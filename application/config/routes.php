@@ -1,0 +1,75 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/*
+| -------------------------------------------------------------------------
+| URI ROUTING
+| -------------------------------------------------------------------------
+| This file lets you re-map URI requests to specific controller functions.
+|
+| Typically there is a one-to-one relationship between a URL string
+| and its corresponding controller class/method. The segments in a
+| URL normally follow this pattern:
+|
+|	example.com/class/method/id/
+|
+| In some instances, however, you may want to remap this relationship
+| so that a different class/function is called than the one
+| corresponding to the URL.
+|
+| Please see the user guide for complete details:
+|
+|	https://codeigniter.com/userguide3/general/routing.html
+|
+| -------------------------------------------------------------------------
+| RESERVED ROUTES
+| -------------------------------------------------------------------------
+|
+| There are three reserved routes:
+|
+|	$route['default_controller'] = 'welcome';
+|
+| This route indicates which controller class should be loaded if the
+| URI contains no data. In the above example, the "welcome" class
+| would be loaded.
+|
+|	$route['404_override'] = 'errors/page_missing';
+|
+| This route will tell the Router which controller/method to use if those
+| provided in the URL cannot be matched to a valid route.
+|
+|	$route['translate_uri_dashes'] = FALSE;
+|
+| This is not exactly a route, but allows you to automatically route
+| controller and method names that contain dashes. '-' isn't a valid
+| class or method name character, so it requires translation.
+| When you set this option to TRUE, it will replace ALL dashes in the
+| controller and method URI segments.
+|
+| Examples:	my-controller/index	-> my_controller/index
+|		my-controller/my-method	-> my_controller/my_method
+*/
+// AMS start
+$route['department'] = "routes/department";
+$route['location'] = "routes/location";
+$route['user_accounts'] = "routes/user_accounts";
+$route['user_roles'] = "routes/user_roles";
+$route['dashboard'] = "routes/dashboard";
+// AMS end
+
+$route['request_user'] = "routes/request_user";
+$route['brgy_residency'] = "routes/brgy_residency";
+$route['brgy_indigency'] = "routes/brgy_indigency";
+$route['brgy_business_permit'] = "routes/brgy_business_permit";
+$route['brgy_clearance'] = "routes/brgy_clearance";
+$route['audit_trail'] = "routes/audit_trail";
+$route['qrcode'] = "routes/qrcode";
+$route['barcode'] = "routes/barcode";
+$route['barcode_qr_management'] = "routes/barcode_qr_management";
+$route['resident'] = "routes/resident";
+$route['blotter'] = "routes/blotter";
+$route['announcement'] = "routes/announcement";
+$route['inventory'] = "routes/inventory";
+$route['default_controller'] = 'Routes';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
