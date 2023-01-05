@@ -22,44 +22,44 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John" class="form-control a_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John" class="form-control firstName_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="A."class="form-control b_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="A."class="form-control middleName_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Doe"class="form-control c_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Doe"class="form-control lastName_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Jr."class="form-control d_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Jr."class="form-control suffix_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Username</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe"class="form-control e_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe"class="form-control userName_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe@gmail.com"class="form-control f_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe@gmail.com"class="form-control email_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact No.</label></div>
-                        <div class="col-12 col-md-9"><input type="number" name="text-input" placeholder="09123456789"class="form-control g_update"></div>
+                        <div class="col-12 col-md-9"><input type="number" name="text-input" placeholder="09123456789"class="form-control num_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthday</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control h_update"></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control birthday_update"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control i_update"></div>
+                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control password_update"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_confirm_update">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_confirm_update btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -79,44 +79,44 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John" class="form-control a"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="A."class="form-control b"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A."class="form-control middleName"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Doe"class="form-control c"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe"class="form-control lastName"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Jr."class="form-control d"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr."class="form-control suffix"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Username</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe"class="form-control e"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g john_doe"class="form-control username"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe@gmail.com"class="form-control f"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g john_doe@gmail.com"class="form-control email"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact No.</label></div>
-                        <div class="col-12 col-md-9"><input type="number" name="text-input" placeholder="09123456789"class="form-control g"></div>
+                        <div class="col-12 col-md-9"><input type="number" name="text-input" placeholder="e.g 09123456789"class="form-control num"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthday</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control h"></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control birthday"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control i"></div>
+                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control password"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -414,16 +414,16 @@
                 var payload = {
                         "updatedBy"     : "",
                         "updatedDate"   : "",
-                        "firstName"     : $(".a").val(),
-                        "middleName"    : $(".b").val(),
-                        "lastName"      : $(".c").val(),
-                        "suffix"        : $(".d").val(),
+                        "firstName"     : $(".firstName").val(),
+                        "middleName"    : $(".middleName").val(),
+                        "lastName"      : $(".lastName").val(),
+                        "suffix"        : $(".suffix").val(),
                         "corpKey"       : "",
-                        "username"      : $(".e").val(),
-                        "email"         : $(".f").val(),
-                        "phoneNumber"   : $(".g").val(),
-                        "birthday"      : $(".h").val(),
-                        "password"      : $(".i").val()
+                        "username"      : $(".username").val(),
+                        "email"         : $(".email").val(),
+                        "phoneNumber"   : $(".num").val(),
+                        "birthday"      : $(".birthday").val(),
+                        "password"      : $(".password").val()
                     }
                 __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
@@ -505,29 +505,29 @@
                         __executeExternalGet('http://localhost:8088/user/'+data_id).done(function (result) {
                             console.log(result);
                             if (result) {
-                                $(".a_update").val(result.firstName);
-                                $(".b_update").val(result.middleName);
-                                $(".c_update").val(result.lastName);
-                                $(".d_update").val(result.suffix);
-                                $(".e_update").val(result.username);
-                                $(".f_update").val(result.email);
-                                $(".g_update").val(result.phoneNumber);
-                                $(".h_update").val(result.birthday);
-                                $(".i_update").val(result.password);
+                                $(".firstName_update").val(result.firstName);
+                                $(".middleName_update").val(result.middleName);
+                                $(".lastName_update").val(result.lastName);
+                                $(".suffix_update").val(result.suffix);
+                                $(".userName_update").val(result.username);
+                                $(".email_update").val(result.email);
+                                $(".num_update").val(result.phoneNumber);
+                                $(".birthday_update").val(result.birthday);
+                                $(".password_update").val(result.password);
 
                                 $(".btn_confirm_update").unbind("click").on("click", function(){
                                     console.log('clicked')
                                     var payload = {
-                                        "firstName"     : $(".a_update").val(),
-                                        "middleName"    : $(".b_update").val(),
-                                        "lastName"      : $(".c_update").val(),
-                                        "suffix"        : $(".d_update").val(),
+                                        "firstName"     : $(".firstName_update").val(),
+                                        "middleName"    : $(".middleName_update").val(),
+                                        "lastName"      : $(".lastName_update").val(),
+                                        "suffix"        : $(".suffix_update").val(),
                                         "corpKey"       : "",
-                                        "username"      : $(".e_update").val(),
-                                        "email"         : $(".f_update").val(),
-                                        "phoneNumber"   : $(".g_update").val(),
-                                        "birthday"      : $(".h_update").val(),
-                                        "password"      : $(".i_update").val()
+                                        "username"      : $(".userName_update").val(),
+                                        "email"         : $(".email_update").val(),
+                                        "phoneNumber"   : $(".num_update").val(),
+                                        "birthday"      : $(".birthday_update").val(),
+                                        "password"      : $(".password_update").val()
                                     }
 
                                     __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {

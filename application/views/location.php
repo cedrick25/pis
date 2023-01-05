@@ -10,8 +10,8 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="updateDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+    <div class="modal fade" id="updateLocModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Update Location</h5>
@@ -20,20 +20,16 @@
                   </button>
                 </div>
                 <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
+                    <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="LOCATION" class="form-control loc_name_update"></div>
-                    </div>
-                </div>
-                <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_name_update"></div>
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="LOCATION" class="form-control loc_add_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_add_update"></div>
                     </div>
-                </div>                              
+                </div>                        
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_confirm_update">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_confirm_update btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -42,7 +38,7 @@
 
     <!-- new Location modal -->
     <div class="modal fade" id="newLocationModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+        <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">New Location</h5>
@@ -51,20 +47,18 @@
                   </button>
                 </div>
                 <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
+                    <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="MARIKINA PPO" class="form-control new_loc"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central office" class="form-control new_loc"></div>
                     </div>
-                </div>
-                <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
+                    <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="MARIKINA CITY" class="form-control new_add"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Quezon City" class="form-control new_add"></div>
                     </div>
-                </div>                            
+                </div>         
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -303,7 +297,7 @@
                 console.log(result)
 
                 result.forEach(function(data){
-                    let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>";
+                    let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateLocModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>";
 
                     $('.table_body').append("<tr>"+
                         "<td>"+data.id+"</td>"+
