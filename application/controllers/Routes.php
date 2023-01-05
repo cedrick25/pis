@@ -82,7 +82,6 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('request_user');
 	}
-	// ams start
 	public function user_accounts()
 	{
 		$this->load->view('user_accounts');
@@ -99,5 +98,4 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('location');
 	}
-	// ams end
 }

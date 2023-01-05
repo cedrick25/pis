@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Asset Management System</title>
+    <title>Probation Information System</title>
     <meta name="description" content="Brgy Culong">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

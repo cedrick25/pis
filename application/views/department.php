@@ -11,7 +11,7 @@
 
     <!-- Update modal -->
     <div class="modal fade" id="updateDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+        <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Update User Accounts</h5>
@@ -20,9 +20,11 @@
                   </button>
                 </div>
                 <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="DEPARTMENT" class="form-control a_update"></div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update"></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -36,7 +38,7 @@
 
     <!-- new User account modal -->
     <div class="modal fade" id="newDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+        <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">New Department</h5>
@@ -45,9 +47,13 @@
                   </button>
                 </div>
                 <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="DEPARTMENT" class="form-control a"></div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name"></div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="cmrd department" class="form-control dep_desc"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -147,6 +153,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Department Name</th>
+                                            <th>Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -192,6 +199,10 @@
                 method: "POST",
                 url: path,
                 dataType: "json",
+                headers: {
+                    // 'Content-Type': 'multipart/form-data;'
+                    'Content-Type':'application/json'
+                },
                 data: jsonObj
             }).done(function (data, textStatus, jqXHR) {
                 if(customLoader != ""){
@@ -257,53 +268,29 @@
             return d.promise();
         };
 
-
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
+            $(".dep_name").val();
+            $(".dep_desc").val();
+            console.log($(".dep_name").val())
+            console.log($(".dep_desc").val())
 
             var payload = {
-               METHOD           : "insert",
-               first_name       : $(".a").val(),
-               middle_name      : $(".b").val(),
-               last_name        : $(".c").val(),
-               suffix_name      : $(".d").val(),
-               username         : $(".e").val(),
-               email            : $(".f").val(),
-               user_type_id     : $(".g").val(),
-               contact_no       : $(".h").val(),
-               gender           : $(".i").val(),
-               birthdate        : $(".j").val(),
-               civil_status     : $(".k").val(),
-               voter_status     : $(".l").val(),
-               occupation       : $(".m").val(),
-               street           : $(".n").val(),
-               barangay         : $(".o").val(),
-               city             : $(".p").val(),
-               province         : $(".q").val(),
-               password         : $(".r").val(),
-               retype_password  : $(".s").val(),
-               status           : $(".t").val(),
+                "createdBy"     : "1",
+                "name"          : $(".dep_name").val(),
+                "description"   : $(".dep_desc").val(),
+                "parentId"      : "1",
+                "locationId"    : "1"
             }
-            __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status == "SUCCESS") {
-                    console.log(result.status);
-                    $(".form-control").val('');
-                    alert(result.message)
-                    $('#newUserModal').modal('hide');
-                    var payload_audit = {
-                       METHOD : "insert",
-                       resident_id      :  $.cookie("resident_id"),
-                       action_performed : "Add",
-                       action_details   : "Add User Accounts module"
-                    }
-                    __executeExternalPost('/bms_api/bms/audit_trail',JSON.stringify(payload_audit)).done(function (result) {
 
-                    })
+            __executeExternalPost('http://localhost:8088/department/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#newDeptModal').modal('hide');
                     __table();
                 }else{
-                    console.log(result.status);
-                    alert(result.message)
+                    console.log("failed adding new department")
                 }
             })
         })
@@ -312,183 +299,66 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8088/department?page=0&size=50&name=cmrd').done(function (result) {
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
                 console.log(result)
-
-                result.content.forEach(function(data){
-                    var status;
-                    let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>";
-
-                    $('.table_body').append("<tr>"+
-                        "<td>"+data.id+"</td>"+
-                        "<td>"+data.name+"</td>"+  
-                        "<td align='center' class='actions'> "+actions+"")
-                });
+                if (result.status != "ERROR") {
+                    result.forEach(function(data){
+                        console.log(data)
+                        $('.table_body').append("<tr>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.name+"</td>"+  
+                            "<td>"+data.description+"</td>"+  
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+                
                 $(document).ready(function () {
                     var table = $('.table_head').DataTable({
                         order: [[0, 'asc']],
-                        "columnDefs": [
-                            { "width": "30%", "targets": 6 }
-                        ]
+                        // "columnDefs": [
+                            // { "width": "30%", "targets": 6 }
+                        // ]
                     });
                     $('.dataTables_length').addClass('bs-select');
                 });
 
                 $(".btn_update").unbind("click").on("click", function(){
-                    console.log('clicked')
-                    var data_id     = $(this).data("id");
-
-                    var payload = {
-                       METHOD      : "fetch_by_id",
-                       resident_id  : data_id,
-                    }
-                    __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
+                    console.log("clicked button update")
+                    var data_id = $(this).data("id");
+                    console.log(data_id)
+                    __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
                         console.log(result);
-                        if (result.status == "SUCCESS") {
-                            console.log(result.status);
-                           $(".a_update").val(result.payload.first_name);
-                           $(".b_update").val(result.payload.middle_name);
-                           $(".c_update").val(result.payload.last_name);
-                           $(".d_update").val(result.payload.suffix_name);
-                           $(".e_update").val(result.payload.username);
-                           $(".f_update").val(result.payload.email);
-                           $(".g_update").val(result.payload.user_type_id);
-                           $(".h_update").val(result.payload.contact_no);
-                           $(".i_update").val(result.payload.gender);
-                           $(".j_update").val(result.payload.birthdate);
-                           $(".k_update").val(result.payload.civil_status);
-                           $(".l_update").val(result.payload.voter_status);
-                           $(".m_update").val(result.payload.occupation);
-                           $(".n_update").val(result.payload.street);
-                           $(".o_update").val(result.payload.barangay);
-                           $(".p_update").val(result.payload.city);
-                           $(".q_update").val(result.payload.province);
-                           // $(".r_update").val(result.payload.password);
-                           // $(".s_update").val(result.payload.retype_password);
-                           $(".t_update").val(result.payload.status);
+                        if (result) {
+                            $(".dep_name_update").val(result.name);
+                            $(".dep_desc_update").val(result.description);
 
                             $(".btn_confirm_update").unbind("click").on("click", function(){
-                                console.log('clicked')
+                                console.log('clicked btn update confirm')
                                 var payload = {
-                                   METHOD       : "update",
-                                   resident_id   : data_id,
-                                   first_name  : $(".a_update").val(),
-                                   middle_name    : $(".b_update").val(),
-                                   last_name      : $(".c_update").val(),
-                                   suffix_name     : $(".d_update").val(),
-                                   username  : $(".e_update").val(),
-                                   email  : $(".f_update").val(),
-                                   user_type_id  : $(".g_update").val(),
-                                   contact_no    : $(".h_update").val(),
-                                   gender      : $(".i_update").val(),
-                                   birthdate     : $(".j_update").val(),
-                                   civil_status  : $(".k_update").val(),
-                                   voter_status  : $(".l_update").val(),
-                                   occupation  : $(".m_update").val(),
-                                   street    : $(".n_update").val(),
-                                   barangay      : $(".o_update").val(),
-                                   city     : $(".p_update").val(),
-                                   province  : $(".q_update").val(),
-                                   password  : $(".r_update").val(),
-                                   retype_password  : $(".s_update").val(),
-                                   status    : $(".t_update").val(),
+                                    "updatedBy"     : "1",
+                                    "name"          : $(".dep_name_update").val(),
+                                    "description"   : $(".dep_desc_update").val(),
+                                    "parentId"      : "1",
+                                    "locationId"    : "1"
                                 }
-                                __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
+                                console.log(payload);
+                                __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
-                                    if (result.status == "SUCCESS") {
-                                        console.log(result.status);
+                                    if (result) {
                                         $(".form-control").val('');
-                                        alert(result.message)
-                                        $('#updateUserModal').modal('hide');
-
-                                        var payload_audit = {
-                                           METHOD : "insert",
-                                           resident_id      :  $.cookie("resident_id"),
-                                           action_performed : "Update",
-                                           action_details   : "Update Account module"
-                                        }
-                                        __executeExternalPost('/bms_api/bms/audit_trail',JSON.stringify(payload_audit)).done(function (result) {
-
-                                        })
+                                        $('#updateDeptModal').modal('hide');
                                         __table();
                                     }else{
-                                        console.log(result.status);
-                                        alert(result.message)
+                                        alert("failed")
                                     }
                                 })
                             })
 
                         }else{
-                            console.log(result.status);
-                            alert(result.message)
+                            alert("failed")
                         }
-                    })
-                })
-
-                $(".btn_accept").unbind("click").on("click", function(){
-                    console.log('clicked')
-                    var data_id     = $(this).data("id");
-
-                    $(".btn_accept_confirm").unbind("click").on("click", function(){
-                        console.log('clicked')
-
-                        var payload = {
-                           METHOD  : "update_status",
-                           resident_id   : data_id,
-                           status  : "1",
-                        }
-                        __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
-                            console.log(result);
-                            if (result.status == "SUCCESS") {
-                                console.log(result.status);
-                                $(".form-control").val('');
-                                alert(result.message)
-                                $('#acceptModal').modal('hide');
-                                var payload_audit = {
-                                   METHOD : "insert",
-                                   resident_id      :  $.cookie("resident_id"),
-                                   action_performed : "Accept",
-                                   action_details   : "Accept Account module"
-                                }
-                                __executeExternalPost('/bms_api/bms/audit_trail',JSON.stringify(payload_audit)).done(function (result) {
-
-                                })
-                                __table();
-                            }else{
-                                console.log(result.status);
-                                alert(result.message)
-                            }
-                        })
-
-                    })
-                })
-
-                $(".btn_archive").unbind("click").on("click", function(){
-                    console.log('clicked')
-                    var data_id     = $(this).data("id");
-
-                    $(".btn_archive_confirm").unbind("click").on("click", function(){
-                        console.log('clicked')
-
-                        var payload = {
-                           METHOD  : "update",
-                           blotter_id   : data_id,
-                           status  : "2",
-                        }
-                        __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
-                            console.log(result);
-                            if (result.status == "SUCCESS") {
-                                console.log(result.status);
-                                $(".form-control").val('');
-                                alert(result.message)
-                                $('#archiveModal').modal('hide');
-                                __table();
-                            }else{
-                                console.log(result.status);
-                                alert(result.message)
-                            }
-                        })
-
                     })
                 })
             })
