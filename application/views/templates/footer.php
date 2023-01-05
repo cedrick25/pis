@@ -1,7 +1,7 @@
     
 
-    <!-- <script src="assets/js/jquery-3.2.0.min.js"></script> -->
-    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="assets/js/jquery-3.2.0.min.js"></script>
+    <!-- <script src="vendors/jquery/dist/jquery.min.js"></script> -->
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
