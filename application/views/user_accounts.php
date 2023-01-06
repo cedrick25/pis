@@ -124,7 +124,7 @@
     <!-- new User account modal -->
 
     <div class="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
+        <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Activate User Account</h5>
@@ -138,14 +138,14 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_activate_confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_activate_confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
+        <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Deactivate User Account</h5>
@@ -159,14 +159,14 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_deactivate_confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_deactivate_confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
+        <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Remove User Account</h5>
@@ -180,14 +180,14 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_remove_confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_remove_confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="restrictModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
+        <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Restrict User Account</h5>
@@ -201,14 +201,14 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_restrict_confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_restrict_confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="liftModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
+        <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Lift User Account</h5>
@@ -222,8 +222,8 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_lift_confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_lift_confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -606,7 +606,7 @@
                             __executeExternalPost('http://localhost:8088/user/remove/'+data_id).done(function (result) {
                                 if (result.status != "ERROR") {
                                     $(".form-control").val('');
-                                    $('#btn_removeModal').modal('hide');
+                                    $('#removeModal').modal('hide');
                                     __table();
                                 }else{
                                     alert("failed")
