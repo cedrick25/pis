@@ -26,10 +26,18 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update"></div>
                     </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="select" id="select" class="form-control dep_loc_update" >
+                                <option>Select Location</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>                            
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_confirm_update">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_confirm_update btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -53,12 +61,20 @@
                     </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="cmrd department" class="form-control dep_desc"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD Department" class="form-control dep_desc"></div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="select" id="select" class="form-control dep_loc" >
+                                <option>Select Location</option>
+                            </select>
+                        </div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -268,27 +284,53 @@
             return d.promise();
         };
 
+
+        var __select = function(){
+            // $('.table_head').DataTable().destroy();
+            $('.dep_loc').empty();
+            $('.dep_loc_update').empty();
+
+            __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    result.forEach(function(data){
+                        console.log(data)
+                        $('.dep_loc').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                        $('.dep_loc_update').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
+        }
+        __select();
+
+
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
-            $(".dep_name").val();
-            $(".dep_desc").val();
-            console.log($(".dep_name").val())
-            console.log($(".dep_desc").val())
-
+            // $(".dep_loc").val();
+            // $(".dep_name").val();
+            // $(".dep_desc").val();
+            // console.log($(".dep_name").val())
+            // console.log($(".dep_desc").val())
+            // console.log($(".dep_loc").val())
             var payload = {
                 "createdBy"     : "1",
                 "name"          : $(".dep_name").val(),
                 "description"   : $(".dep_desc").val(),
-                "parentId"      : "1",
-                "locationId"    : "1"
+                "parentId"      : "0",
+                "locationId"    : $(".dep_loc").val()
             }
-
+            console.log(payload)
             __executeExternalPost('http://localhost:8088/department/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#newDeptModal').modal('hide');
                     __table();
+                    __select();
                 }else{
                     console.log("failed adding new department")
                 }
@@ -307,7 +349,7 @@
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.name+"</td>"+  
-                            "<td>"+data.description+"</td>"+  
+                            "<td>"+data.description+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
                     });
                 } else {
@@ -333,6 +375,7 @@
                         if (result.status != "ERROR") {
                             $(".dep_name_update").val(result.name);
                             $(".dep_desc_update").val(result.description);
+                            $(".dep_loc_update").val(result.locationId);
 
                             $(".btn_confirm_update").unbind("click").on("click", function(){
                                 console.log('clicked btn update confirm')
@@ -340,16 +383,17 @@
                                     "updatedBy"     : "1",
                                     "name"          : $(".dep_name_update").val(),
                                     "description"   : $(".dep_desc_update").val(),
-                                    "parentId"      : "1",
-                                    "locationId"    : "1"
+                                    "parentId"      : "0",
+                                    "locationId"    : $(".dep_loc_update").val()
                                 }
-                                console.log(payload);
+                                // console.log(payload);
                                 __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#updateDeptModal').modal('hide');
                                         __table();
+                                        __select();
                                     }else{
                                         alert("failed")
                                     }
@@ -364,7 +408,6 @@
             })
         }
         __table();
-
 
     } )( jQuery );
     </script>

@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="updateDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateRoleModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,10 +21,10 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update"></div>
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update"></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Role Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control user_role_name_update"></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Role Description</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control user_role_desc_update"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -37,7 +37,7 @@
     <!-- Update modal -->
 
     <!-- new User account modal -->
-    <div class="modal fade" id="newDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newRoleModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -48,11 +48,11 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Role</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Role Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Administrator" class="form-control user_role_name"></div>
                     </div>
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Role Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Administrator CMRD" class="form-control user_role_desc"></div>
                     </div>
                 </div>                            
@@ -148,7 +148,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">User Roles List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newDeptModal"><i class="fa fa-plus-circle"></i> Add Role</button>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newRoleModal"><i class="fa fa-plus-circle"></i> Add Role</button>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
@@ -157,6 +157,7 @@
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Description</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
@@ -285,7 +286,7 @@
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
-                    $('#newDeptModal').modal('hide');
+                    $('#newRoleModal').modal('hide');
                     __table();
                 }else{
                     console.log("failed adding new department")
@@ -305,7 +306,8 @@
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.name+"</td>"+  
-                            "<td>"+data.description+"</td>");
+                            "<td>"+data.description+"</td>"+
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateRoleModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -321,43 +323,42 @@
                     $('.dataTables_length').addClass('bs-select');
                 });
 
-                // $(".btn_update").unbind("click").on("click", function(){
-                //     console.log("clicked button update")
-                //     var data_id = $(this).data("id");
-                //     console.log(data_id)
-                //     __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
-                //         console.log(result);
-                //         if (result.status != "ERROR") {
-                //             $(".dep_name_update").val(result.name);
-                //             $(".dep_desc_update").val(result.description);
+                $(".btn_update").unbind("click").on("click", function(){
+                    console.log("clicked button update")
+                    var data_id = $(this).data("id");
+                    console.log(data_id)
+                    __executeExternalGet('http://localhost:8088/role/'+data_id).done(function (result) {
+                        console.log(result);
+                        if (result.status != "ERROR") {
+                            $(".user_role_name_update").val(result.name);
+                            $(".user_role_desc_update").val(result.description);
 
-                //             $(".btn_confirm_update").unbind("click").on("click", function(){
-                //                 console.log('clicked btn update confirm')
-                //                 var payload = {
-                //                     "updatedBy"     : "1",
-                //                     "name"          : $(".dep_name_update").val(),
-                //                     "description"   : $(".dep_desc_update").val(),
-                //                     "parentId"      : "1",
-                //                     "locationId"    : "1"
-                //                 }
-                //                 console.log(payload);
-                //                 __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                //                     console.log(result);
-                //                     if (result.status != "ERROR") {
-                //                         $(".form-control").val('');
-                //                         $('#updateDeptModal').modal('hide');
-                //                         __table();
-                //                     }else{
-                //                         alert("failed")
-                //                     }
-                //                 })
-                //             })
+                            $(".btn_confirm_update").unbind("click").on("click", function(){
+                                console.log('clicked btn update confirm')
+                                var payload = {
+                                    "name"             : $(".user_role_name_update").val(),
+                                    "description"      : $(".user_role_desc_update").val(),
+                                    "parentId"         : "2",
+                                    "departmentId"     : "2"
+                                }
+                                console.log(payload);
+                                __executeExternalPost('http://localhost:8088/role/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                    console.log(result);
+                                    if (result.status != "ERROR") {
+                                        $(".form-control").val('');
+                                        $('#updateRoleModal').modal('hide');
+                                        __table();
+                                    }else{
+                                        alert("failed")
+                                    }
+                                })
+                            })
 
-                //         }else{
-                //             alert("failed")
-                //         }
-                //     })
-                // })
+                        }else{
+                            alert("failed")
+                        }
+                    })
+                })
             })
         }
         __table();

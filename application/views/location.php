@@ -275,7 +275,7 @@
             var payload = {
                     "name"         : $(".new_loc").val(),
                     "address"      : $(".new_add").val(),
-                    "parentId"     : "3"
+                    "parentId"     : "0"
                 }
             __executeExternalPost('http://localhost:8088/location/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
@@ -333,7 +333,7 @@
                                 var payload = {
                                     "name"      : $(".loc_name_update").val(),
                                     "address"   : $(".loc_add_update").val(),
-                                    "parentId"  : "2"
+                                    "parentId"  : "0"
                         }
 
                             __executeExternalPost('http://localhost:8088/location/update/'+data_id,JSON.stringify(payload)).done(function (result) {
