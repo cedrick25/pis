@@ -4,7 +4,7 @@
 
 
     <!-- new User account modal -->
-    <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -136,14 +136,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- new User account modal -->
     <div class="sufee-login d-flex align-content-center flex-wrap">
         <div class="container">
             <div class="login-content">
                 <div class="login-logo">
-                    <span style="font-size: 60px;"><b>AMS</b></span><br>
-                    <span>Asset Management System</span>
+                    <span style="font-size: 60px;"><b>PIS</b></span><br>
+                    <span>Probation Information System</span>
                 </div>
                 <div class="login-form">
                     <div style="margin-bottom: 30px; text-align: center;">
@@ -153,7 +153,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                            <input type="text" class="form-control email_username" placeholder="Email or Username">
+                            <input type="text" class="form-control username" placeholder="Username">
                         </div>
                     </div>
                     <div class="form-group">
@@ -199,6 +199,10 @@
                 method: "POST",
                 url: path,
                 dataType: "json",
+                headers: {
+                    // 'Content-Type': 'multipart/form-data;'
+                    'Content-Type':'application/json'
+                },
                 data: jsonObj
             }).done(function (data, textStatus, jqXHR) {
                 if(customLoader != ""){
@@ -227,97 +231,103 @@
             return d.promise();
         };
 
-        $(".btn-confirm-new").unbind("click").on("click", function(){
-            console.log('clicked')
+        // $(".btn-confirm-new").unbind("click").on("click", function(){
+        //     console.log('clicked')
 
-            var payload = {
-               METHOD           : "insert",
-               first_name       : $(".a").val(),
-               middle_name      : $(".b").val(),
-               last_name        : $(".c").val(),
-               suffix_name      : $(".d").val(),
-               username         : $(".e").val(),
-               email            : $(".f").val(),
-               user_type_id     : $(".g").val(),
-               contact_no       : $(".h").val(),
-               gender           : $(".i").val(),
-               birthdate        : $(".j").val(),
-               civil_status     : $(".k").val(),
-               voter_status     : $(".l").val(),
-               occupation       : $(".m").val(),
-               street           : $(".n").val(),
-               barangay         : $(".o").val(),
-               city             : $(".p").val(),
-               province         : $(".q").val(),
-               password         : $(".r").val(),
-               retype_password  : $(".s").val(),
-               status           : $(".t").val(),
-            }
-            __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status == "SUCCESS") {
-                    console.log(result.status);
-                    $(".form-control").val('');
-                    alert(result.message+ " PLEASE WAIT FOR THE ADMIN TO ACCEPT YOUR ACCOUNT!")
-                    $('#newUserModal').modal('hide');
+        //     var payload = {
+        //        METHOD           : "insert",
+        //        first_name       : $(".a").val(),
+        //        middle_name      : $(".b").val(),
+        //        last_name        : $(".c").val(),
+        //        suffix_name      : $(".d").val(),
+        //        username         : $(".e").val(),
+        //        email            : $(".f").val(),
+        //        user_type_id     : $(".g").val(),
+        //        contact_no       : $(".h").val(),
+        //        gender           : $(".i").val(),
+        //        birthdate        : $(".j").val(),
+        //        civil_status     : $(".k").val(),
+        //        voter_status     : $(".l").val(),
+        //        occupation       : $(".m").val(),
+        //        street           : $(".n").val(),
+        //        barangay         : $(".o").val(),
+        //        city             : $(".p").val(),
+        //        province         : $(".q").val(),
+        //        password         : $(".r").val(),
+        //        retype_password  : $(".s").val(),
+        //        status           : $(".t").val(),
+        //     }
+        //     __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
+        //         console.log(result);
+        //         if (result.status == "SUCCESS") {
+        //             console.log(result.status);
+        //             $(".form-control").val('');
+        //             alert(result.message+ " PLEASE WAIT FOR THE ADMIN TO ACCEPT YOUR ACCOUNT!")
+        //             $('#newUserModal').modal('hide');
 
-                    var payload_audit = {
-                       METHOD : "insert",
-                       resident_id      :  result.payload,
-                       action_performed : "Register",
-                       action_details   : "Login module"
-                    }
-                    __executeExternalPost('/bms_api/bms/audit_trail',JSON.stringify(payload_audit)).done(function (result) {
+        //             var payload_audit = {
+        //                METHOD : "insert",
+        //                resident_id      :  result.payload,
+        //                action_performed : "Register",
+        //                action_details   : "Login module"
+        //             }
+        //             __executeExternalPost('/bms_api/bms/audit_trail',JSON.stringify(payload_audit)).done(function (result) {
 
-                    })
-                }else{
-                    console.log(result.status);
-                    alert(result.message)
-                }
-            })
-        })
+        //             })
+        //         }else{
+        //             console.log(result.status);
+        //             alert(result.message)
+        //         }
+        //     })
+        // })
 
         $(".btn-confirm").unbind("click").on("click", function(){
-            console.log('clicked')
+            // console.log('clicked')
 
-            var username = $(".email_username").val();
+            var username = $(".username").val();
             var password = $(".password").val();
 
             var payload = {
-                   email : username,
                    username : username,
                    password : password
             }
-            __executeExternalPost('/bms_api/User_accounts/loginThruCredentials',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('http://localhost:8088/authenticate',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
-                if (result.status == "SUCCESS") {
-                    console.log(result.status);
-                    alert(result.message)
-                    var user_type_id = result.payload.user_type_id
-                    var resident_id = result.payload.resident_id
-                    $.cookie("user_type_id", user_type_id);
-                    $.cookie("resident_id", resident_id);
+                if (result.status != "ERROR") {
+                    if (result.authenticated == true) {
+                        console.log('authenticated = true')
+                        if (result.isLocked != true) {
+                            console.log("not lock")
+                            
+                            // var user_type_id = result.payload.user_type_id
+                            // var resident_id = result.payload.resident_id
+                            // $.cookie("user_type_id", user_type_id);
+                            // $.cookie("resident_id", resident_id);
 
-                    var payload_audit = {
-                       METHOD : "insert",
-                       resident_id      :  $.cookie("resident_id"),
-                       action_performed : "Login",
-                       action_details   : "Login module"
+                            setTimeout(function () {
+                                window.location.href="dashboard"
+                            },1000);
+                        } else {
+                            console.log("this account is locked")
+                        }
+                    } else {
+                        console.log('no data found,inactive or removed')
+                        if (result.failedAttemptsCount == 4) {
+                            console.log("attempt 4, last failed attempt your account will be locked")
+                        }else if(result.failedAttemptsCount >= 5){
+                            console.log("your account is locked now")
+                        }else if(result.failedAttemptsCount != null){
+                            console.log("Your failed attempt is " +result.failedAttemptsCount)
+                        }
                     }
-                    __executeExternalPost('/bms_api/bms/audit_trail',JSON.stringify(payload_audit)).done(function (result) {
 
-                    })
-                    setTimeout(function () {
-                        window.location.href="dashboard"
-                    },1000);
                 }else{
-                    console.log(result.status);
-                    alert(result.message)
+
                 }
             })
         })
 
-        $(".email_username,.password").keyup(function(event){
+        $(".username,.password").keyup(function(event){
             if(event.keyCode == 13){
                 $(".btn-confirm").click();
             }
