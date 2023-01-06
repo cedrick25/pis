@@ -427,7 +427,7 @@
                     }
                 __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
-                    if (result) {
+                    if (result.status != "ERROR") {
                         $(".form-control").val('');
                         $('#newUserModal').modal('hide');
                         __table();
@@ -504,7 +504,7 @@
                         console.log(data_id)
                         __executeExternalGet('http://localhost:8088/user/'+data_id).done(function (result) {
                             console.log(result);
-                            if (result) {
+                            if (result.status != "ERROR") {
                                 $(".firstName_update").val(result.firstName);
                                 $(".middleName_update").val(result.middleName);
                                 $(".lastName_update").val(result.lastName);
@@ -532,7 +532,7 @@
 
                                     __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                         console.log(result);
-                                        if (result) {
+                                        if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#updateUserModal').modal('hide');
                                             __table();
@@ -553,7 +553,7 @@
                         $(".btn_activate_confirm").unbind("click").on("click", function(){
 
                             __executeExternalPost('http://localhost:8088/user/active/'+data_id).done(function (result) {
-                                if (result) {
+                                if (result.status != "ERROR") {
                                     $(".form-control").val('');
                                     $('#activateModal').modal('hide');
                                     __table();
@@ -570,7 +570,7 @@
                         $(".btn_deactivate_confirm").unbind("click").on("click", function(){
 
                             __executeExternalPost('http://localhost:8088/user/inactive/'+data_id).done(function (result) {
-                                if (result) {
+                                if (result.status != "ERROR") {
                                     $(".form-control").val('');
                                     $('#deactivateModal').modal('hide');
                                     __table();
@@ -587,7 +587,7 @@
                         $(".btn_restrict_confirm").unbind("click").on("click", function(){
 
                             __executeExternalPost('http://localhost:8088/user/restrict/'+data_id).done(function (result) {
-                                if (result) {
+                                if (result.status != "ERROR") {
                                     $(".form-control").val('');
                                     $('#restrictModal').modal('hide');
                                     __table();
@@ -604,7 +604,7 @@
                         $(".btn_remove_confirm").unbind("click").on("click", function(){
 
                             __executeExternalPost('http://localhost:8088/user/remove/'+data_id).done(function (result) {
-                                if (result) {
+                                if (result.status != "ERROR") {
                                     $(".form-control").val('');
                                     $('#btn_removeModal').modal('hide');
                                     __table();
@@ -621,7 +621,7 @@
                         console.log(data_id)
 
                             __executeExternalPost('http://localhost:8088/user/lift/'+data_id).done(function (result) {
-                                if (result) {
+                                if (result.status != "ERROR") {
                                     $(".form-control").val('');
                                     $('#liftModal').modal('hide');
                                     __table();

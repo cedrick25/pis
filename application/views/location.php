@@ -153,6 +153,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Location</th>
+                                            <th>Address</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -301,7 +302,8 @@
 
                     $('.table_body').append("<tr>"+
                         "<td>"+data.id+"</td>"+
-                        "<td>"+data.name+"</td>"+  
+                        "<td>"+data.name+"</td>"+ 
+                        "<td>"+data.address+"</td>"+  
                         "<td align='center' class='actions'> "+actions+"")
                 });
                 
@@ -322,7 +324,7 @@
                     __executeExternalGet('http://localhost:8088/location/'+data_id).done(function (result) {
                         console.log(result);
 
-                        if (result) {
+                        if (result.status != "ERROR") {
                             $(".loc_name_update").val(result.name);
                             $(".loc_add_update").val(result.address);
 
@@ -332,11 +334,11 @@
                                     "name"      : $(".loc_name_update").val(),
                                     "address"   : $(".loc_add_update").val(),
                                     "parentId"  : "2"
-                                }
+                        }
 
                             __executeExternalPost('http://localhost:8088/location/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                 console.log(result);
-                                    if (result) {
+                                    if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#updateDeptModal').modal('hide');
                                         __table();
@@ -347,7 +349,7 @@
                             })
 
                         }else{
-                             alert("failed")
+                            alert("failed")
                         }
                     })
                 })

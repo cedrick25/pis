@@ -330,7 +330,7 @@
                     console.log(data_id)
                     __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
                         console.log(result);
-                        if (result) {
+                        if (result.status != "ERROR") {
                             $(".dep_name_update").val(result.name);
                             $(".dep_desc_update").val(result.description);
 
@@ -346,7 +346,7 @@
                                 console.log(payload);
                                 __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
-                                    if (result) {
+                                    if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#updateDeptModal').modal('hide');
                                         __table();
