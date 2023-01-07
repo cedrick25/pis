@@ -19,6 +19,10 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <div class="alert alert-success" role="alert" id="success_update" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Updated  
+                </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
@@ -76,6 +80,10 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Updated  
+                </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
@@ -132,6 +140,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="alert alert-success" role="alert" id="success_activated" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Activated Successfully  
+                </div>
                 <div class="modal-body">
                     <p>
                         Are you sure you want to Activate this user account? 
@@ -144,6 +156,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
@@ -152,6 +165,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_deactivate" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Deactivated Successfully  
                 </div>
                 <div class="modal-body">
                     <p>
@@ -165,6 +182,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
@@ -173,6 +191,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Removed Successfully  
                 </div>
                 <div class="modal-body">
                     <p>
@@ -186,6 +208,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="restrictModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
@@ -194,6 +217,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_restrict" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Restricted  
                 </div>
                 <div class="modal-body">
                     <p>
@@ -207,6 +234,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="liftModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
@@ -215,6 +243,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_lift" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Lifted Successfully
                 </div>
                 <div class="modal-body">
                     <p>
@@ -228,27 +260,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Deactivate User Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure you want to deactive this user account? 
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_deactivate_confirm">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -428,9 +440,13 @@
                 __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
                     if (result.status != "ERROR") {
-                        $(".form-control").val('');
-                        $('#newUserModal').modal('hide');
-                        __table();
+                    $(".form-control").val('');
+                    $('#success').show();
+                        setTimeout(function () {
+                            $('#newUserModal').modal('hide');
+                            $('#success').hide();
+                            __table();
+                        }, 1000);
                     }else{
                     //     console.log(result.status);
                     //     alert(result.message)
@@ -533,9 +549,13 @@
                                     __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                         console.log(result);
                                         if (result.status != "ERROR") {
-                                            $(".form-control").val('');
-                                            $('#updateUserModal').modal('hide');
-                                            __table();
+                                        $(".form-control").val('');
+                                        $('#success_update').show();
+                                            setTimeout(function () {
+                                                $('#updateUserModal').modal('hide');
+                                                $('#success_update').hide();
+                                                __table();
+                                            }, 1000);
                                         }else{
                                             alert("failed")
                                         }
@@ -554,9 +574,17 @@
 
                             __executeExternalPost('http://localhost:8088/user/active/'+data_id).done(function (result) {
                                 if (result.status != "ERROR") {
-                                    $(".form-control").val('');
-                                    $('#activateModal').modal('hide');
-                                    __table();
+                                        $(".form-control").val('');
+                                        $('#success_activated').show();
+                                            setTimeout(function () {
+                                                $('#activateModal').modal('hide');
+                                                $('#success_activated').hide();
+                                                __table();
+                                            }, 1000);
+                                        
+                                    // $(".form-control").val('');
+                                    // $('#activateModal').modal('hide');
+                                    // __table();
                                 }else{
                                     alert("failed")
                                 }
@@ -571,9 +599,16 @@
 
                             __executeExternalPost('http://localhost:8088/user/inactive/'+data_id).done(function (result) {
                                 if (result.status != "ERROR") {
-                                    $(".form-control").val('');
-                                    $('#deactivateModal').modal('hide');
-                                    __table();
+                                        $(".form-control").val('');
+                                        $('#success_deactivate').show();
+                                            setTimeout(function () {
+                                                $('#deactivateModal').modal('hide');
+                                                $('#success_deactivate').hide();
+                                                __table();
+                                            }, 1000);
+                                    // $(".form-control").val('');
+                                    // $('#deactivateModal').modal('hide');
+                                    // __table();
                                 }else{
                                     alert("failed")
                                 }
@@ -588,9 +623,17 @@
 
                             __executeExternalPost('http://localhost:8088/user/restrict/'+data_id).done(function (result) {
                                 if (result.status != "ERROR") {
-                                    $(".form-control").val('');
-                                    $('#restrictModal').modal('hide');
-                                    __table();
+                                        $(".form-control").val('');
+                                        $('#success_restrict').show();
+                                            setTimeout(function () {
+                                                $('#restrictModal').modal('hide');
+                                                $('#success_restrict').hide();
+                                                __table();
+                                            }, 1000);
+                                        
+                                    // $(".form-control").val('');
+                                    // $('#restrictModal').modal('hide');
+                                    // __table();
                                 }else{
                                     alert("failed")
                                 }
@@ -605,9 +648,17 @@
 
                             __executeExternalPost('http://localhost:8088/user/remove/'+data_id).done(function (result) {
                                 if (result.status != "ERROR") {
-                                    $(".form-control").val('');
-                                    $('#removeModal').modal('hide');
-                                    __table();
+                                        $(".form-control").val('');
+                                        $('#success_remove').show();
+                                            setTimeout(function () {
+                                                $('#removeModal').modal('hide');
+                                                $('#success_remove').hide();
+                                                __table();
+                                            }, 1000);
+                                        
+                                    // $(".form-control").val('');
+                                    // $('#removeModal').modal('hide');
+                                    // __table();
                                 }else{
                                     alert("failed")
                                 }
@@ -622,9 +673,17 @@
 
                             __executeExternalPost('http://localhost:8088/user/lift/'+data_id).done(function (result) {
                                 if (result.status != "ERROR") {
-                                    $(".form-control").val('');
-                                    $('#liftModal').modal('hide');
-                                    __table();
+                                        $(".form-control").val('');
+                                        $('#success_lift').show();
+                                            setTimeout(function () {
+                                                $('#liftModal').modal('hide');
+                                                $('#success_lift').hide();
+                                                __table();
+                                            }, 1000);
+                                        
+                                    // $(".form-control").val('');
+                                    // $('#liftModal').modal('hide');
+                                    // __table();
                                 }else{
                                     alert("failed")
                                 }

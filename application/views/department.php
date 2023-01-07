@@ -14,10 +14,14 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Update User Accounts</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">Update Departments</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_update" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Updated  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
@@ -44,15 +48,19 @@
     </div>
     <!-- Update modal -->
 
-    <!-- new User account modal -->
+    <!-- new dept account modal -->
     <div class="modal fade" id="newDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">New Department</h5>
+                <div class="modal-header">            
+                    <h5 class="modal-title" id="mediumModalLabel">New Department</h5>      
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully created  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
@@ -79,7 +87,7 @@
             </div>
         </div>
     </div>
-    <!-- new User account modal -->
+    <!-- new dept account modal -->
 
     <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="deactivate">
@@ -102,6 +110,7 @@
             </div>
         </div>
     </div>
+
     <!-- modal -->
     <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="deactivate">
@@ -284,7 +293,6 @@
             return d.promise();
         };
 
-
         var __select = function(){
             // $('.table_head').DataTable().destroy();
             $('.dep_loc').empty();
@@ -323,14 +331,19 @@
                 "parentId"      : "0",
                 "locationId"    : $(".dep_loc").val()
             }
-            console.log(payload)
+            // console.log(payload)
             __executeExternalPost('http://localhost:8088/department/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
-                    $('#newDeptModal').modal('hide');
-                    __table();
-                    __select();
+                    $('#success').show();
+                        setTimeout(function () {
+                            $('#newDeptModal').modal('hide');
+                            $('success').hide();
+                            __table();
+                            __select();
+                        }, 1000);
+
                 }else{
                     console.log("failed adding new department")
                 }
@@ -391,9 +404,13 @@
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');
-                                        $('#updateDeptModal').modal('hide');
-                                        __table();
-                                        __select();
+                                        $('#success_update').show();
+                                            setTimeout(function () {
+                                                $('#updateDeptModal').modal('hide');
+                                                $('#success_update').hide();
+                                                __table();
+                                                __select();
+                                            }, 1000);
                                     }else{
                                         alert("failed")
                                     }

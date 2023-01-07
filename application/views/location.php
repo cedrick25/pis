@@ -19,6 +19,10 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <div class="alert alert-success" role="alert" id="success_update" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Updated  
+                </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location Name</label></div>
@@ -37,7 +41,7 @@
     <!-- Update modal -->
 
     <!-- new Location modal -->
-    <div class="modal fade" id="newLocationModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newLocModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -45,6 +49,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Updated  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
@@ -145,7 +153,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Locations</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newLocationModal"><i class="fa fa-plus-circle"></i> Add Location</button>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newLocModal"><i class="fa fa-plus-circle"></i> Add Location</button>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
@@ -281,8 +289,12 @@
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
-                    $('#newLocationModal').modal('hide');
-                    __table();
+                    $('#success').show();
+                        setTimeout(function () {
+                            $('#newLocModal').modal('hide');
+                            $('#success').show();
+                            __table();
+                        }, 1000);
                 }else{
                 //     console.log(result.status);
                 //     alert(result.message)
@@ -340,8 +352,12 @@
                                 console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');
-                                        $('#updateDeptModal').modal('hide');
-                                        __table();
+                                        $('#success_update').show();
+                                            setTimeout(function () {
+                                                $('#updateLocModal').modal('hide');
+                                                $('#success_update').hide();
+                                                __table();
+                                            }, 1000);
                                     }else{
                                         alert("failed")
                                     }

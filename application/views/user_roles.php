@@ -19,6 +19,10 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <div class="alert alert-success" role="alert" id="success_update" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Updated  
+                </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Role Name</label></div>
@@ -45,6 +49,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Created  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
@@ -286,8 +294,12 @@
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
-                    $('#newRoleModal').modal('hide');
-                    __table();
+                    $('#success').show();
+                        setTimeout(function () {
+                        $('#newRoleModal').modal('hide');
+                        $('#success').hide();
+                            __table();
+                        }, 1000);
                 }else{
                     console.log("failed adding new department")
                 }
@@ -345,8 +357,14 @@
                                 __executeExternalPost('http://localhost:8088/role/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
-                                        $(".form-control").val('');
+                                    $(".form-control").val('');
+                                    $('#success_update').show();
+                                        setTimeout(function () {
                                         $('#updateRoleModal').modal('hide');
+                                        $('success_update').hide();
+                                            __table();
+                                        }, 1000);
+                
                                         __table();
                                     }else{
                                         alert("failed")
