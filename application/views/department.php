@@ -34,7 +34,7 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control dep_loc_update" >
-                                <option>Select Location</option>
+                                <!-- <option>Select Location</option> -->
                             </select>
                         </div>
                     </div>
