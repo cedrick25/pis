@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="updateDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateDeptModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -33,7 +33,7 @@
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="select" class="form-control dep_loc_update" >
+                            <select name="select" id="" class="form-control dep_loc_update" >
                                 <option>Select Location</option>
                             </select>
                         </div>
@@ -49,7 +49,7 @@
     <!-- Update modal -->
 
     <!-- new dept account modal -->
-    <div class="modal fade" id="newDeptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newDeptModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">            
@@ -74,8 +74,7 @@
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="select" class="form-control dep_loc" >
-                                <option>Select Location</option>
+                            <select name="select" id="" class="form-control dep_loc select2">
                             </select>
                         </div>
                     </div>
@@ -88,52 +87,6 @@
         </div>
     </div>
     <!-- new dept account modal -->
-
-    <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Deactivate User Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure you want to deactive this user account? 
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- modal -->
-    <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Accept User Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure you want to accept this user account? 
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_accept_confirm">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal -->
 
     <div id="right-panel" class="right-panel">
 
@@ -179,6 +132,7 @@
                                             <th>#</th>
                                             <th>Department Name</th>
                                             <th>Description</th>
+                                            <th>Location</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -294,19 +248,25 @@
         };
 
         var __select = function(){
-            // $('.table_head').DataTable().destroy();
             $('.dep_loc').empty();
             $('.dep_loc_update').empty();
 
             __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
+                    $('.dep_loc').append("<option selected disabled> - - Select Location - - </option>");
+                    $('.dep_loc_update').append("<option selected disabled> - - Select Location - - </option>");
                     result.forEach(function(data){
                         console.log(data)
                         $('.dep_loc').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                         $('.dep_loc_update').append(
                             "<option value="+data.id+">"+data.name+"</option>");
+
+                        // $(".dep_loc").append($('<option>', {
+                        //     value: data.id,
+                        //     text: data.name,
+                        // }));
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -363,6 +323,7 @@
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.name+"</td>"+  
                             "<td>"+data.description+"</td>"+
+                            "<td>"+data.locationId+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
                     });
                 } else {

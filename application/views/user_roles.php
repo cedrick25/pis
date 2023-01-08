@@ -285,8 +285,8 @@
             var payload = {
                 "name"             : $(".user_role_name").val(),
                 "description"      : $(".user_role_desc").val(),
-                "parentId"         : "2",
-                "departmentId"     : "2"
+                "parentId"         : "0",
+                "departmentId"     : "0"
              }
              console.log(payload);
 
@@ -350,8 +350,8 @@
                                 var payload = {
                                     "name"             : $(".user_role_name_update").val(),
                                     "description"      : $(".user_role_desc_update").val(),
-                                    "parentId"         : "2",
-                                    "departmentId"     : "2"
+                                    "parentId"         : "0",
+                                    "departmentId"     : "0"
                                 }
                                 console.log(payload);
                                 __executeExternalPost('http://localhost:8088/role/update/'+data_id,JSON.stringify(payload)).done(function (result) {

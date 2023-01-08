@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
     
-    <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.css">
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.css"> -->
     <link rel="stylesheet" href="assets/css/select2.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 

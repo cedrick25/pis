@@ -22,13 +22,18 @@
     <script src="assets/js/init-scripts/data-table/datatables-init.js"></script>
 
     <script src="assets/js/moment.min.js"></script>
-    <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- <script src="assets/js/bootstrap-datetimepicker.min.js"></script> -->
     <script src="assets/js/select2.min.js"></script>
     <script src="assets/js/jquery.cookie.js"></script>
     <script src="assets/js/main.js"></script>
 
     <script type="text/javascript">
     ( function ( $ ) {
+        $(document).ready(function() {
+            $('.select2').select2({
+                dropdownParent: $('.modal')
+            });
+        });
         var ___ctx = '';
 
         var __setContext = function(newctx) {
@@ -123,39 +128,30 @@
             // console.log(result);
             if (result.status == "SUCCESS") {
                 $(".f_name").html(result.payload.username)
-                switch (result.payload.user_type_id) {
-                case "1":
-                    $(".jj").attr("hidden",true);   
-                    break;
-                case "2":
-                    $(".bb").attr("hidden",true);   
-                    $(".cc").attr("hidden",true);   
-                    $(".dd").attr("hidden",true);   
-                    $(".ee").attr("hidden",true);   
-                    $(".ff").attr("hidden",true);   
-                    $(".gg").attr("hidden",true);   
-                    $(".hh").attr("hidden",true);   
-                    $(".ii").attr("hidden",true);   
-                    break;
-                default:  
-                    break;
-                };
+                // switch (result.payload.user_type_id) {
+                // case "1":
+                //     $(".jj").attr("hidden",true);   
+                //     break;
+                // case "2":
+                //     $(".bb").attr("hidden",true);   
+                //     $(".cc").attr("hidden",true);   
+                //     $(".dd").attr("hidden",true);   
+                //     $(".ee").attr("hidden",true);   
+                //     $(".ff").attr("hidden",true);   
+                //     $(".gg").attr("hidden",true);   
+                //     $(".hh").attr("hidden",true);   
+                //     $(".ii").attr("hidden",true);   
+                //     break;
+                // default:  
+                //     break;
+                // };
             }
         })
         $(".btn_logout").unbind("click").on("click", function(){
             console.log('clicked')
-            var payload_audit = {
-               METHOD : "insert",
-               resident_id      :  $.cookie("resident_id"),
-               action_performed : "Logout",
-               action_details   : "Logout module"
-            }
-            __executeExternalPost('/bms_api/bms/audit_trail',JSON.stringify(payload_audit)).done(function (result) {
-
-                setTimeout(function () {
-                    window.location.href="./"
-                },1000);
-            })
+            setTimeout(function () {
+                window.location.href="./"
+            },1000);
         })
 
     } )( jQuery );

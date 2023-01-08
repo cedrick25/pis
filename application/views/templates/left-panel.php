@@ -37,16 +37,16 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="user_accounts">User Accounts</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="user_roles">User Type</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="department">Department</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="location">Location</a></li>
+                        <li><i class="menu-icon fa fa-building-o"></i><a href="department">Department</a></li>
+                        <li><i class="menu-icon fa fa-location-arrow"></i><a href="location">Location</a></li>
                     </ul>
                 </li>
                <!--  <li class="ii">
                     <a href="audit_trail"><i class="menu-icon fa fa-history"></i>Audit Trail</a>
                 </li> -->
-                <li class="jj">
+                <!-- <li class="jj">
                     <a href="request_user"><i class="menu-icon fa fa-file"></i>Request</a>
-                </li>
+                </li> -->
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
