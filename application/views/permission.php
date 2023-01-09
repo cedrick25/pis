@@ -30,7 +30,7 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update"></div>
                     </div>
-<!--                     <div class="row form-group col-md-12">
+<!--                    <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control dep_loc_update" >
@@ -71,7 +71,7 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g CMRD Admin" class="form-control permission_desc"></div>
                     </div>
-<!--                     <div class="row form-group col-md-12">
+    <!--                <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control dep_loc select2">

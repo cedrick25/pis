@@ -155,6 +155,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
+
     <script type="text/javascript">
     ( function ( $ ) {
 
@@ -167,6 +168,7 @@
         var __getContext = function() {
             return ___ctx;
         };
+
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -247,6 +249,9 @@
             return d.promise();
         };
 
+                    
+
+
         var __select = function(){
             $('.dep_loc').empty();
             $('.dep_loc_update').empty();
@@ -274,7 +279,7 @@
             })
         }
         __select();
-
+           
 
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
@@ -388,6 +393,7 @@
         __table();
 
     } )( jQuery );
+
     </script>
 
 </body>
