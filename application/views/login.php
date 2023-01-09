@@ -149,10 +149,8 @@
                     <div style="margin-bottom: 30px; text-align: center;">
                         <img class="align-content" src="images/pis_logo.png" alt="" style="max-width: 32%;">
                     </div>
-                    
-                    <div class="alert alert-success" role="alert" id="login_success" style="display:none">
-                    <i class="fa fa-check"></i>
-                        Login Successfully  
+                    <div id="prompt">
+                        
                     </div>
                     <hr>
                     <div class="form-group">
@@ -303,27 +301,31 @@
                         console.log('authenticated = true')
                         if (result.isLocked != true) {
                             console.log("not lock")
-                                $('#login_success').show();
+                                $('#prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i> Login Successfully </div>');  
                             // var user_type_id = result.payload.user_type_id
                             // var resident_id = result.payload.resident_id
                             // $.cookie("user_type_id", user_type_id);
                             // $.cookie("resident_id", resident_id);
 
                             setTimeout(function () {
-                                $('#login_success').hide();
                                 window.location.href="dashboard"
                             },1000);
                         } else {
-                            console.log("this account is locked")
+                            $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
+                            // console.log("this account is locked")
                         }
                     } else {
-                        console.log('no data found,inactive or removed')
+                        // console.log('no data found,inactive or removed')
+                            $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> No data found,inactive or removed! </div>')
                         if (result.failedAttemptsCount == 4) {
-                            console.log("attempt 4, last failed attempt your account will be locked")
+                            $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle""></i> Attempt 4, last failed attempt your account will be locked! </div>')
+                            // console.log("attempt 4, last failed attempt your account will be locked")
                         }else if(result.failedAttemptsCount >= 5){
-                            console.log("your account is locked now")
+                            $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle""></i> Your account is locked now! </div>')
+                            // console.log("your account is locked now")
                         }else if(result.failedAttemptsCount != null){
-                            console.log("Your failed attempt is " +result.failedAttemptsCount)
+                            $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i>'+' Your failed attempt is ' + result.failedAttemptsCount + '</div>')
+                            // console.log("Your failed attempt is " +result.failedAttemptsCount)
                         }
                     }
 
