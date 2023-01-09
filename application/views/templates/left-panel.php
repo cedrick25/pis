@@ -39,7 +39,7 @@
                         <li><i class="menu-icon fa fa-user"></i><a href="user_roles">User Type</a></li>
                         <li><i class="menu-icon fa fa-building-o"></i><a href="department">Department</a></li>
                         <li><i class="menu-icon fa fa-location-arrow"></i><a href="location">Location</a></li>
-                        <li><i class="menu-icon fa fa-location-arrow"></i><a href="permission">Permission</a></li>
+                        <li><i class="menu-icon fa fa-lock"></i><a href="permission">Permission</a></li>
                     </ul>
                 </li>
                <!--  <li class="ii">

@@ -147,11 +147,12 @@
                 </div>
                 <div class="login-form">
                     <div style="margin-bottom: 30px; text-align: center;">
-                        <div class="alert alert-success" role="alert" id="login_success" style="display:none">
-                        <i class="fa fa-check"></i>
-                            Login Successfully  
-                </div>
-                        <!-- <img class="align-content" src="images/logo.png" alt="" style="max-width: 32%;"> -->
+                        <img class="align-content" src="images/pis_logo.png" alt="" style="max-width: 32%;">
+                    </div>
+                    
+                    <div class="alert alert-success" role="alert" id="login_success" style="">
+                    <i class="fa fa-check"></i>
+                        Login Successfully  
                     </div>
                     <hr>
                     <div class="form-group">
