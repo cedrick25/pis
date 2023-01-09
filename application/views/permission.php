@@ -14,30 +14,30 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Update Departments</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">Update Permission</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_update" style="display:none">
+                <div class="alert alert-success" role="alert" id="permission_update" style="display:none">
                     <i class="fa fa-check"></i>
                         Successfully Updated  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update"></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control permission_name_update"></div>
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update"></div>
                     </div>
-                    <div class="row form-group col-md-12">
+<!--                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control dep_loc_update" >
-                                <!-- <option>Select Location</option> -->
+                                <option>Select Location</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                 </div>                            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -53,31 +53,31 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">            
-                    <h5 class="modal-title" id="mediumModalLabel">New Department</h5>      
+                    <h5 class="modal-title" id="mediumModalLabel">New Permission</h5>      
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                <div class="alert alert-success" role="alert" id="permission_success" style="display:none">
                     <i class="fa fa-check"></i>
                         Successfully created  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name"></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Admin" class="form-control permission_name"></div>
                     </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD Department" class="form-control dep_desc"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g CMRD Admin" class="form-control permission_desc"></div>
                     </div>
-                    <div class="row form-group col-md-12">
+<!--                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control dep_loc select2">
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                 </div>                            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -98,7 +98,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Departments</h1>
+                        <h1>Permissions</h1>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="dashboard">My Organization</a></li>
-                            <li class="active">Departments</li>
+                            <li class="active">Permission</li>
                         </ol>
                     </div>
                 </div>
@@ -122,17 +122,16 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Department List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newDeptModal"><i class="fa fa-plus-circle"></i> Add Department</button>
+                                <strong class="card-title">Permission List</strong>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newDeptModal"><i class="fa fa-plus-circle"></i> Add Permission </button>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Department Name</th>
+                                            <th>Permission Name</th>
                                             <th>Description</th>
-                                            <th>Location</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -285,21 +284,20 @@
             // console.log($(".dep_desc").val())
             // console.log($(".dep_loc").val())
             var payload = {
-                "createdBy"     : "1",
-                "name"          : $(".dep_name").val(),
-                "description"   : $(".dep_desc").val(),
-                "parentId"      : "0",
-                "locationId"    : $(".dep_loc").val()
+                  "name"       : $(".permission_name").val(),
+                  "type"       : "1",
+                  "detail"     : $(".permission_desc").val(),
+                  "parentId"   : "0"
             }
-            // console.log(payload)
-            __executeExternalPost('http://localhost:8088/department/create',JSON.stringify(payload)).done(function (result) {
+            console.log(payload)
+            __executeExternalPost('http://localhost:8088/permission/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
-                    $('#success').show();
+                    $('#permission_success').show();
                         setTimeout(function () {
                             $('#newDeptModal').modal('hide');
-                            $('success').hide();
+                            $('#permission_success').hide();
                             __table();
                             __select();
                         }, 1000);
@@ -314,7 +312,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('http://localhost:8088/permission/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     result.forEach(function(data){
@@ -322,8 +320,7 @@
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.name+"</td>"+  
-                            "<td>"+data.description+"</td>"+
-                            "<td value="+data.id+">"+data.locationId+"</td>"+
+                            "<td>"+data.detail+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
                     });
                 } else {
@@ -344,31 +341,29 @@
                     console.log("clicked button update")
                     var data_id = $(this).data("id");
                     console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
+                    __executeExternalGet('http://localhost:8088/permission/'+data_id).done(function (result) {
                         console.log(result);
                         if (result.status != "ERROR") {
-                            $(".dep_name_update").val(result.name);
-                            $(".dep_desc_update").val(result.description);
-                            $(".dep_loc_update").val(result.locationId);
+                            $(".permission_name_update").val(result.name);
+                            $(".permission_desc_update").val(result.detail);
+                            // $(".dep_loc_update").val(result.locationId);
 
                             $(".btn_confirm_update").unbind("click").on("click", function(){
                                 console.log('clicked btn update confirm')
                                 var payload = {
-                                    "updatedBy"     : "1",
-                                    "name"          : $(".dep_name_update").val(),
-                                    "description"   : $(".dep_desc_update").val(),
+                                    "name"          : $(".permission_name_update").val(),
+                                    "detail"        : $(".permission_desc_update").val(),
                                     "parentId"      : "0",
-                                    "locationId"    : $(".dep_loc_update").val()
                                 }
-                                // console.log(payload);
-                                __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                console.log(payload);
+                                __executeExternalPost('http://localhost:8088/permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');
-                                        $('#success_update').show();
+                                        $('#permission_update').show();
                                             setTimeout(function () {
                                                 $('#updateDeptModal').modal('hide');
-                                                $('#success_update').hide();
+                                                $('#permission_update').hide();
                                                 __table();
                                                 __select();
                                             }, 1000);

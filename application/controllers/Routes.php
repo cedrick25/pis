@@ -98,4 +98,8 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('location');
 	}
+	public function permission()
+	{
+		$this->load->view('permission');
+	}
 }

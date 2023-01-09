@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // AMS start
 $route['department'] = "routes/department";
 $route['location'] = "routes/location";
+$route['permission'] = "routes/permission";
 $route['user_accounts'] = "routes/user_accounts";
 $route['user_roles'] = "routes/user_roles";
 $route['dashboard'] = "routes/dashboard";

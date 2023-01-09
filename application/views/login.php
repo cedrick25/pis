@@ -147,6 +147,10 @@
                 </div>
                 <div class="login-form">
                     <div style="margin-bottom: 30px; text-align: center;">
+                        <div class="alert alert-success" role="alert" id="login_success" style="display:none">
+                        <i class="fa fa-check"></i>
+                            Login Successfully  
+                </div>
                         <!-- <img class="align-content" src="images/logo.png" alt="" style="max-width: 32%;"> -->
                     </div>
                     <hr>
@@ -298,13 +302,14 @@
                         console.log('authenticated = true')
                         if (result.isLocked != true) {
                             console.log("not lock")
-                            
+                                $('#login_success').show();
                             // var user_type_id = result.payload.user_type_id
                             // var resident_id = result.payload.resident_id
                             // $.cookie("user_type_id", user_type_id);
                             // $.cookie("resident_id", resident_id);
 
                             setTimeout(function () {
+                                $('#login_success').hide();
                                 window.location.href="dashboard"
                             },1000);
                         } else {
