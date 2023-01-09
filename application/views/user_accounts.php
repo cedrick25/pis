@@ -302,10 +302,10 @@
                                 <table id="" class="table table_head">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Full Name</th>
                                             <th>Username</th>
                                             <th>Email Address</th>
-                                            <th>Birthday</th>
                                             <th>Created By</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -497,15 +497,18 @@
                             break;
                         };
                         $('.table_body').append("<tr>"+
+                            "<td></td>"+
                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
                             "<td>"+data.username+"</td>"+
                             "<td>"+data.email+"</td>"+
-                            "<td>"+data.birthday+"</td>"+
                             "<td>"+data.createdBy+"</td>"+
                             "<td>"+status+"</td>"+
                             "<td align='center' class='actions'> "+actions+"")
                     });
                     $(document).ready(function () {
+                        $('.table_head tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                       });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
