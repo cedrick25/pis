@@ -508,7 +508,7 @@
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
                            $(this).children("td:eq(0)").html(idx + 1);
-                       });
+                        });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
