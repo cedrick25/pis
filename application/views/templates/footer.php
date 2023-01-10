@@ -154,8 +154,8 @@
                 window.location.href="./"
             },1000);
         })
-
-        $('.form-control').keyup(function(event) {
+                
+        $('.form_capitalized').keyup(function(event) {
             var textBox = event.target;
             var start = textBox.selectionStart;
             var end = textBox.selectionEnd;
