@@ -33,7 +33,7 @@
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control dep_loc_update select2" >
+                            <select name="select" class="form-control dep_loc_update" >
                                 <!-- <option>Select Location</option> -->
                             </select>
                         </div>
@@ -74,7 +74,7 @@
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control dep_loc select2">
+                            <select name="select" class="form-control dep_loc select2">
                             </select>
                         </div>
                     </div>
@@ -270,7 +270,7 @@
 
                         // $(".dep_loc").append($('<option>', {
                         //     value: data.id,
-                        //     text: data.name,
+                        //     textkey: "value",  data.name,
                         // }));
                     });
                 } else {
