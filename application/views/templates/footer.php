@@ -162,9 +162,6 @@
             textBox.value = textBox.value.charAt(0).toUpperCase() + textBox.value.slice(1);
             textBox.setSelectionRange(start, end);                  
         });
-        $('.password2').keyup(function(event) {
-                
-        });
         
 
     } )( jQuery );

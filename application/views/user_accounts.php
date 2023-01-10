@@ -26,19 +26,19 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John" class="form-control firstName_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John" class="form-control firstName_update form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="A."class="form-control middleName_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="A."class="form-control middleName_update form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Doe"class="form-control lastName_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Doe"class="form-control lastName_update form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Jr."class="form-control suffix_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Jr."class="form-control suffix_update form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Username</label></div>
@@ -87,19 +87,19 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A."class="form-control middleName"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A."class="form-control middleName form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe"class="form-control lastName"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe"class="form-control lastName form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr."class="form-control suffix"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr."class="form-control suffix form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Username</label></div>
@@ -340,17 +340,22 @@
             return ___ctx;
         };
 
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+        var __executeExternalPost = function(path, jsonObj, customLoader) {
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
                 $("#"+customLoader).removeClass("hide");
             }
             $.ajax({
-                method: "GET",
+                method: "POST",
                 url: path,
                 dataType: "json",
+                headers: {
+                    // 'Content-Type': 'multipart/form-data;'
+                    'Content-Type':'application/json'
+                },
+                data: jsonObj
             }).done(function (data, textStatus, jqXHR) {
                 if(customLoader != ""){
                     $("#"+customLoader).hide();
@@ -377,22 +382,17 @@
             
             return d.promise();
         };
-        var __executeExternalPost = function(path, jsonObj, customLoader) {
-            path = __getContext() + path;
+        var __executeExternalGet = function(path, customLoader) {
+            // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
                 $("#"+customLoader).removeClass("hide");
             }
             $.ajax({
-                method: "POST",
+                method: "GET",
                 url: path,
                 dataType: "json",
-                headers: {
-                    // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
-                },
-                data: jsonObj
             }).done(function (data, textStatus, jqXHR) {
                 if(customLoader != ""){
                     $("#"+customLoader).hide();
@@ -438,21 +438,21 @@
                         "password"      : $(".password").val()
                     }
                 console.log(payload);
-                // __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
-                //     console.log(result);
-                //     if (result.status != "ERROR") {
-                //     $(".form-control").val('');
-                //     $('#success').show();
-                //         setTimeout(function () {
-                //             $('#newUserModal').modal('hide');
-                //             $('#success').hide();
-                //             __table();
-                //         }, 1000);
-                //     }else{
-                //     //     console.log(result.status);
-                //     //     alert(result.message)
-                //     }
-                // })
+                __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
+                    console.log(result);
+                    if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                        setTimeout(function () {
+                            $('#newUserModal').modal('hide');
+                            $('#success').hide();
+                            __table();
+                        }, 1000);
+                    }else{
+                    //     console.log(result.status);
+                    //     alert(result.message)
+                    }
+                })
             })
 
             var __table = function(){

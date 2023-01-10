@@ -156,7 +156,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                            <input type="text" class="form-control username form_capitalized" placeholder="Username">
+                            <input type="text" class="form-control username" placeholder="Username">
                         </div>
                     </div>
                     <div class="form-group">
@@ -294,6 +294,7 @@
                    username : username,
                    password : password
             }
+            console.log(payload);
             __executeExternalPost('http://localhost:8088/authenticate',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
