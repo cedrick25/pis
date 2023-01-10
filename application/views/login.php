@@ -156,7 +156,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                            <input type="text" class="form-control username" placeholder="Username">
+                            <input type="text" class="form-control username form_capitalized" placeholder="Username">
                         </div>
                     </div>
                     <div class="form-group">
