@@ -119,7 +119,7 @@
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control password"></div>
+                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control password password2"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -437,21 +437,22 @@
                         "birthday"      : $(".birthday").val(),
                         "password"      : $(".password").val()
                     }
-                __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
-                    console.log(result);
-                    if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                        setTimeout(function () {
-                            $('#newUserModal').modal('hide');
-                            $('#success').hide();
-                            __table();
-                        }, 1000);
-                    }else{
-                    //     console.log(result.status);
-                    //     alert(result.message)
-                    }
-                })
+                console.log(payload);
+                // __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
+                //     console.log(result);
+                //     if (result.status != "ERROR") {
+                //     $(".form-control").val('');
+                //     $('#success').show();
+                //         setTimeout(function () {
+                //             $('#newUserModal').modal('hide');
+                //             $('#success').hide();
+                //             __table();
+                //         }, 1000);
+                //     }else{
+                //     //     console.log(result.status);
+                //     //     alert(result.message)
+                //     }
+                // })
             })
 
             var __table = function(){
