@@ -307,9 +307,9 @@
                             // $.cookie("user_type_id", user_type_id);
                             // $.cookie("resident_id", resident_id);
 
-                            // setTimeout(function () {
-                            //     window.location.href="dashboard"
-                            // },1000);
+                            setTimeout(function () {
+                                window.location.href="dashboard"
+                            },1000);
                         } else {
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                             // console.log("this account is locked")
