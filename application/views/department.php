@@ -26,14 +26,14 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update form_capitalized"></div>
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control dep_loc_update" >
+                            <select name="select" class="form-control dep_loc_update select2" >
                                 <!-- <option>Select Location</option> -->
                             </select>
                         </div>
@@ -65,7 +65,7 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
@@ -74,7 +74,7 @@
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control dep_loc select2">
+                            <select name="select" class="form-control dep_loc select2">
                             </select>
                         </div>
                     </div>
@@ -270,7 +270,7 @@
 
                         // $(".dep_loc").append($('<option>', {
                         //     value: data.id,
-                        //     text: data.name,
+                        //     textkey: "value",  data.name,
                         // }));
                     });
                 } else {
@@ -354,7 +354,8 @@
                         if (result.status != "ERROR") {
                             $(".dep_name_update").val(result.name);
                             $(".dep_desc_update").val(result.description);
-                            $(".dep_loc_update").val(result.locationId);
+                            $(".dep_loc_update").val(result.locationName);
+
 
                             $(".btn_confirm_update").unbind("click").on("click", function(){
                                 console.log('clicked btn update confirm')

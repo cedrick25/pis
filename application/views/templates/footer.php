@@ -163,10 +163,6 @@
             textBox.setSelectionRange(start, end);                  
         });
         
-        // $('.dropdown hh').on('click', function() {
-        // $('.dropdown hh').removeClass('active');
-        // $(this).addClass('active');
-        // });
 
     } )( jQuery );
     </script>

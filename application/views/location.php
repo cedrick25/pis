@@ -26,9 +26,9 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_name_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_name_update form_capitalized"></div>
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_add_update"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_add_update form_capitalized"></div>
                     </div>
                 </div>                        
                 <div class="modal-footer">
@@ -57,11 +57,11 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central office" class="form-control new_loc"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central office" class="form-control new_loc form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Quezon City" class="form-control new_add"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Quezon City" class="form-control new_add form_capitalized"></div>
                     </div>
                 </div>         
                 <div class="modal-footer">
