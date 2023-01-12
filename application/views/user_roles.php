@@ -121,6 +121,166 @@
     </div>
     <!-- accept modal -->
 
+    <!-- grant modal -->
+    <div class="modal fade" id="grantPermissionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Grant Permission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Granted!  
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="" class=" form-control-label">Permissions: </label></div>
+                        <div class="col col-md-3"><label for="api" class=" form-control-label">API</label></div>
+                        <div class="col col-md-3"><label for="view" class=" form-control-label">VIEW</label></div>
+                        <div class="col col-md-3"><label for="action" class=" form-control-label">ACTION</label></div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:block">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Dashboard:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 5:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 21:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- grant modal -->
+
+
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -166,6 +326,7 @@
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>Actions</th>
+                                            <th>Permission</th> 
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
@@ -319,7 +480,8 @@
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.name+"</td>"+  
                             "<td>"+data.description+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateRoleModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateRoleModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>"+
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-success btn_update' type='submit' data-toggle='modal' data-target='#grantPermissionModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Grant</button>");
                     });
                 } else {
                     console.log("failed fetching department list")
