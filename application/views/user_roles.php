@@ -65,8 +65,8 @@
                     </div>
                 </div>                            
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>

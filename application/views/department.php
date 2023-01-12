@@ -33,7 +33,7 @@
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" class="form-control dep_loc_update" >
+                            <select name="select" class="form-control dep_loc_update select2" >
                                 <!-- <option>Select Location</option> -->
                             </select>
                         </div>
@@ -354,7 +354,8 @@
                         if (result.status != "ERROR") {
                             $(".dep_name_update").val(result.name);
                             $(".dep_desc_update").val(result.description);
-                            $(".dep_loc_update").val(result.locationId);
+                            $(".dep_loc_update").val(result.locationName);
+
 
                             $(".btn_confirm_update").unbind("click").on("click", function(){
                                 console.log('clicked btn update confirm')

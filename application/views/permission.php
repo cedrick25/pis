@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="updateDeptModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updatePermissionModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -30,15 +30,8 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update form_capitalized"></div>
                     </div>
-<!--                    <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
-                        <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control dep_loc_update" >
-                                <option>Select Location</option>
-                            </select>
-                        </div>
-                    </div> -->
-                </div>                            
+                </div>  
+            </div>                            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn_confirm_update btn-sm">Confirm</button>
@@ -48,19 +41,19 @@
     </div>
     <!-- Update modal -->
 
-    <!-- new dept account modal -->
-    <div class="modal fade" id="newDeptModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <!-- new permission modal -->
+    <div class="modal fade" id="newPermissionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
-                <div class="modal-header">            
-                    <h5 class="modal-title" id="mediumModalLabel">New Permission</h5>      
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">New Permission</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="permission_success" style="display:none">
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
                     <i class="fa fa-check"></i>
-                        Successfully created  
+                        Successfully Updated  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
@@ -71,14 +64,7 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g CMRD Admin" class="form-control permission_desc form_capitalized"></div>
                     </div>
-    <!--                <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
-                        <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control dep_loc select2">
-                            </select>
-                        </div>
-                    </div> -->
-                </div>                            
+                </div>         
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
@@ -86,7 +72,120 @@
             </div>
         </div>
     </div>
-    <!-- new dept account modal -->
+    <!-- new permission modal -->
+
+
+    <!-- new grant permission modal -->
+    <div class="modal fade" id="grantPermissionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Grant Permission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Granted!  
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="" class=" form-control-label">Permissions: </label></div>
+                        <div class="col col-md-3"><label for="api" class=" form-control-label">API</label></div>
+                        <div class="col col-md-3"><label for="view" class=" form-control-label">VIEW</label></div>
+                        <div class="col col-md-3"><label for="action" class=" form-control-label">ACTION</label></div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Dashboard:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="api" value="option1">
+                                </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="api" value="option1">
+                                </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 5:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="api" value="option1">
+                                </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 21:</label></div>
+                        <div class="col col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="api" value="option1">
+                                </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- new grant permission modal -->
+
 
     <div id="right-panel" class="right-panel">
 
@@ -123,7 +222,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Permission List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newDeptModal"><i class="fa fa-plus-circle"></i> Add Permission </button>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newPermissionModal"><i class="fa fa-plus-circle"></i> Add Permission </button>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
@@ -133,6 +232,7 @@
                                             <th>Permission Name</th>
                                             <th>Description</th>
                                             <th>Action</th>
+                                            <th>Permission</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
@@ -246,33 +346,33 @@
             return d.promise();
         };
 
-        var __select = function(){
-            $('.dep_loc').empty();
-            $('.dep_loc_update').empty();
+        // var __select = function(){
+        //     $('.permission_desc').empty();
+        //     $('.permission_desc_update').empty();
 
-            __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
-                // console.log(result)
-                if (result.status != "ERROR") {
-                    $('.dep_loc').append("<option selected disabled> - - Select Location - - </option>");
-                    $('.dep_loc_update').append("<option selected disabled> - - Select Location - - </option>");
-                    result.forEach(function(data){
-                        console.log(data)
-                        $('.dep_loc').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.dep_loc_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
+        //     __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
+        //         // console.log(result)
+        //         if (result.status != "ERROR") {
+        //             $('.dep_loc').append("<option selected disabled> - - Select Location - - </option>");
+        //             $('.dep_loc_update').append("<option selected disabled> - - Select Location - - </option>");
+        //             result.forEach(function(data){
+        //                 console.log(data)
+        //                 $('.dep_loc').append(
+        //                     "<option value="+data.id+">"+data.name+"</option>");
+        //                 $('.dep_loc_update').append(
+        //                     "<option value="+data.id+">"+data.name+"</option>");
 
-                        // $(".dep_loc").append($('<option>', {
-                        //     value: data.id,
-                        //     text: data.name,
-                        // }));
-                    });
-                } else {
-                    console.log("failed fetching department list")
-                }
-            })
-        }
-        __select();
+        //                 // $(".dep_loc").append($('<option>', {
+        //                 //     value: data.id,
+        //                 //     text: data.name,
+        //                 // }));
+        //             });
+        //         } else {
+        //             console.log("failed fetching department list")
+        //         }
+        //     })
+        // }
+        // __select();
 
 
         $(".btn-confirm").unbind("click").on("click", function(){
@@ -296,7 +396,7 @@
                     $(".form-control").val('');
                     $('#permission_success').show();
                         setTimeout(function () {
-                            $('#newDeptModal').modal('hide');
+                            $('#newPermissionModal').modal('hide');
                             $('#permission_success').hide();
                             __table();
                             __select();
@@ -321,7 +421,8 @@
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.name+"</td>"+  
                             "<td>"+data.detail+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updatePermissionModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>"+
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-success btn_grant' type='submit' data-toggle='modal' data-target='#grantPermissionModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Grant</button>");
                     });
                 } else {
                     console.log("failed fetching department list")
