@@ -145,14 +145,13 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <form class="form-inline" style="display:block">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Dashboard:</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label" style="display:block">Dashboard:</label></div>
                         <div class="col col-md-3">
                             <div class="form-check form-check-inline">
                                 <label class="switch ">
                                     <input type="checkbox" class="form-check-input primary" id="api" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
@@ -161,7 +160,6 @@
                                     <input type="checkbox" class="form-check-input primary" id="value" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
@@ -170,21 +168,24 @@
                                     <input type="checkbox" class="form-check-input primary" id="action" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-body col-md-12">
                     <form class="form-inline" style="display:flex">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload:</label></div>
+                        <div class="col col-md-3"><label for="" class=" form-control-label" style="display:block" >Caseload:</label></div>
+                    </form>
+                </div>
+                <div class="modal-body col-md-12">
+                    <form class="form-inline" style="display:flex">
+                         <div class="col col-md-3"><label for="text-input" class="float-right form-control-label">Form 5:</label></div>
                         <div class="col col-md-3">
                             <div class="form-check form-check-inline">
                                 <label class="switch ">
                                     <input type="checkbox" class="form-check-input primary" id="api" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
@@ -193,7 +194,6 @@
                                     <input type="checkbox" class="form-check-input primary" id="value" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
@@ -202,21 +202,19 @@
                                     <input type="checkbox" class="form-check-input primary" id="action" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-body col-md-12">
                     <form class="form-inline" style="display:flex">
-                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 5:</label></div>
+                        <div class="col col-md-3"><label for="text-input" class="float-right form-control-label">Form 21:</label></div>
                         <div class="col col-md-3">
                             <div class="form-check form-check-inline">
                                 <label class="switch ">
                                     <input type="checkbox" class="form-check-input primary" id="api" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
@@ -225,7 +223,6 @@
                                     <input type="checkbox" class="form-check-input primary" id="value" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
@@ -234,46 +231,13 @@
                                     <input type="checkbox" class="form-check-input primary" id="action" value="option1">
                                     <span class="slider round"></span>
                                 </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-body col-md-12">
-                    <form class="form-inline" style="display:flex">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 21:</label></div>
-                        <div class="col col-md-3">
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-primary btn_grant_confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -481,7 +445,7 @@
                             "<td>"+data.name+"</td>"+  
                             "<td>"+data.description+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateRoleModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-success btn_update' type='submit' data-toggle='modal' data-target='#grantPermissionModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Grant</button>");
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-success btn_grant' type='submit' data-toggle='modal' data-target='#grantPermissionModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Grant</button>");
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -537,6 +501,14 @@
                         }else{
                             alert("failed")
                         }
+                    })
+                })
+                $(".btn_grant").unbind("click").on("click", function(){
+                    console.log("clicked button grant")
+                    var data_id = $(this).data("id");
+                    console.log(data_id)
+                    $(".btn_grant_confirm").unbind("click").on("click", function(){
+                    console.log('clicked btn grant confirm')
                     })
                 })
             })
