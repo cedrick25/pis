@@ -49,7 +49,7 @@
     <!-- Update modal -->
 
     <!-- new dept account modal -->
-    <div class="modal fade" id="newDeptModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newPermission" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">            
@@ -64,21 +64,32 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Admin" class="form-control permission_name"></div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g CMRD Admin" class="form-control permission_desc"></div>
-                    </div>
-    <!--                <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Select Parent</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control dep_loc select2">
+                            <select name="select" id="" class="form-control permission_add select2">
                             </select>
                         </div>
-                    </div> -->
-                </div>                            
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g User Accounts" class="form-control permission_name"></div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">API</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="select" id="" class="form-control type_add select2">
+                                <option value="0" selected disabled> - - Select Type - - </option>
+                                <option value="API">API</option>
+                                <option value="VIEW">VIEW</option>
+                                <option value="ACTION">ACTION</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Detail</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g api - user_accounts/list, page - /user_account, action - add" class="form-control permission_desc"></div>
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
@@ -123,7 +134,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Permission List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newDeptModal"><i class="fa fa-plus-circle"></i> Add Permission </button>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newPermission"><i class="fa fa-plus-circle"></i> Add Permission </button>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
@@ -131,7 +142,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Permission Name</th>
-                                            <th>Description</th>
+                                            <th>Type</th>
+                                            <th>Detail</th>
+                                            <th>Parent</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -247,25 +260,17 @@
         };
 
         var __select = function(){
-            $('.dep_loc').empty();
-            $('.dep_loc_update').empty();
+            $('.permission_add').empty();
 
-            __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
+            __executeExternalGet('http://localhost:8088/permission/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
-                    $('.dep_loc').append("<option selected disabled> - - Select Location - - </option>");
-                    $('.dep_loc_update').append("<option selected disabled> - - Select Location - - </option>");
+                    $('.permission_add').append("<option selected value='0'> - - None - - </option>");
                     result.forEach(function(data){
                         console.log(data)
-                        $('.dep_loc').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.dep_loc_update').append(
+                        $('.permission_add').append(
                             "<option value="+data.id+">"+data.name+"</option>");
 
-                        // $(".dep_loc").append($('<option>', {
-                        //     value: data.id,
-                        //     text: data.name,
-                        // }));
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -277,17 +282,11 @@
 
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
-            // $(".dep_loc").val();
-            // $(".dep_name").val();
-            // $(".dep_desc").val();
-            // console.log($(".dep_name").val())
-            // console.log($(".dep_desc").val())
-            // console.log($(".dep_loc").val())
             var payload = {
                   "name"       : $(".permission_name").val(),
-                  "type"       : "1",
+                  "type"       : $(".type_add").val(),
                   "detail"     : $(".permission_desc").val(),
-                  "parentId"   : "0"
+                  "parentId"   : $(".permission_add").val()
             }
             console.log(payload)
             __executeExternalPost('http://localhost:8088/permission/create',JSON.stringify(payload)).done(function (result) {
@@ -295,15 +294,14 @@
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#permission_success').show();
-                        setTimeout(function () {
-                            $('#newDeptModal').modal('hide');
-                            $('#permission_success').hide();
-                            __table();
-                            __select();
-                        }, 1000);
-
+                    setTimeout(function () {
+                        $('#newPermission').modal('hide');
+                        $('#permission_success').hide();
+                        __table();
+                        __select();
+                    }, 1000);
                 }else{
-                    console.log("failed adding new department")
+                    console.log("failed adding new permission")
                 }
             })
         })
@@ -319,8 +317,10 @@
                         console.log(data)
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
-                            "<td>"+data.name+"</td>"+  
+                            "<td>"+data.name+"</td>"+
+                            "<td>"+data.type+"</td>"+
                             "<td>"+data.detail+"</td>"+
+                            "<td>"+data.parentId+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
                     });
                 } else {

@@ -15,7 +15,10 @@
             <ul class="nav navbar-nav">
                 <li class="aa">
                     <a href="dashboard"> <i class="menu-icon fa fa-dashboard" aria-hidden="true"></i>Dashboard </a>
-                </li class="bb">
+                </li>
+                <li class="docketing">
+                    <a href="docketing"> <i class="menu-icon fa fa-user" aria-hidden="true"></i>Docketing </a>
+                </li>
                 <h3 class="menu-title">Management</h3>
                 <!-- <li class="cc">
                     <a href="announcement"><i class="menu-icon fa fa-bullhorn" aria-hidden="true"></i>Announcement</a>

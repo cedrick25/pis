@@ -102,4 +102,8 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('permission');
 	}
+	public function docketing()
+	{
+		$this->load->view('docketing');
+	}
 }
