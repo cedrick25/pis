@@ -41,13 +41,13 @@
     </div>
     <!-- Update modal -->
 
-<<<<<<< HEAD
+
     <!-- new permission modal -->
     <div class="modal fade" id="newPermissionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-=======
+
     <!-- new dept account modal -->
     <div class="modal fade" id="newPermission" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
->>>>>>> 05c0a48d9270191def0f1583e56581bbc00b4e6c
+
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -62,7 +62,7 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-<<<<<<< HEAD
+
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Admin" class="form-control permission_name form_capitalized"></div>
                     </div>
@@ -71,7 +71,7 @@
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g CMRD Admin" class="form-control permission_desc form_capitalized"></div>
                     </div>
                 </div>         
-=======
+
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Select Parent</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control permission_add select2">
@@ -98,7 +98,7 @@
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g api - user_accounts/list, page - /user_account, action - add" class="form-control permission_desc"></div>
                     </div>
                 </div>
->>>>>>> 05c0a48d9270191def0f1583e56581bbc00b4e6c
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
@@ -132,21 +132,33 @@
                     </form>
                 </div>
                 <div class="modal-body col-md-12">
-                    <form class="form-inline" style="display:flex">
+                    <form class="form-inline" style="display:block">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Dashboard:</label></div>
                         <div class="col col-md-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="api" value="option1">
-                                </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
                             </div>
                         </div>
                     </form>
@@ -156,37 +168,61 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload:</label></div>
                         <div class="col col-md-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="api" value="option1">
-                                </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-body col-md-12">
                     <form class="form-inline" style="display:flex">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 5:</label></div>
+                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 5:</label></div>
                         <div class="col col-md-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="api" value="option1">
-                                </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
                             </div>
                         </div>
                     </form>
@@ -196,17 +232,29 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Form 21:</label></div>
                         <div class="col col-md-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="api" value="option1">
-                                </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="view" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!--<input class="form-check-input primary" type="checkbox" id="api" value="option1"> -->
                             </div>
                         </div>
                         <div class="col col-md-3">                            
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="action" value="option1">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="view" value="option1"> -->
+                            </div>
+                        </div>
+                        <div class="col col-md-3">                            
+                            <div class="form-check form-check-inline">
+                                <label class="switch ">
+                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <!-- <input class="form-check-input" type="checkbox" id="action" value="option1"> -->
                             </div>
                         </div>
                     </form>
@@ -256,11 +304,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Permission List</strong>
-<<<<<<< HEAD
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newPermissionModal"><i class="fa fa-plus-circle"></i> Add Permission </button>
-=======
                                 <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newPermission"><i class="fa fa-plus-circle"></i> Add Permission </button>
->>>>>>> 05c0a48d9270191def0f1583e56581bbc00b4e6c
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
@@ -270,7 +314,6 @@
                                             <th>Permission Name</th>
                                             <th>Type</th>
                                             <th>Detail</th>
-                                            <th>Parent</th>
                                             <th>Action</th>
                                             <th>Permission</th>
                                         </tr>
@@ -386,7 +429,6 @@
             return d.promise();
         };
 
-<<<<<<< HEAD
         // var __select = function(){
         //     $('.permission_desc').empty();
         //     $('.permission_desc_update').empty();
@@ -414,7 +456,7 @@
         //     })
         // }
         // __select();
-=======
+
         var __select = function(){
             $('.permission_add').empty();
 
@@ -434,7 +476,7 @@
             })
         }
         __select();
->>>>>>> 05c0a48d9270191def0f1583e56581bbc00b4e6c
+
 
 
         $(".btn-confirm").unbind("click").on("click", function(){
@@ -451,7 +493,7 @@
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#permission_success').show();
-<<<<<<< HEAD
+
                         setTimeout(function () {
                             $('#newPermissionModal').modal('hide');
                             $('#permission_success').hide();
@@ -459,14 +501,14 @@
                             __select();
                         }, 1000);
 
-=======
+
                     setTimeout(function () {
                         $('#newPermission').modal('hide');
                         $('#permission_success').hide();
                         __table();
                         __select();
                     }, 1000);
->>>>>>> 05c0a48d9270191def0f1583e56581bbc00b4e6c
+
                 }else{
                     console.log("failed adding new permission")
                 }
@@ -487,13 +529,9 @@
                             "<td>"+data.name+"</td>"+
                             "<td>"+data.type+"</td>"+
                             "<td>"+data.detail+"</td>"+
-<<<<<<< HEAD
+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updatePermissionModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-success btn_grant' type='submit' data-toggle='modal' data-target='#grantPermissionModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Grant</button>");
-=======
-                            "<td>"+data.parentId+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
->>>>>>> 05c0a48d9270191def0f1583e56581bbc00b4e6c
                     });
                 } else {
                     console.log("failed fetching department list")
