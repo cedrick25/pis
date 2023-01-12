@@ -2479,3 +2479,40 @@ header .form-inline {
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 38px!important;
 }
+fieldset {
+    display: block!important;
+    margin-inline-start: 2px!important;
+    margin-inline-end: 2px!important;
+    padding-block-start: 0.35em!important;
+    padding-inline-start: 0.75em!important;
+    padding-inline-end: 0.75em!important;
+    padding-block-end: 0.625em!important;
+    min-inline-size: min-content!important;
+    border-width: 2px!important;
+    border-style: groove!important;
+    border-color: rgb(192, 192, 192)!important;
+    border-image: initial!important;
+}
+legend {
+    display: block!important;
+    width: auto; 
+    max-width: 100%!important;
+    padding: 0!important;
+    margin-bottom: .5rem!important;
+    font-size: 1.5rem!important;
+    line-height: inherit!important;
+    color: inherit!important;
+    white-space: normal!important;
+}
+fieldset {
+    /* min-width: 0!important; */
+    /* padding: 0!important; */
+    /* margin: 0!important; */
+    /* border: 0!important; */
+        color: #495057!important;
+    border-color: rgb(255 255 255)!important;
+    background-clip: padding-box!important;
+    border: 1px solid #ced4da!important;
+    border-radius: .25rem!important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out!important;
+}
