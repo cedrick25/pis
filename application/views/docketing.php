@@ -10,6 +10,140 @@
     <!-- modal -->
 
     <!-- Update modal -->
+    <div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Forward Docket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Forward  
+                </div>
+                <div class="modal-body col-md-12">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Sentence" class="form-control"></div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Accounts</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control">
+                                <option value="">Test 1</option>
+                                <option value="">Test 2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>                            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update modal -->
+    <!-- Update modal -->
+    <div class="modal fade" id="updateDocketing" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Update Docket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Successfully Updated  
+                </div>
+                <div class="modal-body col-md-12">
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control military_court">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <fieldset class="row col col-md-12">
+                            <legend>List</legend>
+                            <div class="list">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
+                    </div>
+                </div>                            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Update modal -->
 
     <!-- new Docket modal -->
@@ -24,7 +158,7 @@
                 </div>
                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                     <i class="fa fa-check"></i>
-                        Successfully Updated  
+                        Successfully Added  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
@@ -169,7 +303,7 @@
                                             <td>Test Case</td>
                                             <td>Criminal case test</td>
                                             <td>inbox</td>
-                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal'><i class='fa fa-refresh'></i> Update</button>
+                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDocketing'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-toggle='modal' data-target='#forwardDocket'><i class='fa fa-forward'></i> Forwarding</button>
                                             </td>
                                         </tr>
                                     </tbody>
