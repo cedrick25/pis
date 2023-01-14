@@ -162,6 +162,16 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
+                                        <tr>
+                                            <td>1</td>
+                                            <td>PIS-00000-0001</td>
+                                            <td>01/20/2023</td>
+                                            <td>Test Case</td>
+                                            <td>Criminal case test</td>
+                                            <td>inbox</td>
+                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal'><i class='fa fa-refresh'></i> Update</button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -327,125 +337,125 @@
             })
         })
 
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
+        // var __table = function(){
+        //     $('.table_head').DataTable().destroy();
+        //     $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
+        //     __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
+        //         console.log("==========")
+        //         console.log(result)
+        //         console.log("==========")
 
-                result.content.forEach(function(data){
-                    var status;
-                    let actions;
-                    switch (data.accountStatus) {
-                    case "ACTIVE":
-                            switch (data.isLocked) {
-                            case true:
-                                status = "RESTRICTED"
-                                actions = "<button class='btn btn-sm btn-success btn_lift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data.uuid+"'><i class='fa fa-unlock'></i> Lift</button>";
-                                break;
-                            case false:
-                                status = "ACTIVE"
-                                actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button>";
-                                break;
-                            default:
-                                status = "ACTIVE"
-                                actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button>";
-                                break;
-                            };
-                        break;
-                    case "INACTIVE":
-                        status = "INACTIVE"
-                        actions = "<button class='btn btn-sm btn-success btn_activate' type='submit' data-toggle='modal' data-target='#activateModal' data-id='"+data.uuid+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data.uuid+"'><i class='fa fa-remove'></i> Remove</button>";
-                        break;
-                    case "REMOVED":
-                        status = "REMOVED"
-                        actions = "";
-                        break;
-                    default:
-                        status = "ACTIVE"
-                        actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data.uuid+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-success btn_lift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data.uuid+"'><i class='fa fa-unlock'></i> Lift</button>";
-                        break;
-                    };
-                    $('.table_body').append("<tr>"+
-                        "<td></td>"+
-                        "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
-                        "<td>"+data.username+"</td>"+
-                        "<td>"+data.email+"</td>"+
-                        "<td>"+data.createdBy+"</td>"+
-                        "<td>"+status+"</td>"+
-                        "<td align='center' class='actions'> "+actions+"")
-                });
-                $(document).ready(function () {
-                    $('.table_head tbody tr').each(function (idx) {
-                       $(this).children("td:eq(0)").html(idx + 1);
-                    });
-                    var table = $('.table_head').DataTable({
-                        order: [[0, 'asc']],
-                        "columnDefs": [
-                            { "width": "30%", "targets": 6 }
-                        ]
-                    });
-                    $('.dataTables_length').addClass('bs-select');
-                });
+        //         result.content.forEach(function(data){
+        //             var status;
+        //             let actions;
+        //             switch (data.accountStatus) {
+        //             case "ACTIVE":
+        //                     switch (data.isLocked) {
+        //                     case true:
+        //                         status = "RESTRICTED"
+        //                         actions = "<button class='btn btn-sm btn-success btn_lift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data.uuid+"'><i class='fa fa-unlock'></i> Lift</button>";
+        //                         break;
+        //                     case false:
+        //                         status = "ACTIVE"
+        //                         actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button>";
+        //                         break;
+        //                     default:
+        //                         status = "ACTIVE"
+        //                         actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button>";
+        //                         break;
+        //                     };
+        //                 break;
+        //             case "INACTIVE":
+        //                 status = "INACTIVE"
+        //                 actions = "<button class='btn btn-sm btn-success btn_activate' type='submit' data-toggle='modal' data-target='#activateModal' data-id='"+data.uuid+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data.uuid+"'><i class='fa fa-remove'></i> Remove</button>";
+        //                 break;
+        //             case "REMOVED":
+        //                 status = "REMOVED"
+        //                 actions = "";
+        //                 break;
+        //             default:
+        //                 status = "ACTIVE"
+        //                 actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data.uuid+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-success btn_lift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data.uuid+"'><i class='fa fa-unlock'></i> Lift</button>";
+        //                 break;
+        //             };
+        //             $('.table_body').append("<tr>"+
+        //                 "<td></td>"+
+        //                 "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
+        //                 "<td>"+data.username+"</td>"+
+        //                 "<td>"+data.email+"</td>"+
+        //                 "<td>"+data.createdBy+"</td>"+
+        //                 "<td>"+status+"</td>"+
+        //                 "<td align='center' class='actions'> "+actions+"")
+        //         });
+        //         $(document).ready(function () {
+        //             $('.table_head tbody tr').each(function (idx) {
+        //                $(this).children("td:eq(0)").html(idx + 1);
+        //             });
+        //             var table = $('.table_head').DataTable({
+        //                 order: [[0, 'asc']],
+        //                 "columnDefs": [
+        //                     { "width": "30%", "targets": 6 }
+        //                 ]
+        //             });
+        //             $('.dataTables_length').addClass('bs-select');
+        //         });
 
-                $(".btn_update").unbind("click").on("click", function(){
-                    var data_id = $(this).data("id");
-                    console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/user/'+data_id).done(function (result) {
-                        console.log(result);
-                        if (result.status != "ERROR") {
-                            $(".firstName_update").val(result.firstName);
-                            $(".middleName_update").val(result.middleName);
-                            $(".lastName_update").val(result.lastName);
-                            $(".suffix_update").val(result.suffix);
-                            $(".userName_update").val(result.username);
-                            $(".email_update").val(result.email);
-                            $(".num_update").val(result.phoneNumber);
-                            $(".birthday_update").val(result.birthday);
-                            $(".password_update").val(result.password);
+        //         $(".btn_update").unbind("click").on("click", function(){
+        //             var data_id = $(this).data("id");
+        //             console.log(data_id)
+        //             __executeExternalGet('http://localhost:8088/user/'+data_id).done(function (result) {
+        //                 console.log(result);
+        //                 if (result.status != "ERROR") {
+        //                     $(".firstName_update").val(result.firstName);
+        //                     $(".middleName_update").val(result.middleName);
+        //                     $(".lastName_update").val(result.lastName);
+        //                     $(".suffix_update").val(result.suffix);
+        //                     $(".userName_update").val(result.username);
+        //                     $(".email_update").val(result.email);
+        //                     $(".num_update").val(result.phoneNumber);
+        //                     $(".birthday_update").val(result.birthday);
+        //                     $(".password_update").val(result.password);
 
-                            $(".btn_confirm_update").unbind("click").on("click", function(){
-                                console.log('clicked')
-                                var payload = {
-                                    "firstName"     : $(".firstName_update").val(),
-                                    "middleName"    : $(".middleName_update").val(),
-                                    "lastName"      : $(".lastName_update").val(),
-                                    "suffix"        : $(".suffix_update").val(),
-                                    "corpKey"       : "",
-                                    "username"      : $(".userName_update").val(),
-                                    "email"         : $(".email_update").val(),
-                                    "phoneNumber"   : $(".num_update").val(),
-                                    "birthday"      : $(".birthday_update").val(),
-                                    "password"      : $(".password_update").val()
-                                }
+        //                     $(".btn_confirm_update").unbind("click").on("click", function(){
+        //                         console.log('clicked')
+        //                         var payload = {
+        //                             "firstName"     : $(".firstName_update").val(),
+        //                             "middleName"    : $(".middleName_update").val(),
+        //                             "lastName"      : $(".lastName_update").val(),
+        //                             "suffix"        : $(".suffix_update").val(),
+        //                             "corpKey"       : "",
+        //                             "username"      : $(".userName_update").val(),
+        //                             "email"         : $(".email_update").val(),
+        //                             "phoneNumber"   : $(".num_update").val(),
+        //                             "birthday"      : $(".birthday_update").val(),
+        //                             "password"      : $(".password_update").val()
+        //                         }
 
-                                __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                                    console.log(result);
-                                    if (result.status != "ERROR") {
-                                    $(".form-control").val('');
-                                    $('#success_update').show();
-                                        setTimeout(function () {
-                                            $('#updateUserModal').modal('hide');
-                                            $('#success_update').hide();
-                                            __table();
-                                        }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            })
+        //                         __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+        //                             console.log(result);
+        //                             if (result.status != "ERROR") {
+        //                             $(".form-control").val('');
+        //                             $('#success_update').show();
+        //                                 setTimeout(function () {
+        //                                     $('#updateUserModal').modal('hide');
+        //                                     $('#success_update').hide();
+        //                                     __table();
+        //                                 }, 1000);
+        //                             }else{
+        //                                 alert("failed")
+        //                             }
+        //                         })
+        //                     })
 
-                        }else{
-                            alert("failed")
-                        }
-                    })
-                })
-            })
-        }
-        __table();
+        //                 }else{
+        //                     alert("failed")
+        //                 }
+        //             })
+        //         })
+        //     })
+        // }
+        // __table();
 
     } )( jQuery );
     </script>

@@ -329,7 +329,7 @@
                             "<td>"+data.name+"</td>"+  
                             "<td>"+data.description+"</td>"+
                             "<td value="+data.locationId+">"+data.locationName+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button></td>");
                     });
                 } else {
                     console.log("failed fetching department list")
