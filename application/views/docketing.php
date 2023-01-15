@@ -25,17 +25,12 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Sentence" class="form-control"></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                        <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label">PIS-00000-0001</label></div>
                     </div>
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Accounts</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control">
-                                <option value="">Test 1</option>
-                                <option value="">Test 2</option>
-                            </select>
-                        </div>
+                        <div class="col col-md-3"><label for="uploadFile" class=" form-control-label">Upload a File</label></div>
+                        <div class="col-12 col-md-9"><input type="file" class="form-control-file" id="uploadFile"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
