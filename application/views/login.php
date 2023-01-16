@@ -119,15 +119,14 @@
                         console.log('authenticated = true')
                         if (result.isLocked != true) {
                             console.log("not lock")
-                                $('#prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i> Login Successfully </div>');  
-                            // var user_type_id = result.payload.user_type_id
+                            $('#prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i> Login Successfully </div>');  
+                            var uuid = result.uuid
                             // var resident_id = result.payload.resident_id
                             // $.cookie("user_type_id", user_type_id);
-                            // $.cookie("resident_id", resident_id);
-
-                            // setTimeout(function () {
-                            //     window.location.href="dashboard"
-                            // },1000);
+                            $.cookie("uuid", uuid);
+                            setTimeout(function () {
+                                window.location.href="dashboard"
+                            },1000);
                         } else {
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                             // console.log("this account is locked")
