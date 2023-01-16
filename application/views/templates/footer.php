@@ -121,6 +121,7 @@
             return d.promise();
         };
 
+<<<<<<< HEAD
         // var payload = {
         //    METHOD      : "fetch_by_id",
         //    resident_id  : $.cookie("resident_id"),
@@ -129,6 +130,12 @@
         //     // console.log(result);
         //     if (result.status == "SUCCESS") {
         //         $(".f_name").html(result.payload.username)
+=======
+        __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+            console.log(result);
+            if (result.status != "ERROR") {
+                $(".f_name").html(result.username);
+>>>>>>> 40640e64459600e74968fad09392395a3e23386e
                 // switch (result.payload.user_type_id) {
                 // case "1":
                 //     $(".jj").attr("hidden",true);   
