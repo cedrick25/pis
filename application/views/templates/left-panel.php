@@ -16,8 +16,12 @@
                 <li class="aa">
                     <a href="dashboard"> <i class="menu-icon fa fa-dashboard" aria-hidden="true"></i>Dashboard </a>
                 </li>
-                <li class="docketing">
-                    <a href="docketing"> <i class="menu-icon fa fa-user" aria-hidden="true"></i>Docketing </a>
+                <li class="menu-item-has-children dropdown hh">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Docketing</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="investigation_docketing">Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
+                    </ul>
                 </li>
                 <h3 class="menu-title">Management</h3>
                 <!-- <li class="cc">
