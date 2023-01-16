@@ -587,7 +587,7 @@
         // }
         // __table();
 
-    } )( jQuery );
+    })( jQuery );
     </script>
 
 </body>
