@@ -118,5 +118,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('field_office');
 	}
+	public function regions()
+	{
+		$this->load->view('regions');
+	}
+
 
 }
