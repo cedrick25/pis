@@ -43,7 +43,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>My Organization</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="user_accounts">User Accounts</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="user_roles">User Type</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="user_roles">User Roles</a></li>
                         <li><i class="menu-icon fa fa-building-o"></i><a href="department">Department</a></li>
                         <li><i class="menu-icon fa fa-location-arrow"></i><a href="location">Location</a></li>
                         <li><i class="menu-icon fa fa-lock"></i><a href="permission">Permission</a></li>
