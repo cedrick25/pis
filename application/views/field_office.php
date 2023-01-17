@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,7 +31,7 @@
                     <div class="row form-group col-md-12">         
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control caseload_investigation select2">
+                            <select name="select" id="" class="form-control caseload_supervision select2">
                             </select>
                         </div>
                     </div>
@@ -46,14 +46,15 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Update modal -->
+
     <!-- Update modal -->
     <div class="modal fade" id="updateDocketing" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
+        <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Update Docket</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">Field Office Update</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -62,83 +63,14 @@
                     <i class="fa fa-check"></i>
                         Successfully Updated  
                 </div>
-                <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control military_court">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <fieldset class="row col col-md-12">
-                            <legend>List</legend>
-                            <div class="list">
-                                <div class="row form-group col-md-12">
-                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
-                    </div>
-                </div>                            
+                    <div class="modal-body col-md-12">
+                        <div class="row form-group col-md-12">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control permission_name_update form_capitalized"></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
+                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update form_capitalized"></div>
+                        </div>      
+                    </div>                            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
@@ -150,10 +82,10 @@
 
     <!-- new Docket modal -->
     <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
+        <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">New Docket</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">New Field Office</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -163,80 +95,13 @@
                         Successfully Added  
                 </div>
                 <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control military_court">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <fieldset class="row col col-md-12">
-                            <legend>List</legend>
-                            <div class="list">
-                                <div class="row form-group col-md-12">
-                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
+                    <div class="modal-body col-md-12">
+                        <div class="row form-group col-md-12">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control permission_name_update form_capitalized"></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
+                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update form_capitalized"></div>
+                        </div>      
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -258,7 +123,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Investigation Docket</h1>
+                        <h1>Field Office</h1>
                     </div>
                 </div>
             </div>
@@ -268,7 +133,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="dashboard">Docket</a></li>
-                            <li class="active">Investigation Docket list</li>
+                            <li class="active">Field Office</li>
                         </ol>
                     </div>
                 </div>
@@ -282,32 +147,35 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Investigation Docket List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add Docket</button>
+                                <strong class="card-title">Field Office List</strong>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add Field Office</button>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Docket Number</th>
-                                            <th>Received Date</th>
-                                            <th>Name</th>
+                                            <th>Field Office</th>
+                                            <th>Region</th>
+                                            <th>Actions</th>
+<!--                                        <th>Name</th>
                                             <th>Criminal Case No.</th>
                                             <th>Status</th>
                                             <th>Actions</th>
-                                        </tr>
+ -->                                        </tr>
                                     </thead>
                                     <tbody class="table_body">
                                         <tr>
                                             <td>1</td>
                                             <td>PIS-00000-0001</td>
                                             <td>01/20/2023</td>
-                                            <td>Test Case</td>
+                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDocketing'><i class='fa fa-refresh'></i> Update</button>
+                                            </td>
+<!--                                        <td>Test Case</td> 
                                             <td>Criminal case test</td>
                                             <td>inbox</td>
                                             <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDocketing'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-toggle='modal' data-target='#forwardDocket'><i class='fa fa-forward'></i> Forwarding</button>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -468,8 +336,8 @@
                         __table();
                     }, 1000);
                 }else{
-                //     console.log(result.status);
-                //     alert(result.message)
+                    console.log(result.status);
+                    alert(result.message)
                 }
             })
         })
@@ -594,7 +462,7 @@
         // }
         // __table();
 
-    } )( jQuery );
+    })( jQuery );
     </script>
 
 </body>

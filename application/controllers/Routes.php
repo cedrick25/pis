@@ -114,5 +114,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('supervision_docketing');
 	}
+	public function field_office()
+	{
+		$this->load->view('field_office');
+	}
 
 }

@@ -28,6 +28,13 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                         <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label">PIS-00000-0001</label></div>
                     </div>
+                    <div class="row form-group col-md-12">         
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="select" id="" class="form-control caseload_supervision select2">
+                            </select>
+                        </div>
+                    </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="uploadFile" class=" form-control-label">Upload a File</label></div>
                         <div class="col-12 col-md-9"><input type="file" class="form-control-file" id="uploadFile"></div>

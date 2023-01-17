@@ -3,7 +3,7 @@
 <body>
     <!-- Left Panel -->
 
-    <?php $this->load->view('templates/left-panel.php'); ?> 
+    <?php $this->load->view('templates/left-panel.php');?> 
     
     <!-- /#left-panel -->
 
