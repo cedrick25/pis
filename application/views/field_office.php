@@ -50,7 +50,7 @@
     <!-- Update modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="updateDocketing" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateOfficemodal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -66,9 +66,14 @@
                     <div class="modal-body col-md-12">
                         <div class="row form-group col-md-12">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control permission_name_update form_capitalized"></div>
+                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control field_office_update form_capitalized"></div>
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
-                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update form_capitalized"></div>
+                            <div class="col-12 col-md-9">
+                                <select name="select" class="form-control region_update select2" >
+                                    <option>Select Location</option>
+                                    <option>NCR</option>
+                                </select>
+                            </div>
                         </div>      
                     </div>                            
                 <div class="modal-footer">
@@ -81,7 +86,7 @@
     <!-- Update modal -->
 
     <!-- new Docket modal -->
-    <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newOfficemodal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -98,10 +103,17 @@
                     <div class="modal-body col-md-12">
                         <div class="row form-group col-md-12">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control permission_name_update form_capitalized"></div>
+                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control field_office form_capitalized"></div>
+                        </div>
+                        <div class="row form-group col-md-12">      
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
-                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update form_capitalized"></div>
-                        </div>      
+                            <div class="col-12 col-md-9">
+                                <select name="select" class="form-control region select2" >
+                                    <option>Select Location</option>
+                                    <option>NCR</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -132,7 +144,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="dashboard">Docket</a></li>
+                            <li><a href="dashboard">My Organization</a></li>
                             <li class="active">Field Office</li>
                         </ol>
                     </div>
@@ -148,7 +160,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Field Office List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add Field Office</button>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newOfficemodal"><i class="fa fa-plus-circle"></i> Add Field Office</button>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
@@ -157,9 +169,9 @@
                                             <th>#</th>
                                             <th>Field Office</th>
                                             <th>Region</th>
+                                            <th>Date Created</th>
                                             <th>Actions</th>
-<!--                                        <th>Name</th>
-                                            <th>Criminal Case No.</th>
+<!--                                        <th>Criminal Case No.</th>
                                             <th>Status</th>
                                             <th>Actions</th>
  -->                                        </tr>
@@ -167,9 +179,10 @@
                                     <tbody class="table_body">
                                         <tr>
                                             <td>1</td>
-                                            <td>PIS-00000-0001</td>
-                                            <td>01/20/2023</td>
-                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDocketing'><i class='fa fa-refresh'></i> Update</button>
+                                            <td>Central Office</td>
+                                            <td>NCR</td>
+                                            <td>01/01/2023</td>
+                                            <td class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateOfficemodal'><i class='fa fa-refresh'></i> Update</button>
                                             </td>
 <!--                                        <td>Test Case</td> 
                                             <td>Criminal case test</td>

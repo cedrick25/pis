@@ -47,8 +47,8 @@
                         <li><i class="menu-icon fa fa-building-o"></i><a href="department">Department</a></li>
                         <li><i class="menu-icon fa fa-location-arrow"></i><a href="location">Location</a></li>
                         <li><i class="menu-icon fa fa-lock"></i><a href="permission">Permission</a></li>
-                        <li><i class="menu-icon fa fa-location-arrow"></i><a href="field_office">Field Office</a></li>
-                        <li><i class="menu-icon fa fa-location-arrow"></i><a href="regions">Regions</a></li>
+                        <li><i class="menu-icon fa fa-building-o"></i><a href="field_office">Field Office</a></li>
+                        <li><i class="menu-icon fa fa-map-marker"></i><a href="regions">Regions</a></li>
                     </ul>
                 </li>
                <!--  <li class="ii">
