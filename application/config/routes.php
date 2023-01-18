@@ -52,6 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // AMS start
 $route['docketing'] = "routes/docketing";
 $route['investigation_docketing'] = "routes/investigation_docketing";
+$route['investigation_docket_create'] = "routes/investigation_docket_create";
+$route['supervision_docket_create'] = "routes/supervision_docket_create";
 $route['field_office'] = "routes/field_office";
 $route['regions'] = "routes/regions";
 $route['supervision_docketing'] = "routes/supervision_docketing";
