@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--\<div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,7 +31,7 @@
                     <div class="row form-group col-md-12">         
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
                         <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control caseload_supervision select2">
+                            <select name="select" id="" class="form-control caseload_investigation select2">
                             </select>
                         </div>
                     </div>
@@ -46,10 +46,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Update modal -->
     <!-- Update modal -->
-    <div class="modal fade" id="updateDocketing" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="updateDocketing" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -138,44 +138,6 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
                     </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Manual Docket" class="form-control md"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control referral">
-                                <option value="True">True</option>
-                                <option value="False">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Referral</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control tor">
-                                <option value="">Court</option>
-                                <option value="">Field Office</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control psd"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
-                        <div class="col-12 col-md-9"><input type="text" class="form-control py" placeholder="Year"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Month</label></div>
-                        <div class="col-12 col-md-9"><input type="text" class="form-control pm" placeholder="Month"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Day</label></div>
-                        <div class="col-12 col-md-9"><input type="text" class="form-control pd" placeholder="Day"></div>
-                    </div>
                 </div>                            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -183,11 +145,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Update modal -->
 
     <!-- new Docket modal -->
-    <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -201,10 +163,6 @@
                         Successfully Added  
                 </div>
                 <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Manual Docket" class="form-control md"></div>
-                    </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
@@ -237,8 +195,8 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
                         <div class="col-12 col-md-9">
                             <select class="form-control military_court">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
                             </select>
                         </div>
                     </div>
@@ -280,40 +238,6 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
                     </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control referral">
-                                <option value="True">True</option>
-                                <option value="False">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Referral</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control tor">
-                                <option value="">Court</option>
-                                <option value="">Field Office</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control psd"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
-                        <div class="col-12 col-md-9"><input type="text" class="form-control py" placeholder="Year"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Month</label></div>
-                        <div class="col-12 col-md-9"><input type="text" class="form-control pm" placeholder="Month"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Day</label></div>
-                        <div class="col-12 col-md-9"><input type="text" class="form-control pd" placeholder="Day"></div>
-                    </div>
                 </div>                            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -321,7 +245,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- new Docket modal -->
 
     <div id="right-panel" class="right-panel">
@@ -334,7 +258,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Supervision Docket</h1>
+                        <h1>Create</h1>
                     </div>
                 </div>
             </div>
@@ -343,56 +267,111 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="dashboard">Docket</a></li>
-                            <li class="active">Supervision Docket list</li>
+                            <li><a href="dashboard">Supervision Docket</a></li>
+                            <li class="active">Create</li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="content mt-3">
+	    <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-
-                    <div class="col-md-12">
+                  <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Supervision Docket List</strong>
-                                <a href="supervision_docket_create"><button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i>Add Docket</button></a>
+                                <strong class="card-title">Create Supervision Docket</strong>
                             </div>
                             <div class="card-body">
-                                <table id="" class="table table_head">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Docket Number</th>
-                                            <th>Received Date</th>
-                                            <th>Name</th>
-                                            <th>Criminal Case No.</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table_body">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>PIS-00000-0001</td>
-                                            <td>01/20/2023</td>
-                                            <td>Test Case</td>
-                                            <td>Criminal case test</td>
-                                            <td>inbox</td>
-                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDocketing'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-toggle='modal' data-target='#forwardDocket'><i class='fa fa-forward'></i> Forwarding</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+				                <div class="modal-body col-md-12">
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
+				                        <div class="col-12 col-md-9">
+				                            <select class="form-control military_court">
+				                                <option value="Yes">Yes</option>
+				                                <option value="No">No</option>
+				                            </select>
+				                        </div>
+				                    </div>
+				                    <div class="row form-group col-md-12">
+				                        <fieldset class="row col col-md-12">
+				                            <legend>List</legend>
+				                            <div class="list">
+				                                <div class="row form-group col-md-12">
+				                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+				                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+				                                </div>
+				                                <div class="row form-group col-md-6">
+				                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+				                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
+				                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
+				                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
+				                                </div>
+				                                <div class="row form-group col-md-6">
+				                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+				                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
+				                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
+				                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
+				                                </div>
+				                            </div>
+				                            <div class="col-12">
+				                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+				                            </div>
+				                        </fieldset>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
+				                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
+				                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
+				                    </div>
+				                    <div class="row form-group col-md-6">
+				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
+				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
+				                    </div>
+				                </div>                            
+				                <div class="modal-footer">
+				                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+				                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+				                </div>
+				                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!-- .animated -->
-        </div><!-- .content -->
+            </div>
+        </div>
 
 
     </div><!-- /#right-panel -->
@@ -401,7 +380,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -496,62 +475,44 @@
         $(".add_more").unbind("click").on("click", function(){
             console.log("clicked")
             $(".list").append(`
-                <div class="">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-                    </div>
-                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                </div>`
-            )
+                <div class="row form-group col-md-12">
+                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+                </div>
+                <div class="row form-group col-md-6">
+                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
+                </div>
+                <div class="row form-group col-md-6">
+                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
+                </div>`)
 
         })
-        $('.list').on('click', '.remove', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
 
             var payload = {
-                "type"          : "SUP",
-                "docketNumber"  : "",
-                "fieldOfficeId" : "",
-                "clientType"    : "ADULT",
-                "firstName"     : $(".firstName").val(),
-                "middleName"    : $(".middleName").val(),
-                "lastName"      : $(".lastName").val(),
-                "suffixName"    : $(".suffix").val(),
-                "criminalCaseNumber" : $(".cc_no").val(),
-                "offense"       : $(".offense").val(),
-                "courtOfOrigin" : $(".court_origin").val(),
-                "militaryCourt" : $(".military_court").val(),
-                "sentence"      : $(".sentence").val(),
-                "courtOrderDate": $(".cod").val(),
-                "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : false,
-                "referral"      : false,
-                "typeOfReferral": "",
-                "remarks"       : $(".remarks").val(),
-                "probationStartDate": "",
-                "probationYear" : "",
-                "probationMonth": "",
-                "probationDay"  :"",
-            }
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+                    "firstName"     : $(".firstName").val(),
+                    "middleName"    : $(".middleName").val(),
+                    "lastName"      : $(".lastName").val(),
+                    "suffix"        : $(".suffix").val(),
+                    "cc_no"         : $(".cc_no").val(),
+                    "offense"       : $(".offense").val(),
+                    "court_origin"  : $(".court_origin").val(),
+                    "military_court": $(".military_court").val(),
+                    "sentence"      : $(".sentence").val(),
+                    "min"           : $(".min").val(),
+                    "max"           : $(".max").val(),
+                    "cod"           : $(".cod").val(),
+                    "rd"            : $(".rd").val(),
+                    "remarks"       : $(".remarks").val()
+                }
+            __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                 $(".form-control").val('');
@@ -567,6 +528,8 @@
                 }
             })
         })
+
+
 
         // var __table = function(){
         //     $('.table_head').DataTable().destroy();
@@ -688,8 +651,8 @@
         // }
         // __table();
 
-    })( jQuery );
-    </script>
+    } )( jQuery );
+    </script> -->
 
 </body>
 

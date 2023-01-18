@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Update modal -->
     <!-- Update modal -->
     <div class="modal fade" id="updateDocketing" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -149,7 +149,7 @@
     <!-- Update modal -->
 
     <!-- new Docket modal -->
-    <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -245,7 +245,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- new Docket modal -->
 
     <div id="right-panel" class="right-panel">
@@ -281,9 +281,9 @@
 
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header" id="pager">
                                 <strong class="card-title">Investigation Docket List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add Docket</button>
+                                <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
