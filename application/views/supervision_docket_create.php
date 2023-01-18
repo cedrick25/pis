@@ -27,7 +27,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="dashboard">Supervision Docket</a></li>
+                            <li><a href="supervision_docketing">Supervision Docket</a></li>
                             <li class="active">Create</li>
                         </ol>
                     </div>
@@ -47,6 +47,24 @@
                             </div>
                             <div class="card-body">
 				                <div class="modal-body col-md-12">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control manual_docket select2">
+                                                <option selected value="true">True</option>
+                                                <option value="false">False</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Offices</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control field_office select2">
+                                                <option selected value="1">Central Office</option>
+                                                <option value="2">San Juan</option>
+                                            </select>
+                                        </div>
+                                    </div>
 				                    <div class="row form-group col-md-6">
 				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
@@ -87,21 +105,12 @@
 				                    <div class="row form-group col-md-6">
 				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
 				                        <div class="col-12 col-md-9">
-				                            <select class="form-control military_court">
-				                                <option value="Yes">Yes</option>
-				                                <option value="No">No</option>
+				                            <select class="form-control military_court select2">
+				                                <option value="true">Yes</option>
+				                                <option value="false">No</option>
 				                            </select>
 				                        </div>
 				                    </div>
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control manual_docket">
-                                                <option selected value="true">True</option>
-                                                <option value="false">False</option>
-                                            </select>
-                                        </div>
-                                    </div>
 				                    <div class="row form-group col-md-12">
 				                        <fieldset class="row col col-md-12">
 				                            <legend>List</legend>
@@ -132,14 +141,14 @@
 				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
 				                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
 				                    </div>
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" class="form-control prob_start"></div>
-                                    </div>
 				                    <div class="row form-group col-md-6">
 				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
 				                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
 				                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
+                                        <div class="col-12 col-md-9"><input type="date" class="form-control prob_start"></div>
+                                    </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Year" class="form-control prob_year"></div>
@@ -305,7 +314,7 @@
             var payload = {
                 "type"          : "SUP",
                 "docketNumber"  : "",
-                "fieldOfficeId" : "",
+                "fieldOfficeId" : $(".field_office").val(),
                 "clientType"    : $(".client_type").val(),
                 "firstName"     : $(".firstName").val(),
                 "middleName"    : $(".middleName").val(),

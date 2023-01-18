@@ -25,7 +25,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="investigation_docketing">Investigation Docket</a></li>
+                            <li><a href="supervision_docketing">Investigation Docket</a></li>
                             <li class="active">Update</li>
                         </ol>
                     </div>
@@ -45,6 +45,24 @@
                                 <div class="alert alert-success" role="alert" id="success_update" style="display:none">
                                     <i class="fa fa-check"></i>
                                         Successfully Updated  
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control manual_docket_update select2">
+                                            <option selected value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Offices</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control field_office_update select2">
+                                            <option selected value="1">Central Office</option>
+                                            <option value="2">San Juan</option>
+                                        </select>
+                                    </div>
                                 </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
@@ -136,16 +154,20 @@
 			                        <div class="col-12 col-md-9"><input type="date" class="form-control rd_update"></div>
 			                    </div>
                                 <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control prob_start"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Year" class="form-control prob_year"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Year" class="form-control prob_year_update"></div>
                                     </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Month</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Month" class="form-control prob_month"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Month" class="form-control prob_month_update"></div>
                                     </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Day</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Day" class="form-control prob_day"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Day" class="form-control prob_day_update"></div>
                                     </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
@@ -307,6 +329,8 @@
                 console.log(result);
                 var result = result.response;
                 if (result.status != "ERROR") {
+                    $(".manual_docket_update").val(result.manualDocket);
+                    $(".field_office_update").val(result.fieldOfficeId);
                     $(".firstName_update").val(result.firstName);
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
@@ -325,6 +349,10 @@
                     $(".cod_update").val(result.courtOrderDate);
                     $(".rd_update").val(result.receivedDate);
                     $(".remarks_update").val(result.remarks);
+                    $(".remarks_update").val(result.probationStartDate);
+                    $(".prob_year_update").val(result.probationYear);
+                    $(".prob_month_update").val(result.probationMonth);
+                    $(".prob_day_update").val(result.probationDay);
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         console.log('clicked')

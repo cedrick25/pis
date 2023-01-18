@@ -86,7 +86,7 @@
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
 			                        <div class="col-12 col-md-9">
-			                            <select class="form-control military_court">
+			                            <select class="form-control military_court select2">
 			                                <option selected value="true">Yes</option>
 			                                <option value="false">No</option>
 			                            </select>
