@@ -496,26 +496,26 @@
         $(".add_more").unbind("click").on("click", function(){
             console.log("clicked")
             $(".list").append(`
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-                </div>
-                <div class="col-12">
+                <div class="">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                        <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
+                    </div>
                     <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
                 </div>`
-                )
+            )
 
         })
         $('.list').on('click', '.remove', function(e) {
