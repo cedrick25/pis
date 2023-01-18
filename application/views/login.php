@@ -121,8 +121,6 @@
                             console.log("not lock")
                             $('#prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i> Login Successfully </div>');  
                             var uuid = result.uuid
-                            // var resident_id = result.payload.resident_id
-                            // $.cookie("user_type_id", user_type_id);
                             $.cookie("uuid", uuid);
                             setTimeout(function () {
                                 window.location.href="dashboard"

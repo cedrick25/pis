@@ -65,36 +65,36 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
                         <div class="col-12 col-md-9">
-                            <select class="form-control military_court">
+                            <select class="form-control military_court_updt">
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
@@ -106,7 +106,7 @@
                             <div class="list">
                                 <div class="row form-group col-md-12">
                                     <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence_updt"></textarea></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
@@ -122,23 +122,23 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+                                <button type="button" class="add_more_updt btn btn-primary btn-success btn-sm float-right">Add more</button>
                             </div>
                         </fieldset>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control cod_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control rd_updt"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks_updt"></div>
                     </div>
-                </div>                            
+                </div>                         
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
@@ -420,44 +420,47 @@
         $(".add_more").unbind("click").on("click", function(){
             console.log("clicked")
             $(".list").append(`
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-                </div>`)
-
+                <div class="">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                        <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
+                    </div>
+                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
+                </div>`
+            )
         })
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
 
             var payload = {
-                    "firstName"     : $(".firstName").val(),
-                    "middleName"    : $(".middleName").val(),
-                    "lastName"      : $(".lastName").val(),
-                    "suffix"        : $(".suffix").val(),
-                    "cc_no"         : $(".cc_no").val(),
-                    "offense"       : $(".offense").val(),
-                    "court_origin"  : $(".court_origin").val(),
-                    "military_court": $(".military_court").val(),
-                    "sentence"      : $(".sentence").val(),
-                    "min"           : $(".min").val(),
-                    "max"           : $(".max").val(),
-                    "cod"           : $(".cod").val(),
-                    "rd"            : $(".rd").val(),
-                    "remarks"       : $(".remarks").val()
-                }
-            __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
+                "firstName"     : $(".firstName").val(),
+                "middleName"    : $(".middleName").val(),
+                "lastName"      : $(".lastName").val(),
+                "suffixName"    : $(".suffix").val(),
+                "criminalCaseNumber" : $(".cc_no").val(),
+                "offense"       : $(".offense").val(),
+                "courtOfOrigin" : $(".court_origin").val(),
+                "militaryCourt" : $(".military_court").val(),
+                "sentence"      : $(".sentence").val(),
+                "courtOrderDate": $(".cod").val(),
+                "receivedDate"  : $(".rd").val(),
+                "remarks"       : $(".remarks").val(),
+                "fieldOfficeId" : "",
+                "clientType"    : "INV"
+            }
+            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                 $(".form-control").val('');
