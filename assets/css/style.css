@@ -1073,7 +1073,8 @@ aside.left-panel {
       .navbar .navbar-nav li .toggle_nav_button.nav-open:before {
         color: #fff !important; }
       .navbar .navbar-nav li .dropdown-toggle:after {
-        display: none; }
+        display: none;
+        color: #fff !important; }
       .navbar .navbar-nav li > a {
         background: none !important;
         color: #c8c9ce !important;
@@ -2591,3 +2592,4 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+

@@ -59,9 +59,8 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                    <i class="fa fa-check"></i>
-                        Successfully Updated  
+                <div id="success">
+                    
                 </div>
                     <div class="modal-body col-md-12">
                         <div class="row form-group col-md-12">
@@ -206,7 +205,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -298,54 +297,22 @@
             return d.promise();
         };
 
-        $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked")
-            $(".list").append(`
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-                </div>`)
-
-        })
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
 
             var payload = {
-                    "firstName"     : $(".firstName").val(),
-                    "middleName"    : $(".middleName").val(),
-                    "lastName"      : $(".lastName").val(),
-                    "suffix"        : $(".suffix").val(),
-                    "cc_no"         : $(".cc_no").val(),
-                    "offense"       : $(".offense").val(),
-                    "court_origin"  : $(".court_origin").val(),
-                    "military_court": $(".military_court").val(),
-                    "sentence"      : $(".sentence").val(),
-                    "min"           : $(".min").val(),
-                    "max"           : $(".max").val(),
-                    "cod"           : $(".cod").val(),
-                    "rd"            : $(".rd").val(),
-                    "remarks"       : $(".remarks").val()
+                    "field_office"     : $(".field_office").val(),
+                    "region"           : $(".region").val(),
                 }
-            __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
+            // console.log(payload);
+
+            __executeExternalPost('http://localhost:8088/region/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                 $(".form-control").val('');
-                $('#success').show();
                     setTimeout(function () {
-                        $('#newUserModal').modal('hide');
-                        $('#success').hide();
+                        $('#success').html('<div class="alert alert-success" role="alert" style="display:none"> <i class="fa fa-check"></i> Successfully Updated</div>');
+                        $('#newOfficemodal').modal('hide');
                         __table();
                     }, 1000);
                 }else{
@@ -355,129 +322,83 @@
             })
         })
 
-        // var __table = function(){
-        //     $('.table_head').DataTable().destroy();
-        //     $('.table_body').empty();
+        var __table = function(){
+            $('.table_head').DataTable().destroy();
+            $('.table_body').empty();
 
-        //     __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
-        //         console.log("==========")
-        //         console.log(result)
-        //         console.log("==========")
+            __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
+                console.log("==========")
+                console.log(result)
+                console.log("==========")
 
-        //         result.content.forEach(function(data){
-        //             var status;
-        //             let actions;
-        //             switch (data.accountStatus) {
-        //             case "ACTIVE":
-        //                     switch (data.isLocked) {
-        //                     case true:
-        //                         status = "RESTRICTED"
-        //                         actions = "<button class='btn btn-sm btn-success btn_lift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data.uuid+"'><i class='fa fa-unlock'></i> Lift</button>";
-        //                         break;
-        //                     case false:
-        //                         status = "ACTIVE"
-        //                         actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button>";
-        //                         break;
-        //                     default:
-        //                         status = "ACTIVE"
-        //                         actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button>";
-        //                         break;
-        //                     };
-        //                 break;
-        //             case "INACTIVE":
-        //                 status = "INACTIVE"
-        //                 actions = "<button class='btn btn-sm btn-success btn_activate' type='submit' data-toggle='modal' data-target='#activateModal' data-id='"+data.uuid+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data.uuid+"'><i class='fa fa-remove'></i> Remove</button>";
-        //                 break;
-        //             case "REMOVED":
-        //                 status = "REMOVED"
-        //                 actions = "";
-        //                 break;
-        //             default:
-        //                 status = "ACTIVE"
-        //                 actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data.uuid+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-sm btn-danger btn_deact' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data.uuid+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data.uuid+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-sm btn-danger btn_restrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data.uuid+"'><i class='fa fa-lock'></i> Restrict</button> <button class='btn btn-sm btn-success btn_lift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data.uuid+"'><i class='fa fa-unlock'></i> Lift</button>";
-        //                 break;
-        //             };
-        //             $('.table_body').append("<tr>"+
-        //                 "<td></td>"+
-        //                 "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
-        //                 "<td>"+data.username+"</td>"+
-        //                 "<td>"+data.email+"</td>"+
-        //                 "<td>"+data.createdBy+"</td>"+
-        //                 "<td>"+status+"</td>"+
-        //                 "<td align='center' class='actions'> "+actions+"")
-        //         });
-        //         $(document).ready(function () {
-        //             $('.table_head tbody tr').each(function (idx) {
-        //                $(this).children("td:eq(0)").html(idx + 1);
-        //             });
-        //             var table = $('.table_head').DataTable({
-        //                 order: [[0, 'asc']],
-        //                 "columnDefs": [
-        //                     { "width": "30%", "targets": 6 }
-        //                 ]
-        //             });
-        //             $('.dataTables_length').addClass('bs-select');
-        //         });
+                result.content.forEach(function(data){
 
-        //         $(".btn_update").unbind("click").on("click", function(){
-        //             var data_id = $(this).data("id");
-        //             console.log(data_id)
-        //             __executeExternalGet('http://localhost:8088/user/'+data_id).done(function (result) {
-        //                 console.log(result);
-        //                 if (result.status != "ERROR") {
-        //                     $(".firstName_update").val(result.firstName);
-        //                     $(".middleName_update").val(result.middleName);
-        //                     $(".lastName_update").val(result.lastName);
-        //                     $(".suffix_update").val(result.suffix);
-        //                     $(".userName_update").val(result.username);
-        //                     $(".email_update").val(result.email);
-        //                     $(".num_update").val(result.phoneNumber);
-        //                     $(".birthday_update").val(result.birthday);
-        //                     $(".password_update").val(result.password);
+                    $('.table_body').append("<tr>"+
+                        "<td></td>"+
+                        "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
+                        "<td>"+data.username+"</td>"+
+                        "<td>"+data.email+"</td>"+
+                        "<td>"+data.createdBy+"</td>"+
+                        "<td>"+status+"</td>"+
+                        "<td align='center' class='actions'> "+actions+"")
+                });
+                $(document).ready(function () {
+                    $('.table_head tbody tr').each(function (idx) {
+                       $(this).children("td:eq(0)").html(idx + 1);
+                    });
+                    var table = $('.table_head').DataTable({
+                        order: [[0, 'asc']],
+                        "columnDefs": [
+                            { "width": "30%", "targets": 6 }
+                        ]
+                    });
+                    $('.dataTables_length').addClass('bs-select');
+                });
 
-        //                     $(".btn_confirm_update").unbind("click").on("click", function(){
-        //                         console.log('clicked')
-        //                         var payload = {
-        //                             "firstName"     : $(".firstName_update").val(),
-        //                             "middleName"    : $(".middleName_update").val(),
-        //                             "lastName"      : $(".lastName_update").val(),
-        //                             "suffix"        : $(".suffix_update").val(),
-        //                             "corpKey"       : "",
-        //                             "username"      : $(".userName_update").val(),
-        //                             "email"         : $(".email_update").val(),
-        //                             "phoneNumber"   : $(".num_update").val(),
-        //                             "birthday"      : $(".birthday_update").val(),
-        //                             "password"      : $(".password_update").val()
-        //                         }
+                $(".btn_update").unbind("click").on("click", function(){
+                    var data_id = $(this).data("id");
+                    console.log(data_id)
+                    __executeExternalGet('http://localhost:8088/region/'+data_id).done(function (result) {
+                        console.log(result);
+                        if (result.status != "ERROR") {
+                            $(".field_office_update").val(result.field_office);
+                            $(".region_update").val(result.region);
 
-        //                         __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-        //                             console.log(result);
-        //                             if (result.status != "ERROR") {
-        //                             $(".form-control").val('');
-        //                             $('#success_update').show();
-        //                                 setTimeout(function () {
-        //                                     $('#updateUserModal').modal('hide');
-        //                                     $('#success_update').hide();
-        //                                     __table();
-        //                                 }, 1000);
-        //                             }else{
-        //                                 alert("failed")
-        //                             }
-        //                         })
-        //                     })
+                            $(".btn_confirm_update").unbind("click").on("click", function(){
+                                console.log('clicked')
+                                var payload = {
+                                    "field_office_update"     : $(".field_office_update").val(),
+                                    "region_update"           : $(".region_update").val(),
+                                }
+                                // console.log(payload)
 
-        //                 }else{
-        //                     alert("failed")
-        //                 }
-        //             })
-        //         })
-        //     })
-        // }
-        // __table();
+                                __executeExternalPost('http://localhost:8088/region/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                    console.log(result);
+                                    if (result.status != "ERROR") {
+                                    $(".form-control").val('');
+                                        setTimeout(function () {
+                                            $('#success_update').html('<div class="alert alert-success" role="alert" style="display:none"> <i class="fa fa-check"></i> Successfully Updated</div>');
+                                            $('#updateUserModal').modal('hide');
+                                            __table();
+                                        }, 1000);
+                                    }else{
+                                        alert("failed")
+                                    }
+                                })
+                            })
+
+                        }else{
+                            alert("failed")
+                        }
+                    })
+                })
+            })
+        }
+        __table();
 
     })( jQuery );
     </script>
-
+ -->
 </body>
 
 </html>
