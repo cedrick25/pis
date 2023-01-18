@@ -251,7 +251,7 @@
                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
                             "<td>"+data.criminalCaseNumber+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit'><i class='fa fa-forward'></i> Forwarding</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-forward'></i> Forwarding</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
@@ -270,58 +270,11 @@
                         var docket_number = $(this).data("docket");
                         window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
                     })
-                    // $(".btn_update").unbind("click").on("click", function(){
-                    //     var data_id = $(this).data("id");
-                    //     console.log(data_id)
-                    //     __executeExternalGet('http://localhost:8088/user/'+data_id).done(function (result) {
-                    //         console.log(result);
-                    //         if (result.status != "ERROR") {
-                    //             $(".firstName_update").val(result.firstName);
-                    //             $(".middleName_update").val(result.middleName);
-                    //             $(".lastName_update").val(result.lastName);
-                    //             $(".suffix_update").val(result.suffix);
-                    //             $(".userName_update").val(result.username);
-                    //             $(".email_update").val(result.email);
-                    //             $(".num_update").val(result.phoneNumber);
-                    //             $(".birthday_update").val(result.birthday);
-                    //             $(".password_update").val(result.password);
 
-                    //             $(".btn_confirm_update").unbind("click").on("click", function(){
-                    //                 console.log('clicked')
-                    //                 var payload = {
-                    //                     "firstName"     : $(".firstName_update").val(),
-                    //                     "middleName"    : $(".middleName_update").val(),
-                    //                     "lastName"      : $(".lastName_update").val(),
-                    //                     "suffix"        : $(".suffix_update").val(),
-                    //                     "corpKey"       : "",
-                    //                     "username"      : $(".userName_update").val(),
-                    //                     "email"         : $(".email_update").val(),
-                    //                     "phoneNumber"   : $(".num_update").val(),
-                    //                     "birthday"      : $(".birthday_update").val(),
-                    //                     "password"      : $(".password_update").val()
-                    //                 }
-
-                    //                 __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                    //                     console.log(result);
-                    //                     if (result.status != "ERROR") {
-                    //                     $(".form-control").val('');
-                    //                     $('#success_update').show();
-                    //                         setTimeout(function () {
-                    //                             $('#updateUserModal').modal('hide');
-                    //                             $('#success_update').hide();
-                    //                             __table();
-                    //                         }, 1000);
-                    //                     }else{
-                    //                         alert("failed")
-                    //                     }
-                    //                 })
-                    //             })
-
-                    //         }else{
-                    //             alert("failed")
-                    //         }
-                    //     })
-                    // })
+                    $(".btn_forward").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        window.location.href = 'http://localhost/pis/inv_forward?docket_number='+docket_number;
+                    })
                 }
             })
         }

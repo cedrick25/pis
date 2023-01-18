@@ -134,5 +134,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('supervision_docket_create');
 	}
+	public function inv_forward()
+	{
+		$this->load->view('inv_forward');
+	}
 
 }

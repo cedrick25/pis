@@ -54,6 +54,7 @@ $route['docketing'] = "routes/docketing";
 $route['investigation_docketing'] = "routes/investigation_docketing";
 $route['investigation_docket_create'] = "routes/investigation_docket_create";
 $route['investigation_docket_update'] = "routes/investigation_docket_update";
+$route['inv_forward'] = "routes/inv_forward";
 $route['supervision_docket_create'] = "routes/supervision_docket_create";
 $route['field_office'] = "routes/field_office";
 $route['regions'] = "routes/regions";
