@@ -42,7 +42,7 @@
                                 <strong class="card-title">Forward Docket</strong>
                             </div>
                             <div class="card-body">
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                                <div class="alert alert-success" role="alert" id="success_forwarding" style="display:none">
                                     <i class="fa fa-check"></i>
                                         Successfully Forward  
                                 </div>
@@ -72,10 +72,10 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
                                 </div>
-                                <div class="row form-group col-md-12">
+                                <!-- <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="uploadFile" class=" form-control-label">Upload a File</label></div>
                                     <div class="col-12 col-md-9"><input type="file" class="form-control-file" id="uploadFile"></div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="card-footer">
 			                    <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
@@ -216,8 +216,8 @@
                         
                         var payload = {
                             "type"                  : $(".caseload_type").val(),
-                            "senderID"              : $.cookie("uuid"),
-                            "receiverID"            : $(".client_type_update").val(),
+                            "senderId"              : $.cookie("uuid"),
+                            "receiverId"            : "1",
                             "fieldOfficeId"         : $(".field_office").val(),
                             "docketNumber"          : $(".docket_number").val(),
                             "details"               : $(".details").val(),
@@ -226,13 +226,13 @@
                             "lastStatusUpdateDate"  : "",
                         }
 
-                        __executeExternalPost('http://localhost:8000/workflow/create/',JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
-                            $('#success_update').show();
+                            $('#success_forwarding').show();
                                 setTimeout(function () {
-                                    $('#success_update').hide();
+                                    $('#success_forwarding').hide();
                                     window.location.reload(true);
                                 }, 2000);
                             }else{
