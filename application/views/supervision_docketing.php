@@ -202,6 +202,10 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Manual Docket" class="form-control md"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
                     </div>
@@ -233,8 +237,8 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
                         <div class="col-12 col-md-9">
                             <select class="form-control military_court">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                     </div>
@@ -275,10 +279,6 @@
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Manual Docket" class="form-control md"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral</label></div>
@@ -527,6 +527,10 @@
             console.log('clicked')
 
             var payload = {
+                "type"          : "SUP",
+                "docketNumber"  : "",
+                "fieldOfficeId" : "",
+                "clientType"    : "ADULT",
                 "firstName"     : $(".firstName").val(),
                 "middleName"    : $(".middleName").val(),
                 "lastName"      : $(".lastName").val(),
@@ -538,15 +542,14 @@
                 "sentence"      : $(".sentence").val(),
                 "courtOrderDate": $(".cod").val(),
                 "receivedDate"  : $(".rd").val(),
+                "manualDocket"  : false,
+                "referral"      : false,
+                "typeOfReferral": "",
                 "remarks"       : $(".remarks").val(),
-                "fieldOfficeId" : "",
-                "manualDocket"  : $(".md").val(),
-                "referral"      : $(".remarks").val(),
-                "typeOfReferral": $(".tor").val(),
-                "probationStartDate": $(".psd").val(),
-                "probationYear" : $(".py").val(),
-                "probationMonth": $(".pm").val(),
-                "probationDay"  : $(".pd").val(),
+                "probationStartDate": "",
+                "probationYear" : "",
+                "probationMonth": "",
+                "probationDay"  :"",
             }
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);

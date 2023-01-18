@@ -195,8 +195,8 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
                         <div class="col-12 col-md-9">
                             <select class="form-control military_court">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
                             </select>
                         </div>
                     </div>
@@ -445,6 +445,10 @@
             console.log('clicked')
 
             var payload = {
+                "type"          : "INV",
+                "docketNumber"  : "",
+                "fieldOfficeId" : "",
+                "clientType"    : "ADULT",
                 "firstName"     : $(".firstName").val(),
                 "middleName"    : $(".middleName").val(),
                 "lastName"      : $(".lastName").val(),
@@ -456,9 +460,14 @@
                 "sentence"      : $(".sentence").val(),
                 "courtOrderDate": $(".cod").val(),
                 "receivedDate"  : $(".rd").val(),
+                "manualDocket"  : false,
+                "referral"      : false,
+                "typeOfReferral": "",
                 "remarks"       : $(".remarks").val(),
-                "fieldOfficeId" : "",
-                "clientType"    : "INV"
+                "probationStartDate": "",
+                "probationYear" : "",
+                "probationMonth": "",
+                "probationDay"  :"",
             }
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
