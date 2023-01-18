@@ -138,6 +138,44 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
                     </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Manual Docket" class="form-control md"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control referral">
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Referral</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control tor">
+                                <option value="">Court</option>
+                                <option value="">Field Office</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control psd"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
+                        <div class="col-12 col-md-9"><input type="text" class="form-control py" placeholder="Year"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Month</label></div>
+                        <div class="col-12 col-md-9"><input type="text" class="form-control pm" placeholder="Month"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Day</label></div>
+                        <div class="col-12 col-md-9"><input type="text" class="form-control pd" placeholder="Day"></div>
+                    </div>
                 </div>                            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -237,6 +275,44 @@
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Manual Docket" class="form-control md"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control referral">
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Referral</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control tor">
+                                <option value="">Court</option>
+                                <option value="">Field Office</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
+                        <div class="col-12 col-md-9"><input type="date" class="form-control psd"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
+                        <div class="col-12 col-md-9"><input type="text" class="form-control py" placeholder="Year"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Month</label></div>
+                        <div class="col-12 col-md-9"><input type="text" class="form-control pm" placeholder="Month"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Day</label></div>
+                        <div class="col-12 col-md-9"><input type="text" class="form-control pd" placeholder="Day"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -435,29 +511,44 @@
                     <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
                     <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
                     <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-                </div>`)
+                </div>
+                <div class="col-12">
+                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
+                </div>`
+                )
 
         })
+        $('.list').on('click', '.remove', function(e) {
+            e.preventDefault();
+
+            $(this).parent().remove();
+        });
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
 
             var payload = {
-                    "firstName"     : $(".firstName").val(),
-                    "middleName"    : $(".middleName").val(),
-                    "lastName"      : $(".lastName").val(),
-                    "suffix"        : $(".suffix").val(),
-                    "cc_no"         : $(".cc_no").val(),
-                    "offense"       : $(".offense").val(),
-                    "court_origin"  : $(".court_origin").val(),
-                    "military_court": $(".military_court").val(),
-                    "sentence"      : $(".sentence").val(),
-                    "min"           : $(".min").val(),
-                    "max"           : $(".max").val(),
-                    "cod"           : $(".cod").val(),
-                    "rd"            : $(".rd").val(),
-                    "remarks"       : $(".remarks").val()
-                }
-            __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
+                "firstName"     : $(".firstName").val(),
+                "middleName"    : $(".middleName").val(),
+                "lastName"      : $(".lastName").val(),
+                "suffixName"    : $(".suffix").val(),
+                "criminalCaseNumber" : $(".cc_no").val(),
+                "offense"       : $(".offense").val(),
+                "courtOfOrigin" : $(".court_origin").val(),
+                "militaryCourt" : $(".military_court").val(),
+                "sentence"      : $(".sentence").val(),
+                "courtOrderDate": $(".cod").val(),
+                "receivedDate"  : $(".rd").val(),
+                "remarks"       : $(".remarks").val(),
+                "fieldOfficeId" : "",
+                "manualDocket"  : $(".md").val(),
+                "referral"      : $(".remarks").val(),
+                "typeOfReferral": $(".tor").val(),
+                "probationStartDate": $(".psd").val(),
+                "probationYear" : $(".py").val(),
+                "probationMonth": $(".pm").val(),
+                "probationDay"  : $(".pd").val(),
+            }
+            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                 $(".form-control").val('');

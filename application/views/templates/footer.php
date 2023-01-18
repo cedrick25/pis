@@ -121,35 +121,10 @@
             return d.promise();
         };
 
-        // var payload = {
-        //    METHOD      : "fetch_by_id",
-        //    resident_id  : $.cookie("resident_id"),
-        // }
-        // __executeExternalPost('/bms_api/User_accounts/upsertUserAccount',JSON.stringify(payload)).done(function (result) {
-        //     // console.log(result);
-        //     if (result.status == "SUCCESS") {
-        //         $(".f_name").html(result.payload.username)
         __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
             console.log(result);
             if (result.status != "ERROR") {
                 $(".f_name").html(result.username);
-                // switch (result.payload.user_type_id) {
-                // case "1":
-                //     $(".jj").attr("hidden",true);   
-                //     break;
-                // case "2":
-                //     $(".bb").attr("hidden",true);   
-                //     $(".cc").attr("hidden",true);   
-                //     $(".dd").attr("hidden",true);   
-                //     $(".ee").attr("hidden",true);   
-                //     $(".ff").attr("hidden",true);   
-                //     $(".gg").attr("hidden",true);   
-                //     $(".hh").attr("hidden",true);   
-                //     $(".ii").attr("hidden",true);   
-                //     break;
-                // default:  
-                //     break;
-                // };
             }
         })
         $(".btn_logout").unbind("click").on("click", function(){
