@@ -58,9 +58,13 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control field_office select2">
-                                            <option value="" disabled selected> - - Select Field Office - - </option>
-                                            <option value="Central Office">Central Office</option>
-                                            <option value="Central Office1">Central Office1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12 user_display" style="display: none;">         
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Account</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select name="select" id="" class="form-control user_account select2">
                                         </select>
                                     </div>
                                 </div>
@@ -199,6 +203,44 @@
             }
         }
 
+
+        var __select = function(){
+            $('.field_office').empty();
+
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        console.log(data)
+                        $('.field_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    $('.field_office').on('change', function() {
+                        $('.user_account').empty();
+                        __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
+                            // console.log(result)
+                            if (result.status != "ERROR") {
+                                $(".user_display").show()
+                                $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
+                                result.content.forEach(function(data){
+                                    console.log(data)
+                                    $('.user_account').append(
+                                        "<option value="+data.uuid+">"+data.email+"</option>");
+                                });
+                            } else {
+                                console.log("failed fetching user list")
+                                $(".user_display").hide()
+                            }
+                        });
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
+        }
+        __select();
+
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
@@ -219,7 +261,7 @@
                             "senderId"              : $.cookie("uuid"),
                             "receiverId"            : "1",
                             "fieldOfficeId"         : $(".field_office").val(),
-                            "docketNumber"          : $(".docket_number").val(),
+                            "docketNumber"          : $(".docket_number").text(),
                             "details"               : $(".details").val(),
                             "remarks"               : $(".remarks").val(),
                             "approvalStatus"        : "",

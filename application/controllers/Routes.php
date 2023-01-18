@@ -138,5 +138,13 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('inv_forward');
 	}
+	public function sent()
+	{
+		$this->load->view('sent');
+	}
+	public function received()
+	{
+		$this->load->view('received');
+	}
 
 }

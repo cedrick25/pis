@@ -14,7 +14,7 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Update Departments</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">Update Field Office</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -25,13 +25,13 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update form_capitalized"></div>
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" class="form-control dep_loc_update select2" >
                                 <!-- <option>Select Location</option> -->
@@ -53,7 +53,7 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">            
-                    <h5 class="modal-title" id="mediumModalLabel">New Department</h5>      
+                    <h5 class="modal-title" id="mediumModalLabel">New Field Office</h5>      
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -64,15 +64,15 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Department Name</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD Department" class="form-control dep_desc form_capitalized"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD Field Office" class="form-control dep_desc form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" class="form-control dep_loc select2">
                             </select>
@@ -98,7 +98,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Departments</h1>
+                        <h1>Field Office</h1>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="dashboard">My Organization</a></li>
-                            <li class="active">Departments</li>
+                            <li class="active">Field Office</li>
                         </ol>
                     </div>
                 </div>
@@ -122,17 +122,17 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Department List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newDeptModal"><i class="fa fa-plus-circle"></i> Add Department</button>
+                                <strong class="card-title">Field Office List</strong>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newDeptModal"><i class="fa fa-plus-circle"></i> Add Field Office</button>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Department Name</th>
+                                            <th>Field Office Name</th>
                                             <th>Description</th>
-                                            <th>Location</th>
+                                            <th>Region</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -249,9 +249,6 @@
             return d.promise();
         };
 
-                    
-
-
         var __select = function(){
             $('.dep_loc').empty();
             $('.dep_loc_update').empty();
@@ -259,8 +256,8 @@
             __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
-                    $('.dep_loc').append("<option selected disabled> - - Select Location - - </option>");
-                    $('.dep_loc_update').append("<option selected disabled> - - Select Location - - </option>");
+                    $('.dep_loc').append("<option selected disabled> - - Select Region - - </option>");
+                    $('.dep_loc_update').append("<option selected disabled> - - Select Region - - </option>");
                     result.forEach(function(data){
                         console.log(data)
                         $('.dep_loc').append(
@@ -268,10 +265,6 @@
                         $('.dep_loc_update').append(
                             "<option value="+data.id+">"+data.name+"</option>");
 
-                        // $(".dep_loc").append($('<option>', {
-                        //     value: data.id,
-                        //     textkey: "value",  data.name,
-                        // }));
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -279,7 +272,6 @@
             })
         }
         __select();
-           
 
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
@@ -354,8 +346,7 @@
                         if (result.status != "ERROR") {
                             $(".dep_name_update").val(result.name);
                             $(".dep_desc_update").val(result.description);
-                            $(".dep_loc_update").val(result.locationName);
-
+                            $(".dep_loc_update").val(result.locationId).trigger('change');
 
                             $(".btn_confirm_update").unbind("click").on("click", function(){
                                 console.log('clicked btn update confirm')

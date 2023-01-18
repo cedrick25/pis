@@ -14,7 +14,7 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Update Location</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">Update Region</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -25,9 +25,9 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location Name</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_name_update form_capitalized"></div>
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location Address</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region Address</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_add_update form_capitalized"></div>
                     </div>
                 </div>                        
@@ -45,7 +45,7 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">New Location</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">New Region</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -56,12 +56,12 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central office" class="form-control new_loc form_capitalized"></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g NCR" class="form-control new_loc form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Quezon City" class="form-control new_add form_capitalized"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g NCR" class="form-control new_add form_capitalized"></div>
                     </div>
                 </div>         
                 <div class="modal-footer">
@@ -128,7 +128,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Locations</h1>
+                        <h1>Region</h1>
                     </div>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="dashboard">My Organization</a></li>
-                            <li class="active">Locations</li>
+                            <li class="active">Region</li>
                         </ol>
                     </div>
                 </div>
@@ -152,15 +152,15 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Locations</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newLocModal"><i class="fa fa-plus-circle"></i> Add Location</button>
+                                <strong class="card-title">Region List</strong>
+                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newLocModal"><i class="fa fa-plus-circle"></i> Add Region</button>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Location</th>
+                                            <th>Region</th>
                                             <th>Address</th>
                                             <th>Action</th>
                                         </tr>

@@ -23,32 +23,24 @@
                         <li><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
                     </ul>
                 </li>
+                <li class="menu-item-has-children dropdown hh">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Forwarding Docket</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="sent">Sent</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="received">Received</a></li>
+                    </ul>
+                </li>
                 <h3 class="menu-title">Management</h3>
-                <!-- <li class="cc">
-                    <a href="announcement"><i class="menu-icon fa fa-bullhorn" aria-hidden="true"></i>Announcement</a>
-                </li>
-                <li class="dd">
-                    <a href="blotter"><i class="menu-icon fa fa-file" aria-hidden="true"></i>Blotter</a>
-                </li>
-                <li class="ee">
-                    <a href="resident"><i class="menu-icon fa fa-home" aria-hidden="true"></i>Resident & Request</a>
-                </li>
-                <li class="ff">
-                    <a href="inventory"><i class="menu-icon fa fa-houzz" aria-hidden="true"></i>Inventory</a>
-                </li>
-                <li class="gg">
-                    <a href="barcode_qr_management"><i class="menu-icon fa fa-barcode" aria-hidden="true"></i>Barcode QR Management</a>
-                </li> -->
                 <li class="menu-item-has-children dropdown hh">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>My Organization</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="user_accounts">User Accounts</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="user_roles">User Roles</a></li>
-                        <li><i class="menu-icon fa fa-building-o"></i><a href="department">Department</a></li>
-                        <li><i class="menu-icon fa fa-location-arrow"></i><a href="location">Location</a></li>
+                        <li><i class="menu-icon fa fa-building-o"></i><a href="department">Field Office</a></li>
+                        <li><i class="menu-icon fa fa-location-arrow"></i><a href="location">Region</a></li>
                         <li><i class="menu-icon fa fa-lock"></i><a href="permission">Permission</a></li>
-                        <li><i class="menu-icon fa fa-building-o"></i><a href="field_office">Field Office</a></li>
-                        <li><i class="menu-icon fa fa-map-marker"></i><a href="regions">Regions</a></li>
+                        <!-- <li><i class="menu-icon fa fa-building-o"></i><a href="field_office">Field Office</a></li> -->
+                        <!-- <li><i class="menu-icon fa fa-map-marker"></i><a href="regions">Regions</a></li> -->
                     </ul>
                 </li>
                <!--  <li class="ii">
