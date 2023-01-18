@@ -16,7 +16,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Create</h1>
+                        <h1>Update</h1>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="investigation_docketing">Investigation Docket</a></li>
-                            <li class="active">Create</li>
+                            <li class="active">Update</li>
                         </ol>
                     </div>
                 </div>
@@ -39,55 +39,55 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Create Investigation List</strong>
+                                <strong class="card-title">Update Investigation List</strong>
                             </div>
                             <div class="card-body">
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                                <div class="alert alert-success" role="alert" id="success_update" style="display:none">
                                     <i class="fa fa-check"></i>
-                                        Successfully Added  
+                                        Successfully Updated  
                                 </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_update"></div>
 			                    </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control client_type">
+                                        <select class="form-control client_type_update select2">
                                             <option selected value="ADULT">Adult</option>
                                             <option value="JUVENILE">Juvenile</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
-                                </div>
+			                    <div class="row form-group col-md-6">
+			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no_update"></div>
+			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
 			                        <div class="col-12 col-md-9">
-			                            <select class="form-control military_court">
-			                                <option selected value="true">Yes</option>
+			                            <select class="form-control military_court_update select2">
+			                                <option value="true">Yes</option>
 			                                <option value="false">No</option>
 			                            </select>
 			                        </div>
@@ -98,7 +98,7 @@
 			                            <div class="list">
 			                                <div class="row form-group col-md-12">
 			                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-			                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+			                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence_update"></textarea></div>
 			                                </div>
 			                                <div class="row form-group col-md-6">
 			                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
@@ -120,20 +120,20 @@
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-			                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
+			                        <div class="col-12 col-md-9"><input type="date" class="form-control cod_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-			                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
+			                        <div class="col-12 col-md-9"><input type="date" class="form-control rd_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks_update"></div>
 			                    </div>
                             </div>
                             <div class="card-footer">
 			                    <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-			                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+			                    <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
 			                </div>
                         </div>
                     </div>
@@ -239,6 +239,18 @@
             
             return d.promise();
         };
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
 
         $(".add_more").unbind("click").on("click", function(){
             console.log("clicked")
@@ -263,57 +275,87 @@
                     <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
                 </div>`
             )
-        });
-        $('.list').on('click', '.remove', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
+        })
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
-        $(".btn-confirm").unbind("click").on("click", function(){
 
-            var payload = {
-                "type"          : "INV",
-                "docketNumber"  : "",
-                "fieldOfficeId" : "",
-                "clientType"    : $(".client_type").val(),
-                "firstName"     : $(".firstName").val(),
-                "middleName"    : $(".middleName").val(),
-                "lastName"      : $(".lastName").val(),
-                "suffixName"    : $(".suffix").val(),
-                "criminalCaseNumber" : $(".cc_no").val(),
-                "offense"       : $(".offense").val(),
-                "courtOfOrigin" : $(".court_origin").val(),
-                "militaryCourt" : $(".military_court").val(),
-                "sentence"      : $(".sentence").val(),
-                "courtOrderDate": $(".cod").val(),
-                "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : false,
-                "referral"      : false,
-                "typeOfReferral": "",
-                "remarks"       : $(".remarks").val(),
-                "probationStartDate": "",
-                "probationYear" : "",
-                "probationMonth": "",
-                "probationDay"  :"",
-                "status"        : 1,
-            }
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+        var docket_number = GetURLParameter('docket_number');
+        var __fields = function(){
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
                 console.log(result);
+                var result = result.response;
                 if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                    }, 2000);
+                    $(".firstName_update").val(result.firstName);
+                    $(".middleName_update").val(result.middleName);
+                    $(".lastName_update").val(result.lastName);
+                    $(".suffix_update").val(result.suffixName);
+                    $(".client_type_update").val(result.clientType).trigger("change");
+                    $(".cc_no_update").val(result.criminalCaseNumber);
+                    $(".offense_update").val(result.offense);
+                    $(".court_origin_update").val(result.courtOfOrigin);
+                    if (result.militaryCourt == true) {
+                        var mc = "true"
+                    } else {
+                        var mc = "false"
+                    }
+                    $(".military_court_update").val(mc).trigger("change");
+                    $(".sentence_update").val(result.sentence);
+                    $(".cod_update").val(result.courtOrderDate);
+                    $(".rd_update").val(result.receivedDate);
+                    $(".remarks_update").val(result.remarks);
+
+                    $(".btn-confirm_update").unbind("click").on("click", function(){
+                        console.log('clicked')
+                        
+                        var payload = {
+                            "type"          : "INV",
+                            "docketNumber"  : "",
+                            "fieldOfficeId" : "",
+                            "clientType"    : $(".client_type_update").val(),
+                            "firstName"     : $(".firstName_update").val(),
+                            "middleName"    : $(".middleName_update").val(),
+                            "lastName"      : $(".lastName_update").val(),
+                            "suffixName"    : $(".suffix_update").val(),
+                            "criminalCaseNumber" : $(".cc_no_update").val(),
+                            "offense"       : $(".offense_update").val(),
+                            "courtOfOrigin" : $(".court_origin_update").val(),
+                            "militaryCourt" : $(".military_court_update").val(),
+                            "sentence"      : $(".sentence_update").val(),
+                            "courtOrderDate": $(".cod_update").val(),
+                            "receivedDate"  : $(".rd_update").val(),
+                            "manualDocket"  : false,
+                            "referral"      : false,
+                            "typeOfReferral": "",
+                            "remarks"       : $(".remarks_update").val(),
+                            "probationStartDate": "",
+                            "probationYear" : "",
+                            "probationMonth": "",
+                            "probationDay"  :"",
+                            "status"        : 1,
+                        }
+
+                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number,JSON.stringify(payload)).done(function (result) {
+                            console.log(result);
+                            if (result.status != "ERROR") {
+                            $(".form-control").val('');
+                            $('#success_update').show();
+                                setTimeout(function () {
+                                    $('#success_update').hide();
+                                    window.location.reload(true);
+                                }, 2000);
+                            }else{
+                                alert("failed")
+                            }
+                        })
+                    })
+
                 }else{
-                //     console.log(result.status);
-                //     alert(result.message)
+                    alert("failed")
                 }
             })
-        })
+        }
+        __fields();
 
     } )( jQuery );
     </script>

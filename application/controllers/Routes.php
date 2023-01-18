@@ -126,6 +126,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('investigation_docket_create');
 	}
+	public function investigation_docket_update()
+	{
+		$this->load->view('investigation_docket_update');
+	}
 	public function supervision_docket_create()
 	{
 		$this->load->view('supervision_docket_create');
