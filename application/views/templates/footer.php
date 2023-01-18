@@ -166,11 +166,6 @@
             textBox.value = textBox.value.charAt(0).toUpperCase() + textBox.value.slice(1);
             textBox.setSelectionRange(start, end);                  
         });
-            $('.hh ul li a').click(function () {
-                $('.hh ul li a').removeClass('active');
-                $(this).addClass('active');
-            });
-
         
     })
 ( jQuery );
