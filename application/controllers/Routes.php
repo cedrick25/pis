@@ -134,6 +134,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('supervision_docket_create');
 	}
+	public function supervision_docket_update()
+	{
+		$this->load->view('supervision_docket_update');
+	}
 	public function inv_forward()
 	{
 		$this->load->view('inv_forward');
@@ -145,6 +149,10 @@ class routes extends CI_Controller {
 	public function received()
 	{
 		$this->load->view('received');
+	}
+	public function sup_forward()
+	{
+		$this->load->view('sup_forward');
 	}
 
 }

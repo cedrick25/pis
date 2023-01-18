@@ -382,7 +382,7 @@
                                             <td>Test Case</td>
                                             <td>Criminal case test</td>
                                             <td>inbox</td>
-                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDocketing'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-toggle='modal' data-target='#forwardDocket'><i class='fa fa-forward'></i> Forwarding</button>
+                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-toggle='modal' data-target='#forwardDocket'><i class='fa fa-forward'></i> Forwarding</button>
                                             </td>
                                         </tr>
                                     </tbody>
