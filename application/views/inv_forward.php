@@ -58,6 +58,8 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control field_office select2">
+                                            <option>Central Office</option>
+                                            <option>San Juan</option>
                                         </select>
                                     </div>
                                 </div>
@@ -246,6 +248,7 @@
         });
 
         var docket_number = GetURLParameter('docket_number');
+
         var __fields = function(){
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
                 console.log(result);

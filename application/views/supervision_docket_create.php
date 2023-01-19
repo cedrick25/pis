@@ -56,6 +56,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="row form-group col-md-6">       
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                        <div class="col-12 col-md-9">
+                                        <select name="select" id="" class="form-control docket_num select2">
+                                        </select>
+                                        </div>
+                                    </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Offices</label></div>
                                         <div class="col-12 col-md-9">
@@ -350,9 +357,46 @@
                 //     console.log(result.status);
                 //     alert(result.message)
                 }
-            })
+            })   
         })
+        
 
+        var __select = function(){
+            // $('.manual_docket').empty();
+
+            __executeExternalGet('http://localhost:8000/docketbook/list/sup').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    // $('.manual_docket').append("<option selected disabled> - - Select Field Office - - </option>");
+                    // result.forEach(function(data){
+                    //     console.log(data)
+                    //     $('.manual_docket').append(
+                    //         "<option value="+data.docketNumber+">"+data.manualDocket+"</option>");
+                    // });
+                    $('.manual_docket').on('change', function() {
+                        $('.docket_num').empty();
+                        __executeExternalGet('http://localhost:8000/docketbook/list/sup').done(function (result) {
+                            // console.log(result)
+                            if (result.status != "ERROR") {
+                                $(".docket_display").show()
+                                $('.dokcet_num').append("<option selected disabled> - - Select Docket Number - - </option>");
+                                result.content.forEach(function(data){
+                                    console.log(data)
+                                    $('.docket_num').append(
+                                        "<option value="+data.id+">"+data.docketNumber+"</option>");
+                                });
+                            } else {
+                                console.log("failed fetching user list")
+                                $(".docket_display").hide()
+                            }
+                        });
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
+        }
+        __select();
     } )( jQuery );
     </script>
 
