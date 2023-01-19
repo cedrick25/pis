@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="updateUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="updateUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,11 +75,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Update modal -->
 
     <!-- new User account modal -->
-    <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,7 +144,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- new User account modal -->
 
     <div id="right-panel" class="right-panel">
@@ -166,7 +166,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="dashboard">Forwarding Docket</a></li>
+                            <li><a href="sent">Forwarding Docket</a></li>
                             <li class="active">Sent</li>
                         </ol>
                     </div>
@@ -200,7 +200,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
-                                        <tr>
+<!--                                         <tr>
                                             <td>1</td>
                                             <td>JPI202400001</td>
                                             <td>Central Office</td>
@@ -210,7 +210,7 @@
                                             <td>User 1</td>
                                             <td>Pending</td>
                                             <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button></td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

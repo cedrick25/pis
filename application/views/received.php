@@ -10,7 +10,7 @@
     <!-- modal -->
 
     <!-- Update modal -->
-    <div class="modal fade" id="updateUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="updateUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,11 +75,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Update modal -->
 
     <!-- new User account modal -->
-    <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<!--     <div class="modal fade" id="newUserModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,7 +144,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- new User account modal -->
 
     <div id="right-panel" class="right-panel">
@@ -362,7 +362,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/'+ type).done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -398,7 +398,7 @@
 
                     $(".btn_view").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/inv_forward?docket_number='+docket_number;
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number;
                     })
                 }
             })
