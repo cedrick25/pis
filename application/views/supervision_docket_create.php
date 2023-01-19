@@ -56,10 +56,10 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-md-6">       
+                                    <div class="row form-group col-md-6 docket_display" style="display:none">       
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                                         <div class="col-12 col-md-9">
-                                        <select name="select" id="" class="form-control docket_num select2">
+                                        <select name="select" class="form-control docket_num select2">
                                         </select>
                                         </div>
                                     </div>
@@ -196,6 +196,8 @@
     ( function ( $ ) {
         var ___ctx = '';
 
+        var ___ctx = '';
+
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -204,43 +206,6 @@
             return ___ctx;
         };
 
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -283,6 +248,56 @@
             
             return d.promise();
         };
+        var __executeExternalGet = function(path, customLoader) {
+            // path = $.wms.getContextPath() + path;
+            var d = $.Deferred();
+            if(customLoader != ""){
+                $("#"+customLoader).show();
+                $("#"+customLoader).removeClass("hide");
+            }
+            $.ajax({
+                method: "GET",
+                url: path,
+                dataType: "json",
+            }).done(function (data, textStatus, jqXHR) {
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+                d.resolve(data)
+            }).fail(function (jqXHR, textStatus, errorThrown,request) {
+                console.log('---FAILED---');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                console.log('---FAILED---');
+                
+                d.resolve({
+                    status : 'ERROR',
+                    message : request
+                });
+                
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+            });
+            
+            return d.promise();
+        };
+
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
 
         $(".add_more").unbind("click").on("click", function(){
             console.log("clicked")
@@ -360,6 +375,7 @@
             })   
         })
         
+        var docket_number = GetURLParameter('docket_number');
 
         var __select = function(){
             // $('.manual_docket').empty();
@@ -378,25 +394,26 @@
                         __executeExternalGet('http://localhost:8000/docketbook/list/sup').done(function (result) {
                             // console.log(result)
                             if (result.status != "ERROR") {
-                                $(".docket_display").show()
-                                $('.dokcet_num').append("<option selected disabled> - - Select Docket Number - - </option>");
+                                $(".docket_display").show();
+                                $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
                                 result.content.forEach(function(data){
-                                    console.log(data)
+                                    // console.log(data)
                                     $('.docket_num').append(
                                         "<option value="+data.id+">"+data.docketNumber+"</option>");
                                 });
                             } else {
-                                console.log("failed fetching user list")
-                                $(".docket_display").hide()
+                                console.log("failed fetching docket number")
+                                $(".docket_display").hide();
                             }
                         });
                     });
                 } else {
-                    console.log("failed fetching department list")
+                    console.log("failed fetching docket number")
                 }
             })
         }
         __select();
+
     } )( jQuery );
     </script>
 
