@@ -215,7 +215,8 @@
                         console.log('clicked')
                         
                         var payload = {
-                            "type"                  : $(".caseload_type").val(),
+                            "type"                  : "SUP",
+                            "caseload_type"         : $(".caseload_type").val(),
                             "senderId"              : $.cookie("uuid"),
                             "receiverId"            : "1",
                             "fieldOfficeId"         : $(".field_office").val(),
