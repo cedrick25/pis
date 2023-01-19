@@ -53,6 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['docketing'] = "routes/docketing";
 $route['sent'] = "routes/sent";
 $route['received'] = "routes/received";
+$route['upload'] = "routes/upload";
 $route['investigation_docketing'] = "routes/investigation_docketing";
 $route['investigation_docket_create'] = "routes/investigation_docket_create";
 $route['investigation_docket_update'] = "routes/investigation_docket_update";

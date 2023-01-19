@@ -154,5 +154,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('sup_forward');
 	}
+	public function upload()
+	{
+		$this->load->view('upload');
+	}
 
 }
