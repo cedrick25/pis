@@ -185,7 +185,6 @@
             
             return d.promise();
         };
-
         var __executeFile = function(path, jsonObj) {
             var d = $.Deferred();
                 $(".overlay-back").show();
@@ -195,6 +194,7 @@
                 url: path,
                 dataType: "json",
                 cache: false,
+                "mimeType": "multipart/form-data",
                 processData: false,
                 contentType: false,
                 /*data: JSON.stringify(jsonObj)*/
@@ -219,7 +219,7 @@
             });
             return d.promise();
         };
-
+        
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -232,11 +232,6 @@
                 }
             }
         }
-
-
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
 
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){

@@ -51,8 +51,8 @@
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control manual_docket select2">
-                                                <option selected value="true">True</option>
-                                                <option value="false">False</option>
+                                                <option  value="true">True</option>
+                                                <option selected value="false">False</option>
                                             </select>
                                         </div>
                                     </div>
