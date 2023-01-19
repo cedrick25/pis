@@ -281,6 +281,7 @@
             
             return d.promise();
         };
+
         var __executeExternalGet = function(path, customLoader) {
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
@@ -319,6 +320,8 @@
             return d.promise();
         };
 
+        var type = GetURLParameter('type');
+        
         var __select = function(){
             $('.field_office').empty();
             $('.field_office_update').empty();
@@ -343,11 +346,23 @@
         }
         __select();
 
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
         var __table = function(){
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/'+ type).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
