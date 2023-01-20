@@ -77,8 +77,8 @@
                                     <div class="col-12 col-md-9"><input type="file" class="form-control-file" id="uploadFile"></div>
                                 </div> -->
                             </div>
-                            <div class="card-footer">
-			                    <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
+                            <div class="modal-footer">
+			                    <button type="button" class="btn btn-success btn-sm btn-view">View File</button>
 			                    <button type="button" class="btn btn-primary btn-certUpload btn-sm float-right">Confirm</button>
 			                </div>
                         </div>

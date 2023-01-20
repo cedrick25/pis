@@ -364,7 +364,7 @@
                             <div class="card-body">
                                 <table id="" class="table table_head">
                                     <thead>
-                                        <tr>
+                                        <tr align="center">
                                             <th>#</th>
                                             <th>Docket Number</th>
                                             <th>Received Date</th>
@@ -510,7 +510,7 @@
                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
                             "<td>"+data.criminalCaseNumber+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-forward'></i> Forwarding</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button type='button' class='btn btn-sm btn btn-danger'><i class='fa fa-times'></i> Delete </button> <button class='btn btn-sm btn-danger btn_forward' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-forward'></i> Forwarding</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {

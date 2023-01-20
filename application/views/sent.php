@@ -200,7 +200,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
-<!--                                         <tr>
+                                        <tr>
                                             <td>1</td>
                                             <td>JPI202400001</td>
                                             <td>Central Office</td>
@@ -209,8 +209,8 @@
                                             <td>caseload type sample</td>
                                             <td>User 1</td>
                                             <td>Pending</td>
-                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button></td>
-                                        </tr> -->
+                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_display' type='submit' data-docket='"+data.docketNumber+"'> <i class='fa fa-eye'></i> Display</button> <button class='btn btn-sm btn-success btn_view' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -343,47 +343,47 @@
         }
         __select();
 
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
+        // var __table = function(){
+        //     $('.table_head').DataTable().destroy();
+        //     $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.response.forEach(function(data){
-                        $('.table_body').append("<tr>"+
-                            "<td></td>"+
-                            "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.fieldOfficeId+"</td>"+
-                            "<td>"+data.status+"</td>"+
-                            "<td>"+data.remarks+"</td>"+
-                            "<td>"+data.type+"</td>"+
-                            "<td>"+data.createdBy+"</td>"+
-                            "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button>")
-                    });
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "30%", "targets": 9 }
-                            ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    });
-                    $(".btn_update").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
-                    })
-                }
-            })
-        }
-        __table();
+        //     __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
+        //         console.log("==========")
+        //         console.log(result)
+        //         console.log("==========")
+        //         if (result.status != "ERROR") {
+        //             result.response.forEach(function(data){
+        //                 $('.table_body').append("<tr>"+
+        //                     "<td></td>"+
+        //                     "<td>"+data.docketNumber+"</td>"+
+        //                     "<td>"+data.fieldOfficeId+"</td>"+
+        //                     "<td>"+data.status+"</td>"+
+        //                     "<td>"+data.remarks+"</td>"+
+        //                     "<td>"+data.type+"</td>"+
+        //                     "<td>"+data.createdBy+"</td>"+
+        //                     "<td>"+data.status+"</td>"+
+        //                     "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button>")
+        //             });
+        //             $(document).ready(function () {
+        //                 $('.table_head tbody tr').each(function (idx) {
+        //                    $(this).children("td:eq(0)").html(idx + 1);
+        //                 });
+        //                 var table = $('.table_head').DataTable({
+        //                     order: [[0, 'asc']],
+        //                     "columnDefs": [
+        //                         { "width": "30%", "targets": 9 }
+        //                     ]
+        //                 });
+        //                 $('.dataTables_length').addClass('bs-select');
+        //             });
+        //             $(".btn_update").unbind("click").on("click", function(){
+        //                 var docket_number = $(this).data("docket");
+        //                 window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+        //             })
+        //         }
+        //     })
+        // }
+        // __table();
 
     } )( jQuery );
     </script>
