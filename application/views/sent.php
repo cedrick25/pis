@@ -196,7 +196,7 @@
                                             <th>Caseload Type</th>
                                             <th>Receiver</th>
                                             <th>Status</th>
-                                            <th>Actions</th>
+                                            <!-- <th>Actions</th> -->
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
@@ -209,7 +209,7 @@
                                             <td>caseload type sample</td>
                                             <td>User 1</td>
                                             <td>Pending</td>
-                                            <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_display' type='submit' data-docket='"+data.docketNumber+"'> <i class='fa fa-eye'></i> Display</button> <button class='btn btn-sm btn-success btn_view' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> </td>
+                                            <!-- <td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_display' type='submit' data-docket='"+data.docketNumber+"'> <i class='fa fa-eye'></i> Display</button> <button class='btn btn-sm btn-success btn_view' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> </td> -->
                                         </tr>
                                     </tbody>
                                 </table>

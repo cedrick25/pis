@@ -102,9 +102,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('permission');
 	}
-	public function docketing()
+	public function docket_routing()
 	{
-		$this->load->view('docketing');
+		$this->load->view('docket_routing');
 	}
 	public function investigation_docketing()
 	{
@@ -158,5 +158,4 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('upload');
 	}
-
 }

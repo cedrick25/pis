@@ -50,9 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 // AMS start
-$route['docketing'] = "routes/docketing";
+$route['docketing'] = "routes/docket_routing";
 $route['sent'] = "routes/sent";
 $route['received'] = "routes/received";
+$route['docket_routing'] = "routes/docket_routing";
 $route['upload'] = "routes/upload";
 $route['investigation_docketing'] = "routes/investigation_docketing";
 $route['investigation_docket_create'] = "routes/investigation_docket_create";

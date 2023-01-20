@@ -3,7 +3,7 @@
 
         <div class="navbar-header">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa fa-bars"></i>
+            <i class="fa fa-bars"></i>
             </button>
             <!-- <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a> -->
             <!-- <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a> -->
@@ -28,6 +28,7 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="sent">Sent</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="received">Received</a></li>
+                        <li><i class="menu-icon fa fa-paper-plane"></i><a href="docket_routing">Docket Routing</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title">Management</h3>
