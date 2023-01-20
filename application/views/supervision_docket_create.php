@@ -420,7 +420,7 @@
                             if (result.status != "ERROR") {
                                 $(".docket_display").show();
                                 $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
-                                result.content.forEach(function(data){
+                                result.response.forEach(function(data){
                                     console.log(data)
                                     $('.docket_num').append(
                                         "<option value="+data.id+">"+data.docketNumber+"</option>");
