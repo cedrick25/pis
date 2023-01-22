@@ -24,11 +24,11 @@
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown hh">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Forwarding Docket</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Docket Routing</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user"></i><a href="sent">Sent</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="received">Received</a></li>
-                        <li><i class="menu-icon fa fa-paper-plane"></i><a href="docket_routing">Docket Routing</a></li>
+                        <li><i class="menu-icon fa fa-share"></i><a href="docket_routing">Docket Routing</a></li>
+                        <li><i class="menu-icon fa fa-paper-plane-o"></i><a href="sent">Sent</a></li>
+                        <li><i class="menu-icon fa fa-inbox"></i><a href="received">Received</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title">Management</h3>

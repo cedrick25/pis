@@ -65,7 +65,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control client_type">
+                                        <select class="form-control client_type select2">
                                             <option selected value="ADULT">Adult</option>
                                             <option value="JUVENILE">Juvenile</option>
                                         </select>
@@ -83,6 +83,13 @@
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
 			                    </div>
+                                <div class="row form-group col-md-6 false_manual">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control field_office select2" >
+                                        </select>
+                                    </div>
+                                </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
 			                        <div class="col-12 col-md-9">
@@ -96,22 +103,6 @@
 			                        <fieldset class="row col col-md-12">
 			                            <legend>List</legend>
 			                            <div class="list">
-			                                <div class="row form-group col-md-12">
-			                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-			                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
-			                                </div>
-			                                <div class="row form-group col-md-6">
-			                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-			                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-			                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-			                                    <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
-			                                </div>
-			                                <div class="row form-group col-md-6">
-			                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-			                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-			                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-			                                    <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
-			                                </div>
 			                            </div>
 			                            <div class="col-12">
 			                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
@@ -240,28 +231,51 @@
             return d.promise();
         };
 
+        $(".list").html(`
+            <div class="list_sentence">
+                <div class="row form-group col-md-12">
+                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
+                </div>
+                <div class="row form-group col-md-6">
+                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
+                </div>
+                <div class="row form-group col-md-6">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
+                </div>
+            </div>`
+        );
+
         $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked")
+            console.log("clicked");
+
             $(".list").append(`
-                <div class="">
+                <div class="list_sentence">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
                     </div>
                     <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                </div>`
+                </div>
+                `
             )
         });
         $('.list').on('click', '.remove', function(e) {
@@ -272,12 +286,54 @@
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
+
+        var __select = function(){
+            $('.field_office').empty();
+
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.field_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                   
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
         $(".btn-confirm").unbind("click").on("click", function(){
+            
+            const sentence = [];
+            const sentence_inputs = $(".sentence");
+            const min_y = $(".min_y");
+            const min_m = $(".min_m");
+            const min_d = $(".min_d");
+            const max_y = $(".max_y");
+            const max_m = $(".max_m");
+            const max_d = $(".max_d");
+
+            for(var i = 0; i < sentence_inputs.length; i++){
+                const list = {};
+                list.sentence = $(sentence_inputs[i]).val()
+                list.min_y = $(min_y[i]).val();
+                list.min_m = $(min_m[i]).val();
+                list.min_d = $(min_d[i]).val();
+                list.max_y = $(max_y[i]).val();
+                list.max_m = $(max_m[i]).val();
+                list.max_d = $(max_d[i]).val();
+                sentence.push(list);
+            }
+            console.log(list)
+            console.log(sentence)
 
             var payload = {
                 "type"          : "INV",
                 "docketNumber"  : "",
-                "fieldOfficeId" : "",
+                "fieldOfficeId" : $(".field_office").val(),
                 "clientType"    : $(".client_type").val(),
                 "firstName"     : $(".firstName").val(),
                 "middleName"    : $(".middleName").val(),
@@ -287,7 +343,7 @@
                 "offense"       : $(".offense").val(),
                 "courtOfOrigin" : $(".court_origin").val(),
                 "militaryCourt" : $(".military_court").val(),
-                "sentence"      : $(".sentence").val(),
+                "sentence"      : JSON.stringify(sentence),
                 "courtOrderDate": $(".cod").val(),
                 "receivedDate"  : $(".rd").val(),
                 "manualDocket"  : false,
@@ -300,6 +356,7 @@
                 "probationDay"  :"",
                 "status"        : 1,
             }
+            console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {

@@ -25,7 +25,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="investigation_docketing">Investigation Docket</a></li>
+                            <li><a href="received">Received</a></li>
                             <li class="active">Upload</li>
                         </ol>
                     </div>
@@ -47,40 +47,42 @@
                                         Successfully Uploaded 
                                 </div>
                                 <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
+                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label type"></label></div>
+                                </div>
+                                <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                                     <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label docket_number"></label></div>
                                 </div>
                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Caseload Type" class="form-control caseload_type"></div>
-                                </div>
-                                <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select name="select" id="" class="form-control field_office select2">
-                                            <option value="" disabled selected> - - Select Field Office - - </option>
-                                            <option value="Central Office">Central Office</option>
-                                            <option value="Central Office1">Central Office1</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Upload File</label></div>
-                                    <div class="col col-md-3"><input type="file" class="form-control-file" id="fileupload"></div>
+                                    <div class="col col-md-3"><input type="file" name="fileupload" class="form-control-file" id="fileupload"></div>
                                 </div>
-<!--                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
-                                </div> -->
-                                <!-- <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="uploadFile" class=" form-control-label">Upload a File</label></div>
-                                    <div class="col-12 col-md-9"><input type="file" class="form-control-file" id="uploadFile"></div>
-                                </div> -->
                             </div>
-                            <div class="modal-footer">
-			                    <button type="button" class="btn btn-success btn-sm btn-view">View File</button>
-			                    <button type="button" class="btn btn-primary btn-certUpload btn-sm float-right">Confirm</button>
-			                </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Upload List</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="col col-md-12">
+                                    <table class="table table_head">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>File name</th>
+                                                <th>Date Uploaded</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table_body">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,9 +90,7 @@
         </div>
 
 
-    </div><!-- /#right-panel -->
-
-    <!-- Right Panel -->
+    </div>
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
@@ -187,8 +187,6 @@
         };
         var __executeFile = function(path, jsonObj) {
             var d = $.Deferred();
-                $(".overlay-back").show();
-                $(".loadDiv").show();
             $.ajax({
                 method: "POST",
                 url: path,
@@ -214,8 +212,6 @@
                     status : 'ERROR',
                     message : errorThrown
                 });
-                $(".overlay-back").hide();
-                $(".loadDiv").hide();
             });
             return d.promise();
         };
@@ -240,37 +236,30 @@
                 var result = result.response;
                 if (result.status != "ERROR") {
                     $(".docket_number").html(result.docketNumber);
+                    $(".type").html(result.type);
 
-                    $(".btn-confirm_update").unbind("click").on("click", function(){
-                        console.log('clicked')
-                        
-                        var payload = {
-                            "type"                  : $(".caseload_type").val(),
-                            "senderId"              : $.cookie("uuid"),
-                            "receiverId"            : "1",
-                            "fieldOfficeId"         : $(".field_office").val(),
-                            "docketNumber"          : $(".docket_number").val(),
-                            "details"               : $(".details").val(),
-                            "remarks"               : $(".remarks").val(),
-                            "approvalStatus"        : "",
-                            "lastStatusUpdateDate"  : "",
-                        }
+                    $(".btn-confirm").unbind("click").on("click", function(){
+                        console.log("clicked")
+                        var fileToUpload = $('#fileupload').prop('files')[0];
 
-                        __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                            console.log(result);
-                            if (result.status != "ERROR") {
-                            $(".form-control").val('');
-                            $('#success_forwarding').show();
-                                setTimeout(function () {
-                                    $('#success_forwarding').hide();
-                                    window.location.reload(true);
-                                }, 2000);
-                            }else{
-                                alert("failed")
-                            }
-                        })
+                        if (fileToUpload === undefined) {
+                            alert("Please Choose File Before Upload!")
+                        }else {
+                            const formdata = new FormData();
+                            formdata.append("files", fileupload.files[0], fileupload.files[0].name);
+                            console.log(fileupload.files[0])
+                            console.log(fileupload.files[0].name)
+                            __executeFile('http://localhost:8080/file/upload?uuid='+$.cookie('uuid')+'&type='+result.type,formdata).done(function (result) {
+                                console.log(result)
+                                if(result){
+                                    list_upload();
+
+                                }else{
+                                    // alert ("upload Failed");
+                                }
+                            });
+                        } 
                     })
-
                 }else{
                     alert("failed")
                 }
@@ -278,26 +267,26 @@
         }
         __fields();
 
-        $(".btn-certUpload").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    var fileToUpload = $('#fileupload').prop('files')[0];
-                    // console.log(fileToUpload)
-                    if (fileToUpload === undefined) {
-                        alert("Please Choose File Before Upload!")
-                    }else {
-                        var formdata = new FormData();
-                        formdata.append("files", fileupload.files[0], fileupload.files[0].name);
+        var list_upload = function(){
+            console.log("list")
+            __executeExternalGet('http://localhost:8080/file/list/INV/'+$.cookie('uuid')).done(function (result) {
+                console.log(result)
 
-                        $.wms.executeFile('http://192.168.1.184:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f44',formdata).done(function (result) {
-                            console.log(result)
-                            if(result){
-                                __cert_list_upload();
-                            }else{
-                                // alert ("region Failed");
-                            }
-                        });
-                    } 
-        })
+                if (result.response.length != 0) {
+                    $(".table_body").empty()
+                    result.response.forEach(function(data){
+                        $('.table_body').append("<tr>"+
+                            "<td>"+data.file_name+"</td>"+
+                            "<td>"+data.created_date+"</td>"+
+                            "<td align='center' class='options'><a href="+'http://localhost:8080/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.file_path+"' data-file_name='"+data.file_name+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                        )
+                    });
+                } else {
+
+                }
+
+            });
+        }
     } )( jQuery );
     </script>
 

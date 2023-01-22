@@ -25,7 +25,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="supervision_docketing">Investigation Docket</a></li>
+                            <li><a href="supervision_docketing">Supervision Docket</a></li>
                             <li class="active">Update</li>
                         </ol>
                     </div>
@@ -39,7 +39,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Update Investigation List</strong>
+                                <strong class="card-title">Update Supervision List</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success_update" style="display:none">
@@ -360,7 +360,7 @@
                         var payload = {
                             "type"          : "INV",
                             "docketNumber"  : "",
-                            "fieldOfficeId" : "",
+                            "fieldOfficeId" :  $(".field_office_update").val(),
                             "clientType"    : $(".client_type_update").val(),
                             "firstName"     : $(".firstName_update").val(),
                             "middleName"    : $(".middleName_update").val(),

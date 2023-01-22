@@ -25,7 +25,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="investigation_docketing">Investigation Docket</a></li>
+                            <li><a href="docket_routing">Docket Routing</a></li>
                             <li class="active">Forward</li>
                         </ol>
                     </div>
@@ -44,13 +44,22 @@
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success_forwarding" style="display:none">
                                     <i class="fa fa-check"></i>
-                                        Successfully Forward  
+                                        Successfully Forward 
+                                </div>
+                                <div class="row form-group col-md-12">         
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select name="select" id="" class="form-control type select2">
+                                            <option value="" selected disabled> - - Select Type - - </option>
+                                            <option value="INV">Investigation</option>
+                                            <option value="SUP">Supervision</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select name="select" id="" class="form-control docket select2">
-                                            <option>--Select--</option>
+                                        <select name="select" id="" class="form-control docket_num select2">
                                         </select>
                                     </div>
                                 </div>
@@ -67,7 +76,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-12 user_display" style="display: none;">         
+                                <div class="row form-group col-md-12 user_display" style="display: none;">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Account</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control user_account select2">
@@ -78,18 +87,10 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Details</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Details" class="form-control details"></div>
                                 </div>
-<!--                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
-                                </div> -->
-                                <!-- <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="uploadFile" class=" form-control-label">Upload a File</label></div>
-                                    <div class="col-12 col-md-9"><input type="file" class="form-control-file" id="uploadFile"></div>
-                                </div> -->
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -196,41 +197,48 @@
             return d.promise();
         };
 
-        function GetURLParameter(sParam){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++)
-            {
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == sParam)
-                {
-                    return decodeURIComponent(sParameterName[1]);
-                }
-            }
-        }
-
-
         var __select = function(){
             $('.field_office').empty();
+
+            $('.type').on('change', function() {
+                $('.docket_num').empty();
+                const type = this.value
+                console.log(type)
+                __executeExternalGet('http://localhost:8000/docketbook/list/'+type).done(function (result) {
+                    console.log(result)
+                    if (result.status != "ERROR") {
+
+                        $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
+
+                        result.response.forEach(function(data){
+                            $('.docket_num').append(
+                                "<option value="+data.docketNumber+" data-id="+data.type+">"+data.docketNumber+"</option>");
+                        });
+
+                    } else {
+                        console.log("failed fetching docket number")
+                    }
+                });
+            });
 
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
-                        console.log(data)
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                     });
                     $('.field_office').on('change', function() {
                         $('.user_account').empty();
-                        __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
+                        const dep_id = this.value
+                        __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
                             // console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
                                 $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
-                                result.content.forEach(function(data){
-                                    console.log(data)
+                                result.forEach(function(data){
+                                    // console.log(data)
                                     $('.user_account').append(
                                         "<option value="+data.uuid+">"+data.email+"</option>");
                                 });
@@ -244,6 +252,37 @@
                     console.log("failed fetching department list")
                 }
             })
+
+            $(".btn-confirm_forward").unbind("click").on("click", function(){
+                console.log('clicked')
+
+                var payload = {
+                    "type"                  : $('.type').val(),
+                    "caseload_type"         : $(".caseload_type").val(),
+                    "senderId"              : $.cookie("uuid"),
+                    "receiverId"            : $(".user_account").val(),
+                    "fieldOfficeId"         : $(".field_office").val(),
+                    "docketNumber"          : $(".docket_num").val(),
+                    "details"               : $(".details").val(),
+                    "remarks"               : "",
+                    "approvalStatus"        : "",
+                    "lastStatusUpdateDate"  : "",
+                }
+                console.log(payload)
+                __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                    console.log(result);
+                    if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success_forwarding').show();
+                        setTimeout(function () {
+                            $('#success_forwarding').hide();
+                            window.location.reload(true);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
+                })
+            })
         }
         __select();
 
@@ -251,52 +290,6 @@
             $(".form-control").val('');
         });
 
-        var docket_number = GetURLParameter('docket_number');
-
-        var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
-                console.log(result);
-                var result = result.response;
-                if (result.status != "ERROR") {
-                    $(".docket_number").html(result.docketNumber);
-
-                    $(".btn-confirm_update").unbind("click").on("click", function(){
-                        console.log('clicked')
-                        
-                        var payload = {
-                            "type"                  : "INV",
-                            "caseload_type"         : $(".caseload_type").val(),
-                            "senderId"              : $.cookie("uuid"),
-                            "receiverId"            : "1",
-                            "fieldOfficeId"         : $(".field_office").val(),
-                            "docketNumber"          : $(".docket_number").text(),
-                            "details"               : $(".details").val(),
-                            "remarks"               : $(".remarks").val(),
-                            "approvalStatus"        : "",
-                            "lastStatusUpdateDate"  : "",
-                        }
-
-                        __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                            console.log(result);
-                            if (result.status != "ERROR") {
-                            $(".form-control").val('');
-                            $('#success_forwarding').show();
-                                setTimeout(function () {
-                                    $('#success_forwarding').hide();
-                                    window.location.reload(true);
-                                }, 2000);
-                            }else{
-                                alert("failed")
-                            }
-                        })
-                    })
-
-                }else{
-                    alert("failed")
-                }
-            })
-        }
-        __fields();
     } )( jQuery );
     </script>
 

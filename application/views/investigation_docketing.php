@@ -7,12 +7,37 @@
     
     <!-- /#left-panel -->
 
+    <div class="modal fade" id="removeModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Remove Docket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Removed Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to remove this Docket: <b><span class="docket"></span></b>? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_remove_confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
         <?php $this->load->view('templates/avatar.php'); ?> 
         <!-- /header -->
-
+  
         <div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -183,7 +208,7 @@
                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
                             "<td>"+data.criminalCaseNumber+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button type='button' class='btn btn-sm btn btn-danger'><i class='fa fa-times'></i> Delete </button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-remove'></i> Remove</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
@@ -198,15 +223,36 @@
                         $('.dataTables_length').addClass('bs-select');
                     });
 
+                    $(".btn_remove").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        $(".docket").html(docket_number)
+                        $(".btn_remove_confirm").unbind("click").on("click", function(){
+
+                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                                if (result.status != "ERROR") {
+                                        $(".form-control").val('');
+                                        $('#success_remove').show();
+                                            setTimeout(function () {
+                                                $('#removeModal').modal('hide');
+                                                $('#success_remove').hide();
+                                                __table();
+                                            }, 1000);
+                                        
+                                    // $(".form-control").val('');
+                                    // $('#removeModal').modal('hide');
+                                    // __table();
+                                }else{
+                                    alert("failed")
+                                }
+                            })
+                        })
+                    })
+
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
                     })
-
-                    $(".btn_forward").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/inv_forward?docket_number='+docket_number;
-                    })
+                   
                 }
             })
         }
