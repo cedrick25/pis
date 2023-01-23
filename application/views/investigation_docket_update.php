@@ -46,6 +46,19 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Updated  
                                 </div>
+                                    <div class="row form-group col-md-12">
+                                        <div class="row form-group col-md-6">
+                                            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
+                                            <div class="col-12 col-md-8">
+                                                <div class="form-check form-check-inline">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="form-check-input primary manual_docket" value="false">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
