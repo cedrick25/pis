@@ -158,4 +158,12 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('upload');
 	}
+	public function return()
+	{
+		$this->load->view('return');
+	}
+	public function forward()
+	{
+		$this->load->view('forward');
+	}
 }

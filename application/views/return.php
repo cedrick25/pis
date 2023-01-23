@@ -16,7 +16,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Upload</h1>
+                        <h1>Return</h1>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="received">Received</a></li>
-                            <li class="active">Upload</li>
+                            <li class="active">Return</li>
                         </ol>
                     </div>
                 </div>
@@ -39,12 +39,12 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Upload File</strong>
+                                <strong class="card-title">Return Docket</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success_forwarding" style="display:none">
                                     <i class="fa fa-check"></i>
-                                        Successfully Uploaded 
+                                        Successfully Return  
                                 </div>
                                 <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
@@ -55,34 +55,26 @@
                                     <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label docket_number"></label></div>
                                 </div>
                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Upload File</label></div>
-                                    <div class="col col-md-3"><input type="file" name="fileupload" class="form-control-file" id="fileupload"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label field_office"></label></div>
+                                </div>
+                                <div class="row form-group col-md-12">         
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Return to</label></div>
+                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label return_to"></label></div>
+                                </div>
+                                <div class="row form-group col-md-12">         
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Details</label></div>
+                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label details"></label></div>
+                                </div>
+                                <div class="row form-group col-md-12">         
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">Upload List</strong>
-                            </div>
-                            <div class="card-body">
-                                <div class="col col-md-12">
-                                    <table class="table table_head">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>File name</th>
-                                                <th>Date Uploaded</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table_body">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+			                    <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
+			                    <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
+			                </div>
                         </div>
                     </div>
                 </div>
@@ -90,7 +82,9 @@
         </div>
 
 
-    </div>
+    </div><!-- /#right-panel -->
+
+    <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
@@ -185,37 +179,7 @@
             
             return d.promise();
         };
-        var __executeFile = function(path, jsonObj) {
-            var d = $.Deferred();
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                cache: false,
-                "mimeType": "multipart/form-data",
-                processData: false,
-                contentType: false,
-                /*data: JSON.stringify(jsonObj)*/
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                d.resolve(data);
-                $(".loadDiv").hide();
-                $(".overlay-back").hide();
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : errorThrown
-                });
-            });
-            return d.promise();
-        };
-        
+
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -229,66 +193,72 @@
             }
         }
 
+        $(".btn-reset").unbind("click").on("click", function(){
+            $(".form-control").val('');
+        });
+
         var docket_number = GetURLParameter('docket_number');
+        var id = GetURLParameter('id');
         var __fields = function(){
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
-                console.log(result);
+                // console.log(result);
                 var result = result.response;
                 if (result.status != "ERROR") {
-                    $(".docket_number").html(result.docketNumber);
-                    $(".type").html(result.type);
 
-                    $(".btn-confirm").unbind("click").on("click", function(){
-                        console.log("clicked")
-                        var fileToUpload = $('#fileupload').prop('files')[0];
+                    __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
+                        console.log(result);
 
-                        if (fileToUpload === undefined) {
-                            alert("Please Choose File Before Upload!")
-                        }else {
-                            const formdata = new FormData();
-                            formdata.append("files", fileupload.files[0], fileupload.files[0].name);
-                            console.log(fileupload.files[0])
-                            console.log(fileupload.files[0].name)
-                            __executeFile('http://localhost:8080/file/upload?uuid='+$.cookie('uuid')+'&type='+result.type+'&version=0',formdata).done(function (result) {
-                                console.log(result)
-                                if(result){
-                                    // list_upload();
+                        var result = result.response;
+                        if (result.status != "ERROR") {
+                            $(".docket_number").html(result.docketNumber);
+                            $(".type").html(result.type);
+                            $(".field_office").html(result.fieldOfficeId);
+                            $(".return_to").html(result.senderId);
+                            $(".details").html(result.details);
+                            
+                            $(".btn-confirm_update").unbind("click").on("click", function(){
+                            console.log('clicked')
+                            
+                            var payload = {
+                                "type"                  : result.type,
+                                "caseload_type"         : $(".caseload_type").val(),
+                                "senderId"              : $.cookie("uuid"),
+                                "receiverId"            : "1",
+                                "fieldOfficeId"         : $(".field_office").val(),
+                                "docketNumber"          : $(".docket_number").val(),
+                                "details"               : $(".details").val(),
+                                "remarks"               : $(".remarks").val(),
+                                "approvalStatus"        : "",
+                                "lastStatusUpdateDate"  : "",
+                            }
 
+                            __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                                console.log(result);
+                                if (result.status != "ERROR") {
+                                $(".form-control").val('');
+                                $('#success_forwarding').show();
+                                    setTimeout(function () {
+                                        $('#success_forwarding').hide();
+                                        window.location.reload(true);
+                                    }, 2000);
                                 }else{
-                                    // alert ("upload Failed");
+                                    alert("failed")
                                 }
-                            });
-                        } 
+                            })
+                        })
+                        }else{
+                            alert("failed")
+                        }
                     })
+
+                    
+
                 }else{
                     alert("failed")
                 }
             })
         }
         __fields();
-
-        var list_upload = function(){
-            console.log("list")
-            __executeExternalGet('http://localhost:8080/file/list/INV/'+$.cookie('uuid')).done(function (result) {
-                console.log(result)
-
-                if (result.response.length != 0) {
-                    $(".table_body").empty()
-                    result.response.forEach(function(data){
-                        $('.table_body').append("<tr>"+
-                            "<td>"+data.file_name+"</td>"+
-                            "<td>"+data.created_date+"</td>"+
-                            "<td align='center' class='options'><a href="+'http://localhost:8080/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.file_path+"' data-file_name='"+data.file_name+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
-                        )
-                    });
-                } else {
-
-                }
-
-            });
-        }
-        // list_upload();
-
     } )( jQuery );
     </script>
 

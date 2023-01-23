@@ -46,10 +46,10 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#inv" role="tab" aria-controls="home" aria-selected="true">Investigation</a>
+                                        <a class="nav-link active" id="inv_tab" data-toggle="tab" href="#inv" role="tab" aria-controls="investigation" aria-selected="true">Investigation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#sup" role="tab" aria-controls="profile" aria-selected="false">Supervision</a>
+                                        <a class="nav-link" id="sup_tab" data-toggle="tab" href="#sup" role="tab" aria-controls="supervision" aria-selected="false">Supervision</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
@@ -204,38 +204,14 @@
             return d.promise();
         };
 
-        var __select = function(){
-            $('.field_office').empty();
-            $('.field_office_update').empty();
-
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        console.log(data)
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.field_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-
-                    });
-                } else {
-                    console.log("failed fetching department list")
-                }
-            })
-        }
-        __select();
-
         var __table = function(){
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
             __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=INV').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
+                // console.log("==========")
+                // console.log(result)
+                // console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
                         $('.table_body').append("<tr>"+
@@ -245,7 +221,7 @@
                             "<td>"+data.details+"</td>"+
                             "<td>"+data.senderId+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_upload type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-upload'></i> Upload</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
@@ -253,19 +229,26 @@
                         });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "30%", "targets": 6 }
-                            // ]
+                            "columnDefs": [
+                                { "width": "30%", "targets": 6 }
+                            ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     }); 
-                    $(".btn_update").unbind("click").on("click", function(){
+                    $(".btn_return").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+                        var id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
+                    })
+                    $(".btn_forward").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        var id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
                     })
                     $(".btn_upload").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number;
+                        var id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id;
                     })
                 }
             })
@@ -289,28 +272,42 @@
                             "<td>"+data.details+"</td>"+
                             "<td>"+data.senderId+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button>")
+                            "<td align='center' class='actions' width='30%'> <button class='btn btn-sm btn-primary btn_upload_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head_sup tbody tr').each(function (idx) {
                            $(this).children("td:eq(0)").html(idx + 1);
                         });
-                        var table = $('.table_head_sup').DataTable({
+                        var table_sup = $('.table_head_sup').DataTable({
                             order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "30%", "targets": 6 }
-                            // ]
+                            "columnDefs": [
+                                // { "width": "30%", "targets": 6 }
+                            ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     }); 
-                    $(".btn_update").unbind("click").on("click", function(){
+                    $(".btn_return_sup").unbind("click").on("click", function(){
+                        var id = $(this).data("id");
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
+                    })
+                    $(".btn_forward_sup").unbind("click").on("click", function(){
+                        var id = $(this).data("id");
+                        var docket_number = $(this).data("docket");
+                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
+                    })
+                    $(".btn_upload_sup").unbind("click").on("click", function(){
+                        var id = $(this).data("id");
+                        var docket_number = $(this).data("docket");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id;
                     })
                 }
             })
         }
-        __table_sup();
+        
+        // $(".sup_tab").unbind("click").on("click", function(){
+            __table_sup();
+        // })
     } )( jQuery );
     </script>
 
