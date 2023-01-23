@@ -166,4 +166,8 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('forward');
 	}
+	public function sent_view()
+	{
+		$this->load->view('sent_view');
+	}
 }

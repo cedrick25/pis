@@ -245,7 +245,7 @@
                             "<td>"+data.details+"</td>"+
                             "<td>"+data.receiverId+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
@@ -259,9 +259,10 @@
                         });
                         $('.dataTables_length').addClass('bs-select');
                     }); 
-                    $(".btn_update").unbind("click").on("click", function(){
+                    $(".btn_view").unbind("click").on("click", function(){
+                        var id = $(this).data("id");
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+                        window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
                     })
                 }
             })

@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // AMS start
 $route['docketing'] = "routes/docket_routing";
 $route['sent'] = "routes/sent";
+$route['sent_view'] = "routes/sent_view";
 $route['received'] = "routes/received";
 $route['return'] = "routes/return";
 $route['forward'] = "routes/forward";
