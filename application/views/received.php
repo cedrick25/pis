@@ -221,7 +221,7 @@
                             "<td>"+data.details+"</td>"+
                             "<td>"+data.senderId+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
@@ -248,7 +248,8 @@
                     $(".btn_upload").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id;
+                        var type = $(this).data("type");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type;
                     })
                 }
             })
@@ -272,7 +273,7 @@
                             "<td>"+data.details+"</td>"+
                             "<td>"+data.senderId+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions' width='30%'> <button class='btn btn-sm btn-primary btn_upload_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button>")
+                            "<td align='center' class='actions' width='30%'> <button class='btn btn-sm btn-primary btn_upload_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head_sup tbody tr').each(function (idx) {
@@ -298,8 +299,9 @@
                     })
                     $(".btn_upload_sup").unbind("click").on("click", function(){
                         var id = $(this).data("id");
+                        var type = $(this).data("type");
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id;
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type;
                     })
                 }
             })

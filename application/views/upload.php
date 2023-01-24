@@ -54,6 +54,12 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                                     <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label docket_number"></label></div>
                                 </div>
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Kind</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <input type="text" name="kind" class="form-control kind"  placeholder="e.g Kind"/>
+                                    </div>
+                                </div>
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Upload File</label></div>
                                     <div class="col col-md-3"><input type="file" name="fileupload" class="form-control-file" id="fileupload"></div>
@@ -230,6 +236,7 @@
         }
 
         var docket_number = GetURLParameter('docket_number');
+        var type = GetURLParameter('type');
         var __fields = function(){
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
                 console.log(result);
@@ -249,7 +256,8 @@
                             formdata.append("files", fileupload.files[0], fileupload.files[0].name);
                             console.log(fileupload.files[0])
                             console.log(fileupload.files[0].name)
-                            __executeFile('http://localhost:8080/file/upload?uuid='+$.cookie('uuid')+'&type='+result.type+'&version=0',formdata).done(function (result) {
+                            console.log(formdata)
+                            __executeFile('http://localhost:8080/file/upload?uuid='+result.docketNumber+'&type='+result.type+'&version=0'+'&kind='+$('.kind').val(),formdata).done(function (result) {
                                 console.log(result)
                                 if(result){
                                     // list_upload();
@@ -269,8 +277,10 @@
 
         var list_upload = function(){
             console.log("list")
-            __executeExternalGet('http://localhost:8080/file/list/INV/'+$.cookie('uuid')).done(function (result) {
+            __executeExternalGet('http://localhost:8080/file/list/'+type+'/'+docket_number).done(function (result) {
+                console.log("======")
                 console.log(result)
+                console.log("======")
 
                 if (result.response.length != 0) {
                     $(".table_body").empty()
@@ -287,7 +297,7 @@
 
             });
         }
-        // list_upload();
+        list_upload();
 
     } )( jQuery );
     </script>
