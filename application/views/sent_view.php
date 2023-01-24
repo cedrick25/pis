@@ -55,8 +55,8 @@
                                     <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label field_office"></label></div>
                                 </div>
                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Return to</label></div>
-                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label return_to"></label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sent to</label></div>
+                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label sent_to"></label></div>
                                 </div>
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Details</label></div>
@@ -201,39 +201,39 @@
                             $(".docket_number").html(result.docketNumber);
                             $(".type").html(result.type);
                             $(".field_office").html(result.fieldOfficeId);
-                            $(".return_to").html(result.senderId);
+                            $(".sent_to").html(result.senderId);
                             $(".details").html(result.details);
                             
-                            $(".btn-confirm_update").unbind("click").on("click", function(){
-                            console.log('clicked')
+                        //     $(".btn-confirm_update").unbind("click").on("click", function(){
+                        //     console.log('clicked')
                             
-                            var payload = {
-                                "type"                  : result.type,
-                                "caseload_type"         : $(".caseload_type").val(),
-                                "senderId"              : $.cookie("uuid"),
-                                "receiverId"            : "1",
-                                "fieldOfficeId"         : $(".field_office").val(),
-                                "docketNumber"          : $(".docket_number").val(),
-                                "details"               : $(".details").val(),
-                                "remarks"               : $(".remarks").val(),
-                                "approvalStatus"        : "",
-                                "lastStatusUpdateDate"  : "",
-                            }
+                        //     var payload = {
+                        //         "type"                  : result.type,
+                        //         "caseload_type"         : $(".caseload_type").val(),
+                        //         "senderId"              : $.cookie("uuid"),
+                        //         "receiverId"            : "1",
+                        //         "fieldOfficeId"         : $(".field_office").val(),
+                        //         "docketNumber"          : $(".docket_number").val(),
+                        //         "details"               : $(".details").val(),
+                        //         "remarks"               : $(".remarks").val(),
+                        //         "approvalStatus"        : "",
+                        //         "lastStatusUpdateDate"  : "",
+                        //     }
 
-                            __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                                console.log(result);
-                                if (result.status != "ERROR") {
-                                $(".form-control").val('');
-                                $('#success_forwarding').show();
-                                    setTimeout(function () {
-                                        $('#success_forwarding').hide();
-                                        window.location.reload(true);
-                                    }, 2000);
-                                }else{
-                                    alert("failed")
-                                }
-                            })
-                        })
+                        //     __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                        //         console.log(result);
+                        //         if (result.status != "ERROR") {
+                        //         $(".form-control").val('');
+                        //         $('#success_forwarding').show();
+                        //             setTimeout(function () {
+                        //                 $('#success_forwarding').hide();
+                        //                 window.location.reload(true);
+                        //             }, 2000);
+                        //         }else{
+                        //             alert("failed")
+                        //         }
+                        //     })
+                        // })
                         }else{
                             alert("failed")
                         }

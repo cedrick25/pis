@@ -215,18 +215,18 @@
                             $(".field_office").html(result.fieldOfficeId);
                             $(".return_to").html(result.senderId);
                             $(".details").html(result.details);
-                            
+
                             $(".btn-confirm_update").unbind("click").on("click", function(){
                             console.log('clicked')
                             
                             var payload = {
                                 "type"                  : result.type,
-                                "caseload_type"         : $(".caseload_type").val(),
+                                "caseload_type"         : $(".caseload_type").html(),
                                 "senderId"              : $.cookie("uuid"),
-                                "receiverId"            : "1",
-                                "fieldOfficeId"         : $(".field_office").val(),
-                                "docketNumber"          : $(".docket_number").val(),
-                                "details"               : $(".details").val(),
+                                "receiverId"            : $(".return_to").html(),
+                                "fieldOfficeId"         : $(".field_office").html(),
+                                "docketNumber"          : $(".docket_number").html(),
+                                "details"               : $(".details").html(),
                                 "remarks"               : $(".remarks").val(),
                                 "approvalStatus"        : "",
                                 "lastStatusUpdateDate"  : "",
