@@ -25,7 +25,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="investigation_docketing">Investigation Docket</a></li>
+                            <li><a href="supervision_docketing">Supervision Docket</a></li>
                             <li class="active">Update</li>
                         </ol>
                     </div>
@@ -39,7 +39,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Update Investigation List</strong>
+                                <strong class="card-title">Update Supervision</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success_update" style="display:none">
@@ -51,7 +51,7 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control manual_docket" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control docket_num" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
@@ -344,7 +344,7 @@
                         console.log('clicked')
                         
                         var payload = {
-                            "type"          : "INV",
+                            "type"          : "SUP",
                             "docketNumber"  : "",
                             "fieldOfficeId" :  $(".field_office_update").val(),
                             "clientType"    : $(".client_type_update").val(),
