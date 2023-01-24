@@ -327,7 +327,7 @@
                 list.max_d = $(max_d[i]).val();
                 sentence.push(list);
             }
-            console.log(list)
+            // console.log(list)
             console.log(sentence)
 
             var payload = {
