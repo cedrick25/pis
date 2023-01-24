@@ -39,19 +39,12 @@
         <!-- /header -->
   
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Investigation Docket</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="dashboard">Docket</a></li>
+                            <li><a href="investigation_docketing">Docketing</a></li>
                             <li class="active">Investigation Docket list</li>
                         </ol>
                     </div>
