@@ -340,7 +340,7 @@
                     console.log("failed fetching docket list")
                 }
             })
-            __executeExternalGet('http://localhost:8000/docketbook/list/sup').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
 
