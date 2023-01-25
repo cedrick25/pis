@@ -305,7 +305,7 @@
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
                 console.log(result);
                 var result = result.response;
-                console.log(JSON.parse(result.sentence))
+                // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
                     $(".manual_docket").val(result.manualDocket);
                     $(".docket_num").val(result.docketNumber);
@@ -414,6 +414,7 @@
         }, 500);
     } )( jQuery );
     </script>
+
 
 </body>
 

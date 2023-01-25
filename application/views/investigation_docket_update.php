@@ -46,27 +46,18 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Updated  
                                 </div>
-                                    <div class="row form-group col-md-12">
-                                        <div class="row form-group col-md-6">
-                                            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
-                                            <div class="col-12 col-md-8">
-                                                <div class="form-check form-check-inline">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="form-check-input primary manual_docket" value="false">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="PI202400001" class="form-control docketNum_update" disabled></div>
+                                </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
-			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update"></div>
-			                    </div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update"></div>
+                                </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_update"></div>
@@ -310,8 +301,9 @@
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
                 console.log(result);
                 var result = result.response;
-                console.log(JSON.parse(result.sentence))
+                // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
+                    $(".docketNum_update").val(result.docketNumber);
                     $(".firstName_update").val(result.firstName);
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
