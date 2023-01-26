@@ -46,16 +46,18 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Updated  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="PI202400001" class="form-control docketNum_update" disabled></div>
+                                <div class="row col-lg-12">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" class="form-control docketNum_update" disabled></div>
+                                    </div>
                                 </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Mid Name</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update"></div>
                                 </div>
 			                    <div class="row form-group col-md-6">
@@ -249,50 +251,35 @@
             }
         }
 
-        $(".list").html(`
-            <div class="list_sentence">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_update"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y_update" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m_update" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d_update" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y_update" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m_update" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d_update" placeholder="Day"></div>
-                </div>
-            </div>`
-        );
-        // $(".add_more").unbind("click").on("click", function(){
-        //     console.log("clicked")
-        //     $(".list").append(`
-        //         <div class="list_sentence">
-        //             <div class="row form-group col-md-12">
-        //                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-        //                 <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-        //             </div>
-        //             <div class="row form-group col-md-6">
-        //                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-        //                 <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-        //                 <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-        //                 <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-        //             </div>
-        //             <div class="row form-group col-md-6">
-        //                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-        //                 <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-        //                 <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-        //                 <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-        //             </div>
-        //             <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-        //         </div>`
-        //     )
-        // })
+        $(".add_more").unbind("click").on("click", function(){
+            console.log("clicked")
+            $(".list").append(`
+                <div class="list_sentence">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
+                    </div>
+                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
+                </div>`
+            )
+        })
+        $('.list').on('click', '.remove', function(e) {
+            e.preventDefault();
+
+            $(this).parent().remove();
+        });
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
@@ -324,23 +311,60 @@
                     $(".rd_update").val(result.receivedDate);
                     $(".remarks_update").val(result.remarks);
 
+                    console.log(JSON.parse(result.sentence))
                     JSON.parse(result.sentence).forEach(function(data){
-                        console.log(data)
-                        $('.sentence_update').val(data.sentence)
-                        $('.min_y_update').val(data.min_y)
-                        $('.min_m_update').val(data.min_m)
-                        $('.min_d_update').val(data.min_d)
-                        $('.max_y_update').val(data.max_y)
-                        $('.max_m_update').val(data.max_m)
-                        $('.max_d_update').val(data.max_d)
+                        $(".list").append(`
+                            <div class="list_sentence">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence">${data.sentence}</textarea></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year" value="${data.min_y}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month" value="${data.min_m}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day" value="${data.min_d}"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year" value="${data.max_y}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
+                                </div>
+                                <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
+                            </div>`
+                        )
                     });
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         console.log('clicked')
                         
+                        const sentence = [];
+                        const sentence_inputs = $(".sentence");
+                        const min_y = $(".min_y");
+                        const min_m = $(".min_m");
+                        const min_d = $(".min_d");
+                        const max_y = $(".max_y");
+                        const max_m = $(".max_m");
+                        const max_d = $(".max_d");
+
+                        for(var i = 0; i < sentence_inputs.length; i++){
+                            const list = {};
+                            list.sentence = $(sentence_inputs[i]).val()
+                            list.min_y = $(min_y[i]).val();
+                            list.min_m = $(min_m[i]).val();
+                            list.min_d = $(min_d[i]).val();
+                            list.max_y = $(max_y[i]).val();
+                            list.max_m = $(max_m[i]).val();
+                            list.max_d = $(max_d[i]).val();
+                            sentence.push(list);
+                        }
+                        // console.log(list)
+                        console.log(sentence)
+
                         var payload = {
                             "type"          : "INV",
-                            "docketNumber"  : "",
+                            "docketNumber"  : docket_number,
                             "fieldOfficeId" :  $(".field_office_update").val(),
                             "clientType"    : $(".client_type_update").val(),
                             "firstName"     : $(".firstName_update").val(),
@@ -351,7 +375,7 @@
                             "offense"       : $(".offense_update").val(),
                             "courtOfOrigin" : $(".court_origin_update").val(),
                             "militaryCourt" : $(".military_court_update").val(),
-                            "sentence"      : $(".sentence_update").val(),
+                            "sentence"      : JSON.stringify(sentence),
                             "courtOrderDate": $(".cod_update").val(),
                             "receivedDate"  : $(".rd_update").val(),
                             "manualDocket"  : false,
@@ -368,9 +392,9 @@
                         __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number,JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
-                            $(".form-control").val('');
                             $('#success_update').show();
                                 setTimeout(function () {
+                                    $(".form-control").val('');
                                     $('#success_update').hide();
                                     window.location.reload(true);
                                 }, 2000);

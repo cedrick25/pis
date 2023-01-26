@@ -210,7 +210,7 @@
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "30%", "targets": 6 }
+                                { "width": "20%", "targets": 6 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');

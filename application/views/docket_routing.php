@@ -232,8 +232,9 @@
                                 $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
                                 result.forEach(function(data){
                                     // console.log(data)
+                                    var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                     $('.user_account').append(
-                                        "<option value="+data.uuid+">"+data.email+"</option>");
+                                        "<option value="+data.uuid+">"+fullname+"</option>");
                                 });
                             } else {
                                 console.log("failed fetching user list")

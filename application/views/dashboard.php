@@ -37,7 +37,8 @@
                                     <div class="card-header">
                                         <strong class="card-title">Dashboard</strong>
                                     </div>
-                                    <div class="card-body an_body" style="height:490px; overflow:auto; background:#fff;">
+                                    <!-- <div class="card-body" style="height:490px; overflow:auto; background:#fff;"> -->
+                                    <div class="card-body">
                                         <div class="row form-group col-md-6">         
                                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
                                             <div class="col-12 col-md-9">
@@ -56,21 +57,26 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col col-md-6">
-                                            <table class="table table_head_workflow">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>File name</th>
-                                                        <th>Date Uploaded</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_workflow">
-                                                </tbody>
-                                            </table>
+                                        <div class="col col-md-6 docket_result" style="display: none">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4>Workflow</h4>   
+                                                </div>
+                                            </div><br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="an_body" style="height:490px; overflow:auto; background:#fff;">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col col-md-6">
+                                        <div class="col col-md-6 docket_result" style="display: none">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4>Uploaded File</h4>   
+                                                </div>
+                                            </div><br>
                                             <table class="table table_head">
                                                 <thead>
                                                     <tr>
@@ -222,16 +228,15 @@
         $('.docket_num').on('change', function() {
             const dn = this.value
             list_upload(dn)
+            list_workflow(dn)
         });
         var list_upload = function(docket_number){
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
             __executeExternalGet('http://localhost:8080/file/list/'+docket_number).done(function (result) {
-                console.log("======")
-                console.log(result)
-                console.log("======")
 
                 if (result.status != "ERROR") {
+                    $('.docket_result').show()
                     if (result.files.length != 0) {
                         result.files.forEach(function(data){
                             $('.table_body').append("<tr>"+
@@ -248,12 +253,59 @@
                         });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
+                            "bPaginate": false,
                             // "columnDefs": [
                                 // { "width": "30%", "targets": 6 }
                             // ]
                         });
                         // $('.dataTables_length').addClass('bs-select');
                     }); 
+                }
+            });
+        }
+        var list_workflow = function(docket_number){
+            $('.an_body').empty();
+
+            __executeExternalGet('http://localhost:8000/workflow/docket/'+docket_number+'?page=0&size=100').done(function (result) {
+                // console.log("==========")
+                // console.log(result)
+                // console.log(result.content.length)
+                if (result.status != "ERROR") {
+                    if (result.content.length != 0) {
+
+                        result.content.forEach(function(data){
+                            console.log(data)
+                            console.log(data.fieldOfficeId)
+                            __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                                if (result.status != "ERROR") {
+                                    console.log(result);
+                                    console.log(result.name);
+                                    var fo = result.name;
+                                    __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
+                                        var sender = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
+                                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                                            $('.an_body').prepend(`
+                                                <div class="card-announcement">
+                                                    <p class="card-text"><b>Date posted: <i>${data.createdDate}</i></b></p>
+                                                    <p class="card-text">Docket Number: <b>${data.docketNumber}</b></p>
+                                                    <p class="card-text">Field Office: <b>${fo}</b></p>
+                                                    <p class="card-text">Sender: <b>${sender}</b></p>
+                                                    <p class="card-text">Receiver: <b>${receiver}</b></p>
+                                                </div>
+                                                `)
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                       
+                    }
+                    else{
+                        $('.an_body').prepend(`
+                            No data available ...
+                            `)
+                    }
                 }
             });
         }

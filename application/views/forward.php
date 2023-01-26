@@ -49,11 +49,17 @@
                                 </div>
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label field_office"></label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select name="select" id="" class="form-control field_office select2">
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Return to</label></div>
-                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label return_to"></label></div>
+                                <div class="row form-group col-md-12 user_display" style="display: none;">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Forward to</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select name="select" id="" class="form-control user_account select2">
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Details</label></div>
@@ -189,6 +195,39 @@
         var docket_number = GetURLParameter('docket_number');
         var id = GetURLParameter('id');
         var __fields = function(){
+
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.field_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    $('.field_office').on('change', function() {
+                        $('.user_account').empty();
+                        const dep_id = this.value
+                        __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
+                            // console.log(result)
+                            if (result.status != "ERROR") {
+                                $(".user_display").show()
+                                $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
+                                result.forEach(function(data){
+                                    // console.log(data)
+                                    var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+                                    $('.user_account').append(
+                                        "<option value="+data.uuid+">"+fullname+"</option>");
+                                });
+                            } else {
+                                console.log("failed fetching user list")
+                                $(".user_display").hide()
+                            }
+                        });
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
                 // console.log(result);
                 var result = result.response;
@@ -210,13 +249,13 @@
                             
                             var payload = {
                                 "type"                  : result.type,
-                                "caseload_type"         : $(".caseload_type").val(),
+                                "caseload_type"         : result.caseloadType,
                                 "senderId"              : $.cookie("uuid"),
-                                "receiverId"            : "1",
+                                "receiverId"            : $(".user_account").val(),
                                 "fieldOfficeId"         : $(".field_office").val(),
-                                "docketNumber"          : $(".docket_number").val(),
+                                "docketNumber"          : result.docketNumber,
                                 "details"               : $(".details").val(),
-                                "remarks"               : "",
+                                "remarks"               : result.remarks,
                                 "approvalStatus"        : "",
                                 "lastStatusUpdateDate"  : "",
                             }
@@ -239,15 +278,13 @@
                             alert("failed")
                         }
                     })
-
-                    
-
                 }else{
                     alert("failed")
                 }
             })
         }
         __fields();
+
     } )( jQuery );
     </script>
 

@@ -359,8 +359,7 @@
                         $('#success').hide();
                     }, 2000);
                 }else{
-                //     console.log(result.status);
-                //     alert(result.message)
+                    alert("failed")
                 }
             })
         })

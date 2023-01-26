@@ -127,30 +127,14 @@
 				                        </div>
 				                    </div>
 				                    <div class="row form-group col-md-12 false_manual">
-				                        <fieldset class="row col col-md-12">
-				                            <legend>List</legend>
-				                            <div class="list">
-				                                <div class="row form-group col-md-12">
-				                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-				                                    <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence" ></textarea></div>
-				                                </div>
-				                                <div class="row form-group col-md-6">
-				                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-				                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_yr" placeholder="Year" ></div>
-				                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_month" placeholder="Month" ></div>
-				                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_day" placeholder="Day" ></div>
-				                                </div>
-				                                <div class="row form-group col-md-6">
-				                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label" >Max</label></div>
-				                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_yr" placeholder="Year" ></div>
-				                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_month" placeholder="Month" ></div>
-				                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_day" placeholder="Day" ></div>
-				                                </div>
-				                            </div>
-				                            <div class="col-12">
-				                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right" >Add more</button>
-				                            </div>
-				                        </fieldset>
+                                        <fieldset class="row col col-md-12">
+                                            <legend>List</legend>
+                                            <div class="list">
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+                                            </div>
+                                        </fieldset>
 				                    </div>
 				                    <div class="row form-group col-md-6 false_manual">
 				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
@@ -294,28 +278,51 @@
             return d.promise();
         };
 
+        $(".list").html(`
+            <div class="list_sentence">
+                <div class="row form-group col-md-12">
+                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
+                </div>
+                <div class="row form-group col-md-6">
+                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
+                </div>
+                <div class="row form-group col-md-6">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
+                </div>
+            </div>`
+        );
+
         $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked")
+            console.log("clicked");
+
             $(".list").append(`
-                <div class="">
+                <div class="list_sentence">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea id="" name="" rows="2" cols="50" class="form-control sentence"></textarea></div>
+                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min" placeholder="Day"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max" placeholder="Day"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
                     </div>
                     <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                </div>`
+                </div>
+                `
             )
         });
         $('.list').on('click', '.remove', function(e) {
@@ -363,7 +370,9 @@
                                 $(".client_type").val(result.clientType).trigger("change");
                                 $(".cc_no").val(result.criminalCaseNumber);
                                 $(".offense").val(result.offense);
-                                $(".field_office").val(result.fieldOfficeId);
+                                setTimeout(function () {
+                                    $(".field_office").val(result.fieldOfficeId).trigger("change");
+                                }, 100);
                                 $(".court_origin").val(result.courtOfOrigin);
                                 if (result.militaryCourt == true) {
                                     var mc = "true"
@@ -371,10 +380,36 @@
                                     var mc = "false"
                                 }
                                 $(".military_court").val(mc).trigger("change");
-                                $(".sentence").val(result.sentence);
+                                // $(".sentence").val(result.sentence);
                                 $(".cod").val(result.courtOrderDate);
                                 $(".rd").val(result.receivedDate);
                                 // $(".remarks").val(result.remarks);
+
+                                $(".list").empty();
+                                console.log(JSON.parse(result.sentence))
+                                JSON.parse(result.sentence).forEach(function(data){
+                                    $(".list").append(`
+                                        <div class="list_sentence">
+                                            <div class="row form-group col-md-12">
+                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence">${data.sentence}</textarea></div>
+                                            </div>
+                                            <div class="row form-group col-md-6">
+                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                                                <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year" value="${data.min_y}"></div>
+                                                <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month" value="${data.min_m}"></div>
+                                                <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day" value="${data.min_d}"></div>
+                                            </div>
+                                            <div class="row form-group col-md-6">
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                                                <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year" value="${data.max_y}"></div>
+                                                <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
+                                                <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
+                                            </div>
+                                            <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
+                                        </div>`
+                                    )
+                                });
                             };
                         });
                     });
@@ -412,6 +447,33 @@
         });
         $(".btn-confirm").unbind("click").on("click", function(){
 
+            const sentence = [];
+            const sentence_inputs = $(".sentence");
+            const min_y = $(".min_y");
+            const min_m = $(".min_m");
+            const min_d = $(".min_d");
+            const max_y = $(".max_y");
+            const max_m = $(".max_m");
+            const max_d = $(".max_d");
+
+            for(var i = 0; i < sentence_inputs.length; i++){
+                const list = {};
+                list.sentence = $(sentence_inputs[i]).val()
+                list.min_y = $(min_y[i]).val();
+                list.min_m = $(min_m[i]).val();
+                list.min_d = $(min_d[i]).val();
+                list.max_y = $(max_y[i]).val();
+                list.max_m = $(max_m[i]).val();
+                list.max_d = $(max_d[i]).val();
+                sentence.push(list);
+            }
+            var md;
+            if ($(".manual_docket").val() == "true") {
+                md = true
+            } else {
+                md = false
+            }
+
             var payload = {
                 "type"          : "SUP",
                 "docketNumber"  : "",
@@ -425,10 +487,10 @@
                 "offense"       : $(".offense").val(),
                 "courtOfOrigin" : $(".court_origin").val(),
                 "militaryCourt" : $(".military_court").val(),
-                "sentence"      : $(".sentence").val(),
+                "sentence"      : JSON.stringify(sentence),
                 "courtOrderDate": $(".cod").val(),
                 "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : $(".manual_docket").val(),
+                "manualDocket"  : md,
                 "referral"      : false,
                 "typeOfReferral": "",
                 "remarks"       : "",

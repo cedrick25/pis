@@ -48,7 +48,7 @@
                                     <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label field_office"></label></div>
                                 </div>
                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sent to</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Receiver</label></div>
                                     <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label sent_to"></label></div>
                                 </div>
                                 <div class="row form-group col-md-12">         
@@ -181,62 +181,24 @@
         var docket_number = GetURLParameter('docket_number');
         var id = GetURLParameter('id');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
-                // console.log(result);
-                var result = result.response;
-                if (result.status != "ERROR") {
-
-                    __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
-                        console.log(result);
-
-                        var result = result.response;
-                        if (result.status != "ERROR") {
-                            $(".docket_number").html(result.docketNumber);
-                            $(".type").html(result.type);
-                            $(".field_office").html(result.fieldOfficeId);
-                            $(".sent_to").html(result.senderId);
-                            $(".details").html(result.details);
-                            
-                        //     $(".btn-confirm_update").unbind("click").on("click", function(){
-                        //     console.log('clicked')
-                            
-                        //     var payload = {
-                        //         "type"                  : result.type,
-                        //         "caseload_type"         : $(".caseload_type").val(),
-                        //         "senderId"              : $.cookie("uuid"),
-                        //         "receiverId"            : "1",
-                        //         "fieldOfficeId"         : $(".field_office").val(),
-                        //         "docketNumber"          : $(".docket_number").val(),
-                        //         "details"               : $(".details").val(),
-                        //         "remarks"               : $(".remarks").val(),
-                        //         "approvalStatus"        : "",
-                        //         "lastStatusUpdateDate"  : "",
-                        //     }
-
-                        //     __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                        //         console.log(result);
-                        //         if (result.status != "ERROR") {
-                        //         $(".form-control").val('');
-                        //         $('#success_forwarding').show();
-                        //             setTimeout(function () {
-                        //                 $('#success_forwarding').hide();
-                        //                 window.location.reload(true);
-                        //             }, 2000);
-                        //         }else{
-                        //             alert("failed")
-                        //         }
-                        //     })
-                        // })
+            __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result2) {
+                var result2 = result2.response
+                __executeExternalGet('http://localhost:8088/department/'+result2.fieldOfficeId).done(function (result3) {
+                    var fo = result3.name;
+                    __executeExternalGet('http://localhost:8088/user/'+result2.receiverId).done(function (result4) {
+                        console.log(result4);
+                        var receiver = result4.firstName+" "+result4.middleName+" "+result4.lastName+" "+result4.suffix;
+                        if (result4.status != "ERROR") {
+                            $(".docket_number").html(result2.docketNumber);
+                            $(".type").html(result2.type);
+                            $(".field_office").html(fo);
+                            $(".sent_to").html(receiver);
+                            $(".details").html(result2.details);
                         }else{
                             alert("failed")
                         }
                     })
-
-                    
-
-                }else{
-                    alert("failed")
-                }
+                })
             })
         }
         __fields();

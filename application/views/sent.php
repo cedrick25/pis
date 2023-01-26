@@ -231,35 +231,43 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        $('.table_body').append("<tr>"+
-                            "<td></td>"+
-                            "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.fieldOfficeId+"</td>"+
-                            "<td>"+data.details+"</td>"+
-                            "<td>"+data.receiverId+"</td>"+
-                            "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
+                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            var fo = result.name;
+                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
+                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            $('.table_body').append("<tr>"+
+                                "<td>"+data.id+"</td>"+
+                                "<td>"+data.docketNumber+"</td>"+
+                                "<td>"+fo+"</td>"+
+                                "<td>"+data.details+"</td>"+
+                                "<td>"+receiver+"</td>"+
+                                "<td>"+data.status+"</td>"+
+                                "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
+                        })
+                        })
                     });
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
+                    setTimeout(function () {
+                        $(document).ready(function () {
+                            $('.table_head tbody tr').each(function (idx) {
+                               $(this).children("td:eq(0)").html(idx + 1);
+                            });
+                            var table = $('.table_head').DataTable({
+                                order: [[0, 'asc']],
+                                "columnDefs": [
+                                    // { "width": "30%", "targets": 6 }
+                                ]
+                            });
+                            $('.dataTables_length').addClass('bs-select');
                         });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "30%", "targets": 6 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
-                    $(".btn_view").unbind("click").on("click", function(){
-                        var id = $(this).data("id");
-                        var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
-                    })
+                        $(".btn_view").unbind("click").on("click", function(){
+                            var id = $(this).data("id");
+                            var docket_number = $(this).data("docket");
+                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
+                        })
+                    }, 400);
                 }
             })
-        }
+        } 
         __table();
 
         var __table_sup = function(){
@@ -272,32 +280,40 @@
                 // console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        $('.table_body_sup').append("<tr>"+
-                            "<td></td>"+
-                            "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.fieldOfficeId+"</td>"+
-                            "<td>"+data.details+"</td>"+
-                            "<td>"+data.receiverId+"</td>"+
-                            "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
-                    });
-                    $(document).ready(function () {
-                        $('.table_head_sup tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head_sup').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "30%", "targets": 6 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
-                    $(".btn_view_sup").unbind("click").on("click", function(){
-                        var id = $(this).data("id");
-                        var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
+                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            var fo = result.name;
+                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
+                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            $('.table_body_sup').append("<tr>"+
+                                "<td>"+data.id+"</td>"+
+                                "<td>"+data.docketNumber+"</td>"+
+                                "<td>"+fo+"</td>"+
+                                "<td>"+data.details+"</td>"+
+                                "<td>"+receiver+"</td>"+
+                                "<td>"+data.status+"</td>"+
+                                "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
+                        })
+                        })
                     })
+                    setTimeout(function () {
+                        $(document).ready(function () {
+                            $('.table_head_sup tbody tr').each(function (idx) {
+                               $(this).children("td:eq(0)").html(idx + 1);
+                            });
+                            var table = $('.table_head_sup').DataTable({
+                                order: [[0, 'asc']],
+                                // "columnDefs": [
+                                //     { "width": "30%", "targets": 6 }
+                                // ]
+                            });
+                            $('.dataTables_length').addClass('bs-select');
+                        }); 
+                        $(".btn_view_sup").unbind("click").on("click", function(){
+                            var id = $(this).data("id");
+                            var docket_number = $(this).data("docket");
+                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
+                        })
+                    }, 400);
                 }
             })
         }
