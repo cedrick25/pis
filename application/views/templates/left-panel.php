@@ -21,6 +21,7 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="investigation_docketing">Investigation</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="single_carpeta">Single Carpeta</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown hh">

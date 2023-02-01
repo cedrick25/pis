@@ -64,12 +64,6 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('brgy_business_permit');
 	}
-
-	public function brgy_clearance()
-	{
-		$this->load->view('brgy_clearance');
-	}
-
 	public function brgy_residency()
 	{
 		$this->load->view('brgy_residency');
@@ -169,5 +163,17 @@ class routes extends CI_Controller {
 	public function sent_view()
 	{
 		$this->load->view('sent_view');
+	}
+	public function single_carpeta_create()
+	{
+		$this->load->view('single_carpeta_create');
+	}
+	public function single_carpeta()
+	{
+		$this->load->view('single_carpeta');
+	}
+	public function single_carpeta_update()
+	{
+		$this->load->view('single_carpeta_update');
 	}
 }
