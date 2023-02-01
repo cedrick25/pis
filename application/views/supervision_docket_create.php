@@ -90,6 +90,34 @@
 				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix" ></div>
 				                    </div>
                                     <div class="row form-group col-md-6 false_manual">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control caseload select2">
+                                                <option value="PROBATION_SUP_CSS">Community Service Supervision</option>
+                                                <option value="PROBATION_SUP_CCSS">Courtesy Community Service Supervision</option>
+                                                <option value="PROBATION_SUP_CPS">Courtesy Probation Supervision</option>
+                                                <option value="PROBATION_SUP_CSSS">Courtesy Suspended Sentence Supervision</option>
+                                                <option value="PROBATION_SUP_DOCKET_CREATION">For Docket Creation</option>
+                                                <option value="PROBATION_SUP_TRANS">Motion/Manifestation to Transfer Supervision and Control</option>
+                                                <option value="PROBATION_SUP_TRAVEL_PERMIT">Permit to Travel</option>
+                                                <option value="PROBATION_SUP_SUPERVISION">Probation Supervision</option>
+                                                <option value="PROBATION_SUP_RPS">Reinstated Probation Supervision</option>
+                                                <option value="PROBATION_SUP_RC">Request for Records Check</option>
+                                                <option value="PROBATION_SUP_RES_RC">Results of Records Check</option>
+                                                <option value="PROBATION_REVOCATION_ABSCOND">Revocation - Abscond</option>
+                                                <option value="PROBATION_REVOCATION_COMMISSION">Revocation - Commission of Another Offense</option>
+                                                <option value="PROBATION_REVOCATION_OTHER">Revocation - Other</option>
+                                                <option value="PROBATION_REVOCATION_VIOLATION">Revocation - Violation of Probation Conditions</option>
+                                                <option value="PROBATION_SUP_SSS">Suspended Sentence Supervision</option>
+                                                <option value="PROBATION_SUP_TERMINATE_PROBATION">Terminate Probation</option>
+                                                <option value="PROBATION_SUP_CRT_APPR_TRANS">Transfer of Residence</option>
+                                                <option value="PROBATION_SUP_TCSS">Transferred Community Service Supervision</option>
+                                                <option value="PROBATION_SUP_TPS">Transferred Probation Supervision</option>
+                                                <option value="PROBATION_SUP_TSSS">Transferred Suspended Sentence Supervision</option><option value="PROBATION_SUP_TRAVEL_GT30">Travel Exceeding 30 Days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6 false_manual">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control client_type select2">

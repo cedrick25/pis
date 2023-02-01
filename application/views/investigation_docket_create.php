@@ -56,6 +56,33 @@
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
 			                    </div>
                                 <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control caseload select2">
+                                            <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
+                                            <option value="PROBATION_INV_CSI">Community Service Investigation</option>
+                                            <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
+                                            <option value="PROBATION_INV_CPI">Courtesy Probation Investigation</option>
+                                            <option value="PROBATION_INV_CPI_FULL_BLOWN">Courtesy Probation Investigation - Full Blown</option>
+                                            <option value="PROBATION_INV_CPI_PARTIAL">Courtesy Probation Investigation - Partial</option>
+                                            <option value="PROBATION_INV_CSSI">Courtesy Suspended Sentence Investigation</option>
+                                            <option value="PROBATION_INV_MOTION_DISQUALIFY">Disqualified Client</option>
+                                            <option value="PROBATION_INV_GIOR_FOLLOW_UP">Follow-up of GIOR Result</option>
+                                            <option value="PROBATION_INV_INVESTIGATION">Probation Investigation</option>
+                                            <option value="PROBATION_INV_RPI">Reinvestigation for Client under Probation</option>
+                                            <option value="PROBATION_INV_RCS">Reinvestigation for Community Service</option>
+                                            <option value="PROBATION_INV_RSS">Reinvestigation for Suspended Sentence</option>
+                                            <option value="PROBATION_INV_MOTION_EXTENSION">Request for Extension of Time to Submit PSIR</option>
+                                            <option value="PROBATION_INV_RC">Request for Records Check</option>
+                                            <option value="PROBATION_INV_RES_RC">Results of Records Check</option>
+                                            <option value="PROBATION_INV_SSI">Suspended Sentence Investigation</option>
+                                            <option value="PROBATION_INV_TCSI">Transferred Community Service Investigation</option>
+                                            <option value="PROBATION_INV_TPI">Transferred Probation Investigation</option>
+                                            <option value="PROBATION_INV_TSSI">Transferred Suspended Sentence Investigation</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type select2">

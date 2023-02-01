@@ -69,6 +69,14 @@
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_update"></div>
 			                    </div>
                                 <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control caseload_update select2" disabled>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type_update select2">
@@ -367,6 +375,7 @@
                             "docketNumber"  : docket_number,
                             "fieldOfficeId" :  $(".field_office_update").val(),
                             "clientType"    : $(".client_type_update").val(),
+                            // "caseload"      : $(".caseload_update").val(),
                             "firstName"     : $(".firstName_update").val(),
                             "middleName"    : $(".middleName_update").val(),
                             "lastName"      : $(".lastName_update").val(),
