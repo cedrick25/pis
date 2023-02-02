@@ -569,7 +569,8 @@
                                 $(".num_update").val(result.phoneNumber);
                                 $(".birthday_update").val(result.birthday);
                                 $(".password_update").val(result.password);
-                                $(".field_office_update").val(result.departmentId);
+                                $(".field_office_update").val(result.departmentId).trigger('change');
+                                console.log(result.departmentId);
 
                                 $(".btn_confirm_update").unbind("click").on("click", function(){
                                     console.log('clicked')
