@@ -47,11 +47,7 @@
                                         Successfully Updated  
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control manual_docket" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control docket_num" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
@@ -108,11 +104,35 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control inv_off_update"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control military_court_update select2">
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control plea_bargain_update select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6 class_sel" style="display: none;">
+                                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control classification_update select2" >
+                                            <option selected value="none" disabled>Choose</option>
+                                            <option value="drug">Drug</option>
+                                            <option value="non-drug">Non Drug</option>
                                         </select>
                                     </div>
                                 </div>
@@ -260,6 +280,19 @@
             }
         }
 
+        $('.plea_bargain_update').change(function(){
+            if ($('.plea_bargain_update').val() == "true") {
+                $(".class_sel").show();
+            } else {
+                $(".class-sel").hide();
+            }
+            if ($('.plea_bargain_update').val() == "false"){
+            $(".class_sel").hide();
+            } else {
+                $(".class_sel").show();
+            }
+        });
+
         $(".add_more").unbind("click").on("click", function(){
             console.log("clicked")
             $(".list").append(`
@@ -299,7 +332,6 @@
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
-                    $(".manual_docket").val(result.manualDocket);
                     $(".docket_num").val(result.docketNumber);
                     $(".firstName_update").val(result.firstName);
                     $(".middleName_update").val(result.middleName);

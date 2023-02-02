@@ -18,7 +18,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="investigation_docketing">Single Carpeta Docket</a></li>
+                            <li><a href="single_carpeta">Single Carpeta Docket</a></li>
                             <li class="active">Create</li>
                         </ol>
                     </div>
@@ -124,11 +124,35 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control inv_off"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control military_court select2">
                                             <option selected value="true">Yes</option>
                                             <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control plea_bargain select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6 class_sel" style="display: none;">
+                                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control classification select2" >
+                                            <option selected value="none" disabled>Choose</option>
+                                            <option value="drug">Drug</option>
+                                            <option value="non-drug">Non Drug</option>
                                         </select>
                                     </div>
                                 </div>
@@ -172,7 +196,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--<script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -263,6 +287,20 @@
             
             return d.promise();
         };
+
+        $('.plea_bargain').change(function(){
+            if ($('.plea_bargain').val() == "true") {
+                $(".class_sel").show();
+            } else {
+                $(".class-sel").hide();
+            }
+            if ($('.plea_bargain').val() == "false"){
+            $(".class_sel").hide();
+            } else {
+                $(".class_sel").show();
+            }
+        });
+
 
         $(".list").html(`
             <div class="list_sentence">
@@ -364,7 +402,7 @@
             console.log(sentence)
 
             var payload = {
-                "type"          : "INV",
+                "type"          : "SC",
                 "docketNumber"  : "",
                 "fieldOfficeId" : $(".field_office").val(),
                 "clientType"    : $(".client_type").val(),
@@ -405,7 +443,7 @@
         })
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 

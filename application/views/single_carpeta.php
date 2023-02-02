@@ -92,7 +92,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -188,7 +188,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/sc').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -243,7 +243,7 @@
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+                        window.location.href = 'http://localhost/pis/single_carpeta_update?docket_number='+docket_number;
                     })
                    
                 }
@@ -252,7 +252,7 @@
         __table();
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 

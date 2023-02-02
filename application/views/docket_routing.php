@@ -46,6 +46,7 @@
                                             <option value="" selected disabled> - - Select Type - - </option>
                                             <option value="INV">Investigation</option>
                                             <option value="SUP">Supervision</option>
+                                            <option value="SC">Single Carpeta</option>
                                         </select>
                                     </div>
                                 </div>
@@ -231,7 +232,7 @@
                                 $(".user_display").show()
                                 $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
                                 result.forEach(function(data){
-                                    // console.log(data)
+                                    console.log(data)
                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                     $('.user_account').append(
                                         "<option value="+data.uuid+">"+fullname+"</option>");

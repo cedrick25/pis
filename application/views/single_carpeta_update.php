@@ -25,7 +25,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="investigation_docketing">Single Carpeta</a></li>
+                            <li><a href="single_carpeta">Single Carpeta</a></li>
                             <li class="active">Update</li>
                         </ol>
                     </div>
@@ -106,8 +106,12 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control inv_off_update"></div>
+                                </div>
 			                    <div class="row form-group col-md-6">
-			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Is this Military Court?</label></div>
+			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
 			                        <div class="col-12 col-md-9">
 			                            <select class="form-control military_court_update select2">
 			                                <option value="true">Yes</option>
@@ -115,6 +119,26 @@
 			                            </select>
 			                        </div>
 			                    </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control plea_bargain_update select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6 class_sel" style="display: none;">
+                                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control classification_update select2" >
+                                            <option selected value="none" disabled>Choose</option>
+                                            <option value="drug">Drug</option>
+                                            <option value="non-drug">Non Drug</option>
+                                        </select>
+                                    </div>
+                                </div>
 			                    <div class="row form-group col-md-12">
 			                        <fieldset class="row col col-md-12">
 			                            <legend>List</legend>
@@ -155,7 +179,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -258,6 +282,19 @@
                 }
             }
         }
+
+        $('.plea_bargain_update').change(function(){
+            if ($('.plea_bargain_update').val() == "true") {
+                $(".class_sel").show();
+            } else {
+                $(".class-sel").hide();
+            }
+            if ($('.plea_bargain_update').val() == "false"){
+            $(".class_sel").hide();
+            } else {
+                $(".class_sel").show();
+            }
+        });
 
         $(".add_more").unbind("click").on("click", function(){
             console.log("clicked")
@@ -371,9 +408,9 @@
                         console.log(sentence)
 
                         var payload = {
-                            "type"          : "INV",
+                            "type"          : "SC",
                             "docketNumber"  : docket_number,
-                            "fieldOfficeId" :  $(".field_office_update").val(),
+                            "fieldOfficeId" : $(".field_office_update").val(),
                             "clientType"    : $(".client_type_update").val(),
                             // "caseload"      : $(".caseload_update").val(),
                             "firstName"     : $(".firstName_update").val(),
@@ -441,7 +478,7 @@
             __fields();
         }, 500);
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 
