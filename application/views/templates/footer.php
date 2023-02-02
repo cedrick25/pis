@@ -122,9 +122,13 @@
         };
 
         __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+            console.log("====this is user logged in=====");
             console.log(result);
+            console.log("====this is user logged in=====");
             if (result.status != "ERROR") {
                 $(".f_name").html(result.username);
+                var field_office_id = result.departmentId
+                $.cookie("field_office_id", field_office_id);
             }
         })
         $(".btn_logout").unbind("click").on("click", function(){

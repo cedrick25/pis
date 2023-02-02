@@ -263,7 +263,7 @@
                 "reason"            : $(".reason").val(),
                 "dr_ppo"            : $(".dr_ppo").val(),
                 "date_cic"          : $(".date_cic").val(),
-                "fieldOfficeId"     : "",
+                "fieldOfficeId"     : $.cookie('field_office_id'),
                 "firstName"         : "",
                 "middleName"        : "",
                 "lastName"          : "",
@@ -317,6 +317,9 @@
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 500);
                     }, 2000);
                 }else{
                     alert("failed")
