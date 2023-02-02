@@ -69,7 +69,6 @@
                                             <th>#</th>
                                             <th>Docket Number</th>
                                             <th>Docket Series</th>
-                                            <th>Client Name</th>
                                             <th>Client Type</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -92,7 +91,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -188,7 +187,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/SC_PR_CINV/'+$.cookie("field_office_id")).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -197,9 +196,8 @@
                         $('.table_body').append("<tr>"+
                             "<td></td>"+
                             "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.receivedDate+"</td>"+
-                            "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
-                            "<td>"+data.criminalCaseNumber+"</td>"+
+                            "<td>"+data.docketSeries+"</td>"+
+                            "<td>"+data.clientType+"</td>"+
                             "<td>"+data.status+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-remove'></i> Remove</button>")
                     });
@@ -210,7 +208,7 @@
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "20%", "targets": 6 }
+                                { "width": "20%", "targets": 5 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');
@@ -243,7 +241,7 @@
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+                        window.location.href = 'http://localhost/pis/parolee_courtesy_investigation_update?docket_number='+docket_number;
                     })
                    
                 }
@@ -252,7 +250,7 @@
         __table();
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 
