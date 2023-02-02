@@ -40,13 +40,14 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g 2023-00001" class="form-control docket_num"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
-                                    <div class="col-12 col-md-9">
+                                </div> -->
+                                <div class="row form-group col-md-12">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
+                                        <div class="col-12 col-md-9">
                                         <select class="form-control docket_series select2">
                                             <option selected value="none" disabled> - - Select - - </option>
                                             <option value="PPI">PRE-PAROLE INVESTIGATION</option>
@@ -62,6 +63,7 @@
                                             <option value="CPR">COURTESY PAROLE SUPERVISION</option>
                                             <option value="CPD">COURTESY PARDON SUPERVISION</option>
                                         </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
@@ -252,45 +254,75 @@
         $(".btn-confirm").unbind("click").on("click", function(){
             
             var payload = {
-                "type"          : "",
-                "docketNumber"  : $(".docket_num").val(),
-                "docket_series" : $(".docket_series").val(),
-                "caseload"      : $(".caseload").val(),
-                "client_type"   : $(".client_type").val(),
-                "ref_office"    : $(".ref_office").val(),
-                "inv_off"      : $(".inv_off").val(),
-                "reason"    : $(".reason").val(),
-                "dr_ppo" : $(".dr_ppo").val(),
-                "date_cic"       : $(".date_cic").val(),
-
-                // "courtOfOrigin" : $(".court_origin").val(),
-                // "militaryCourt" : $(".military_court").val(),
-                // "sentence"      : JSON.stringify(sentence),
-                // "courtOrderDate": $(".cod").val(),
-                // "receivedDate"  : $(".rd").val(),
-                // "manualDocket"  : false,
-                // "referral"      : false,
-                // "typeOfReferral": "",
-                // "remarks"       : $(".remarks").val(),
-                // "probationStartDate": "",
-                // "probationYear" : "",
-                // "probationMonth": "",
-                // "probationDay"  :"",
-                // "status"        : 1,
+                "type"              : "SC_PR_CINV",
+                "docketNumber"      : "",
+                "docketSeries"      : $(".docket_series").val(),
+                "caseloadType"      : $(".caseload").val(),
+                "clientType"        : $(".client_type").val(),
+                "ref_office"        : $(".ref_office").val(),
+                "inv_off"           : $(".inv_off").val(),
+                "reason"            : $(".reason").val(),
+                "dr_ppo"            : $(".dr_ppo").val(),
+                "date_cic"          : $(".date_cic").val(),
+                "fieldOfficeId"     : "",
+                "firstName"         : "",
+                "middleName"        : "",
+                "lastName"          : "",
+                "suffixName"        : "",
+                "fullName"          : "",
+                "pleaBargain"       : false,
+                "caseClassification"    : "",
+                "criminalCaseNumber"    : "",
+                "offense"               : "",
+                "investigatingOfficer"  : "",
+                "courtOfOrigin"         : "",
+                "courtOrderDate"        : "",
+                "receivedDateByPPO"     : "",
+                "sentence"              : "",
+                "manualDocket"          : false,
+                "referral"              : false,
+                "referralData"          : "",
+                "remarks"               : "",
+                "probationStartDate"    : "",
+                "probationYear"         : "",
+                "probationMonth"        : "",
+                "probationDay"          :"",
+                "prisonName"            : "",
+                "investigationReportSubmittedDate"  : "",
+                "ppoRecommendation"                 : "",
+                "recommendationState"               : "",
+                "dateOfTransfer"                    : "",
+                "transferredOfficeId"               : "",
+                "dateOrderReceivedFromTheBoard"     : "",
+                "boardOrder"            : "",
+                "boardOrderStatus"      : "",
+                "referrringOfficeId"    : "",
+                "dateCICAR"             : "",
+                "supervisingOfficer"    : "",
+                "probationEndDate"      : "",
+                "referralType"          : "",
+                "dateReportSubmittedToTheBoard"                 : "",
+                "dateReportSubmittedToRDForTransferToOtherPPO"  : "",
+                "resolutionType"                                : "",
+                "dateResolutionFromTheBoard"                    : "",
+                "dateResolutionFromTheRDForTransfer"            : "",
+                "createdBy"     : "",
+                "legalAge"      : false,
+                "militaryCourt" : false,
             }
             console.log(payload)
-            // __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-            //     console.log(result);
-            //     if (result.status != "ERROR") {
-            //         $(".form-control").val('');
-            //         $('#success').show();
-            //         setTimeout(function () {
-            //             $('#success').hide();
-            //         }, 2000);
-            //     }else{
-            //         alert("failed")
-            //     }
-            // })
+            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+            })
         })
 
     } )( jQuery );
