@@ -52,19 +52,19 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pardonee</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Investigation</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Supervision</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Courtesy Investigation</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Courtesy Supervision</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="pardonee_investigation_docketing">Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="pardonee_supervision_docketing">Supervision</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title">Docket Routing</h3>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Docket Routing</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Probation</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Pardonee</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="docket_routing">Probation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="pardonee_docket_routing">Pardonee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="docket_routing_parolee">Parolee</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
@@ -81,6 +81,15 @@
                         <li><i class="menu-icon fa fa-user"></i><a href="">Probation</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="">Pardonee</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
+                    </ul>
+                </li>
+                <h3 class="menu-title">Clients</h3>
+                <li class="menu-item-has-children dropdown hh">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Clients</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="user_accounts">Client List</a></li>
+                        <!-- <li><i class="menu-icon fa fa-building-o"></i><a href="field_office">Field Office</a></li> -->
+                        <!-- <li><i class="menu-icon fa fa-map-marker"></i><a href="regions">Regions</a></li> -->
                     </ul>
                 </li>
                 <h3 class="menu-title">Management</h3>

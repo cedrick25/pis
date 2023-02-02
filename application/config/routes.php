@@ -90,6 +90,23 @@ $route['parolee_courtesy_supervision_docketing'] = "routes/parolee_courtesy_supe
 $route['parolee_courtesy_supervision_update'] = "routes/parolee_courtesy_supervision_update";
 $route['parolee_investigation_update'] = "routes/parolee_investigation_update";
 $route['parolee_supervision_update'] = "routes/parolee_supervision_update";
+$route['pardonee_courtesy_investigation_create'] = "routes/pardonee_courtesy_investigation_create";
+$route['pardonee_courtesy_supervision_create'] = "routes/pardonee_courtesy_supervision_create";
+$route['pardonee_investigation_create'] = "routes/pardonee_investigation_create";
+$route['pardonee_supervision_create'] = "routes/pardonee_supervision_create";
+$route['pardonee_courtesy_investigation_docketing'] = "routes/pardonee_courtesy_investigation_docketing";
+$route['pardonee_courtesy_supervision_docketing'] = "routes/pardonee_courtesy_supervision_docketing";
+$route['pardonee_investigation_docketing'] = "routes/pardonee_investigation_docketing";
+$route['pardonee_supervision_docketing'] = "routes/pardonee_supervision_docketing";
+$route['pardonee_courtesy_investigation_update'] = "routes/pardonee_courtesy_investigation_update";
+$route['pardonee_courtesy_supervision_update'] = "routes/pardonee_courtesy_supervision_update";
+$route['pardonee_investigation_update'] = "routes/pardonee_investigation_update";
+$route['pardonee_supervision_update'] = "routes/pardonee_supervision_update";
+$route['client_list'] = "routes/client_list";
+$route['client_update'] = "routes/client_update";
+$route['docket_routing_parolee'] = "routes/docket_routing_parolee";
+$route['pardonee_docket_routing'] = "routes/pardonee_docket_routing";
+
 // AMS end
 
 $route['request_user'] = "routes/request_user";

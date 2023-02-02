@@ -44,8 +44,10 @@
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control type select2">
                                             <option value="" selected disabled> - - Select Type - - </option>
-                                            <option value="INV">Investigation</option>
-                                            <option value="SUP">Supervision</option>
+                                            <option value="SC_PD_CINV">Courtesy Investigation</option>
+                                            <option value="SC_PD_CSUP">Courtesy Supervision</option>
+                                            <option value="SC_PD_INV">Investigation</option>
+                                            <option value="SC_PD_SUP">Supervision</option>
                                         </select>
                                     </div>
                                 </div>
