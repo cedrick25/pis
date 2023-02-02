@@ -39,9 +39,29 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num"></div>
+                                </div> -->
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Ser.</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control docket_series select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="PPI">PRE-PAROLE INVESTIGATION</option>
+                                            <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
+                                            <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
+                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <option value="PR">PAROLE SUPERVISION</option>
+                                            <option value="PD">PARDON SUPERVISION</option>
+                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
+                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
+                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
+                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral Type</label></div>
@@ -62,26 +82,6 @@
                                             <option value="infraction">Infraction</option>
                                             <option value="death">Death</option>
                                             <option value="others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control docket_series select2">
-                                            <option selected value="none" disabled>Select</option>
-                                            <option value="PPI">PRE-PAROLE INVESTIGATION</option>
-                                            <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
-                                            <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
-                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="PR">PAROLE SUPERVISION</option>
-                                            <option value="PD">PARDON SUPERVISION</option>
-                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
-                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
-                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
                                         </select>
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -335,145 +335,69 @@
             
             return d.promise();
         };
-
-        $('.plea_bargain').change(function(){
-            if ($('.plea_bargain').val() == "true") {
-                $(".class_sel").show();
-            } else {
-                $(".class-sel").hide();
-            }
-            if ($('.plea_bargain').val() == "false"){
-            $(".class_sel").hide();
-            } else {
-                $(".class_sel").show();
-            }
-        });
-
-
-        $(".list").html(`
-            <div class="list_sentence">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                </div>
-            </div>`
-        );
-
-        $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked");
-
-            $(".list").append(`
-                <div class="list_sentence">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                    </div>
-                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                </div>
-                `
-            )
-        });
-        $('.list').on('click', '.remove', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
+       
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
 
-        var __select = function(){
-            $('.field_office').empty();
-
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                // console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-                   
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
         $(".btn-confirm").unbind("click").on("click", function(){
-            
-            const sentence = [];
-            const sentence_inputs = $(".sentence");
-            const min_y = $(".min_y");
-            const min_m = $(".min_m");
-            const min_d = $(".min_d");
-            const max_y = $(".max_y");
-            const max_m = $(".max_m");
-            const max_d = $(".max_d");
-
-            for(var i = 0; i < sentence_inputs.length; i++){
-                const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                sentence.push(list);
-            }
-            // console.log(list)
-            console.log(sentence)
-
+                
             var payload = {
-                "type"          : "INV",
-                "docketNumber"  : "",
-                "fieldOfficeId" : $(".field_office").val(),
-                "clientType"    : $(".client_type").val(),
-                "firstName"     : $(".firstName").val(),
-                "middleName"    : $(".middleName").val(),
-                "lastName"      : $(".lastName").val(),
-                "suffixName"    : $(".suffix").val(),
-                "criminalCaseNumber" : $(".cc_no").val(),
-                "offense"       : $(".offense").val(),
-                "courtOfOrigin" : $(".court_origin").val(),
-                "militaryCourt" : $(".military_court").val(),
-                "sentence"      : JSON.stringify(sentence),
-                "courtOrderDate": $(".cod").val(),
-                "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : false,
-                "referral"      : false,
-                "typeOfReferral": "",
-                "remarks"       : $(".remarks").val(),
-                "probationStartDate": "",
-                "probationYear" : "",
-                "probationMonth": "",
-                "probationDay"  :"",
-                "status"        : 1,
+                "type"              : "SC_PD_SUP",
+                "docketNumber"      : "",
+                "docketSeries"      : $(".docket_series").val(),
+                "caseloadType"      : $(".caseload").val(),
+                "clientType"        : $(".client_type").val(),
+                // "ref_office"        : $(".ref_office").val(),
+                // "reason"            : $(".reason").val(),
+                // "start_sup_date"            : $(".start_sup_date").val(),
+                // "end_sup_date"            : $(".end_sup_date").val(),
+                // "date_court_ref"            : $(".date_court_ref").val(),
+                "fieldOfficeId"     : $.cookie('field_office_id'),
+                "firstName"         : "",
+                "middleName"        : "",
+                "lastName"          : "",
+                "suffixName"        : "",
+                "fullName"          : "",
+                "pleaBargain"       : false,
+                "caseClassification"    : $(".case_class").val(),
+                "criminalCaseNumber"    : "",
+                "offense"               : "",
+                "investigatingOfficer"  : "",
+                "courtOfOrigin"         : "",
+                "courtOrderDate"        : "",
+                "receivedDateByPPO"     : $(".dr_ppo").val(),
+                "sentence"              : "",
+                "manualDocket"          : false,
+                "referral"              : false,
+                "referralData"          : "",
+                "remarks"               : "",
+                "probationStartDate"    : "",
+                "probationYear"         : "",
+                "probationMonth"        : "",
+                "probationDay"          :"",
+                "prisonName"            : "",
+                "investigationReportSubmittedDate"  : "",
+                "ppoRecommendation"                 : "",
+                "recommendationState"               : "",
+                "dateOfTransfer"                    : "",
+                "transferredOfficeId"               : "",
+                "dateOrderReceivedFromTheBoard"     : "",
+                "boardOrder"            : "",
+                "boardOrderStatus"      : "",
+                "referrringOfficeId"    : "",
+                "dateCICAR"             : $(".date_cic").val(),
+                "supervisingOfficer"    : $(".sup_officer").val(),
+                "probationEndDate"      : "",
+                "referralType"          : "",
+                "dateReportSubmittedToTheBoard"                 : "",
+                "dateReportSubmittedToRDForTransferToOtherPPO"  : "",
+                "resolutionType"                                : "",
+                "dateResolutionFromTheBoard"                    : "",
+                "dateResolutionFromTheRDForTransfer"            : "",
+                "createdBy"     : "",
+                "legalAge"      : false,
+                "militaryCourt" : false,
             }
             console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
@@ -483,6 +407,9 @@
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 500);
                     }, 2000);
                 }else{
                     alert("failed")
@@ -491,8 +418,7 @@
         })
 
     } )( jQuery );
-    </script> -->
-
+    </script>
 </body>
 
 </html>
