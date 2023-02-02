@@ -21,7 +21,7 @@
                 </div>
                 <div class="alert alert-success" role="alert" id="success_update" style="display:none">
                     <i class="fa fa-check"></i>
-                        Successfully Updated  
+                        Successfully Created  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
@@ -51,7 +51,7 @@
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                         <div class="col-12 col-md-9">
-                            <select class="form-control field_office_update">
+                            <select class="form-control field_office_update select2">
                                 
                             </select>
                         </div>
@@ -120,7 +120,7 @@
                     <div class="row form-group col-md-6">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                         <div class="col-12 col-md-9">
-                            <select class="form-control field_office">
+                            <select class="form-control field_office select2">
                                 
                             </select>
                         </div>

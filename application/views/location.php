@@ -27,7 +27,7 @@
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_name_update form_capitalized"></div>
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region Address</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control loc_add_update form_capitalized"></div>
                     </div>
                 </div>                        
@@ -52,7 +52,7 @@
                 </div>
                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                     <i class="fa fa-check"></i>
-                        Successfully Updated  
+                        Successfully Added  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
@@ -60,7 +60,7 @@
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g NCR" class="form-control new_loc form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g NCR" class="form-control new_add form_capitalized"></div>
                     </div>
                 </div>         

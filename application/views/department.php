@@ -25,20 +25,29 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update form_capitalized"></div>
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update form_capitalized"></div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
-                        <div class="col-12 col-md-9">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Region</label></div>
+                        <div class="col-12 col-md-8">
                             <select name="select" class="form-control dep_loc_update select2" >
                                 <!-- <option>Select Location</option> -->
                             </select>
                         </div>
                     </div>
-                </div>                            
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                        <div class="col-12 col-md-8"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name_update form_capitalized"></div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-8"><input type="text" name="text-input" placeholder="description" class="form-control dep_desc_update form_capitalized"></div>
+                    </div>
+                    <!-- <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Parent Name</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="select" class="form-control parent_name_update select2">
+                            </select>
+                        </div>
+                    </div> -->
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn_confirm_update btn-sm">Confirm</button>
@@ -64,19 +73,19 @@
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name form_capitalized"></div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD Field Office" class="form-control dep_desc form_capitalized"></div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Region</label></div>
-                        <div class="col-12 col-md-9">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Region</label></div>
+                        <div class="col-12 col-md-8">
                             <select name="select" class="form-control dep_loc select2">
                             </select>
                         </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                        <div class="col-12 col-md-8"><input type="text" name="text-input" placeholder="CMRD" class="form-control dep_name form_capitalized"></div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-8"><input type="text" name="text-input" placeholder="CMRD Field Office" class="form-control dep_desc form_capitalized"></div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -87,6 +96,54 @@
         </div>
     </div>
     <!-- new dept account modal -->
+
+    <div class="modal fade" id="addModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
+            <div class="modal-content">
+                <div class="modal-header">            
+                    <h5 class="modal-title" id="mediumModalLabel">Add Parent</h5>      
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body col-md-12">
+                    <div class="alert alert-success" role="alert" id="success_update_parent" style="display:none">
+                        <i class="fa fa-check"></i>
+                            Successfully Parent Added  
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Region</label></div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-group region_view"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-group field_office_view"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-group desc_view"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Parent Name</label></div>
+                        <div class="col-12 col-md-8">
+                            <select name="select" class="form-control parent_name select2">
+                            </select>
+                        </div>
+                    </div>
+                </div>                            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm_add btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="right-panel" class="right-panel">
 
@@ -265,15 +322,34 @@
             })
         }
         __select();
+        var __select_parent = function(){
+            $('.parent_name').empty();
+            $('.parent_name_update').empty();
+
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    $('.parent_name').append("<option selected disabled> - - Select Parent Name - - </option>");
+                    $('.parent_name').append("<option value='0'> None </option>");
+
+                    $('.parent_name_update').append("<option selected disabled> - - Select Parent Name - - </option>");
+                    $('.parent_name_update').append("<option value='0'> None </option>");
+                    result.forEach(function(data){
+                        console.log(data)
+                        $('.parent_name').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                        $('.parent_name_update').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
+        }
+        __select_parent();
 
         $(".btn-confirm").unbind("click").on("click", function(){
-            console.log('clicked')
-            // $(".dep_loc").val();
-            // $(".dep_name").val();
-            // $(".dep_desc").val();
-            // console.log($(".dep_name").val())
-            // console.log($(".dep_desc").val())
-            // console.log($(".dep_loc").val())
             var payload = {
                 "createdBy"     : "1",
                 "name"          : $(".dep_name").val(),
@@ -292,6 +368,7 @@
                             $('success').hide();
                             __table();
                             __select();
+                            __select_parent();
                         }, 1000);
 
                 }else{
@@ -309,12 +386,20 @@
                 if (result.status != "ERROR") {
                     result.forEach(function(data){
                         console.log(data)
+                        var actions;
+                        switch (data.hasChild) {
+                        case true:
+                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button></td> <button class='btn btn-sm btn-info btn_view' type='submit' data-toggle='modal' data-target='#viewModal' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button></td>";
+                        default:
+                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button></td>";
+                            break;
+                        };
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
-                            "<td>"+data.name+"</td>"+  
+                            "<td>"+data.name+"</td>"+
                             "<td>"+data.description+"</td>"+
                             "<td value="+data.locationId+">"+data.locationName+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button></td>");
+                            "<td align='center' class='actions' width='20%'> "+actions+" ");
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -361,6 +446,7 @@
                                                 $('#success_update').hide();
                                                 __table();
                                                 __select();
+                                                __select_parent();
                                             }, 1000);
                                     }else{
                                         alert("failed")
@@ -368,6 +454,50 @@
                                 })
                             })
 
+                        }else{
+                            alert("failed")
+                        }
+                    })
+                })
+
+                $(".btn_add").unbind("click").on("click", function(){
+                    console.log("clicked button update")
+                    var data_id = $(this).data("id");
+                    console.log(data_id)
+                    __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
+                        console.log(result);
+                        if (result.status != "ERROR") {
+                            $(".region_view").html(result.locationName);
+                            $(".field_office_view").html(result.name);
+                            $(".desc_view").html(result.description);
+
+                            $(".btn-confirm_add").unbind("click").on("click", function(){
+                                console.log('clicked btn update confirm')
+                                var payload = {
+                                    "updatedBy"     : "1",
+                                    "name"          : result.name,
+                                    "description"   : result.description,
+                                    "parentId"      : $(".parent_name").val(),
+                                    "locationId"    : result.locationId
+                                };
+                                // console.log(payload);
+                                __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                    console.log(result);
+                                    if (result.status != "ERROR") {
+                                        $(".form-control").val('');
+                                        $('#success_update_parent').show();
+                                            setTimeout(function () {
+                                                $('#addModal').modal('hide');
+                                                $('#success_update_parent').hide();
+                                                __table();
+                                                __select();
+                                                __select_parent();
+                                            }, 1000);
+                                    }else{
+                                        alert("failed")
+                                    }
+                                })
+                            })
                         }else{
                             alert("failed")
                         }
