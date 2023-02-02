@@ -18,8 +18,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pardonee_courtesy_investigation_docketing">Pardonee</a></li>
-                            <li class="active">Courtesy Investigation Create</li>
+                            <li><a href="pardonee_investigation_docketing">Pardonee</a></li>
+                            <li class="active">Investigation List Create</li>
                         </ol>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Create Courtesy Investigation</strong>
+                                <strong class="card-title">Create Investigation List</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
@@ -64,9 +64,31 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Recommendation</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control recommentation   select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="parole">For Parole</option>
+                                            <option value="commutation">For Commutation of Sentence</option>
+                                            <option value="conditional">For Conditional Pardon</option>
+                                            <option value="absolute">For Absolute Pardon</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control state select2">
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="grant">Grant</option>
+                                            <option value="denial">Denial</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control task select2">
+                                        <select class="form-control caseload select2">
                                             <option selected value="none" disabled>Select</option>
                                             <option value="SINGLE_CARPETA_PAPWA">Process Application for Permit to Work Abroad</option>
                                             <option value="SINGLE_CARPETA_PAR">Process Arrival Report</option>
@@ -119,7 +141,18 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
                                 </div> -->
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control client select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="select">Select</option>
+                                            <option value="pending">John Doe</option>
+                                            <option value="approve">Doe John</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transfered</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
@@ -127,27 +160,48 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control inv_off"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reason referral</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control reason"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control cc_no"></div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control case_class select2">
+                                        <select class="form-control board_order select2">
                                             <option selected value="select" disabled>Select</option>
-                                            <option selected value="high">High</option>
-                                            <option selected value="medium">Medium</option>
-                                            <option selected value="low">Low</option>
+                                            <option value="parole">Parole</option>
+                                            <option value="commutation">Commutation of Sentence</option>
+                                            <option value="conditional_pardon">Conditional Pardon</option>
+                                            <option value="absolute_pardon">Absolute Pardon</option>
                                         </select>
                                     </div>
-                                </div> -->
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received by PPO</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control dr_ppo"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Courtesy Investigation Completed</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_cic"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John A. Doe" class="form-control prison_name"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense </label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Murder" class="form-control offense"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order Status</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control board_status select2">
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="granted">Granted</option>
+                                            <option value="denied">Denied</option>
+                                            <option value="cancelled">Cancelled</option>
+                                            <option value="died">Died</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date of Transferred</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_transferred"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date of PECI Submitted</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_peci"></div>
                                 </div>
                             </div>
                             <div class="card-footer">

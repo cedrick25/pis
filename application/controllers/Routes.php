@@ -216,16 +216,82 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('parolee_courtesy_investigation_update');
 	}
-		public function parolee_courtesy_supervision_update()
+	public function parolee_courtesy_supervision_update()
 	{
 		$this->load->view('parolee_courtesy_supervision_update');
 	}
-		public function parolee_investigation_update()
+	public function parolee_investigation_update()
 	{
 		$this->load->view('parolee_investigation_update');
 	}
-		public function parolee_supervision_update()
+	public function parolee_supervision_update()
 	{
 		$this->load->view('parolee_supervision_update');
 	}
+
+	public function pardonee_courtesy_investigation_create()
+	{
+		$this->load->view('pardonee_courtesy_investigation_create');
+	}
+	public function pardonee_courtesy_supervision_create()
+	{
+		$this->load->view('pardonee_courtesy_supervision_create');
+	}
+	public function pardonee_investigation_create()
+	{
+		$this->load->view('pardonee_investigation_create');
+	}
+	public function pardonee_supervision_create()
+	{
+		$this->load->view('pardonee_supervision_create');
+	}
+	public function pardonee_courtesy_investigation_docketing()
+	{
+		$this->load->view('pardonee_courtesy_investigation_docketing');
+	}
+	public function pardonee_courtesy_supervision_docketing()
+	{
+		$this->load->view('pardonee_courtesy_supervision_docketing');
+	}
+	public function pardonee_investigation_docketing()
+	{
+		$this->load->view('pardonee_investigation_docketing');
+	}
+	public function pardonee_supervision_docketing()
+	{
+		$this->load->view('pardonee_supervision_docketing');
+	}
+	public function pardonee_courtesy_investigation_update()
+	{
+		$this->load->view('pardonee_courtesy_investigation_update');
+	}
+	public function pardonee_courtesy_supervision_update()
+	{
+		$this->load->view('pardonee_courtesy_supervision_update');
+	}
+	public function pardonee_investigation_update()
+	{
+		$this->load->view('pardonee_investigation_update');
+	}
+	public function pardonee_supervision_update()
+	{
+		$this->load->view('pardonee_supervision_update');
+	}
+	public function client_list()
+	{
+		$this->load->view('client_list');
+	}
+	public function client_update()
+	{
+		$this->load->view('client_update');
+	}
+	public function docket_routing_parolee()
+	{
+		$this->load->view('docket_routing_parolee');
+	}
+	public function pardonee_docket_routing()
+	{
+		$this->load->view('pardonee_docket_routing');
+	}
+
 }
