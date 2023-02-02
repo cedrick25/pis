@@ -70,16 +70,16 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Sent</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Probation</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Pardonee</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="sent">Probation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="sent_pardonee">Pardonee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="sent_parolee">Parolee</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Received</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Probation</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Pardonee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="received">Probation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardonee</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
                     </ul>
                 </li>

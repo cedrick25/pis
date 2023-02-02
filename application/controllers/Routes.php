@@ -293,5 +293,13 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('pardonee_docket_routing');
 	}
+	public function sent_parolee()
+	{
+		$this->load->view('sent_parolee');
+	}
+	public function received_pardonee()
+	{
+		$this->load->view('received_pardonee');
+	}
 
 }

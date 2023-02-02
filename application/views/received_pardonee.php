@@ -94,6 +94,12 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="sup_tab" data-toggle="tab" href="#sup" role="tab" aria-controls="supervision" aria-selected="false">Supervision</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="cinv_tab" data-toggle="tab" href="#cinv" role="tab" aria-controls="single_carpeta" aria-selected="false">Courtesy Investigation</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="cinv_tab" data-toggle="tab" href="#csup" role="tab" aria-controls="single_carpeta" aria-selected="false">Courtesy Supervision</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="inv" role="tabpanel" aria-labelledby="home-tab">
@@ -140,6 +146,50 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="cinv" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="col col-md-12">
+                                            <h3>Courtesy Investigation</h3>
+                                        </div><br><br>
+                                        <div class="col col-md-12">
+                                            <table class="table table_head_sc">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Docket No.</th>
+                                                        <th>Field Office</th>
+                                                        <th>Details</th>
+                                                        <th>Sender</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table_body_sc">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="csup" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="col col-md-12">
+                                            <h3>Courtesy Supervision</h3>
+                                        </div><br><br>
+                                        <div class="col col-md-12">
+                                            <table class="table table_head_sc">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Docket No.</th>
+                                                        <th>Field Office</th>
+                                                        <th>Details</th>
+                                                        <th>Sender</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table_body_sc">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +205,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -576,7 +626,7 @@
         }
         __table_sc();
     } )( jQuery );
-    </script>
+    </script> -->
 
 </body>
 
