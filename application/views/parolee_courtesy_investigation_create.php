@@ -69,8 +69,6 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control task select2">
-                                            <option selected value="none" disabled>Select</option>
-                                        <select class="form-control caseload select2">
                                             <option selected value="none" disabled> - - Select - - </option>
                                             <option value="SINGLE_CARPETA_PAPWA">Process Application for Permit to Work Abroad</option>
                                             <option value="SINGLE_CARPETA_PAR">Process Arrival Report</option>
@@ -258,7 +256,7 @@
                 "type"              : "SC_PR_CINV",
                 "docketNumber"      : "",
                 "docketSeries"      : $(".docket_series").val(),
-                "caseloadType"      : $(".caseload").val(),
+                "caseloadType"      : $(".task").val(),
                 "clientType"        : $(".client_type").val(),
                 "ref_office"        : $(".ref_office").val(),
                 "inv_off"           : $(".inv_off").val(),
