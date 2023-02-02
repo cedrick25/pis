@@ -108,7 +108,10 @@ $route['docket_routing_parolee'] = "routes/docket_routing_parolee";
 $route['pardonee_docket_routing'] = "routes/pardonee_docket_routing";
 $route['sent_parolee'] = "routes/sent_parolee";
 $route['received_pardonee'] = "routes/received_pardonee";
-$route['receive_parolee'] = "routes/receive_parolee";
+$route['sent_pardonee'] = "routes/sent_pardonee";
+$route['received_parolee'] = "routes/received_parolee";
+$route['form_list'] = "routes/form_list";
+$route['form_upload'] = "routes/form_upload";
 
 // AMS end
 

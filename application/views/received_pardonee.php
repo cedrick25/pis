@@ -120,6 +120,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th> 
                                                 </tbody>
                                             </table>
                                         </div>
@@ -142,6 +149,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_sup">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -164,6 +178,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_cinv">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -186,6 +207,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_csup">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>

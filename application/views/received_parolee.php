@@ -120,6 +120,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -142,6 +149,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_sup">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -151,7 +165,7 @@
                                             <h3>Courtesy Investigation</h3>
                                         </div><br><br>
                                         <div class="col col-md-12">
-                                            <table class="table table_head_sc">
+                                            <table class="table table_head_cinv">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -163,7 +177,14 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="table_body_sc">
+                                                <tbody class="table_body_cinv">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -173,7 +194,7 @@
                                             <h3>Courtesy Supervision</h3>
                                         </div><br><br>
                                         <div class="col col-md-12">
-                                            <table class="table table_head_sc">
+                                            <table class="table table_head_csup">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -185,7 +206,14 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="table_body_sc">
+                                                <tbody class="table_body_csup">
+                                                    <th>1</th>
+                                                    <th>JPECI-2023-02-00001</th>
+                                                    <th>Central Office</th>
+                                                    <th>Test</th>
+                                                    <th>John Doe</th>
+                                                    <th>Active</th>
+                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>

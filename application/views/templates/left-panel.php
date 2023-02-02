@@ -92,6 +92,16 @@
                         <!-- <li><i class="menu-icon fa fa-map-marker"></i><a href="regions">Regions</a></li> -->
                     </ul>
                 </li>
+                <h3 class="menu-title">Forms</h3>
+                <li class="menu-item-has-children dropdown hh">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Forms</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="form_list">Form List</a></li>
+                        
+                        <!-- <li><i class="menu-icon fa fa-building-o"></i><a href="field_office">Field Office</a></li> -->
+                        <!-- <li><i class="menu-icon fa fa-map-marker"></i><a href="regions">Regions</a></li> -->
+                    </ul>
+                </li>
                 <h3 class="menu-title">Management</h3>
                 <li class="menu-item-has-children dropdown hh">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>My Organization</a>
