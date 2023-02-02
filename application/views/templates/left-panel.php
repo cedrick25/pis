@@ -36,8 +36,8 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Probation</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Investigation</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Supervision</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="investigation_docketing">Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
@@ -80,14 +80,14 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="received">Probation</a></li>
                         <li><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardonee</a></li>
-                        <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parolee</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title">Clients</h3>
                 <li class="menu-item-has-children dropdown hh">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Clients</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user"></i><a href="user_accounts">Client List</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="client_list">Client List</a></li>
                         <!-- <li><i class="menu-icon fa fa-building-o"></i><a href="field_office">Field Office</a></li> -->
                         <!-- <li><i class="menu-icon fa fa-map-marker"></i><a href="regions">Regions</a></li> -->
                     </ul>

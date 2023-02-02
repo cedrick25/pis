@@ -151,7 +151,7 @@
                                             <h3>Courtesy Investigation</h3>
                                         </div><br><br>
                                         <div class="col col-md-12">
-                                            <table class="table table_head_cinv">
+                                            <table class="table table_head_sc">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -163,7 +163,7 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="table_body_cinv">
+                                                <tbody class="table_body_sc">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -173,7 +173,7 @@
                                             <h3>Courtesy Supervision</h3>
                                         </div><br><br>
                                         <div class="col col-md-12">
-                                            <table class="table table_head_csup">
+                                            <table class="table table_head_sc">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -185,7 +185,7 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="table_body_csup">
+                                                <tbody class="table_body_sc">
                                                 </tbody>
                                             </table>
                                         </div>

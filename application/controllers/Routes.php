@@ -301,5 +301,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('received_pardonee');
 	}
+	public function receive_parolee()
+	{
+		$this->load->view('receive_parolee');
+	}
+
 
 }

@@ -198,7 +198,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/sup').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/pis_sup').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")

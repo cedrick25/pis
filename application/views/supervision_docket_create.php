@@ -544,7 +544,7 @@
             }
 
             var payload = {
-                "type"          : "SUP",
+                "type"          : "PIS_SUP",
                 "docketNumber"  : "",
                 "fieldOfficeId" : $(".field_office").val(),
                 "clientType"    : $(".client_type").val(),

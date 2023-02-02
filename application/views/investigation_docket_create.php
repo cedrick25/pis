@@ -389,7 +389,7 @@
             console.log(sentence)
 
             var payload = {
-                "type"          : "INV",
+                "type"          : "PIS_INV",
                 "docketNumber"  : "",
                 "fieldOfficeId" : $(".field_office").val(),
                 "clientType"    : $(".client_type").val(),

@@ -404,7 +404,7 @@
                         console.log(sentence)
                         
                         var payload = {
-                            "type"          : "SUP",
+                            "type"          : "PIS_SUP",
                             "docketNumber"  : "",
                             "fieldOfficeId" :  $(".field_office_update").val(),
                             "clientType"    : $(".client_type_update").val(),
