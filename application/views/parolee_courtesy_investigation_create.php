@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g 2023-00001" class="form-control docket_num"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
@@ -115,10 +115,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
@@ -131,17 +127,6 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reason referral</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control reason"></div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control case_class select2">
-                                            <option selected value="select" disabled>Select</option>
-                                            <option selected value="high">High</option>
-                                            <option selected value="medium">Medium</option>
-                                            <option selected value="low">Low</option>
-                                        </select>
-                                    </div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received by PPO</label></div>
                                     <div class="col-12 col-md-9"><input type="date" class="form-control dr_ppo"></div>
