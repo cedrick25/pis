@@ -69,7 +69,6 @@
                                             <th>#</th>
                                             <th>Docket Number</th>
                                             <th>Docket Series</th>
-                                            <th>Client Name</th>
                                             <th>Client Type</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -188,65 +187,64 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/SC_PR_CINV/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/SC_PR_INV/'+$.cookie("field_office_id")).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
-                // if (result.status != "ERROR") {
-                //     result.response.forEach(function(data){
-                //         $('.table_body').append("<tr>"+
-                //             "<td></td>"+
-                //             "<td>"+data.docketNumber+"</td>"+
-                //             "<td>"+data.receivedDate+"</td>"+
-                //             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
-                //             "<td>"+data.criminalCaseNumber+"</td>"+
-                //             "<td>"+data.status+"</td>"+
-                //             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-remove'></i> Remove</button>")
-                //     });
-                //     $(document).ready(function () {
-                //         $('.table_head tbody tr').each(function (idx) {
-                //            $(this).children("td:eq(0)").html(idx + 1);
-                //         });
-                //         var table = $('.table_head').DataTable({
-                //             order: [[0, 'asc']],
-                //             "columnDefs": [
-                //                 { "width": "20%", "targets": 6 }
-                //             ]
-                //         });
-                //         $('.dataTables_length').addClass('bs-select');
-                //     });
+                if (result.status != "ERROR") {
+                    result.response.forEach(function(data){
+                        $('.table_body').append("<tr>"+
+                            "<td></td>"+
+                            "<td>"+data.docketNumber+"</td>"+
+                            "<td>"+data.docketSeries+"</td>"+
+                            "<td>"+data.clientType+"</td>"+
+                            "<td>"+data.status+"</td>"+
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-remove'></i> Remove</button>")
+                    });
+                    $(document).ready(function () {
+                        $('.table_head tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "20%", "targets": 5 }
+                            ]
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    });
 
-                //     $(".btn_remove").unbind("click").on("click", function(){
-                //         var docket_number = $(this).data("docket");
-                //         $(".docket").html(docket_number)
-                //         $(".btn_remove_confirm").unbind("click").on("click", function(){
+                    $(".btn_remove").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        $(".docket").html(docket_number)
+                        $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                //             __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
-                //                 if (result.status != "ERROR") {
-                //                         $(".form-control").val('');
-                //                         $('#success_remove').show();
-                //                             setTimeout(function () {
-                //                                 $('#removeModal').modal('hide');
-                //                                 $('#success_remove').hide();
-                //                                 __table();
-                //                             }, 1000);
+                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                                if (result.status != "ERROR") {
+                                        $(".form-control").val('');
+                                        $('#success_remove').show();
+                                            setTimeout(function () {
+                                                $('#removeModal').modal('hide');
+                                                $('#success_remove').hide();
+                                                __table();
+                                            }, 1000);
                                         
-                //                     // $(".form-control").val('');
-                //                     // $('#removeModal').modal('hide');
-                //                     // __table();
-                //                 }else{
-                //                     alert("failed")
-                //                 }
-                //             })
-                //         })
-                //     })
+                                    // $(".form-control").val('');
+                                    // $('#removeModal').modal('hide');
+                                    // __table();
+                                }else{
+                                    alert("failed")
+                                }
+                            })
+                        })
+                    })
 
-                //     $(".btn_update").unbind("click").on("click", function(){
-                //         var docket_number = $(this).data("docket");
-                //         window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
-                //     })
+                    $(".btn_update").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        window.location.href = 'http://localhost/pis/parolee_courtesy_supervision_update?docket_number='+docket_number;
+                    })
                    
-                // }
+                }
             })
         }
         __table();
