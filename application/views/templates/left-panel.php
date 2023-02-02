@@ -16,7 +16,7 @@
                 <li class="aa">
                     <a href="dashboard"> <i class="menu-icon fa fa-dashboard" aria-hidden="true"></i>Dashboard </a>
                 </li>
-                <li class="menu-item-has-children dropdown hh">
+                <!-- <li class="menu-item-has-children dropdown hh">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Docketing</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="investigation_docketing">Investigation</a></li>
@@ -30,6 +30,57 @@
                         <li><i class="menu-icon fa fa-share"></i><a href="docket_routing">Docket Routing</a></li>
                         <li><i class="menu-icon fa fa-paper-plane-o"></i><a href="sent">Sent</a></li>
                         <li><i class="menu-icon fa fa-inbox"></i><a href="received">Received</a></li>
+                    </ul>
+                </li> -->
+                <h3 class="menu-title">Docketing</h3>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Probation</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Supervision</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parolee</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="parolee_supervision_docketing">Supervision</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pardonee</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Supervision</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Courtesy Investigation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Courtesy Supervision</a></li>
+                    </ul>
+                </li>
+                <h3 class="menu-title">Docket Routing</h3>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Docket Routing</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Probation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Pardonee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Sent</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Probation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Pardonee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Received</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Probation</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Pardonee</a></li>
+                        <li><i class="menu-icon fa fa-user"></i><a href="">Parolee</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title">Management</h3>
