@@ -192,4 +192,8 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('parolee_investigation_create');
 	}
+	public function parolee_supervision_create()
+	{
+		$this->load->view('parolee_supervision_create');
+	}
 }
