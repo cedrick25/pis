@@ -44,6 +44,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#sup" role="tab" aria-controls="profile" aria-selected="false">Supervision</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#sc" role="tab" aria-controls="profile" aria-selected="false">Single Carpeta</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="inv" role="tabpanel" aria-labelledby="home-tab">
@@ -86,6 +89,28 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_sup">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="sc" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="col col-md-12">
+                                            <h3>Single Carpeta</h3>
+                                        </div><br><br>
+                                        <div class="col col-md-12">
+                                            <table class="table table_head_sc">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Docket No.</th>
+                                                        <th>Field Office</th>
+                                                        <th>Details</th>
+                                                        <th>Receiver</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table_body_sc">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -318,6 +343,55 @@
             })
         }
         __table_sup();
+
+        var __table_sc = function(){
+            $('.table_head_sc').DataTable().destroy();
+            $('.table_body_sc').empty();
+
+            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC').done(function (result) {
+                // console.log("==========")
+                // console.log(result)
+                // console.log("==========")
+                if (result.status != "ERROR") {
+                    result.content.forEach(function(data){
+                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            var fo = result.name;
+                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
+                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            $('.table_body_sc').append("<tr>"+
+                                "<td>"+data.id+"</td>"+
+                                "<td>"+data.docketNumber+"</td>"+
+                                "<td>"+fo+"</td>"+
+                                "<td>"+data.details+"</td>"+
+                                "<td>"+receiver+"</td>"+
+                                "<td>"+data.status+"</td>"+
+                                "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view_sc type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
+                        })
+                        })
+                    })
+                    setTimeout(function () {
+                        $(document).ready(function () {
+                            $('.table_head_sc tbody tr').each(function (idx) {
+                               $(this).children("td:eq(0)").html(idx + 1);
+                            });
+                            var table = $('.table_head_sc').DataTable({
+                                order: [[0, 'asc']],
+                                // "columnDefs": [
+                                //     { "width": "30%", "targets": 6 }
+                                // ]
+                            });
+                            $('.dataTables_length').addClass('bs-select');
+                        }); 
+                        $(".btn_view_sc").unbind("click").on("click", function(){
+                            var id = $(this).data("id");
+                            var docket_number = $(this).data("docket");
+                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
+                        })
+                    }, 400);
+                }
+            })
+        }
+        __table_sc();
     } )( jQuery );
     </script>
 

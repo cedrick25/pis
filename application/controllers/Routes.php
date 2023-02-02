@@ -176,4 +176,12 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('single_carpeta_update');
 	}
+	public function new_client()
+	{
+		$this->load->view('new_client');
+	}
+	public function courtesy_supervision_create()
+	{
+		$this->load->view('courtesy_supervision_create');
+	}
 }

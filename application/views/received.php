@@ -94,6 +94,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="sup_tab" data-toggle="tab" href="#sup" role="tab" aria-controls="supervision" aria-selected="false">Supervision</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="sup_tab" data-toggle="tab" href="#sc" role="tab" aria-controls="single_carpeta" aria-selected="false">Single Carpeta</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="inv" role="tabpanel" aria-labelledby="home-tab">
@@ -136,6 +139,28 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_sup">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="sc" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="col col-md-12">
+                                            <h3>Supervision</h3>
+                                        </div><br><br>
+                                        <div class="col col-md-12">
+                                            <table class="table table_head_sc">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Docket No.</th>
+                                                        <th>Field Office</th>
+                                                        <th>Details</th>
+                                                        <th>Sender</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table_body_sc">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -466,6 +491,115 @@
         // $(".sup_tab").unbind("click").on("click", function(){
             __table_sup();
         // })
+
+
+        var __table_sc = function(){
+            $('.table_head_sc').DataTable().destroy();
+            $('.table_body_sc').empty();
+
+            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=SC').done(function (result) {
+                // console.log("==========")
+                // console.log(result)
+                // console.log("==========")
+                if (result.status != "ERROR") {
+                    result.content.forEach(function(data){
+                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            var fo = result.name;
+                        __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
+                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            let actions;
+                            switch (data.approvalStatus) {
+                            case "COMPLETED":
+                                actions = "<h5>This Docket is Completed</h5>";
+                                break;
+                            default:
+                                actions = " <button class='btn btn-sm btn-primary btn_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete type='submit' data-toggle='modal' data-target='#completeModal'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                break;
+                            };
+                            $('.table_body_sc').append("<tr>"+
+                                "<td></td>"+
+                                "<td>"+data.docketNumber+"</td>"+
+                                "<td>"+fo+"</td>"+
+                                "<td>"+data.details+"</td>"+
+                                "<td>"+senderId+"</td>"+
+                                "<td>"+data.status+"</td>"+
+                                "<td align='center' class='actions' width='40%'>"+actions+"")
+                            });
+                        });
+                    });
+                    setTimeout(function () {
+                    $(document).ready(function () {
+                        $('.table_head_sc tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head_sc').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                // { "width": "40%", "targets": 6 }
+                            ]
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    }); 
+
+                    $(".btn_complete").unbind("click").on("click", function(){
+                        var id = $(this).data("id");
+                        var docket_number = $(this).data("docket");
+                        $(".docket").html(docket_number)
+                        __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
+                            console.log(result)
+                            var result = result.response;
+                            $(".btn_complete_confirm").unbind("click").on("click", function(){
+                                console.log('clicked')
+                                var payload = {
+                                    "type"                  : result.type,
+                                    "caseload_type"         : result.caseloadType,
+                                    "senderId"              : result.senderId,
+                                    "receiverId"            : result.receiverId,
+                                    "fieldOfficeId"         : result.fieldOfficeId,
+                                    "docketNumber"          : result.docketNumber,
+                                    "details"               : result.details,
+                                    "remarks"               : result.remarks,
+                                    "approvalStatus"        : "",
+                                    "lastStatusUpdateDate"  : "",
+                                }
+                                console.log(payload)
+                                __executeExternalPost('http://localhost:8000/workflow/complete/'+id,JSON.stringify(payload)).done(function (result) {
+                                    if (result.status != "ERROR") {
+                                            $(".form-control").val('');
+                                            $('#complete_success').show();
+                                                setTimeout(function () {
+                                                    $('#completeModal').modal('hide');
+                                                    $('#complete_success').hide();
+                                                    window.location.reload(true);
+                                                }, 1000);
+                                    }else{
+                                        alert("failed")
+                                    }
+                                })
+                            })
+                        })
+                    })
+                    $(".btn_return").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        var id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
+                    })
+                    $(".btn_forward").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        var id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
+                    })
+                    $(".btn_upload").unbind("click").on("click", function(){
+                        var docket_number = $(this).data("docket");
+                        var id = $(this).data("id");
+                        var type = $(this).data("type");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type;
+                    })
+                    }, 500);
+                }
+            })
+        }
+        __table_sc();
     } )( jQuery );
     </script>
 

@@ -46,6 +46,7 @@
                                                     <option value="" selected disabled> - - Select Type - - </option>
                                                     <option value="INV">Investigation</option>
                                                     <option value="SUP">Supervision</option>
+                                                    <option value="SC">Single Carpeta</option>
                                                 </select>
                                             </div>
                                         </div>
