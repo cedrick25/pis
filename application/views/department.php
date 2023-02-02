@@ -101,7 +101,7 @@
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">            
-                    <h5 class="modal-title" id="mediumModalLabel">Add Parent</h5>      
+                    <h5 class="modal-title" id="mediumModalLabel">Add Department</h5>      
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -109,8 +109,51 @@
                 <div class="modal-body col-md-12">
                     <div class="alert alert-success" role="alert" id="success_update_parent" style="display:none">
                         <i class="fa fa-check"></i>
-                            Successfully Parent Added  
+                            Successfully Department Added  
                     </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Region</label></div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-group region_add"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-group field_office_add"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-group desc_add"></label>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Department</label></div>
+                        <div class="col-12 col-md-8">
+                            <select name="select" class="form-control parent_name select2">
+                            </select>
+                        </div>
+                    </div>
+                </div>                            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-confirm_add btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="viewModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
+            <div class="modal-content">
+                <div class="modal-header">            
+                    <h5 class="modal-title" id="mediumModalLabel">View details</h5>      
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-4"><label for="text-input" class=" form-control-label">Region</label></div>
                         <div class="col-12 col-md-8">
@@ -130,17 +173,12 @@
                         </div>
                     </div>
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Parent Name</label></div>
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Department</label></div>
                         <div class="col-12 col-md-8">
-                            <select name="select" class="form-control parent_name select2">
-                            </select>
+                            <label class="form-group parent_name_view"></label>
                         </div>
                     </div>
-                </div>                            
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-confirm_add btn-sm">Confirm</button>
-                </div>
+                </div>      
             </div>
         </div>
     </div>
@@ -329,10 +367,10 @@
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
-                    $('.parent_name').append("<option selected disabled> - - Select Parent Name - - </option>");
+                    $('.parent_name').append("<option selected disabled> - - Select Department - - </option>");
                     $('.parent_name').append("<option value='0'> None </option>");
 
-                    $('.parent_name_update').append("<option selected disabled> - - Select Parent Name - - </option>");
+                    $('.parent_name_update').append("<option selected disabled> - - Select Department - - </option>");
                     $('.parent_name_update').append("<option value='0'> None </option>");
                     result.forEach(function(data){
                         console.log(data)
@@ -389,9 +427,9 @@
                         var actions;
                         switch (data.hasChild) {
                         case true:
-                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button></td> <button class='btn btn-sm btn-info btn_view' type='submit' data-toggle='modal' data-target='#viewModal' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button></td>";
+                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button> <button class='btn btn-sm btn-info btn_view' type='submit' data-toggle='modal' data-target='#viewModal' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button></td>";
                         default:
-                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button></td>";
+                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button> <button class='btn btn-sm btn-info btn_view' type='submit' data-toggle='modal' data-target='#viewModal' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button></td>";
                             break;
                         };
                         $('.table_body').append("<tr>"+
@@ -399,7 +437,7 @@
                             "<td>"+data.name+"</td>"+
                             "<td>"+data.description+"</td>"+
                             "<td value="+data.locationId+">"+data.locationName+"</td>"+
-                            "<td align='center' class='actions' width='20%'> "+actions+" ");
+                            "<td align='center' class='actions' width='35%'> "+actions+" ");
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -467,9 +505,9 @@
                     __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
                         console.log(result);
                         if (result.status != "ERROR") {
-                            $(".region_view").html(result.locationName);
-                            $(".field_office_view").html(result.name);
-                            $(".desc_view").html(result.description);
+                            $(".region_add").html(result.locationName);
+                            $(".field_office_add").html(result.name);
+                            $(".desc_add").html(result.description);
 
                             $(".btn-confirm_add").unbind("click").on("click", function(){
                                 console.log('clicked btn update confirm')
@@ -498,6 +536,37 @@
                                     }
                                 })
                             })
+                        }else{
+                            alert("failed")
+                        }
+                    })
+                })
+                $(".btn_view").unbind("click").on("click", function(){
+                    console.log("clicked button update")
+                    var data_id = $(this).data("id");
+                    console.log(data_id)
+                    __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
+                        console.log(result);
+                        if (result.status != "ERROR") {
+                            $(".region_view").html(result.locationName);
+                            $(".field_office_view").html(result.name);
+                            $(".desc_view").html(result.description);
+                            if (result.parentId != 0 ) {
+
+                                __executeExternalGet('http://localhost:8088/department/'+result.parentId).done(function (result) {
+                                    console.log(result);
+                                    if (result.status != "ERROR") {
+                                        $(".parent_name_view").html(result.name);
+
+                                    }else{
+                                        alert("failed")
+                                    }
+                                })
+                            } else {
+                                $(".parent_name_view").html(" - - no parent added - - ");
+
+                            }
+
                         }else{
                             alert("failed")
                         }
