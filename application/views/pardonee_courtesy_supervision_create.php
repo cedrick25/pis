@@ -18,31 +18,31 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pardonee_courtesy_investigation_docketing">Pardonee</a></li>
-                            <li class="active">Courtesy Investigation Create</li>
+                            <li><a href="pardonee_courtesy_supervision_docketing">Pardonee</a></li>
+                            <li class="active">Courtesy Supervision Create</li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="content mt-3">
+	    <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Create Courtesy Investigation</strong>
+                                <strong class="card-title">Create Courtesy Supervision</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num"></div>
-                                </div>
+			                    <div class="row form-group col-md-6">
+			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num"></div>
+			                    </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
                                     <div class="col-12 col-md-9">
@@ -62,6 +62,18 @@
                                             <option value="CPD">COURTESY PARDON SUPERVISION</option>
                                         </select>
                                     </div>
+                                </div>
+			                    <div class="row form-group col-md-6">
+			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
+			                    </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reason referral</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control reason"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
@@ -114,23 +126,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control inv_off"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reason referral</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control reason"></div>
-                                </div>
-                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control case_class select2">
@@ -140,20 +136,29 @@
                                             <option selected value="low">Low</option>
                                         </select>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received by PPO</label></div>
                                     <div class="col-12 col-md-9"><input type="date" class="form-control dr_ppo"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Courtesy Investigation Completed</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_cic"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Start Supervision</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control start_sup_date"></div>
                                 </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">End Supervision</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control end_sup_date"></div>
+                                </div>
+                                
+			                    <div class="row form-group col-md-6">
+			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Courtesy Referral</label></div>
+			                        <div class="col-12 col-md-9"><input type="date" class="form-control date_court_ref"></div>
+			                    </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
-                            </div>
+			                    <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
+			                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+			                </div>
                         </div>
                     </div>
                 </div>
