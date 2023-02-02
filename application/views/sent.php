@@ -44,9 +44,6 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#sup" role="tab" aria-controls="profile" aria-selected="false">Supervision</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#sc" role="tab" aria-controls="profile" aria-selected="false">Single Carpeta</a>
-                                    </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="inv" role="tabpanel" aria-labelledby="home-tab">
@@ -89,28 +86,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_sup">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="sc" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="col col-md-12">
-                                            <h3>Single Carpeta</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head_sc">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Docket No.</th>
-                                                        <th>Field Office</th>
-                                                        <th>Details</th>
-                                                        <th>Receiver</th>
-                                                        <th>Status</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_sc">
                                                 </tbody>
                                             </table>
                                         </div>
