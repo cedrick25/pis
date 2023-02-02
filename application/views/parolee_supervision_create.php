@@ -18,8 +18,9 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="parolee_investigation_docketing">Parolee</a></li>
-                            <li class="active">Investigation List Create</li>
+                            <li><a href="#">Parolee</a></li>
+                            <li><a href="#">Supervision List</a></li>
+                            <li class="active">Create</li>
                         </ol>
                     </div>
                 </div>
@@ -32,7 +33,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Create Investigation List</strong>
+                                <strong class="card-title">Create Supervision</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
@@ -42,6 +43,28 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control referral_type select2">
+                                            <option selected value="select">Select</option>
+                                            <option value="BPP">From Board of Pardons and Parole</option>
+                                            <option value="parolee">Transferred from otther PPO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Report Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control report_type select2">
+                                            <option selected value="select">Select</option>
+                                            <option value="summary">Summary</option>
+                                            <option value="infraction">Infraction</option>
+                                            <option value="death">Death</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
@@ -60,28 +83,6 @@
                                             <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
                                             <option value="CPR">COURTESY PAROLE SUPERVISION</option>
                                             <option value="CPD">COURTESY PARDON SUPERVISION</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Recommendation</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control recommentation   select2">
-                                            <option selected value="none" disabled>Select</option>
-                                            <option value="parole">For Parole</option>
-                                            <option value="commutation">For Commutation of Sentence</option>
-                                            <option value="conditional">For Conditional Pardon</option>
-                                            <option value="absolute">For Absolute Pardon</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control state select2">
-                                            <option selected value="select" disabled>Select</option>
-                                            <option value="grant">Grant</option>
-                                            <option value="denial">Denial</option>
                                         </select>
                                     </div>
                                 </div>
@@ -136,10 +137,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
@@ -152,7 +149,35 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transfered</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control case_class select2">
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="high">High</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="low">Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Resolution Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control res_type select2">
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="final">Final Release and Discharge</option>
+                                            <option value="arrest">Arrest and Recommitment</option>
+                                            <option value="death">Death</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
@@ -160,48 +185,47 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control inv_off"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control cc_no"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reason referral</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control reason"></div>
+                                </div> -->
+                                <!-- <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control board_order select2">
+                                        <select class="form-control case_class select2">
                                             <option selected value="select" disabled>Select</option>
-                                            <option value="parole">Parole</option>
-                                            <option value="commutation">Commutation of Sentence</option>
-                                            <option value="conditional_pardon">Conditional Pardon</option>
-                                            <option value="absolute_pardon">Absolute Pardon</option>
+                                            <option selected value="high">High</option>
+                                            <option selected value="medium">Medium</option>
+                                            <option selected value="low">Low</option>
                                         </select>
                                     </div>
+                                </div> -->
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received by PPO</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control dr_ppo"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John A. Doe" class="form-control prison_name"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Start Supervision Period</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control start_sup"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense </label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Murder" class="form-control offense"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Report Submitted to board</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_sub_board"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order Status</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control board_status select2">
-                                            <option selected value="select" disabled>Select</option>
-                                            <option value="granted">Granted</option>
-                                            <option value="denied">Denied</option>
-                                            <option value="cancelled">Cancelled</option>
-                                            <option value="died">Died</option>
-                                        </select>
-                                    </div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">End Supervision Period</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control end_sup"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date of Transferred</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_transferred"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Resolution Received from Board</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_rec_board"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date of PECI Submitted</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_peci"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Report Submitted to Regional Director for Transfer to other PPO</label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_sub_trans"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Resolution Received from the Regional Director re:Transferred </label></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_rec_trans"></div>
                                 </div>
                             </div>
                             <div class="card-footer">

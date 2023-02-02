@@ -81,6 +81,8 @@ $route['new_client'] = "routes/new_client";
 $route['parolee_courtesy_supervision_create'] = "routes/parolee_courtesy_supervision_create";
 $route['parolee_courtesy_investigation_create'] = "routes/parolee_courtesy_investigation_create";
 $route['parolee_investigation_create'] = "routes/parolee_investigation_create";
+$route['parolee_supervision_create'] = "routes/parolee_supervision_create";
+$route['parolee_investigation_docketing'] = "routes/parolee_investigation_docketing";
 // AMS end
 
 $route['request_user'] = "routes/request_user";
