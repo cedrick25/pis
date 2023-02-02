@@ -434,12 +434,11 @@
             $('.field_office_update').empty();
 
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                console.log(result)
+                // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
                     $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
-                        console.log(data)
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                         $('.field_office_update').append(
@@ -471,7 +470,7 @@
                     "password"      : $(".password").val(),
                     "departmentId"  : $(".field_office").val(),
                 }
-            console.log(payload);
+            // console.log(payload);
             __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
@@ -494,9 +493,9 @@
             $('.table_body').empty();
 
             __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
+                // console.log("==========")
+                // console.log(result)
+                // console.log("==========")
                 if (result.status != "ERROR") {
 
                     result.content.forEach(function(data){
@@ -711,7 +710,6 @@
                         var data_id     = $(this).data("id");
                         console.log(data_id)
                         $(".btn_lift_confirm").unbind("click").on("click", function(){
-                        console.log(data_id)
 
                             __executeExternalPost('http://localhost:8088/user/lift/'+data_id).done(function (result) {
                                 if (result.status != "ERROR") {
