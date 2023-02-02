@@ -43,26 +43,24 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g 2023-00001" class="form-control docket_num"></div>
                                 </div> -->
-                                <div class="row form-group col-md-12">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
-                                        <div class="col-12 col-md-9">
-                                        <select class="form-control docket_series select2">
-                                            <option selected value="none" disabled> - - Select - - </option>
-                                            <option value="PPI">PRE-PAROLE INVESTIGATION</option>
-                                            <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
-                                            <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
-                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="PR">PAROLE SUPERVISION</option>
-                                            <option value="PD">PARDON SUPERVISION</option>
-                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
-                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
-                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
-                                        </select>
-                                        </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Ser.</label></div>
+                                    <div class="col-12 col-md-9">
+                                    <select class="form-control docket_series select2">
+                                        <option selected value="none" disabled> - - Select - - </option>
+                                        <option value="PPI">PRE-PAROLE INVESTIGATION</option>
+                                        <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                        <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
+                                        <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                        <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
+                                        <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                        <option value="PR">PAROLE SUPERVISION</option>
+                                        <option value="PD">PARDON SUPERVISION</option>
+                                        <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
+                                        <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
+                                        <option value="CPR">COURTESY PAROLE SUPERVISION</option>
+                                        <option value="CPD">COURTESY PARDON SUPERVISION</option>
+                                    </select>
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
@@ -258,11 +256,8 @@
                 "docketSeries"      : $(".docket_series").val(),
                 "caseloadType"      : $(".task").val(),
                 "clientType"        : $(".client_type").val(),
-                "ref_office"        : $(".ref_office").val(),
-                "inv_off"           : $(".inv_off").val(),
-                "reason"            : $(".reason").val(),
-                "dr_ppo"            : $(".dr_ppo").val(),
-                "date_cic"          : $(".date_cic").val(),
+                // "ref_office"        : $(".ref_office").val(),
+                // "reason"            : $(".reason").val(),
                 "fieldOfficeId"     : $.cookie('field_office_id'),
                 "firstName"         : "",
                 "middleName"        : "",
@@ -273,10 +268,10 @@
                 "caseClassification"    : "",
                 "criminalCaseNumber"    : "",
                 "offense"               : "",
-                "investigatingOfficer"  : "",
+                "investigatingOfficer"  : $(".inv_off").val(),
                 "courtOfOrigin"         : "",
                 "courtOrderDate"        : "",
-                "receivedDateByPPO"     : "",
+                "receivedDateByPPO"     : $(".dr_ppo").val(),
                 "sentence"              : "",
                 "manualDocket"          : false,
                 "referral"              : false,
@@ -296,7 +291,7 @@
                 "boardOrder"            : "",
                 "boardOrderStatus"      : "",
                 "referrringOfficeId"    : "",
-                "dateCICAR"             : "",
+                "dateCICAR"             : $(".date_cic").val(),
                 "supervisingOfficer"    : "",
                 "probationEndDate"      : "",
                 "referralType"          : "",
