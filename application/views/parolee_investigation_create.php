@@ -18,9 +18,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="#">Parolee</a></li>
-                            <li><a href="#">Investigation List</a></li>
-                            <li class="active">Create</li>
+                            <li><a href="parolee_investigation_docketing">Parolee</a></li>
+                            <li class="active">Investigation List Create</li>
                         </ol>
                     </div>
                 </div>
@@ -69,9 +68,10 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control recommentation   select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="select">Select</option>
-                                            <option value="pending">Pending</option>
-                                            <option value="approve">Approve</option>
+                                            <option value="parole">For Parole</option>
+                                            <option value="commutation">For Commutation of Sentence</option>
+                                            <option value="conditional">For Conditional Pardon</option>
+                                            <option value="absolute">For Absolute Pardon</option>
                                         </select>
                                     </div>
                                 </div>
@@ -79,10 +79,9 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control state select2">
-                                            <option selected value="none" disabled>Select</option>
-                                            <option value="select">Select</option>
-                                            <option value="pending">Pending</option>
-                                            <option value="approve">Approve</option>
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="grant">Grant</option>
+                                            <option value="denial">Denial</option>
                                         </select>
                                     </div>
                                 </div>
@@ -165,8 +164,16 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control cc_no"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Board Order</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Order" class="form-control board_order"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control board_order select2">
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="parole">Parole</option>
+                                            <option value="commutation">Commutation of Sentence</option>
+                                            <option value="conditional_pardon">Conditional Pardon</option>
+                                            <option value="absolute_pardon">Absolute Pardon</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
@@ -179,10 +186,12 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order Status</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control case_class select2">
+                                        <select class="form-control board_status select2">
                                             <option selected value="select" disabled>Select</option>
+                                            <option value="granted">Granted</option>
                                             <option value="denied">Denied</option>
-                                            <option value="approve">Approve</option>
+                                            <option value="cancelled">Cancelled</option>
+                                            <option value="died">Died</option>
                                         </select>
                                     </div>
                                 </div>

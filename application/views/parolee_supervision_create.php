@@ -49,8 +49,8 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control referral_type select2">
                                             <option selected value="select">Select</option>
-                                            <!-- <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option> -->
+                                            <option value="BPP">From Board of Pardons and Parole</option>
+                                            <option value="parolee">Transferred from otther PPO</option>
                                         </select>
                                     </div>
                                 </div>
@@ -59,8 +59,10 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control report_type select2">
                                             <option selected value="select">Select</option>
-                                            <!-- <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option> -->
+                                            <option value="summary">Summary</option>
+                                            <option value="infraction">Infraction</option>
+                                            <option value="death">Death</option>
+                                            <option value="others">Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -166,9 +168,10 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control res_type select2">
                                             <option selected value="select" disabled>Select</option>
-                                            <!-- <option value="high">High</option>
-                                            <option value="medium">Medium</option>
-                                            <option value="low">Low</option> -->
+                                            <option value="final">Final Release and Discharge</option>
+                                            <option value="arrest">Arrest and Recommitment</option>
+                                            <option value="death">Death</option>
+                                            <option value="others">Others</option>
                                         </select>
                                     </div>
                                 </div>
