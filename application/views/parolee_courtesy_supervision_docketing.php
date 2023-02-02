@@ -44,8 +44,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="parolee_investigation_docketing">Parolee</a></li>
-                            <li class="active">Investigation Docket list</li>
+                            <li><a href="parolee_courtesy_supervision_docketing">Parolee</a></li>
+                            <li class="active">Courtesy Supervision Docket list</li>
                         </ol>
                     </div>
                 </div>
@@ -59,8 +59,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Parolee Investigation Docket List</strong>
-                                <a href="parolee_investigation_create"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <strong class="card-title">Parolee Courtesy Supervision Docket List</strong>
+                                <a href="parolee_courtesy_supervision_create"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">

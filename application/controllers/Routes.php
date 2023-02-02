@@ -200,4 +200,32 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('parolee_investigation_docketing');
 	}
+	public function parolee_supervision_docketing()
+	{
+		$this->load->view('parolee_supervision_docketing');
+	}
+	public function parolee_courtesy_supervision_docketing()
+	{
+		$this->load->view('parolee_courtesy_supervision_docketing');
+	}
+	public function parolee_courtesy_investigation_docketing()
+	{
+		$this->load->view('parolee_courtesy_investigation_docketing');
+	}
+	public function parolee_courtesy_investigation_update()
+	{
+		$this->load->view('parolee_courtesy_investigation_update');
+	}
+		public function parolee_courtesy_supervision_update()
+	{
+		$this->load->view('parolee_courtesy_supervision_update');
+	}
+		public function parolee_investigation_update()
+	{
+		$this->load->view('parolee_investigation_update');
+	}
+		public function parolee_supervision_update()
+	{
+		$this->load->view('parolee_supervision_update');
+	}
 }

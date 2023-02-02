@@ -83,6 +83,13 @@ $route['parolee_courtesy_investigation_create'] = "routes/parolee_courtesy_inves
 $route['parolee_investigation_create'] = "routes/parolee_investigation_create";
 $route['parolee_supervision_create'] = "routes/parolee_supervision_create";
 $route['parolee_investigation_docketing'] = "routes/parolee_investigation_docketing";
+$route['parolee_courtesy_investigation_docketing'] = "routes/parolee_courtesy_investigation_docketing";
+$route['parolee_courtesy_investigation_update'] = "routes/parolee_courtesy_investigation_update";
+$route['parolee_courtesy_supervision_docketing'] = "routes/parolee_supervision_docketing";
+$route['parolee_courtesy_supervision_docketing'] = "routes/parolee_courtesy_supervision_docketing";
+$route['parolee_courtesy_supervision_update'] = "routes/parolee_courtesy_supervision_update";
+$route['parolee_investigation_update'] = "routes/parolee_investigation_update";
+$route['parolee_supervision_update'] = "routes/parolee_supervision_update";
 // AMS end
 
 $route['request_user'] = "routes/request_user";
