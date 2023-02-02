@@ -180,8 +180,16 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('new_client');
 	}
-	public function courtesy_supervision_create()
+	public function parolee_courtesy_supervision_create()
 	{
-		$this->load->view('courtesy_supervision_create');
+		$this->load->view('parolee_courtesy_supervision_create');
+	}
+	public function parolee_courtesy_investigation_create()
+	{
+		$this->load->view('parolee_courtesy_investigation_create');
+	}
+	public function parolee_investigation_create()
+	{
+		$this->load->view('parolee_investigation_create');
 	}
 }

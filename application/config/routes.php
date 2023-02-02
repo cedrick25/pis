@@ -78,7 +78,9 @@ $route['single_carpeta_create'] = "routes/single_carpeta_create";
 $route['single_carpeta'] = "routes/single_carpeta";
 $route['single_carpeta_update'] = "routes/single_carpeta_update";
 $route['new_client'] = "routes/new_client";
-$route['courtesy_supervision_create'] = "routes/courtesy_supervision_create";
+$route['parolee_courtesy_supervision_create'] = "routes/parolee_courtesy_supervision_create";
+$route['parolee_courtesy_investigation_create'] = "routes/parolee_courtesy_investigation_create";
+$route['parolee_investigation_create'] = "routes/parolee_investigation_create";
 // AMS end
 
 $route['request_user'] = "routes/request_user";
