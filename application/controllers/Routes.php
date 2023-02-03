@@ -297,13 +297,25 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('sent_parolee');
 	}
+	public function sent_pardonee()
+	{
+		$this->load->view('sent_pardonee');
+	}
 	public function received_pardonee()
 	{
 		$this->load->view('received_pardonee');
 	}
-	public function receive_parolee()
+	public function received_parolee()
 	{
-		$this->load->view('receive_parolee');
+		$this->load->view('received_parolee');
+	}
+	public function form_list()
+	{
+		$this->load->view('form_list');
+	}
+	public function form_upload()
+	{
+		$this->load->view('form_upload');
 	}
 
 

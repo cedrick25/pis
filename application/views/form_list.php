@@ -44,8 +44,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="client_list">Client</a></li>
-                            <li class="active">Client list</li>
+                            <li><a href="form_list">Forms</a></li>
+                            <li class="active">Forms list</li>
                         </ol>
                     </div>
                 </div>
@@ -59,30 +59,24 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Client List</strong>
-                                <a href="new_client"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
+                                <strong class="card-title">Forms List</strong>
+                                <a href="form_upload"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Document</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
                                     <thead>
                                         <tr align="center">
                                             <th>#</th>
-                                            <th>Full Name</th>
-                                            <th>Gender</th>
-                                            <th>Education</th>
-                                            <th>Field Office</th>
-                                            <th>Criminal Case No.</th>
+                                            <th>File Name</th>
+                                            <th>Date Uploaded</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table_body" align="center">
                                         <th>1</th>
-                                        <th>Simon Cowell</th>
-                                        <th>Male</th>
-                                        <th>BSIT</th>
-                                        <th>Central Office</th>
-                                        <th>CC No. 123</th>
-                                        <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
+                                        <th>Permit to Work Abroad</th>
+                                        <th>01-01-2023</th>
+                                        <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Download</button> <button class='btn btn-sm btn-success btn_upload type=submit'><i class='fa fa-eye'></i> View</button></th>
                                     </tbody>
                                 </table>
                             </div>
