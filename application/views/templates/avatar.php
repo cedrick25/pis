@@ -10,7 +10,7 @@
             <div class="user-area dropdown float-right">
                 <b><span class="f_name" style="font-size: 22px; color: #5d6676;"></span></b>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle" src="images/avatar/images.jpeg" alt="User Avatar">
+                    <img class="user-avatar rounded-circle" src="images/avatar/images.png" alt="User Avatar">
                 </a>
 
                 <div class="user-menu dropdown-menu">

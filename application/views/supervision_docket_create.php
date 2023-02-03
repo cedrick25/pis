@@ -89,7 +89,34 @@
 				                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
 				                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix" ></div>
 				                    </div>
-                                    <div class="row form-group col-md-6 false_manual">
+                                    <div class="row form-group col-md-6 caseload_inv">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control caseload2 select2">
+                                                <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
+                                                <option value="PROBATION_INV_CSI">Community Service Investigation</option>
+                                                <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
+                                                <option value="PROBATION_INV_CPI">Courtesy Probation Investigation</option>
+                                                <option value="PROBATION_INV_CPI_FULL_BLOWN">Courtesy Probation Investigation - Full Blown</option>
+                                                <option value="PROBATION_INV_CPI_PARTIAL">Courtesy Probation Investigation - Partial</option>
+                                                <option value="PROBATION_INV_CSSI">Courtesy Suspended Sentence Investigation</option>
+                                                <option value="PROBATION_INV_MOTION_DISQUALIFY">Disqualified Client</option>
+                                                <option value="PROBATION_INV_GIOR_FOLLOW_UP">Follow-up of GIOR Result</option>
+                                                <option value="PROBATION_INV_INVESTIGATION">Probation Investigation</option>
+                                                <option value="PROBATION_INV_RPI">Reinvestigation for Client under Probation</option>
+                                                <option value="PROBATION_INV_RCS">Reinvestigation for Community Service</option>
+                                                <option value="PROBATION_INV_RSS">Reinvestigation for Suspended Sentence</option>
+                                                <option value="PROBATION_INV_MOTION_EXTENSION">Request for Extension of Time to Submit PSIR</option>
+                                                <option value="PROBATION_INV_RC">Request for Records Check</option>
+                                                <option value="PROBATION_INV_RES_RC">Results of Records Check</option>
+                                                <option value="PROBATION_INV_SSI">Suspended Sentence Investigation</option>
+                                                <option value="PROBATION_INV_TCSI">Transferred Community Service Investigation</option>
+                                                <option value="PROBATION_INV_TPI">Transferred Probation Investigation</option>
+                                                <option value="PROBATION_INV_TSSI">Transferred Suspended Sentence Investigation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6 true_manual">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control caseload select2">
@@ -121,8 +148,8 @@
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control client_type select2">
-                                                <option selected value="ADULT">Adult</option>
-                                                <option value="JUVENILE">Juvenile</option>
+                                                <option selected value="true">Adult</option>
+                                                <option value="false">Juvenile</option>
                                             </select>
                                         </div>
                                     </div>
@@ -399,7 +426,7 @@
                     console.log("failed fetching docket list")
                 }
             })
-            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
 
@@ -419,12 +446,22 @@
                                 $(".middleName").val(result.middleName);
                                 $(".lastName").val(result.lastName);
                                 $(".suffix").val(result.suffixName);
-                                $(".client_type").val(result.clientType).trigger("change");
+                                // $(".client_type").val(result.clientType).trigger("change");
                                 $(".cc_no").val(result.criminalCaseNumber);
                                 $(".offense").val(result.offense);
                                 setTimeout(function () {
                                     $(".field_office").val(result.fieldOfficeId).trigger("change");
-                                }, 100);
+                                }, 3000);
+                                if (result.legalAge == true) {
+                                    var la = "true"
+                                } else {
+                                    var la = "false"
+                                }
+
+                                $(".caseload2").val(result.caseloadType).trigger("change");
+                                $(".client_type").val(la).trigger("change");
+                                $(".cc_no").val(result.criminalCaseNumber);
+                                $(".offense").val(result.offense);
                                 $(".court_origin").val(result.courtOfOrigin);
                                 if (result.militaryCourt == true) {
                                     var mc = "true"
@@ -432,10 +469,18 @@
                                     var mc = "false"
                                 }
                                 $(".military_court").val(mc).trigger("change");
-                                // $(".sentence").val(result.sentence);
+                                $(".sentence").val(result.sentence);
                                 $(".cod").val(result.courtOrderDate);
-                                $(".rd").val(result.receivedDate);
-                                // $(".remarks").val(result.remarks);
+                                $(".rd").val(result.receivedDateByPPO);
+                                $(".remarks").val(result.remarks);
+                                $(".inv_off").val(result.investigatingOfficer);
+                                if (result.pleaBargain == true) {
+                                    var plea = "true"
+                                } else {
+                                    var plea = "false"
+                                }
+                                $(".plea_bargain").val(plea).trigger("change");
+                                $(".classification").val(result.caseClassification).trigger("change");
 
                                 $(".list").empty();
                                 console.log(JSON.parse(result.sentence))
@@ -477,10 +522,12 @@
             $(".false_manual").hide();
             $(".true_manual").hide();
             $(".class_sel").hide();
+            $(".caseload_inv").hide();
         } else {
             $(".class_sel").hide();
             $(".false_manual").show();
             $(".true_manual").hide();
+            $(".caseload_inv").show();
         }
         $('.manual_docket').change(function(){
             cb = $(this);
@@ -492,12 +539,15 @@
                 $(".false_manual").show();
                 $(".true_manual").show();
                 $(".class_sel").hide();
+                $(".caseload_inv").hide();
+                
             } else {
                 $(".false_manual").hide();
                 $(".true_manual").hide();
                 $(".docket_display").show();
                 $(".form-control").val('');
                 $(".class_sel").hide();
+                $(".caseload_inv").hide();
                 __select();
             }
         });
@@ -546,28 +596,35 @@
             var payload = {
                 "type"          : "PIS_SUP",
                 "docketNumber"  : "",
+                "docketSeries"  : "NONE",
+                "caseloadType"  : $(".caseload").val(),
                 "fieldOfficeId" : $(".field_office").val(),
-                "clientType"    : $(".client_type").val(),
+                "clientType"    : "PROBATIONER",
                 "firstName"     : $(".firstName").val(),
                 "middleName"    : $(".middleName").val(),
                 "lastName"      : $(".lastName").val(),
                 "suffixName"    : $(".suffix").val(),
-                "criminalCaseNumber" : $(".cc_no").val(),
-                "offense"       : $(".offense").val(),
-                "courtOfOrigin" : $(".court_origin").val(),
-                "militaryCourt" : $(".military_court").val(),
-                "sentence"      : JSON.stringify(sentence),
-                "courtOrderDate": $(".cod").val(),
-                "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : md,
-                "referral"      : false,
-                "typeOfReferral": "",
-                "remarks"       : "",
-                "probationStartDate": $(".prob_start").val(),
-                "probationYear" : $(".prob_year").val(),
-                "probationMonth": $(".prob_month").val(),
-                "probationDay"  : $(".prob_day").val(),
-                "status"        : 1,
+                "fullName"              : "",
+                "pleaBargain"           : $(".plea_bargain").val(),
+                "criminalCaseNumber"    : $(".cc_no").val(),
+                "caseClassification"    : $(".classification").val(),
+                "offense"               : $(".offense").val(),
+                "investigatingOfficer"  : $(".inv_off").val(),
+                "courtOfOrigin"         : $(".court_origin").val(),
+                "militaryCourt"         : $(".military_court").val(),
+                "sentence"              : JSON.stringify(sentence),
+                "courtOrderDate"        : $(".cod").val(),
+                "receivedDateByPPO"     : $(".rd").val(),
+                "manualDocket"          : false,
+                "referral"              : false,
+                "referralData"          : "",
+                "remarks"               : $(".remarks").val(),
+                "probationStartDate"    : "",
+                "probationYear"         : "",
+                "probationMonth"        : "",
+                "probationDay"          :"",
+                "status"                : 1,
+                "legalAge"              : $(".client_type").val(),
             }
             console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {

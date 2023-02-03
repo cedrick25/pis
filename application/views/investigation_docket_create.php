@@ -86,8 +86,8 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type select2">
-                                            <option selected value="ADULT">Adult</option>
-                                            <option value="JUVENILE">Juvenile</option>
+                                            <option selected value="true">Adult</option>
+                                            <option value="false">Juvenile</option>
                                         </select>
                                     </div>
                                 </div>
@@ -391,29 +391,37 @@
             var payload = {
                 "type"          : "PIS_INV",
                 "docketNumber"  : "",
+                "docketSeries"  : "NONE",
+                "caseloadType"  : $(".caseload").val(),
                 "fieldOfficeId" : $(".field_office").val(),
-                "clientType"    : $(".client_type").val(),
+                "clientType"    : "PROBATIONER",
                 "firstName"     : $(".firstName").val(),
                 "middleName"    : $(".middleName").val(),
                 "lastName"      : $(".lastName").val(),
                 "suffixName"    : $(".suffix").val(),
-                "criminalCaseNumber" : $(".cc_no").val(),
-                "offense"       : $(".offense").val(),
-                "courtOfOrigin" : $(".court_origin").val(),
-                "militaryCourt" : $(".military_court").val(),
-                "sentence"      : JSON.stringify(sentence),
-                "courtOrderDate": $(".cod").val(),
-                "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : false,
-                "referral"      : false,
-                "typeOfReferral": "",
-                "remarks"       : $(".remarks").val(),
-                "probationStartDate": "",
-                "probationYear" : "",
-                "probationMonth": "",
-                "probationDay"  :"",
-                "status"        : 1,
+                "fullName"              : "",
+                "pleaBargain"           : $(".plea_bargain").val(),
+                "criminalCaseNumber"    : $(".cc_no").val(),
+                "caseClassification"    : $(".classification").val(),
+                "offense"               : $(".offense").val(),
+                "investigatingOfficer"  : $(".inv_off").val(),
+                "courtOfOrigin"         : $(".court_origin").val(),
+                "militaryCourt"         : $(".military_court").val(),
+                "sentence"              : JSON.stringify(sentence),
+                "courtOrderDate"        : $(".cod").val(),
+                "receivedDateByPPO"     : $(".rd").val(),
+                "manualDocket"          : false,
+                "referral"              : false,
+                "referralData"          : "",
+                "remarks"               : $(".remarks").val(),
+                "probationStartDate"    : "",
+                "probationYear"         : "",
+                "probationMonth"        : "",
+                "probationDay"          :"",
+                "status"                : 1,
+                "legalAge"              : $(".client_type").val(),
             }
+                
             console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);

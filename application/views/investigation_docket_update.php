@@ -71,8 +71,27 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control caseload_update select2" disabled>
-                                            
+                                        <select class="form-control caseload_update select2">
+                                            <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
+                                            <option value="PROBATION_INV_CSI">Community Service Investigation</option>
+                                            <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
+                                            <option value="PROBATION_INV_CPI">Courtesy Probation Investigation</option>
+                                            <option value="PROBATION_INV_CPI_FULL_BLOWN">Courtesy Probation Investigation - Full Blown</option>
+                                            <option value="PROBATION_INV_CPI_PARTIAL">Courtesy Probation Investigation - Partial</option>
+                                            <option value="PROBATION_INV_CSSI">Courtesy Suspended Sentence Investigation</option>
+                                            <option value="PROBATION_INV_MOTION_DISQUALIFY">Disqualified Client</option>
+                                            <option value="PROBATION_INV_GIOR_FOLLOW_UP">Follow-up of GIOR Result</option>
+                                            <option value="PROBATION_INV_INVESTIGATION">Probation Investigation</option>
+                                            <option value="PROBATION_INV_RPI">Reinvestigation for Client under Probation</option>
+                                            <option value="PROBATION_INV_RCS">Reinvestigation for Community Service</option>
+                                            <option value="PROBATION_INV_RSS">Reinvestigation for Suspended Sentence</option>
+                                            <option value="PROBATION_INV_MOTION_EXTENSION">Request for Extension of Time to Submit PSIR</option>
+                                            <option value="PROBATION_INV_RC">Request for Records Check</option>
+                                            <option value="PROBATION_INV_RES_RC">Results of Records Check</option>
+                                            <option value="PROBATION_INV_SSI">Suspended Sentence Investigation</option>
+                                            <option value="PROBATION_INV_TCSI">Transferred Community Service Investigation</option>
+                                            <option value="PROBATION_INV_TPI">Transferred Probation Investigation</option>
+                                            <option value="PROBATION_INV_TSSI">Transferred Suspended Sentence Investigation</option>
                                         </select>
                                     </div>
                                 </div>
@@ -80,8 +99,8 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type_update select2">
-                                            <option selected value="ADULT">Adult</option>
-                                            <option value="JUVENILE">Juvenile</option>
+                                            <option selected value="true">Adult</option>
+                                            <option value="false">Juvenile</option>
                                         </select>
                                     </div>
                                 </div>
@@ -100,7 +119,7 @@
                                 <div class="row form-group col-md-6 false_manual">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control field_office_update">
+                                        <select class="form-control field_office_update select2">
                                             <option value="1">Yes</option>
                                             <option value="2">No</option>
                                         </select>
@@ -340,8 +359,17 @@
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
-                    $(".field_office_update").val(result.fieldOfficeId).trigger("change");
-                    $(".client_type_update").val(result.clientType).trigger("change");
+                    setTimeout(function () {
+                        $(".field_office_update").val(result.fieldOfficeId).trigger("change");
+                    }, 3000);
+                    if (result.legalAge == true) {
+                        var la = "true"
+                    } else {
+                        var la = "false"
+                    }
+
+                    $(".caseload_update").val(result.caseloadType).trigger("change");
+                    $(".client_type_update").val(la).trigger("change");
                     $(".cc_no_update").val(result.criminalCaseNumber);
                     $(".offense_update").val(result.offense);
                     $(".court_origin_update").val(result.courtOfOrigin);
@@ -353,8 +381,16 @@
                     $(".military_court_update").val(mc).trigger("change");
                     $(".sentence_update").val(result.sentence);
                     $(".cod_update").val(result.courtOrderDate);
-                    $(".rd_update").val(result.receivedDate);
+                    $(".rd_update").val(result.receivedDateByPPO);
                     $(".remarks_update").val(result.remarks);
+                    $(".inv_off_update").val(result.investigatingOfficer);
+                    if (result.pleaBargain == true) {
+                        var plea = "true"
+                    } else {
+                        var plea = "false"
+                    }
+                    $(".plea_bargain_update").val(plea).trigger("change");
+                    $(".classification_update").val(result.caseClassification).trigger("change");
 
                     console.log(JSON.parse(result.sentence))
                     JSON.parse(result.sentence).forEach(function(data){
@@ -410,29 +446,35 @@
                         var payload = {
                             "type"          : "PIS_INV",
                             "docketNumber"  : docket_number,
-                            "fieldOfficeId" :  $(".field_office_update").val(),
-                            "clientType"    : $(".client_type_update").val(),
-                            // "caseload"      : $(".caseload_update").val(),
+                            "docketSeries"  : "NONE",
+                            "caseloadType"  : $(".caseload_update").val(),
+                            "fieldOfficeId" : $(".field_office_update").val(),
+                            "clientType"    : "PROBATIONER",
                             "firstName"     : $(".firstName_update").val(),
                             "middleName"    : $(".middleName_update").val(),
                             "lastName"      : $(".lastName_update").val(),
                             "suffixName"    : $(".suffix_update").val(),
-                            "criminalCaseNumber" : $(".cc_no_update").val(),
-                            "offense"       : $(".offense_update").val(),
-                            "courtOfOrigin" : $(".court_origin_update").val(),
-                            "militaryCourt" : $(".military_court_update").val(),
-                            "sentence"      : JSON.stringify(sentence),
-                            "courtOrderDate": $(".cod_update").val(),
-                            "receivedDate"  : $(".rd_update").val(),
-                            "manualDocket"  : false,
-                            "referral"      : false,
-                            "typeOfReferral": "",
-                            "remarks"       : $(".remarks_update").val(),
-                            "probationStartDate": "",
-                            "probationYear" : "",
-                            "probationMonth": "",
-                            "probationDay"  :"",
-                            "status"        : 1,
+                            "fullName"              : "",
+                            "pleaBargain"           : $(".plea_bargain_update").val(),
+                            "criminalCaseNumber"    : $(".cc_no_update").val(),
+                            "caseClassification"    : $(".classification_update").val(),
+                            "offense"               : $(".offense_update").val(),
+                            "investigatingOfficer"  : $(".inv_off_update").val(),
+                            "courtOfOrigin"         : $(".court_origin_update").val(),
+                            "militaryCourt"         : $(".military_court_update").val(),
+                            "sentence"              : JSON.stringify(sentence),
+                            "courtOrderDate"        : $(".cod_update").val(),
+                            "receivedDateByPPO"     : $(".rd_update").val(),
+                            "manualDocket"          : false,
+                            "referral"              : false,
+                            "referralData"          : "",
+                            "remarks"               : $(".remarks_update").val(),
+                            "probationStartDate"    : "",
+                            "probationYear"         : "",
+                            "probationMonth"        : "",
+                            "probationDay"          :"",
+                            "status"                : 1,
+                            "legalAge"              : $(".client_type_update").val(),
                         }
 
                         __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number,JSON.stringify(payload)).done(function (result) {

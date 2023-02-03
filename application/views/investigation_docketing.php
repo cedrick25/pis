@@ -188,7 +188,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/pis_inv').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -197,11 +197,11 @@
                         $('.table_body').append("<tr>"+
                             "<td></td>"+
                             "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.receivedDate+"</td>"+
+                            "<td>"+data.receivedDateByPPO+"</td>"+
                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
                             "<td>"+data.criminalCaseNumber+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-remove'></i> Remove</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-sm btn-success btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-plus-circle'></i> Add worksheet</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
@@ -210,7 +210,7 @@
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "20%", "targets": 6 }
+                                { "width": "40%", "targets": 6 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');
