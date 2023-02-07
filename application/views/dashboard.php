@@ -44,9 +44,9 @@
                                             <div class="col-12 col-md-9">
                                                 <select name="select" id="" class="form-control type select2">
                                                     <option value="" selected disabled> - - Select Type - - </option>
-                                                    <option value="INV">Investigation</option>
-                                                    <option value="SUP">Supervision</option>
-                                                    <option value="SC">Single Carpeta</option>
+                                                    <option value="PIS_INV">Investigation</option>
+                                                    <option value="PIS_SUP">Supervision</option>
+                                                    <option value="PIS_SC">Single Carpeta</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -210,7 +210,7 @@
                 $('.docket_num').empty();
                 const type = this.value
                 console.log(type)
-                __executeExternalGet('http://localhost:8000/docketbook/list/'+type).done(function (result) {
+                __executeExternalGet('http://localhost:8000/docketbook/list/'+type+'/'+$.cookie('field_office_id')).done(function (result) {
                     if (result.status != "ERROR") {
 
                         $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
