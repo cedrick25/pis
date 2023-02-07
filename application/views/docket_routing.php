@@ -44,8 +44,8 @@
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control type select2">
                                             <option value="" selected disabled> - - Select Type - - </option>
-                                            <option value="INV">Investigation</option>
-                                            <option value="SUP">Supervision</option>
+                                            <option value="PIS_INV">Investigation</option>
+                                            <option value="PIS_SUP">Supervision</option>
                                         </select>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control caseload select2">
                                             <option value="" selected disabled> - - Select Type - - </option>
@@ -97,12 +97,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Caseload Type" class="form-control caseload_type"></div>
-                                </div> -->
                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Forward to Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control field_office select2">
                                             <option value="" selected disabled> - - Select Type - - </option>
@@ -140,7 +136,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -239,7 +235,7 @@
                 $('.docket_num').empty();
                 const type = this.value
                 console.log(type)
-                __executeExternalGet('http://localhost:8000/docketbook/list/'+type).done(function (result) {
+                __executeExternalGet('http://localhost:8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
                     console.log(result)
                     if (result.status != "ERROR") {
 
@@ -268,7 +264,7 @@
                         $('.user_account').empty();
                         const dep_id = this.value
                         __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
-                            // console.log(result)
+                            console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
                                 $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
@@ -294,7 +290,7 @@
 
                 var payload = {
                     "type"                  : $('.type').val(),
-                    "caseload_type"         : $(".caseload_type").val(),
+                    "caseloadType"          : $(".caseload").val(),
                     "senderId"              : $.cookie("uuid"),
                     "receiverId"            : $(".user_account").val(),
                     "fieldOfficeId"         : $(".field_office").val(),
@@ -305,19 +301,19 @@
                     "lastStatusUpdateDate"  : "",
                 }
                 console.log(payload)
-                __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                    console.log(result);
-                    if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success_forwarding').show();
-                        setTimeout(function () {
-                            $('#success_forwarding').hide();
-                            window.location.reload(true);
-                        }, 2000);
-                    }else{
-                        alert("failed")
-                    }
-                })
+                // __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                //     console.log(result);
+                //     if (result.status != "ERROR") {
+                //     $(".form-control").val('');
+                //     $('#success_forwarding').show();
+                //         setTimeout(function () {
+                //             $('#success_forwarding').hide();
+                //             window.location.reload(true);
+                //         }, 2000);
+                //     }else{
+                //         alert("failed")
+                //     }
+                // })
             })
         }
         __select();
@@ -327,7 +323,7 @@
         });
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 

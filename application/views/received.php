@@ -252,7 +252,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=INV').done(function (result) {
+            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=PIS_INV').done(function (result) {
                 // console.log("==========")
                 // console.log(result)
                 // console.log("==========")
@@ -360,7 +360,7 @@
             $('.table_head_sup').DataTable().destroy();
             $('.table_body_sup').empty();
 
-            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=SUP').done(function (result) {
+            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=PIS_SUP').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")

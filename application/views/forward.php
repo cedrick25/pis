@@ -239,7 +239,7 @@
                         var result = result.response;
                         if (result.status != "ERROR") {
                             $(".docket_number").html(result.docketNumber);
-                            $(".type").html(result.type);
+                            $(".type").html(result.caseloadType);
                             $(".field_office").html(result.fieldOfficeId);
                             $(".return_to").html(result.senderId);
                             // $(".details").val(result.details);

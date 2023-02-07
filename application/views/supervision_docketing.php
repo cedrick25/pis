@@ -198,7 +198,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/pis_sup').done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/list/PIS_SUP/'+$.cookie("field_office_id")).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -207,7 +207,7 @@
                         $('.table_body').append("<tr>"+
                             "<td></td>"+
                             "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.receivedDate+"</td>"+
+                            "<td>"+data.receivedDateByPPO+"</td>"+
                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
                             "<td>"+data.criminalCaseNumber+"</td>"+
                             "<td>"+data.status+"</td>"+
