@@ -71,7 +71,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control caseload_update select2">
+                                        <select class="form-control caseload_update select2" disabled>
                                             <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
                                             <option value="PROBATION_INV_CSI">Community Service Investigation</option>
                                             <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
@@ -98,7 +98,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control client_type_update select2">
+                                        <select class="form-control client_type_update select2" disabled>
                                             <option selected value="true">Adult</option>
                                             <option value="false">Juvenile</option>
                                         </select>
@@ -120,8 +120,6 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control field_office_update select2">
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -487,7 +485,7 @@
                             "legalAge"              : $(".client_type_update").val(),
                         }
 
-                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number,JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $('#success_update').show();

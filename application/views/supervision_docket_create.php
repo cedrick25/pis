@@ -446,7 +446,7 @@
                     $('.docket_num').on('change', function() {
                         $(".false_manual").show();
                         const docket = this.value
-                        __executeExternalGet('http://localhost:8000/docketbook/'+docket'/'+$.cookie("field_office_id")).done(function (result) {
+                        __executeExternalGet('http://localhost:8000/docketbook/'+docket+'/'+$.cookie("field_office_id")).done(function (result) {
                             console.log(result)
                             var result = result.response;
                             if (result.status != "ERROR") {

@@ -77,8 +77,8 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type_update select2">
-                                            <option selected value="ADULT">Adult</option>
-                                            <option value="JUVENILE">Juvenile</option>
+                                            <option selected value="true">Adult</option>
+                                            <option value="false">Juvenile</option>
                                         </select>
                                     </div>
                                 </div>
@@ -331,7 +331,7 @@
         });
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result);
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
@@ -342,7 +342,6 @@
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
                     $(".field_office_update").val(result.fieldOfficeId).trigger("change");
-                    $(".client_type_update").val(result.clientType).trigger("change");
                     $(".cc_no_update").val(result.criminalCaseNumber);
                     $(".offense_update").val(result.offense);
                     $(".court_origin_update").val(result.courtOfOrigin);
@@ -351,6 +350,12 @@
                     } else {
                         var mc = "false"
                     }
+                    if (result.legalAge == true) {
+                        var la = "true"
+                    } else {
+                        var la = "false"
+                    }
+                    $(".client_type_update").val(la).trigger("change");
                     $(".military_court_update").val(mc).trigger("change");
                     $(".cod_update").val(result.courtOrderDate);
                     $(".rd_update").val(result.receivedDate);
