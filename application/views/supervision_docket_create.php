@@ -403,6 +403,10 @@
                         <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
                         <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
                     </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
+                        <div class="col-3 col-md-9"><input type="text" class="form-control max_d" placeholder="Robbery"></div>
+                    </div>
                     <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
                 </div>
                 `
@@ -442,7 +446,7 @@
                     $('.docket_num').on('change', function() {
                         $(".false_manual").show();
                         const docket = this.value
-                        __executeExternalGet('http://localhost:8000/docketbook/'+docket).done(function (result) {
+                        __executeExternalGet('http://localhost:8000/docketbook/'+docket'/'+$.cookie("field_office_id")).done(function (result) {
                             console.log(result)
                             var result = result.response;
                             if (result.status != "ERROR") {
@@ -506,6 +510,10 @@
                                                 <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year" value="${data.max_y}"></div>
                                                 <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
                                                 <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
+                                            </div>
+                                            <div class="row form-group col-md-6">
+                                                <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
+                                                <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
                                             </div>
                                             <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
                                         </div>`
@@ -578,6 +586,7 @@
             const max_y = $(".max_y");
             const max_m = $(".max_m");
             const max_d = $(".max_d");
+            const civil_liability = $(".civil_liability");
 
             for(var i = 0; i < sentence_inputs.length; i++){
                 const list = {};
@@ -588,6 +597,7 @@
                 list.max_y = $(max_y[i]).val();
                 list.max_m = $(max_m[i]).val();
                 list.max_d = $(max_d[i]).val();
+                list.civil_liability = $(civil_liability[i]).val();
                 sentence.push(list);
             }
             var md;
@@ -638,6 +648,7 @@
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
+                        window.location.reload(true);
                     }, 2000);
                 }else{
                 }

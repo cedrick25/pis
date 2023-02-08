@@ -301,19 +301,19 @@
                     "lastStatusUpdateDate"  : "",
                 }
                 console.log(payload)
-                // __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                //     console.log(result);
-                //     if (result.status != "ERROR") {
-                //     $(".form-control").val('');
-                //     $('#success_forwarding').show();
-                //         setTimeout(function () {
-                //             $('#success_forwarding').hide();
-                //             window.location.reload(true);
-                //         }, 2000);
-                //     }else{
-                //         alert("failed")
-                //     }
-                // })
+                __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                    console.log(result);
+                    if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success_forwarding').show();
+                        setTimeout(function () {
+                            $('#success_forwarding').hide();
+                            window.location.reload(true);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
+                })
             })
         }
         __select();

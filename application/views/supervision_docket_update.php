@@ -331,7 +331,7 @@
         });
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result);
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
@@ -376,6 +376,10 @@
                                     <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
                                     <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
                                 </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
+                                    <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
+                                </div>
                                 <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
                             </div>`
                         )
@@ -392,6 +396,7 @@
                         const max_y = $(".max_y");
                         const max_m = $(".max_m");
                         const max_d = $(".max_d");
+                        const civil_liability = $(".civil_liability");
 
                         for(var i = 0; i < sentence_inputs.length; i++){
                             const list = {};
@@ -402,6 +407,7 @@
                             list.max_y = $(max_y[i]).val();
                             list.max_m = $(max_m[i]).val();
                             list.max_d = $(max_d[i]).val();
+                            list.civil_liability = $(civil_liability[i]).val();
                             sentence.push(list);
                         }
                         // console.log(list)
