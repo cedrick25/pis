@@ -69,7 +69,28 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control caseload_update select2" disabled>
+                                        <select class="form-control caseload_type_update select2" disabled>
+                                            <option value="PROBATION_SUP_CSS">Community Service Supervision</option>
+                                            <option value="PROBATION_SUP_CCSS">Courtesy Community Service Supervision</option>
+                                            <option value="PROBATION_SUP_CPS">Courtesy Probation Supervision</option>
+                                            <option value="PROBATION_SUP_CSSS">Courtesy Suspended Sentence Supervision</option>
+                                            <option value="PROBATION_SUP_DOCKET_CREATION">For Docket Creation</option>
+                                            <option value="PROBATION_SUP_TRANS">Motion/Manifestation to Transfer Supervision and Control</option>
+                                            <option value="PROBATION_SUP_TRAVEL_PERMIT">Permit to Travel</option>
+                                            <option value="PROBATION_SUP_SUPERVISION">Probation Supervision</option>
+                                            <option value="PROBATION_SUP_RPS">Reinstated Probation Supervision</option>
+                                            <option value="PROBATION_SUP_RC">Request for Records Check</option>
+                                            <option value="PROBATION_SUP_RES_RC">Results of Records Check</option>
+                                            <option value="PROBATION_REVOCATION_ABSCOND">Revocation - Abscond</option>
+                                            <option value="PROBATION_REVOCATION_COMMISSION">Revocation - Commission of Another Offense</option>
+                                            <option value="PROBATION_REVOCATION_OTHER">Revocation - Other</option>
+                                            <option value="PROBATION_REVOCATION_VIOLATION">Revocation - Violation of Probation Conditions</option>
+                                            <option value="PROBATION_SUP_SSS">Suspended Sentence Supervision</option>
+                                            <option value="PROBATION_SUP_TERMINATE_PROBATION">Terminate Probation</option>
+                                            <option value="PROBATION_SUP_CRT_APPR_TRANS">Transfer of Residence</option>
+                                            <option value="PROBATION_SUP_TCSS">Transferred Community Service Supervision</option>
+                                            <option value="PROBATION_SUP_TPS">Transferred Probation Supervision</option>
+                                            <option value="PROBATION_SUP_TSSS">Transferred Suspended Sentence Supervision</option><option value="PROBATION_SUP_TRAVEL_GT30">Travel Exceeding 30 Days</option>
                                         </select>
                                     </div>
                                 </div>
@@ -339,9 +360,14 @@
                     $(".docket_num").val(result.docketNumber);
                     $(".firstName_update").val(result.firstName);
                     $(".middleName_update").val(result.middleName);
+                    setTimeout(function () {
+                    $(".caseload_type_update").val(result.caseloadType).trigger("change");
+                    }, 3000);
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
-                    $(".field_office_update").val(result.fieldOfficeId).trigger("change");
+                    setTimeout(function () {
+                        $(".field_office_update").val(result.fieldOfficeId).trigger("change");
+                    }, 3000);
                     $(".cc_no_update").val(result.criminalCaseNumber);
                     $(".offense_update").val(result.offense);
                     $(".court_origin_update").val(result.courtOfOrigin);
@@ -420,10 +446,10 @@
                         
                         var payload = {
                             "type"          : "PIS_SUP",
-                            "docketNumber"  : "",
-                            "fieldOfficeId" :  $(".field_office_update").val(),
+                            "docketNumber"  : $(".docket_num").val(),
+                            "fieldOfficeId" : $(".field_office_update").val(),
                             "clientType"    : $(".client_type_update").val(),
-                            // "caseload"      : $(".caseload_update").val(),
+                            "caseload"      : $(".caseload_type_update").val(),
                             "firstName"     : $(".firstName_update").val(),
                             "middleName"    : $(".middleName_update").val(),
                             "lastName"      : $(".lastName_update").val(),
@@ -446,7 +472,7 @@
                             "status"        : 1,
                         }
 
-                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number,JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');

@@ -57,6 +57,7 @@ $route['received'] = "routes/received";
 $route['return'] = "routes/return";
 $route['forward'] = "routes/forward";
 $route['docket_routing'] = "routes/docket_routing";
+$route['supervision_manual'] = "routes/supervision_manual";
 $route['upload'] = "routes/upload";
 $route['investigation_docketing'] = "routes/investigation_docketing";
 $route['investigation_docket_create'] = "routes/investigation_docket_create";
