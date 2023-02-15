@@ -220,7 +220,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -311,163 +311,166 @@
             
             return d.promise();
         };
-
-        $('.plea_bargain').change(function(){
-            if ($('.plea_bargain').val() == "true") {
-                $(".class_sel").show();
-            } else {
-                $(".class-sel").hide();
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
             }
-            if ($('.plea_bargain').val() == "false"){
-            $(".class_sel").hide();
-            } else {
-                $(".class_sel").show();
-            }
-        });
+        }
+
+        var docket_number = GetURLParameter('docket_number');
+        var __fields = function(){
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+                console.log(result);
+                console.log(docket_number)
+                var result = result.response;
+                // console.log(JSON.parse(result.sentence))
+                if (result.status != "ERROR") {
+                    $(".docket_num_update").val(result.docketNumber);
+
+                    setTimeout(function () {
+                    $(".docket_series_update").val(result.docketSeries).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".task_update").val(result.caseloadType).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".client_type_update").val(result.clientType).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".ref_office_update").val(result.referringOfficeId).trigger("change");
+                    }, 3000);
 
 
-        $(".list").html(`
-            <div class="list_sentence">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                </div>
-            </div>`
-        );
+                    $(".inv_off_update").val(result.investigatingOfficer);
+                    $(".reason_update").val(result.referralData);
+                    $(".dr_ppo_update").val(result.receivedDateByPPO);
+                    $(".date_cic_update").val(result.dateCICAR);
 
-        $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked");
 
-            $(".list").append(`
-                <div class="list_sentence">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                    </div>
-                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                </div>
-                `
-            )
-        });
-        $('.list').on('click', '.remove', function(e) {
-            e.preventDefault();
 
-            $(this).parent().remove();
-        });
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
+                    $(".btn-confirm_update").unbind("click").on("click", function(){
+                        console.log('clicked')
+
+                        var payload = {
+
+                        "type"                      : "SC_PR_SUP",
+                        "docketNumber"              : $(".docket_num_update").val(),
+                        "docketSeries"              : $(".docket_series_update").val(),
+                        "caseloadType"              : $(".task_update").val(),
+                        "fieldOfficeId"             : $.cookie('field_office_id'),
+                        "clientType"                : $(".client_type_update").val(),
+                        "clientId"                  : "",
+                        "firstName"                 : "",
+                        "middleName"                : "",
+                        "lastName"                  : "",
+                        "suffixName"                : "",
+                        "fullName"                  : "",
+                        "pleaBargain"               : true,
+                        "caseClassification"        : "",
+                        "criminalCaseNumber"        : "",
+                        "offense"                   : "",
+                        "courtOfOrigin"             : "",
+                        "courtOrderDate"            : "",
+                        "investigatingOfficer"      : $(".inv_off_update").val(),
+                        "receivedDateByPPO"         : $(".dr_ppo_update").val(),
+                        "sentence"                  : "",
+                        "manualDocket"              : true,
+                        "referral"                  : true,
+                        "referralData"              : "",
+                        "remarks"                   : "",
+                        "probationStartDate"        : "",
+                        "probationYear"             : "",
+                        "probationMonth"            : "",
+                        "probationDay"              : "",
+                        "reportType"                : "",
+                        "prisonName"                : "",
+                        "investigationReportSubmittedDate"          :"",
+                        "ppoRecommendation"         : "",
+                        "recommendationState"       : "",
+                        "dateOfTransfer"            : "",
+                        "transferredOfficeId"       : "",
+                        "dateOrderReceivedFromTheBoard"             : "",
+                        "boardOrder"                : "",
+                        "boardOrderStatus"          : "",
+                        "referringOfficeId"         : $(".ref_office_update").val(),
+                        "dateCICAR"                 : $(".date_cic_update").val(),
+                        "supervisingOfficer"        : "",
+                        "probationEndDate"          : "",
+                        "referralType"              : "",
+                        "dateReportSubmittedToTheBoard"             : "",
+                        "dateReportSubmittedToRDForTransferToOtherPPO": "",
+                        "resolutionType"            : "",
+                        "dateResolutionFromTheBoard": "",
+                        "dateResolutionFromTheRDForTransfer"        : "",
+                        "createdBy"                 : "",
+                        "updatedBy"                 : "",
+                        "legalAge"                  : true,
+                        "militaryCourt"             : true,
+                        "supervisionStartDate"      : "",
+                        "supervisionEndDate"        : ""
+
+                        }
+
+                        console.log(payload)
+
+                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
+                            console.log(result);
+                            if (result.status != "ERROR") {
+                            $(".form-control").val('');
+                            $('#success_update').show();
+                                setTimeout(function () {
+                                    $('#success_update').hide();
+                                    window.location.href = 'http://localhost/pis/parolee_supervision_docketing';
+                                }, 2000);
+                            }else{
+                                alert("failed")
+                            }
+                        })
+                    })
+
+                }else{
+                    alert("failed")
+                }
+            })
+        }
+
 
         var __select = function(){
-            $('.field_office').empty();
+            $('.ref_office_update').empty();
 
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                // console.log(result)
+                console.log(result)
                 if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
-                        $('.field_office').append(
+                        $('.ref_office_update').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                     });
-                   
+
                 } else {
                     console.log("failed fetching docket list")
                 }
             })
         }
         __select();
-        $(".btn-confirm").unbind("click").on("click", function(){
-            
-            const sentence = [];
-            const sentence_inputs = $(".sentence");
-            const min_y = $(".min_y");
-            const min_m = $(".min_m");
-            const min_d = $(".min_d");
-            const max_y = $(".max_y");
-            const max_m = $(".max_m");
-            const max_d = $(".max_d");
 
-            for(var i = 0; i < sentence_inputs.length; i++){
-                const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                sentence.push(list);
-            }
-            // console.log(list)
-            console.log(sentence)
+        setTimeout(function () {
+            __fields();
+        }, 500);
 
-            var payload = {
-                "type"          : "INV",
-                "docketNumber"  : "",
-                "fieldOfficeId" : $(".field_office").val(),
-                "clientType"    : $(".client_type").val(),
-                "firstName"     : $(".firstName").val(),
-                "middleName"    : $(".middleName").val(),
-                "lastName"      : $(".lastName").val(),
-                "suffixName"    : $(".suffix").val(),
-                "criminalCaseNumber" : $(".cc_no").val(),
-                "offense"       : $(".offense").val(),
-                "courtOfOrigin" : $(".court_origin").val(),
-                "militaryCourt" : $(".military_court").val(),
-                "sentence"      : JSON.stringify(sentence),
-                "courtOrderDate": $(".cod").val(),
-                "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : false,
-                "referral"      : false,
-                "typeOfReferral": "",
-                "remarks"       : $(".remarks").val(),
-                "probationStartDate": "",
-                "probationYear" : "",
-                "probationMonth": "",
-                "probationDay"  :"",
-                "status"        : 1,
-            }
-            console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
-        })
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 

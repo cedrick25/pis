@@ -5,6 +5,32 @@
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
     
+    <div class="modal fade" id="removeModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Remove Docket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Removed Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to remove this Docket: <b><span class="docket"></span></b>? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_remove_confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- /#left-panel -->
     <div id="right-panel" class="right-panel">
 
@@ -75,7 +101,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control state select2">
@@ -84,7 +110,7 @@
                                             <option value="denial">Denial</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
@@ -152,9 +178,14 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transfered</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transferred</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control office_transfered select2">
+                                            <option selected value="select" disabled>Select</option>
+                                        </select>
+                                    </div>
                                 </div>
+
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control inv_off"></div>
@@ -320,62 +351,60 @@
         $(".btn-confirm").unbind("click").on("click", function(){
                 
             var payload = {
-                "type"              : "SC_PR_INV",
-                "docketNumber"      : "",
-                "docketSeries"      : $(".docket_series").val(),
-                "caseloadType"      : $(".caseload").val(),
-                "clientType"        : $(".client_type").val(),
-                // "ref_office"        : $(".ref_office").val(),
-                // "reason"            : $(".reason").val(),
-                // "start_sup_date"            : $(".start_sup_date").val(),
-                // "end_sup_date"            : $(".end_sup_date").val(),
-                // "date_court_ref"            : $(".date_court_ref").val(),
-                "fieldOfficeId"     : $.cookie('field_office_id'),
-                "firstName"         : "",
-                "middleName"        : "",
-                "lastName"          : "",
-                "suffixName"        : "",
-                "fullName"          : "",
-                "pleaBargain"       : false,
-                "caseClassification"    : $(".case_class").val(),
-                "criminalCaseNumber"    : "",
-                "offense"               : "",
-                "investigatingOfficer"  : "",
-                "courtOfOrigin"         : "",
-                "courtOrderDate"        : "",
-                "receivedDateByPPO"     : $(".dr_ppo").val(),
-                "sentence"              : "",
-                "manualDocket"          : false,
-                "referral"              : false,
-                "referralData"          : "",
-                "remarks"               : "",
-                "probationStartDate"    : "",
-                "probationYear"         : "",
-                "probationMonth"        : "",
-                "probationDay"          :"",
-                "prisonName"            : "",
-                "investigationReportSubmittedDate"  : "",
-                "ppoRecommendation"                 : "",
-                "recommendationState"               : $(".recommentation").val(),
-                "dateOfTransfer"                    : "",
-                "transferredOfficeId"               : "",
-                "dateOrderReceivedFromTheBoard"     : "",
-                "boardOrder"            : "",
-                "boardOrderStatus"      : "",
-                "referrringOfficeId"    : "",
-                "dateCICAR"             : $(".date_cic").val(),
-                "supervisingOfficer"    : $(".sup_officer").val(),
-                "probationEndDate"      : "",
-                "referralType"          : "",
-                "dateReportSubmittedToTheBoard"                 : "",
-                "dateReportSubmittedToRDForTransferToOtherPPO"  : "",
-                "resolutionType"                                : "",
-                "dateResolutionFromTheBoard"                    : "",
-                "dateResolutionFromTheRDForTransfer"            : "",
-                "createdBy"     : "",
-                "legalAge"      : false,
-                "militaryCourt" : false,
-            }
+                "type": "SC_PR_INV",
+                "docketNumber": "",
+                "docketSeries":$(".docket_series").val(),
+                "caseloadType":$(".caseload").val(),
+                "fieldOfficeId": $.cookie('field_office_id'),
+                "clientType": $(".client_type").val(),
+                "firstName": "",
+                "middleName": "",
+                "lastName": "",
+                "suffixName": "",
+                "fullName": "",
+                "pleaBargain": true,
+                "caseClassification": "",
+                "criminalCaseNumber": $(".cc_no").val(),
+                "offense": $(".offense").val(),
+                "courtOfOrigin": "",
+                "courtOrderDate": "",
+                "investigatingOfficer":$(".inv_off").val(),
+                "receivedDateByPPO": "",
+                "sentence": "",
+                "manualDocket": true,
+                "referral": true,
+                "referralData": "",
+                "remarks": "",
+                "reportType": "",
+                "probationStartDate": "",
+                "probationYear": "",
+                "probationMonth": "",
+                "probationDay": "",
+                "prisonName": $(".prison_name").val(),
+                "investigationReportSubmittedDate":$(".date_peci").val(),
+                "ppoRecommendation": "",
+                "recommendationState": $(".recommentation").val(),
+                "dateOfTransfer": $(".date_transferred").val(),
+                "transferredOfficeId": $(".office_transfered").val(),
+                "dateOrderReceivedFromTheBoard": "",
+                "boardOrder": $(".board_order").val(),
+                "boardOrderStatus": $(".board_status").val(),
+                "referrringOfficeId": "",
+                "dateCICAR": "",
+                "supervisingOfficer": "",
+                "probationEndDate": "",
+                "referralType": "",
+                "dateReportSubmittedToTheBoard": "",
+                "dateReportSubmittedToRDForTransferToOtherPPO": "",
+                "resolutionType": "",
+                "dateResolutionFromTheBoard": "",
+                "dateResolutionFromTheRDForTransfer": "",
+                "createdBy": "",
+                "updatedBy": "",
+                "legalAge": true,
+                "militaryCourt": true
+}
+
             console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
@@ -393,6 +422,25 @@
                 }
             })
         })
+
+        var __select = function(){
+            $('.office_transfered').empty();
+
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.office_transfered').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.office_transfered').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
 
     } )( jQuery );
     </script>

@@ -65,11 +65,17 @@
                                 </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_off"></div>
 			                    </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control ref_office select2">
+                                            <option selected value="select">Select</option>
+                                            <option value="parolee">Parolee</option>
+                                            <option value="parolee">Pardonee</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reason referral</label></div>
@@ -271,61 +277,61 @@
         $(".btn-confirm").unbind("click").on("click", function(){
                 
             var payload = {
-                "type"              : "SC_PR_CSUP",
-                "docketNumber"      : "",
-                "docketSeries"      : $(".docket_series").val(),
-                "caseloadType"      : $(".task").val(),
-                "clientType"        : $(".client_type").val(),
-                // "ref_office"        : $(".ref_office").val(),
-                // "reason"            : $(".reason").val(),
-                // "start_sup_date"            : $(".start_sup_date").val(),
-                // "end_sup_date"            : $(".end_sup_date").val(),
-                // "date_court_ref"            : $(".date_court_ref").val(),
-                "fieldOfficeId"     : $.cookie('field_office_id'),
-                "firstName"         : "",
-                "middleName"        : "",
-                "lastName"          : "",
-                "suffixName"        : "",
-                "fullName"          : "",
-                "pleaBargain"       : false,
-                "caseClassification"    : $(".case_class").val(),
-                "criminalCaseNumber"    : "",
-                "offense"               : "",
-                "investigatingOfficer"  : "",
-                "courtOfOrigin"         : "",
-                "courtOrderDate"        : "",
-                "receivedDateByPPO"     : $(".dr_ppo").val(),
-                "sentence"              : "",
-                "manualDocket"          : false,
-                "referral"              : false,
-                "referralData"          : "",
-                "remarks"               : "",
-                "probationStartDate"    : "",
-                "probationYear"         : "",
-                "probationMonth"        : "",
-                "probationDay"          :"",
-                "prisonName"            : "",
-                "investigationReportSubmittedDate"  : "",
-                "ppoRecommendation"                 : "",
-                "recommendationState"               : "",
-                "dateOfTransfer"                    : "",
-                "transferredOfficeId"               : "",
-                "dateOrderReceivedFromTheBoard"     : "",
-                "boardOrder"            : "",
-                "boardOrderStatus"      : "",
-                "referrringOfficeId"    : "",
-                "dateCICAR"             : $(".date_cic").val(),
-                "supervisingOfficer"    : $(".sup_officer").val(),
-                "probationEndDate"      : "",
-                "referralType"          : "",
-                "dateReportSubmittedToTheBoard"                 : "",
-                "dateReportSubmittedToRDForTransferToOtherPPO"  : "",
-                "resolutionType"                                : "",
-                "dateResolutionFromTheBoard"                    : "",
-                "dateResolutionFromTheRDForTransfer"            : "",
-                "createdBy"     : "",
-                "legalAge"      : false,
-                "militaryCourt" : false,
+                        "type"                      : "SC_PR_CSUP",
+                        "docketNumber"              : $(".docket_num").val(),
+                        "docketSeries"              : $(".docket_series").val(),
+                        "caseloadType"              : $(".task").val(),
+                        "fieldOfficeId"             : $.cookie('field_office_id'),
+                        "clientType"                : $(".client_type").val(),
+                        "clientId"                  : "",
+                        "firstName"                 : "",
+                        "middleName"                : "",
+                        "lastName"                  : "",
+                        "suffixName"                : "",
+                        "fullName"                  : "",
+                        "pleaBargain"               : true,
+                        "caseClassification"        : $(".case_class").val(),
+                        "criminalCaseNumber"        : "",
+                        "offense"                   : "",
+                        "courtOfOrigin"             : "",
+                        "courtOrderDate"            : "",
+                        "investigatingOfficer"      : "",
+                        "receivedDateByPPO"         : $(".dr_ppo").val(),
+                        "sentence"                  : "",
+                        "manualDocket"              : true,
+                        "referral"                  : true,
+                        "referralData"              : "",
+                        "remarks"                   : "",
+                        "probationStartDate"        : "",
+                        "probationYear"             : "",
+                        "probationMonth"            : "",
+                        "probationDay"              : "",
+                        "reportType"                : "",
+                        "prisonName"                : "",
+                        "investigationReportSubmittedDate"          :"",
+                        "ppoRecommendation"         : "",
+                        "recommendationState"       : "",
+                        "dateOfTransfer"            : "",
+                        "transferredOfficeId"       : "",
+                        "dateOrderReceivedFromTheBoard"             : "",
+                        "boardOrder"                : "",
+                        "boardOrderStatus"          : "",
+                        "referringOfficeId"         : $(".ref_office").val(),
+                        "dateCICAR"                 : $(".date_cic").val(),
+                        "supervisingOfficer"        : $(".sup_off").val(),
+                        "probationEndDate"          : "",
+                        "referralType"              : "",
+                        "dateReportSubmittedToTheBoard"             : "",
+                        "dateReportSubmittedToRDForTransferToOtherPPO": "",
+                        "resolutionType"            : "",
+                        "dateResolutionFromTheBoard": "",
+                        "dateResolutionFromTheRDForTransfer"        : "",
+                        "createdBy"                 : "",
+                        "updatedBy"                 : "",
+                        "legalAge"                  : true,
+                        "militaryCourt"             : true,
+                        "supervisionStartDate"      : $(".start_sup_date").val(),
+                        "supervisionEndDate"        : $(".end_sup_date").val()
             }
             console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
@@ -344,7 +350,24 @@
                 }
             })
         })
+        var __select = function(){
+            $('.ref_office').empty();
 
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.ref_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
     } )( jQuery );
     </script>
 

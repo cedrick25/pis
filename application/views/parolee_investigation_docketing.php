@@ -217,9 +217,10 @@
                     $(".btn_remove").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         $(".docket").html(docket_number)
+                        console.log("clicked")
                         $(".btn_remove_confirm").unbind("click").on("click", function(){
-
-                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                        console.log("clicked")
+                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+$.cookie("field_office_id")).done(function (result) {
                                 if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#success_remove').show();
@@ -241,7 +242,7 @@
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/parolee_courtesy_supervision_update?docket_number='+docket_number;
+                        window.location.href = 'http://localhost/pis/parolee_investigation_update?docket_number='+docket_number;
                     })
                    
                 }
