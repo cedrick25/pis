@@ -193,62 +193,62 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner').done(function (result) {
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
-                    result.response.forEach(function(data){
+                    result.content.forEach(function(data){
                         let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateLocModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>";
                         $('.table_body').append("<tr>"+
-                            "<td></td>"+
-                            "<td>"+data.firstName + data.middleName + data.lastName+"</td>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
                             "<td>"+data.sex+"</td>"+
                             "<td>"+data.education+"</td>"+
-                            "<td>"+data.fieldOfficeId+"</td>"+
+                            "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
                             "<td align='center' class='actions'> "+actions+"")
                     });
-                    // $(document).ready(function () {
-                    //     $('.table_head tbody tr').each(function (idx) {
-                    //        $(this).children("td:eq(0)").html(idx + 1);
-                    //     });
-                    //     var table = $('.table_head').DataTable({
-                    //         order: [[0, 'asc']],
-                    //         "columnDefs": [
-                    //             { "width": "20%", "targets": 5 }
-                    //         ]
-                    //     });
-                    //     $('.dataTables_length').addClass('bs-select');
-                    // });
+                    $(document).ready(function () {
+                        $('.table_head tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "20%", "targets": 5 }
+                            ]
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    });
 
-                    $(".btn_remove").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        $(".docket").html(docket_number)
-                        $(".btn_remove_confirm").unbind("click").on("click", function(){
+                    // $(".btn_remove").unbind("click").on("click", function(){
+                    //     var docket_number = $(this).data("docket");
+                    //     $(".docket").html(docket_number)
+                    //     $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
-                                if (result.status != "ERROR") {
-                                        $(".form-control").val('');
-                                        $('#success_remove').show();
-                                            setTimeout(function () {
-                                                $('#removeModal').modal('hide');
-                                                $('#success_remove').hide();
-                                                __table();
-                                            }, 1000);
+                    //         __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                    //             if (result.status != "ERROR") {
+                    //                     $(".form-control").val('');
+                    //                     $('#success_remove').show();
+                    //                         setTimeout(function () {
+                    //                             $('#removeModal').modal('hide');
+                    //                             $('#success_remove').hide();
+                    //                             __table();
+                    //                         }, 1000);
                                         
-                                    // $(".form-control").val('');
-                                    // $('#removeModal').modal('hide');
-                                    // __table();
-                                }else{
-                                    alert("failed")
-                                }
-                            })
-                        })
-                    })
+                    //                 // $(".form-control").val('');
+                    //                 // $('#removeModal').modal('hide');
+                    //                 // __table();
+                    //             }else{
+                    //                 alert("failed")
+                    //             }
+                    //         })
+                    //     })
+                    // })
 
                     $(".btn_update").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/client_update?docket_number='+docket_number;
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
                     })
                    
                 }

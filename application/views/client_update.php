@@ -101,7 +101,7 @@
                             </div>
                             <div class="card-footer">
 			                    <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-			                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+			                    <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
 			                </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -207,163 +207,122 @@
             
             return d.promise();
         };
-
-        $('.plea_bargain').change(function(){
-            if ($('.plea_bargain').val() == "true") {
-                $(".class_sel").show();
-            } else {
-                $(".class-sel").hide();
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
             }
-            if ($('.plea_bargain').val() == "false"){
-            $(".class_sel").hide();
-            } else {
-                $(".class_sel").show();
-            }
-        });
+        }
+
+        var client_id = GetURLParameter('client_id');
+        var __fields = function(){
+            console.log(client_id)
+
+            __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+                console.log(result);
+                
+                var result = result.response;
+
+                if (result.status != "ERROR") {
+                    console.log()
+                    setTimeout(function () {
+
+                        $(".field_office_update").val(result.fieldOfficeId).trigger("change");
+                    }, 3000);
 
 
-        $(".list").html(`
-            <div class="list_sentence">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                </div>
-            </div>`
-        );
+                    $(".firstName_update").val(result.firstName);
+                    $(".middleName_update").val(result.middleName);
+                    $(".lastName_update").val(result.lastName);
+                    $(".suffix_update").val(result.suffixName);
+                    $(".gender_update").val(result.sex);
+                    $(".education_update").val(result.education);
+                    $(".occupation_update").val(result.occupation);
+                    $(".cc_no_update").val(result.criminalCaseNo);
+                    $(".field_office_update").val(result.fieldOfficeId);
+                    $(".birthdate_update").val(result.birthDate);
+                    $(".b_place_update").val(result.birthCity);
+                    $(".address_update").val(result.permanentAddress);
 
-        $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked");
+                    $(".btn-confirm_update").unbind("click").on("click", function(){
+                        console.log('clicked')
 
-            $(".list").append(`
-                <div class="list_sentence">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                    </div>
-                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                </div>
-                `
-            )
-        });
-        $('.list').on('click', '.remove', function(e) {
-            e.preventDefault();
+                        var payload = {
 
-            $(this).parent().remove();
-        });
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
+                        "firstName"         : $(".firstName_update").val(),
+                        "middleName"        : $(".middleName_update").val(),
+                        "lastName"          : $(".lastName_update").val(),
+                        "suffixName"        : $(".suffix_update").val(),
+                        "sex"               : $(".gender_update").val(),
+                        "education"         : $(".education_update").val(),
+                        "occupation"        : $(".occupation_update").val(),
+                        "criminalCaseNo"    : $(".cc_no_update").val(),
+                        "fieldOfficeId"     : $(".field_office_update").val(),
+                        "birthDate"         : $(".birthdate_update").val(),
+                        "birthCity"         : $(".b_place_update").val(),
+                        "permanentAddress"  : $(".address_update").val(),
+                        "createdBy"         : "",
+                        "updatedBy"         : "",
+                        "status"            : 1
+
+                        }
+
+                        console.log(payload)
+
+                        __executeExternalPost('http://localhost:8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
+                            console.log(result);
+                            if (result.status != "ERROR") {
+                            $(".form-control").val('');
+                            $('#success_update').show();
+                                setTimeout(function () {
+                                    $('#success_update').hide();
+                                    window.location.reload(true);
+                                }, 2000);
+                            }else{
+                                alert("failed")
+                            }
+                        })
+                    })
+
+                }else{
+                    alert("failed")
+                }
+            })
+        }
+
 
         var __select = function(){
-            $('.field_office').empty();
+            $('.field_office_update').empty();
 
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                // console.log(result)
+                console.log(result)
                 if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
-                        $('.field_office').append(
+                        $('.field_office_update').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                     });
-                   
+
                 } else {
                     console.log("failed fetching docket list")
                 }
             })
         }
         __select();
-        $(".btn-confirm").unbind("click").on("click", function(){
-            
-            const sentence = [];
-            const sentence_inputs = $(".sentence");
-            const min_y = $(".min_y");
-            const min_m = $(".min_m");
-            const min_d = $(".min_d");
-            const max_y = $(".max_y");
-            const max_m = $(".max_m");
-            const max_d = $(".max_d");
 
-            for(var i = 0; i < sentence_inputs.length; i++){
-                const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                sentence.push(list);
-            }
-            // console.log(list)
-            console.log(sentence)
+        setTimeout(function () {
+            __fields();
+        }, 500);
 
-            var payload = {
-                "type"          : "INV",
-                "docketNumber"  : "",
-                "fieldOfficeId" : $(".field_office").val(),
-                "clientType"    : $(".client_type").val(),
-                "firstName"     : $(".firstName").val(),
-                "middleName"    : $(".middleName").val(),
-                "lastName"      : $(".lastName").val(),
-                "suffixName"    : $(".suffix").val(),
-                "criminalCaseNumber" : $(".cc_no").val(),
-                "offense"       : $(".offense").val(),
-                "courtOfOrigin" : $(".court_origin").val(),
-                "militaryCourt" : $(".military_court").val(),
-                "sentence"      : JSON.stringify(sentence),
-                "courtOrderDate": $(".cod").val(),
-                "receivedDate"  : $(".rd").val(),
-                "manualDocket"  : false,
-                "referral"      : false,
-                "typeOfReferral": "",
-                "remarks"       : $(".remarks").val(),
-                "probationStartDate": "",
-                "probationYear" : "",
-                "probationMonth": "",
-                "probationDay"  :"",
-                "status"        : 1,
-            }
-            console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
-        })
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 
