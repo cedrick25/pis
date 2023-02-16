@@ -64,28 +64,6 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Recommendation</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control recommentation   select2">
-                                            <option selected value="none" disabled>Select</option>
-                                            <option value="parole">For Parole</option>
-                                            <option value="commutation">For Commutation of Sentence</option>
-                                            <option value="conditional">For Conditional Pardon</option>
-                                            <option value="absolute">For Absolute Pardon</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control state select2">
-                                            <option selected value="select" disabled>Select</option>
-                                            <option value="grant">Grant</option>
-                                            <option value="denial">Denial</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control caseload select2">
@@ -127,6 +105,28 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Recommendation</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control recommentation   select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="parole">For Parole</option>
+                                            <option value="commutation">For Commutation of Sentence</option>
+                                            <option value="conditional">For Conditional Pardon</option>
+                                            <option value="absolute">For Absolute Pardon</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control state select2">
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="grant">Grant</option>
+                                            <option value="denial">Denial</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type select2">
@@ -152,19 +152,23 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transfered</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transferred</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control office_transfered select2">
+                                            <option selected value="select" disabled>Select</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control inv_off"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control cc_no"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Board Order</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control board_order select2">
                                             <option selected value="select" disabled>Select</option>
@@ -184,7 +188,7 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Murder" class="form-control offense"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order Status</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Board Order Status</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control board_status select2">
                                             <option selected value="select" disabled>Select</option>
@@ -320,61 +324,58 @@
         $(".btn-confirm").unbind("click").on("click", function(){
                 
             var payload = {
-                "type"              : "SC_PD_INV",
-                "docketNumber"      : "",
-                "docketSeries"      : $(".docket_series").val(),
-                "caseloadType"      : $(".caseload").val(),
-                "clientType"        : $(".client_type").val(),
-                // "ref_office"        : $(".ref_office").val(),
-                // "reason"            : $(".reason").val(),
-                // "start_sup_date"            : $(".start_sup_date").val(),
-                // "end_sup_date"            : $(".end_sup_date").val(),
-                // "date_court_ref"            : $(".date_court_ref").val(),
-                "fieldOfficeId"     : $.cookie('field_office_id'),
-                "firstName"         : "",
-                "middleName"        : "",
-                "lastName"          : "",
-                "suffixName"        : "",
-                "fullName"          : "",
-                "pleaBargain"       : false,
-                "caseClassification"    : $(".case_class").val(),
-                "criminalCaseNumber"    : "",
-                "offense"               : "",
-                "investigatingOfficer"  : "",
-                "courtOfOrigin"         : "",
-                "courtOrderDate"        : "",
-                "receivedDateByPPO"     : $(".dr_ppo").val(),
-                "sentence"              : "",
-                "manualDocket"          : false,
-                "referral"              : false,
-                "referralData"          : "",
-                "remarks"               : "",
-                "probationStartDate"    : "",
-                "probationYear"         : "",
-                "probationMonth"        : "",
-                "probationDay"          :"",
-                "prisonName"            : "",
-                "investigationReportSubmittedDate"  : "",
+                "type"                              : "SC_PD_INV",
+                "docketNumber"                      : "",
+                "docketSeries"                      :$(".docket_series").val(),
+                "caseloadType"                      :$(".caseload").val(),
+                "fieldOfficeId"                     : $.cookie('field_office_id'),
+                "clientType"                        : $(".client_type").val(),
+                "firstName"                         : "",
+                "middleName"                        : "",
+                "lastName"                          : "",
+                "suffixName"                        : "",
+                "fullName"                          : "",
+                "pleaBargain"                       : true,
+                "caseClassification"                : "",
+                "criminalCaseNumber"                : $(".cc_no").val(),
+                "offense"                           : $(".offense").val(),
+                "courtOfOrigin"                     : "",
+                "courtOrderDate"                    : "",
+                "investigatingOfficer"              :$(".inv_off").val(),
+                "receivedDateByPPO"                 : "",
+                "sentence"                          : "",
+                "manualDocket"                      : true,
+                "referral"                          : true,
+                "referralData"                      : "",
+                "remarks"                           : "",
+                "reportType"                        : "",
+                "probationStartDate"                : "",
+                "probationYear"                     : "",
+                "probationMonth"                    : "",
+                "probationDay"                      : "",
+                "prisonName"                        : $(".prison_name").val(),
+                "investigationReportSubmittedDate"  :$(".date_peci").val(),
                 "ppoRecommendation"                 : "",
                 "recommendationState"               : $(".recommentation").val(),
-                "dateOfTransfer"                    : "",
-                "transferredOfficeId"               : "",
+                "dateOfTransfer"                    : $(".date_transferred").val(),
+                "transferredOfficeId"               : $(".office_transfered").val(),
                 "dateOrderReceivedFromTheBoard"     : "",
-                "boardOrder"            : "",
-                "boardOrderStatus"      : "",
-                "referrringOfficeId"    : "",
-                "dateCICAR"             : $(".date_cic").val(),
-                "supervisingOfficer"    : $(".sup_officer").val(),
-                "probationEndDate"      : "",
-                "referralType"          : "",
-                "dateReportSubmittedToTheBoard"                 : "",
-                "dateReportSubmittedToRDForTransferToOtherPPO"  : "",
-                "resolutionType"                                : "",
-                "dateResolutionFromTheBoard"                    : "",
-                "dateResolutionFromTheRDForTransfer"            : "",
-                "createdBy"     : "",
-                "legalAge"      : false,
-                "militaryCourt" : false,
+                "boardOrder"                        : $(".board_order").val(),
+                "boardOrderStatus"                  : $(".board_status").val(),
+                "referrringOfficeId"                : "",
+                "dateCICAR"                         : "",    
+                "supervisingOfficer"                : "",
+                "probationEndDate"                  : "",
+                "referralType"                      : "",
+                "dateReportSubmittedToTheBoard"     : "",
+                "dateReportSubmittedToRDForTransferToOtherPPO": "",
+                "resolutionType"                    : "",
+                "dateResolutionFromTheBoard"        : "",
+                "dateResolutionFromTheRDForTransfer": "",
+                "createdBy"                         : "",
+                "updatedBy"                         : "",
+                "legalAge"                          : true,
+                "militaryCourt"                     : true
             }
             console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
@@ -393,6 +394,25 @@
                 }
             })
         })
+
+        var __select = function(){
+            $('.office_transfered').empty();
+
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.office_transfered').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.office_transfered').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
 
     } )( jQuery );
     </script>

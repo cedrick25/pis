@@ -32,7 +32,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Update Courtesy Supervision</strong>
+                                <strong class="card-title">Update Courtesy Investigation</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">

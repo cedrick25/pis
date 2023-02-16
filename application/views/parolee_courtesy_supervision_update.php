@@ -72,8 +72,6 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control ref_office_update select2">
                                             <option selected value="select">Select</option>
-                                            <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option>
                                         </select>
                                     </div>
                                 </div>
@@ -372,7 +370,7 @@
                         "referralType"              : "",
                         "dateReportSubmittedToTheBoard"             : "",
                         "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                        "resolutionType"            : "",
+                        "resolutionType"            : $(".res_type_update").val(),
                         "dateResolutionFromTheBoard": "",
                         "dateResolutionFromTheRDForTransfer"        : "",
                         "createdBy"                 : "",

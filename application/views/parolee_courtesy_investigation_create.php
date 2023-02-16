@@ -119,8 +119,6 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control ref_office select2">
                                             <option selected disabled value="select"> - - Select - - </option>
-                                            <option value="parolee">Parolee</option>
-                                            <option value="pardonee">Pardonee</option>
                                         </select>
                                     </div>
                                 </div>

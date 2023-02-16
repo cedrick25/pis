@@ -892,18 +892,18 @@
                 "legalAge"              : $(".client_type_false").val(),
             }
             console.log(payload)
-            // __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-            //     console.log(result);
-            //     if (result.status != "ERROR") {
-            //         $(".form-control").val('');
-            //         $('#success').show();
-            //         setTimeout(function () {
-            //             $('#success').hide();
-            //             window.location.reload(true);
-            //         }, 2000);
-            //     }else{
-            //     }
-            // })   
+            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        window.location.reload(true);
+                    }, 2000);
+                }else{
+                }
+            })   
         })
 
     } )( jQuery );

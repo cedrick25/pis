@@ -66,7 +66,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Recommendation</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control recommentation_update select2">
+                                        <select class="form-control recommendation_update select2">
                                             <option selected value="none" disabled>Select</option>
                                             <option value="parole">For Parole</option>
                                             <option value="commutation">For Commutation of Sentence</option>
@@ -75,7 +75,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control state_update select2">
@@ -84,7 +84,7 @@
                                             <option value="denial">Denial</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
@@ -221,7 +221,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -325,165 +325,123 @@
             }
         }
 
-        $('.plea_bargain_update').change(function(){
-            if ($('.plea_bargain_update').val() == "true") {
-                $(".class_sel").show();
-            } else {
-                $(".class-sel").hide();
-            }
-            if ($('.plea_bargain_update').val() == "false"){
-            $(".class_sel").hide();
-            } else {
-                $(".class_sel").show();
-            }
-        });
-
-        $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked")
-            $(".list").append(`
-                <div class="list_sentence">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                    </div>
-                    <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                </div>`
-            )
-        })
-        $('.list').on('click', '.remove', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result);
+                console.log(docket_number)
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
-                    $(".docket_num").val(result.docketNumber);
-                    $(".firstName_update").val(result.firstName);
-                    $(".middleName_update").val(result.middleName);
-                    $(".lastName_update").val(result.lastName);
-                    $(".suffix_update").val(result.suffixName);
-                    $(".field_office_update").val(result.fieldOfficeId).trigger("change");
-                    $(".client_type_update").val(result.clientType).trigger("change");
+                    $(".docket_num_update").val(result.docketNumber);
+
+                    setTimeout(function () {
+                    $(".docket_series_update").val(result.docketSeries).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".recommendation_update").val(result.recommendationState).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".task_update").val(result.caseloadType).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".client_type_update").val(result.clientType).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".board_status_update").val(result.boardOrderStatus).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".board_order_update").val(result.boardOrder).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".state_update").val(result.status).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".ref_office_update").val(result.transferredOfficeId).trigger("change");
+                    }, 3000);
+
+                    $(".inv_off_update").val(result.investigatingOfficer);
                     $(".cc_no_update").val(result.criminalCaseNumber);
                     $(".offense_update").val(result.offense);
-                    $(".court_origin_update").val(result.courtOfOrigin);
-                    if (result.militaryCourt == true) {
-                        var mc = "true"
-                    } else {
-                        var mc = "false"
-                    }
-                    $(".military_court_update").val(mc).trigger("change");
-                    $(".cod_update").val(result.courtOrderDate);
-                    $(".rd_update").val(result.receivedDate);
-                    $(".remarks_update").val(result.remarks);
+                    $(".prison_name_update").val(result.prisonName);
+                    $(".date_transferred_update").val(result.dateOfTransfer);
+                    $(".date_peci_update").val(result.investigationReportSubmittedDate);
 
-                    // console.log(JSON.parse(result.sentence))
-                    JSON.parse(result.sentence).forEach(function(data){
-                        $(".list").append(`
-                            <div class="list_sentence">
-                                <div class="row form-group col-md-12">
-                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence">${data.sentence}</textarea></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year" value="${data.min_y}"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month" value="${data.min_m}"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day" value="${data.min_d}"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year" value="${data.max_y}"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
-                                </div>
-                                <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                            </div>`
-                        )
-                    });
+                    
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         console.log('clicked')
-                        
-                        const sentence = [];
-                        const sentence_inputs = $(".sentence");
-                        const min_y = $(".min_y");
-                        const min_m = $(".min_m");
-                        const min_d = $(".min_d");
-                        const max_y = $(".max_y");
-                        const max_m = $(".max_m");
-                        const max_d = $(".max_d");
 
-                        for(var i = 0; i < sentence_inputs.length; i++){
-                            const list = {};
-                            list.sentence = $(sentence_inputs[i]).val()
-                            list.min_y = $(min_y[i]).val();
-                            list.min_m = $(min_m[i]).val();
-                            list.min_d = $(min_d[i]).val();
-                            list.max_y = $(max_y[i]).val();
-                            list.max_m = $(max_m[i]).val();
-                            list.max_d = $(max_d[i]).val();
-                            sentence.push(list);
-                        }
-                        // console.log(list)
-                        console.log(sentence)
-                        
                         var payload = {
-                            "type"          : "SUP",
-                            "docketNumber"  : "",
-                            "fieldOfficeId" :  $(".field_office_update").val(),
-                            "clientType"    : $(".client_type_update").val(),
-                            // "caseload"      : $(".caseload_update").val(),
-                            "firstName"     : $(".firstName_update").val(),
-                            "middleName"    : $(".middleName_update").val(),
-                            "lastName"      : $(".lastName_update").val(),
-                            "suffixName"    : $(".suffix_update").val(),
-                            "criminalCaseNumber" : $(".cc_no_update").val(),
-                            "offense"       : $(".offense_update").val(),
-                            "courtOfOrigin" : $(".court_origin_update").val(),
-                            "militaryCourt" : $(".military_court_update").val(),
-                            "sentence"      : JSON.stringify(sentence),
-                            "courtOrderDate": $(".cod_update").val(),
-                            "receivedDate"  : $(".rd_update").val(),
-                            "manualDocket"  : false,
-                            "referral"      : false,
-                            "typeOfReferral": "",
-                            "remarks"       : $(".remarks_update").val(),
-                            "probationStartDate": "",
-                            "probationYear" : "",
-                            "probationMonth": "",
-                            "probationDay"  :"",
-                            "status"        : 1,
+                        "type"                  : "SC_PD_INV",
+                        "docketNumber"          : $(".docket_num_update").val(),
+                        "docketSeries"          : $(".docket_series_update").val(),
+                        "caseloadType"          : $(".task_update").val(),
+                        "clientType"            : $(".client_type_update").val(),
+                        "fieldOfficeId"         : $.cookie('field_office_id'),
+                        "firstName"             : "",
+                        "middleName"            : "",
+                        "lastName"              : "",
+                        "suffixName"            : "",
+                        "fullName"              : "",
+                        "pleaBargain"           : false,
+                        "caseClassification"    : "",
+                        "criminalCaseNumber"    : $(".cc_no_update").val(),
+                        "offense"               : $(".offense_update").val(),
+                        "investigatingOfficer"  : $(".inv_off_update").val(),
+                        "courtOfOrigin"         : "",
+                        "courtOrderDate"        : "",
+                        "receivedDateByPPO"     : "",
+                        "sentence"              : "",
+                        "manualDocket"          : false,
+                        "referral"              : false,
+                        "referralData"          : "",
+                        "remarks"               : "",
+                        "probationStartDate"    : "",
+                        "probationYear"         : "",
+                        "probationMonth"        : "",
+                        "probationDay"          :"",
+                        "prisonName"            : $(".prison_name_update").val(),
+                        "investigationReportSubmittedDate"  : $(".date_peci_update").val(),
+                        "ppoRecommendation"                 : "",
+                        "recommendationState"               : $(".recommendation_update").val(),
+                        "dateOfTransfer"                    : $(".date_transferred_update").val(),
+                        "transferredOfficeId"               : $(".ref_office_update").val(),
+                        "dateOrderReceivedFromTheBoard"     : "",
+                        "boardOrder"            : $(".board_order_update").val(),
+                        "boardOrderStatus"      : $(".board_status_update").val(),
+                        "referrringOfficeId"    : "",
+                        "dateCICAR"             : "",
+                        "supervisingOfficer"    : "",
+                        "probationEndDate"      : "",
+                        "referralType"          : "",
+                        "dateReportSubmittedToTheBoard"                 : "",
+                        "dateReportSubmittedToRDForTransferToOtherPPO"  : "",
+                        "resolutionType"                                : "",
+                        "dateResolutionFromTheBoard"                    : "",
+                        "dateResolutionFromTheRDForTransfer"            : "",
+                        "createdBy"     : "",
+                        "legalAge"      : false,
+                        "militaryCourt" : false,
+
                         }
 
-                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number,JSON.stringify(payload)).done(function (result) {
+                        console.log(payload)
+                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
                             $('#success_update').show();
                                 setTimeout(function () {
                                     $('#success_update').hide();
-                                    window.location.reload(true);
+                                    window.location.href = 'http://localhost/pis/parolee_investigation_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")
@@ -497,14 +455,14 @@
             })
         }
         var __select = function(){
-            $('.field_office_update').empty();
+            $('.ref_office_update').empty();
 
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
-                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
+                    $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
-                        $('.field_office_update').append(
+                        $('.ref_office_update').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                     });
 
@@ -519,7 +477,7 @@
             __fields();
         }, 500);
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 

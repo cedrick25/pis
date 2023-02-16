@@ -205,7 +205,7 @@
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -339,7 +339,11 @@
                     }, 3000);
 
                     setTimeout(function () {
-                        $(".task_update").val(result.caseloadType).trigger("change");
+                        $(".client_update").val(result.clientId).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".type_update").val(result.caseloadType).trigger("change");
                     }, 3000);
 
                     setTimeout(function () {
@@ -347,41 +351,60 @@
                     }, 3000);
 
                     setTimeout(function () {
-                        $(".ref_office_update").val(result.referringOfficeId).trigger("change");
+                        $(".case_class_update").val(result.caseClassification).trigger("change");
                     }, 3000);
 
+                    setTimeout(function () {
+                        $(".report_type_update").val(result.reportType).trigger("change");
+                    }, 3000);
 
-                    $(".inv_off_update").val(result.investigatingOfficer);
-                    $(".reason_update").val(result.referralData);
+                    setTimeout(function () {
+                        $(".referral_type_update").val(result.referralType).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".res_type_update").val(result.resolutionType).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".board_order_update").val(result.referralType).trigger("change");
+                    }, 3000);
+
+                    setTimeout(function () {
+                        $(".board_status_update").val(result.resolutionType).trigger("change");
+                    }, 3000);
+
                     $(".dr_ppo_update").val(result.receivedDateByPPO);
-                    $(".date_cic_update").val(result.dateCICAR);
-
-
+                    $(".sup_officer_update").val(result.supervisingOfficer);
+                    $(".date_rec_board_update").val(result.dateResolutionFromTheBoard);
+                    $(".date_rec_trans_update").val(result.dateResolutionFromTheRDForTransfer);
+                    $(".start_sup_update").val(result.supervisionStartDate);
+                    $(".end_sup_update").val(result.supervisionEndDate);
+                    $(".date_sub_board_update").val(result.dateReportSubmittedToTheBoard)
+                    $(".date_sub_trans_update").val(result.dateReportSubmittedToRDForTransferToOtherPPO)
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         console.log('clicked')
 
                         var payload = {
-
-                        "type"                      : "SC_PR_SUP",
+                        "type"                      : "SC_PD_SUP",
                         "docketNumber"              : $(".docket_num_update").val(),
                         "docketSeries"              : $(".docket_series_update").val(),
-                        "caseloadType"              : $(".task_update").val(),
+                        "caseloadType"              : $(".type_update").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
                         "clientType"                : $(".client_type_update").val(),
-                        "clientId"                  : "",
                         "firstName"                 : "",
                         "middleName"                : "",
                         "lastName"                  : "",
                         "suffixName"                : "",
                         "fullName"                  : "",
                         "pleaBargain"               : true,
-                        "caseClassification"        : "",
+                        "caseClassification"        : $(".case_class_update").val(),
                         "criminalCaseNumber"        : "",
                         "offense"                   : "",
                         "courtOfOrigin"             : "",
                         "courtOrderDate"            : "",
-                        "investigatingOfficer"      : $(".inv_off_update").val(),
+                        "investigatingOfficer"      : "",
                         "receivedDateByPPO"         : $(".dr_ppo_update").val(),
                         "sentence"                  : "",
                         "manualDocket"              : true,
@@ -392,7 +415,7 @@
                         "probationYear"             : "",
                         "probationMonth"            : "",
                         "probationDay"              : "",
-                        "reportType"                : "",
+                        "reportType"                : $(".report_type_update").val(),
                         "prisonName"                : "",
                         "investigationReportSubmittedDate"          :"",
                         "ppoRecommendation"         : "",
@@ -400,29 +423,28 @@
                         "dateOfTransfer"            : "",
                         "transferredOfficeId"       : "",
                         "dateOrderReceivedFromTheBoard"             : "",
-                        "boardOrder"                : "",
-                        "boardOrderStatus"          : "",
-                        "referringOfficeId"         : $(".ref_office_update").val(),
-                        "dateCICAR"                 : $(".date_cic_update").val(),
-                        "supervisingOfficer"        : "",
+                        "boardOrder"                : $(".board_update").val(),
+                        "boardOrderStatus"          : $(".board_status_update").val(),
+                        "referrringOfficeId"        : "",
+                        "dateCICAR"                 : "",
+                        "supervisingOfficer"        : $(".sup_officer_update").val(),
                         "probationEndDate"          : "",
-                        "referralType"              : "",
-                        "dateReportSubmittedToTheBoard"             : "",
-                        "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                        "resolutionType"            : "",
-                        "dateResolutionFromTheBoard": "",
-                        "dateResolutionFromTheRDForTransfer"        : "",
+                        "referralType"              : $(".referral_type_update").val(),
+                        "dateReportSubmittedToTheBoard"             : $(".date_sub_board_update").val(),
+                        "dateReportSubmittedToRDForTransferToOtherPPO": $(".date_sub_trans_update").val(),
+                        "resolutionType"            : $(".res_type_update").val(),
+                        "dateResolutionFromTheBoard": $(".date_rec_board_update").val(),
+                        "dateResolutionFromTheRDForTransfer"        : $(".date_rec_trans_update").val(),
                         "createdBy"                 : "",
                         "updatedBy"                 : "",
                         "legalAge"                  : true,
                         "militaryCourt"             : true,
-                        "supervisionStartDate"      : "",
-                        "supervisionEndDate"        : ""
+                        "supervisionStartDate"      : $(".start_sup_update").val(),
+                        "supervisionEndDate"        : $(".end_sup_update").val()
 
                         }
 
                         console.log(payload)
-
                         __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
@@ -443,8 +465,6 @@
                 }
             })
         }
-
-
         var __select = function(){
             $('.ref_office_update').empty();
 
@@ -467,8 +487,6 @@
         setTimeout(function () {
             __fields();
         }, 500);
-
-
     } )( jQuery );
     </script>
 

@@ -72,8 +72,6 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control ref_office select2">
                                             <option selected value="select">Select</option>
-                                            <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option>
                                         </select>
                                     </div>
                                 </div>
@@ -137,9 +135,9 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control case_class select2">
                                             <option selected value="select" disabled>Select</option>
-                                            <option selected value="high">High</option>
-                                            <option selected value="medium">Medium</option>
-                                            <option selected value="low">Low</option>
+                                            <option value="high">High</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="low">Low</option>
                                         </select>
                                     </div>
                                 </div>
@@ -278,7 +276,7 @@
                 
             var payload = {
                         "type"                      : "SC_PR_CSUP",
-                        "docketNumber"              : $(".docket_num").val(),
+                        "docketNumber"              : "",
                         "docketSeries"              : $(".docket_series").val(),
                         "caseloadType"              : $(".task").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
@@ -323,7 +321,7 @@
                         "referralType"              : "",
                         "dateReportSubmittedToTheBoard"             : "",
                         "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                        "resolutionType"            : "",
+                        "resolutionType"            : $(".res_type").val(),
                         "dateResolutionFromTheBoard": "",
                         "dateResolutionFromTheRDForTransfer"        : "",
                         "createdBy"                 : "",
