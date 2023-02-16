@@ -71,7 +71,6 @@
                                             <th>Gender</th>
                                             <th>Education</th>
                                             <th>Field Office</th>
-                                            <th>Criminal Case No.</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -81,7 +80,6 @@
                                         <th>Male</th>
                                         <th>BSIT</th>
                                         <th>Central Office</th>
-                                        <th>CC No. 123</th>
                                         <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                     </tbody>
                                 </table>
@@ -99,7 +97,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -195,33 +193,33 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/inv').done(function (result) {
+            __executeExternalGet('http://localhost:8000/petitioner').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.response.forEach(function(data){
+                        let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateLocModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>";
                         $('.table_body').append("<tr>"+
                             "<td></td>"+
-                            "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.receivedDate+"</td>"+
-                            "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
-                            "<td>"+data.criminalCaseNumber+"</td>"+
-                            "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"'><i class='fa fa-remove'></i> Remove</button>")
+                            "<td>"+data.firstName + data.middleName + data.lastName+"</td>"+
+                            "<td>"+data.sex+"</td>"+
+                            "<td>"+data.education+"</td>"+
+                            "<td>"+data.fieldOfficeId+"</td>"+
+                            "<td align='center' class='actions'> "+actions+"")
                     });
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "20%", "targets": 6 }
-                            ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    });
+                    // $(document).ready(function () {
+                    //     $('.table_head tbody tr').each(function (idx) {
+                    //        $(this).children("td:eq(0)").html(idx + 1);
+                    //     });
+                    //     var table = $('.table_head').DataTable({
+                    //         order: [[0, 'asc']],
+                    //         "columnDefs": [
+                    //             { "width": "20%", "targets": 5 }
+                    //         ]
+                    //     });
+                    //     $('.dataTables_length').addClass('bs-select');
+                    // });
 
                     $(".btn_remove").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
@@ -250,7 +248,7 @@
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+                        window.location.href = 'http://localhost/pis/client_update?docket_number='+docket_number;
                     })
                    
                 }
@@ -259,7 +257,8 @@
         __table();
 
     } )( jQuery );
-    </script> -->
+    </script>
+
 
 </body>
 
