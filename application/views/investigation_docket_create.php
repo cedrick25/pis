@@ -309,7 +309,7 @@
                 </div>
                 <div class="row form-group col-md-6">
                     <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                    <div class="col-3 col-md-9"><input type="text" class="form-control max_d" placeholder="Robbery"></div>
+                    <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery"></div>
                 </div>
 
             </div>`

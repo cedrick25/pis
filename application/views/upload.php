@@ -264,6 +264,7 @@
             });
         }
         list_upload();
+        
         var __fields = function(){
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
                 console.log(result);

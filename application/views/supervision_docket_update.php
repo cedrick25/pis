@@ -115,12 +115,11 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin_update"></div>
                                 </div>
-                                <div class="row form-group col-md-6 false_manual">
+                                <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control field_office_update">
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -384,7 +383,7 @@
                     $(".client_type_update").val(la).trigger("change");
                     $(".military_court_update").val(mc).trigger("change");
                     $(".cod_update").val(result.courtOrderDate);
-                    $(".rd_update").val(result.receivedDate);
+                    $(".rd_update").val(result.receivedDateByPPO);
                     $(".remarks_update").val(result.remarks);
 
                     // console.log(JSON.parse(result.sentence))
@@ -445,31 +444,61 @@
                         console.log(sentence)
                         
                         var payload = {
-                            "type"          : "PIS_SUP",
-                            "docketNumber"  : $(".docket_num").val(),
-                            "fieldOfficeId" : $(".field_office_update").val(),
-                            "clientType"    : $(".client_type_update").val(),
-                            "caseload"      : $(".caseload_type_update").val(),
-                            "firstName"     : $(".firstName_update").val(),
-                            "middleName"    : $(".middleName_update").val(),
-                            "lastName"      : $(".lastName_update").val(),
-                            "suffixName"    : $(".suffix_update").val(),
-                            "criminalCaseNumber" : $(".cc_no_update").val(),
-                            "offense"       : $(".offense_update").val(),
-                            "courtOfOrigin" : $(".court_origin_update").val(),
-                            "militaryCourt" : $(".military_court_update").val(),
-                            "sentence"      : JSON.stringify(sentence),
-                            "courtOrderDate": $(".cod_update").val(),
-                            "receivedDate"  : $(".rd_update").val(),
-                            "manualDocket"  : false,
-                            "referral"      : false,
-                            "typeOfReferral": "",
-                            "remarks"       : $(".remarks_update").val(),
-                            "probationStartDate": "",
-                            "probationYear" : "",
-                            "probationMonth": "",
-                            "probationDay"  :"",
-                            "status"        : 1,
+                              "type": "PIS_SUP",
+                              "docketNumber": $(".docket_num").val(),
+                              "docketSeries": "NONE",
+                              "caseloadType": $(".caseload_update").val(),
+                              "fieldOfficeId": $(".field_office_update").val(),
+                              "clientType": "PROBATIONER",
+                              "clientId": "",
+                              "firstName": $(".firstName_update").val(),
+                              "middleName": $(".middleName_update").val(),
+                              "lastName": $(".lastName_update").val(),
+                              "suffixName": $(".suffix_update").val(),
+                              "fullName": "",
+                              "pleaBargain": $(".plea_bargain_update").val(),
+                              "caseClassification": $(".classification_update").val(),
+                              "criminalCaseNumber": $(".cc_no_update").val(),
+                              "offense": $(".offense_update").val(),
+                              "courtOfOrigin": $(".court_origin_update").val(),
+                              "courtOrderDate": $(".cod_update").val(),
+                              "investigatingOfficer": $(".inv_off_update").val(),
+                              "receivedDateByPPO": $(".rd_update").val(),
+                              "sentence": JSON.stringify(sentence),
+                              "manualDocket": false,
+                              "referral": false,
+                              "referralData": "",
+                              "remarks": "",
+                              "probationStartDate": "",
+                              "probationYear": "",
+                              "probationMonth": "",
+                              "probationDay": "",
+                              "prisonName": "",
+                              "investigationReportSubmittedDate": "",
+                              "ppoRecommendation": "",
+                              "recommendationState": "",
+                              "dateOfTransfer": "",
+                              "transferredOfficeId": "",
+                              "dateOrderReceivedFromTheBoard": "",
+                              "boardOrder": "",
+                              "boardOrderStatus": "",
+                              "referringOfficeId": "",
+                              "dateCICAR": "",
+                              "supervisingOfficer": "",
+                              "supervisionStartDate": "",
+                              "supervisionEndDate": "",
+                              "probationEndDate": "",
+                              "reportType": "",
+                              "referralType": "",
+                              "dateReportSubmittedToTheBoard": "",
+                              "dateReportSubmittedToRDForTransferToOtherPPO": "",
+                              "resolutionType": "",
+                              "dateResolutionFromTheBoard": "",
+                              "dateResolutionFromTheRDForTransfer": "",
+                              "createdBy": "",
+                              "updatedBy": "",
+                              "legalAge": $(".client_type_update").val(),
+                              "militaryCourt": $(".military_court_update").val()
                         }
 
                         __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
