@@ -248,26 +248,27 @@
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                                 <div class="col-12 col-md-9">
                                                     <select class="form-control caseload_false select2">
-                                                        <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
-                                                        <option value="PROBATION_INV_CSI">Community Service Investigation</option>
-                                                        <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
-                                                        <option value="PROBATION_INV_CPI">Courtesy Probation Investigation</option>
-                                                        <option value="PROBATION_INV_CPI_FULL_BLOWN">Courtesy Probation Investigation - Full Blown</option>
-                                                        <option value="PROBATION_INV_CPI_PARTIAL">Courtesy Probation Investigation - Partial</option>
-                                                        <option value="PROBATION_INV_CSSI">Courtesy Suspended Sentence Investigation</option>
-                                                        <option value="PROBATION_INV_MOTION_DISQUALIFY">Disqualified Client</option>
-                                                        <option value="PROBATION_INV_GIOR_FOLLOW_UP">Follow-up of GIOR Result</option>
-                                                        <option value="PROBATION_INV_INVESTIGATION">Probation Investigation</option>
-                                                        <option value="PROBATION_INV_RPI">Reinvestigation for Client under Probation</option>
-                                                        <option value="PROBATION_INV_RCS">Reinvestigation for Community Service</option>
-                                                        <option value="PROBATION_INV_RSS">Reinvestigation for Suspended Sentence</option>
-                                                        <option value="PROBATION_INV_MOTION_EXTENSION">Request for Extension of Time to Submit PSIR</option>
-                                                        <option value="PROBATION_INV_RC">Request for Records Check</option>
-                                                        <option value="PROBATION_INV_RES_RC">Results of Records Check</option>
-                                                        <option value="PROBATION_INV_SSI">Suspended Sentence Investigation</option>
-                                                        <option value="PROBATION_INV_TCSI">Transferred Community Service Investigation</option>
-                                                        <option value="PROBATION_INV_TPI">Transferred Probation Investigation</option>
-                                                        <option value="PROBATION_INV_TSSI">Transferred Suspended Sentence Investigation</option>
+                                                        <option value="PROBATION_SUP_CSS">Community Service Supervision</option>
+                                                        <option value="PROBATION_SUP_CCSS">Courtesy Community Service Supervision</option>
+                                                        <option value="PROBATION_SUP_CPS">Courtesy Probation Supervision</option>
+                                                        <option value="PROBATION_SUP_CSSS">Courtesy Suspended Sentence Supervision</option>
+                                                        <option value="PROBATION_SUP_DOCKET_CREATION">For Docket Creation</option>
+                                                        <option value="PROBATION_SUP_TRANS">Motion/Manifestation to Transfer Supervision and Control</option>
+                                                        <option value="PROBATION_SUP_TRAVEL_PERMIT">Permit to Travel</option>
+                                                        <option value="PROBATION_SUP_SUPERVISION">Probation Supervision</option>
+                                                        <option value="PROBATION_SUP_RPS">Reinstated Probation Supervision</option>
+                                                        <option value="PROBATION_SUP_RC">Request for Records Check</option>
+                                                        <option value="PROBATION_SUP_RES_RC">Results of Records Check</option>
+                                                        <option value="PROBATION_REVOCATION_ABSCOND">Revocation - Abscond</option>
+                                                        <option value="PROBATION_REVOCATION_COMMISSION">Revocation - Commission of Another Offense</option>
+                                                        <option value="PROBATION_REVOCATION_OTHER">Revocation - Other</option>
+                                                        <option value="PROBATION_REVOCATION_VIOLATION">Revocation - Violation of Probation Conditions</option>
+                                                        <option value="PROBATION_SUP_SSS">Suspended Sentence Supervision</option>
+                                                        <option value="PROBATION_SUP_TERMINATE_PROBATION">Terminate Probation</option>
+                                                        <option value="PROBATION_SUP_CRT_APPR_TRANS">Transfer of Residence</option>
+                                                        <option value="PROBATION_SUP_TCSS">Transferred Community Service Supervision</option>
+                                                        <option value="PROBATION_SUP_TPS">Transferred Probation Supervision</option>
+                                                        <option value="PROBATION_SUP_TSSS">Transferred Suspended Sentence Supervision</option><option value="PROBATION_SUP_TRAVEL_GT30">Travel Exceeding 30 Days</option>
                                                     </select>
                                                 </div>
                                             </div>
