@@ -214,6 +214,8 @@
                 }
             }
         }
+            var client_id = GetURLParameter('client_id');
+            var officeid = GetURLParameter('departmentId');
 
             __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
 
@@ -224,16 +226,20 @@
                 if (result.status != "ERROR") {
                     var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
                     console.log(fullname)
+                    var officeId = result.departmentId;
+                    console.log(officeId);
 
                     $(".uploader").val(fullname);
 
+                    __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+                        console.log(result)
+                        console.log(client_id)
 
-                    $(".btn-confirm").unbind("click").on("click", function(){
+                        $(".btn-confirm").unbind("click").on("click", function(){
                         
                         console.log("clicked")
                         
-                        var officeId = result.departmentId;
-                        console.log(officeId);
+                        
                         
                         var fileToUpload = $('#fileupload').prop('files')[0];
 
@@ -246,7 +252,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
 
                             var settings = {
-                                "url": "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"FORM"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
+                                "url": "http://localhost:8080/file/upload?uuid="+client_id+"&type="+"CLIENT"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,
@@ -269,22 +275,12 @@
 
                                 }
                             });
-
-
-                            // var formdata = new FormData();
-                            // formdata.append("file", fileToUpload, fileToUpload.name);
-                            // console.log(formdata)
-                            // __executeFile("http://localhost:8080/file/upload?uuid="+$.cookie('uuid')+"&type="+$('.type').val()+"&createdby="+$('.uploader').val()+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,formdata).done(function (result) {
-                            //     console.log(result)
-                            //     if(result){
-                            //         // list_upload();
-
-                            //     }else{
-                            //         // alert ("upload Failed");
-                            //     }
-                            // });
                         }
                     })
+
+                    })
+
+                    
 
                 }else{
                     alert("failed")

@@ -64,7 +64,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Upload List</strong>
+                                <strong class="card-title">Files Attached</strong>
                             </div>
                             <div class="card-body">
                                 <div class="col col-md-12">
@@ -72,8 +72,9 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>File name</th>
-                                                <th>Date Uploaded</th>
+                                                <th>Kind</th>
+                                                <th>File Name</th>
+                                                <th>Version</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -230,11 +231,27 @@
 
         var docket_number = GetURLParameter('docket_number');
         var type = GetURLParameter('type');
+        var fi = GetURLParameter('fi')
+
+        console.log(docket_number)
+        console.log(type)
+        console.log(fi)
 
         var list_upload = function(){
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
-            __executeExternalGet('http://localhost:8080/file/list/'+docket_number).done(function (result) {
+
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
+
+                console.log(result)
+                var result = result.response;
+                var client_type = result.clientType;
+                var docket_num = result.docketNumber;
+
+                // console.log (client_type)
+                // console.log (docket_num)
+
+                __executeExternalGet('http://localhost:8080/file/list/'+type+'/'+docket_number+'/'+fi).done(function (result) {
                 console.log("======")
                 console.log(result)
                 console.log("======")
@@ -243,8 +260,9 @@
                     result.files.forEach(function(data){
                         $('.table_body').append("<tr>"+
                             "<td></td>"+
+                            "<td>"+data.kind+"</td>"+
                             "<td>"+data.fileName+"</td>"+
-                            "<td>"+data.createdDate+"</td>"+
+                            "<td>"+data.version+"</td>"+
                             "<td class='options'><a href="+'http://localhost:8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
@@ -261,16 +279,17 @@
                         $('.dataTables_length').addClass('bs-select');
                     }); 
                 }
-            });
+                });
+            })
         }
         list_upload();
         
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
                 console.log(result);
                 var result = result.response;
                 if (result.status != "ERROR") {
-                    $(".type").html(result.type);
+                    $(".type").html(result.clientType);
                     $(".docket_number").html(result.docketNumber);
 
                     $(".btn-confirm").unbind("click").on("click", function(){
@@ -284,7 +303,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
 
                             var settings = {
-                                "url": "http://localhost:8080/file/upload?uuid="+result.docketNumber+"&type="+result.type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val(),
+                                "url": "http://localhost:8080/file/upload?uuid="+result.docketNumber+"&type="+result.type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+fi,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

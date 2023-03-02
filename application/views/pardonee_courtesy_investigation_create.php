@@ -54,12 +54,12 @@
                                             <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
                                             <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
                                             <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="PR">PAROLE SUPERVISION</option>
+<!--                                             <option value="PR">PAROLE SUPERVISION</option>
                                             <option value="PD">PARDON SUPERVISION</option>
                                             <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
                                             <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
                                             <option value="CPR">COURTESY PAROLE SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
+                                            <option value="CPD">COURTESY PARDON SUPERVISION</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                         <select class="form-control client_type select2">
                                             <option selected value="select">Select</option>
                                             <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option>
+                                            <option value="pardonee">Pardonee</option>
                                         </select>
                                     </div>
                                 </div>

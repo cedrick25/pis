@@ -126,7 +126,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type_update select2">
@@ -135,7 +135,7 @@
                                             <option value="parolee">Pardonee</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
@@ -392,7 +392,7 @@
                         "docketSeries"              : $(".docket_series_update").val(),
                         "caseloadType"              : $(".type_update").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
-                        "clientType"                : $(".client_type_update").val(),
+                        "clientType"                : "PARDONEE",
                         "firstName"                 : "",
                         "middleName"                : "",
                         "lastName"                  : "",

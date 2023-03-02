@@ -470,7 +470,7 @@
                     "password"      : $(".password").val(),
                     "departmentId"  : $(".field_office").val(),
                 }
-            // console.log(payload);
+            console.log(payload);
             __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {

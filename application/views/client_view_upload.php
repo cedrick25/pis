@@ -44,8 +44,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="client_list">Client</a></li>
-                            <li class="active">Client list</li>
+                            <li><a href="client_list">Client List</a></li>
+                            <li class="active">Client Documents</li>
                         </ol>
                     </div>
                 </div>
@@ -59,28 +59,21 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Client List</strong>
-                                <a href="new_client"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
+                                <strong class="card-title">Forms List</strong>
+                                <a href="form_upload"> <button class="btn btn-sm btn-success btn_add float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Document</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
                                     <thead>
                                         <tr align="center">
                                             <th>#</th>
-                                            <th>Full Name</th>
-                                            <th>Gender</th>
-                                            <th>Education</th>
-                                            <th>Field Office</th>
+                                            <th>Client Name</th>
+                                            <th>File Name</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table_body" align="center">
-                                        <th>1</th>
-                                        <th>Simon Cowell</th>
-                                        <th>Male</th>
-                                        <th>BSIT</th>
-                                        <th>Central Office</th>
-                                        <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -189,23 +182,48 @@
             return d.promise();
         };
 
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
+
+
+        var client_id = GetURLParameter('client_id');
+        var type = GetURLParameter('type');
+        var officeid = GetURLParameter('fieldOfficeId');
+
+        console.log(client_id)
+
         var __table = function(){
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10').done(function (result) {
+            __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+
+                console.log(result)
+                var result = result.response;
+                var officeId = result.fieldOfficeId;
+                var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
+                console.log(officeId)
+                __executeExternalGet('http://localhost:8080/file/list/CLIENT/'+client_id+'/'+officeId).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-success btn_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
+                    result.files.forEach(function(data){
+                        let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Download</button>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
-                            "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
-                            "<td>"+data.sex+"</td>"+
-                            "<td>"+data.education+"</td>"+
-                            "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
+                            "<td>"+fullname+"</td>"+
+                            "<td>"+data.fileName+"</td>"+
                             "<td align='center' class='actions'> "+actions+"")
                     });
                     $(document).ready(function () {
@@ -214,59 +232,22 @@
                         });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "20%", "targets": 5 }
-                            ]
+                            // "columnDefs": [
+                            //     { "width": "20%", "targets": 5 }
+                            // ]
                         });
                         $('.dataTables_length').addClass('bs-select');
-                    });
-
-                    // $(".btn_remove").unbind("click").on("click", function(){
-                    //     var docket_number = $(this).data("docket");
-                    //     $(".docket").html(docket_number)
-                    //     $(".btn_remove_confirm").unbind("click").on("click", function(){
-
-                    //         __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
-                    //             if (result.status != "ERROR") {
-                    //                     $(".form-control").val('');
-                    //                     $('#success_remove').show();
-                    //                         setTimeout(function () {
-                    //                             $('#removeModal').modal('hide');
-                    //                             $('#success_remove').hide();
-                    //                             __table();
-                    //                         }, 1000);
-                                        
-                    //                 // $(".form-control").val('');
-                    //                 // $('#removeModal').modal('hide');
-                    //                 // __table();
-                    //             }else{
-                    //                 alert("failed")
-                    //             }
-                    //         })
-                    //     })
-                    // })
-
-                    $(".btn_update").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
-                    })
-                    $(".btn_upload").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id;
-                    })
-                    $(".btn_view").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
-                    })
-                   
+                    });               
                 }
-            })
+                })
+
+            })    
+            
         }
         __table();
 
     } )( jQuery );
     </script>
-
 
 </body>
 

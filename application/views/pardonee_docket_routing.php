@@ -271,9 +271,9 @@
                         $(".caseload").val(result.caseloadType).trigger("change");
                         }, 500);
 
-                        // setTimeout(function () {
-                        // $(".field_office").val(result.fieldOfficeId).trigger("change");
-                        // }, 500);
+                        setTimeout(function () {
+                        $(".field_office").val(result.fieldOfficeId).trigger("change");
+                        }, 500);
 
                     } else {
                         console.log("failed fetching docket number")

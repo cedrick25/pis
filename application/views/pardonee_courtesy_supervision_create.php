@@ -48,12 +48,12 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control docket_series select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="PPI">PRE-PAROLE INVESTIGATION</option>
+<!--                                             <option value="PPI">PRE-PAROLE INVESTIGATION</option>
                                             <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
                                             <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
                                             <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
                                             <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
-                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option> -->
                                             <option value="PR">PAROLE SUPERVISION</option>
                                             <option value="PD">PARDON SUPERVISION</option>
                                             <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
@@ -120,7 +120,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type select2">
@@ -129,7 +129,7 @@
                                             <option value="parolee">Pardonee</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
                                     <div class="col-12 col-md-9">
@@ -280,7 +280,7 @@
                         "docketSeries"              : $(".docket_series").val(),
                         "caseloadType"              : $(".task").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
-                        "clientType"                : $(".client_type").val(),
+                        "clientType"                : "PARDONEE",
                         "clientId"                  : "",
                         "firstName"                 : "",
                         "middleName"                : "",

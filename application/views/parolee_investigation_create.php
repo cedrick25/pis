@@ -80,12 +80,12 @@
                                             <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
                                             <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
                                             <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="PR">PAROLE SUPERVISION</option>
+<!--                                             <option value="PR">PAROLE SUPERVISION</option>
                                             <option value="PD">PARDON SUPERVISION</option>
                                             <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
                                             <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
                                             <option value="CPR">COURTESY PAROLE SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
+                                            <option value="CPD">COURTESY PARDON SUPERVISION</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type select2">
@@ -161,7 +161,7 @@
                                             <option value="parolee">Pardonee</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
@@ -351,58 +351,58 @@
         $(".btn-confirm").unbind("click").on("click", function(){
                 
             var payload = {
-                "type": "SC_PR_INV",
-                "docketNumber": "",
-                "docketSeries":$(".docket_series").val(),
-                "caseloadType":$(".caseload").val(),
-                "fieldOfficeId": $.cookie('field_office_id'),
-                "clientType": $(".client_type").val(),
-                "firstName": "",
-                "middleName": "",
-                "lastName": "",
-                "suffixName": "",
-                "fullName": "",
-                "pleaBargain": true,
-                "caseClassification": "",
-                "criminalCaseNumber": $(".cc_no").val(),
-                "offense": $(".offense").val(),
-                "courtOfOrigin": "",
-                "courtOrderDate": "",
-                "investigatingOfficer":$(".inv_off").val(),
-                "receivedDateByPPO": "",
-                "sentence": "",
-                "manualDocket": true,
-                "referral": true,
-                "referralData": "",
-                "remarks": "",
-                "reportType": "",
-                "probationStartDate": "",
-                "probationYear": "",
-                "probationMonth": "",
-                "probationDay": "",
-                "prisonName": $(".prison_name").val(),
+                "type"                         : "SC_PR_INV",
+                "docketNumber"                 : "",
+                "docketSeries"                 :$(".docket_series").val(),
+                "caseloadType"                 :$(".caseload").val(),
+                "fieldOfficeId"                : $.cookie('field_office_id'),
+                "clientType"                   :"PAROLEE",
+                "firstName"                    : "",
+                "middleName"                   : "",
+                "lastName"                     : "",
+                "suffixName"                   : "",
+                "fullName"                     : "",
+                "pleaBargain"                  : true,
+                "caseClassification"           : "",
+                "criminalCaseNumber"           : $(".cc_no").val(),
+                "offense"                      : $(".offense").val(),
+                "courtOfOrigin"                : "",
+                "courtOrderDate"               : "",
+                "investigatingOfficer"         :$(".inv_off").val(),
+                "receivedDateByPPO"            : "",
+                "sentence"                     : "",
+                "manualDocket"                 : true,
+                "referral"                     : true,
+                "referralData"                 : "",
+                "remarks"                      : "",
+                "reportType"                   : "",
+                "probationStartDate"           : "",
+                "probationYear"                : "",
+                "probationMonth"               : "",
+                "probationDay"                 : "",
+                "prisonName"                   : $(".prison_name").val(),
                 "investigationReportSubmittedDate":$(".date_peci").val(),
-                "ppoRecommendation": "",
-                "recommendationState": $(".recommentation").val(),
-                "dateOfTransfer": $(".date_transferred").val(),
-                "transferredOfficeId": $(".office_transfered").val(),
+                "ppoRecommendation"            : "",
+                "recommendationState"          : $(".recommentation").val(),
+                "dateOfTransfer"               : $(".date_transferred").val(),
+                "transferredOfficeId"          : $(".office_transfered").val(),
                 "dateOrderReceivedFromTheBoard": "",
-                "boardOrder": $(".board_order").val(),
-                "boardOrderStatus": $(".board_status").val(),
-                "referrringOfficeId": "",
-                "dateCICAR": "",
-                "supervisingOfficer": "",
-                "probationEndDate": "",
-                "referralType": "",
+                "boardOrder"                   : $(".board_order").val(),
+                "boardOrderStatus"             : $(".board_status").val(),
+                "referrringOfficeId"           : "",
+                "dateCICAR"                    : "",
+                "supervisingOfficer"           : "",
+                "probationEndDate"             : "",
+                "referralType"                 : "",
                 "dateReportSubmittedToTheBoard": "",
                 "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                "resolutionType": "",
-                "dateResolutionFromTheBoard": "",
+                "resolutionType"               : "",
+                "dateResolutionFromTheBoard"   : "",
                 "dateResolutionFromTheRDForTransfer": "",
-                "createdBy": "",
-                "updatedBy": "",
-                "legalAge": true,
-                "militaryCourt": true
+                "createdBy"                    : "",
+                "updatedBy"                    : "",
+                "legalAge"                     : true,
+                "militaryCourt"                : true
 }
 
             console.log(payload)

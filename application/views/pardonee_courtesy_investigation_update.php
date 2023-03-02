@@ -118,7 +118,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
                                 </div> -->
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control ref_office_update select2">
@@ -127,7 +127,7 @@
                                             <option value="pardonee">Pardonee</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control inv_off_update"></div>
@@ -321,7 +321,7 @@
                         "docketSeries"              : $(".docket_series_update").val(),
                         "caseloadType"              : $(".task_update").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
-                        "clientType"                : $(".client_type_update").val(),
+                        "clientType"                : "PARDONEE",
                         "clientId"                  : "",
                         "firstName"                 : "",
                         "middleName"                : "",

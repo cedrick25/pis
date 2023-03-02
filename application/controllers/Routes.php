@@ -289,6 +289,22 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('client_update');
 	}
+	public function client_view_upload()
+	{
+		$this->load->view('client_view_upload');
+	}
+	public function client_uploads()
+	{
+		$this->load->view('client_uploads');
+	}
+	public function client_file_upload()
+	{
+		$this->load->view('client_file_upload');
+	}
+	public function client_file_view()
+	{
+		$this->load->view('client_file_view');
+	}
 	public function docket_routing_parolee()
 	{
 		$this->load->view('docket_routing_parolee');
@@ -321,6 +337,5 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('form_upload');
 	}
-
 
 }

@@ -377,13 +377,14 @@
                             var fo = result.name;
                         __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
                             var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            var field = result.departmentId;
                             let actions;
                             switch (data.approvalStatus) {
                             case "COMPLETED":
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_inv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_inv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_inv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_inv type='submit' data-toggle='modal' data-target='#completeModal_inv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_inv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_inv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_inv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_inv type='submit' data-toggle='modal' data-target='#completeModal_inv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_inv').append("<tr>"+
@@ -465,7 +466,8 @@
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
                         var type = $(this).data("type");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type;
+                        var fi = $(this).data("fi");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
                     }, 500);
                 }
@@ -487,13 +489,14 @@
                             var fo = result.name;
                         __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
                             var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            var field = result.departmentId;
                             let actions;
                             switch (data.approvalStatus) {
                             case "COMPLETED":
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_cinv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_cinv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_cinv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_cinv type='submit' data-toggle='modal' data-target='#completeModal_cinv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_cinv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_cinv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_cinv type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_cinv type='submit' data-toggle='modal' data-target='#completeModal_cinv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_cinv').append("<tr>"+
@@ -574,7 +577,8 @@
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
                         var type = $(this).data("type");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type;
+                        var fi = $(this).data("fi");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
                     }, 500);
                 }
@@ -596,13 +600,14 @@
                             var fo = result.name;
                         __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
                             var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            var field = result.departmentId;
                             let actions;
                             switch (data.approvalStatus) {
                             case "COMPLETED":
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_sup type='submit' data-toggle='modal' data-target='#completeModal_sup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_sup type='submit' data-toggle='modal' data-target='#completeModal_sup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_sup').append("<tr>"+
@@ -683,7 +688,8 @@
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
                         var type = $(this).data("type");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type;
+                        var fi = $(this).data("fi");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
                     }, 500);
                 }
@@ -705,13 +711,14 @@
                             var fo = result.name;
                         __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
                             var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            var field = result.departmentId
                             let actions;
                             switch (data.approvalStatus) {
                             case "COMPLETED":
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_csup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_csup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_csup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_csup type='submit' data-toggle='modal' data-target='#completeModal_csup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_csup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_csup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_csup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_csup type='submit' data-toggle='modal' data-target='#completeModal_csup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_csup').append("<tr>"+
@@ -792,7 +799,8 @@
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
                         var type = $(this).data("type");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type;
+                        var fi = $(this).data("fi");
+                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
                     }, 500);
                 }
