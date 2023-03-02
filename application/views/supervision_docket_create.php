@@ -247,7 +247,7 @@
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                                 <div class="col-12 col-md-9">
-                                                    <select class="form-control caseload_false select2" disabled>
+                                                    <select class="form-control caseload_false select2">
                                                         <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
                                                         <option value="PROBATION_INV_CSI">Community Service Investigation</option>
                                                         <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
@@ -916,7 +916,7 @@
 
             var payload_false = {
                   "type": "PIS_SUP",
-                  "docketNumber": $(".docket_num").val(),
+                  "docketNumber": "",
                   "docketSeries": "NONE",
                   "caseloadType": $(".caseload_false").val(),
                   "fieldOfficeId": $(".field_office_false").val(),
