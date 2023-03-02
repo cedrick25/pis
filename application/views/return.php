@@ -66,7 +66,7 @@
                             </div>
                             <div class="card-footer">
 			                    <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-			                    <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
+			                    <button type="button" class="btn btn-primary btn-confirm_return btn-sm">Confirm</button>
 			                </div>
                         </div>
                     </div>
@@ -209,12 +209,12 @@
                             $(".return_to").html(senderId);
                             $(".details").html(result.details);
 
-                            $(".btn-confirm_update").unbind("click").on("click", function(){
+                            $(".btn-confirm_return").unbind("click").on("click", function(){
                             console.log('clicked')
 
                             var payload = {
                                 "type"                  : result.type,
-                                "caseload_type"         : $(".caseload_type").html(),
+                                "caseloadType"          : result.caseloadType,
                                 "senderId"              : $.cookie("uuid"),
                                 "receiverId"            : result.senderId,
                                 "fieldOfficeId"         : result.fieldOfficeId,

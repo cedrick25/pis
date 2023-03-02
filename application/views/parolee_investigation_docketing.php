@@ -216,11 +216,11 @@
 
                     $(".btn_remove").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
+                        var office_id = $(this).data("oi");
                         $(".docket").html(docket_number)
-                        console.log("clicked")
                         $(".btn_remove_confirm").unbind("click").on("click", function(){
-                        console.log("clicked")
-                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+$.cookie("field_office_id")).done(function (result) {
+
+                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
                                 if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#success_remove').show();

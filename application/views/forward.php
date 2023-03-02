@@ -68,7 +68,7 @@
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -194,6 +194,8 @@
 
         var docket_number = GetURLParameter('docket_number');
         var id = GetURLParameter('id');
+
+        console.log(id)
         var __fields = function(){
 
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
@@ -228,9 +230,10 @@
                     console.log("failed fetching department list")
                 }
             })
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
+            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 // console.log(result);
                 var result = result.response;
+
                 if (result.status != "ERROR") {
 
                     __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
@@ -239,17 +242,17 @@
                         var result = result.response;
                         if (result.status != "ERROR") {
                             $(".docket_number").html(result.docketNumber);
-                            $(".type").html(result.caseloadType);
+                            $(".type").html(result.type);
                             $(".field_office").html(result.fieldOfficeId);
                             $(".return_to").html(result.senderId);
                             // $(".details").val(result.details);
                             
-                            $(".btn-confirm_update").unbind("click").on("click", function(){
+                            $(".btn-confirm_forward").unbind("click").on("click", function(){
                             console.log('clicked')
                             
                             var payload = {
                                 "type"                  : result.type,
-                                "caseload_type"         : result.caseloadType,
+                                "caseloadType"          : result.caseloadType,
                                 "senderId"              : $.cookie("uuid"),
                                 "receiverId"            : $(".user_account").val(),
                                 "fieldOfficeId"         : $(".field_office").val(),

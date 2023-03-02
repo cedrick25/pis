@@ -61,7 +61,7 @@
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select name="select" id="" class="form-control caseload select2">
+                                        <select class="form-control caseload select2" disabled>
                                             <option value="" selected disabled> - - Select Type - - </option>
                                             <option value="SINGLE_CARPETA_PAPWA">Process Application for Permit to Work Abroad</option>
                                             <option value="SINGLE_CARPETA_PAR">Process Arrival Report</option>
@@ -107,13 +107,13 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control field_office select2">
-                                            <option value="" selected disabled> - - Select Type - - </option>
+                                            <option value="" selected disabled> - - Select Office - - </option>
                                             <option>Central Office</option>
                                             <option>San Juan</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-12 user_display" style="display: none;">
+                                <div class="row form-group col-md-12 user_display">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Account</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control user_account select2">
@@ -142,7 +142,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -241,7 +241,7 @@
                 $('.docket_num').empty();
                 const type = this.value
                 console.log(type)
-                __executeExternalGet('http://localhost:8000/docketbook/list/'+type).done(function (result) {
+                __executeExternalGet('http://localhost:8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
                     console.log(result)
                     if (result.status != "ERROR") {
 
@@ -258,6 +258,32 @@
                 });
             });
 
+            $('.docket_num').on('change', function() {
+                const docket_number = this.value
+                console.log(docket_number)
+                __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+                    console.log(result)
+                    var result = result.response;
+                    if (result.status != "ERROR") {
+                        // console.log(result.caseloadType)
+
+                        setTimeout(function () {
+                        $(".caseload").val(result.caseloadType).trigger("change");
+                        }, 500);
+
+                        // setTimeout(function () {
+                        // $(".field_office").val(result.fieldOfficeId).trigger("change");
+                        // }, 500);
+
+                    } else {
+                        console.log("failed fetching docket number")
+                    }
+
+
+                });
+            });
+
+                    
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
@@ -270,7 +296,7 @@
                         $('.user_account').empty();
                         const dep_id = this.value
                         __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
-                            // console.log(result)
+                            console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
                                 $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
@@ -291,12 +317,13 @@
                 }
             })
 
+
             $(".btn-confirm_forward").unbind("click").on("click", function(){
                 console.log('clicked')
 
                 var payload = {
                     "type"                  : $('.type').val(),
-                    "caseload_type"         : $(".caseload_type").val(),
+                    "caseloadType"          : $(".caseload").val(),
                     "senderId"              : $.cookie("uuid"),
                     "receiverId"            : $(".user_account").val(),
                     "fieldOfficeId"         : $(".field_office").val(),
@@ -329,7 +356,7 @@
         });
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 

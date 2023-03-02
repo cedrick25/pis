@@ -199,7 +199,7 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateLocModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>";
+                        let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+

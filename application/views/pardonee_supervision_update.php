@@ -41,7 +41,27 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num_update" disabled></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control docket_series_update select2" disabled>
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="PPI">PRE-PAROLE INVESTIGATION</option>
+                                            <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
+                                            <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
+                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <option value="PR">PAROLE SUPERVISION</option>
+                                            <option value="PD">PARDON SUPERVISION</option>
+                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
+                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
+                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
+                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral Type</label></div>
@@ -62,26 +82,6 @@
                                             <option value="infraction">Infraction</option>
                                             <option value="death">Death</option>
                                             <option value="others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control docket_series_update select2">
-                                            <option selected value="none" disabled>Select</option>
-                                            <option value="PPI">PRE-PAROLE INVESTIGATION</option>
-                                            <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
-                                            <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
-                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="PR">PAROLE SUPERVISION</option>
-                                            <option value="PD">PARDON SUPERVISION</option>
-                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
-                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
-                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
                                         </select>
                                     </div>
                                 </div>
@@ -452,7 +452,7 @@
                             $('#success_update').show();
                                 setTimeout(function () {
                                     $('#success_update').hide();
-                                    window.location.href = 'http://localhost/pis/parolee_supervision_docketing';
+                                    window.location.href = 'http://localhost/pis/pardonee_supervision_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")

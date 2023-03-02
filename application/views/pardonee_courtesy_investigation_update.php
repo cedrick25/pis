@@ -383,7 +383,7 @@
                             $('#success_update').show();
                                 setTimeout(function () {
                                     $('#success_update').hide();
-                                    window.location.href = 'http://localhost/pis/parolee_courtesy_investigation_docketing';
+                                    window.location.href = 'http://localhost/pis/pardonee_courtesy_investigation_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")

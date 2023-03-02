@@ -44,7 +44,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="parolee_courtesy_supervision_docketing">Parolee</a></li>
+                            <li><a href="parolee_courtesy_investigation_docketing">Parolee</a></li>
                             <li class="active">Courtesy Investigation Docket list</li>
                         </ol>
                     </div>
@@ -216,10 +216,11 @@
 
                     $(".btn_remove").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
+                        var office_id = $(this).data("oi");
                         $(".docket").html(docket_number)
                         $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
                                 if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#success_remove').show();

@@ -316,6 +316,7 @@
                     $(".start_sup_date_update").val(result.supervisionStartDate);
                     $(".end_sup_date_update").val(result.supervisionEndDate);
                     $(".date_cic_update").val(result.dateCICAR);
+                    $(".date_court_ref_update").val(result.dateCICAR);
 
 
 
@@ -337,7 +338,7 @@
                         "suffixName"                : "",
                         "fullName"                  : "",
                         "pleaBargain"               : true,
-                        "caseClassification"        : "",
+                        "caseClassification"        : $(".case_class_update").val(),
                         "criminalCaseNumber"        : "",
                         "offense"                   : "",
                         "courtOfOrigin"             : "",
@@ -391,7 +392,7 @@
                             $('#success_update').show();
                                 setTimeout(function () {
                                     $('#success_update').hide();
-                                    window.location.href = 'http://localhost/pis/parolee_courtesy_supervision_docketing';
+                                    window.location.href = 'http://localhost/pis/pardonee_courtesy_supervision_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")

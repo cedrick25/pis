@@ -44,6 +44,18 @@
                                     <div class="col-12 col-md-6"><input type="text" name="kind" class="form-control file_name"  placeholder="e.g Permit to Work Abroad"/></div>
                                 </div>
                                 <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <input type="text" name="type" class="form-control type"  placeholder="e.g PDF"/>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Uploader</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <input type="text" name="type" class="form-control uploader"  placeholder="e.g John Doe"/>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Kind</label></div>
                                     <div class="col-12 col-md-6">
                                         <input type="text" name="kind" class="form-control kind"  placeholder="e.g Kind"/>
@@ -211,51 +223,53 @@
                     $(".btn-confirm").unbind("click").on("click", function(){
                         console.log($.cookie('uuid'));
                         console.log("clicked")
-                        // var fileToUpload = $('#fileupload').prop('files')[0];
+                        var fileToUpload = $('#fileupload').prop('files')[0];
 
-                        // if (fileToUpload === undefined) {
-                        //     alert("Please Choose File Before Upload!")
-                        // }else {
-                        //     var form = new FormData();
-                        //     form.append("file", fileToUpload, fileToUpload.name);
+                        if (fileToUpload === undefined) {
+                            alert("Please Choose File Before Upload!")
+                        }
 
-                        //     var settings = {
-                        //         "url": "http://localhost:8080/file/upload?uuid="+$.cookie('uuid')+"&type="+$('.type').val()+"&createdby="+result.username+"&version=0&kind="+$('.kind').val(),
-                        //         "method": "POST",
-                        //         "timeout": 0,
-                        //         "processData": false,
-                        //         "mimeType": "multipart/form-data",
-                        //         "contentType": false,
-                        //         "data": form
-                        //     };
+                        else {
+                            var form = new FormData();
+                            form.append("file", fileToUpload, fileToUpload.name);
 
-                        //     $.ajax(settings).done(function (response) {
-                        //         console.log(response);
-                        //         if (response) {
-                        //             $('#success_upload').show();
-                        //             setTimeout(function () {
-                        //                 $('#success_upload').hide();
-                        //                 window.location.reload(true);
-                        //             }, 2000);
-                        //         } else {
+                            var settings = {
+                                "url": "http://localhost:8080/file/upload?uuid="+$.cookie('uuid')+"&type="+$('.type').val()+"&createdby="+$('.uploader').val()+"&version=0&kind="+$('.kind').val(),
+                                "method": "POST",
+                                "timeout": 0,
+                                "processData": false,
+                                "mimeType": "multipart/form-data",
+                                "contentType": false,
+                                "data": form
+                            };
 
-                        //         }
-                        //     });
+                            $.ajax(settings).done(function (response) {
+                                console.log(response);
+                                if (response) {
+                                    $('#success_upload').show();
+                                    setTimeout(function () {
+                                        $('#success_upload').hide();
+                                        window.location.reload(true);
+                                    }, 2000);
+                                } else {
+
+                                }
+                            });
 
 
-                        //     var formdata = new FormData();
-                        //     formdata.append("file", fileToUpload, fileToUpload.name);
-                        //     console.log(formdata)
-                        //     __executeFile("http://localhost:8080/file/upload?uuid="+$.cookie('uuid')+"&type="+$('.type').val()+"&version=0&kind="+$('.kind').val(),formdata).done(function (result) {
-                        //         console.log(result)
-                        //         if(result){
-                        //             // list_upload();
+                            var formdata = new FormData();
+                            formdata.append("file", fileToUpload, fileToUpload.name);
+                            console.log(formdata)
+                            __executeFile("http://localhost:8080/file/upload?uuid="+$.cookie('uuid')+"&type="+$('.type').val()+"&createdby="+$('.uploader').val()+"&version=0&kind="+$('.kind').val(),formdata).done(function (result) {
+                                console.log(result)
+                                if(result){
+                                    // list_upload();
 
-                        //         }else{
-                        //             // alert ("upload Failed");
-                        //         }
-                        //     });
-                        // }
+                                }else{
+                                    // alert ("upload Failed");
+                                }
+                            });
+                        }
                     })
     } )( jQuery );
     </script>

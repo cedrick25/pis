@@ -135,9 +135,9 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control case_class select2">
                                             <option selected value="select" disabled>Select</option>
-                                            <option selected value="high">High</option>
-                                            <option selected value="medium">Medium</option>
-                                            <option selected value="low">Low</option>
+                                            <option value="high">High</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="low">Low</option>
                                         </select>
                                     </div>
                                 </div>

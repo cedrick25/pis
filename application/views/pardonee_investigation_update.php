@@ -41,12 +41,12 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num_update" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control docket_series_update select2">
+                                        <select class="form-control docket_series_update select2" disabled>
                                             <option selected value="none" disabled>Select</option>
                                             <option value="PPI">PRE-PAROLE INVESTIGATION</option>
                                             <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
@@ -153,7 +153,11 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transfered</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office_update"></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control ref_office_update select2">
+                                            <option selected value="none" disabled>Select</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
@@ -206,7 +210,7 @@
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -441,7 +445,7 @@
                             $('#success_update').show();
                                 setTimeout(function () {
                                     $('#success_update').hide();
-                                    window.location.href = 'http://localhost/pis/parolee_investigation_docketing';
+                                    window.location.href = 'http://localhost/pis/pardonee_investigation_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")
@@ -476,6 +480,28 @@
         setTimeout(function () {
             __fields();
         }, 500);
+
+        var __client = function(){
+                $('.client_update').empty();
+
+
+                __executeExternalGet('http://localhost:8000/petitioner?page=0&size=100').done(function (result) {
+                    
+                    if (result.status != "ERROR") {
+                    console.log(result)
+                        $('.client_update').append("<option selected disabled> - - Select Client - - </option>");
+                        result.content.forEach(function(data){
+                            $('.client_update').append(
+                                "<option value="+data.id+">"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</option>");
+                        });
+
+                    } else {
+                        console.log("failed fetching docket list")
+                    }
+                })
+            }
+            __client();
+
     } )( jQuery );
     </script>
 

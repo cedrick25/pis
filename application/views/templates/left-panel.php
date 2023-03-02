@@ -12,7 +12,7 @@
         </div>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" id="mm">
                 <li class="aa">
                     <a href="dashboard"> <i class="menu-icon fa fa-dashboard" aria-hidden="true"></i>Dashboard </a>
                 </li>
@@ -125,3 +125,17 @@
         </div><!-- /.navbar-collapse -->
     </nav>
 </aside>
+
+<script>
+        var header = document.getElementById("mm");
+        var btns = header.getElementsByClassName("aa");
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function() {
+          var current = document.getElementsByClassName("active");
+          if (current.length > 0) { 
+            current[0].className = current[0].className.replace(" active", "");
+          }
+          this.className += " active";
+          });
+        }
+    </script>

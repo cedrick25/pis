@@ -57,7 +57,7 @@
                                             <h3>Investigation</h3>
                                         </div><br><br>
                                         <div class="col col-md-12">
-                                            <table class="table table_head">
+                                            <table class="table table_head_inv">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -66,17 +66,10 @@
                                                         <th>Details</th>
                                                         <th>Receiver</th>
                                                         <th>Status</th>
-                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_inv">
-                                                    <th>1</th>
-                                                    <th>JPECI-2023-02-00001</th>
-                                                    <th>Central Office</th>
-                                                    <th>Test</th>
-                                                    <th>John Doe</th>
-                                                    <th>Active</th>
-                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -95,17 +88,10 @@
                                                         <th>Details</th>
                                                         <th>Receiver</th>
                                                         <th>Status</th>
-                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_sup">
-                                                    <th>1</th>
-                                                    <th>JPECI-2023-02-00001</th>
-                                                    <th>Central Office</th>
-                                                    <th>Test</th>
-                                                    <th>John Doe</th>
-                                                    <th>Active</th>
-                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -124,17 +110,10 @@
                                                         <th>Details</th>
                                                         <th>Receiver</th>
                                                         <th>Status</th>
-                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_cinv">
-                                                    <th>1</th>
-                                                    <th>JPECI-2023-02-00001</th>
-                                                    <th>Central Office</th>
-                                                    <th>Test</th>
-                                                    <th>John Doe</th>
-                                                    <th>Active</th>
-                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -153,17 +132,10 @@
                                                         <th>Details</th>
                                                         <th>Receiver</th>
                                                         <th>Status</th>
-                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_csup">
-                                                    <th>1</th>
-                                                    <th>JPECI-2023-02-00001</th>
-                                                    <th>Central Office</th>
-                                                    <th>Test</th>
-                                                    <th>John Doe</th>
-                                                    <th>Active</th>
-                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -183,7 +155,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -285,7 +257,7 @@
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
                     $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
-                        console.log(data)
+                        // console.log(data)
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                         $('.field_office_update').append(
@@ -298,12 +270,54 @@
             })
         }
         __select();
+        var __table_SC_PR_INV = function(){
+            $('.table_head_inv').DataTable().destroy();
+            $('.table_body_inv').empty();
 
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
+            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PR_INV').done(function (result) {
+                console.log("=====this is=====")
+                console.log(result)
+                console.log("==========")
+                if (result.status != "ERROR") {
+                    result.content.forEach(function(data){
+                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            var fo = result.name;
+                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
+                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            $('.table_body_inv').append("<tr>"+
+                                "<td>"+data.id+"</td>"+
+                                "<td>"+data.docketNumber+"</td>"+
+                                "<td>"+fo+"</td>"+
+                                "<td>"+data.details+"</td>"+
+                                "<td>"+receiver+"</td>"+
+                                "<td>"+data.status+"</td>")
+                        })
+                        })
+                    })
+                    setTimeout(function () {
+                        $(document).ready(function () {
+                            $('.table_head_inv tbody tr').each(function (idx) {
+                               $(this).children("td:eq(0)").html(idx + 1);
+                            });
+                            var table = $('.table_head_inv').DataTable({
+                                order: [[0, 'asc']],
+                                // "columnDefs": [
+                                //     { "width": "30%", "targets": 6 }
+                                // ]
+                            });
+                            $('.dataTables_length').addClass('bs-select');
+                        }); 
+                    }, 400);
+                }
+            })
+        }
+        __table_SC_PR_INV();
 
-            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=INV').done(function (result) {
+        var __table_SC_PR_CINV = function(){
+            $('.table_head_cinv').DataTable().destroy();
+            $('.table_body_cinv').empty();
+
+            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PR_CINV').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -313,23 +327,22 @@
                             var fo = result.name;
                         __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
                             var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            $('.table_body').append("<tr>"+
+                            $('.table_body_cinv').append("<tr>"+
                                 "<td>"+data.id+"</td>"+
                                 "<td>"+data.docketNumber+"</td>"+
                                 "<td>"+fo+"</td>"+
                                 "<td>"+data.details+"</td>"+
                                 "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
+                                "<td>"+data.status+"</td>")
                         })
                         })
                     });
                     setTimeout(function () {
                         $(document).ready(function () {
-                            $('.table_head tbody tr').each(function (idx) {
+                            $('.table_head_cinv tbody tr').each(function (idx) {
                                $(this).children("td:eq(0)").html(idx + 1);
                             });
-                            var table = $('.table_head').DataTable({
+                            var table = $('.table_head_cinv').DataTable({
                                 order: [[0, 'asc']],
                                 "columnDefs": [
                                     // { "width": "30%", "targets": 6 }
@@ -337,22 +350,61 @@
                             });
                             $('.dataTables_length').addClass('bs-select');
                         });
-                        $(".btn_view").unbind("click").on("click", function(){
-                            var id = $(this).data("id");
-                            var docket_number = $(this).data("docket");
-                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
-                        })
                     }, 400);
                 }
             })
         } 
-        __table();
+        __table_SC_PR_CINV();
 
-        var __table_sup = function(){
+        var __table_SC_PR_CSUP = function(){
+            $('.table_head_csup').DataTable().destroy();
+            $('.table_body_csup').empty();
+
+            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PR_CSUP').done(function (result) {
+                // console.log("==========")
+                // console.log(result)
+                // console.log("==========")
+                if (result.status != "ERROR") {
+                    result.content.forEach(function(data){
+                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            var fo = result.name;
+                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
+                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            $('.table_body_csup').append("<tr>"+
+                                "<td>"+data.id+"</td>"+
+                                "<td>"+data.docketNumber+"</td>"+
+                                "<td>"+fo+"</td>"+
+                                "<td>"+data.details+"</td>"+
+                                "<td>"+receiver+"</td>"+
+                                "<td>"+data.status+"</td>")
+                        })
+                        })
+                    })
+                    setTimeout(function () {
+                        $(document).ready(function () {
+                            $('.table_head_csup tbody tr').each(function (idx) {
+                               $(this).children("td:eq(0)").html(idx + 1);
+                            });
+                            var table = $('.table_head_csup').DataTable({
+                                order: [[0, 'asc']],
+                                // "columnDefs": [
+                                //     { "width": "30%", "targets": 6 }
+                                // ]
+                            });
+                            $('.dataTables_length').addClass('bs-select');
+                        }); 
+
+                    }, 400);
+                }
+            })
+        }
+        __table_SC_PR_CSUP();
+
+        var __table_SC_PR_SUP = function(){
             $('.table_head_sup').DataTable().destroy();
             $('.table_body_sup').empty();
 
-            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SUP').done(function (result) {
+            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PR_SUP').done(function (result) {
                 // console.log("==========")
                 // console.log(result)
                 // console.log("==========")
@@ -368,8 +420,7 @@
                                 "<td>"+fo+"</td>"+
                                 "<td>"+data.details+"</td>"+
                                 "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view_sup type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
+                                "<td>"+data.status+"</td>")
                         })
                         })
                     })
@@ -386,67 +437,13 @@
                             });
                             $('.dataTables_length').addClass('bs-select');
                         }); 
-                        $(".btn_view_sup").unbind("click").on("click", function(){
-                            var id = $(this).data("id");
-                            var docket_number = $(this).data("docket");
-                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
-                        })
                     }, 400);
                 }
             })
         }
-        __table_sup();
-
-        var __table_sc = function(){
-            $('.table_head_sc').DataTable().destroy();
-            $('.table_body_sc').empty();
-
-            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
-                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            $('.table_body_sc').append("<tr>"+
-                                "<td>"+data.id+"</td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_view_sc type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button>")
-                        })
-                        })
-                    })
-                    setTimeout(function () {
-                        $(document).ready(function () {
-                            $('.table_head_sc tbody tr').each(function (idx) {
-                               $(this).children("td:eq(0)").html(idx + 1);
-                            });
-                            var table = $('.table_head_sc').DataTable({
-                                order: [[0, 'asc']],
-                                // "columnDefs": [
-                                //     { "width": "30%", "targets": 6 }
-                                // ]
-                            });
-                            $('.dataTables_length').addClass('bs-select');
-                        }); 
-                        $(".btn_view_sc").unbind("click").on("click", function(){
-                            var id = $(this).data("id");
-                            var docket_number = $(this).data("docket");
-                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
-                        })
-                    }, 400);
-                }
-            })
-        }
-        __table_sc();
+        __table_SC_PR_SUP();
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 

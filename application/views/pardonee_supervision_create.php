@@ -417,6 +417,27 @@
             })
         })
 
+            var __client = function(){
+                $('.client').empty();
+
+
+                __executeExternalGet('http://localhost:8000/petitioner?page=0&size=100').done(function (result) {
+                    
+                    if (result.status != "ERROR") {
+                    console.log(result)
+                        $('.client').append("<option selected disabled> - - Select Client - - </option>");
+                        result.content.forEach(function(data){
+                            $('.client').append(
+                                "<option value="+data.id+">"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</option>");
+                        });
+
+                    } else {
+                        console.log("failed fetching docket list")
+                    }
+                })
+            }
+            __client();
+
     } )( jQuery );
     </script>
 </body>
