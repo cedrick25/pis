@@ -75,7 +75,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table_body">
+                                    <tbody class="table_body" align="center">
                                     </tbody>
                                 </table>
                             </div>
@@ -210,7 +210,7 @@
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "40%", "targets": 6 }
+                                { "width": "30%", "targets": 6 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');

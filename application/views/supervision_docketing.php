@@ -63,7 +63,7 @@
                                 <a href="supervision_docket_create"><button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button></a>
                             </div>
                             <div class="card-body">
-                                <table id="" class="table table_head">
+                                <table id="" class="table table_head" align="center">
                                     <thead>
                                         <tr align="center">
                                             <th>#</th>
@@ -75,7 +75,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table_body">
+                                    <tbody class="table_body" align="center">
                                         <tr>
                                             <td>1</td>
                                             <td>PIS-00000-0001</td>
@@ -219,9 +219,9 @@
                         });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "20%", "targets": 6 }
-                            ]
+                            // "columnDefs": [
+                            //     { "width": "20%", "targets": 6 }
+                            // ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });

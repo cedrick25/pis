@@ -74,7 +74,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table_body">
+                                    <tbody class="table_body" align="center">
                                     </tbody>
                                 </table>
                             </div>
