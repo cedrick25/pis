@@ -7,7 +7,7 @@
             </button>
             <!-- <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a> -->
             <!-- <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a> -->
-            <a class="navbar-brand" href="dashboard">PIS</a>
+            <a class="navbar-brand" href="dashboard">PPIS</a>
             <a class="navbar-brand hidden" href="dashboard">P</a>
         </div>
 

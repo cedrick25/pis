@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Client List</strong>
-                                <a href="new_client"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
+                                <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
@@ -199,7 +199,7 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-success btn_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
+                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
@@ -215,7 +215,7 @@
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "20%", "targets": 5 }
+                                { "width": "40%", "targets": 5 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');

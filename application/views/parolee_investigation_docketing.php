@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Parolee Investigation Docket List</strong>
-                                <a href="parolee_investigation_create"> <button class="btn btn-sm btn-success float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <a href="parolee_investigation_create"> <button class="btn btn-sm btn-success float-right pr_inv_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
@@ -199,7 +199,7 @@
                             "<td>"+data.docketSeries+"</td>"+
                             "<td>"+data.clientType+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update pr_inv_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pr_inv_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {

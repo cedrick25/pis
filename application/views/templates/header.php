@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Probation Information System</title>
+    <title>Probation and Parole Information System</title>
     <meta name="description" content="Brgy Culong">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
