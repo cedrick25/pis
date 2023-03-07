@@ -83,10 +83,6 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_grant" style="display:none">
-                    <i class="fa fa-check"></i>
-                        Granted!  
-                </div>
                 <div class="modal-body col-md-12">
                     <div class="col col-md-12 row">
                         <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">Permissions:</label></div>
@@ -95,9 +91,43 @@
                     <div class="col col-md-12 row permission_list">
                     </div>
                 </div>
+                <div class="alert alert-success" role="alert" id="success_grant" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Granted!  
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn_grant_confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- grant modal -->
+    <!-- update permission modal -->
+    <div class="modal fade" id="updatePermissionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Update Permission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body col-md-12">
+                    <div class="col col-md-12 row">
+                        <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">Permissions:</label></div>
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" style="display:block">Grant</label></div>
+                    </div>
+                    <div class="col col-md-12 row permission_list_update">
+                    </div>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_grant_update" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Permission Updated!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_grant_confirm_update btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -298,7 +328,7 @@
                             "<td>"+data.name+"</td>"+  
                             "<td>"+data.description+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateRoleModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-success btn_grant' type='submit' data-toggle='modal' data-target='#grantPermissionModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Grant</button>");
+                            "<td align='center' class='actions' width='40%'> <button class='btn btn-sm btn-success btn_grant' type='submit' data-toggle='modal' data-target='#grantPermissionModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Grant Permission</button> <button class='btn btn-sm btn-primary btn_grant_update' type='submit' data-toggle='modal' data-target='#updatePermissionModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update Permission</button>");
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -336,12 +366,9 @@
                                     $(".form-control").val('');
                                     $('#success_update').show();
                                         setTimeout(function () {
-                                        $('#updateRoleModal').modal('hide');
-                                        $('success_update').hide();
-                                            __table();
-                                        }, 1000);
-                
-                                        __table();
+                                            $('#success_update').hide();
+                                            window.location.reload(true);
+                                        }, 2000);
                                     }else{
                                         alert("failed")
                                     }
@@ -357,29 +384,19 @@
                     console.log("clicked button grant")
                     var data_id = $(this).data("id");
                     console.log(data_id)
-
                     __executeExternalGet('http://localhost:8088/permission/list').done(function (result) {
                         // console.log(result);
 
                         $('.permission_list').empty();
                         if (result.status != "ERROR") {
                             result.forEach(function(data){
-                                let value;
-                                switch (data.value) {
-                                case true:
-                                    value = "checked";
-                                    break;
-                                default:
-                                    value = "";
-                                    break;
-                                }
 
                                 $('.permission_list').append(`
                                     <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">${data.name}</label></div>
                                     <div class="col col-md-2">
                                         <div class="form-check form-check-inline">
                                         <label class="switch">
-                                            <input type="checkbox" name="type" class="form-check-input primary" ${value} value="${data.id}">
+                                            <input type="checkbox" name="type" class="form-check-input primary" data-name="${data.name}" value="${data.id}">
                                             <span class="slider round"></span>
                                         </label>
                                         </div>
@@ -395,13 +412,25 @@
                         console.log('clicked btn grant confirm')
                         const sentence = [];
                         $("input:checkbox[name=type]:checked").each(function(){
-                            sentence.push($(this).val());
+                            var list = {
+                              "id": $(this).val(),
+                              "value": true,
+                            }
+                            sentence.push(list);
                         });
-                        console.log(sentence)
+                        $("input:checkbox[name=type]:not(:checked)").each(function(){
+                            var list = {
+                              "id": $(this).val(),
+                              "value": false,
+                            }
+                            sentence.push(list);
+                        });
+
                         var payload = {
-                              "roleId": data_id,
-                              "permissions": sentence
+                            "roleId": data_id,
+                            "permissionList": sentence
                         }
+                        console.log(payload)
                         __executeExternalPost('http://localhost:8088/role-permission/update',JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
@@ -409,6 +438,83 @@
                                 setTimeout(function () {
                                     $('#success_grant').hide();
                                     window.location.reload(true);
+                                }, 2000);
+                            }else{
+                            }
+                        })   
+                    })
+                })
+                $(".btn_grant_update").unbind("click").on("click", function(){
+                    console.log("clicked button grant")
+                    var data_id = $(this).data("id");
+                    console.log(data_id)
+
+                    __executeExternalGet('http://localhost:8088/role-permission/'+data_id).done(function (result_rp) {
+                        console.log(result_rp);
+
+                        $('.permission_list_update').empty();
+                        if (result_rp.status != "ERROR") {
+                            result_rp.permissionList.forEach(function(data){
+                            console.log(data);
+                            let value;
+                            switch (data.value) {
+                            case true:
+                                value = "checked";
+                                break;
+                            default:
+                                value = "";
+                                break;
+                            }
+
+                            $('.permission_list_update').append(`
+                                <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">${data.name}</label></div>
+                                <div class="col col-md-2">
+                                    <div class="form-check form-check-inline">
+                                    <label class="switch">
+                                        <input type="checkbox" name="type" class="form-check-input primary" ${value} data-name="${data.name}" value="${data.id}">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    </div>
+                                </div>`);
+                            });
+                            
+                        } else {
+                            console.log("failed fetching department list")
+                        }
+                    });
+
+                    $(".btn_grant_confirm_update").unbind("click").on("click", function(){
+                        console.log('clicked btn grant confirm')
+                        const sentence = [];
+                        $("input:checkbox[name=type]:checked").each(function(){
+                            var list = {
+                              "id": $(this).val(),
+                              "value": true,
+                              "name": $(this).data("name")
+                            }
+                            sentence.push(list);
+                        });
+                        $("input:checkbox[name=type]:not(:checked)").each(function(){
+                            var list = {
+                              "id": $(this).val(),
+                              "value": false,
+                              "name": $(this).data("name")
+                            }
+                            sentence.push(list);
+                        });
+
+                        var payload = {
+                            "roleId": data_id,
+                            "permissionList": sentence
+                        }
+                        console.log(payload)
+                        __executeExternalPost('http://localhost:8088/role-permission/update',JSON.stringify(payload)).done(function (result) {
+                            console.log(result);
+                            if (result.status != "ERROR") {
+                                $('#success_grant_update').show();
+                                setTimeout(function () {
+                                    $('#success_grant_update').hide();
+                                    // window.location.reload(true);
                                 }, 2000);
                             }else{
                             }
