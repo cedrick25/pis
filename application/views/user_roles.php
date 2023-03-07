@@ -73,57 +73,9 @@
     </div>
     <!-- new User account modal -->
 
-    <!-- deactivate modal -->
-    <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Deactivate User Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure you want to deactive this user account? 
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- deactivate modal -->
-
-    <!-- accept modal -->
-    <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="deactivate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Accept User Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure you want to accept this user account? 
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_accept_confirm">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- accept modal -->
-
     <!-- grant modal -->
     <div class="modal fade" id="grantPermissionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document" style="">
+        <div class="modal-dialog modal-lg" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Grant Permission</h5>
@@ -131,109 +83,17 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                <div class="alert alert-success" role="alert" id="success_grant" style="display:none">
                     <i class="fa fa-check"></i>
                         Granted!  
                 </div>
                 <div class="modal-body col-md-12">
-                    <form class="form-inline" style="display:flex">
-                        <div class="col col-md-3"><label for="" class=" form-control-label">Permissions: </label></div>
-                        <div class="col col-md-3"><label for="api" class=" form-control-label">API</label></div>
-                        <div class="col col-md-3"><label for="view" class=" form-control-label">VIEW</label></div>
-                        <div class="col col-md-3"><label for="action" class=" form-control-label">ACTION</label></div>
-                    </form>
-                </div>
-                <div class="modal-body col-md-12">
-                    <form class="form-inline" style="display:block">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label" style="display:block">Dashboard:</label></div>
-                        <div class="col col-md-3">
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-body col-md-12">
-                    <form class="form-inline" style="display:flex">
-                        <div class="col col-md-3"><label for="" class=" form-control-label" style="display:block" >Caseload:</label></div>
-                    </form>
-                </div>
-                <div class="modal-body col-md-12">
-                    <form class="form-inline" style="display:flex">
-                         <div class="col col-md-3"><label for="text-input" class="float-right form-control-label">Form 5:</label></div>
-                        <div class="col col-md-3">
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-body col-md-12">
-                    <form class="form-inline" style="display:flex">
-                        <div class="col col-md-3"><label for="text-input" class="float-right form-control-label">Form 21:</label></div>
-                        <div class="col col-md-3">
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="api" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="value" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col col-md-3">                            
-                            <div class="form-check form-check-inline">
-                                <label class="switch ">
-                                    <input type="checkbox" class="form-check-input primary" id="action" value="option1">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="col col-md-12 row">
+                        <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">Permissions:</label></div>
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" style="display:block">Grant</label></div>
+                    </div>
+                    <div class="col col-md-12 row permission_list">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -429,10 +289,10 @@
             $('.table_body').empty();
 
             __executeExternalGet('http://localhost:8088/role/list').done(function (result) {
-                console.log(result)
+                // console.log(result)
                 if (result.status != "ERROR") {
                     result.forEach(function(data){
-                        console.log(data)
+                        // console.log(data)
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.name+"</td>"+  
@@ -447,9 +307,6 @@
                 $(document).ready(function () {
                     var table = $('.table_head').DataTable({
                         order: [[0, 'asc']],
-                        // "columnDefs": [
-                            // { "width": "30%", "targets": 6 }
-                        // ]
                     });
                     $('.dataTables_length').addClass('bs-select');
                 });
@@ -500,8 +357,62 @@
                     console.log("clicked button grant")
                     var data_id = $(this).data("id");
                     console.log(data_id)
+
+                    __executeExternalGet('http://localhost:8088/permission/list').done(function (result) {
+                        // console.log(result);
+
+                        $('.permission_list').empty();
+                        if (result.status != "ERROR") {
+                            result.forEach(function(data){
+                                let value;
+                                switch (data.value) {
+                                case true:
+                                    value = "checked";
+                                    break;
+                                default:
+                                    value = "";
+                                    break;
+                                }
+
+                                $('.permission_list').append(`
+                                    <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">${data.name}</label></div>
+                                    <div class="col col-md-2">
+                                        <div class="form-check form-check-inline">
+                                        <label class="switch">
+                                            <input type="checkbox" name="type" class="form-check-input primary" ${value} value="${data.id}">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        </div>
+                                    </div>`);
+                            });
+                            
+                        } else {
+                            console.log("failed fetching department list")
+                        }
+                    });
+
                     $(".btn_grant_confirm").unbind("click").on("click", function(){
-                    console.log('clicked btn grant confirm')
+                        console.log('clicked btn grant confirm')
+                        const sentence = [];
+                        $("input:checkbox[name=type]:checked").each(function(){
+                            sentence.push($(this).val());
+                        });
+                        console.log(sentence)
+                        var payload = {
+                              "roleId": data_id,
+                              "permissions": sentence
+                        }
+                        __executeExternalPost('http://localhost:8088/role-permission/update',JSON.stringify(payload)).done(function (result) {
+                            console.log(result);
+                            if (result.status != "ERROR") {
+                                $('#success_grant').show();
+                                setTimeout(function () {
+                                    $('#success_grant').hide();
+                                    window.location.reload(true);
+                                }, 2000);
+                            }else{
+                            }
+                        })   
                     })
                 })
             })

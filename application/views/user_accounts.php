@@ -21,7 +21,7 @@
                 </div>
                 <div class="alert alert-success" role="alert" id="success_update" style="display:none">
                     <i class="fa fa-check"></i>
-                        Successfully Created  
+                        Successfully Updated  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
@@ -52,6 +52,14 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                         <div class="col-12 col-md-9">
                             <select class="form-control field_office_update select2">
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Roles</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control user_roles_update select2">
                                 
                             </select>
                         </div>
@@ -90,7 +98,7 @@
                 </div>
                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                     <i class="fa fa-check"></i>
-                        Successfully Updated  
+                        Successfully Created  
                 </div>
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-6">
@@ -121,6 +129,14 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                         <div class="col-12 col-md-9">
                             <select class="form-control field_office select2">
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Roles</label></div>
+                        <div class="col-12 col-md-9">
+                            <select class="form-control user_roles select2">
                                 
                             </select>
                         </div>
@@ -452,6 +468,29 @@
         }
         __select();
 
+        var __select_user_roles = function(){
+            $('.user_roles').empty();
+            $('.user_roles_update').empty();
+
+            __executeExternalGet('http://localhost:8088/role/list').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    $('.user_roles').append("<option selected disabled> - - Select User Roles - - </option>");
+                    $('.user_roles_update').append("<option selected disabled> - - Select User Roles - - </option>");
+                    result.forEach(function(data){
+                        $('.user_roles').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                        $('.user_roles_update').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
+        }
+        __select_user_roles();
+
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
 
@@ -469,6 +508,7 @@
                     "birthday"      : $(".birthday").val(),
                     "password"      : $(".password").val(),
                     "departmentId"  : $(".field_office").val(),
+                    "userRoles"     : $(".user_roles").val(),
                 }
             console.log(payload);
             __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
@@ -569,6 +609,7 @@
                                 $(".birthday_update").val(result.birthday);
                                 $(".password_update").val(result.password);
                                 $(".field_office_update").val(result.departmentId).trigger('change');
+                                $(".user_roles_update").val(result.userRoles).trigger('change');
                                 console.log(result.departmentId);
 
                                 $(".btn_confirm_update").unbind("click").on("click", function(){
@@ -585,6 +626,7 @@
                                         "birthday"      : $(".birthday_update").val(),
                                         "password"      : $(".password_update").val(),
                                         "departmentId"  : $(".field_office_update").val(),
+                                        "userRoles"     : $(".user_roles_update").val(),
                                     }
 
                                     __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
