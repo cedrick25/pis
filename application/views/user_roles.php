@@ -514,7 +514,7 @@
                                 $('#success_grant_update').show();
                                 setTimeout(function () {
                                     $('#success_grant_update').hide();
-                                    // window.location.reload(true);
+                                    window.location.reload(true);
                                 }, 2000);
                             }else{
                             }
