@@ -26,11 +26,24 @@
                 <div class="modal-body col-md-12">
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CMRD" class="form-control permission_name_update form_capitalized"></div>
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update form_capitalized"></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g User Accounts" class="form-control permission_name_update"></div>
                     </div>
-                </div>                         
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="select" id="" class="form-control type_update select2">
+                                <option value="0" selected disabled> - - Select Type - - </option>
+                                <!-- <option value="API">API</option> -->
+                                <option value="VIEW">VIEW</option>
+                                <option value="ACTION">ACTION</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Detail</label></div>
+                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g api - user_accounts/list, page - /user_account, action - add" class="form-control permission_desc_update"></div>
+                    </div>
+                </div>                      
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn_confirm_update btn-sm">Confirm</button>
@@ -57,21 +70,12 @@
                         New Permission Added Successfully  
                 </div>
                 <div class="modal-body col-md-12">
-
-
-                   <!--  <div class="row form-group col-md-12">         
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Select Parent</label></div>
-                        <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control permission_add select2">
-                            </select>
-                        </div>
-                    </div> -->
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g User Accounts" class="form-control permission_name"></div>
                     </div>
                     <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">API</label></div>
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control type_add select2">
                                 <option value="0" selected disabled> - - Select Type - - </option>
@@ -345,14 +349,14 @@
                         if (result.status != "ERROR") {
                             $(".permission_name_update").val(result.name);
                             $(".permission_desc_update").val(result.detail);
-                            // $(".dep_loc_update").val(result.locationId);
+                            $(".type_update").val(result.type).trigger('change');
 
                             $(".btn_confirm_update").unbind("click").on("click", function(){
                                 console.log('clicked btn update confirm')
                                 var payload = {
                                     "name"          : $(".permission_name_update").val(),
                                     "detail"        : $(".permission_desc_update").val(),
-                                    "parentId"      : "0",
+                                    "type"          : $(".type_update").val(),
                                 }
                                 console.log(payload);
                                 __executeExternalPost('http://localhost:8088/permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
