@@ -8,8 +8,8 @@
         <div class="container">
             <div class="login-content">
                 <div class="login-logo">
-                    <span style="font-size: 60px;"><b>PIS</b></span><br>
-                    <span>Probation Information System</span>
+                    <span style="font-size: 60px;"><b>PPIS</b></span><br>
+                    <span>Probation and Parole Information System</span>
                 </div>
                 <div class="login-form">
                     <div style="margin-bottom: 30px; text-align: center;">
