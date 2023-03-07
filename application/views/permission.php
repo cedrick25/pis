@@ -30,8 +30,7 @@
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="description" class="form-control permission_desc_update form_capitalized"></div>
                     </div>
-                </div>  
-            </div>                            
+                </div>                         
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn_confirm_update btn-sm">Confirm</button>
@@ -53,20 +52,20 @@
                         <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                <div class="alert alert-success" role="alert" id="permission_success" style="display:none">
                     <i class="fa fa-check"></i>
-                        Successfully Updated  
+                        New Permission Added Successfully  
                 </div>
                 <div class="modal-body col-md-12">
 
 
-                    <div class="row form-group col-md-12">         
+                   <!--  <div class="row form-group col-md-12">         
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Select Parent</label></div>
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control permission_add select2">
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row form-group col-md-12">
                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permission Name</label></div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g User Accounts" class="form-control permission_name"></div>
@@ -76,7 +75,7 @@
                         <div class="col-12 col-md-9">
                             <select name="select" id="" class="form-control type_add select2">
                                 <option value="0" selected disabled> - - Select Type - - </option>
-                                <option value="API">API</option>
+                                <!-- <option value="API">API</option> -->
                                 <option value="VIEW">VIEW</option>
                                 <option value="ACTION">ACTION</option>
                             </select>
@@ -256,34 +255,6 @@
             return d.promise();
         };
 
-        // var __select = function(){
-        //     $('.permission_desc').empty();
-        //     $('.permission_desc_update').empty();
-
-        //     __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
-        //         // console.log(result)
-        //         if (result.status != "ERROR") {
-        //             $('.dep_loc').append("<option selected disabled> - - Select Location - - </option>");
-        //             $('.dep_loc_update').append("<option selected disabled> - - Select Location - - </option>");
-        //             result.forEach(function(data){
-        //                 console.log(data)
-        //                 $('.dep_loc').append(
-        //                     "<option value="+data.id+">"+data.name+"</option>");
-        //                 $('.dep_loc_update').append(
-        //                     "<option value="+data.id+">"+data.name+"</option>");
-
-        //                 // $(".dep_loc").append($('<option>', {
-        //                 //     value: data.id,
-        //                 //     text: data.name,
-        //                 // }));
-        //             });
-        //         } else {
-        //             console.log("failed fetching department list")
-        //         }
-        //     })
-        // }
-        // __select();
-
         var __select = function(){
             $('.permission_add').empty();
 
@@ -320,14 +291,6 @@
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#permission_success').show();
-
-                        setTimeout(function () {
-                            $('#newPermissionModal').modal('hide');
-                            $('#permission_success').hide();
-                            __table();
-                            __select();
-                        }, 1000);
-
 
                     setTimeout(function () {
                         $('#newPermission').modal('hide');
@@ -398,7 +361,7 @@
                                         $(".form-control").val('');
                                         $('#permission_update').show();
                                             setTimeout(function () {
-                                                $('#updateDeptModal').modal('hide');
+                                                $('#updatePermissionModal').modal('hide');
                                                 $('#permission_update').hide();
                                                 __table();
                                                 __select();
