@@ -508,7 +508,7 @@
                     "birthday"      : $(".birthday").val(),
                     "password"      : $(".password").val(),
                     "departmentId"  : $(".field_office").val(),
-                    "userRoles"     : $(".user_roles").val(),
+                    "roleId"        : $(".user_roles").val(),
                 }
             console.log(payload);
             __executeExternalPost('http://localhost:8088/user/create',JSON.stringify(payload)).done(function (result) {
@@ -609,7 +609,7 @@
                                 $(".birthday_update").val(result.birthday);
                                 $(".password_update").val(result.password);
                                 $(".field_office_update").val(result.departmentId).trigger('change');
-                                $(".user_roles_update").val(result.userRoles).trigger('change');
+                                $(".user_roles_update").val(result.roleId).trigger('change');
                                 console.log(result.departmentId);
 
                                 $(".btn_confirm_update").unbind("click").on("click", function(){
@@ -626,7 +626,7 @@
                                         "birthday"      : $(".birthday_update").val(),
                                         "password"      : $(".password_update").val(),
                                         "departmentId"  : $(".field_office_update").val(),
-                                        "userRoles"     : $(".user_roles_update").val(),
+                                        "roleId"        : $(".user_roles_update").val(),
                                     }
 
                                     __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
