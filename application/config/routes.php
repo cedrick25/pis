@@ -117,6 +117,9 @@ $route['sent_pardonee'] = "routes/sent_pardonee";
 $route['received_parolee'] = "routes/received_parolee";
 $route['form_list'] = "routes/form_list";
 $route['form_upload'] = "routes/form_upload";
+$route['worksheet_identifying_data'] = "routes/worksheet_identifying_data";
+$route['worksheet_present_office'] = "routes/worksheet_present_office";
+$route['worksheet_prior_records'] = "routes/worksheet_prior_records";
 
 // AMS end
 
