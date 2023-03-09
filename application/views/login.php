@@ -125,9 +125,9 @@
                             $.cookie("uuid", uuid);
                             $.cookie("roleid", roleid);
                             // console.log($.cookie("roleid", roleid))
-                            setTimeout(function () {
-                                window.location.href="dashboard"
-                            },1000);
+                            // setTimeout(function () {
+                            //     window.location.href="dashboard"
+                            // },1000);
                         } else {
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                             // console.log("this account is locked")
@@ -148,7 +148,7 @@
                     }
 
                 }else{
-
+                    
                 }
             })
         })
