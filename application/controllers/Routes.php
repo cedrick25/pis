@@ -337,5 +337,18 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('form_upload');
 	}
+	public function worksheet_identifying_data()
+	{
+		$this->load->view('worksheet_identifying_data');
+	}
+	public function worksheet_present_office()
+	{
+		$this->load->view('worksheet_present_office');
+	}
+	public function worksheet_prior_records()
+	{
+		$this->load->view('worksheet_prior_records');
+	}
+
 
 }
