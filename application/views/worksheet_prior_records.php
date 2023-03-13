@@ -67,9 +67,32 @@
                                         <div class="list">
                                         </div>
                                         <div class="col-12">
-                                            <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+                                            <button type="button" class="add_more btn btn-success btn-sm float-right">Add more</button>
                                         </div>
-                                    </fieldset>
+                                </fieldset>
+                                <div class="row form-group col-md-6">
+                                </div>
+                                <div class="row form-group col-md-6">
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Has Been of Probation:</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input petitioner" name="optradio"> Yes
+                                            <input type="radio" class="form-check-input sources" name="optradio"> No
+                                        </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <fieldset class="row col col-md-12">
+                                        <legend>Information</legend>
+                                        <div class="list_info">
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="add_more_info btn btn-success btn-sm float-right">Add more</button>
+                                        </div>
+                                </fieldset>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
@@ -198,21 +221,32 @@
         $(".list").html(`
             <div class="list_records">
                 <div class="row form-group col-md-12">
-                    <div class="col-3 col-md-2"><input type="text" class="form-control min_y" placeholder="Agency"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control min_m" placeholder="CC No."></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control min_d" placeholder="Offense"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control max_y" placeholder="When"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control max_m" placeholder="Where"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control max_d" placeholder="Disposition"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No."></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition"></div>
+                </div>
+            </div>`
+        );
+
+        $(".list_info").html(`
+            <div class="list_information">
+                <div class="row form-group col-md-12">
+                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars"></div>
                 </div>
             </div>`
         );
 
         $(".add_more").unbind("click").on("click", function(){
-            console.log("clicked");
+            // console.log("clicked");
 
             $(".list").append(`
-                <div class="list_records">
+            <div class="list_records">
                 <div class="row form-group col-md-12">
                     <div class="col-3 col-md-2"><input type="text" class="form-control min_y" placeholder="Agency"></div>
                     <div class="col-3 col-md-2"><input type="text" class="form-control min_m" placeholder="CC No."></div>
@@ -221,18 +255,47 @@
                     <div class="col-3 col-md-2"><input type="text" class="form-control max_m" placeholder="Where"></div>
                     <div class="col-3 col-md-2"><input type="text" class="form-control max_d" placeholder="Disposition"></div>
                 </div>
+                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
             </div>
                 `
             )
         });
+
+        $(".add_more_info").unbind("click").on("click", function(){
+            // console.log("clicked");
+
+            $(".list_info").append(`
+            <div class="list_information">
+                <div class="row form-group col-md-12">
+                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position"></div>
+                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars"></div>
+                </div>
+                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
+            </div>
+                `
+            )
+        });
+
         $('.list').on('click', '.remove', function(e) {
             e.preventDefault();
 
             $(this).parent().remove();
         });
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
+
+        $('.list_info').on('click', '.remove', function(e) {
+            e.preventDefault();
+
+            $(this).parent().remove();
+        });
+
+
+
+
+        $(".btn-reset").unbind("click").on("click", function(){
+            $(".form-control").val('');
+        });
 
         // var __select = function(){
         //     $('.field_office').empty();

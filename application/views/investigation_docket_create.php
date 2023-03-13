@@ -350,6 +350,7 @@
 
             $(this).parent().remove();
         });
+
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
@@ -375,6 +376,7 @@
             })
         }
         __select();
+        
         $(".btn-confirm").unbind("click").on("click", function(){
             
             const sentence = [];

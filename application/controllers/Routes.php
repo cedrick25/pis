@@ -349,6 +349,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('worksheet_prior_records');
 	}
-
+	public function worksheet_family_background()
+	{
+		$this->load->view('worksheet_family_background');
+	}
 
 }
