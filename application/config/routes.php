@@ -121,6 +121,7 @@ $route['worksheet_identifying_data'] = "routes/worksheet_identifying_data";
 $route['worksheet_present_office'] = "routes/worksheet_present_office";
 $route['worksheet_prior_records'] = "routes/worksheet_prior_records";
 $route['worksheet_family_background'] = "routes/worksheet_family_background";
+$route['worksheet_socio_economic'] = "routes/worksheet_socio_economic";
 
 // AMS end
 
