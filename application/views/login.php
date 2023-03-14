@@ -121,13 +121,12 @@
                             console.log("not lock")
                             $('#prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i> Login Successfully </div>');  
                             var uuid = result.uuid
-                            var roleid = result.role.roleId
+                            // var roleid = result.role.roleId
                             $.cookie("uuid", uuid);
-                            $.cookie("roleid", roleid);
-                            // console.log($.cookie("roleid", roleid))
-                            // setTimeout(function () {
-                            //     window.location.href="dashboard"
-                            // },1000);
+                            // $.cookie("roleid", roleid);
+                            setTimeout(function () {
+                                window.location.href="dashboard"
+                            },1000);
                         } else {
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                             // console.log("this account is locked")
