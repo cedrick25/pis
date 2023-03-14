@@ -369,6 +369,13 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('worksheet_education_history');
 	}
+	public function worksheet_employment_history()
+	{
+		$this->load->view('worksheet_employment_history');
+	}
+	public function worksheet_environmental_factor()
+	{
+		$this->load->view('worksheet_environmental_factor');
+	}
 	
-
 }

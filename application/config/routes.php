@@ -125,6 +125,8 @@ $route['worksheet_socio_economic'] = "routes/worksheet_socio_economic";
 $route['worksheet_spouse_children'] = "routes/worksheet_spouse_children";
 $route['worksheet_residence_economic'] = "routes/worksheet_residence_economic";
 $route['worksheet_education_history'] = "routes/worksheet_education_history";
+$route['worksheet_employment_history'] = "routes/worksheet_employment_history";
+$route['worksheet_environmental_factor'] = "routes/worksheet_environmental_factor";
 
 // AMS end
 

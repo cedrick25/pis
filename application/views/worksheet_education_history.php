@@ -20,7 +20,7 @@
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list">Client</a></li>
                             <li><a href="">Worksheet Create</a></li>
-                            <li class="active">Residence/Economic Conditions</li>
+                            <li class="active">Educational History</li>
                         </ol>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Residence/Economic Conditions</strong>
+                                <strong class="card-title">Petitioner's Educational History</strong>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
