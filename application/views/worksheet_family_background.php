@@ -372,6 +372,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <fieldset class="row col col-md-12">
                                         <legend>Paternal</legend>
                                         <div class="row form-group col-md-6">
@@ -965,6 +966,7 @@
                                             <div class="col-12 col-md-9"><input type="date" class="form-control mother_date_deceased"></div>
                                         </div>
                                 </fieldset>
+                                
                                 <fieldset class="row col col-md-12">
                                         <legend>Siblings</legend>
                                         <div class="list_siblings">

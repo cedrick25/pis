@@ -125,30 +125,6 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
                                     <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control explain"></textarea></div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control data_name"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Initital Interview</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control data_interview"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias(es)</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control alias"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">True Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control true_name"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Present Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control present_add"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permanent Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control permanent_add"></div>
-                                </div> -->
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
