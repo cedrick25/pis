@@ -372,6 +372,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <fieldset class="row col col-md-12">
                                         <legend>Paternal</legend>
                                         <div class="row form-group col-md-6">
@@ -965,6 +966,7 @@
                                             <div class="col-12 col-md-9"><input type="date" class="form-control mother_date_deceased"></div>
                                         </div>
                                 </fieldset>
+                                
                                 <fieldset class="row col col-md-12">
                                         <legend>Siblings</legend>
                                         <div class="list_siblings">
@@ -1184,18 +1186,86 @@
         //     }
         //     __select();
 
-        $(".list_siblings").html(`
+        // $(".list_siblings").html(`
+        //     <div class="list_sibling">
+        //         <div class="row form-group col-md-12">
+        //             <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name"></div>
+        //             <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship"></div>
+        //             <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age"></div>
+        //             <div class="col-3 col-md-2">
+        //                 <select class="form-control sibling_sex select2">
+        //                     <option value="" selected disabled>Sex</option>
+        //                     <option value="FEMALE">Female</option>
+        //                     <option value="MALE">Male</option>
+        //                     <option value="LGBT">LGBT</option>
+        //                 </select>
+        //             </div>
+        //             <div class="col-3 col-md-2">
+        //                 <select class="form-control sibling_education select2">
+        //                     <option value="" selected disabled>Education</option>
+        //                     <option value="COLLEGE GRADUATE">College Graduate</option>
+        //                     <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
+        //                     <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
+        //                     <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
+        //                     <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
+        //                     <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
+        //                     <option value="ILLITERATE">No Education/Illiterate</option>
+        //                     <option value="POST-GRADUATE">Post-Graduate Studies</option>
+        //                     <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
+        //                     <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
+        //                     <option value="VOCATIONAL">Vocational</option>
+        //                 </select>
+        //             </div>
+        //             <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation"></div>
+        //         </div>
+        //     </div>`
+        // );
+
+        $(".add_more_siblings").unbind("click").on("click", function(){
+            // console.log("clicked");
+
+            $(".list_siblings").append(`
             <div class="list_sibling">
                 <div class="row form-group col-md-12">
                     <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No."></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age"></div>
+                    <div class="col-3 col-md-2">
+                        <select class="form-control sibling_sex select2">
+                            <option value="" selected disabled>Sex</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="MALE">Male</option>
+                            <option value="LGBT">LGBT</option>
+                        </select>
+                    </div>
+                    <div class="col-3 col-md-2">
+                        <select class="form-control sibling_education select2">
+                            <option value="" selected disabled>Education</option>
+                            <option value="COLLEGE GRADUATE">College Graduate</option>
+                            <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
+                            <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
+                            <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
+                            <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
+                            <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
+                            <option value="ILLITERATE">No Education/Illiterate</option>
+                            <option value="POST-GRADUATE">Post-Graduate Studies</option>
+                            <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
+                            <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
+                            <option value="VOCATIONAL">Vocational</option>
+                        </select>
+                    </div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation"></div>
                 </div>
+                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
             </div>`
-        );
+            )
+        });
+
+        $('.list_siblings').on('click', '.remove', function(e) {
+            e.preventDefault();
+
+            $(this).parent().remove();
+        });
 
         var fatherDeceased = $('.father_deceased').val()
         // console.log(fatherDeceased)
