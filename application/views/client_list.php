@@ -63,26 +63,86 @@
                                 <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
                             </div>
                             <div class="card-body">
-                                <table id="" class="table table_head">
-                                    <thead>
-                                        <tr align="center">
-                                            <th>#</th>
-                                            <th>Full Name</th>
-                                            <th>Gender</th>
-                                            <th>Education</th>
-                                            <th>Field Office</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table_body" align="center">
-                                        <th>1</th>
-                                        <th>Simon Cowell</th>
-                                        <th>Male</th>
-                                        <th>BSIT</th>
-                                        <th>Central Office</th>
-                                        <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
-                                    </tbody>
-                                </table>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="client_pb" data-toggle="tab" href="#pb" role="tab" aria-controls="investigation" aria-selected="true">Probationer</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="client_pr" data-toggle="tab" href="#pr" role="tab" aria-controls="supervision" aria-selected="false">Parolee</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="cinv_tab" data-toggle="tab" href="#cinv" role="tab" aria-controls="single_carpeta" aria-selected="false">Pardonee</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content pl-3 p-1" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="pb" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="col col-md-12">
+                                            <h3>Probationer</h3>
+                                        </div><br><br>
+                                        <div class="col col-md-12">
+                                            <table class="table table_head_pb">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Full Name</th>
+                                                        <th>Gender</th>
+                                                        <th>Client Type</th>
+                                                        <th>Field Office</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table_body_pb">
+                                                     
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pr" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="col col-md-12">
+                                            <h3>Parolee</h3>
+                                        </div><br><br>
+                                        <div class="col col-md-12">
+                                            <table class="table table_head_pr">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Full Name</th>
+                                                        <th>Gender</th>
+                                                        <th>Client Type</th>
+                                                        <th>Field Office</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table_body_pr">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pd" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="col col-md-12">
+                                            <h3>Pardonee</h3>
+                                        </div><br><br>
+                                        <div class="col col-md-12">
+                                            <table class="table table_head_pd">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Full Name</th>
+                                                        <th>Gender</th>
+                                                        <th>Client Type</th>
+                                                        <th>Field Office</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table_body_pd">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -189,9 +249,9 @@
             return d.promise();
         };
 
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
+        var __tablePB = function(){
+            $('.table_head_pb').DataTable().destroy();
+            $('.table_body_pb').empty();
 
             __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10&type=PROBATIONER').done(function (result) {
                 console.log("==========")
@@ -200,19 +260,19 @@
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
                         let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
-                        $('.table_body').append("<tr>"+
+                        $('.table_body_pb').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
                             "<td>"+data.sex+"</td>"+
-                            "<td>"+data.education+"</td>"+
+                            "<td>"+data.clientType+"</td>"+
                             "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
-                            "<td align='center' class='actions'> "+actions+"")
+                            "<td class='actions'> "+actions+"")
                     });
                     $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
+                        $('.table_head_pb tbody tr').each(function (idx) {
                            $(this).children("td:eq(0)").html(idx + 1);
                         });
-                        var table = $('.table_head').DataTable({
+                        var table = $('.table_head_pb').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
                                 { "width": "40%", "targets": 5 }
@@ -262,7 +322,157 @@
                 }
             })
         }
-        __table();
+        __tablePB();
+
+        var __tablePR = function(){
+            $('.table_head_pr').DataTable().destroy();
+            $('.table_body_pr').empty();
+
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10&type=PAROLEE').done(function (result) {
+                console.log("==========")
+                console.log(result)
+                console.log("==========")
+                if (result.status != "ERROR") {
+                    result.content.forEach(function(data){
+                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
+                        $('.table_body_pr').append("<tr>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
+                            "<td>"+data.sex+"</td>"+
+                            "<td>"+data.clientType+"</td>"+
+                            "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
+                            "<td class='actions'> "+actions+"")
+                    });
+                    $(document).ready(function () {
+                        $('.table_head_pr tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head_pr').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "40%", "targets": 5 }
+                            ]
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    });
+
+                    // $(".btn_remove").unbind("click").on("click", function(){
+                    //     var docket_number = $(this).data("docket");
+                    //     $(".docket").html(docket_number)
+                    //     $(".btn_remove_confirm").unbind("click").on("click", function(){
+
+                    //         __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                    //             if (result.status != "ERROR") {
+                    //                     $(".form-control").val('');
+                    //                     $('#success_remove').show();
+                    //                         setTimeout(function () {
+                    //                             $('#removeModal').modal('hide');
+                    //                             $('#success_remove').hide();
+                    //                             __table();
+                    //                         }, 1000);
+                                        
+                    //                 // $(".form-control").val('');
+                    //                 // $('#removeModal').modal('hide');
+                    //                 // __table();
+                    //             }else{
+                    //                 alert("failed")
+                    //             }
+                    //         })
+                    //     })
+                    // })
+
+                    $(".btn_update").unbind("click").on("click", function(){
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
+                    })
+                    $(".btn_upload").unbind("click").on("click", function(){
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id;
+                    })
+                    $(".btn_view").unbind("click").on("click", function(){
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
+                    })
+                   
+                }
+            })
+        }
+        __tablePR();
+
+        var __tablePD = function(){
+            $('.table_head_pd').DataTable().destroy();
+            $('.table_body_pd').empty();
+
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10&type=PARDONEE').done(function (result) {
+                console.log("==========")
+                console.log(result)
+                console.log("==========")
+                if (result.status != "ERROR") {
+                    result.content.forEach(function(data){
+                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
+                        $('.table_body_pd').append("<tr>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
+                            "<td>"+data.sex+"</td>"+
+                            "<td>"+data.clientType+"</td>"+
+                            "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
+                            "<td class='actions'> "+actions+"")
+                    });
+                    $(document).ready(function () {
+                        $('.table_head_pd tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head_pd').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "40%", "targets": 5 }
+                            ]
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    });
+
+                    // $(".btn_remove").unbind("click").on("click", function(){
+                    //     var docket_number = $(this).data("docket");
+                    //     $(".docket").html(docket_number)
+                    //     $(".btn_remove_confirm").unbind("click").on("click", function(){
+
+                    //         __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                    //             if (result.status != "ERROR") {
+                    //                     $(".form-control").val('');
+                    //                     $('#success_remove').show();
+                    //                         setTimeout(function () {
+                    //                             $('#removeModal').modal('hide');
+                    //                             $('#success_remove').hide();
+                    //                             __table();
+                    //                         }, 1000);
+                                        
+                    //                 // $(".form-control").val('');
+                    //                 // $('#removeModal').modal('hide');
+                    //                 // __table();
+                    //             }else{
+                    //                 alert("failed")
+                    //             }
+                    //         })
+                    //     })
+                    // })
+
+                    $(".btn_update").unbind("click").on("click", function(){
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
+                    })
+                    $(".btn_upload").unbind("click").on("click", function(){
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id;
+                    })
+                    $(".btn_view").unbind("click").on("click", function(){
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
+                    })
+                   
+                }
+            })
+        }
+        __tablePD();
 
     } )( jQuery );
     </script>

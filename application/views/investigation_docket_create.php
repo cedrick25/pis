@@ -388,14 +388,15 @@
         var __selectclient = function(){
             $('.pb_client_type').empty();
             __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
-                // console.log(result)
+                console.log(result)
                 if (result.status != "ERROR") {
                     $('.pb_client_type').append("<option selected disabled> - - Select Client - - </option>");
                     result.content.forEach(function(data){
-                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " + data.suffixName;
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        console.log(name)
                         $('.pb_client_type').append(
-                            "<option value="+data.id+" '"+data-fname=name"'>"+name+"</option>");
-                    });                    
+                            '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
                 } else {
                     console.log("failed fetching docket list")
                 }
@@ -403,10 +404,12 @@
         }
         __selectclient();
 
-        var client_name = $(this).data("fullname");
-        console.log(client_name)
-
         $(".btn-confirm").unbind("click").on("click", function(){
+            var fname = $('.pb_client_type option:selected').data('fname');
+            var mname = $('.pb_client_type option:selected').data('mname');
+            var lname = $('.pb_client_type option:selected').data('lname');
+            var sname = $('.pb_client_type option:selected').data('sname');
+
             const sentence = [];
             const sentence_inputs = $(".sentence");
             const min_y = $(".min_y");
@@ -439,11 +442,11 @@
                 "caseloadType"  : $(".caseload").val(),
                 "fieldOfficeId" : $(".field_office").val(),
                 "clientType"    : "PROBATIONER",
-                // "firstName"     : $(".firstName").val(),
-                // "middleName"    : $(".middleName").val(),
-                // "lastName"      : $(".lastName").val(),
-                // "suffixName"    : $(".suffix").val(),
-                "fullName"              : client_name,
+                "firstName"     : fname,
+                "middleName"    : mname,
+                "lastName"      : lname,
+                "suffixName"    : sname,
+                "fullName"              : "",
                 "pleaBargain"           : $(".plea_bargain").val(),
                 "criminalCaseNumber"    : $(".cc_no").val(),
                 "caseClassification"    : $(".classification").val(),
@@ -467,19 +470,19 @@
             }
                 
             console.log(payload)
-            // __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-            //     console.log(result);
-            //     if (result.status != "ERROR") {
-            //         $(".form-control").val('');
-            //         $('#success').show();
-            //         setTimeout(function () {
-            //             $('#success').hide();
-            //         }, 2000);
-            //     }else{
-            //         alert("failed")
-            //     }
-            // })
-        })
+            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+            })
+        })  
 
     } )( jQuery );
     </script>

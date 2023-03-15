@@ -77,7 +77,15 @@
                                     </div>
 
                                         <div class="col-md-12 manual_true" style="display:none">
-                                                <div class="row form-group col-md-6">
+
+                                            <div class="row form-group col-md-6">
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
+                                                <div class="col-12 col-md-9">
+                                                    <select class="form-control pb_client_type_sup select2">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        <!-- <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_true"></div>
                                                 </div>
@@ -92,7 +100,7 @@
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_true" ></div>
-                                            </div>
+                                            </div> -->
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                                 <div class="col-12 col-md-9">
@@ -620,6 +628,25 @@
                     }
     })
 
+        var __selectclient = function(){
+            $('.pb_client_type_sup').empty();
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.pb_client_type_sup').append("<option selected disabled> - - Select Client - - </option>");
+                    result.content.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        console.log(name)
+                        $('.pb_client_type_sup').append(
+                            '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
 // manual docket is set to false
         __executeExternalGet('http://localhost:8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
         console.log(result)
@@ -779,6 +806,12 @@
 
             $(".btn-confirm_true").unbind("click").on("click", function(){
                 console.log("clicked true")
+
+            var fname = $('.pb_client_type_sup option:selected').data('fname');
+            var mname = $('.pb_client_type_sup option:selected').data('mname');
+            var lname = $('.pb_client_type_sup option:selected').data('lname');
+            var sname = $('.pb_client_type_sup option:selected').data('sname');
+            console.log(fname+","+mname+","+lname+","+sname)
 
             const sentence = [];
             const sentence_inputs = $(".sentence_true");
