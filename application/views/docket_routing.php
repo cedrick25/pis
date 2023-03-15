@@ -128,8 +128,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-secondary btn-sm btn-reset" style='display:none;'>Reset</button>
+                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm" style='display:none;'>Confirm</button>
                             </div>
                         </div>
                     </div>

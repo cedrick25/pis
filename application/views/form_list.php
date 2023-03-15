@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Forms List</strong>
-                                <a href="form_upload"> <button class="btn btn-sm btn-success btn_add float-right form_add" type="submit"><i class="fa fa-plus-circle"></i> Add Document</button> </a>
+                                <a href="form_upload"> <button class="btn btn-sm btn-success btn_add float-right form_add"style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Document</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
@@ -191,7 +191,7 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.files.forEach(function(data){
-                        let actions = "<a href="+'http://localhost:8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-download form_download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                        let actions = "<a href="+'http://localhost:8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-download form_download' style='display:none;' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.fileName+"</td>"+

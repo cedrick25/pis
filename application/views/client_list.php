@@ -60,7 +60,8 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Fact Sheet</strong>
-                                <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
+                                <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add"
+                                style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -143,6 +144,20 @@
                                     </div>
                                 </div>
                             </div>
+                                <table id="" class="table table_head">
+                                    <thead>
+                                        <tr align="center">
+                                            <th>#</th>
+                                            <th>Full Name</th>
+                                            <th>Gender</th>
+                                            <th>Education</th>
+                                            <th>Field Office</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table_body" align="center">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -261,6 +276,8 @@
                     result.content.forEach(function(data){
                         let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
                         $('.table_body_pb').append("<tr>"+
+                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload'style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view'style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet'style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
+                        $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
                             "<td>"+data.sex+"</td>"+
