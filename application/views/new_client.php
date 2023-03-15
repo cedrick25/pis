@@ -39,6 +39,26 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control client_type select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="PROBATIONER">Probationer</option>
+                                            <option value="PAROLEE">Parolee</option>
+                                            <option value="PARDONEE">Pardonee</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control field_office select2">
+                                            <!-- <option selected value="ADULT">Adult</option>
+                                            <option value="JUVENILE">Juvenile</option> -->
+                                        </select>
+                                    </div>
+                                </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
@@ -76,15 +96,6 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g No.1234" class="form-control cc_no"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control field_office select2">
-                                            <!-- <option selected value="ADULT">Adult</option>
-                                            <option value="JUVENILE">Juvenile</option> -->
-                                        </select>
-                                    </div>
                                 </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthdate</label></div>
@@ -225,6 +236,7 @@
                     "createdBy"         : "",
                     "updatedBy"         : "",
                     "id"                : "",
+                    "clientType"        : $(".client_type").val(),
                     "status"            : 1
             }
             console.log(payload)

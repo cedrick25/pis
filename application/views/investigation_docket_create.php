@@ -39,7 +39,16 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-			                    <div class="row form-group col-md-6">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control pb_client_type select2">
+                                            <option selected value="true">Adult</option>
+                                            <option value="false">Juvenile</option>
+                                        </select>
+                                    </div>
+                                </div>
+<!-- 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
 			                    </div>
@@ -55,7 +64,7 @@
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
 			                    </div>
-                                <div class="row form-group col-md-6">
+ -->                                <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control caseload select2">
@@ -357,7 +366,6 @@
 
         var __select = function(){
             $('.field_office').empty();
-
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
@@ -376,9 +384,29 @@
             })
         }
         __select();
-        
+
+        var __selectclient = function(){
+            $('.pb_client_type').empty();
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    $('.pb_client_type').append("<option selected disabled> - - Select Client - - </option>");
+                    result.content.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " + data.suffixName;
+                        $('.pb_client_type').append(
+                            "<option value="+data.id+" '"+data-fname=name"'>"+name+"</option>");
+                    });                    
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
+        var client_name = $(this).data("fullname");
+        console.log(client_name)
+
         $(".btn-confirm").unbind("click").on("click", function(){
-            
             const sentence = [];
             const sentence_inputs = $(".sentence");
             const min_y = $(".min_y");
@@ -411,11 +439,11 @@
                 "caseloadType"  : $(".caseload").val(),
                 "fieldOfficeId" : $(".field_office").val(),
                 "clientType"    : "PROBATIONER",
-                "firstName"     : $(".firstName").val(),
-                "middleName"    : $(".middleName").val(),
-                "lastName"      : $(".lastName").val(),
-                "suffixName"    : $(".suffix").val(),
-                "fullName"              : "",
+                // "firstName"     : $(".firstName").val(),
+                // "middleName"    : $(".middleName").val(),
+                // "lastName"      : $(".lastName").val(),
+                // "suffixName"    : $(".suffix").val(),
+                "fullName"              : client_name,
                 "pleaBargain"           : $(".plea_bargain").val(),
                 "criminalCaseNumber"    : $(".cc_no").val(),
                 "caseClassification"    : $(".classification").val(),
@@ -439,18 +467,18 @@
             }
                 
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
+            // __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+            //     console.log(result);
+            //     if (result.status != "ERROR") {
+            //         $(".form-control").val('');
+            //         $('#success').show();
+            //         setTimeout(function () {
+            //             $('#success').hide();
+            //         }, 2000);
+            //     }else{
+            //         alert("failed")
+            //     }
+            // })
         })
 
     } )( jQuery );
