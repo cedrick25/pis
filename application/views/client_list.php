@@ -275,8 +275,6 @@
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
                         let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
-                        $('.table_body_pb').append("<tr>"+
-                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload'style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view'style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet'style='display:none;' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
