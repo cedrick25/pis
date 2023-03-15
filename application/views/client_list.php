@@ -44,8 +44,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="client_list">Client</a></li>
-                            <li class="active">Client list</li>
+                            <li><a href="client_list">Fact Sheet</a></li>
+                            <li class="active">Fact Sheet Dashboard</li>
                         </ol>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Client List</strong>
+                                <strong class="card-title">Fact Sheet</strong>
                                 <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
                             </div>
                             <div class="card-body">
@@ -193,7 +193,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10').done(function (result) {
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10&type=PROBATIONER').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")

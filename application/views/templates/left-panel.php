@@ -83,9 +83,9 @@
                         <li><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parolee</a></li>
                     </ul>
                 </li>
-                <h3 class="menu-title">Clients</h3>
+                <h3 class="menu-title">Fact Sheet</h3>
                 <li class="menu-item-has-children dropdown hh">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Clients</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Fact Sheet</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user"></i><a href="client_list">Client List</a></li>
                         <!-- <li><i class="menu-icon fa fa-building-o"></i><a href="field_office">Field Office</a></li> -->
