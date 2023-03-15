@@ -120,22 +120,37 @@
             
             return d.promise();
         };
+        console.log()
+        if ($.cookie("uuid") != undefined) {
+            __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+                console.log("====this is user logged in=====");
+                console.log(result);
+                console.log("====this is user logged in=====");
+                if (result.status != "ERROR") {
+                    $(".f_name").html(result.username);
+                    var field_office_id = result.departmentId
+                    $.cookie("field_office_id", field_office_id);
+                    result.permissions.forEach(function(data){
+                        if (data.type == "ACTION") {
+                            console.log(data.detail)
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }
+                        }else{
 
-        __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-            console.log("====this is user logged in=====");
-            console.log(result);
-            console.log("====this is user logged in=====");
-            if (result.status != "ERROR") {
-                $(".f_name").html(result.username);
-                var field_office_id = result.departmentId
-                $.cookie("field_office_id", field_office_id);
-            }
-        })
+                        }
+                    });
+                }
+            })
+        } else {
+            console.log("no user logged in")
+        }
         $(".btn_logout").unbind("click").on("click", function(){
             console.log('clicked')
             setTimeout(function () {
                 window.location.href="./"
-            },1000);
+            },500);
         })
                 
         $('.form_capitalized').keyup(function(event) {
