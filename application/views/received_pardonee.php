@@ -216,13 +216,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_cinv">
-                                                    <th>1</th>
-                                                    <th>JPECI-2023-02-00001</th>
-                                                    <th>Central Office</th>
-                                                    <th>Test</th>
-                                                    <th>John Doe</th>
-                                                    <th>Active</th>
-                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -245,13 +238,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_csup">
-                                                    <th>1</th>
-                                                    <th>JPECI-2023-02-00001</th>
-                                                    <th>Central Office</th>
-                                                    <th>Test</th>
-                                                    <th>John Doe</th>
-                                                    <th>Active</th>
-                                                    <th><button class='btn btn-sm btn-primary btn_upload type=submit'><i class='fa fa-upload'></i> Upload</button></th>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -384,7 +370,7 @@
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_inv pd_inv_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_inv pd_inv_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_inv pd_inv_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_inv pd_inv_complete type='submit' data-toggle='modal' data-target='#completeModal_inv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_inv pd_inv_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_inv pd_inv_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_inv pd_inv_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_inv pd_inv_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_inv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_inv').append("<tr>"+
@@ -496,7 +482,7 @@
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_cinv pd_cinv_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_cinv pd_cinv_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_cinv pd_cinv_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_cinv pd_cinv_complete type='submit' data-toggle='modal' data-target='#completeModal_cinv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_cinv pd_cinv_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_cinv pd_cinv_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_cinv pd_cinv_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_cinv pd_cinv_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_cinv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_cinv').append("<tr>"+
@@ -607,7 +593,7 @@
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_sup pd_sup_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup pd_sup_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup pd_sup_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_sup pd_sup_complete type='submit' data-toggle='modal' data-target='#completeModal_sup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_sup pd_sup_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup pd_sup_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup pd_sup_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_sup pd_sup_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_sup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_sup').append("<tr>"+
@@ -718,7 +704,7 @@
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_csup pd_csup_upload type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_csup pd_csup_return type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_csup pd_csup_forward type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_csup pd_csup_complete type='submit' data-toggle='modal' data-target='#completeModal_csup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = " <button class='btn btn-sm btn-primary btn_upload_csup pd_csup_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_csup pd_csup_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_csup pd_csup_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_csup pd_csup_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_csup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
                             };
                             $('.table_body_csup').append("<tr>"+

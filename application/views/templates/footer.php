@@ -132,13 +132,23 @@
                     $.cookie("field_office_id", field_office_id);
                     result.permissions.forEach(function(data){
                         if (data.type == "ACTION") {
-                            console.log(data.detail)
+                            // console.log(data.value)
                             if (!data.value) {
                                 var element = $('.' + data.detail);
                                 element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
+                            }
+                        }else if (data.type == "VIEW") {
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
                             }
                         }else{
-
                         }
                     });
                 }

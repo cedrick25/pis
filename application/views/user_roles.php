@@ -396,7 +396,7 @@
                                     <div class="col col-md-2">
                                         <div class="form-check form-check-inline">
                                         <label class="switch">
-                                            <input type="checkbox" name="type" class="form-check-input primary" data-name="${data.name}" value="${data.id}">
+                                            <input type="checkbox" name="type" class="form-check-input primary" checked data-name="${data.name}" value="${data.id}">
                                             <span class="slider round"></span>
                                         </label>
                                         </div>

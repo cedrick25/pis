@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Parolee Courtesy Investigation Docket List</strong>
-                                <a href="parolee_courtesy_investigation_create"> <button class="btn btn-sm btn-success float-right pr_cinv_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <a href="parolee_courtesy_investigation_create"> <button class="btn btn-sm btn-success float-right pr_cinv_add" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
@@ -199,7 +199,7 @@
                             "<td>"+data.docketSeries+"</td>"+
                             "<td>"+data.clientType+"</td>"+
                             "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update pr_cinv_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pr_cinv_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>")
+                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update pr_cinv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pr_cinv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>")
                     });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
