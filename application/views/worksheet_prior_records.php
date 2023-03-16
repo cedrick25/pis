@@ -45,8 +45,8 @@
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input petitioner" name="optradio">Petitioner 
-                                            <input type="radio" class="form-check-input sources" name="optradio">Other Sources
+                                            <input type="radio" class="form-check-input petitioner" name="optradio" value="PETITIONER">Petitioner 
+                                            <input type="radio" class="form-check-input sources" name="optradio" value="OTHER SOURCES">Other Sources
                                         </label>
                                         </div>
                                     </div>
@@ -79,8 +79,8 @@
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input petitioner" name="optradio"> Yes
-                                            <input type="radio" class="form-check-input sources" name="optradio"> No
+                                            <input type="radio" class="form-check-input petitioner" name="optradio" value="YES"> Yes
+                                            <input type="radio" class="form-check-input sources" name="optradio" value="NO"> No
                                         </label>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-confirm btn-sm">Save & Next</button>
+                                <a href="worksheet_family_background"> <button type="button" class="btn btn-success btn-confirm btn-sm">Save & Next</button> </a>
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
                             </div>
                         </div>
@@ -204,6 +204,9 @@
             return d.promise();
         };
 
+        var client_id = GetURLParameter('client_id');
+        console.log(client_id)
+
         // $('.plea_bargain').change(function(){
         //     if ($('.plea_bargain').val() == "true") {
         //         $(".class_sel").show();
@@ -248,12 +251,12 @@
             $(".list").append(`
             <div class="list_records">
                 <div class="row form-group col-md-12">
-                    <div class="col-3 col-md-2"><input type="text" class="form-control min_y" placeholder="Agency"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control min_m" placeholder="CC No."></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control min_d" placeholder="Offense"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control max_y" placeholder="When"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control max_m" placeholder="Where"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control max_d" placeholder="Disposition"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No."></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where"></div>
+                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition"></div>
                 </div>
                 <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
             </div>
@@ -297,102 +300,126 @@
             $(".form-control").val('');
         });
 
-        // var __select = function(){
-        //     $('.field_office').empty();
+        var __select = function(){
+            $('.field_office').empty();
 
-        //     __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-        //         // console.log(result)
-        //         if (result.status != "ERROR") {
-        //             $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-        //             result.forEach(function(data){
-        //                 $('.field_office').append(
-        //                     "<option value="+data.id+">"+data.name+"</option>");
-        //             });
-        //             setTimeout(function () {
-        //                 $(".field_office").val($.cookie("field_office_id")).trigger("change");
-        //             }, 2000);
+            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+                // console.log(result)
+                if (result.status != "ERROR") {
+                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.field_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    setTimeout(function () {
+                        $(".field_office").val($.cookie("field_office_id")).trigger("change");
+                    }, 2000);
                     
-        //         } else {
-        //             console.log("failed fetching docket list")
-        //         }
-        //     })
-        // }
-        // __select();
-        // $(".btn-confirm").unbind("click").on("click", function(){
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
+
+        __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+
+        // console.log(result.departmentId)
+        var officeId = result.departmentId;
+        // console.log(result.uuid)
+        var createdBy = result.uuid;
+
+            __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+
+            $(".btn-next").unbind("click").on("click", function(){
+
+            // const priorRecords = {
+            //     chargedWith                 : $(".charged").val(),
+            //     commisionPlace              : $(".p_commision").val(),
+            //     convictedOf                 : $(".convicted").val(),
+            //     dateCharged                 : $(".date_charged").val(),
+            //     dateCommitted               : $(".date_commited").val(),
+            //     dateConvicted               : $(".date_convicted").val(),
+            //     sentenceYear                : $(".s_yr").val(),
+            //     sentenceMonth               : $(".s_mo").val(),
+            //     sentenceDay                 : $(".s_day").val(),
+            //     judge                       : $(".judge").val(),
+            //     court                       : $(".court").val(),
+            //     arrestingOfficer            : $(".arresting").val(),
+            //     firstAddress                : $(".address_1").val(),
+            //     defenseCounsel              : $(".defense").val(),
+            //     secondAddress               : $(".address_2").val(),
+            //     prosecutor                  : $(".prosecutor").val(),
+            //     thirdAddress                : $(".address_3").val(),
+            //     offended                    : $(".offended").val(),
+            //     fourthAddress               : $(".address_4").val(),
+            //     coAccused                   : $(".ca").val(),
+            //     aggravatingCirsumstances    : $(".ac").val(),
+            //     mitigatingCircumstances     : $(".mc").val(),
+            //     extentParticipation         : $(".ep").val(),
+            //     custody                     : $(".custody").val(),
+            //     mannerofCommision           : $(".commision").val(),
+            //     motives                     : $(".motives").val(),
+            //     explain                     : $(".explain").val(),
+            // }
+
+            const records [];
+            const min_y = $(".agency");
+            const min_m = $(".cc_no");
+            const max_d = $(".offense");
+            const min_d = $(".when");
+            const max_y = $(".where");
+            const max_m = $(".disposition");
+            const civil_liability = $(".civil_liability");
+
+            for(var i = 0; i < records_input.length; i++){
+                const list = {};
+                list.sentence = $(sentence_inputs[i]).val()
+                list.min_y = $(min_y[i]).val();
+                list.min_m = $(min_m[i]).val();
+                list.min_d = $(min_d[i]).val();
+                list.max_y = $(max_y[i]).val();
+                list.max_m = $(max_m[i]).val();
+                list.max_d = $(max_d[i]).val();
+                list.civil_liability = $(civil_liability[i]).val();
+                sentence.push(list);
+            }
+
+            console.log(identifying_data)
+
+
             
-        //     const sentence = [];
-        //     const sentence_inputs = $(".sentence");
-        //     const min_y = $(".min_y");
-        //     const min_m = $(".min_m");
-        //     const min_d = $(".min_d");
-        //     const max_y = $(".max_y");
-        //     const max_m = $(".max_m");
-        //     const max_d = $(".max_d");
-        //     const civil_liability = $(".civil_liability");
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(presentOffense),
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : createdBy,
+            }
 
-        //     for(var i = 0; i < sentence_inputs.length; i++){
-        //         const list = {};
-        //         list.sentence = $(sentence_inputs[i]).val()
-        //         list.min_y = $(min_y[i]).val();
-        //         list.min_m = $(min_m[i]).val();
-        //         list.min_d = $(min_d[i]).val();
-        //         list.max_y = $(max_y[i]).val();
-        //         list.max_m = $(max_m[i]).val();
-        //         list.max_d = $(max_d[i]).val();
-        //         list.civil_liability = $(civil_liability[i]).val();
-        //         sentence.push(list);
-        //     }
-        //     // console.log(list)
-        //     console.log(sentence)
+            console.log(payload)
 
-        //     var payload = {
-        //         "type"          : "PIS_INV",
-        //         "docketNumber"  : "",
-        //         "docketSeries"  : "NONE",
-        //         "caseloadType"  : $(".caseload").val(),
-        //         "fieldOfficeId" : $(".field_office").val(),
-        //         "clientType"    : "PROBATIONER",
-        //         "firstName"     : $(".firstName").val(),
-        //         "middleName"    : $(".middleName").val(),
-        //         "lastName"      : $(".lastName").val(),
-        //         "suffixName"    : $(".suffix").val(),
-        //         "fullName"              : "",
-        //         "pleaBargain"           : $(".plea_bargain").val(),
-        //         "criminalCaseNumber"    : $(".cc_no").val(),
-        //         "caseClassification"    : $(".classification").val(),
-        //         "offense"               : $(".offense").val(),
-        //         "investigatingOfficer"  : $(".inv_off").val(),
-        //         "courtOfOrigin"         : $(".court_origin").val(),
-        //         "militaryCourt"         : $(".military_court").val(),
-        //         "sentence"              : JSON.stringify(sentence),
-        //         "courtOrderDate"        : $(".cod").val(),
-        //         "receivedDateByPPO"     : $(".rd").val(),
-        //         "manualDocket"          : false,
-        //         "referral"              : false,
-        //         "referralData"          : "",
-        //         "remarks"               : $(".remarks").val(),
-        //         "probationStartDate"    : "",
-        //         "probationYear"         : "",
-        //         "probationMonth"        : "",
-        //         "probationDay"          :"",
-        //         "status"                : 1,
-        //         "legalAge"              : $(".client_type").val(),
-        //     }
-                
-        //     console.log(payload)
-        //     __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-        //         console.log(result);
-        //         if (result.status != "ERROR") {
-        //             $(".form-control").val('');
-        //             $('#success').show();
-        //             setTimeout(function () {
-        //                 $('#success').hide();
-        //             }, 2000);
-        //         }else{
-        //             alert("failed")
-        //         }
-        //     })
-        // })
+
+            __executeExternalPost('http://localhost:8000/worksheet/update'+client_id,JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+            })
+        })
+
+            })
+
+        })
 
     } )( jQuery );
     </script>

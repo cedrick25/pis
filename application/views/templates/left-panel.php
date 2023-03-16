@@ -27,10 +27,10 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle parolee_module" style='display:none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parolee</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li style='display:none;' class="parolee_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li>
+                        <li style='display:none;' class="parolee_investigastion_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="parolee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_supervision_docketing">Supervision</a></li>
-                        <li style='display:none;' class="parolee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
-                        <li style='display:none;' class="parolee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
+<!--                         <li style='display:none;' class="parolee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
+                        <li style='display:none;' class="parolee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_supervision_docketing">Courtesy Supervision</a></li> -->
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
@@ -38,8 +38,8 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="pardonee_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="pardonee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_supervision_docketing">Supervision</a></li>
-                        <li style='display:none;' class="pardonee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
-                        <li style='display:none;' class="pardonee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
+<!--                         <li style='display:none;' class="pardonee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
+                        <li style='display:none;' class="pardonee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_supervision_docketing">Courtesy Supervision</a></li> -->
                     </ul>
                 </li>
                 <h3 class="menu-title">Docket Routing</h3>
@@ -71,7 +71,7 @@
                 <li class="menu-item-has-children dropdown hh">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Fact Sheet</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list">Client List</a></li>
+                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list">Fact Sheet</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title">Forms</h3>

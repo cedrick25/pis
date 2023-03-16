@@ -42,16 +42,16 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Charged With</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control charged"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control charged"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Place of Commision</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control p_commision"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control p_commision"></div>
                                     <!-- <div class="col-12 col-md-9"><input type="date" class="form-control date_cic"></div> -->
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Convicted Of</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control convicted"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control convicted"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Charged</label></div>
@@ -147,7 +147,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-confirm btn-sm">Save & Next</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-<!--     <script type="text/javascript">
+    <script type="text/javascript">
     ( function ( $ ) {
         var ___ctx = '';
 
@@ -254,72 +254,78 @@
             
             return d.promise();
         };
-       
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
 
-        $(".btn-confirm").unbind("click").on("click", function(){
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
+
+        var client_id = GetURLParameter('client_id');
+        console.log(client_id)
+
+
+        __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+
+        // console.log(result.departmentId)
+        var officeId = result.departmentId;
+        // console.log(result.uuid)
+        var createdBy = result.uuid;
+
+
+            $(".btn-next").unbind("click").on("click", function(){
+
+            var presentOffense = {
+                chargedWith                 : $(".charged").val(),
+                commisionPlace              : $(".p_commision").val(),
+                convictedOf                 : $(".convicted").val(),
+                dateCharged                 : $(".date_charged").val(),
+                dateCommitted               : $(".date_commited").val(),
+                dateConvicted               : $(".date_convicted").val(),
+                sentenceYear                : $(".s_yr").val(),
+                sentenceMonth               : $(".s_mo").val(),
+                sentenceDay                 : $(".s_day").val(),
+                judge                       : $(".judge").val(),
+                court                       : $(".court").val(),
+                arrestingOfficer            : $(".arresting").val(),
+                firstAddress                : $(".address_1").val(),
+                defenseCounsel              : $(".defense").val(),
+                secondAddress               : $(".address_2").val(),
+                prosecutor                  : $(".prosecutor").val(),
+                thirdAddress                : $(".address_3").val(),
+                offended                    : $(".offended").val(),
+                fourthAddress               : $(".address_4").val(),
+                coAccused                   : $(".ca").val(),
+                aggravatingCirsumstances    : $(".ac").val(),
+                mitigatingCircumstances     : $(".mc").val(),
+                extentParticipation         : $(".ep").val(),
+                custody                     : $(".custody").val(),
+                mannerofCommision           : $(".commision").val(),
+                motives                     : $(".motives").val(),
+                explain                     : $(".explain").val(),
+            }
+
+            console.log(presentOffense)
+
+
             
             var payload = {
-                "type"                      : "SC_PR_CINV",
-                "docketNumber"              : "",
-                "docketSeries"              : $(".docket_series").val(),
-                "caseloadType"              : $(".task").val(),
-                "fieldOfficeId"             : $.cookie('field_office_id'),
-                "clientType"                : "PAROLEE",
-                "clientId"                  : "",
-                "firstName"                 : "",
-                "middleName"                : "",
-                "lastName"                  : "",
-                "suffixName"                : "",
-                "fullName"                  : "",
-                "pleaBargain"               : true,
-                "caseClassification"        : "",
-                "criminalCaseNumber"        : "",
-                "offense"                   : "",
-                "courtOfOrigin"             : "",
-                "courtOrderDate"            : "",
-                "investigatingOfficer"      : $(".inv_off").val(),
-                "receivedDateByPPO"         : $(".dr_ppo").val(),
-                "sentence"                  : "",
-                "manualDocket"              : true,
-                "referral"                  : true,
-                "referralData"              : "",
-                "remarks"                   : "",
-                "probationStartDate"        : "",
-                "probationYear"             : "",
-                "probationMonth"            : "",
-                "probationDay"              : "",
-                "reportType"                : "",
-                "prisonName"                : "",
-                "investigationReportSubmittedDate"          :"",
-                "ppoRecommendation"         : "",
-                "recommendationState"       : "",
-                "dateOfTransfer"            : "",
-                "transferredOfficeId"       : "",
-                "dateOrderReceivedFromTheBoard"             : "",
-                "boardOrder"                : "",
-                "boardOrderStatus"          : "",
-                "referringOfficeId"         : $(".ref_office").val(),
-                "dateCICAR"                 : $(".date_cic").val(),
-                "supervisingOfficer"        : "",
-                "probationEndDate"          : "",
-                "referralType"              : "",
-                "dateReportSubmittedToTheBoard"             : "",
-                "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                "resolutionType"            : "",
-                "dateResolutionFromTheBoard": "",
-                "dateResolutionFromTheRDForTransfer"        : "",
-                "createdBy"                 : "",
-                "updatedBy"                 : "",
-                "legalAge"                  : true,
-                "militaryCourt"             : true,
-                "supervisionStartDate"      : "",
-                "supervisionEndDate"        : ""
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(presentOffense),
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : createdBy,
             }
+
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -327,7 +333,8 @@
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            window.location.reload(true);
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -335,28 +342,83 @@
                 }
             })
         })
+
+        })
+
+        // $(".btn-reset").unbind("click").on("click", function(){
+        //     $(".form-control").val('');
+        // });
+
+        // $(document).ready(function() {
+        //   // Listen for the file input change event
+        //   $('#file-input').on('change', function() {
+        //     var imgavat = $('#client_photo');
+        //     var file = this.files[0];
+        //     // Create a FormData object to store the file data
+        //     var formData = new FormData();
+        //     formData.append('file', file);
+        //     // Set up an AJAX request to send the file data to the server
+        //     $.ajax({
+        //       url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+officeId, // Replace with the path to your server-side script
+        //       type: 'POST',
+        //       data: formData,
+        //       contentType: false,
+        //       processData: false,
+        //       success: function(response) {
+        //         // Handle the server response here
+        //         console.log(response);
+        //       },
+        //       error: function(xhr, status, error) {
+        //         // Handle any errors here
+        //         console.log(error);
+        //       }
+        //     });
+        //     if (this.files[0]) {   
+        //         var reader  = new FileReader();
+                
+        //         reader.readAsDataURL(this.files[0]);
+                
+        //         reader.onloadend = function () {
+        //             imgavat.attr('src', reader.result);
+        //         };
+        //     }
+
+        //   });
+          
+        //   // Listen for the upload button click event
+        //   $('.btn-upload').on('click', function() {
+        //     console.log("clicked")
+        //     // var imgavat = $('#client_photo');
+        //     // // Trigger the file input click event to open the file selector dialog
+        //     // // $('#file-input').click();
+        //     // // image.src = URL.createObjectURL(url);
+            
+        //   });
+        // });
+
+        
    
-            var __select = function(){
-                $('.ref_office').empty();
+        //     var __select = function(){
+        //         $('.ref_office').empty();
 
-                __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                    console.log(result)
-                    if (result.status != "ERROR") {
-                        $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                        result.forEach(function(data){
-                            $('.ref_office').append(
-                                "<option value="+data.id+">"+data.name+"</option>");
-                        });
+        //         __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+        //             console.log(result)
+        //             if (result.status != "ERROR") {
+        //                 $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
+        //                 result.forEach(function(data){
+        //                     $('.ref_office').append(
+        //                         "<option value="+data.id+">"+data.name+"</option>");
+        //                 });
 
-                    } else {
-                        console.log("failed fetching docket list")
-                    }
-                })
-            }
-            __select();
+        //             } else {
+        //                 console.log("failed fetching docket list")
+        //             }
+        //         })
+        //     }
+        //     __select();
 
     } )( jQuery );
-    </script> -->
+    </script>
 
 </body>
 
