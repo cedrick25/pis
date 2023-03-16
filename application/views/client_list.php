@@ -72,7 +72,7 @@
                                         <a class="nav-link" id="client_pr" data-toggle="tab" href="#pr" role="tab" aria-controls="supervision" aria-selected="false">Parolee</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="cinv_tab" data-toggle="tab" href="#cinv" role="tab" aria-controls="single_carpeta" aria-selected="false">Pardonee</a>
+                                        <a class="nav-link" id="client_pd" data-toggle="tab" href="#pd" role="tab" aria-controls="single_carpeta" aria-selected="false">Pardonee</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
@@ -144,20 +144,6 @@
                                     </div>
                                 </div>
                             </div>
-                                <table id="" class="table table_head">
-                                    <thead>
-                                        <tr align="center">
-                                            <th>#</th>
-                                            <th>Full Name</th>
-                                            <th>Gender</th>
-                                            <th>Education</th>
-                                            <th>Field Office</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table_body" align="center">
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -268,14 +254,14 @@
             $('.table_head_pb').DataTable().destroy();
             $('.table_body_pb').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10&type=PROBATIONER').done(function (result) {
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
                         let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
-                        $('.table_body').append("<tr>"+
+                        $('.table_body_pb').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
                             "<td>"+data.sex+"</td>"+
@@ -283,6 +269,7 @@
                             "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
                             "<td class='actions'> "+actions+"")
                     });
+                    
                     $(document).ready(function () {
                         $('.table_head_pb tbody tr').each(function (idx) {
                            $(this).children("td:eq(0)").html(idx + 1);
@@ -295,32 +282,10 @@
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });
-
-                    // $(".btn_remove").unbind("click").on("click", function(){
-                    //     var docket_number = $(this).data("docket");
-                    //     $(".docket").html(docket_number)
-                    //     $(".btn_remove_confirm").unbind("click").on("click", function(){
-
-                    //         __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
-                    //             if (result.status != "ERROR") {
-                    //                     $(".form-control").val('');
-                    //                     $('#success_remove').show();
-                    //                         setTimeout(function () {
-                    //                             $('#removeModal').modal('hide');
-                    //                             $('#success_remove').hide();
-                    //                             __table();
-                    //                         }, 1000);
-                                        
-                    //                 // $(".form-control").val('');
-                    //                 // $('#removeModal').modal('hide');
-                    //                 // __table();
-                    //             }else{
-                    //                 alert("failed")
-                    //             }
-                    //         })
-                    //     })
-                    // })
-
+                    $(".btn_worksheet").unbind("click").on("click", function(){
+                        var client_id = $(this).data("id");
+                        window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                    })
                     $(".btn_update").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
                         window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
@@ -343,13 +308,13 @@
             $('.table_head_pr').DataTable().destroy();
             $('.table_body_pr').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10&type=PAROLEE').done(function (result) {
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PAROLEE').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
+                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
                         $('.table_body_pr').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
@@ -358,43 +323,20 @@
                             "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
                             "<td class='actions'> "+actions+"")
                     });
+                    
                     $(document).ready(function () {
                         $('.table_head_pr tbody tr').each(function (idx) {
                            $(this).children("td:eq(0)").html(idx + 1);
                         });
                         var table = $('.table_head_pr').DataTable({
                             order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "40%", "targets": 5 }
-                            ]
+                            // "columnDefs": [
+                            //     { "width": "40%", "targets": 5 }
+                            // ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });
 
-                    // $(".btn_remove").unbind("click").on("click", function(){
-                    //     var docket_number = $(this).data("docket");
-                    //     $(".docket").html(docket_number)
-                    //     $(".btn_remove_confirm").unbind("click").on("click", function(){
-
-                    //         __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
-                    //             if (result.status != "ERROR") {
-                    //                     $(".form-control").val('');
-                    //                     $('#success_remove').show();
-                    //                         setTimeout(function () {
-                    //                             $('#removeModal').modal('hide');
-                    //                             $('#success_remove').hide();
-                    //                             __table();
-                    //                         }, 1000);
-                                        
-                    //                 // $(".form-control").val('');
-                    //                 // $('#removeModal').modal('hide');
-                    //                 // __table();
-                    //             }else{
-                    //                 alert("failed")
-                    //             }
-                    //         })
-                    //     })
-                    // })
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
@@ -408,7 +350,6 @@
                         var client_id = $(this).data("id");
                         window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
                     })
-                   
                 }
             })
         }
@@ -418,13 +359,13 @@
             $('.table_head_pd').DataTable().destroy();
             $('.table_body_pd').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=10&type=PARDONEE').done(function (result) {
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PARDONEE').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
+                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
                         $('.table_body_pd').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
@@ -439,37 +380,12 @@
                         });
                         var table = $('.table_head_pd').DataTable({
                             order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "40%", "targets": 5 }
-                            ]
+                            // "columnDefs": [
+                            //     { "width": "30%", "targets": 5 }
+                            // ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });
-
-                    // $(".btn_remove").unbind("click").on("click", function(){
-                    //     var docket_number = $(this).data("docket");
-                    //     $(".docket").html(docket_number)
-                    //     $(".btn_remove_confirm").unbind("click").on("click", function(){
-
-                    //         __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
-                    //             if (result.status != "ERROR") {
-                    //                     $(".form-control").val('');
-                    //                     $('#success_remove').show();
-                    //                         setTimeout(function () {
-                    //                             $('#removeModal').modal('hide');
-                    //                             $('#success_remove').hide();
-                    //                             __table();
-                    //                         }, 1000);
-                                        
-                    //                 // $(".form-control").val('');
-                    //                 // $('#removeModal').modal('hide');
-                    //                 // __table();
-                    //             }else{
-                    //                 alert("failed")
-                    //             }
-                    //         })
-                    //     })
-                    // })
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");

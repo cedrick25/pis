@@ -43,8 +43,6 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control pb_client_type select2">
-                                            <option selected value="true">Adult</option>
-                                            <option value="false">Juvenile</option>
                                         </select>
                                     </div>
                                 </div>

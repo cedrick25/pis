@@ -343,12 +343,36 @@
             
             return d.promise();
         };
+
+        var __selectclient = function(){
+            $('.client').empty();
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PAROLEE').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.client').append("<option selected disabled> - - Select Client - - </option>");
+                    result.content.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        console.log(name)
+                        $('.client').append(
+                            '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
        
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
 
         $(".btn-confirm").unbind("click").on("click", function(){
+
+            var fname = $('.client option:selected').data('fname');
+            var mname = $('.client option:selected').data('mname');
+            var lname = $('.client option:selected').data('lname');
+            var sname = $('.client option:selected').data('sname');
                 
             var payload = {
                 "type"                         : "SC_PR_INV",
@@ -442,26 +466,26 @@
         }
         __select();
 
-            var __client = function(){
-                $('.client').empty();
+            // var __client = function(){
+            //     $('.client').empty();
 
 
-                __executeExternalGet('http://localhost:8000/petitioner?page=0&size=100').done(function (result) {
+            //     __executeExternalGet('http://localhost:8000/petitioner?page=0&size=100').done(function (result) {
                     
-                    if (result.status != "ERROR") {
-                    console.log(result)
-                        $('.client').append("<option selected disabled> - - Select Client - - </option>");
-                        result.content.forEach(function(data){
-                            $('.client').append(
-                                "<option value="+data.id+">"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</option>");
-                        });
+            //         if (result.status != "ERROR") {
+            //         console.log(result)
+            //             $('.client').append("<option selected disabled> - - Select Client - - </option>");
+            //             result.content.forEach(function(data){
+            //                 $('.client').append(
+            //                     "<option value="+data.id+">"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</option>");
+            //             });
 
-                    } else {
-                        console.log("failed fetching docket list")
-                    }
-                })
-            }
-            __client();
+            //         } else {
+            //             console.log("failed fetching docket list")
+            //         }
+            //     })
+            // }
+            // __client();
 
 
     } )( jQuery );
