@@ -130,6 +130,11 @@
                     $(".f_name").html(result.username);
                     var field_office_id = result.departmentId
                     $.cookie("field_office_id", field_office_id);
+                    const roleId = ["1"];
+                    if (roleId.includes("1")) {
+                        console.log("role id hello")
+                        $(".org_module").show()
+                    }
                     result.permissions.forEach(function(data){
                         if (data.type == "ACTION") {
                             // console.log(data.value)
