@@ -493,7 +493,6 @@
 
         $(".btn-confirm").unbind("click").on("click", function(){
             console.log('clicked')
-
             var payload = {
                     "updatedBy"     : "",
                     "updatedDate"   : "",
@@ -519,7 +518,11 @@
                     setTimeout(function () {
                         $('#newUserModal').modal('hide');
                         $('#success').hide();
-                        __table();
+                            // __table();
+                                                
+                            setTimeout(function () {
+                                window.location.reload(true);
+                            }, 500);
                     }, 1000);
                 }else{
                 //     console.log(result.status);
@@ -608,8 +611,10 @@
                                 $(".num_update").val(result.phoneNumber);
                                 $(".birthday_update").val(result.birthday);
                                 $(".password_update").val(result.password);
-                                $(".field_office_update").val(result.departmentId).trigger('change');
-                                $(".user_roles_update").val(result.roleId).trigger('change');
+                                setTimeout(function() {
+                                    $(".field_office_update").val(result.departmentId).trigger('change');
+                                    $(".user_roles_update").val(result.roleId).trigger('change');
+                                },1500);
                                 console.log(result.departmentId);
 
                                 $(".btn_confirm_update").unbind("click").on("click", function(){
@@ -637,7 +642,11 @@
                                             setTimeout(function () {
                                                 $('#updateUserModal').modal('hide');
                                                 $('#success_update').hide();
-                                                __table();
+                                                // __table();
+
+                                                setTimeout(function () {
+                                                    window.location.reload(true);
+                                                }, 500);
                                             }, 1000);
                                         }else{
                                             alert("failed")
@@ -662,7 +671,11 @@
                                             setTimeout(function () {
                                                 $('#activateModal').modal('hide');
                                                 $('#success_activated').hide();
-                                                __table();
+                                                // __table();
+                                                
+                                                setTimeout(function () {
+                                                    window.location.reload(true);
+                                                }, 500);
                                             }, 1000);
                                         
                                     // $(".form-control").val('');
@@ -687,7 +700,11 @@
                                             setTimeout(function () {
                                                 $('#deactivateModal').modal('hide');
                                                 $('#success_deactivate').hide();
-                                                __table();
+                                                // __table();
+                                                
+                                                setTimeout(function () {
+                                                    window.location.reload(true);
+                                                }, 500);
                                             }, 1000);
                                     // $(".form-control").val('');
                                     // $('#deactivateModal').modal('hide');
@@ -711,7 +728,11 @@
                                             setTimeout(function () {
                                                 $('#restrictModal').modal('hide');
                                                 $('#success_restrict').hide();
-                                                __table();
+                                                // __table();
+
+                                                setTimeout(function () {
+                                                    window.location.reload(true);
+                                                }, 500);
                                             }, 1000);
                                         
                                     // $(".form-control").val('');
@@ -736,7 +757,11 @@
                                             setTimeout(function () {
                                                 $('#removeModal').modal('hide');
                                                 $('#success_remove').hide();
-                                                __table();
+                                                // __table();
+                                                
+                                                setTimeout(function () {
+                                                    window.location.reload(true);
+                                                }, 500);
                                             }, 1000);
                                         
                                     // $(".form-control").val('');
@@ -760,7 +785,11 @@
                                             setTimeout(function () {
                                                 $('#liftModal').modal('hide');
                                                 $('#success_lift').hide();
-                                                __table();
+                                                // __table();
+                                                
+                                                setTimeout(function () {
+                                                    window.location.reload(true);
+                                                }, 500);
                                             }, 1000);
                                         
                                     // $(".form-control").val('');

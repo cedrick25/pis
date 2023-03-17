@@ -18,14 +18,14 @@
                 </li>
                 <h3 class="menu-title">Docketing</h3>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Probation</a>
+                    <a href="#" class="dropdown-toggle probation_module" style='display:none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Probation</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parolee</a>
+                    <a href="#" class="dropdown-toggle parolee_module" style='display:none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parolee</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="parolee_investigastion_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="parolee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_supervision_docketing">Supervision</a></li>
@@ -34,7 +34,7 @@
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pardonee</a>
+                    <a href="#" class="dropdown-toggle pardonee_module" style='display:none;'  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pardonee</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="pardonee_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="pardonee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_supervision_docketing">Supervision</a></li>
@@ -81,15 +81,15 @@
                         <li style='display:none;' class="form_list"><i class="menu-icon fa fa-user"></i><a href="form_list">Form List</a></li>
                     </ul>
                 </li>
-                <h3 class="menu-title">Management</h3>
-                <li class="menu-item-has-children dropdown hh">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>My Organization</a>
+                <h3 class="menu-title org_module" style='display:none;'>Management</h3>
+                <li class="menu-item-has-children dropdown hh org_module" style='display:none;'>
+                    <a href="#" class="dropdown-toggle org_module" style='display:none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>My Organization</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li class="user_accounts"><i class="menu-icon fa fa-user"></i><a href="user_accounts">User Accounts</a></li>
+                        <li class=""><i class="menu-icon fa fa-user"></i><a href="user_accounts">User Accounts</a></li>
                         <li class=""><i class="menu-icon fa fa-user"></i><a href="user_roles">User Roles</a></li>
-                        <li class="department"><i class="menu-icon fa fa-building-o"></i><a href="department">Field Office</a></li>
-                        <li class="location"><i class="menu-icon fa fa-location-arrow"></i><a href="location">Region</a></li>
-                        <li class="permission"><i class="menu-icon fa fa-lock"></i><a href="permission">Permission</a></li>
+                        <li class=""><i class="menu-icon fa fa-building-o"></i><a href="department">Field Office</a></li>
+                        <li class=""><i class="menu-icon fa fa-location-arrow"></i><a href="location">Region</a></li>
+                        <li class=""><i class="menu-icon fa fa-lock"></i><a href="permission">Permission</a></li>
                     </ul>
                 </li>
             </ul>
