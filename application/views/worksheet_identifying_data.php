@@ -1,6 +1,29 @@
 <?php $this->load->view('templates/header.php'); ?> 
 
 <body>
+
+    <div class="modal fade" id="cameraModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="max-width: 1100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Capture Camera</h5>
+                        <div class="modal-body col-md-12">
+                            <div id="my_camera"></div>
+                            <button type="button" class="btn btn-primary btn_snap">Snapshot</button>
+                            <input type="file" id="file-snap" style="display:none"></input>
+                            <button type="button" class="btn btn-primary btn_save">Save</button>
+                            <input type="button" id="file-input-snap" style="display:none;">
+                            <!-- <input type=button value="Take Snapshot" onClick="take_snapshot()">  -->
+                            <div id="results" ></div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary btn_confirm_update">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
@@ -44,10 +67,10 @@
                                     <img class="align-content" id="client_photo" src="images/pis_logo.png" alt="" style="max-width: 10%;">
                                 </div>
                                 <div style="margin-bottom: 30px; margin-right: 70px; text-align: right;">
-                                    <input type="file" id="file-input">
+                                    <input type="file" id="file-input" style="display: none">
                                     <!-- <button id="upload-btn">Upload</button> -->
                                     <button type="button" class="btn btn-primary btn-sm btn-upload">Upload Photo</button>
-                                    <!-- <button type="button" class="btn btn-success btn-sm btn-take">Take Photo</button> -->
+                                    <button type="button" type="submit" data-toggle="modal" data-target="#cameraModal" class="btn btn-success btn-sm btn-take">Take Photo</button>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
@@ -201,6 +224,7 @@
         console.log(client_id)
 
 
+
         __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
 
         // console.log(result.departmentId)
@@ -242,7 +266,7 @@
                         setTimeout(function () {
                         // window.location.reload(true);
                         console.log(client_id)
-                        window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        // window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -256,55 +280,135 @@
         // $(".btn-reset").unbind("click").on("click", function(){
         //     $(".form-control").val('');
         // });
+    __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+        // console.log(result.departmentId)
+        var officeId = result.departmentId;
+        // console.log(result.uuid)
+        var createdBy = result.uuid;
+        $(document).ready(function() {
+          // Listen for the file input change event
+          $('#file-input').on('change', function() {
 
-        // $(document).ready(function() {
-        //   // Listen for the file input change event
-        //   $('#file-input').on('change', function() {
-        //     var imgavat = $('#client_photo');
-        //     var file = this.files[0];
-        //     // Create a FormData object to store the file data
-        //     var formData = new FormData();
-        //     formData.append('file', file);
-        //     // Set up an AJAX request to send the file data to the server
-        //     $.ajax({
-        //       url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+officeId, // Replace with the path to your server-side script
-        //       type: 'POST',
-        //       data: formData,
-        //       contentType: false,
-        //       processData: false,
-        //       success: function(response) {
-        //         // Handle the server response here
-        //         console.log(response);
-        //       },
-        //       error: function(xhr, status, error) {
-        //         // Handle any errors here
-        //         console.log(error);
-        //       }
-        //     });
+            var imgavat = $('#client_photo');
 
-        //     if (this.files[0]) {   
-        //         var reader  = new FileReader();
+            console.log(imgavat);
+
+            var file = this.files[0];
+
+            console.log(file);
+
+            // Create a FormData object to store the file data
+            var formData = new FormData();
+
+            formData.append('file', file);
+
+            // Set up an AJAX request to send the file data to the server
+
+            $.ajax({
+              url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+officeId, // Replace with the path to your server-side script
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function(response) {
+                // Handle the server response here
+                console.log(response);
+              },
+              error: function(xhr, status, error) {
+                // Handle any errors here
+                console.log(error);
+              }
+            });
+
+            if (this.files[0]) {   
+                var reader  = new FileReader();
                 
-        //         reader.readAsDataURL(this.files[0]);
+                reader.readAsDataURL(this.files[0]);
                 
-        //         reader.onloadend = function () {
-        //             imgavat.attr('src', reader.result);
-        //         };
-        //     }
+                reader.onloadend = function () {
+                    imgavat.attr('src', reader.result);
+                };
+            }
 
-        //   });
+          });
           
-        //   // Listen for the upload button click event
-        //   $('.btn-upload').on('click', function() {
-        //     console.log("clicked")
-        //     var imgavat = $('#client_photo');
+          // Listen for the upload button click event
+          $('.btn-upload').on('click', function() {
+            console.log("clicked")
+            // var imgavat = $('#client_photo');
             
-        //     // Trigger the file input click event to open the file selector dialog
-        //     // $('#file-input').click();
-        //     // image.src = URL.createObjectURL(url);
+            // Trigger the file input click event to open the file selector dialog
+            $('#file-input').click();
             
-        //   });
-        // });
+          });
+        });
+
+
+
+
+
+        });
+
+
+
+            $('.btn-take').on('click', function() {
+            console.log("clicked take")
+
+            Webcam.set({
+                width: 320,
+                height: 240,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+            Webcam.attach( '#my_camera' );
+            });
+
+
+            $('.btn_snap').on('click', function() {
+                console.log("clicked snap")
+ 
+            // take snapshot and get image data
+               Webcam.snap( function(data_uri) {
+                   // display results in page
+                   document.getElementById('results').innerHTML = 
+                    '<img id="imageprev" src="'+data_uri+'"/>';
+                });
+            });
+
+
+
+            $('.btn_save').on('click', function() {
+                console.log("clicked save")
+                __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+                    var officeId = result.departmentId;
+                    // console.log(result.uuid)
+                    var createdBy = result.uuid;
+
+            var imgsave = $('#imageprev');
+            
+
+                });
+            });
+
+
+
+
+
+     //    function take_snapshot() {
+ 
+     // // take snapshot and get image data
+     //    Webcam.snap( function(data_uri) {
+     //   // display results in page
+     //   document.getElementById('results').innerHTML = 
+     //    '<img src="'+data_uri+'"/>';
+     //        } );
+     //    }
+    // Webcam.set({
+    //    width: 320,
+    //    height: 240,
+    //    image_format: 'jpeg',
+    //    jpeg_quality: 90
+    // });
 
         
    
