@@ -260,42 +260,42 @@
                     result.content.forEach(function(data){
                         __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
                             var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
-                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            var field = result.departmentId;
-                            let actions;
-                            switch (data.approvalStatus) {
-                            case "COMPLETED":
-                                actions = "<h5>This Docket is Completed</h5>";
-                                break;
-                            default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload pb_inv_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return pb_inv_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward pb_inv_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete pb_inv_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
-                                break;
-                            };
-                            $('.table_body').append("<tr>"+
-                                "<td></td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+senderId+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'>"+actions+"")
+                            __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
+                                var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                                var field = result.departmentId;
+                                let actions;
+                                switch (data.approvalStatus) {
+                                case "COMPLETED":
+                                    actions = "<h5>This Docket is Completed</h5>";
+                                    break;
+                                default:
+                                    actions = " <button class='btn btn-sm btn-primary btn_upload pb_inv_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return pb_inv_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward pb_inv_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete pb_inv_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                    break;
+                                };
+                                $('.table_body').append("<tr>"+
+                                    "<td></td>"+
+                                    "<td>"+data.docketNumber+"</td>"+
+                                    "<td>"+fo+"</td>"+
+                                    "<td>"+data.details+"</td>"+
+                                    "<td>"+senderId+"</td>"+
+                                    "<td>"+data.status+"</td>"+
+                                    "<td align='center' class='actions'>"+actions+"")
                             });
                         });
                     });
                     setTimeout(function () {
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "40%", "targets": 6 }
-                            ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
+                    // $(document).ready(function () {
+                    //     $('.table_head tbody tr').each(function (idx) {
+                    //        $(this).children("td:eq(0)").html(idx + 1);
+                    //     });
+                    //     var table = $('.table_head').DataTable({
+                    //         order: [[0, 'asc']],
+                    //         "columnDefs": [
+                    //             { "width": "40%", "targets": 6 }
+                    //         ]
+                    //     });
+                    //     $('.dataTables_length').addClass('bs-select');
+                    // }); 
 
                     $(".btn_complete").unbind("click").on("click", function(){
                         var id = $(this).data("id");
