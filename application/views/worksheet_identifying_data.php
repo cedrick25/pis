@@ -126,7 +126,7 @@
                                         Successfully Added  
                                 </div>
                                 <div style="margin-bottom: 30px; margin-right: 90px; text-align: right;">
-                                    <img class="align-content" id="client_photo" src="images/pis_logo.png" alt="" style="max-width: 10%;">
+                                    <img class="align-content" id="client_photo" src="images/logoo.jpg" alt="" style="max-width: 20%;">
                                 </div>
                                 <div style="margin-bottom: 30px; margin-right: 70px; text-align: right;">
                                     <input type="file" id="file-input" style="display: none">
@@ -282,13 +282,18 @@
         }
 
         var client_id = GetURLParameter('client_id');
+        var field_office_id = GetURLParameter('field_office_id');
         console.log(client_id)
 
-        $(document).ready(function() {
-        // __executeExternalGet('http://localhost:8080/file/view/'+client_id).done(function (result) {
-        //     console.log(result)
-        //     // $('#client_photo').attr('src', "/C:/Users/mejar/Downloads/kill%20(3).jpg");
-        // })
+        __executeExternalGet('http://localhost:8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
+            if (result.status != "ERROR") {
+                console.log(result.files.length)
+                if (result.files.length != 0) {
+                    console.log(result.files[0].id)
+                    $('#client_photo').attr('src', 'http://localhost:8080/file/view/'+result.files[0].id);
+                }
+            }
+        })
           // Listen for the file input change event
         $('#file-input').on('change', function() {
 
@@ -308,7 +313,7 @@
             // Set up an AJAX request to send the file data to the server
 
             $.ajax({
-              url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
+              url: "http://localhost:8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
               type: 'POST',
               data: formData,
               contentType: false,
@@ -358,16 +363,8 @@
                 {
                     navigator.getUserMedia({video:true },  streamWebCam ,throwError) ;
                 }
-
                     $('#vid').css('z-index','30');
                     $('#capture').css('z-index','20');
-                    // $('#snap').unbind("click").on("click", function(){
-                    //   canvas.width=video.clientWidth;
-                    //   canvas.height=video.clientHeight;
-                    //   context.drawImage(video,0,0);
-                    //   $('#vid').css('z-index','20');
-                    //   $('#capture').css('z-index','30');
-                    // });
                     $('#snap').unbind("click").on("click", function(){
                         var canvas = document.getElementById('canvas');
                         var context = canvas.getContext('2d');
@@ -403,7 +400,7 @@
                             formData.append('file', blob, 'image.jpg');
                             // Make an AJAX request to upload the image
                             $.ajax({
-                                url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+$.cookie('field_office_id'),
+                                url: "http://localhost:8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
                                 type: 'POST',
                                     data: formData,
                                     contentType: false,
@@ -466,21 +463,7 @@
               closecam();
             });
         });
-        // $('.btn_save').on('click', function() {
-        //     console.log("clicked save")
-        //     __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-        //         var officeId = result.departmentId;
-        //         // console.log(result.uuid)
-        //         var createdBy = result.uuid;
-
-        // var imgsave = $('#imageprev');
         
-
-        //     });
-        // });
-        
-        });
-
         $(".btn-next").unbind("click").on("click", function(){
 
             var identifyingData = {
