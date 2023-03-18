@@ -96,7 +96,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <a href="worksheet_family_background"> <button type="button" class="btn btn-success btn-confirm btn-sm">Save & Next</button> </a>
+                                <!-- <a href="worksheet_family_background"> <button type="button" class="btn btn-success btn-confirm btn-sm">Save & Next</button> </a> -->
+                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
                             </div>
                         </div>
@@ -203,6 +204,20 @@
             
             return d.promise();
         };
+
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
+
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
@@ -363,35 +378,32 @@
             //     explain                     : $(".explain").val(),
             // }
 
-            const records [];
-            const min_y = $(".agency");
-            const min_m = $(".cc_no");
-            const max_d = $(".offense");
-            const min_d = $(".when");
-            const max_y = $(".where");
-            const max_m = $(".disposition");
-            const civil_liability = $(".civil_liability");
+            const records = [];
+            const agency = $(".agency");
+            const cc_no = $(".cc_no");
+            const offense = $(".offense");
+            const when = $(".when");
+            const where = $(".where");
+            const disposition = $(".disposition");
 
-            for(var i = 0; i < records_input.length; i++){
+            for(var i = 0; i < agency.length; i++){
                 const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                list.civil_liability = $(civil_liability[i]).val();
-                sentence.push(list);
+                list.agency = $(agency[i]).val();
+                list.cc_no = $(cc_no[i]).val();
+                list.offense = $(offense[i]).val();
+                list.when = $(when[i]).val();
+                list.where = $(where[i]).val();
+                list.disposition = $(disposition[i]).val();
+                records.push(list);
             }
 
-            console.log(identifying_data)
+            console.log(records)
 
 
             
             var payload = {
             "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(presentOffense),
+            "jsonData"                  : JSON.stringify(records),
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : createdBy,
             }
@@ -399,22 +411,22 @@
             console.log(payload)
 
 
-            __executeExternalPost('http://localhost:8000/worksheet/update'+client_id,JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
+            // __executeExternalPost('http://localhost:8000/worksheet/update'+client_id,JSON.stringify(payload)).done(function (result) {
+            //     console.log(result);
+            //     if (result.status != "ERROR") {
+            //         $(".form-control").val('');
+            //         $('#success').show();
+            //         setTimeout(function () {
+            //             $('#success').hide();
+            //             setTimeout(function () {
+            //                 // window.location.reload(true);
+            //                 window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+            //             }, 500);
+            //         }, 2000);
+            //     }else{
+            //         alert("failed")
+            //     }
+            // })
         })
 
             })
