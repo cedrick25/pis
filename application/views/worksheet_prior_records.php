@@ -36,6 +36,40 @@
                                 <strong class="card-title">Present Offense</strong>
                             </div>
                             <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link idenData" href="" aria-selected="true">Identifying Data</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link presOff" href="" aria-selected="false">Present Offense</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active priorRec" id="priorRecordsTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link famBg" id="familyBackgroundTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link socioEco" id="socioEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link resEco" id="residenceEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link spouseChild" id="spouseChildrenTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link educHis" id="educationHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link empHis" id="employmentHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link envFac" id="environmentalFactorTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                    </li>
+                                </ul>
+                                <div style="margin-top: 30px;">
+                                </div>
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
@@ -336,46 +370,8 @@
         }
         __select();
 
-        __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-
-        // console.log(result.departmentId)
-        var officeId = result.departmentId;
-        // console.log(result.uuid)
-        var createdBy = result.uuid;
-
-            __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
 
             $(".btn-next").unbind("click").on("click", function(){
-
-            // const priorRecords = {
-            //     chargedWith                 : $(".charged").val(),
-            //     commisionPlace              : $(".p_commision").val(),
-            //     convictedOf                 : $(".convicted").val(),
-            //     dateCharged                 : $(".date_charged").val(),
-            //     dateCommitted               : $(".date_commited").val(),
-            //     dateConvicted               : $(".date_convicted").val(),
-            //     sentenceYear                : $(".s_yr").val(),
-            //     sentenceMonth               : $(".s_mo").val(),
-            //     sentenceDay                 : $(".s_day").val(),
-            //     judge                       : $(".judge").val(),
-            //     court                       : $(".court").val(),
-            //     arrestingOfficer            : $(".arresting").val(),
-            //     firstAddress                : $(".address_1").val(),
-            //     defenseCounsel              : $(".defense").val(),
-            //     secondAddress               : $(".address_2").val(),
-            //     prosecutor                  : $(".prosecutor").val(),
-            //     thirdAddress                : $(".address_3").val(),
-            //     offended                    : $(".offended").val(),
-            //     fourthAddress               : $(".address_4").val(),
-            //     coAccused                   : $(".ca").val(),
-            //     aggravatingCirsumstances    : $(".ac").val(),
-            //     mitigatingCircumstances     : $(".mc").val(),
-            //     extentParticipation         : $(".ep").val(),
-            //     custody                     : $(".custody").val(),
-            //     mannerofCommision           : $(".commision").val(),
-            //     motives                     : $(".motives").val(),
-            //     explain                     : $(".explain").val(),
-            // }
 
             const records = [];
             const agency = $(".agency");
@@ -384,8 +380,13 @@
             const when = $(".when");
             const where = $(".where");
             const disposition = $(".disposition");
+            const source = $(".source");
+            const date = $(".date");
+            const pos = $(".pos");
+            const particulars = $(".particulars");
 
             for(var i = 0; i < agency.length; i++){
+
                 const list = {};
                 list.agency = $(agency[i]).val();
                 list.cc_no = $(cc_no[i]).val();
@@ -393,44 +394,55 @@
                 list.when = $(when[i]).val();
                 list.where = $(where[i]).val();
                 list.disposition = $(disposition[i]).val();
+                list.source = $(source).val();
+                list.date = $(date).val();
+                list.pos = $(pos).val();
+                list.particulars = $(particulars).val();
                 records.push(list);
             }
 
-            console.log(records)
+            // console.log(records)
+            // console.log(info)
+
+            var priorRecords = {
+
+                priorRecord         : records,
+
+            }
+
+            console.log(priorRecords)
 
 
-            
             var payload = {
             "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(records),
+            "jsonData"                  : JSON.stringify(priorRecords),
+            "type"                      : "priorRecords",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : createdBy,
+            "createdBy"                 : $.cookie("uuid")
             }
 
             console.log(payload)
 
 
-            // __executeExternalPost('http://localhost:8000/worksheet/update'+client_id,JSON.stringify(payload)).done(function (result) {
-            //     console.log(result);
-            //     if (result.status != "ERROR") {
-            //         $(".form-control").val('');
-            //         $('#success').show();
-            //         setTimeout(function () {
-            //             $('#success').hide();
-            //             setTimeout(function () {
-            //                 // window.location.reload(true);
-            //                 window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
-            //             }, 500);
-            //         }, 2000);
-            //     }else{
-            //         alert("failed")
-            //     }
-            // })
-        })
-
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
             })
 
-        })
+
 
     } )( jQuery );
     </script>

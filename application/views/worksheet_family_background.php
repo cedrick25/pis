@@ -36,6 +36,40 @@
                                 <strong class="card-title">Identification Data</strong>
                             </div>
                             <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link idenData" href="" aria-selected="true">Identifying Data</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link presOff" href="" aria-selected="false">Present Offense</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link priorRec" id="priorRecordsTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active famBg" id="familyBackgroundTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link socioEco" id="socioEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link resEco" id="residenceEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link spouseChild" id="spouseChildrenTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link educHis" id="educationHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link empHis" id="employmentHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link envFac" id="environmentalFactorTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                    </li>
+                                </ul>
+                                <div style="margin-top: 30px;">
+                                </div>
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
@@ -343,7 +377,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Identifying Marks</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control sex select2">
+                                        <select class="form-control identifyingMarks select2">
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="MOLE">Mole</option>
                                             <option value="OTHERS">Others</option>
@@ -978,7 +1012,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <a href="worksheet_socio_economic"> <button type="button" class="btn btn-success btn-confirm btn-sm">Save & Next</button> </a>
+                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
                             </div>
                         </div>
@@ -1085,141 +1119,27 @@
             
             return d.promise();
         };
+
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
+
+
+        var client_id = GetURLParameter('client_id');
+        console.log(client_id)
        
         // $(".btn-reset").unbind("click").on("click", function(){
         //     $(".form-control").val('');
         // });
-
-        // $(".btn-confirm").unbind("click").on("click", function(){
-            
-        //     var payload = {
-        //         "type"                      : "SC_PR_CINV",
-        //         "docketNumber"              : "",
-        //         "docketSeries"              : $(".docket_series").val(),
-        //         "caseloadType"              : $(".task").val(),
-        //         "fieldOfficeId"             : $.cookie('field_office_id'),
-        //         "clientType"                : "PAROLEE",
-        //         "clientId"                  : "",
-        //         "firstName"                 : "",
-        //         "middleName"                : "",
-        //         "lastName"                  : "",
-        //         "suffixName"                : "",
-        //         "fullName"                  : "",
-        //         "pleaBargain"               : true,
-        //         "caseClassification"        : "",
-        //         "criminalCaseNumber"        : "",
-        //         "offense"                   : "",
-        //         "courtOfOrigin"             : "",
-        //         "courtOrderDate"            : "",
-        //         "investigatingOfficer"      : $(".inv_off").val(),
-        //         "receivedDateByPPO"         : $(".dr_ppo").val(),
-        //         "sentence"                  : "",
-        //         "manualDocket"              : true,
-        //         "referral"                  : true,
-        //         "referralData"              : "",
-        //         "remarks"                   : "",
-        //         "probationStartDate"        : "",
-        //         "probationYear"             : "",
-        //         "probationMonth"            : "",
-        //         "probationDay"              : "",
-        //         "reportType"                : "",
-        //         "prisonName"                : "",
-        //         "investigationReportSubmittedDate"          :"",
-        //         "ppoRecommendation"         : "",
-        //         "recommendationState"       : "",
-        //         "dateOfTransfer"            : "",
-        //         "transferredOfficeId"       : "",
-        //         "dateOrderReceivedFromTheBoard"             : "",
-        //         "boardOrder"                : "",
-        //         "boardOrderStatus"          : "",
-        //         "referringOfficeId"         : $(".ref_office").val(),
-        //         "dateCICAR"                 : $(".date_cic").val(),
-        //         "supervisingOfficer"        : "",
-        //         "probationEndDate"          : "",
-        //         "referralType"              : "",
-        //         "dateReportSubmittedToTheBoard"             : "",
-        //         "dateReportSubmittedToRDForTransferToOtherPPO": "",
-        //         "resolutionType"            : "",
-        //         "dateResolutionFromTheBoard": "",
-        //         "dateResolutionFromTheRDForTransfer"        : "",
-        //         "createdBy"                 : "",
-        //         "updatedBy"                 : "",
-        //         "legalAge"                  : true,
-        //         "militaryCourt"             : true,
-        //         "supervisionStartDate"      : "",
-        //         "supervisionEndDate"        : ""
-        //     }
-        //     console.log(payload)
-        //     __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-        //         console.log(result);
-        //         if (result.status != "ERROR") {
-        //             $(".form-control").val('');
-        //             $('#success').show();
-        //             setTimeout(function () {
-        //                 $('#success').hide();
-        //                 setTimeout(function () {
-        //                     window.location.reload(true);
-        //                 }, 500);
-        //             }, 2000);
-        //         }else{
-        //             alert("failed")
-        //         }
-        //     })
-        // })
-   
-        //     var __select = function(){
-        //         $('.ref_office').empty();
-
-        //         __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-        //             console.log(result)
-        //             if (result.status != "ERROR") {
-        //                 $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
-        //                 result.forEach(function(data){
-        //                     $('.ref_office').append(
-        //                         "<option value="+data.id+">"+data.name+"</option>");
-        //                 });
-
-        //             } else {
-        //                 console.log("failed fetching docket list")
-        //             }
-        //         })
-        //     }
-        //     __select();
-
-        // $(".list_siblings").html(`
-        //     <div class="list_sibling">
-        //         <div class="row form-group col-md-12">
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name"></div>
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship"></div>
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age"></div>
-        //             <div class="col-3 col-md-2">
-        //                 <select class="form-control sibling_sex select2">
-        //                     <option value="" selected disabled>Sex</option>
-        //                     <option value="FEMALE">Female</option>
-        //                     <option value="MALE">Male</option>
-        //                     <option value="LGBT">LGBT</option>
-        //                 </select>
-        //             </div>
-        //             <div class="col-3 col-md-2">
-        //                 <select class="form-control sibling_education select2">
-        //                     <option value="" selected disabled>Education</option>
-        //                     <option value="COLLEGE GRADUATE">College Graduate</option>
-        //                     <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
-        //                     <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
-        //                     <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
-        //                     <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
-        //                     <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
-        //                     <option value="ILLITERATE">No Education/Illiterate</option>
-        //                     <option value="POST-GRADUATE">Post-Graduate Studies</option>
-        //                     <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
-        //                     <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
-        //                     <option value="VOCATIONAL">Vocational</option>
-        //                 </select>
-        //             </div>
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation"></div>
-        //         </div>
-        //     </div>`
-        // );
 
         $(".add_more_siblings").unbind("click").on("click", function(){
             // console.log("clicked");
@@ -1310,6 +1230,113 @@
                 $(".motherDeceasedCause").hide();
             }
         });
+
+        $(".btn-next").unbind("click").on("click", function(){
+
+            const siblings = [];
+            const sibling_name = $(".sibling_name");
+            const relationship = $(".relationship");
+            const age = $(".age");
+            const sibling_sex = $(".sibling_sex");
+            const sibling_education = $(".sibling_education");
+            const sibling_occupation = $(".sibling_occupation");
+
+            for(var i = 0; i < sibling_name.length; i++){
+                
+                const list = {};
+                list.sibling_name = $(sibling_name[i]).val();
+                list.relationship = $(relationship[i]).val();
+                list.age = $(age[i]).val();
+                list.sibling_sex = $(sibling_sex[i]).val();
+                list.sibling_education = $(sibling_education[i]).val();
+                list.sibling_occupation = $(sibling_occupation[i]).val();
+                siblings.push(list);
+            }
+
+
+            var familyBG = {
+
+                siblings            : siblings,
+                sex                 : $(".sex").val(),
+                civilStatus         : $(".civilStatus").val(),
+                citizenship         : $(".citizenship").val(),
+                religion            : $(".religion").val(),
+                bday                : $(".bday").val(),
+                bplace              : $(".bplace").val(),
+                bprovince           : $(".bprovince").val(),
+                bcity               : $(".bcity").val(),
+                bplaceOthers        : $(".bplace_others").val(),
+                identifyingMarks    : $(".identifyingMarks").val(),
+                handicap            : $(".handicap").val(),
+                desc                : $(".desc").val(),
+                motherDeceased      : $(".mother_deceased").val(),
+                fatherName          : $(".father_name").val(),
+                fatherBday          : $(".father_bday").val(),
+                fatherBplace        : $(".father_bplace").val(),
+                fatherAdd           : $(".father_add").val(),
+                fatherCitizenship   : $(".father_citizenship").val(),
+                fatherReligion      : $(".father_religion").val(),
+                fatherEducation     : $(".father_education").val(),
+                fatherOccupation    : $(".father_occupation").val(),
+                fatherWork_add      : $(".father_work_add").val(),
+                fatherTelNo         : $(".father_tel_no").val(),
+                fatherIncome        : $(".father_income").val(),
+                fatherDeceased      : $(".father_deceased").val(),
+                fatherDeceasedCause : $(".father_deceased_cause").val(),
+                fatherDateDeceased  : $(".father_date_deceased").val(),
+
+                motherName          : $(".mother_name").val(),
+                motherBday          : $(".mother_bday").val(),
+                motherBplace        : $(".mother_bplace").val(),
+                motherAdd           : $(".mother_add").val(),
+                motherCitizenship   : $(".mother_citizenship").val(),
+                motherReligion      : $(".mother_religion").val(),
+                motherEducation     : $(".mother_education").val(),
+                motherOccupation    : $(".mother_occupation").val(),
+                motherWork_add      : $(".mother_work_add").val(),
+                motherTelNo         : $(".mother_tel_no").val(),
+                motherIncome        : $(".mother_income").val(),
+                motherDeceased      : $(".mother_deceased").val(),
+                motherDeceasedCause : $(".mother_deceased_cause").val(),
+                motherDateDeceased  : $(".mother_date_deceased").val(),
+
+            }
+
+            console.log(familyBG)
+
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(familyBG),
+            "type"                      : "familyBackground",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid")
+            }
+
+            console.log(payload)
+
+
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+
+            })
+
+
+
 
     } )( jQuery );
     </script>

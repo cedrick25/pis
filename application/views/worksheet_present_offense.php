@@ -38,36 +38,38 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="worksheet_identifying_data" aria-selected="false">Identifying Data</a>
+                                        <a class="nav-link idenData" href="#">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="worksheet_present_offense" role="tab" aria-selected="true">Present Offense</a>
+                                        <a class="nav-link active presOff" href="" aria-selected="false">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="priorRecordsTab" data-toggle="tab" href="#priorRecords" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                        <a class="nav-link priorRec" id="priorRecordsTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="familyBackgroundTab" data-toggle="tab" href="#familyBackground" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                        <a class="nav-link famBg" id="familyBackgroundTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="socioEconomicTab" data-toggle="tab" href="#socioEconomic" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                        <a class="nav-link socioEco" id="socioEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="residenceEconomicTab" data-toggle="tab" href="#residenceEconomics" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                        <a class="nav-link resEco" id="residenceEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="spouseChildrenTab" data-toggle="tab" href="#spouseChildren" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                        <a class="nav-link spouseChild" id="spouseChildrenTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="educationHistoryTab" data-toggle="tab" href="#educationHistory" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                        <a class="nav-link educHis" id="educationHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="employmentHistoryTab" data-toggle="tab" href="#employmentHistory" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                        <a class="nav-link empHis" id="employmentHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="environmentalFactorTab" data-toggle="tab" href="#environmentalFactor" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                        <a class="nav-link envFac" id="environmentalFactorTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
                                     </li>
                                 </ul>
+                                <div style="margin-top: 30px;">
+                                </div>
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
@@ -304,7 +306,7 @@
         console.log(client_id)
 
 
-            $(".btn-next").unbind("click").on("click", function(){
+        $(".btn-next").unbind("click").on("click", function(){
 
             var presentOffense = {
                 chargedWith                 : $(".charged").val(),
@@ -369,77 +371,40 @@
         })
 
 
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
+        $(".btn-reset").unbind("click").on("click", function(){
+            $(".form-control").val('');
+        });
 
-        // $(document).ready(function() {
-        //   // Listen for the file input change event
-        //   $('#file-input').on('change', function() {
-        //     var imgavat = $('#client_photo');
-        //     var file = this.files[0];
-        //     // Create a FormData object to store the file data
-        //     var formData = new FormData();
-        //     formData.append('file', file);
-        //     // Set up an AJAX request to send the file data to the server
-        //     $.ajax({
-        //       url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+officeId, // Replace with the path to your server-side script
-        //       type: 'POST',
-        //       data: formData,
-        //       contentType: false,
-        //       processData: false,
-        //       success: function(response) {
-        //         // Handle the server response here
-        //         console.log(response);
-        //       },
-        //       error: function(xhr, status, error) {
-        //         // Handle any errors here
-        //         console.log(error);
-        //       }
-        //     });
-        //     if (this.files[0]) {   
-        //         var reader  = new FileReader();
-                
-        //         reader.readAsDataURL(this.files[0]);
-                
-        //         reader.onloadend = function () {
-        //             imgavat.attr('src', reader.result);
-        //         };
-        //     }
-
-        //   });
-          
-        //   // Listen for the upload button click event
-        //   $('.btn-upload').on('click', function() {
-        //     console.log("clicked")
-        //     // var imgavat = $('#client_photo');
-        //     // // Trigger the file input click event to open the file selector dialog
-        //     // // $('#file-input').click();
-        //     // // image.src = URL.createObjectURL(url);
-            
-        //   });
-        // });
-
-        
-   
-        //     var __select = function(){
-        //         $('.ref_office').empty();
-
-        //         __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-        //             console.log(result)
-        //             if (result.status != "ERROR") {
-        //                 $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
-        //                 result.forEach(function(data){
-        //                     $('.ref_office').append(
-        //                         "<option value="+data.id+">"+data.name+"</option>");
-        //                 });
-
-        //             } else {
-        //                 console.log("failed fetching docket list")
-        //             }
-        //         })
-        //     }
-        //     __select();
+        $(".idenData").unbind("click").on("click", function(){
+            console.log("clicked")
+                __executeExternalGet('http://localhost:8000/worksheet/identifyingData/'+client_id).done(function (result) {
+                    console.log("==========")
+                    console.log(result)
+                    console.log("==========")
+                    if (result.status != "ERROR") {
+                        window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        // result.files.forEach(function(data){
+                        //     let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Download</button>";
+                        //     $('.table_body').append("<tr>"+
+                        //         "<td>"+data.id+"</td>"+
+                        //         "<td>"+data.fileName+"</td>"+
+                        //         "<td align='center' class='actions'> "+actions+"")
+                        // });
+                        // $(document).ready(function () {
+                        //     $('.table_head tbody tr').each(function (idx) {
+                        //        $(this).children("td:eq(0)").html(idx + 1);
+                        //     });
+                        //     var table = $('.table_head').DataTable({
+                        //         order: [[0, 'asc']],
+                        //         // "columnDefs": [
+                        //         //     { "width": "20%", "targets": 5 }
+                        //         // ]
+                        //     });
+                        //     $('.dataTables_length').addClass('bs-select');
+                        // });               
+                    }
+                })
+        });
 
     } )( jQuery );
     </script>
