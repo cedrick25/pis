@@ -96,7 +96,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <a href="worksheet_family_background"> <button type="button" class="btn btn-success btn-confirm btn-sm">Save & Next</button> </a>
+                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
                             </div>
                         </div>

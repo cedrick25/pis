@@ -87,6 +87,40 @@
                                 <strong class="card-title">Identifying Data</strong>
                             </div>
                             <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="worksheet_identifying_data" aria-selected="true">Identifying Data</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="worksheet_present_offense" role="tab" aria-controls="supervision" aria-selected="false">Present Offense</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="priorRecordsTab" data-toggle="tab" href="#priorRecords" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="familyBackgroundTab" data-toggle="tab" href="#familyBackground" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="socioEconomicTab" data-toggle="tab" href="#socioEconomic" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="residenceEconomicTab" data-toggle="tab" href="#residenceEconomics" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="spouseChildrenTab" data-toggle="tab" href="#spouseChildren" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="educationHistoryTab" data-toggle="tab" href="#educationHistory" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="employmentHistoryTab" data-toggle="tab" href="#employmentHistory" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="environmentalFactorTab" data-toggle="tab" href="#environmentalFactor" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                    </li>
+                                </ul>
+                                <div style="margin-top: 30px;">
+                                </div>
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
@@ -463,6 +497,7 @@
             var payload = {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(identifyingData),
+            "type"                      : "identifyingData",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
             }
@@ -479,7 +514,7 @@
                         setTimeout(function () {
                         // window.location.reload(true);
                         console.log(client_id)
-                        // window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{

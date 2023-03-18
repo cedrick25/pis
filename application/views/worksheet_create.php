@@ -103,6 +103,21 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="socioEconomicTab" data-toggle="tab" href="#socioEconomic" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="residenceEconomicTab" data-toggle="tab" href="#residenceEconomics" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="spouseChildrenTab" data-toggle="tab" href="#spouseChildren" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="educationHistoryTab" data-toggle="tab" href="#educationHistory" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="employmentHistoryTab" data-toggle="tab" href="#employmentHistory" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="environmentalFactorTab" data-toggle="tab" href="#environmentalFactor" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                 	<div class="tab-pane fade show active" id="identifyingData" role="tabpanel" aria-labelledby="home-tab">
@@ -1327,8 +1342,645 @@
 		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control explain"></textarea></div>
 		                                </div>
 		                            </div>
+		                            <div class="tab-pane fade" id="residenceEconomics" role="tabpanel" aria-labelledby="profile-tab">
+		                            	<div style="margin-top: 30px;">
+		                                </div>
+                                        <fieldset class="row col col-md-12">
+                                        <legend>Residence</legend>
+                                        <div class="residence">
+                                        </div>
+                                        <div class="row form-group col-md-6">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stability of Residence</label></div>
+                                            <div class="col-12 col-md-9">
+                                                <select class="form-control res_stability select2">
+                                                    <option value="" selected disabled>-- select one --</option>
+                                                    <option value="FREQUENT CHANGE">Frequent Change</option>
+                                                    <option value="NO STABILITY">No Stability</option>
+                                                    <option value="OCCASIONAL CHANGE">Occasional Change</option>
+                                                    <option value="STABLE">Stable</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group col-md-6">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Residence</label></div>
+                                            <div class="col-12 col-md-9">
+                                                <select class="form-control residence_type select2">
+                                                    <option value="" selected disabled>-- select one --</option>
+                                                    <option value="INFORMAL SETTLER">Informal Settler</option>
+                                                    <option value="OWNED">Owned</option>
+                                                    <option value="OWNED BY PARENTS">Owned by Parents</option>
+                                                    <option value="RENTED">Rented</option>
+                                                    <option value="USED FREE">Used Free</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group col-md-6">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Home Condition</label></div>
+                                            <div class="col-12 col-md-9">
+                                                <select class="form-control res_home_cond select2">
+                                                    <option value="" selected disabled>-- select one --</option>
+                                                    <option value="FAIR">Fair</option>
+                                                    <option value="POOR">Poor</option>
+                                                    <option value="SATISFACTORY">Satisfactory</option>
+                                                    <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="add_more_residence btn btn-success btn-sm float-right">Add more</button>
+                                        </div>
+                                		</fieldset>
+	                                	<fieldset class="row col col-md-12">
+	                                        <legend>Economic Conditions</legend>
+	                                        <div class="economic_conditions">
+	                                        </div>
+	                                        <div class="col-12">
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Status</label></div>
+	                                                <div class="col-12 col-md-9">
+	                                                    <select class="form-control fam_status select2">
+	                                                        <option value="" selected disabled>-- select one --</option>
+	                                                        <option value="ADEQUATE">Adequate</option>
+	                                                        <option value="BELOW POVERTY">Below Poverty Lines</option>
+	                                                        <option value="INADEQUATE">Inadequate</option>
+	                                                        <option value="MORE ADEQAUTE">More than adequate</option>
+	                                                    </select>
+	                                                </div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Breadwinner</label></div>
+	                                                <div class="col-12 col-md-9">
+	                                                    <select class="form-control fam_breadwinner select2">
+	                                                        <option value="" selected disabled>-- select one --</option>
+	                                                        <option value="CLIENT">Client</option>
+	                                                        <option value="CLIENT & SPOUSE">Client and Spouse</option>
+	                                                        <option value="CLIENT & SPOUSE & CHILD">Client,Spouse and Children</option>
+	                                                        <option value="OTHERS">Others</option>
+	                                                        <option value="SPOUSE">Spouse</option>
+	                                                    </select>
+	                                                </div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Dependants</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Ceremony" class="form-control no_dependants"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Dependants</label></div>
+	                                                <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control dependants"></textarea></div>
+	                                            </div>
+
+	                                        </div>
+	                                	</fieldset>
+	                                	<fieldset class="row col col-md-12">
+	                                        <legend>Major Family Problems</legend>
+	                                        <div class="economic_conditions">
+	                                        </div>
+	                                        <div class="col-12">
+
+	                                            <div class="row form-group col-md-12">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Family Problems</label></div>
+	                                                <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control maj_fam_prob"></textarea></div>
+	                                            </div>
+	                                            
+	                                            <div class="row form-group col-md-12">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Comments</label></div>
+	                                                <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control fam_comments"></textarea></div>
+	                                            </div>
+
+	                                        </div>
+	                                	</fieldset>
+		                            </div>
+		                            <div class="tab-pane fade" id="spouseChildren" role="tabpanel" aria-labelledby="profile-tab">
+		                            	<div style="margin-top: 30px;">
+		                                </div>
+                                    	<div class="row form-group col-md-6">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Civil Status</label></div>
+		                                    <div class="col-12 col-md-10">
+		                                        <select class="form-control family_rel select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="ANNULLED">Annulled</option>
+		                                            <option value="DIVORCED">Divorced</option>
+		                                            <option value="LEGALLY SEPERATED">Legally Seperated</option>
+		                                            <option value="MARRIED">Married</option>
+		                                            <option value="SAME SEX RELATIONSHIP">Same Sex Relationship</option>
+		                                            <option value="SINGLE">Single</option>
+		                                            <option value="SOLO PARENT">Solo Parent</option>
+		                                            <option value="WIDOW/WIDOWER">Widow/Widower</option>
+		                                            <option value="WITH COMMON-LAW SPOUSE">With Common-Law Spouse</option>
+		                                        </select>
+		                                    </div>
+	                                	</div>
+                                		<fieldset class="row col col-md-12">
+	                                        <legend>SPOUSE</legend>
+	                                        <div class="spouse">
+	                                        </div>
+	                                        <div class="col-12">
+	                                            <div class="row form-group col-md-12">
+	                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
+	                                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control spouse_fname"></div>
+	                                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control spouse_mname"></div>
+	                                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control spouse_lname"></div>
+	                                                <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Extended Name" class="form-control spouse_ename"></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-12">
+	                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Present Address</label></div>
+	                                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control explain"></textarea></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Region</label></div>
+	                                                <div class="col-12 col-md-10">
+	                                                    <select class="form-control spouse_region select2">
+	                                                        <option value="" selected disabled>-- select one --</option>
+	                                                        <option value="CAR">CAR</option>
+	                                                        <option value="NCR">NCR</option>
+	                                                        <option value="REGION I">REGION I</option>
+	                                                        <option value="REGION II">REGION II</option>
+	                                                        <option value="REGION III">REGION III</option>
+	                                                        <option value="REGION IV-A">REGION IV-A</option>
+	                                                        <option value="REGION IV-B">REGION IV-B</option>
+	                                                        <option value="REGION V">REGION V</option>
+	                                                        <option value="REGION VI">REGION VI</option>
+	                                                        <option value="REGION VII">REGION VII</option>
+	                                                        <option value="REGION VIII">REGION VIII</option>
+	                                                        <option value="REGION IX">REGION IX</option>
+	                                                        <option value="REGION X">REGION X</option>
+	                                                        <option value="REGION XI">REGION XI</option>
+	                                                        <option value="REGION XII">REGION XII</option>
+	                                                        <option value="REGION XIII">REGION XIII</option>
+	                                                    </select>
+	                                                </div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Date</label></div>
+	                                                <div class="col-12 col-md-10"><input type="date" class="form-control spouse_bday"></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Province</label></div>
+	                                                <div class="col-12 col-md-10">
+	                                                    <select class="form-control sibling_sex select2">
+	                                                        <option value="" selected disabled>Sex</option>
+	                                                        <option value="X">X</option>
+	                                                        <option value="Y">Y</option>
+	                                                        <option value="Z">Z</option>
+	                                                    </select>
+	                                                </div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Work Address</label></div>
+	                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Address" class="form-control spouse_work_add"></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Municipality</label></div>
+	                                                <div class="col-12 col-md-10">
+	                                                    <select class="form-control sibling_sex select2">
+	                                                        <option value="" selected disabled>-- select one --</option>
+	                                                        <option value="X">X</option>
+	                                                        <option value="Y">Y</option>
+	                                                        <option value="Z">Z</option>
+	                                                    </select>
+	                                                </div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Nature of Ceremony</label></div>
+	                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Ceremony" class="form-control spouse_ceremony"></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
+	                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Birth Place" class="form-control spouse_bplace_others"></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Occupation</label></div>
+	                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Occupation" class="form-control spouse_occupation"></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Marriage Date</label></div>
+	                                                <div class="col-12 col-md-10"><input type="date" class="form-control date_marriage"></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                
+	                                            </div>
+	                                            <div class="row form-group col-md-12">
+	                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Remarks</label></div>
+	                                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control spouse_remarks"></textarea></div>
+	                                            </div>
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Spouse Relationship</label></div>
+	                                                <div class="col-12 col-md-10">
+	                                                    <select class="form-control spouse_relationship select2">
+	                                                        <option value="" selected disabled>-- select one --</option>
+	                                                        <option value="FAIR">Fair</option>
+	                                                        <option value="POOR">Poor</option>
+	                                                        <option value="SATISFACTORY">Satisfactory</option>
+	                                                        <option value="VERY SATISFACTORY">Very Satisfactory</option>
+	                                                    </select>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                	</fieldset>
+		                                <fieldset class="row col col-md-12">
+	                                        <legend>Children</legend>
+	                                        <div class="children">
+	                                        </div>
+	                                        <div class="col-12">
+	                                            <button type="button" class="add_more_child btn btn-success btn-sm float-right">Add more</button>
+	                                        </div>
+		                                </fieldset>
+		                            </div>
+		                            <div class="tab-pane fade" id="educationHistory" role="tabpanel" aria-labelledby="profile-tab">
+		                            	<div style="margin-top: 30px;">
+		                                </div>
+		                                <fieldset class="row form-group col col-md-12">
+	                                        <legend>Elementary</legend>
+	                                        <div class="elementary_education">
+	                                        </div>
+	                                        <div class="col-12">
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_lvl"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_high"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_where"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+	                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control elem_date"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_award"></div>
+	                                            </div>
+
+	                                        </div>
+                                		</fieldset>
+                                		<fieldset class="row form-group col col-md-12">
+	                                        <legend>Secondary</legend>
+	                                        <div class="secondary_education">
+	                                        </div>
+	                                        <div class="col-12">
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_lvl"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_high"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_where"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+	                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control sec_date"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_award"></div>
+	                                            </div>
+
+	                                        </div>
+                                		</fieldset>
+                                		<fieldset class="row form-group col col-md-12">
+	                                        <legend>College</legend>
+	                                        <div class="college_education">
+	                                        </div>
+	                                        <div class="col-12">
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_lvl"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_high"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_where"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+	                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control college_date"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_award"></div>
+	                                            </div>
+
+	                                        </div>
+                                		</fieldset>
+                                		<fieldset class="row form-group col col-md-12">
+	                                        <legend>Post College</legend>
+	                                        <div class="pcollege_education">
+	                                        </div>
+	                                        <div class="col-12">
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_lvl"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_high"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_where"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+	                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control pcollege_date"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_award"></div>
+	                                            </div>
+
+	                                        </div>
+                                		</fieldset>
+                                		<fieldset class="row col form-group col-md-12">
+	                                        <legend>Vocational</legend>
+	                                        <div class="vocational_education">
+	                                        </div>
+	                                        <div class="col-12">
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_lvl"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_high"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_where"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+	                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control voc_date"></div>
+	                                            </div>
+
+	                                            <div class="row form-group col-md-6">
+	                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+	                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_award"></div>
+	                                            </div>
+
+	                                        </div>
+                                		</fieldset>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Unschooled</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control unschool select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="LITERATE">Unschooled but Literate</option>
+		                                            <option value="ILLITERATE">Illiterate</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Conduct in School</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control conduct select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="FAIR">Fair</option>
+		                                            <option value="POOR">Poor</option>
+		                                            <option value="SATISFACTORY">Satisfactory</option>
+		                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control fam_comments"></textarea></div>
+		                                </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="employmentHistory" role="tabpanel" aria-labelledby="profile-tab">
+		                            	<div style="margin-top: 30px;">
+		                                </div>
+		                                <fieldset class="row form-group col col-md-12">
+	                                        <legend>Employment History</legend>
+	                                        <div class="emp_history">
+	                                        </div>
+	                                        <div class="col-12">
+	                                            <div class="col-12">
+	                                                <button type="button" class="add_more_emp btn btn-success btn-sm float-right">Add more</button>
+	                                            </div>
+	                                        </div>
+                                		</fieldset>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Status of Employment</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control emp_status select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="REGULAR">Regular</option>
+		                                            <option value="IRREGULAR">Irregular</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
+		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specStatus"></textarea></div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Means of Support</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control emp_support select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="CHILDREN SUPPORT">Children Support</option>
+		                                            <option value="OTHERS">Others</option>
+		                                            <option value="PENSION">Pension</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
+		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specSupp"></textarea></div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employable Skills</label></div>
+		                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_skills"></div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Other Source of income</label></div>
+		                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_otherSource"></div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Health</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control emp_health select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="FAIR">Fair</option>
+		                                            <option value="POOR">Poor</option>
+		                                            <option value="SATISFACTORY">Satisfactory</option>
+		                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainHealth"></textarea></div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Previous Treatment</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control emp_treatment select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="NONE">None</option>
+		                                            <option value="YES">Yes</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6 hosp_name" style="display:none;">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Hospital Name/s</label></div>
+		                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_hosName"></div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6 date_hosp" style="display:none;">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date/s Hospitalized</label></div>
+		                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_dateHos"></div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6 use_drug" style="display:none;">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Use of Alcohol/Drugs</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control emp_useDrug select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="NO">No</option>
+		                                            <option value="OCCASIONALLY">Occasionally</option>
+		                                            <option value="YES">Yes</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+
+		                                <div class="row form-group col-md-6 drug_explain" style="display:none;">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainDrug"></textarea></div>
+		                                </div>
+                                    </div>
+		                            <div class="tab-pane fade" id="environmentalFactor" role="tabpanel" aria-labelledby="profile-tab">
+		                                <div style="margin-top: 30px;">
+		                                </div>
+		                                <div class="row form-group col-md-9">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
+		                                    <div class="col-12 col-md-4">
+		                                        <select class="form-control neighborhood select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="RURAL">Rural</option>
+		                                            <option value="URBAN">Urban</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-9">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
+		                                    <div class="col-12 col-md-4">
+		                                        <select class="form-control area select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="NON-SLUM AREA">Non-Slum Area</option>
+		                                            <option value="SLUM-AREA">Slum Area</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-9">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Describe</label></div>
+		                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control neighborhoodDescribe"></textarea></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Neighborhood Criminality</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control home_cond select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="HIGH">High</option>
+		                                            <option value="LOW">Low</option>
+		                                            <option value="MINIMAL">Minimal</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-9">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Explain</label></div>
+		                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control criminalityExplain"></textarea></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Community Acceptance</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control comAcceptance select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="FAIR">Fair</option>
+		                                            <option value="POOR">Poor</option>
+		                                            <option value="SATISFACTORY">Satisfactory</option>
+		                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-9">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
+		                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control acceptanceSpecify"></textarea></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Peer Group Relationship</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control home_cond select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="DESIRABLE">Desirable</option>
+		                                            <option value="UNDESIRABLE WITH POTENTIAL">Undesirable with Potential for Improvement</option>
+		                                            <option value="UNDESIRABLE WITH NO POTENTIAL">Undesirable with no Potential for Improvement</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-9">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
+		                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control peerSpecify"></textarea></div>
+		                                </div>
+		                            </div>
                                 </div>
                             </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm btn-resetId">Reset</button>
+                            <button type="button" class="btn btn-success btn-sm  btn-identifyingData">Save & Next</button>
+<!--                             <button type="button" class="btn btn-secondary btn-sm btn-resetPo">Reset</button>
+                            <button type="button" class="btn btn-success btn-sm  btn-presentOffense">Save & Next</button> -->
+                            <!-- <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button> -->
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1341,17 +1993,15 @@
 
 
 <script type="text/javascript">
+
     ( function ( $ ) {
         var ___ctx = '';
-
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
-
         var __getContext = function() {
             return ___ctx;
         };
-
         var __executeExternalGet = function(path, customLoader) {
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
@@ -1431,6 +2081,7 @@
             
             return d.promise();
         };
+
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -1444,265 +2095,11 @@
             }
         }
 
-
         var client_id = GetURLParameter('client_id');
-
         console.log(client_id)
 
-        console.log($.cookie("uuid"));
 
-        $(".btn-next").unbind("click").on("click", function(){
-
-            var identifyingData = {
-                name                : $(".data_name").val(),
-                interview           : $(".data_interview").val(),
-                alias               : $(".alias").val(),
-                trueName            : $(".true_name").val(),
-                presentAddress      : $(".present_add").val(),
-                permanentAdress     : $(".permanent_add").val()
-            }
-
-            console.log(identifyingData)
-
-
-            
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(identifyingData),
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
-            }
-
-            console.log(payload)
-
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                        // window.location.reload(true);
-                        console.log(client_id)
-                        window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
-        })
-
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
-
-    	__executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-        // console.log(result.departmentId)
-        var officeId = result.departmentId;
-        // console.log(result.uuid)
-        var createdBy = result.uuid;
-        $(document).ready(function() {
-        // __executeExternalGet('http://localhost:8080/file/view/'+client_id).done(function (result) {
-        //     console.log(result)
-        //     // $('#client_photo').attr('src', "/C:/Users/mejar/Downloads/kill%20(3).jpg");
-        // })
-          // Listen for the file input change event
-        $('#file-input').on('change', function() {
-
-            var imgavat = $('#client_photo');
-
-            console.log(imgavat);
-
-            var file = this.files[0];
-
-            console.log(file);
-
-            // Create a FormData object to store the file data
-            var formData = new FormData();
-
-            formData.append('file', file);
-
-            // Set up an AJAX request to send the file data to the server
-
-            $.ajax({
-              url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
-              type: 'POST',
-              data: formData,
-              contentType: false,
-              processData: false,
-              success: function(response) {
-                // Handle the server response here
-                console.log(response);
-              },
-              error: function(xhr, status, error) {
-                // Handle any errors here
-                console.log(error);
-              }
-            });
-
-            if (this.files[0]) {   
-                var reader  = new FileReader();
-                
-                reader.readAsDataURL(this.files[0]);
-                
-                reader.onloadend = function () {
-                    imgavat.attr('src', reader.result);
-                };
-            }
-
-        });
-
-        $('.btn-upload').on('click', function() {
-            console.log("clicked")
-            $('#file-input').click();
-        });
-
-        // this function is for take photo
-        $(document).ready(function() {
-            $('#control').hide();
-            $('#video').resize(function(){
-                $('#cont').height($('#video').height());
-                  $('#cont').width($('#video').width());
-                  $('#control').height($('#video').height()*0.1);
-                  $('#control').css('top',$('#video').height()*0.9 );
-                    $('#control').width($('#video').width());
-                    $('#control').show();
-            });
-            function opencam(){
-                $("#wrap").show()
-                navigator.getUserMedia= navigator.getUserMedia ||   navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia ;
-                if(navigator.getUserMedia)
-                {
-                    navigator.getUserMedia({video:true },  streamWebCam ,throwError) ;
-                }
-
-                    $('#vid').css('z-index','30');
-                    $('#capture').css('z-index','20');
-                    // $('#snap').unbind("click").on("click", function(){
-                    //   canvas.width=video.clientWidth;
-                    //   canvas.height=video.clientHeight;
-                    //   context.drawImage(video,0,0);
-                    //   $('#vid').css('z-index','20');
-                    //   $('#capture').css('z-index','30');
-                    // });
-                    $('#snap').unbind("click").on("click", function(){
-                        var canvas = document.getElementById('canvas');
-                        var context = canvas.getContext('2d');
-                        var video = document.getElementById('video');
-                        context.drawImage(video, 0, 0, canvas.width=video.clientWidth, canvas.height=video.clientHeight);
-                        $('#vid').css('z-index','20');
-                        $('#capture').css('z-index','30');
-
-                        $('.btn_confirm').unbind("click").on("click", function(){
-                            console.log("clicked confirm ")
-                            var dataURL = canvas.toDataURL();
-                            var blob = dataURItoBlob(dataURL);
-                              // Call a function to handle the blob object
-                            handleBlob(blob);
-                        });
-                        // Function to convert data URL to a Blob object
-                        function dataURItoBlob(dataURI) {
-                          var byteString = atob(dataURI.split(',')[1]);
-                          var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-                          var ab = new ArrayBuffer(byteString.length);
-                          var ia = new Uint8Array(ab);
-                          for (var i = 0; i < byteString.length; i++) {
-                            ia[i] = byteString.charCodeAt(i);
-                          }
-                          return new Blob([ab], { type: mimeString });
-                        }
-
-                        function handleBlob(blob) {
-                          // Create a new FormData object
-                          console.log(blob);
-                            var formData = new FormData();
-                            // Append the blob object to the FormData object
-                            formData.append('file', blob, 'image.jpg');
-                            // Make an AJAX request to upload the image
-                            $.ajax({
-                                url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+$.cookie('field_office_id'),
-                                type: 'POST',
-                                    data: formData,
-                                    contentType: false,
-                                    processData: false,
-                                    success: function(response) {
-                                        // Handle the server response here
-                                        console.log(response);
-                                        $("#success_photo_capture").show()
-                                        setTimeout(function () {
-                                            window.location.reload(true);
-                                        }, 1000);
-                                    },
-                                    error: function(xhr, status, error) {
-                                        // Handle any errors here
-                                        console.log(error);
-                                    }
-                            });
-                        }
-                    });
-
-                    $('#retake').unbind("click").on("click", function(){
-                        $('#vid').css('z-index','30');
-                        $('#capture').css('z-index','20');
-                    });
-            }
-            function closecam(){
-                $("#wrap").hide()
-                video.pause();
-                try {
-                    video.srcObject = null;
-                } catch (error) {
-                    video.src =null;
-                }
-              var track = strr.getTracks()[0];  // if only one media track
-              // ...
-              track.stop();
-            }
-              var video= document.getElementById('video');
-              var canvas= document.getElementById('canvas');
-              var context= canvas.getContext('2d');
-              var strr;
-              function streamWebCam(stream){
-              const  mediaSource = new MediaSource(stream);
-              try {
-                  video.srcObject = stream;
-                } catch (error) {
-                  video.src = URL.createObjectURL(mediaSource);
-                }
-                video.play();
-                strr=stream;
-              }
-              function throwError(e){
-                alert(e.name);
-              }
-            $('#open').unbind("click").on("click", function(){
-              opencam();
-               $('#control').show();
-            });
-            $('#cancel_modal').unbind("click").on("click", function(){
-              closecam();
-            });
-        });
-        // $('.btn_save').on('click', function() {
-        //     console.log("clicked save")
-        //     __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-        //         var officeId = result.departmentId;
-        //         // console.log(result.uuid)
-        //         var createdBy = result.uuid;
-
-        // var imgsave = $('#imageprev');
-        
-
-        //     });
-        // });
-        
-        });
-        
-    })
-
-        $(".btn-next").unbind("click").on("click", function(){
+        $(".btn-identifyingData").unbind("click").on("click", function(){
 
             var identifyingData = {
                 name                : $(".data_name").val(),
@@ -1718,6 +2115,7 @@
             var payload = {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(identifyingData),
+            "type"						: "identifyingData",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
             }
@@ -1733,7 +2131,6 @@
                         $('#success').hide();
                         setTimeout(function () {
                         // window.location.reload(true);
-                        console.log(client_id)
                         // window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
                         }, 500);
                     }, 2000);
@@ -1742,6 +2139,10 @@
                 }
             })
         })
+       
+
+
 
     } )( jQuery );
     </script>
+

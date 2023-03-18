@@ -22,9 +22,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('login');
 	}
-	public function supervision_manual()
+	public function worksheet_create()
 	{
-		$this->load->view('supervision_manual');
+		$this->load->view('worksheet_create');
 	}
 	public function dashboard()
 	{
