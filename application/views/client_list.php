@@ -260,7 +260,7 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
+                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
                         $('.table_body_pb').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
@@ -283,8 +283,9 @@
                         $('.dataTables_length').addClass('bs-select');
                     });
                     $(".btn_worksheet").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        var client_id   = $(this).data("id");
+                        var foid        = $(this).data("foid");
+                        window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
                     })
                     $(".btn_update").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");

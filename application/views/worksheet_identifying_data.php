@@ -250,68 +250,6 @@
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
 
-
-
-        __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-
-        // console.log(result.departmentId)
-        var officeId = result.departmentId;
-        // console.log(result.uuid)
-        var createdBy = result.uuid;
-
-        $(".btn-next").unbind("click").on("click", function(){
-
-            var identifyingData = {
-                name                : $(".data_name").val(),
-                interview           : $(".data_interview").val(),
-                alias               : $(".alias").val(),
-                trueName            : $(".true_name").val(),
-                presentAddress      : $(".present_add").val(),
-                permanentAdress     : $(".permanent_add").val()
-            }
-
-            console.log(identifyingData)
-
-
-            
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(identifyingData),
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : createdBy,
-            }
-
-            console.log(payload)
-
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                        // window.location.reload(true);
-                        console.log(client_id)
-                        window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
-        })
-
-        })
-
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
-    __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-        // console.log(result.departmentId)
-        var officeId = result.departmentId;
-        // console.log(result.uuid)
-        var createdBy = result.uuid;
         $(document).ready(function() {
         // __executeExternalGet('http://localhost:8080/file/view/'+client_id).done(function (result) {
         //     console.log(result)
@@ -508,8 +446,6 @@
         // });
         
         });
-        
-    })
 
         $(".btn-next").unbind("click").on("click", function(){
 
