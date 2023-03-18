@@ -506,6 +506,10 @@
 
         //     });
         // });
+        
+        });
+        
+    })
 
         $(".btn-next").unbind("click").on("click", function(){
 

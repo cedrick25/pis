@@ -7,379 +7,1341 @@
     
     <!-- /#left-panel -->
 
-    	<!-- right panel start -->
-        <div id="right-panel" class="right-panel">
+    <div class="modal fade" id="completeModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Complete Docket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Complete Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to Complete this Docket <b><span class="docket"></span></b>? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_complete_confirm btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="completeModal_sup" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Complete Docket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success_sup" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Complete Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to Complete this Docket <b><span class="docket_sup"></span></b>? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_complete_confirm_sup btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="right-panel" class="right-panel">
 
-        	<!-- Header-->
-	        <?php $this->load->view('templates/avatar.php'); ?> 
-	        <!-- /header -->
+        <!-- Header-->
+        <?php $this->load->view('templates/avatar.php'); ?> 
+        <!-- /header -->
 
-		        <div class="breadcrumbs">
-		            <div class="col-sm-4">
-		                <div class="page-header float-left">
-		                    <div class="page-title">
-		                        <h1>Create</h1>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="col-sm-8">
-		                <div class="page-header float-right">
-		                    <div class="page-title">
-		                        <ol class="breadcrumb text-right">
-		                            <li><a href="dashboard">Dashboard</a></li>
-		                            <li><a href="supervision_docketing">Supervision Docket</a></li>
-		                            <li class="active">Create</li>
-		                        </ol>
-		                    </div>
-		                </div>
-		            </div>
-	        	</div>
+        <div class="breadcrumbs">
+            <div class="col-sm-8">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="dashboard">Dashboard</a></li>
+                            <li><a href="received">Docket Routing</a></li>
+                            <li class="active">Received</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	        <!-- content -->
-	        	<div class="content mt-3">
-            		<div class="animated fadeIn">
-                		<div class="row">
-                  			<div class="col-lg-12">
-                        		<div class="card">
-		                            <div class="card-header">
-		                                <strong class="card-title">Create Supervision Docket</strong>
-		                                <div id="prompt">
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Received List</strong>
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="identifyingDataTab" data-toggle="tab" href="#identifyingData" role="tab" aria-controls="investigation" aria-selected="true">Identifying Data</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="presentOffenseTab" data-toggle="tab" href="#presentOffense" role="tab" aria-controls="supervision" aria-selected="false">Present Offense</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="priorRecordsTab" data-toggle="tab" href="#priorRecords" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="familyBackgroundTab" data-toggle="tab" href="#familyBackground" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="socioEconomicTab" data-toggle="tab" href="#socioEconomic" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content pl-3 p-1" id="myTabContent">
+                                	<div class="tab-pane fade show active" id="identifyingData" role="tabpanel" aria-labelledby="home-tab">
+		                                <div style="margin-bottom: 30px; margin-right: 90px; text-align: right; margin-top: 30px;">
+		                                    <img class="align-content" id="client_photo" src="images/pis_logo.png" alt="" style="max-width: 10%;">
+		                                </div>
+		                                <div style="margin-bottom: 30px; margin-right: 70px; text-align: right;">
+		                                    <input type="file" id="file-input" style="display: none">
+		                                    <button type="button" class="btn btn-primary btn-sm btn-upload">Upload Photo</button>
+		                                    <button type="button" type="submit" data-toggle="modal" data-target="#cameraModal" class="btn btn-success btn-sm btn-take">Take Photo</button>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control data_name"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Initital Interview</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control data_interview"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias(es)</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control alias"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">True Name</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control true_name"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Present Address</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control present_add"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permanent Address</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control permanent_add"></div>
 		                                </div>
 		                            </div>
-	                            		<div class="card-body">
-		                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-		                                    <i class="fa fa-check"></i>
-		                                        Successfully Added  
+		                            <div class="tab-pane fade" id="presentOffense" role="tabpanel" aria-labelledby="profile-tab">
+		                                <div style="margin-top: 30px;">
 		                                </div>
-					                <div class="col-md-12">
-	                                    <div class="row form-group col-md-12">
-	                                        <div class="row form-group col-md-6">
-	                                            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Manual Docket</label></div>
-	                                            <div class="col-12 col-md-8">
-	                                                <div class="form-check form-check-inline">
-	                                                    <label class="switch">
-	                                                        <input type="checkbox" class="form-check-input primary manual_docket" value="false">
-	                                                        <span class="slider round"></span>
-	                                                    </label>
-	                                                </div>
-	                                            </div>
-	                                        </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Charged With</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control charged"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Place of Commision</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control p_commision"></div>
+		                                    <!-- <div class="col-12 col-md-9"><input type="date" class="form-control date_cic"></div> -->
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Convicted Of</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control convicted"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Charged</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_charged"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Commited</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_commited"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Convicted</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_convicted"></div>
+		                                </div>
+		                                <div class="row form-group col-md-9">
+		                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Sentence</label></div>
+		                                    <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Year" class="form-control s_yr"></div>
+		                                    <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Month" class="form-control s_mo"></div>
+		                                    <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Day" class="form-control s_day"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Judge</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control judge"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control court"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Arresting Officer</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control arresting"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_1"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Defense Counsel</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control defense"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_2"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prosecutor</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control prosecutor"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_3"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offended Party</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control offended"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_4"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Co-Accused</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control ca"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Aggravating Circumstances</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control ac"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Mitigating Circumstances</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control mc"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Extent of Participation</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control ep"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Custody</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control custody"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manner of Commision</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control commision"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Motives</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control motives"></div>
+		                                </div>
+                                	</div>
+                                	<div class="tab-pane fade" id="priorRecords" role="tabpanel" aria-labelledby="profile-tab">
+		                                <div style="margin-top: 30px;">
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alleged By</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <div class="form-check-inline">
+		                                        <label class="form-check-label">
+		                                            <input type="radio" class="form-check-input petitioner" name="optradio" value="PETITIONER">Petitioner 
+		                                            <input type="radio" class="form-check-input sources" name="optradio" value="OTHER SOURCES">Other Sources
+		                                        </label>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Records</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <div class="form-check-inline">
+		                                        <label class="form-check-label">
+		                                            <input type="radio" class="form-check-input no_record" name="optradio">No Record
+		                                            <input type="radio" class="form-check-input w_record" name="optradio">With Derogatory Record
+		                                        </label>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <fieldset class="row col col-md-12">
+		                                        <legend>Records</legend>
+		                                        <div class="list">
+		                                        </div>
+		                                        <div class="col-12">
+		                                            <button type="button" class="add_more btn btn-success btn-sm float-right">Add more</button>
+		                                        </div>
+		                                </fieldset>
+		                                <div class="row form-group col-md-6">
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Has Been of Probation:</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <div class="form-check-inline">
+		                                        <label class="form-check-label">
+		                                            <input type="radio" class="form-check-input petitioner" name="optradio" value="YES"> Yes
+		                                            <input type="radio" class="form-check-input sources" name="optradio" value="NO"> No
+		                                        </label>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <fieldset class="row col col-md-12">
+		                                        <legend>Information</legend>
+		                                        <div class="list_info">
+		                                        </div>
+		                                        <div class="col-12">
+		                                            <button type="button" class="add_more_info btn btn-success btn-sm float-right">Add more</button>
+		                                        </div>
+		                                </fieldset>
+		                            </div>
+                                	<div class="tab-pane fade" id="familyBackground" role="tabpanel" aria-labelledby="profile-tab">
+	                                	<div style="margin-bottom: 30px; margin-right: 90px; text-align: right; margin-top: 30px;">
+	                                	</div>
+                                		<div class="row form-group col-md-6">
+                                    	<div class="col col-md-3"><label for="text-input" class=" form-control-label">Sex</label></div>
+                                    	<div class="col-12 col-md-9">
+                                        <select class="form-control sex select2">
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="FEMALE">Female</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="LGBT">LGBT</option>
+                                        </select>
+                                    	</div>
+                                		</div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Civil Status</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control civilStatus select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="ANNULLED">Annulled</option>
+		                                            <option value="DIVORCED">Divorced</option>
+		                                            <option value="LEGALLY SEPERATED">Legally Seperated</option>
+		                                            <option value="MARRIED">Married</option>
+		                                            <option value="SAME SEX RELATIONSHIP">Same Sex Relationship</option>
+		                                            <option value="SINGLE">Single</option>
+		                                            <option value="SOLO PARENT">Solo Parent</option>
+		                                            <option value="WIDOW/WIDOWER">Widow/Widower</option>
+		                                            <option value="WITH COMMON LAW SPOUSE">With Common Law Spouse</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+                                		<!-- citizenship -->
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Citizenship</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control citizenship select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="afghan">Afghan</option>
+		                                            <option value="albanian">Albanian</option>
+		                                            <option value="algerian">Algerian</option>
+		                                            <option value="american">American</option>
+		                                            <option value="andorran">Andorran</option>
+		                                            <option value="angolan">Angolan</option>
+		                                            <option value="antiguans">Antiguans</option>
+		                                            <option value="argentinean">Argentinean</option>
+		                                            <option value="armenian">Armenian</option>
+		                                            <option value="australian">Australian</option>
+		                                            <option value="austrian">Austrian</option>
+		                                            <option value="azerbaijani">Azerbaijani</option>
+		                                            <option value="bahamian">Bahamian</option>
+		                                            <option value="bahraini">Bahraini</option>
+		                                            <option value="bangladeshi">Bangladeshi</option>
+		                                            <option value="barbadian">Barbadian</option>
+		                                            <option value="barbudans">Barbudans</option>
+		                                            <option value="batswana">Batswana</option>
+		                                            <option value="belarusian">Belarusian</option>
+		                                            <option value="belgian">Belgian</option>
+		                                            <option value="belizean">Belizean</option>
+		                                            <option value="beninese">Beninese</option>
+		                                            <option value="bhutanese">Bhutanese</option>
+		                                            <option value="bolivian">Bolivian</option>
+		                                            <option value="bosnian">Bosnian</option>
+		                                            <option value="brazilian">Brazilian</option>
+		                                            <option value="british">British</option>
+		                                            <option value="bruneian">Bruneian</option>
+		                                            <option value="bulgarian">Bulgarian</option>
+		                                            <option value="burkinabe">Burkinabe</option>
+		                                            <option value="burmese">Burmese</option>
+		                                            <option value="burundian">Burundian</option>
+		                                            <option value="cambodian">Cambodian</option>
+		                                            <option value="cameroonian">Cameroonian</option>
+		                                            <option value="canadian">Canadian</option>
+		                                            <option value="cape verdean">Cape Verdean</option>
+		                                            <option value="central african">Central African</option>
+		                                            <option value="chadian">Chadian</option>
+		                                            <option value="chilean">Chilean</option>
+		                                            <option value="chinese">Chinese</option>
+		                                            <option value="colombian">Colombian</option>
+		                                            <option value="comoran">Comoran</option>
+		                                            <option value="congolese">Congolese</option>
+		                                            <option value="costa rican">Costa Rican</option>
+		                                            <option value="croatian">Croatian</option>
+		                                            <option value="cuban">Cuban</option>
+		                                            <option value="cypriot">Cypriot</option>
+		                                            <option value="czech">Czech</option>
+		                                            <option value="danish">Danish</option>
+		                                            <option value="djibouti">Djibouti</option>
+		                                            <option value="dominican">Dominican</option>
+		                                            <option value="dutch">Dutch</option>
+		                                            <option value="east timorese">East Timorese</option>
+		                                            <option value="ecuadorean">Ecuadorean</option>
+		                                            <option value="egyptian">Egyptian</option>
+		                                            <option value="emirian">Emirian</option>
+		                                            <option value="equatorial guinean">Equatorial Guinean</option>
+		                                            <option value="eritrean">Eritrean</option>
+		                                            <option value="estonian">Estonian</option>
+		                                            <option value="ethiopian">Ethiopian</option>
+		                                            <option value="fijian">Fijian</option>
+		                                            <option value="filipino">Filipino</option>
+		                                            <option value="finnish">Finnish</option>
+		                                            <option value="french">French</option>
+		                                            <option value="gabonese">Gabonese</option>
+		                                            <option value="gambian">Gambian</option>
+		                                            <option value="georgian">Georgian</option>
+		                                            <option value="german">German</option>
+		                                            <option value="ghanaian">Ghanaian</option>
+		                                            <option value="greek">Greek</option>
+		                                            <option value="grenadian">Grenadian</option>
+		                                            <option value="guatemalan">Guatemalan</option>
+		                                            <option value="guinea-bissauan">Guinea-Bissauan</option>
+		                                            <option value="guinean">Guinean</option>
+		                                            <option value="guyanese">Guyanese</option>
+		                                            <option value="haitian">Haitian</option>
+		                                            <option value="herzegovinian">Herzegovinian</option>
+		                                            <option value="honduran">Honduran</option>
+		                                            <option value="hungarian">Hungarian</option>
+		                                            <option value="icelander">Icelander</option>
+		                                            <option value="indian">Indian</option>
+		                                            <option value="indonesian">Indonesian</option>
+		                                            <option value="iranian">Iranian</option>
+		                                            <option value="iraqi">Iraqi</option>
+		                                            <option value="irish">Irish</option>
+		                                            <option value="israeli">Israeli</option>
+		                                            <option value="italian">Italian</option>
+		                                            <option value="ivorian">Ivorian</option>
+		                                            <option value="jamaican">Jamaican</option>
+		                                            <option value="japanese">Japanese</option>
+		                                            <option value="jordanian">Jordanian</option>
+		                                            <option value="kazakhstani">Kazakhstani</option>
+		                                            <option value="kenyan">Kenyan</option>
+		                                            <option value="kittian and nevisian">Kittian and Nevisian</option>
+		                                            <option value="kuwaiti">Kuwaiti</option>
+		                                            <option value="kyrgyz">Kyrgyz</option>
+		                                            <option value="laotian">Laotian</option>
+		                                            <option value="latvian">Latvian</option>
+		                                            <option value="lebanese">Lebanese</option>
+		                                            <option value="liberian">Liberian</option>
+		                                            <option value="libyan">Libyan</option>
+		                                            <option value="liechtensteiner">Liechtensteiner</option>
+		                                            <option value="lithuanian">Lithuanian</option>
+		                                            <option value="luxembourger">Luxembourger</option>
+		                                            <option value="macedonian">Macedonian</option>
+		                                            <option value="malagasy">Malagasy</option>
+		                                            <option value="malawian">Malawian</option>
+		                                            <option value="malaysian">Malaysian</option>
+		                                            <option value="maldivan">Maldivan</option>
+		                                            <option value="malian">Malian</option>
+		                                            <option value="maltese">Maltese</option>
+		                                            <option value="marshallese">Marshallese</option>
+		                                            <option value="mauritanian">Mauritanian</option>
+		                                            <option value="mauritian">Mauritian</option>
+		                                            <option value="mexican">Mexican</option>
+		                                            <option value="micronesian">Micronesian</option>
+		                                            <option value="moldovan">Moldovan</option>
+		                                            <option value="monacan">Monacan</option>
+		                                            <option value="mongolian">Mongolian</option>
+		                                            <option value="moroccan">Moroccan</option>
+		                                            <option value="mosotho">Mosotho</option>
+		                                            <option value="motswana">Motswana</option>
+		                                            <option value="mozambican">Mozambican</option>
+		                                            <option value="namibian">Namibian</option>
+		                                            <option value="nauruan">Nauruan</option>
+		                                            <option value="nepalese">Nepalese</option>
+		                                            <option value="new zealander">New Zealander</option>
+		                                            <option value="ni-vanuatu">Ni-Vanuatu</option>
+		                                            <option value="nicaraguan">Nicaraguan</option>
+		                                            <option value="nigerien">Nigerien</option>
+		                                            <option value="north korean">North Korean</option>
+		                                            <option value="northern irish">Northern Irish</option>
+		                                            <option value="norwegian">Norwegian</option>
+		                                            <option value="omani">Omani</option>
+		                                            <option value="pakistani">Pakistani</option>
+		                                            <option value="palauan">Palauan</option>
+		                                            <option value="panamanian">Panamanian</option>
+		                                            <option value="papua new guinean">Papua New Guinean</option>
+		                                            <option value="paraguayan">Paraguayan</option>
+		                                            <option value="peruvian">Peruvian</option>
+		                                            <option value="polish">Polish</option>
+		                                            <option value="portuguese">Portuguese</option>
+		                                            <option value="qatari">Qatari</option>
+		                                            <option value="romanian">Romanian</option>
+		                                            <option value="russian">Russian</option>
+		                                            <option value="rwandan">Rwandan</option>
+		                                            <option value="saint lucian">Saint Lucian</option>
+		                                            <option value="salvadoran">Salvadoran</option>
+		                                            <option value="samoan">Samoan</option>
+		                                            <option value="san marinese">San Marinese</option>
+		                                            <option value="sao tomean">Sao Tomean</option>
+		                                            <option value="saudi">Saudi</option>
+		                                            <option value="scottish">Scottish</option>
+		                                            <option value="senegalese">Senegalese</option>
+		                                            <option value="serbian">Serbian</option>
+		                                            <option value="seychellois">Seychellois</option>
+		                                            <option value="sierra leonean">Sierra Leonean</option>
+		                                            <option value="singaporean">Singaporean</option>
+		                                            <option value="slovakian">Slovakian</option>
+		                                            <option value="slovenian">Slovenian</option>
+		                                            <option value="solomon islander">Solomon Islander</option>
+		                                            <option value="somali">Somali</option>
+		                                            <option value="south african">South African</option>
+		                                            <option value="south korean">South Korean</option>
+		                                            <option value="spanish">Spanish</option>
+		                                            <option value="sri lankan">Sri Lankan</option>
+		                                            <option value="sudanese">Sudanese</option>
+		                                            <option value="surinamer">Surinamer</option>
+		                                            <option value="swazi">Swazi</option>
+		                                            <option value="swedish">Swedish</option>
+		                                            <option value="swiss">Swiss</option>
+		                                            <option value="syrian">Syrian</option>
+		                                            <option value="taiwanese">Taiwanese</option>
+		                                            <option value="tajik">Tajik</option>
+		                                            <option value="tanzanian">Tanzanian</option>
+		                                            <option value="thai">Thai</option>
+		                                            <option value="togolese">Togolese</option>
+		                                            <option value="tongan">Tongan</option>
+		                                            <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+		                                            <option value="tunisian">Tunisian</option>
+		                                            <option value="turkish">Turkish</option>
+		                                            <option value="tuvaluan">Tuvaluan</option>
+		                                            <option value="ugandan">Ugandan</option>
+		                                            <option value="ukrainian">Ukrainian</option>
+		                                            <option value="uruguayan">Uruguayan</option>
+		                                            <option value="uzbekistani">Uzbekistani</option>
+		                                            <option value="venezuelan">Venezuelan</option>
+		                                            <option value="vietnamese">Vietnamese</option>
+		                                            <option value="welsh">Welsh</option>
+		                                            <option value="yemenite">Yemenite</option>
+		                                            <option value="zambian">Zambian</option>
+		                                            <option value="zimbabwean">Zimbabwean</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+                                		<!-- religion -->
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Religion</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control religion select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="BAPTIST FUNDAMENTAL">Baptist Fundamental</option>
+		                                            <option value="BORN AGAIN">Born Again</option>
+		                                            <option value="IGLESIA FILIPINA INDEPENDENTE">Iglesia Filipina Independente</option>
+		                                            <option value="IGLESIA NI CRISTO">Iglesia ni Cristo</option>
+		                                            <option value="ISLAM">Islam</option>
+		                                            <option value="JEHOVA">Jehova's Witness, Mormons, IFC, etc.</option>
+		                                            <option value="NONE">None</option>
+		                                            <option value="OTHER">Other/s</option>
+		                                            <option value="CATHOLIC">Roman Catholic</option>
+		                                            <option value="SEVENTH DAY ADVENTIST">Seventh Day Adventist</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Date</label></div>
+		                                    <div class="col-12 col-md-9"><input type="date" class="form-control bday"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Region</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control bplace select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="CAR">CAR</option>
+		                                            <option value="NCR">NCR</option>
+		                                            <option value="REGION I">REGION I</option>
+		                                            <option value="REGION II">REGION II</option>
+		                                            <option value="REGION III">REGION III</option>
+		                                            <option value="REGION IV-A">REGION IV-A</option>
+		                                            <option value="REGION IV-B">REGION IV-B</option>
+		                                            <option value="REGION V">REGION V</option>
+		                                            <option value="REGION VI">REGION VI</option>
+		                                            <option value="REGION VII">REGION VII</option>
+		                                            <option value="REGION VIII">REGION VIII</option>
+		                                            <option value="REGION IX">REGION IX</option>
+		                                            <option value="REGION X">REGION X</option>
+		                                            <option value="REGION XI">REGION XI</option>
+		                                            <option value="REGION XII">REGION XII</option>
+		                                            <option value="REGION XIII">REGION XIII</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Province</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control bprovince select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="MOLE">X</option>
+		                                            <option value="OTHERS">Y</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth City/Municipality</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control bcity select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="MOLE">X</option>
+		                                            <option value="OTHERS">Y</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control bplace_others"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Identifying Marks</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control sex select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="MOLE">Mole</option>
+		                                            <option value="OTHERS">Others</option>
+		                                            <option value="SCAR">Scar</option>
+		                                            <option value="TATTOO">Tattoo</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Handicap</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control handicap"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control desc"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Parents Relationship</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control mother_deceased select2">
+		                                            <option selected disabled>-- select one --</option>
+		                                            <option value="FAIR">Fair</option>
+		                                            <option value="POOR">Poor</option>
+		                                            <option value="SATISFACTORY">Satisfactory</option>
+		                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+
+		                                <fieldset class="row col col-md-12">
+		                                        <legend>Paternal</legend>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control father_name"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Date</label></div>
+		                                            <div class="col-12 col-md-9"><input type="date" class="form-control father_bday"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control father_bplace select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="MOLE">X</option>
+		                                                    <option value="OTHERS">Y</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-12">
+		                                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Address</label></div>
+		                                            <div class="col-12 col-md-12"><input type="text" name="text-input" placeholder=" " class="form-control father_add"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Citizenship</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control father_citizenship select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="afghan">Afghan</option>
+		                                                    <option value="albanian">Albanian</option>
+		                                                    <option value="algerian">Algerian</option>
+		                                                    <option value="american">American</option>
+		                                                    <option value="andorran">Andorran</option>
+		                                                    <option value="angolan">Angolan</option>
+		                                                    <option value="antiguans">Antiguans</option>
+		                                                    <option value="argentinean">Argentinean</option>
+		                                                    <option value="armenian">Armenian</option>
+		                                                    <option value="australian">Australian</option>
+		                                                    <option value="austrian">Austrian</option>
+		                                                    <option value="azerbaijani">Azerbaijani</option>
+		                                                    <option value="bahamian">Bahamian</option>
+		                                                    <option value="bahraini">Bahraini</option>
+		                                                    <option value="bangladeshi">Bangladeshi</option>
+		                                                    <option value="barbadian">Barbadian</option>
+		                                                    <option value="barbudans">Barbudans</option>
+		                                                    <option value="batswana">Batswana</option>
+		                                                    <option value="belarusian">Belarusian</option>
+		                                                    <option value="belgian">Belgian</option>
+		                                                    <option value="belizean">Belizean</option>
+		                                                    <option value="beninese">Beninese</option>
+		                                                    <option value="bhutanese">Bhutanese</option>
+		                                                    <option value="bolivian">Bolivian</option>
+		                                                    <option value="bosnian">Bosnian</option>
+		                                                    <option value="brazilian">Brazilian</option>
+		                                                    <option value="british">British</option>
+		                                                    <option value="bruneian">Bruneian</option>
+		                                                    <option value="bulgarian">Bulgarian</option>
+		                                                    <option value="burkinabe">Burkinabe</option>
+		                                                    <option value="burmese">Burmese</option>
+		                                                    <option value="burundian">Burundian</option>
+		                                                    <option value="cambodian">Cambodian</option>
+		                                                    <option value="cameroonian">Cameroonian</option>
+		                                                    <option value="canadian">Canadian</option>
+		                                                    <option value="cape verdean">Cape Verdean</option>
+		                                                    <option value="central african">Central African</option>
+		                                                    <option value="chadian">Chadian</option>
+		                                                    <option value="chilean">Chilean</option>
+		                                                    <option value="chinese">Chinese</option>
+		                                                    <option value="colombian">Colombian</option>
+		                                                    <option value="comoran">Comoran</option>
+		                                                    <option value="congolese">Congolese</option>
+		                                                    <option value="costa rican">Costa Rican</option>
+		                                                    <option value="croatian">Croatian</option>
+		                                                    <option value="cuban">Cuban</option>
+		                                                    <option value="cypriot">Cypriot</option>
+		                                                    <option value="czech">Czech</option>
+		                                                    <option value="danish">Danish</option>
+		                                                    <option value="djibouti">Djibouti</option>
+		                                                    <option value="dominican">Dominican</option>
+		                                                    <option value="dutch">Dutch</option>
+		                                                    <option value="east timorese">East Timorese</option>
+		                                                    <option value="ecuadorean">Ecuadorean</option>
+		                                                    <option value="egyptian">Egyptian</option>
+		                                                    <option value="emirian">Emirian</option>
+		                                                    <option value="equatorial guinean">Equatorial Guinean</option>
+		                                                    <option value="eritrean">Eritrean</option>
+		                                                    <option value="estonian">Estonian</option>
+		                                                    <option value="ethiopian">Ethiopian</option>
+		                                                    <option value="fijian">Fijian</option>
+		                                                    <option value="filipino">Filipino</option>
+		                                                    <option value="finnish">Finnish</option>
+		                                                    <option value="french">French</option>
+		                                                    <option value="gabonese">Gabonese</option>
+		                                                    <option value="gambian">Gambian</option>
+		                                                    <option value="georgian">Georgian</option>
+		                                                    <option value="german">German</option>
+		                                                    <option value="ghanaian">Ghanaian</option>
+		                                                    <option value="greek">Greek</option>
+		                                                    <option value="grenadian">Grenadian</option>
+		                                                    <option value="guatemalan">Guatemalan</option>
+		                                                    <option value="guinea-bissauan">Guinea-Bissauan</option>
+		                                                    <option value="guinean">Guinean</option>
+		                                                    <option value="guyanese">Guyanese</option>
+		                                                    <option value="haitian">Haitian</option>
+		                                                    <option value="herzegovinian">Herzegovinian</option>
+		                                                    <option value="honduran">Honduran</option>
+		                                                    <option value="hungarian">Hungarian</option>
+		                                                    <option value="icelander">Icelander</option>
+		                                                    <option value="indian">Indian</option>
+		                                                    <option value="indonesian">Indonesian</option>
+		                                                    <option value="iranian">Iranian</option>
+		                                                    <option value="iraqi">Iraqi</option>
+		                                                    <option value="irish">Irish</option>
+		                                                    <option value="israeli">Israeli</option>
+		                                                    <option value="italian">Italian</option>
+		                                                    <option value="ivorian">Ivorian</option>
+		                                                    <option value="jamaican">Jamaican</option>
+		                                                    <option value="japanese">Japanese</option>
+		                                                    <option value="jordanian">Jordanian</option>
+		                                                    <option value="kazakhstani">Kazakhstani</option>
+		                                                    <option value="kenyan">Kenyan</option>
+		                                                    <option value="kittian and nevisian">Kittian and Nevisian</option>
+		                                                    <option value="kuwaiti">Kuwaiti</option>
+		                                                    <option value="kyrgyz">Kyrgyz</option>
+		                                                    <option value="laotian">Laotian</option>
+		                                                    <option value="latvian">Latvian</option>
+		                                                    <option value="lebanese">Lebanese</option>
+		                                                    <option value="liberian">Liberian</option>
+		                                                    <option value="libyan">Libyan</option>
+		                                                    <option value="liechtensteiner">Liechtensteiner</option>
+		                                                    <option value="lithuanian">Lithuanian</option>
+		                                                    <option value="luxembourger">Luxembourger</option>
+		                                                    <option value="macedonian">Macedonian</option>
+		                                                    <option value="malagasy">Malagasy</option>
+		                                                    <option value="malawian">Malawian</option>
+		                                                    <option value="malaysian">Malaysian</option>
+		                                                    <option value="maldivan">Maldivan</option>
+		                                                    <option value="malian">Malian</option>
+		                                                    <option value="maltese">Maltese</option>
+		                                                    <option value="marshallese">Marshallese</option>
+		                                                    <option value="mauritanian">Mauritanian</option>
+		                                                    <option value="mauritian">Mauritian</option>
+		                                                    <option value="mexican">Mexican</option>
+		                                                    <option value="micronesian">Micronesian</option>
+		                                                    <option value="moldovan">Moldovan</option>
+		                                                    <option value="monacan">Monacan</option>
+		                                                    <option value="mongolian">Mongolian</option>
+		                                                    <option value="moroccan">Moroccan</option>
+		                                                    <option value="mosotho">Mosotho</option>
+		                                                    <option value="motswana">Motswana</option>
+		                                                    <option value="mozambican">Mozambican</option>
+		                                                    <option value="namibian">Namibian</option>
+		                                                    <option value="nauruan">Nauruan</option>
+		                                                    <option value="nepalese">Nepalese</option>
+		                                                    <option value="new zealander">New Zealander</option>
+		                                                    <option value="ni-vanuatu">Ni-Vanuatu</option>
+		                                                    <option value="nicaraguan">Nicaraguan</option>
+		                                                    <option value="nigerien">Nigerien</option>
+		                                                    <option value="north korean">North Korean</option>
+		                                                    <option value="northern irish">Northern Irish</option>
+		                                                    <option value="norwegian">Norwegian</option>
+		                                                    <option value="omani">Omani</option>
+		                                                    <option value="pakistani">Pakistani</option>
+		                                                    <option value="palauan">Palauan</option>
+		                                                    <option value="panamanian">Panamanian</option>
+		                                                    <option value="papua new guinean">Papua New Guinean</option>
+		                                                    <option value="paraguayan">Paraguayan</option>
+		                                                    <option value="peruvian">Peruvian</option>
+		                                                    <option value="polish">Polish</option>
+		                                                    <option value="portuguese">Portuguese</option>
+		                                                    <option value="qatari">Qatari</option>
+		                                                    <option value="romanian">Romanian</option>
+		                                                    <option value="russian">Russian</option>
+		                                                    <option value="rwandan">Rwandan</option>
+		                                                    <option value="saint lucian">Saint Lucian</option>
+		                                                    <option value="salvadoran">Salvadoran</option>
+		                                                    <option value="samoan">Samoan</option>
+		                                                    <option value="san marinese">San Marinese</option>
+		                                                    <option value="sao tomean">Sao Tomean</option>
+		                                                    <option value="saudi">Saudi</option>
+		                                                    <option value="scottish">Scottish</option>
+		                                                    <option value="senegalese">Senegalese</option>
+		                                                    <option value="serbian">Serbian</option>
+		                                                    <option value="seychellois">Seychellois</option>
+		                                                    <option value="sierra leonean">Sierra Leonean</option>
+		                                                    <option value="singaporean">Singaporean</option>
+		                                                    <option value="slovakian">Slovakian</option>
+		                                                    <option value="slovenian">Slovenian</option>
+		                                                    <option value="solomon islander">Solomon Islander</option>
+		                                                    <option value="somali">Somali</option>
+		                                                    <option value="south african">South African</option>
+		                                                    <option value="south korean">South Korean</option>
+		                                                    <option value="spanish">Spanish</option>
+		                                                    <option value="sri lankan">Sri Lankan</option>
+		                                                    <option value="sudanese">Sudanese</option>
+		                                                    <option value="surinamer">Surinamer</option>
+		                                                    <option value="swazi">Swazi</option>
+		                                                    <option value="swedish">Swedish</option>
+		                                                    <option value="swiss">Swiss</option>
+		                                                    <option value="syrian">Syrian</option>
+		                                                    <option value="taiwanese">Taiwanese</option>
+		                                                    <option value="tajik">Tajik</option>
+		                                                    <option value="tanzanian">Tanzanian</option>
+		                                                    <option value="thai">Thai</option>
+		                                                    <option value="togolese">Togolese</option>
+		                                                    <option value="tongan">Tongan</option>
+		                                                    <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+		                                                    <option value="tunisian">Tunisian</option>
+		                                                    <option value="turkish">Turkish</option>
+		                                                    <option value="tuvaluan">Tuvaluan</option>
+		                                                    <option value="ugandan">Ugandan</option>
+		                                                    <option value="ukrainian">Ukrainian</option>
+		                                                    <option value="uruguayan">Uruguayan</option>
+		                                                    <option value="uzbekistani">Uzbekistani</option>
+		                                                    <option value="venezuelan">Venezuelan</option>
+		                                                    <option value="vietnamese">Vietnamese</option>
+		                                                    <option value="welsh">Welsh</option>
+		                                                    <option value="yemenite">Yemenite</option>
+		                                                    <option value="zambian">Zambian</option>
+		                                                    <option value="zimbabwean">Zimbabwean</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Religion</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control father_religion select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="BAPTIST FUNDAMENTAL">Baptist Fundamental</option>
+		                                                    <option value="BORN AGAIN">Born Again</option>
+		                                                    <option value="IGLESIA FILIPINA INDEPENDENTE">Iglesia Filipina Independente</option>
+		                                                    <option value="IGLESIA NI CRISTO">Iglesia ni Cristo</option>
+		                                                    <option value="ISLAM">Islam</option>
+		                                                    <option value="JEHOVA">Jehova's Witness, Mormons, IFC, etc.</option>
+		                                                    <option value="NONE">None</option>
+		                                                    <option value="OTHER">Other/s</option>
+		                                                    <option value="CATHOLIC">Roman Catholic</option>
+		                                                    <option value="SEVENTH DAY ADVENTIST">Seventh Day Adventist</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control father_education select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="COLLEGE GRADUATE">College Graduate</option>
+		                                                    <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
+		                                                    <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
+		                                                    <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
+		                                                    <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
+		                                                    <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
+		                                                    <option value="ILLITERATE">No Education/Illiterate</option>
+		                                                    <option value="POST-GRADUATE">Post-Graduate Studies</option>
+		                                                    <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
+		                                                    <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
+		                                                    <option value="VOCATIONAL">Vocational</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control father_occupation"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Work Address</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control father_work_add"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tel. No.</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control father_tel_no"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Monthly Income</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control father_income"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deceased</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control father_deceased select2">
+		                                                    <option selected disabled>-- select one --</option>
+		                                                    <option value="TRUE">Yes</option>
+		                                                    <option value="FALSE">No</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6 fatherDeceasedCause" style="display: none;">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Cause</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control father_deceased_cause"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6 fatherDateDeceased" style="display: none;">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Deceased</label></div>
+		                                            <div class="col-12 col-md-9"><input type="date" class="form-control father_date_deceased"></div>
+		                                        </div>
+		                                </fieldset>
+
+		                                <fieldset class="row col col-md-12">
+		                                        <legend>Maternal</legend>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control mother_name"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Date</label></div>
+		                                            <div class="col-12 col-md-9"><input type="date" class="form-control mother_bday"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control mother_bplace select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="MOLE">X</option>
+		                                                    <option value="OTHERS">Y</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-12">
+		                                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Address</label></div>
+		                                            <div class="col-12 col-md-12"><input type="text" name="text-input" placeholder=" " class="form-control mother_add"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Citizenship</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control mother_citizenship select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="afghan">Afghan</option>
+		                                                    <option value="albanian">Albanian</option>
+		                                                    <option value="algerian">Algerian</option>
+		                                                    <option value="american">American</option>
+		                                                    <option value="andorran">Andorran</option>
+		                                                    <option value="angolan">Angolan</option>
+		                                                    <option value="antiguans">Antiguans</option>
+		                                                    <option value="argentinean">Argentinean</option>
+		                                                    <option value="armenian">Armenian</option>
+		                                                    <option value="australian">Australian</option>
+		                                                    <option value="austrian">Austrian</option>
+		                                                    <option value="azerbaijani">Azerbaijani</option>
+		                                                    <option value="bahamian">Bahamian</option>
+		                                                    <option value="bahraini">Bahraini</option>
+		                                                    <option value="bangladeshi">Bangladeshi</option>
+		                                                    <option value="barbadian">Barbadian</option>
+		                                                    <option value="barbudans">Barbudans</option>
+		                                                    <option value="batswana">Batswana</option>
+		                                                    <option value="belarusian">Belarusian</option>
+		                                                    <option value="belgian">Belgian</option>
+		                                                    <option value="belizean">Belizean</option>
+		                                                    <option value="beninese">Beninese</option>
+		                                                    <option value="bhutanese">Bhutanese</option>
+		                                                    <option value="bolivian">Bolivian</option>
+		                                                    <option value="bosnian">Bosnian</option>
+		                                                    <option value="brazilian">Brazilian</option>
+		                                                    <option value="british">British</option>
+		                                                    <option value="bruneian">Bruneian</option>
+		                                                    <option value="bulgarian">Bulgarian</option>
+		                                                    <option value="burkinabe">Burkinabe</option>
+		                                                    <option value="burmese">Burmese</option>
+		                                                    <option value="burundian">Burundian</option>
+		                                                    <option value="cambodian">Cambodian</option>
+		                                                    <option value="cameroonian">Cameroonian</option>
+		                                                    <option value="canadian">Canadian</option>
+		                                                    <option value="cape verdean">Cape Verdean</option>
+		                                                    <option value="central african">Central African</option>
+		                                                    <option value="chadian">Chadian</option>
+		                                                    <option value="chilean">Chilean</option>
+		                                                    <option value="chinese">Chinese</option>
+		                                                    <option value="colombian">Colombian</option>
+		                                                    <option value="comoran">Comoran</option>
+		                                                    <option value="congolese">Congolese</option>
+		                                                    <option value="costa rican">Costa Rican</option>
+		                                                    <option value="croatian">Croatian</option>
+		                                                    <option value="cuban">Cuban</option>
+		                                                    <option value="cypriot">Cypriot</option>
+		                                                    <option value="czech">Czech</option>
+		                                                    <option value="danish">Danish</option>
+		                                                    <option value="djibouti">Djibouti</option>
+		                                                    <option value="dominican">Dominican</option>
+		                                                    <option value="dutch">Dutch</option>
+		                                                    <option value="east timorese">East Timorese</option>
+		                                                    <option value="ecuadorean">Ecuadorean</option>
+		                                                    <option value="egyptian">Egyptian</option>
+		                                                    <option value="emirian">Emirian</option>
+		                                                    <option value="equatorial guinean">Equatorial Guinean</option>
+		                                                    <option value="eritrean">Eritrean</option>
+		                                                    <option value="estonian">Estonian</option>
+		                                                    <option value="ethiopian">Ethiopian</option>
+		                                                    <option value="fijian">Fijian</option>
+		                                                    <option value="filipino">Filipino</option>
+		                                                    <option value="finnish">Finnish</option>
+		                                                    <option value="french">French</option>
+		                                                    <option value="gabonese">Gabonese</option>
+		                                                    <option value="gambian">Gambian</option>
+		                                                    <option value="georgian">Georgian</option>
+		                                                    <option value="german">German</option>
+		                                                    <option value="ghanaian">Ghanaian</option>
+		                                                    <option value="greek">Greek</option>
+		                                                    <option value="grenadian">Grenadian</option>
+		                                                    <option value="guatemalan">Guatemalan</option>
+		                                                    <option value="guinea-bissauan">Guinea-Bissauan</option>
+		                                                    <option value="guinean">Guinean</option>
+		                                                    <option value="guyanese">Guyanese</option>
+		                                                    <option value="haitian">Haitian</option>
+		                                                    <option value="herzegovinian">Herzegovinian</option>
+		                                                    <option value="honduran">Honduran</option>
+		                                                    <option value="hungarian">Hungarian</option>
+		                                                    <option value="icelander">Icelander</option>
+		                                                    <option value="indian">Indian</option>
+		                                                    <option value="indonesian">Indonesian</option>
+		                                                    <option value="iranian">Iranian</option>
+		                                                    <option value="iraqi">Iraqi</option>
+		                                                    <option value="irish">Irish</option>
+		                                                    <option value="israeli">Israeli</option>
+		                                                    <option value="italian">Italian</option>
+		                                                    <option value="ivorian">Ivorian</option>
+		                                                    <option value="jamaican">Jamaican</option>
+		                                                    <option value="japanese">Japanese</option>
+		                                                    <option value="jordanian">Jordanian</option>
+		                                                    <option value="kazakhstani">Kazakhstani</option>
+		                                                    <option value="kenyan">Kenyan</option>
+		                                                    <option value="kittian and nevisian">Kittian and Nevisian</option>
+		                                                    <option value="kuwaiti">Kuwaiti</option>
+		                                                    <option value="kyrgyz">Kyrgyz</option>
+		                                                    <option value="laotian">Laotian</option>
+		                                                    <option value="latvian">Latvian</option>
+		                                                    <option value="lebanese">Lebanese</option>
+		                                                    <option value="liberian">Liberian</option>
+		                                                    <option value="libyan">Libyan</option>
+		                                                    <option value="liechtensteiner">Liechtensteiner</option>
+		                                                    <option value="lithuanian">Lithuanian</option>
+		                                                    <option value="luxembourger">Luxembourger</option>
+		                                                    <option value="macedonian">Macedonian</option>
+		                                                    <option value="malagasy">Malagasy</option>
+		                                                    <option value="malawian">Malawian</option>
+		                                                    <option value="malaysian">Malaysian</option>
+		                                                    <option value="maldivan">Maldivan</option>
+		                                                    <option value="malian">Malian</option>
+		                                                    <option value="maltese">Maltese</option>
+		                                                    <option value="marshallese">Marshallese</option>
+		                                                    <option value="mauritanian">Mauritanian</option>
+		                                                    <option value="mauritian">Mauritian</option>
+		                                                    <option value="mexican">Mexican</option>
+		                                                    <option value="micronesian">Micronesian</option>
+		                                                    <option value="moldovan">Moldovan</option>
+		                                                    <option value="monacan">Monacan</option>
+		                                                    <option value="mongolian">Mongolian</option>
+		                                                    <option value="moroccan">Moroccan</option>
+		                                                    <option value="mosotho">Mosotho</option>
+		                                                    <option value="motswana">Motswana</option>
+		                                                    <option value="mozambican">Mozambican</option>
+		                                                    <option value="namibian">Namibian</option>
+		                                                    <option value="nauruan">Nauruan</option>
+		                                                    <option value="nepalese">Nepalese</option>
+		                                                    <option value="new zealander">New Zealander</option>
+		                                                    <option value="ni-vanuatu">Ni-Vanuatu</option>
+		                                                    <option value="nicaraguan">Nicaraguan</option>
+		                                                    <option value="nigerien">Nigerien</option>
+		                                                    <option value="north korean">North Korean</option>
+		                                                    <option value="northern irish">Northern Irish</option>
+		                                                    <option value="norwegian">Norwegian</option>
+		                                                    <option value="omani">Omani</option>
+		                                                    <option value="pakistani">Pakistani</option>
+		                                                    <option value="palauan">Palauan</option>
+		                                                    <option value="panamanian">Panamanian</option>
+		                                                    <option value="papua new guinean">Papua New Guinean</option>
+		                                                    <option value="paraguayan">Paraguayan</option>
+		                                                    <option value="peruvian">Peruvian</option>
+		                                                    <option value="polish">Polish</option>
+		                                                    <option value="portuguese">Portuguese</option>
+		                                                    <option value="qatari">Qatari</option>
+		                                                    <option value="romanian">Romanian</option>
+		                                                    <option value="russian">Russian</option>
+		                                                    <option value="rwandan">Rwandan</option>
+		                                                    <option value="saint lucian">Saint Lucian</option>
+		                                                    <option value="salvadoran">Salvadoran</option>
+		                                                    <option value="samoan">Samoan</option>
+		                                                    <option value="san marinese">San Marinese</option>
+		                                                    <option value="sao tomean">Sao Tomean</option>
+		                                                    <option value="saudi">Saudi</option>
+		                                                    <option value="scottish">Scottish</option>
+		                                                    <option value="senegalese">Senegalese</option>
+		                                                    <option value="serbian">Serbian</option>
+		                                                    <option value="seychellois">Seychellois</option>
+		                                                    <option value="sierra leonean">Sierra Leonean</option>
+		                                                    <option value="singaporean">Singaporean</option>
+		                                                    <option value="slovakian">Slovakian</option>
+		                                                    <option value="slovenian">Slovenian</option>
+		                                                    <option value="solomon islander">Solomon Islander</option>
+		                                                    <option value="somali">Somali</option>
+		                                                    <option value="south african">South African</option>
+		                                                    <option value="south korean">South Korean</option>
+		                                                    <option value="spanish">Spanish</option>
+		                                                    <option value="sri lankan">Sri Lankan</option>
+		                                                    <option value="sudanese">Sudanese</option>
+		                                                    <option value="surinamer">Surinamer</option>
+		                                                    <option value="swazi">Swazi</option>
+		                                                    <option value="swedish">Swedish</option>
+		                                                    <option value="swiss">Swiss</option>
+		                                                    <option value="syrian">Syrian</option>
+		                                                    <option value="taiwanese">Taiwanese</option>
+		                                                    <option value="tajik">Tajik</option>
+		                                                    <option value="tanzanian">Tanzanian</option>
+		                                                    <option value="thai">Thai</option>
+		                                                    <option value="togolese">Togolese</option>
+		                                                    <option value="tongan">Tongan</option>
+		                                                    <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+		                                                    <option value="tunisian">Tunisian</option>
+		                                                    <option value="turkish">Turkish</option>
+		                                                    <option value="tuvaluan">Tuvaluan</option>
+		                                                    <option value="ugandan">Ugandan</option>
+		                                                    <option value="ukrainian">Ukrainian</option>
+		                                                    <option value="uruguayan">Uruguayan</option>
+		                                                    <option value="uzbekistani">Uzbekistani</option>
+		                                                    <option value="venezuelan">Venezuelan</option>
+		                                                    <option value="vietnamese">Vietnamese</option>
+		                                                    <option value="welsh">Welsh</option>
+		                                                    <option value="yemenite">Yemenite</option>
+		                                                    <option value="zambian">Zambian</option>
+		                                                    <option value="zimbabwean">Zimbabwean</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Religion</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control mother_religion select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="BAPTIST FUNDAMENTAL">Baptist Fundamental</option>
+		                                                    <option value="BORN AGAIN">Born Again</option>
+		                                                    <option value="IGLESIA FILIPINA INDEPENDENTE">Iglesia Filipina Independente</option>
+		                                                    <option value="IGLESIA NI CRISTO">Iglesia ni Cristo</option>
+		                                                    <option value="ISLAM">Islam</option>
+		                                                    <option value="JEHOVA">Jehova's Witness, Mormons, IFC, etc.</option>
+		                                                    <option value="NONE">None</option>
+		                                                    <option value="OTHER">Other/s</option>
+		                                                    <option value="CATHOLIC">Roman Catholic</option>
+		                                                    <option value="SEVENTH DAY ADVENTIST">Seventh Day Adventist</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control mother_education select2">
+		                                                    <option value="" selected disabled>-- select one --</option>
+		                                                    <option value="COLLEGE GRADUATE">College Graduate</option>
+		                                                    <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
+		                                                    <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
+		                                                    <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
+		                                                    <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
+		                                                    <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
+		                                                    <option value="ILLITERATE">No Education/Illiterate</option>
+		                                                    <option value="POST-GRADUATE">Post-Graduate Studies</option>
+		                                                    <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
+		                                                    <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
+		                                                    <option value="VOCATIONAL">Vocational</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control mother_occupation"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Work Address</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control mother_work_add"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tel. No.</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control mother_tel_no"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Monthly Income</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control mother_income"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deceased</label></div>
+		                                            <div class="col-12 col-md-9">
+		                                                <select class="form-control mother_deceased select2">
+		                                                    <option selected disabled>-- select one --</option>
+		                                                    <option value="TRUE">Yes</option>
+		                                                    <option value="FALSE">No</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6 motherDeceasedCause" style="display: none;">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Cause</label></div>
+		                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control mother_deceased_cause"></div>
+		                                        </div>
+		                                        <div class="row form-group col-md-6 motherDateDeceased" style="display: none;">
+		                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Deceased</label></div>
+		                                            <div class="col-12 col-md-9"><input type="date" class="form-control mother_date_deceased"></div>
+		                                        </div>
+		                                </fieldset>
+                                
+		                                <fieldset class="row col col-md-12">
+		                                        <legend>Siblings</legend>
+		                                        <div class="list_siblings">
+		                                        </div>
+		                                        <div class="col-12">
+		                                            <button type="button" class="add_more_siblings btn btn-success btn-sm float-right">Add more</button>
+		                                        </div>
+		                                </fieldset>
+		                            </div>
+		                            <div class="tab-pane fade" id="socioEconomic" role="tabpanel" aria-labelledby="profile-tab">
+		                                <div style="margin-top: 30px;">
+		                                </div>
+		                                <div class="row form-group col-md-6">
+	                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Relationship</label></div>
+	                                    <div class="col-12 col-md-9">
+	                                        <select class="form-control family_rel select2">
+	                                            <option value="" selected disabled>-- select one --</option>
+	                                            <option value="FAIR">Fair</option>
+	                                            <option value="POOR">Poor</option>
+	                                            <option value="SATISFACTORY">Satisfactory</option>
+	                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+	                                        </select>
 	                                    </div>
-	                                    <div class="row col-lg-12 docket_display" style="">
-	                                        <div class="row form-group col-md-6">
-	                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-	                                            <div class="col-12 col-md-9">
-	                                                <select name="select" class="form-control docket_num select2">
-	                                                </select>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
-
-						                <div class="col-md-12 manual_true" style="display:none">
-						                    	<div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_true"></div>
-						                    	</div>
-			                                    <div class="row form-group col-md-6">
-			                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-			                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_true"></div>
-			                                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_true"></div>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_true" ></div>
-						                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
-		                                        <div class="col-12 col-md-9">
-		                                            <select class="form-control caseload_true select2">
-		                                                <option value="PROBATION_SUP_CSS">Community Service Supervision</option>
-		                                                <option value="PROBATION_SUP_CCSS">Courtesy Community Service Supervision</option>
-		                                                <option value="PROBATION_SUP_CPS">Courtesy Probation Supervision</option>
-		                                                <option value="PROBATION_SUP_CSSS">Courtesy Suspended Sentence Supervision</option>
-		                                                <option value="PROBATION_SUP_DOCKET_CREATION">For Docket Creation</option>
-		                                                <option value="PROBATION_SUP_TRANS">Motion/Manifestation to Transfer Supervision and Control</option>
-		                                                <option value="PROBATION_SUP_TRAVEL_PERMIT">Permit to Travel</option>
-		                                                <option value="PROBATION_SUP_SUPERVISION">Probation Supervision</option>
-		                                                <option value="PROBATION_SUP_RPS">Reinstated Probation Supervision</option>
-		                                                <option value="PROBATION_SUP_RC">Request for Records Check</option>
-		                                                <option value="PROBATION_SUP_RES_RC">Results of Records Check</option>
-		                                                <option value="PROBATION_REVOCATION_ABSCOND">Revocation - Abscond</option>
-		                                                <option value="PROBATION_REVOCATION_COMMISSION">Revocation - Commission of Another Offense</option>
-		                                                <option value="PROBATION_REVOCATION_OTHER">Revocation - Other</option>
-		                                                <option value="PROBATION_REVOCATION_VIOLATION">Revocation - Violation of Probation Conditions</option>
-		                                                <option value="PROBATION_SUP_SSS">Suspended Sentence Supervision</option>
-		                                                <option value="PROBATION_SUP_TERMINATE_PROBATION">Terminate Probation</option>
-		                                                <option value="PROBATION_SUP_CRT_APPR_TRANS">Transfer of Residence</option>
-		                                                <option value="PROBATION_SUP_TCSS">Transferred Community Service Supervision</option>
-		                                                <option value="PROBATION_SUP_TPS">Transferred Probation Supervision</option>
-		                                                <option value="PROBATION_SUP_TSSS">Transferred Suspended Sentence Supervision</option><option value="PROBATION_SUP_TRAVEL_GT30">Travel Exceeding 30 Days</option>
-		                                            </select>
-		                                        </div>
-		                                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-		                                        <div class="col-12 col-md-9">
-		                                            <select class="form-control client_type_true select2">
-		                                                <option selected value="true">Adult</option>
-		                                                <option value="false">Juvenile</option>
-		                                            </select>
-		                                        </div>
-		                                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-		                                        <div class="col-12 col-md-9">
-		                                            <select class="form-control field_office_true select2">
-		                                            </select>
-		                                        </div>
-		                                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no_true" ></div>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense_true"></div>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin_true"></div>
-						                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
-		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control inv_off_true"></div>
-		                                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
-						                        <div class="col-12 col-md-9">
-						                            <select class="form-control military_court_true select2" >
-						                                <option value="true">Yes</option>
-						                                <option value="false">No</option>
-						                            </select>
-						                        </div>
-						                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
+                                		</div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Reputation in Community</label></div>
 		                                    <div class="col-12 col-md-9">
-		                                        <select class="form-control plea_bargain_true select2">
-		                                            <option selected value="none" disabled>Select</option>
-		                                            <option value="true">Yes</option>
-		                                            <option value="false">No</option>
+		                                        <select class="form-control family_rep select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="FAIR">Fair</option>
+		                                            <option value="POOR">Poor</option>
+		                                            <option value="SATISFACTORY">Satisfactory</option>
+		                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
 		                                        </select>
 		                                    </div>
-		                                	</div>
-		                                	<div class="row form-group col-md-6 class_sel_true" style="display: none;">
-		                                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Home Condition</label></div>
 		                                    <div class="col-12 col-md-9">
-		                                        <select class="form-control classification_true select2" >
-		                                            <option selected value="none" disabled>Choose</option>
-		                                            <option value="drug">Drug</option>
-		                                            <option value="non-drug">Non Drug</option>
+		                                        <select class="form-control home_cond select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="FAIR">Fair</option>
+		                                            <option value="POOR">Poor</option>
+		                                            <option value="SATISFACTORY">Satisfactory</option>
+		                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
 		                                        </select>
 		                                    </div>
-		                                	</div>
-						                    <div class="row form-group col-md-12">
-		                                        <fieldset class="row col col-md-12">
-		                                            <legend>List</legend>
-		                                            <div class="list_true">
-		                                            </div>
-		                                            <div class="col-12">
-		                                                <button type="button" class="add_more_true btn btn-primary btn-success btn-sm float-right">Add more</button>
-		                                            </div>
-		                                        </fieldset>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-						                        <div class="col-12 col-md-9"><input type="date" class="form-control cod_true" ></div>
-						                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-		                                        <div class="col-12 col-md-9"><input type="date" class="form-control rd_true" ></div>
-		                                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
-		                                        <div class="col-12 col-md-9"><input type="date" class="form-control prob_start_true" ></div>
-		                                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
-		                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Year" class="form-control prob_year_true" ></div>
-		                                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Month</label></div>
-		                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Month" class="form-control prob_month_true" ></div>
-		                                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Day</label></div>
-		                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Day" class="form-control prob_day_true" ></div>
-		                                    </div>
-		                                    <div class="row form-group col-md-12">
-		                                    <div class="col-12 col-md-12">
-		                                    	<div class="modal-footer">
-							                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" disabled>Cancel</button>
-							                    <button type="button" class="btn btn-primary btn-confirm_true btn-sm" >Confirm</button>
-						                		</div>
-						                	</div>
-						                	</div>
-						                    </div>
-						                </div>
-
-						                <div class="col-md-12 manual_false" style="display:none">
-					                    	<div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_false"></div>
-					                    	</div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-		                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_false"></div>
-		                                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_false"></div>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_false" ></div>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-			                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
-			                                    <div class="col-12 col-md-9">
-			                                        <select class="form-control caseload_false select2" disabled>
-			                                            <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
-			                                            <option value="PROBATION_INV_CSI">Community Service Investigation</option>
-			                                            <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
-			                                            <option value="PROBATION_INV_CPI">Courtesy Probation Investigation</option>
-			                                            <option value="PROBATION_INV_CPI_FULL_BLOWN">Courtesy Probation Investigation - Full Blown</option>
-			                                            <option value="PROBATION_INV_CPI_PARTIAL">Courtesy Probation Investigation - Partial</option>
-			                                            <option value="PROBATION_INV_CSSI">Courtesy Suspended Sentence Investigation</option>
-			                                            <option value="PROBATION_INV_MOTION_DISQUALIFY">Disqualified Client</option>
-			                                            <option value="PROBATION_INV_GIOR_FOLLOW_UP">Follow-up of GIOR Result</option>
-			                                            <option value="PROBATION_INV_INVESTIGATION">Probation Investigation</option>
-			                                            <option value="PROBATION_INV_RPI">Reinvestigation for Client under Probation</option>
-			                                            <option value="PROBATION_INV_RCS">Reinvestigation for Community Service</option>
-			                                            <option value="PROBATION_INV_RSS">Reinvestigation for Suspended Sentence</option>
-			                                            <option value="PROBATION_INV_MOTION_EXTENSION">Request for Extension of Time to Submit PSIR</option>
-			                                            <option value="PROBATION_INV_RC">Request for Records Check</option>
-			                                            <option value="PROBATION_INV_RES_RC">Results of Records Check</option>
-			                                            <option value="PROBATION_INV_SSI">Suspended Sentence Investigation</option>
-			                                            <option value="PROBATION_INV_TCSI">Transferred Community Service Investigation</option>
-			                                            <option value="PROBATION_INV_TPI">Transferred Probation Investigation</option>
-			                                            <option value="PROBATION_INV_TSSI">Transferred Suspended Sentence Investigation</option>
-			                                        </select>
-			                                    </div>
-			                                </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-		                                        <div class="col-12 col-md-9">
-		                                            <select class="form-control client_type_false select2">
-		                                                <option selected value="true">Adult</option>
-		                                                <option value="false">Juvenile</option>
-		                                            </select>
-		                                        </div>
-		                                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-		                                        <div class="col-12 col-md-9">
-		                                            <select class="form-control field_office_false select2">
-		                                            </select>
-		                                        </div>
-		                                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no_false" ></div>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense_false"></div>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
-						                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin_false"></div>
-						                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
-		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control inv_off_false"></div>
-		                                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
-						                        <div class="col-12 col-md-9">
-						                            <select class="form-control military_court_false select2" >
-						                                <option value="true">Yes</option>
-						                                <option value="false">No</option>
-						                            </select>
-						                        </div>
-						                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
+		                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control fam_prob"></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Economic Status</label></div>
 		                                    <div class="col-12 col-md-9">
-		                                        <select class="form-control plea_bargain_false select2">
-		                                            <option selected value="none" disabled>Select</option>
-		                                            <option value="true">Yes</option>
-		                                            <option value="false">No</option>
+		                                        <select class="form-control home_cond select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="POOR">Poor (Less than 7,890/mo)</option>
+		                                            <option value="LOW INCOME">Low Income (Php 7,890-15,780/mo)</option>
+		                                            <option value="LOWER MIDDLE INCOME">Lower Middle Income (Php 15,780-31,560/mo)</option>
+		                                            <option value="MIDDLE CLASS">Middle Class (Php 31,560-78,900/mo)</option>
+		                                            <option value="UPPER MIDDLE CLASS">Upper Middle Class (Php 78,900-118,350/mo)</option>
+		                                            <option value="UPPER INCOME">Upper Income (Php 118,350-157,800/mo)</option>
+		                                            <option value="RICH">Rich (at least Php 157,800/mo)</option>
 		                                        </select>
 		                                    </div>
-		                                	</div>
-		                                	<div class="row form-group col-md-6 class_sel_false" style="display: none;">
-		                                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stability of Residence</label></div>
 		                                    <div class="col-12 col-md-9">
-		                                        <select class="form-control classification_false select2" >
-		                                            <option selected value="none" disabled>Choose</option>
-		                                            <option value="drug">Drug</option>
-		                                            <option value="non-drug">Non Drug</option>
+		                                        <select class="form-control stability select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="FREQUENT CHANGE">Frequent Change</option>
+		                                            <option value="NO STABILITY">No Stability</option>
+		                                            <option value="OCCASIONAL CHANGE">Occasional Change</option>
+		                                            <option value="STABLE">Stable</option>
 		                                        </select>
 		                                    </div>
-		                                	</div>
-						                    <div class="row form-group col-md-12">
-		                                        <fieldset class="row col col-md-12">
-		                                            <legend>List</legend>
-		                                            <div class="list_false">
-		                                            </div>
-		                                            <div class="col-12">
-		                                                <button type="button" class="add_more_false btn btn-primary btn-success btn-sm float-right">Add more</button>
-		                                            </div>
-		                                        </fieldset>
-						                    </div>
-						                    <div class="row form-group col-md-6">
-						                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-						                        <div class="col-12 col-md-9"><input type="date" class="form-control cod_false" ></div>
-						                    </div>
-		                                    <div class="row form-group col-md-6">
-		                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-		                                        <div class="col-12 col-md-9"><input type="date" class="form-control rd_false" ></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Comments</label></div>
+		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control comments"></textarea></div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Childhood Circumstances</label></div>
+		                                    <div class="col-12 col-md-9">
+		                                        <select class="form-control circumstances select2">
+		                                            <option value="" selected disabled>-- select one --</option>
+		                                            <option value="SAD">Sad</option>
+		                                            <option value="HAPPY">Happy</option>
+		                                        </select>
 		                                    </div>
-		                                    <div class="row form-group col-md-12">
-		                                    <div class="col-12 col-md-12">
-		                                    	<div class="modal-footer">
-							                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" disabled>Cancel</button>
-							                    <button type="button" class="btn btn-primary btn-confirm_false btn-sm" >Confirm</button>
-						                		</div>
-						                	</div>
-						                	</div>
-						                    </div>
-						                </div>
+		                                </div>
+		                                <div class="row form-group col-md-6">
+		                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+		                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control explain"></textarea></div>
+		                                </div>
+		                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- .animated -->
+    </div><!-- /#right-panel -->
+    <!-- Right Panel -->
 
-					                	</div>
-	                            </div>
-                        	</div>
-                		</div>
-                	</div>
-            	</div>
-
-        <!-- content -->
-
-	    </div>
-	    	<!-- footer -->
-	        <?php $this->load->view('templates/footer.php'); ?>
-	        <!-- footer -->
+    <?php $this->load->view('templates/footer.php'); ?>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
     ( function ( $ ) {
-        var ___ctx = '';
-
         var ___ctx = '';
 
         var __setContext = function(newctx) {
@@ -390,6 +1352,43 @@
             return ___ctx;
         };
 
+        var __executeExternalGet = function(path, customLoader) {
+            // path = $.wms.getContextPath() + path;
+            var d = $.Deferred();
+            if(customLoader != ""){
+                $("#"+customLoader).show();
+                $("#"+customLoader).removeClass("hide");
+            }
+            $.ajax({
+                method: "GET",
+                url: path,
+                dataType: "json",
+            }).done(function (data, textStatus, jqXHR) {
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+                d.resolve(data)
+            }).fail(function (jqXHR, textStatus, errorThrown,request) {
+                console.log('---FAILED---');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                console.log('---FAILED---');
+                
+                d.resolve({
+                    status : 'ERROR',
+                    message : request
+                });
+                
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+            });
+            
+            return d.promise();
+        };
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -432,595 +1431,317 @@
             
             return d.promise();
         };
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
                 }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
-
-        $(".list_true").html(`
-            <div class="list_sentence_true">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_true"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y_true" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m_true" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d_true" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y_true" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m_true" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d_true" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                    <div class="col-3 col-md-9"><input type="text" class="form-control cl_true" placeholder="Robbery"></div>
-                </div>
-            </div>`
-        );
-
-        $(".list_false").html(`
-            <div class="list_sentence_false">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_false"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y_false" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m_false" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d_false" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y_false" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m_false" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d_false" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                    <div class="col-3 col-md-9"><input type="text" class="form-control cl_false" placeholder="Robbery"></div>
-                </div>
-            </div>`
-        );
-
-        $(".add_more_true").unbind("click").on("click", function(){
-            console.log("clicked");
-
-            $(".list_true").append(`
-                <div class="list_sentence_true">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_true"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y_true" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m_true" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d_true" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y_true" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m_true" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d_true" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                        <div class="col-3 col-md-9"><input type="text" class="form-control cl_true" placeholder="Robbery"></div>
-                    </div>
-                    <button type="button" class="remove_true btn btn-danger btn-sm float-left">Remove</button>
-                </div>
-                `
-            )
-        });
-
-        $(".add_more_false").unbind("click").on("click", function(){
-            console.log("clicked");
-
-            $(".list_false").append(`
-                <div class="list_sentence_false">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_false"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y_false" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m_false" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d_false" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y_false" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m_false" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d_false" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                        <div class="col-3 col-md-9"><input type="text" class="form-control cl_false" placeholder="Robbery"></div>
-                    </div>
-                    <button type="button" class="remove_false btn btn-danger btn-sm float-left">Remove</button>
-                </div>
-                `
-            )
-        });
-
-
-        $('.list_true').on('click', '.remove_true', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
-
-        $('.list_false').on('click', '.remove_false', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
-
-// select manual docket is set to false
-	var __select = function(){
-	    $('.docket_num').empty();
-	    $('.field_office').empty();
-
-	    __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-	        // console.log(result)
-	        if (result.status != "ERROR") {
-	            $('.field_office_true').append("<option selected disabled> - - Select Field Office - - </option>");
-	                result.forEach(function(data){
-	                    $('.field_office_true').append(
-	                        "<option value="+data.id+">"+data.name+"</option>");
-	                });
-	            $('.field_office_false').append("<option selected disabled> - - Select Field Office - - </option>");
-	                result.forEach(function(data){
-	                    $('.field_office_false').append(
-	                        "<option value="+data.id+">"+data.name+"</option>");
-	                });
-	           
-	        } else {
-	                console.log("failed fetching docket list")
-	                }
-    })
-
-// manual docket is set to false
-        __executeExternalGet('http://localhost:8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
-        console.log(result)
-            if (result.status != "ERROR") {
-
-                // if manual docket is false
-                $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
-                    result.response.forEach(function(data){
-                        $('.docket_num').append(
-                            "<option value="+data.docketNumber+">"+data.docketNumber+"</option>");
-                    });
-
-
-                        $('.docket_num').on('change', function() {
-                            $(".manual_false").show();
-                            const docket = this.value
-                                __executeExternalGet('http://localhost:8000/docketbook/'+docket+'/'+$.cookie("field_office_id")).done(function (result) {
-                                    console.log(result)
-                                    var result = result.response;
-                                    if (result.status != "ERROR") {
-                                    	$(".docket_num").val(result.docketNumber);
-                                        $(".firstName_false").val(result.firstName);
-                                        $(".middleName_false").val(result.middleName);
-                                        $(".lastName_false").val(result.lastName);
-                                        $(".suffix_false").val(result.suffixName);
-                                        // $(".client_type").val(result.clientType).trigger("change");
-                                        $(".cc_no_false").val(result.criminalCaseNumber);
-                                        $(".offense_false").val(result.offense);
-                                            setTimeout(function () {
-                                                $(".field_office_false").val(result.fieldOfficeId).trigger("change");
-                                            }, 3000);
-                                                    if (result.legalAge == true) {
-                                                        var la = "true"
-                                                    } else {
-                                                        var la = "false"
-                                                    }
-                                        $(".caseload_false").val(result.caseloadType).trigger("change");
-                                        $(".client_type_false").val(la).trigger("change");
-                                        $(".cc_no_false").val(result.criminalCaseNumber);
-                                        $(".offense_false").val(result.offense);
-                                        $(".court_origin_false").val(result.courtOfOrigin);
-                                                    if (result.militaryCourt == true) {
-                                                        var mc = "true"
-                                                    } else {
-                                                        var mc = "false"
-                                                    }
-                                        $(".military_court_false").val(mc).trigger("change");
-                                        $(".sentence_false").val(result.sentence);
-                                        $(".cod_false").val(result.courtOrderDate);
-                                        $(".rd_false").val(result.receivedDateByPPO);
-                                        $(".remarks_false").val(result.remarks);
-                                        $(".inv_off_false").val(result.investigatingOfficer);
-                                                    if (result.pleaBargain == true) {
-                                                        var plea = "true"
-                                                    } else {
-                                                        var plea = "false"
-                                                    }
-                                        $(".plea_bargain_false").val(plea).trigger("change");
-                                        $(".classification_false").val(result.caseClassification).trigger("change");
-
-                                            $(".list_false").empty();
-                                            console.log(JSON.parse(result.sentence))
-                                            JSON.parse(result.sentence).forEach(function(data){
-                                                $(".list_false").append(`
-                                                    <div class="list_sentence_false">
-                                                        <div class="row form-group col-md-12">
-                                                            <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                                            <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_false">${data.sentence}</textarea></div>
-                                                        </div>
-                                                        <div class="row form-group col-md-6">
-                                                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control min_y_false" placeholder="Year" value="${data.min_y}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control min_m_false" placeholder="Month" value="${data.min_m}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control min_d_false" placeholder="Day" value="${data.min_d}"></div>
-                                                        </div>
-                                                        <div class="row form-group col-md-6">
-                                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control max_y_false" placeholder="Year" value="${data.max_y}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control max_m_false" placeholder="Month" value="${data.max_m}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control max_d_false" placeholder="Day" value="${data.max_d}"></div>
-                                                        </div>
-                                                        <div class="row form-group col-md-6">
-                                                            <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                                                            <div class="col-3 col-md-9"><input type="text" class="form-control cl_false" placeholder="Robbery" value="${data.civil_liability}"></div>
-                                                        </div>
-                                                        <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                                                    </div>`
-                                                )
-                                            });
-                                    };
-                                });
-                        });
-            } else {
-            console.log("failed fetching docket number")
             }
-    });
-}
-// select manual docket is set to false
-
-
-		// manual docket
-        var manual = $('.manual_docket').val()
-        console.log(manual)
-        if ($('.manual_docket').val() == "false"){
-            __select();
-            $(".manual_false").hide();
-            $(".manual_true").hide();
-        } else {
-            $(".manual_false").hide();
-            $(".manual_true").hide();
-            $(".docket_display").hide();
         }
-        $('.manual_docket').change(function(){
-            cb = $(this);
-            cb.val(cb.prop('checked'));
-            console.log($('.manual_docket').val())
-            if ($('.manual_docket').val() == "true") {
-                $(".docket_display").hide();
-                $(".form-control").val('');
-                $(".manual_false").hide();
-                $(".manual_true").show();
-                
-            } else {
-                $(".manual_false").hide();
-                $(".manual_true").hide();
-                $(".docket_display").show();
-                $(".form-control").val('');
-                __select();
-            }
-        });
 
-        $('.plea_bargain_false').change(function(){
-            if ($('.plea_bargain_false').val() == "true") {
-                $(".class_sel_false").show();
-            } else {
-                $(".class_sel_false").hide();
-            }
-            if ($('.plea_bargain_false').val() == "false"){
-                $(".class_sel_false").hide();
-            } else {
-                $(".class_sel_false").show();
-            }
-        });
 
-        $('.plea_bargain_true').change(function(){
-            if ($('.plea_bargain_true').val() == "true") {
-                $(".class_sel_true").show();
-            } else {
-                $(".class_sel_true").hide();
-            }
-            if ($('.plea_bargain_true').val() == "false"){
-                $(".class_sel_true").hide();
-            } else {
-                $(".class_sel_true").show();
-            }
-        });
+        var client_id = GetURLParameter('client_id');
 
-            $(".btn-confirm_true").unbind("click").on("click", function(){
-            	console.log("clicked true")
+        console.log(client_id)
 
-            const sentence = [];
-            const sentence_inputs = $(".sentence_true");
-            const min_y = $(".min_y_true");
-            const min_m = $(".min_m_true");
-            const min_d = $(".min_d_true");
-            const max_y = $(".max_y_true");
-            const max_m = $(".max_m_true");
-            const max_d = $(".max_d_true");
-            const civil_liability = $(".civil_liability_true");
+        console.log($.cookie("uuid"));
 
-            for(var i = 0; i < sentence_inputs.length; i++){
-                const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                list.civil_liability = $(civil_liability[i]).val();
-                sentence.push(list);
-            }
-            var md;
-            if ($(".manual_docket").val() == "true") {
-                md = true
-            } else {
-                md = false
+        $(".btn-next").unbind("click").on("click", function(){
+
+            var identifyingData = {
+                name                : $(".data_name").val(),
+                interview           : $(".data_interview").val(),
+                alias               : $(".alias").val(),
+                trueName            : $(".true_name").val(),
+                presentAddress      : $(".present_add").val(),
+                permanentAdress     : $(".permanent_add").val()
             }
 
-            // var payload_true = {
-            //     "type"                  : "PIS_SUP",
-            //     "docketNumber"          : "",
-            //     "docketSeries"          : "NONE",
-            //     "caseloadType"          : $(".caseload_true").val(),
-            //     "fieldOfficeId"         : $(".field_office_true").val(),
-            //     "clientType"            : "PROBATIONER",
-            //     "firstName"             : $(".firstName_true").val(),
-            //     "middleName"            : $(".middleName_true").val(),
-            //     "lastName"              : $(".lastName_true").val(),
-            //     "suffixName"            : $(".suffix_true").val(),
-            //     "fullName"              : "",
-            //     "pleaBargain"           : $(".plea_bargain_true").val(),
-            //     "criminalCaseNumber"    : $(".cc_no_true").val(),
-            //     "caseClassification"    : $(".classification_true").val(),
-            //     "offense"               : $(".offense_true").val(),
-            //     "investigatingOfficer"  : $(".inv_off_true").val(),
-            //     "courtOfOrigin"         : $(".court_origin_true").val(),
-            //     "militaryCourt"         : $(".military_court_true").val(),
-            //     "sentence"              : JSON.stringify(sentence),
-            //     "courtOrderDate"        : $(".cod_true").val(),
-            //     "receivedDateByPPO"     : $(".rd_true").val(),
-            //     "manualDocket"          : false,
-            //     "referral"              : false,
-            //     "referralData"          : "",
-            //     "remarks"               : $(".remarks_true").val(),
-            //     "probationStartDate"    : "",
-            //     "probationYear"         : "",
-            //     "probationMonth"        : "",
-            //     "probationDay"          :"",
-            //     "status"                : 1,
-            //     "legalAge"              : $(".client_type_true").val(),
-            // }
-            var payload_true = {
-            	"type": "PIS_SUP",
-				"docketNumber": "",
-				"docketSeries": "NONE",
-				"caseloadType": $(".caseload_true").val(),
-				"fieldOfficeId": $(".field_office_true").val(),
-				"clientType": "PROBATIONER",
-				"clientId": "",
-				"firstName": $(".firstName_true").val(),
-				"middleName": $(".middleName_true").val(),
-				"lastName": $(".lastName_true").val(),
-				"suffixName": $(".suffix_true").val(),
-				"fullName": "",
-				"pleaBargain": $(".plea_bargain_true").val(),
-				"caseClassification": $(".classification_true").val(),
-				"criminalCaseNumber": $(".cc_no_true").val(),
-				"offense": $(".offense_true").val(),
-				"courtOfOrigin": $(".court_origin_true").val(),
-				"courtOrderDate": $(".cod_true").val(),
-				"investigatingOfficer": $(".inv_off_true").val(),
-				"receivedDateByPPO": $(".rd_true").val(),
-				"sentence": JSON.stringify(sentence),
-				"manualDocket": false,
-				"referral": false,
-				"referralData": "",
-				"remarks": "",
-				"probationStartDate": "",
-				"probationYear": "",
-				"probationMonth": "",
-				"probationDay": "",
-				"prisonName": "",
-				"investigationReportSubmittedDate": "",
-				"ppoRecommendation": "",
-				"recommendationState": "",
-				"dateOfTransfer": "",
-				"transferredOfficeId": "",
-				"dateOrderReceivedFromTheBoard": "",
-				"boardOrder": "",
-				"boardOrderStatus": "",
-				"referringOfficeId": "",
-				"dateCICAR": "",
-				"supervisingOfficer": "",
-				"supervisionStartDate": "",
-				"supervisionEndDate": "",
-				"probationEndDate": "",
-				"reportType": "",
-				"referralType": "",
-				"dateReportSubmittedToTheBoard": "",
-				"dateReportSubmittedToRDForTransferToOtherPPO": "",
-				"resolutionType": "",
-				"dateResolutionFromTheBoard": "",
-				"dateResolutionFromTheRDForTransfer": "",
-				"createdBy": "",
-				"updatedBy": "",
-				"legalAge": $(".client_type_true").val(),
-				"militaryCourt": $(".military_court_true").val()
+            console.log(identifyingData)
+
+
+            
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(identifyingData),
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid")
             }
-            console.log(payload_true)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload_true)).done(function (result) {
+
+            console.log(payload)
+
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
-                        window.location.reload(true);
+                        setTimeout(function () {
+                        // window.location.reload(true);
+                        console.log(client_id)
+                        window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        }, 500);
                     }, 2000);
                 }else{
+                    alert("failed")
                 }
-            })   
+            })
         })
 
+        // $(".btn-reset").unbind("click").on("click", function(){
+        //     $(".form-control").val('');
+        // });
 
+    	__executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+        // console.log(result.departmentId)
+        var officeId = result.departmentId;
+        // console.log(result.uuid)
+        var createdBy = result.uuid;
+        $(document).ready(function() {
+        // __executeExternalGet('http://localhost:8080/file/view/'+client_id).done(function (result) {
+        //     console.log(result)
+        //     // $('#client_photo').attr('src', "/C:/Users/mejar/Downloads/kill%20(3).jpg");
+        // })
+          // Listen for the file input change event
+        $('#file-input').on('change', function() {
 
-            $(".btn-confirm_false").unbind("click").on("click", function(){
-            	console.log("clicked false")
+            var imgavat = $('#client_photo');
 
-            const sentence = [];
-            const sentence_inputs = $(".sentence_false");
-            const min_y = $(".min_y_false");
-            const min_m = $(".min_m_false");
-            const min_d = $(".min_d_false");
-            const max_y = $(".max_y_false");
-            const max_m = $(".max_m_false");
-            const max_d = $(".max_d_false");
-            const cl_false = $(".cl_false");
+            console.log(imgavat);
 
-            for(var i = 0; i < sentence_inputs.length; i++){
-                const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                list.cl_false = $(cl_false[i]).val();
-                sentence.push(list);
+            var file = this.files[0];
+
+            console.log(file);
+
+            // Create a FormData object to store the file data
+            var formData = new FormData();
+
+            formData.append('file', file);
+
+            // Set up an AJAX request to send the file data to the server
+
+            $.ajax({
+              url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function(response) {
+                // Handle the server response here
+                console.log(response);
+              },
+              error: function(xhr, status, error) {
+                // Handle any errors here
+                console.log(error);
+              }
+            });
+
+            if (this.files[0]) {   
+                var reader  = new FileReader();
+                
+                reader.readAsDataURL(this.files[0]);
+                
+                reader.onloadend = function () {
+                    imgavat.attr('src', reader.result);
+                };
             }
-            var md;
-            if ($(".manual_docket").val() == "false") {
-                md = false
-            } else {
-                md = true
+
+        });
+
+        $('.btn-upload').on('click', function() {
+            console.log("clicked")
+            $('#file-input').click();
+        });
+
+        // this function is for take photo
+        $(document).ready(function() {
+            $('#control').hide();
+            $('#video').resize(function(){
+                $('#cont').height($('#video').height());
+                  $('#cont').width($('#video').width());
+                  $('#control').height($('#video').height()*0.1);
+                  $('#control').css('top',$('#video').height()*0.9 );
+                    $('#control').width($('#video').width());
+                    $('#control').show();
+            });
+            function opencam(){
+                $("#wrap").show()
+                navigator.getUserMedia= navigator.getUserMedia ||   navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia ;
+                if(navigator.getUserMedia)
+                {
+                    navigator.getUserMedia({video:true },  streamWebCam ,throwError) ;
+                }
+
+                    $('#vid').css('z-index','30');
+                    $('#capture').css('z-index','20');
+                    // $('#snap').unbind("click").on("click", function(){
+                    //   canvas.width=video.clientWidth;
+                    //   canvas.height=video.clientHeight;
+                    //   context.drawImage(video,0,0);
+                    //   $('#vid').css('z-index','20');
+                    //   $('#capture').css('z-index','30');
+                    // });
+                    $('#snap').unbind("click").on("click", function(){
+                        var canvas = document.getElementById('canvas');
+                        var context = canvas.getContext('2d');
+                        var video = document.getElementById('video');
+                        context.drawImage(video, 0, 0, canvas.width=video.clientWidth, canvas.height=video.clientHeight);
+                        $('#vid').css('z-index','20');
+                        $('#capture').css('z-index','30');
+
+                        $('.btn_confirm').unbind("click").on("click", function(){
+                            console.log("clicked confirm ")
+                            var dataURL = canvas.toDataURL();
+                            var blob = dataURItoBlob(dataURL);
+                              // Call a function to handle the blob object
+                            handleBlob(blob);
+                        });
+                        // Function to convert data URL to a Blob object
+                        function dataURItoBlob(dataURI) {
+                          var byteString = atob(dataURI.split(',')[1]);
+                          var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+                          var ab = new ArrayBuffer(byteString.length);
+                          var ia = new Uint8Array(ab);
+                          for (var i = 0; i < byteString.length; i++) {
+                            ia[i] = byteString.charCodeAt(i);
+                          }
+                          return new Blob([ab], { type: mimeString });
+                        }
+
+                        function handleBlob(blob) {
+                          // Create a new FormData object
+                          console.log(blob);
+                            var formData = new FormData();
+                            // Append the blob object to the FormData object
+                            formData.append('file', blob, 'image.jpg');
+                            // Make an AJAX request to upload the image
+                            $.ajax({
+                                url: "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"petitioner_profile"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"petitioner_profile"+"&officeId="+$.cookie('field_office_id'),
+                                type: 'POST',
+                                    data: formData,
+                                    contentType: false,
+                                    processData: false,
+                                    success: function(response) {
+                                        // Handle the server response here
+                                        console.log(response);
+                                        $("#success_photo_capture").show()
+                                        setTimeout(function () {
+                                            window.location.reload(true);
+                                        }, 1000);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle any errors here
+                                        console.log(error);
+                                    }
+                            });
+                        }
+                    });
+
+                    $('#retake').unbind("click").on("click", function(){
+                        $('#vid').css('z-index','30');
+                        $('#capture').css('z-index','20');
+                    });
+            }
+            function closecam(){
+                $("#wrap").hide()
+                video.pause();
+                try {
+                    video.srcObject = null;
+                } catch (error) {
+                    video.src =null;
+                }
+              var track = strr.getTracks()[0];  // if only one media track
+              // ...
+              track.stop();
+            }
+              var video= document.getElementById('video');
+              var canvas= document.getElementById('canvas');
+              var context= canvas.getContext('2d');
+              var strr;
+              function streamWebCam(stream){
+              const  mediaSource = new MediaSource(stream);
+              try {
+                  video.srcObject = stream;
+                } catch (error) {
+                  video.src = URL.createObjectURL(mediaSource);
+                }
+                video.play();
+                strr=stream;
+              }
+              function throwError(e){
+                alert(e.name);
+              }
+            $('#open').unbind("click").on("click", function(){
+              opencam();
+               $('#control').show();
+            });
+            $('#cancel_modal').unbind("click").on("click", function(){
+              closecam();
+            });
+        });
+        // $('.btn_save').on('click', function() {
+        //     console.log("clicked save")
+        //     __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+        //         var officeId = result.departmentId;
+        //         // console.log(result.uuid)
+        //         var createdBy = result.uuid;
+
+        // var imgsave = $('#imageprev');
+        
+
+        //     });
+        // });
+        
+        });
+        
+    })
+
+        $(".btn-next").unbind("click").on("click", function(){
+
+            var identifyingData = {
+                name                : $(".data_name").val(),
+                interview           : $(".data_interview").val(),
+                alias               : $(".alias").val(),
+                trueName            : $(".true_name").val(),
+                presentAddress      : $(".present_add").val(),
+                permanentAdress     : $(".permanent_add").val()
             }
 
-            var payload_false = {
-                  "type": "PIS_SUP",
-				  "docketNumber": $(".docket_num").val(),
-				  "docketSeries": "NONE",
-				  "caseloadType": $(".caseload_false").val(),
-				  "fieldOfficeId": $(".field_office_false").val(),
-				  "clientType": "PROBATIONER",
-				  "clientId": "",
-				  "firstName": $(".firstName_false").val(),
-				  "middleName": $(".middleName_false").val(),
-				  "lastName": $(".lastName_false").val(),
-				  "suffixName": $(".suffix_false").val(),
-				  "fullName": "",
-				  "pleaBargain": $(".plea_bargain_false").val(),
-				  "caseClassification": $(".classification_false").val(),
-				  "criminalCaseNumber": $(".cc_no_false").val(),
-				  "offense": $(".offense_false").val(),
-				  "courtOfOrigin": $(".court_origin_false").val(),
-				  "courtOrderDate": $(".cod_false").val(),
-				  "investigatingOfficer": $(".inv_off_false").val(),
-				  "receivedDateByPPO": $(".rd_false").val(),
-				  "sentence": JSON.stringify(sentence),
-				  "manualDocket": false,
-				  "referral": false,
-				  "referralData": "",
-				  "remarks": "",
-				  "probationStartDate": "",
-				  "probationYear": "",
-				  "probationMonth": "",
-				  "probationDay": "",
-				  "prisonName": "",
-				  "investigationReportSubmittedDate": "",
-				  "ppoRecommendation": "",
-				  "recommendationState": "",
-				  "dateOfTransfer": "",
-				  "transferredOfficeId": "",
-				  "dateOrderReceivedFromTheBoard": "",
-				  "boardOrder": "",
-				  "boardOrderStatus": "",
-				  "referringOfficeId": "",
-				  "dateCICAR": "",
-				  "supervisingOfficer": "",
-				  "supervisionStartDate": "",
-				  "supervisionEndDate": "",
-				  "probationEndDate": "",
-				  "reportType": "",
-				  "referralType": "",
-				  "dateReportSubmittedToTheBoard": "",
-				  "dateReportSubmittedToRDForTransferToOtherPPO": "",
-				  "resolutionType": "",
-				  "dateResolutionFromTheBoard": "",
-				  "dateResolutionFromTheRDForTransfer": "",
-				  "createdBy": "",
-				  "updatedBy": "",
-				  "legalAge": $(".client_type_false").val(),
-				  "militaryCourt": $(".military_court_false").val()
+            console.log(identifyingData)
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(identifyingData),
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid"),
             }
-            console.log(payload_false)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload_false)).done(function (result) {
+
+            console.log(payload)
+
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
-                        window.location.reload(true);
+                        setTimeout(function () {
+                        // window.location.reload(true);
+                        console.log(client_id)
+                        // window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        }, 500);
                     }, 2000);
                 }else{
+                    alert("failed")
                 }
-            })   
+            })
         })
 
     } )( jQuery );
-    </script> 
-</body>
-
-
+    </script>
