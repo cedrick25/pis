@@ -68,12 +68,12 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" id="client_pb" data-toggle="tab" href="#pb" role="tab" aria-controls="investigation" aria-selected="true">Probationer</a>
                                     </li>
-                                    <li class="nav-item">
+<!--                                     <li class="nav-item">
                                         <a class="nav-link" id="client_pr" data-toggle="tab" href="#pr" role="tab" aria-controls="supervision" aria-selected="false">Parolee</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="client_pd" data-toggle="tab" href="#pd" role="tab" aria-controls="single_carpeta" aria-selected="false">Pardonee</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="pb" role="tabpanel" aria-labelledby="home-tab">
@@ -270,7 +270,7 @@
                                 "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
                                 "<td>"+data.sex+"</td>"+
                                 "<td>"+data.clientType+"</td>"+
-                                "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
+                                "<td value="+data.fieldOfficeId+">"+data.fieldOfficeName+"</td>"+
                                 "<td class='actions'> "+actions+"")
                             // });
                     })  

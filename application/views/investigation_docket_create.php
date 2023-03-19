@@ -403,6 +403,7 @@
         __selectclient();
 
         $(".btn-confirm").unbind("click").on("click", function(){
+            
             var fname = $('.pb_client_type option:selected').data('fname');
             var mname = $('.pb_client_type option:selected').data('mname');
             var lname = $('.pb_client_type option:selected').data('lname');
@@ -420,7 +421,7 @@
 
             for(var i = 0; i < sentence_inputs.length; i++){
                 const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
+                list.sentence = $(sentence_inputs[i]).val();
                 list.min_y = $(min_y[i]).val();
                 list.min_m = $(min_m[i]).val();
                 list.min_d = $(min_d[i]).val();
@@ -434,16 +435,16 @@
             console.log(sentence)
 
             var payload = {
-                "type"          : "PIS_INV",
-                "docketNumber"  : "",
-                "docketSeries"  : "NONE",
-                "caseloadType"  : $(".caseload").val(),
-                "fieldOfficeId" : $(".field_office").val(),
-                "clientType"    : "PROBATIONER",
-                "firstName"     : fname,
-                "middleName"    : mname,
-                "lastName"      : lname,
-                "suffixName"    : sname,
+                "type"                  : "PIS_INV",
+                "docketNumber"          : "",
+                "docketSeries"          : "NONE",
+                "caseloadType"          : $(".caseload").val(),
+                "fieldOfficeId"         : $(".field_office").val(),
+                "clientType"            : "PROBATIONER",
+                "firstName"             : fname,
+                "middleName"            : mname,
+                "lastName"              : lname,
+                "suffixName"            : sname,
                 "fullName"              : "",
                 "pleaBargain"           : $(".plea_bargain").val(),
                 "criminalCaseNumber"    : $(".cc_no").val(),
@@ -464,10 +465,11 @@
                 "probationMonth"        : "",
                 "probationDay"          :"",
                 "status"                : 1,
-                "legalAge"              : $(".client_type").val(),
+                "legalAge"              : $(".client_type").val()
             }
                 
             console.log(payload)
+
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {

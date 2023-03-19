@@ -139,13 +139,15 @@
                     result.permissions.forEach(function(data){
                         if (data.type == "ACTION") {
                             // console.log(data.value)
-                            if (!data.value) {
-                                var element = $('.' + data.detail);
-                                element.hide();
-                            }else{
-                                var element = $('.' + data.detail);
-                                element.show();
-                            }
+                            setTimeout(function() {
+                                if (!data.value) {
+                                    var element = $('.' + data.detail);
+                                    element.hide();
+                                }else{
+                                    var element = $('.' + data.detail);
+                                    element.show();
+                                }
+                            }, 1000);
                         }else if (data.type == "VIEW") {
                             if (!data.value) {
                                 var element = $('.' + data.detail);

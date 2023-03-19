@@ -67,19 +67,19 @@
                         <li style='display:none;' class="received_parolee"><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parolee</a></li>
                     </ul>
                 </li>
-                <h3 class="menu-title">Fact Sheet</h3>
-                <li class="menu-item-has-children dropdown hh">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Fact Sheet</a>
-                    <ul class="sub-menu children dropdown-menu">
+                <h3 class="menu-title client_list" style='display:none;'>Fact Sheet</h3>
+                <li class="client_list" style='display:none;'>
+                    <a href="client_list"> <i class="menu-icon fa fa-building-o"></i>Fact Sheet</a>
+                   <!--  <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list">Fact Sheet</a></li>
-                    </ul>
+                    </ul> -->
                 </li>
-                <h3 class="menu-title">Forms</h3>
-                <li class="menu-item-has-children dropdown hh">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Forms</a>
-                    <ul class="sub-menu children dropdown-menu">
+                <h3 class="menu-title form_list" style='display:none;'>Forms</h3>
+                <li class="form_list" style='display:none;'>
+                    <a href="form_list"> <i class="menu-icon fa fa-building-o"></i>Forms</a>
+<!--                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="form_list"><i class="menu-icon fa fa-user"></i><a href="form_list">Form List</a></li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <h3 class="menu-title org_module" style='display:none;'>Management</h3>
                 <li class="menu-item-has-children dropdown hh org_module" style='display:none;'>

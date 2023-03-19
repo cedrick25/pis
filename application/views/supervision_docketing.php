@@ -71,7 +71,7 @@
                                             <th>Received Date</th>
                                             <th>Name</th>
                                             <th>Criminal Case No.</th>
-                                            <th>Status</th>
+                                            <th>Field Office</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -200,7 +200,7 @@
                             "<td>"+data.receivedDateByPPO+"</td>"+
                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
                             "<td>"+data.criminalCaseNumber+"</td>"+
-                            "<td>"+data.status+"</td>"+
+                            "<td>"+data.fieldOfficeName+"</td>"+
                             "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>")
                     });
                     $(document).ready(function () {
@@ -209,9 +209,9 @@
                         });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "20%", "targets": 6 }
-                            // ]
+                            "columnDefs": [
+                                { "width": "20%", "targets": 6 }
+                            ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });

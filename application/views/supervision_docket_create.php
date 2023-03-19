@@ -226,7 +226,7 @@
                                             </div>
                                             <div class="row form-group col-md-12">
                                             <div class="col-12 col-md-12">
-                                                <div class="modal-footer">
+                                                <div class="card-footer">
                                                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" disabled>Cancel</button>
                                                 <button type="button" class="btn btn-primary btn-confirm_true btn-sm" >Confirm</button>
                                                 </div>
@@ -361,7 +361,7 @@
                                             </div>
                                             <div class="row form-group col-md-12">
                                             <div class="col-12 col-md-12">
-                                                <div class="modal-footer">
+                                                <div class="card-footer">
                                                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" disabled>Cancel</button>
                                                 <button type="button" class="btn btn-primary btn-confirm_false btn-sm" >Confirm</button>
                                                 </div>
@@ -811,6 +811,7 @@
             var mname = $('.pb_client_type_sup option:selected').data('mname');
             var lname = $('.pb_client_type_sup option:selected').data('lname');
             var sname = $('.pb_client_type_sup option:selected').data('sname');
+
             console.log(fname+","+mname+","+lname+","+sname)
 
             const sentence = [];
@@ -850,10 +851,10 @@
                 "fieldOfficeId": $(".field_office_true").val(),
                 "clientType": "PROBATIONER",
                 "clientId": "",
-                "firstName": $(".firstName_true").val(),
-                "middleName": $(".middleName_true").val(),
-                "lastName": $(".lastName_true").val(),
-                "suffixName": $(".suffix_true").val(),
+                "firstName": fname,
+                "middleName": mname,
+                "lastName": lname,
+                "suffixName": sname,
                 "fullName": "",
                 "pleaBargain": $(".plea_bargain_true").val(),
                 "caseClassification": $(".classification_true").val(),
@@ -918,6 +919,11 @@
 
             $(".btn-confirm_false").unbind("click").on("click", function(){
                 console.log("clicked false")
+
+            var fname = $('.pb_client_type_sup option:selected').data('fname');
+            var mname = $('.pb_client_type_sup option:selected').data('mname');
+            var lname = $('.pb_client_type_sup option:selected').data('lname');
+            var sname = $('.pb_client_type_sup option:selected').data('sname');
 
             const sentence = [];
             const sentence_inputs = $(".sentence_false");

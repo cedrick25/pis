@@ -51,6 +51,13 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control docket_num" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control pb_client_type_sup_update select2">
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
                                 </div>
@@ -65,7 +72,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_update"></div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                     <div class="col-12 col-md-9">
@@ -349,6 +356,26 @@
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
+
+        var __selectclient = function(){
+            $('.pb_client_type_sup_update').empty();
+            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.pb_client_type_sup_update').append("<option selected disabled> - - Select Client - - </option>");
+                    result.content.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        console.log(name)
+                        $('.pb_client_type_sup_update').append(
+                            '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
@@ -418,6 +445,11 @@
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         console.log('clicked')
                         
+                        var fname = $('.pb_client_type_sup_update option:selected').data('fname');
+                        var mname = $('.pb_client_type_sup_update option:selected').data('mname');
+                        var lname = $('.pb_client_type_sup_update option:selected').data('lname');
+                        var sname = $('.pb_client_type_sup_update option:selected').data('sname');
+
                         const sentence = [];
                         const sentence_inputs = $(".sentence");
                         const min_y = $(".min_y");
@@ -451,10 +483,10 @@
                               "fieldOfficeId": $(".field_office_update").val(),
                               "clientType": "PROBATIONER",
                               "clientId": "",
-                              "firstName": $(".firstName_update").val(),
-                              "middleName": $(".middleName_update").val(),
-                              "lastName": $(".lastName_update").val(),
-                              "suffixName": $(".suffix_update").val(),
+                              "firstName": fname,
+                              "middleName": mname,
+                              "lastName": lname,
+                              "suffixName": sname,
                               "fullName": "",
                               "pleaBargain": $(".plea_bargain_update").val(),
                               "caseClassification": $(".classification_update").val(),

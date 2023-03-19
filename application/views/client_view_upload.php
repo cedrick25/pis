@@ -213,7 +213,7 @@
                 var officeId = result.fieldOfficeId;
                 var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
                 console.log(officeId)
-                __executeExternalGet('http://localhost:8080/file/list/CLIENT/'+client_id+'/'+officeId).done(function (result) {
+                __executeExternalGet('http://localhost:8080/file/getLatest/CLIENT/'+client_id+'/'+officeId).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
