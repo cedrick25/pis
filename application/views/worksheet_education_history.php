@@ -64,34 +64,34 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link idenData" href="">Identifying Data</a>
+                                        <a class="nav-link idenData" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link presOff" href="">Present Offense</a>
+                                        <a class="nav-link presOff" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link priorRec" href="">Prior Records</a>
+                                        <a class="nav-link priorRec" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link famBg" href="">Family Background</a>
+                                        <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socioEco" href="">Socio-Economic Background</a>
+                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" href="">Residence/Economic Conditions</a>
+                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouseChild" href="">Spouse/Children</a>
+                                        <a class="nav-link spouseChild" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active educHis" href="">Education History</a>
+                                        <a class="nav-link active educHis" href="#">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link empHis" href="">Employment History</a>
+                                        <a class="nav-link empHis" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" href="">Environmental Factor</a>
+                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -431,34 +431,63 @@
         //     $(".form-control").val('');
         // });
 
+        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/educationHistory/'+client_id).done(function (result) {
+                console.log("==========")
+                console.log(result)
+                console.log("==========")
 
-        $(".add_more_residence").unbind("click").on("click", function(){
-            // console.log("clicked");
+                var result = result.response;
 
-            $(".residence").append(`
-            <div class="res">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control spouse_remarks"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
-                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Birth Place" class="form-control spouse_bplace_others"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
-                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Birth Place" class="form-control spouse_bplace_others"></div>
-                </div>
-                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-            </div>`
-            )
-        });
+                if (result.status != "ERROR") {
 
-        $('.residence').on('click', '.remove', function(e) {
-            e.preventDefault();
+                    if (result.worksheetStatus == "INCOMPLETE"){
 
-            $(this).parent().remove();
-        });
+                        $(".btn-update").show();
+                        $(".btn-next").hide();
+
+                        JSON.parse(result.jsonData)
+
+                        console.log(JSON.parse(result.jsonData))
+
+                        // var spouseChild = JSON.parse(result.jsonData);
+
+                        $(".elem_lvl").val(JSON.parse(result.jsonData).elemLevel);
+                        $(".elem_where").val(JSON.parse(result.jsonData).elemWhere);
+                        $(".elem_high").val(JSON.parse(result.jsonData).elemHigh);
+                        $(".elem_award").val(JSON.parse(result.jsonData).elemAward);
+                        $(".elem_date").val(JSON.parse(result.jsonData).elemDate);
+                        $(".sec_lvl").val(JSON.parse(result.jsonData).secLevel);
+                        $(".sec_where").val(JSON.parse(result.jsonData).secWhere);
+                        $(".sec_high").val(JSON.parse(result.jsonData).secHigh);
+                        $(".sec_award").val(JSON.parse(result.jsonData).secAward);
+                        $(".sec_date").val(JSON.parse(result.jsonData).secDate);
+                        $(".college_lvl").val(JSON.parse(result.jsonData).collegeLevel);
+                        $(".college_where").val(JSON.parse(result.jsonData).collegeWhere);
+                        $(".college_high").val(JSON.parse(result.jsonData).collegeHigh);
+                        $(".college_award").val(JSON.parse(result.jsonData).collegeAward);
+                        $(".college_date").val(JSON.parse(result.jsonData).collegeDate);
+                        $(".pcollege_lvl").val(JSON.parse(result.jsonData).pcollegeLevel);
+                        $(".pcollege_where").val(JSON.parse(result.jsonData).pcollegeWhere);
+                        $(".pcollege_high").val(JSON.parse(result.jsonData).pcollegeHigh);
+                        $(".pcollege_award").val(JSON.parse(result.jsonData).pcollegeAward);
+                        $(".pcollege_date").val(JSON.parse(result.jsonData).pcollegeDate);
+                        $(".voc_lvl").val(JSON.parse(result.jsonData).vocLevel);
+                        $(".voc_where").val(JSON.parse(result.jsonData).vocWhere);
+                        $(".voc_high").val(JSON.parse(result.jsonData).vocHigh);
+                        $(".voc_award").val(JSON.parse(result.jsonData).vocAward);
+                        $(".voc_date").val(JSON.parse(result.jsonData).vocDate);
+                        $(".unschool").val(JSON.parse(result.jsonData).unschool).trigger("change");
+                        $(".educExplain").val(JSON.parse(result.jsonData).educExplain);  
+                        $(".conduct").val(JSON.parse(result.jsonData).conduct).trigger("change");
+
+                    }else{
+
+                        $(".btn-next").show();
+                        $(".btn-update").hide();
+                    } 
+
+                }
+            })
 
         $(".btn-next").unbind("click").on("click", function(){
 
@@ -512,6 +541,77 @@
 
 
             __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            // window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+
+            })
+
+
+        $(".btn-update").unbind("click").on("click", function(){
+
+            var educHistory = {
+
+                elemLevel               : $(".elem_lvl").val(),
+                elemWhere               : $(".elem_where").val(),
+                elemHigh                : $(".elem_high").val(),
+                elemAward              : $(".elem_award").val(),
+                elemDate               : $(".elem_date").val(),
+                secLevel               : $(".sec_lvl").val(),
+                secWhere               : $(".sec_where").val(),
+                secHigh                : $(".sec_high").val(),
+                secAward              : $(".sec_award").val(),
+                secDate               : $(".sec_date").val(),
+                collegeLevel               : $(".college_lvl").val(),
+                collegeWhere               : $(".college_where").val(),
+                collegeHigh                : $(".college_high").val(),
+                collegeAward              : $(".college_award").val(),
+                collegeDate               : $(".college_date").val(),
+                pcollegeLevel               : $(".pcollege_lvl").val(),
+                pcollegeWhere               : $(".pcollege_where").val(),
+                pcollegeHigh                : $(".pcollege_high").val(),
+                pcollegeAward              : $(".pcollege_award").val(),
+                pcollegeDate               : $(".pcollege_date").val(),
+                vocLevel               : $(".voc_lvl").val(),
+                vocWhere               : $(".voc_where").val(),
+                vocHigh                : $(".voc_high").val(),
+                vocAward              : $(".voc_award").val(),
+                vocDate               : $(".voc_date").val(),
+                unschool                : $(".unschool").val(),
+                educExplain              : $(".educExplain").val(),
+                conduct               : $(".conduct").val()
+
+
+
+            }
+
+            console.log(educHistory)
+
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(educHistory),
+            "type"                      : "educationHistory",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid")
+            }
+
+            console.log(payload)
+
+
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/educationHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

@@ -3,6 +3,32 @@
 <body>
     <!-- Left Panel -->
 
+    <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Proceeded Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php $this->load->view('templates/left-panel.php'); ?> 
     
     <!-- /#left-panel -->
@@ -38,34 +64,34 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link idenData" href="">Identifying Data</a>
+                                        <a class="nav-link idenData" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link presOff" href="">Present Offense</a>
+                                        <a class="nav-link presOff" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link priorRec" href="">Prior Records</a>
+                                        <a class="nav-link priorRec" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link famBg" href="">Family Background</a>
+                                        <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socioEco" href="">Socio-Economic Background</a>
+                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" href="">Residence/Economic Conditions</a>
+                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouseChild" href="">Spouse/Children</a>
+                                        <a class="nav-link spouseChild" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link educHis" href="">Education History</a>
+                                        <a class="nav-link educHis" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active empHis" href="">Employment History</a>
+                                        <a class="nav-link active empHis" href="#">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" href="">Environmental Factor</a>
+                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -188,7 +214,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -413,8 +440,9 @@
                 empSpecStatus           : $(".emp_specStatus").val(),
                 empSupport              : $(".emp_support").val(),
                 empSpecSupp             : $(".emp_specSupp").val(),
+                empHealth               : $(".emp_health").val(),
+                empExplainHealth        : $(".emp_explainHealth").val(),
                 empSkills               : $(".emp_skills").val(),
-                empOtherSource          : $(".emp_otherSource").val(),
                 empOtherSource          : $(".emp_otherSource").val(),
                 empTreatment            : $(".emp_treatment").val(),
                 empHosName              : $(".emp_hosName").val(),
@@ -431,7 +459,7 @@
             var payload = {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(employmentHistory),
-            "type"                      : "spouseChildren",
+            "type"                      : "employmentHistory",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid")
             }
@@ -457,6 +485,280 @@
                 })
 
             })
+
+
+        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/employmentHistory/'+client_id).done(function (result) {
+            console.log("==========")
+            console.log(result)
+            console.log("==========")
+
+            var result = result.response;
+
+            if (result.status != "ERROR") {
+
+                if (result.worksheetStatus == "INCOMPLETE"){
+
+                    $(".btn-update").show();
+                    $(".btn-next").hide();
+
+                    JSON.parse(result.jsonData)
+
+                    console.log(JSON.parse(result.jsonData))
+
+                    var empHis = JSON.parse(result.jsonData);
+
+                    $(".emp_status").val(JSON.parse(result.jsonData).empStatus).trigger("change");
+                    $(".emp_specStatus").val(JSON.parse(result.jsonData).empSpecSupp);
+                    $(".emp_support").val(JSON.parse(result.jsonData).empSupport).trigger("change");
+                    $(".emp_specSupp").val(JSON.parse(result.jsonData).empSpecSupp);
+                    $(".emp_skills").val(JSON.parse(result.jsonData).empSkills);
+                    $(".emp_otherSource").val(JSON.parse(result.jsonData).empOtherSource);
+                    $(".emp_treatment").val(JSON.parse(result.jsonData).empTreatment).trigger("change");
+                    $(".emp_health").val(JSON.parse(result.jsonData).empHealth).trigger("change");
+                    $(".emp_explainHealth").val(JSON.parse(result.jsonData).empExplainHealth);
+                    $(".emp_hosName").val(JSON.parse(result.jsonData).empHosName);
+                    $(".emp_dateHos").val(JSON.parse(result.jsonData).empDateHos);
+                    $(".emp_useDrug").val(JSON.parse(result.jsonData).empUseDrug).trigger("change");
+                    $(".emp_explainDrug").val(JSON.parse(result.jsonData).empExplainDrug);
+
+
+
+
+                empHis.empHistory.forEach(function(data){
+                    console.log(data)
+
+                    $(".emp_history").append(`
+                        <div class="emp_his">
+                            <div class="row form-group col-md-6">
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
+                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held" value="${data.job_held}"></div>
+                            </div>
+
+                            <div class="row form-group col-md-6">
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
+                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add" value="${data.emp_add}"></div>
+                            </div>
+
+                            <div class="row form-group col-md-6">
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
+                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom" value="${data.emp_dateFrom}"></div>
+                            </div>
+
+                            <div class="row form-group col-md-6">
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
+                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo" value="${data.emp_dateTo}"></div>
+                            </div>
+
+                            <div class="row form-group col-md-6">
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
+                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income" value="${data.emp_Income}"></div>
+                            </div>
+                            <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
+                        </div>`
+                        )
+                    });
+
+                    $('.emp_his').on('click', '.remove', function(e) {
+                        e.preventDefault();
+
+                        $(this).parent().remove();
+                    });
+
+
+                }else{
+
+                    $(".btn-next").show();
+                    $(".btn-update").hide();
+                } 
+
+            }
+        })
+
+        $(".btn-upload").unbind("click").on("click", function(){
+
+            const empHistory = [];
+            const job_held = $(".job_held");
+            const emp_add = $(".emp_add");
+            const emp_dateFrom = $(".emp_dateFrom");
+            const emp_dateTo = $(".emp_dateTo");
+            const emp_Income = $(".emp_Income");
+
+            for(var i = 0; i < job_held.length; i++){
+                
+                const list = {};
+                list.job_held = $(job_held[i]).val();
+                list.emp_add = $(emp_add[i]).val();
+                list.emp_dateFrom = $(emp_dateFrom[i]).val();
+                list.emp_dateTo = $(emp_dateTo[i]).val();
+                list.emp_Income = $(emp_Income[i]).val();
+                empHistory.push(list);
+            }
+
+
+            var employmentHistory = {
+
+                empHistory              : empHistory,
+                empStatus               : $(".emp_status").val(),
+                empSpecStatus           : $(".emp_specStatus").val(),
+                empSupport              : $(".emp_support").val(),
+                empSpecSupp             : $(".emp_specSupp").val(),
+                empHealth               : $(".emp_health").val(),
+                empExplainHealth        : $(".emp_explainHealth").val(),
+                empSkills               : $(".emp_skills").val(),
+                empOtherSource          : $(".emp_otherSource").val(),
+                empTreatment            : $(".emp_treatment").val(),
+                empHosName              : $(".emp_hosName").val(),
+                empDateHos              : $(".emp_dateHos").val(),
+                empUseDrug              : $(".emp_useDrug").val(),
+                empExplainDrug          : $(".emp_explainDrug").val(),
+
+
+            }
+
+            console.log(employmentHistory)
+
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(employmentHistory),
+            "type"                      : "employmentHistory",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid")
+            }
+
+            console.log(payload)
+
+
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/employmentHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+
+            })        
+
+
+        $(".idenData").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".priorRec").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".presOff").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".famBg").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".socioEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".resEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".spouseChild").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".educHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        // $(".empHis").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
+        $(".envFac").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                        }, 500);
+                });
+        });
 
     } )( jQuery );
     </script>

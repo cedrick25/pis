@@ -79,10 +79,10 @@
                                         <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" href="#">Residence/Economic Conditions</a>
+                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active spouseChild" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
+                                        <a class="nav-link active spouseChild" href="#">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link educHis" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
