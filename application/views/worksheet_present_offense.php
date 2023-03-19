@@ -1,6 +1,33 @@
 <?php $this->load->view('templates/header.php'); ?> 
 
 <body>
+
+
+    <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Proceeded Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
@@ -38,34 +65,34 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link idenData" href="#">Identifying Data</a>
+                                        <a class="nav-link idenData" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active presOff" href="" aria-selected="false">Present Offense</a>
+                                        <a class="nav-link active presOff" href="#">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link priorRec" id="priorRecordsTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                        <a class="nav-link priorRec" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link famBg" id="familyBackgroundTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                        <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socioEco" id="socioEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" id="residenceEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouseChild" id="spouseChildrenTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                        <a class="nav-link spouseChild" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link educHis" id="educationHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                        <a class="nav-link educHis" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link empHis" id="employmentHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                        <a class="nav-link empHis" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" id="environmentalFactorTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -181,8 +208,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -375,35 +402,194 @@
             $(".form-control").val('');
         });
 
+
+        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/presentOffense/'+client_id).done(function (result) {
+            console.log("=====identifyingData=====")
+            console.log(result)
+            console.log("=====identifyingData=====")
+
+            var result = result.response;
+
+            if (result.status != "ERROR") {
+
+                if (result.worksheetStatus == "INCOMPLETE"){
+                    $(".btn-update").show();
+                    $(".btn-next").hide();
+
+                    JSON.parse(result.jsonData)
+
+                    console.log(JSON.parse(result.jsonData))
+
+                    $(".charged").val(JSON.parse(result.jsonData).chargedWith);
+                    $(".p_commision").val(JSON.parse(result.jsonData).commisionPlace);
+                    $(".convicted").val(JSON.parse(result.jsonData).convictedOf);
+                    $(".date_charged").val(JSON.parse(result.jsonData).dateCharged);
+                    $(".date_commited").val(JSON.parse(result.jsonData).dateCommitted);
+                    $(".date_convicted").val(JSON.parse(result.jsonData).dateConvicted);
+                    $(".s_yr").val(JSON.parse(result.jsonData).sentenceYear);
+                    $(".s_mo").val(JSON.parse(result.jsonData).sentenceMonth);
+                    $(".s_day").val(JSON.parse(result.jsonData).sentenceDay);
+                    $(".judge").val(JSON.parse(result.jsonData).judge);
+                    $(".court").val(JSON.parse(result.jsonData).court);
+                    $(".arresting").val(JSON.parse(result.jsonData).arrestingOfficer);
+                    $(".address_1").val(JSON.parse(result.jsonData).firstAddress);
+                    $(".defense").val(JSON.parse(result.jsonData).defenseCounsel);
+                    $(".address_2").val(JSON.parse(result.jsonData).secondAddress);
+                    $(".prosecutor").val(JSON.parse(result.jsonData).prosecutor);
+                    $(".address_3").val(JSON.parse(result.jsonData).thirdAddress);
+                    $(".offended").val(JSON.parse(result.jsonData).offended);
+                    $(".address_4").val(JSON.parse(result.jsonData).fourthAddress);
+                    $(".ca").val(JSON.parse(result.jsonData).coAccused);
+                    $(".ac").val(JSON.parse(result.jsonData).aggravatingCirsumstances);
+                    $(".mc").val(JSON.parse(result.jsonData).mitigatingCircumstances);
+                    $(".ep").val(JSON.parse(result.jsonData).extentParticipation);
+                    $(".custody").val(JSON.parse(result.jsonData).custody);
+                    $(".commision").val(JSON.parse(result.jsonData).mannerofCommision);
+                    $(".motives").val(JSON.parse(result.jsonData).motives);
+                    $(".explain").val(JSON.parse(result.jsonData).explain);
+
+                }else{
+
+                    $(".btn-next").show();
+                    $(".btn-update").hide();
+                } 
+
+            }
+        })
+
+
+        $(".btn-update").unbind("click").on("click", function(){
+
+            var presentOffense = {
+                chargedWith                 : $(".charged").val(),
+                commisionPlace              : $(".p_commision").val(),
+                convictedOf                 : $(".convicted").val(),
+                dateCharged                 : $(".date_charged").val(),
+                dateCommitted               : $(".date_commited").val(),
+                dateConvicted               : $(".date_convicted").val(),
+                sentenceYear                : $(".s_yr").val(),
+                sentenceMonth               : $(".s_mo").val(),
+                sentenceDay                 : $(".s_day").val(),
+                judge                       : $(".judge").val(),
+                court                       : $(".court").val(),
+                arrestingOfficer            : $(".arresting").val(),
+                firstAddress                : $(".address_1").val(),
+                defenseCounsel              : $(".defense").val(),
+                secondAddress               : $(".address_2").val(),
+                prosecutor                  : $(".prosecutor").val(),
+                thirdAddress                : $(".address_3").val(),
+                offended                    : $(".offended").val(),
+                fourthAddress               : $(".address_4").val(),
+                coAccused                   : $(".ca").val(),
+                aggravatingCirsumstances    : $(".ac").val(),
+                mitigatingCircumstances     : $(".mc").val(),
+                extentParticipation         : $(".ep").val(),
+                custody                     : $(".custody").val(),
+                mannerofCommision           : $(".commision").val(),
+                motives                     : $(".motives").val(),
+                explain                     : $(".explain").val(),
+            }
+
+            console.log(presentOffense)
+
+
+            
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(presentOffense),
+            "type"                      : "presentOffense",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid"),
+            }
+
+            console.log(payload)
+
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/presentOffense/'+client_id,JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+            })
+        })
+
+
+
         $(".idenData").unbind("click").on("click", function(){
-            console.log("clicked")
-                __executeExternalGet('http://localhost:8000/worksheet/identifyingData/'+client_id).done(function (result) {
-                    console.log("==========")
-                    console.log(result)
-                    console.log("==========")
-                    if (result.status != "ERROR") {
-                        window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
-                        // result.files.forEach(function(data){
-                        //     let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Download</button>";
-                        //     $('.table_body').append("<tr>"+
-                        //         "<td>"+data.id+"</td>"+
-                        //         "<td>"+data.fileName+"</td>"+
-                        //         "<td align='center' class='actions'> "+actions+"")
-                        // });
-                        // $(document).ready(function () {
-                        //     $('.table_head tbody tr').each(function (idx) {
-                        //        $(this).children("td:eq(0)").html(idx + 1);
-                        //     });
-                        //     var table = $('.table_head').DataTable({
-                        //         order: [[0, 'asc']],
-                        //         // "columnDefs": [
-                        //         //     { "width": "20%", "targets": 5 }
-                        //         // ]
-                        //     });
-                        //     $('.dataTables_length').addClass('bs-select');
-                        // });               
-                    }
-                })
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".priorRec").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
+        });
+        $(".famBg").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
+        });
+        $(".socioEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
+        });
+        $(".resEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
+        });
+        $(".spouseChild").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
+        });
+        $(".educHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
+        });
+        $(".empHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
+        });
+        $(".envFac").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                });
         });
 
     } )( jQuery );
