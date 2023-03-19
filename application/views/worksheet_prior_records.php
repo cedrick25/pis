@@ -1,6 +1,33 @@
 <?php $this->load->view('templates/header.php'); ?> 
 
 <body>
+
+    <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Proceeded Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
@@ -38,34 +65,34 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link idenData" href="" aria-selected="true">Identifying Data</a>
+                                        <a class="nav-link idenData" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link presOff" href="" aria-selected="false">Present Offense</a>
+                                        <a class="nav-link presOff" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active priorRec" id="priorRecordsTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                        <a class="nav-link active priorRec" href="#">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link famBg" id="familyBackgroundTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                        <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socioEco" id="socioEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" id="residenceEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouseChild" id="spouseChildrenTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                        <a class="nav-link spouseChild" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link educHis" id="educationHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                        <a class="nav-link educHis" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link empHis" id="employmentHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                        <a class="nav-link empHis" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" id="environmentalFactorTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -130,8 +157,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -237,7 +264,6 @@
             
             return d.promise();
         };
-
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -254,19 +280,6 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
-
-        // $('.plea_bargain').change(function(){
-        //     if ($('.plea_bargain').val() == "true") {
-        //         $(".class_sel").show();
-        //     } else {
-        //         $(".class-sel").hide();
-        //     }
-        //     if ($('.plea_bargain').val() == "false"){
-        //     $(".class_sel").hide();
-        //     } else {
-        //         $(".class_sel").show();
-        //     }
-        // });
 
 
         $(".list").html(`
@@ -380,6 +393,8 @@
             const when = $(".when");
             const where = $(".where");
             const disposition = $(".disposition");
+
+            const recordInfo = [];
             const source = $(".source");
             const date = $(".date");
             const pos = $(".pos");
@@ -394,19 +409,26 @@
                 list.when = $(when[i]).val();
                 list.where = $(where[i]).val();
                 list.disposition = $(disposition[i]).val();
-                list.source = $(source).val();
-                list.date = $(date).val();
-                list.pos = $(pos).val();
-                list.particulars = $(particulars).val();
                 records.push(list);
             }
 
-            // console.log(records)
-            // console.log(info)
+            for(var i = 0; i < source.length; i++){
+
+                const list_info = {};
+                list_info.source = $(source[i]).val();
+                list_info.date = $(date[i]).val();
+                list_info.pos = $(pos[i]).val();
+                list_info.particulars = $(particulars[i]).val();
+                recordInfo.push(list_info);
+            }
+
+            console.log(records)
+            console.log(recordInfo)
 
             var priorRecords = {
 
                 priorRecord         : records,
+                recordsInfo         : recordInfo
 
             }
 
@@ -442,6 +464,250 @@
                 })
             })
 
+            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/priorRecords/'+client_id).done(function (result) {
+            console.log("==========")
+            console.log(result)
+            console.log("==========")
+
+            var result = result.response;
+
+            if (result.status != "ERROR") {
+
+                if (result.worksheetStatus == "INCOMPLETE"){
+
+                    $('.list').empty();
+                    $('.list_info').empty();
+
+                    $(".btn-update").show();
+                    $(".btn-next").hide();
+
+
+                    console.log(JSON.parse(result.jsonData))
+
+                    const recordList = JSON.parse(result.jsonData)
+
+                    console.log(recordList)
+
+
+                    recordList.priorRecord.forEach(function(data){
+                        $(".list").append(`
+                            <div class="list_records">
+                                <div class="row form-group col-md-12">
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency" value="${data.agency}"></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No." value="${data.cc_no}"></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense" value="${data.offense}"></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When" value="${data.when}"></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where" value="${data.where}"></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition" value="${data.disposition}"></div>
+                                </div>
+                            </div>`
+                        )
+                    });
+
+                    recordList.recordsInfo.forEach(function(data){
+                        $(".list_info").append(`
+                            <div class="list_information">
+                                <div class="row form-group col-md-12">
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source" value="${data.source}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date" value="${data.date}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position" value="${data.pos}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars" value="${data.particulars}"></div>
+                                </div>
+                            </div>
+                        `)
+                    });
+
+
+
+
+                }else{
+
+                    $(".btn-next").show();
+                    $(".btn-update").hide();
+                } 
+
+            }
+        })
+
+        $(".btn-update").unbind("click").on("click", function(){
+
+            const records = [];
+            const agency = $(".agency");
+            const cc_no = $(".cc_no");
+            const offense = $(".offense");
+            const when = $(".when");
+            const where = $(".where");
+            const disposition = $(".disposition");
+
+            const recordInfo = [];
+            const source = $(".source");
+            const date = $(".date");
+            const pos = $(".pos");
+            const particulars = $(".particulars");
+
+            for(var i = 0; i < agency.length; i++){
+
+                const list = {};
+                list.agency = $(agency[i]).val();
+                list.cc_no = $(cc_no[i]).val();
+                list.offense = $(offense[i]).val();
+                list.when = $(when[i]).val();
+                list.where = $(where[i]).val();
+                list.disposition = $(disposition[i]).val();
+                records.push(list);
+            }
+
+            for(var i = 0; i < source.length; i++){
+
+                const list_info = {};
+                list_info.source = $(source[i]).val();
+                list_info.date = $(date[i]).val();
+                list_info.pos = $(pos[i]).val();
+                list_info.particulars = $(particulars[i]).val();
+                recordInfo.push(list_info);
+            }
+
+            // console.log(records)
+            // console.log(info)
+
+            var priorRecords = {
+
+                priorRecord         : records,
+                recordsInfo         : recordInfo
+
+            }
+
+            console.log(priorRecords)
+
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(priorRecords),
+            "type"                      : "priorRecords",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid")
+            }
+
+            console.log(payload)
+
+
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/priorRecords/'+client_id,JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+            })
+
+        $(".idenData").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        // $(".priorRec").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
+        $(".famBg").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".socioEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".resEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".spouseChild").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".educHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".empHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".envFac").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                        }, 500);
+                });
+        });
 
 
     } )( jQuery );

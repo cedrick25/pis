@@ -1,6 +1,32 @@
 <?php $this->load->view('templates/header.php'); ?> 
 
 <body>
+
+    <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Proceeded Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
@@ -276,8 +302,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -503,6 +529,118 @@
                 })
 
             })
+
+
+        $(".idenData").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".priorRec").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".presOff").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".famBg").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".socioEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".resEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".spouseChild").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        // $(".educHis").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
+        $(".empHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".envFac").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                        }, 500);
+                });
+        });
 
     } )( jQuery );
     </script>

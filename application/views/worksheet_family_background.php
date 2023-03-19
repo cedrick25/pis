@@ -1,6 +1,32 @@
 <?php $this->load->view('templates/header.php'); ?> 
 
 <body>
+
+    <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Proceeded Successfully  
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
@@ -38,34 +64,34 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link idenData" href="" aria-selected="true">Identifying Data</a>
+                                        <a class="nav-link idenData" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link presOff" href="" aria-selected="false">Present Offense</a>
+                                        <a class="nav-link presOff" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link priorRec" id="priorRecordsTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Prior Records</a>
+                                        <a class="nav-link priorRec" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active famBg" id="familyBackgroundTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Family Background</a>
+                                        <a class="nav-link active famBg" href="#">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socioEco" id="socioEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Socio-Economic Background</a>
+                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" id="residenceEconomicTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Residence/Economic Conditions</a>
+                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouseChild" id="spouseChildrenTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Spouse/Children</a>
+                                        <a class="nav-link spouseChild" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link educHis" id="educationHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Education History</a>
+                                        <a class="nav-link educHis" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link empHis" id="employmentHistoryTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Employment History</a>
+                                        <a class="nav-link empHis" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" id="environmentalFactorTab" data-toggle="tab" href="" role="tab" aria-controls="supervision" aria-selected="false">Environmental Factor</a>
+                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -352,23 +378,11 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Province</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control bprovince select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="MOLE">X</option>
-                                            <option value="OTHERS">Y</option>
-                                        </select>
-                                    </div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control bprovince"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth City/Municipality</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control bcity select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="MOLE">X</option>
-                                            <option value="OTHERS">Y</option>
-                                        </select>
-                                    </div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control bcity"></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
@@ -397,7 +411,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Parents Relationship</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control mother_deceased select2">
+                                        <select class="form-control parentsRelation select2">
                                             <option selected disabled>-- select one --</option>
                                             <option value="FAIR">Fair</option>
                                             <option value="POOR">Poor</option>
@@ -1012,8 +1026,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-next btn-sm">Save & Next</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Save & Exit</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -1269,7 +1283,7 @@
                 identifyingMarks    : $(".identifyingMarks").val(),
                 handicap            : $(".handicap").val(),
                 desc                : $(".desc").val(),
-                motherDeceased      : $(".mother_deceased").val(),
+                parentsRelationship : $(".parentsRelation").val(),
                 fatherName          : $(".father_name").val(),
                 fatherBday          : $(".father_bday").val(),
                 fatherBplace        : $(".father_bplace").val(),
@@ -1334,6 +1348,328 @@
                 })
 
             })
+        
+
+        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/familyBackground/'+client_id).done(function (result) {
+            console.log("==========")
+            console.log(result)
+            console.log("==========")
+
+            var result = result.response;
+
+            if (result.status != "ERROR") {
+
+                if (result.worksheetStatus == "INCOMPLETE"){
+
+                    $(".btn-update").show();
+                    $(".btn-next").hide();
+
+                    console.log(JSON.parse(result.jsonData))
+
+                    const familybg = JSON.parse(result.jsonData)
+
+                    console.log(familybg)
+
+                    $(".sex").val(JSON.parse(result.jsonData).sex).trigger("change");
+                    $(".civilStatus").val(JSON.parse(result.jsonData).civilStatus).trigger("change");
+                    $(".citizenship").val(JSON.parse(result.jsonData).citizenship).trigger("change");
+                    $(".religion").val(JSON.parse(result.jsonData).religion).trigger("change");
+                    $(".bday").val(JSON.parse(result.jsonData).bday);
+                    $(".bplace").val(JSON.parse(result.jsonData).bplace).trigger("change");
+                    $(".bprovince").val(JSON.parse(result.jsonData).bprovince);
+                    $(".bcity").val(JSON.parse(result.jsonData).bcity);
+                    $(".bplace_others").val(JSON.parse(result.jsonData).bplace);
+                    $(".identifyingMarks").val(JSON.parse(result.jsonData).identifyingMarks).trigger("change");
+                    $(".handicap").val(JSON.parse(result.jsonData).handicap);
+                    $(".desc").val(JSON.parse(result.jsonData).desc);
+                    $(".parentsRelation").val(JSON.parse(result.jsonData).parentsRelationship).trigger("change");
+                    $(".father_name").val(JSON.parse(result.jsonData).fatherName);
+                    $(".father_bday").val(JSON.parse(result.jsonData).fatherBday);
+                    $(".father_bplace").val(JSON.parse(result.jsonData).fatherBplace).trigger("change");
+                    $(".father_add").val(JSON.parse(result.jsonData).fatherAdd);
+                    $(".father_citizenship").val(JSON.parse(result.jsonData).fatherCitizenship).trigger("change");
+                    $(".father_religion").val(JSON.parse(result.jsonData).fatherReligion).trigger("change");
+                    $(".father_education").val(JSON.parse(result.jsonData).fatherEducation).trigger("change");
+                    $(".father_occupation").val(JSON.parse(result.jsonData).fatherOccupation);
+                    $(".father_work_add").val(JSON.parse(result.jsonData).fatherWork_add);
+                    $(".father_tel_no").val(JSON.parse(result.jsonData).fatherTelNo);
+                    $(".father_income").val(JSON.parse(result.jsonData).fatherIncome);
+                    $(".father_deceased").val(JSON.parse(result.jsonData).fatherDeceased).trigger("change");
+                    $(".father_deceased_cause").val(JSON.parse(result.jsonData).fatherDeceasedCause);
+                    $(".father_date_deceased").val(JSON.parse(result.jsonData).fatherDateDeceased);
+                    $(".mother_name").val(JSON.parse(result.jsonData).motherName);
+                    $(".mother_bday").val(JSON.parse(result.jsonData).motherBday);
+                    $(".mother_bplace").val(JSON.parse(result.jsonData).motherBplace).trigger("change");
+                    $(".mother_add").val(JSON.parse(result.jsonData).motherAdd);
+                    $(".mother_citizenship").val(JSON.parse(result.jsonData).motherCitizenship);
+                    $(".mother_religion").val(JSON.parse(result.jsonData).motherReligion).trigger("change");
+                    $(".mother_education").val(JSON.parse(result.jsonData).motherEducation).trigger("change");
+                    $(".mother_occupation").val(JSON.parse(result.jsonData).motherOccupation);
+                    $(".mother_work_add").val(JSON.parse(result.jsonData).motherWork_add);
+                    $(".mother_tel_no").val(JSON.parse(result.jsonData).motherTelNo);
+                    $(".mother_income").val(JSON.parse(result.jsonData).motherIncome);
+                    $(".mother_deceased").val(JSON.parse(result.jsonData).motherDeceased).trigger("change");
+                    $(".mother_deceased_cause").val(JSON.parse(result.jsonData).motherDeceasedCause);
+                    $(".mother_date_deceased").val(JSON.parse(result.jsonData).motherDateDeceased);
+
+                    familybg.siblings.forEach(function(data){
+
+                        $(".list_siblings").append(`
+                        <div class="list_sibling">
+                            <div class="row form-group col-md-12">
+                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name" value="${data.sibling_name}"></div>
+                                <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship" value="${data.relationship}"></div>
+                                <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age" value="${data.age}"></div>
+                                <div class="col-3 col-md-2">
+                                    <select class="form-control sibling_sex select2">
+                                        <option value="${data.sibling_sex}" selected disabled>Sex</option>
+                                    </select>
+                                </div>
+                                <div class="col-3 col-md-2">
+                                    <select class="form-control sibling_education select2">
+                                        <option value="" selected disabled>Education</option>
+                                        <option value="COLLEGE GRADUATE">College Graduate</option>
+                                        <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
+                                        <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
+                                        <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
+                                        <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
+                                        <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
+                                        <option value="ILLITERATE">No Education/Illiterate</option>
+                                        <option value="POST-GRADUATE">Post-Graduate Studies</option>
+                                        <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
+                                        <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
+                                        <option value="VOCATIONAL">Vocational</option>
+                                    </select>
+                                </div>
+                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation" value="${data.sibling_occupation}"></div>
+                            </div>
+                            <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
+                        </div>`
+                        )
+                    });
+                }else{
+                    $(".btn-next").show();
+                    $(".btn-update").hide();
+                } 
+
+            }
+        })
+
+        $(".btn-update").unbind("click").on("click", function(){
+
+            const siblings = [];
+            const sibling_name = $(".sibling_name");
+            const relationship = $(".relationship");
+            const age = $(".age");
+            const sibling_sex = $(".sibling_sex");
+            const sibling_education = $(".sibling_education");
+            const sibling_occupation = $(".sibling_occupation");
+
+            for(var i = 0; i < sibling_name.length; i++){
+                
+                const list = {};
+                list.sibling_name = $(sibling_name[i]).val();
+                list.relationship = $(relationship[i]).val();
+                list.age = $(age[i]).val();
+                list.sibling_sex = $(sibling_sex[i]).val();
+                list.sibling_education = $(sibling_education[i]).val();
+                list.sibling_occupation = $(sibling_occupation[i]).val();
+                siblings.push(list);
+            }
+
+
+            var familyBG = {
+
+                siblings            : siblings,
+                sex                 : $(".sex").val(),
+                civilStatus         : $(".civilStatus").val(),
+                citizenship         : $(".citizenship").val(),
+                religion            : $(".religion").val(),
+                bday                : $(".bday").val(),
+                bplace              : $(".bplace").val(),
+                bprovince           : $(".bprovince").val(),
+                bcity               : $(".bcity").val(),
+                bplaceOthers        : $(".bplace_others").val(),
+                identifyingMarks    : $(".identifyingMarks").val(),
+                handicap            : $(".handicap").val(),
+                desc                : $(".desc").val(),
+                parentsRelationship : $(".parentsRelation").val(),
+                fatherName          : $(".father_name").val(),
+                fatherBday          : $(".father_bday").val(),
+                fatherBplace        : $(".father_bplace").val(),
+                fatherAdd           : $(".father_add").val(),
+                fatherCitizenship   : $(".father_citizenship").val(),
+                fatherReligion      : $(".father_religion").val(),
+                fatherEducation     : $(".father_education").val(),
+                fatherOccupation    : $(".father_occupation").val(),
+                fatherWork_add      : $(".father_work_add").val(),
+                fatherTelNo         : $(".father_tel_no").val(),
+                fatherIncome        : $(".father_income").val(),
+                fatherDeceased      : $(".father_deceased").val(),
+                fatherDeceasedCause : $(".father_deceased_cause").val(),
+                fatherDateDeceased  : $(".father_date_deceased").val(),
+
+                motherName          : $(".mother_name").val(),
+                motherBday          : $(".mother_bday").val(),
+                motherBplace        : $(".mother_bplace").val(),
+                motherAdd           : $(".mother_add").val(),
+                motherCitizenship   : $(".mother_citizenship").val(),
+                motherReligion      : $(".mother_religion").val(),
+                motherEducation     : $(".mother_education").val(),
+                motherOccupation    : $(".mother_occupation").val(),
+                motherWork_add      : $(".mother_work_add").val(),
+                motherTelNo         : $(".mother_tel_no").val(),
+                motherIncome        : $(".mother_income").val(),
+                motherDeceased      : $(".mother_deceased").val(),
+                motherDeceasedCause : $(".mother_deceased_cause").val(),
+                motherDateDeceased  : $(".mother_date_deceased").val(),
+
+            }
+
+            console.log(familyBG)
+
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(familyBG),
+            "type"                      : "familyBackground",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid")
+            }
+
+            console.log(payload)
+
+
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/familyBackground/'+client_id,JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+
+            })
+
+        $(".idenData").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".priorRec").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".presOff").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        }, 500);
+                });
+        });
+
+        // $(".famBg").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
+        $(".socioEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".resEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".spouseChild").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".educHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".empHis").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".envFac").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                        }, 500);
+                });
+        });
 
 
 

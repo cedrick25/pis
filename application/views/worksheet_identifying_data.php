@@ -610,30 +610,49 @@
         })
 
 
+        // $(".idenData").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
+        $(".priorRec").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                        }, 500);
+                });
+        });
         $(".presOff").unbind("click").on("click", function(){
             // console.log("clicked")
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
                         setTimeout(function () {
-                        // window.location.reload(true);
-                        console.log(client_id)
-                        window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
                         }, 500);
                 });
         });
-        $(".priorRec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                });
-        });
+
         $(".famBg").unbind("click").on("click", function(){
             // console.log("clicked")
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                        }, 500);
                 });
         });
         $(".socioEco").unbind("click").on("click", function(){
@@ -641,6 +660,10 @@
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                        }, 500);
                 });
         });
         $(".resEco").unbind("click").on("click", function(){
@@ -648,6 +671,10 @@
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                        }, 500);
                 });
         });
         $(".spouseChild").unbind("click").on("click", function(){
@@ -655,6 +682,10 @@
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                        }, 500);
                 });
         });
         $(".educHis").unbind("click").on("click", function(){
@@ -662,6 +693,10 @@
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                        }, 500);
                 });
         });
         $(".empHis").unbind("click").on("click", function(){
@@ -669,6 +704,10 @@
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                        }, 500);
                 });
         });
         $(".envFac").unbind("click").on("click", function(){
@@ -676,6 +715,10 @@
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                        }, 500);
                 });
         });
 
