@@ -100,9 +100,9 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
-                                    <div class="col-12 col-md-9">
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
+                                    <div class="col-12 col-md-6">
                                         <select class="form-control neighborhood select2">
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="RURAL">Rural</option>
@@ -110,9 +110,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Area</label></div>
-                                    <div class="col-12 col-md-9">
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
+                                    <div class="col-12 col-md-6">
                                         <select class="form-control area select2">
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="NON-SLUM AREA">Non-Slum Area</option>
@@ -174,7 +174,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="modal-footer">
+                            <div class="card-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
                                 <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
                                 <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>

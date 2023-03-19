@@ -250,6 +250,7 @@
             return d.promise();
         };
 
+
         var __tablePB = function(){
             $('.table_head_pb').DataTable().destroy();
             $('.table_body_pb').empty();
@@ -258,17 +259,21 @@
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
-                        $('.table_body_pb').append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
-                            "<td>"+data.sex+"</td>"+
-                            "<td>"+data.clientType+"</td>"+
-                            "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
-                            "<td class='actions'> "+actions+"")
-                    });
+                    console.log(result.name)
+                    if (result.status != "ERROR") {
+                        result.content.forEach(function(data){
+                            // __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (resultfo) {
+                            //     console.log(resultfo.name);
+                            let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Add Worksheet</button>";
+                            $('.table_body_pb').append("<tr>"+
+                                "<td>"+data.id+"</td>"+
+                                "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
+                                "<td>"+data.sex+"</td>"+
+                                "<td>"+data.clientType+"</td>"+
+                                "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
+                                "<td class='actions'> "+actions+"")
+                            // });
+                    })  
                     
                     $(document).ready(function () {
                         $('.table_head_pb tbody tr').each(function (idx) {
@@ -282,6 +287,7 @@
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });
+
                     $(".btn_worksheet").unbind("click").on("click", function(){
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
@@ -298,8 +304,7 @@
                     $(".btn_view").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
                         window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
-                    })
-                   
+                    })                   
                 }
             })
         }
@@ -405,6 +410,7 @@
             })
         }
         __tablePD();
+
 
     } )( jQuery );
     </script>

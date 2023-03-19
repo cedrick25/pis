@@ -46,7 +46,7 @@
                                                     <option value="" selected disabled> - - Select Type - - </option>
                                                     <option value="PIS_INV">Investigation</option>
                                                     <option value="PIS_SUP">Supervision</option>
-                                                    <option value="PIS_SC">Single Carpeta</option>
+                                                    <!-- <option value="PIS_SC">Single Carpeta</option> -->
                                                 </select>
                                             </div>
                                         </div>

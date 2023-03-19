@@ -284,18 +284,18 @@
                         });
                     });
                     setTimeout(function () {
-                    // $(document).ready(function () {
-                    //     $('.table_head tbody tr').each(function (idx) {
-                    //        $(this).children("td:eq(0)").html(idx + 1);
-                    //     });
-                    //     var table = $('.table_head').DataTable({
-                    //         order: [[0, 'asc']],
-                    //         "columnDefs": [
-                    //             { "width": "40%", "targets": 6 }
-                    //         ]
-                    //     });
-                    //     $('.dataTables_length').addClass('bs-select');
-                    // }); 
+                    $(document).ready(function () {
+                        $('.table_head tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "40%", "targets": 6 }
+                            ]
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    }); 
 
                     $(".btn_complete").unbind("click").on("click", function(){
                         var id = $(this).data("id");
@@ -352,7 +352,7 @@
                         var fi = $(this).data("fi");
                         window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
-                    }, 500);
+                    }, 3000);
                 }
             })
         }

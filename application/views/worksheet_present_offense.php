@@ -206,7 +206,7 @@
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control explain"></div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div class="card-footer">
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
                                 <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
                                 <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
