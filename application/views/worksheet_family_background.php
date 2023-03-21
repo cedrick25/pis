@@ -1412,6 +1412,7 @@
                     $(".mother_deceased_cause").val(JSON.parse(result.jsonData).motherDeceasedCause);
                     $(".mother_date_deceased").val(JSON.parse(result.jsonData).motherDateDeceased);
 
+
                     familybg.siblings.forEach(function(data){
                         console.log(data);
                         $(".list_siblings").append(`
@@ -1422,7 +1423,7 @@
                                 <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age" value="${data.age}"></div>
                                 <div class="col-3 col-md-2">
                                     <select class="form-control sibling_sex select2">
-                                        <option value="" selected disabled>Sex</option>
+                                        <option value="${data.sibling_sex}" selected disabled>${data.sibling_sex}</option>
                                         <option value="FEMALE">Female</option>
                                         <option value="MALE">Male</option>
                                         <option value="LGBT">LGBT</option>
@@ -1430,7 +1431,7 @@
                                 </div>
                                 <div class="col-3 col-md-2">
                                     <select class="form-control sibling_education select2">
-                                        <option value="" selected disabled>Education</option>
+                                        <option value="${data.child_education}" selected disabled>${data.child_education}</option>
                                         <option value="COLLEGE GRADUATE">College Graduate</option>
                                         <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
                                         <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
@@ -1449,12 +1450,12 @@
                             <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                         </div>`
                         )
-                        setTimeout(function () {
-                        $(".sibling_sex").val(data.sibling_sex).trigger("change");
-                        }, 500);
-                        setTimeout(function () {
-                        $(".sibling_education").val(data.sibling_education).trigger("change");
-                        }, 500);
+                        // setTimeout(function () {
+                        // $(".sibling_sex").val(data.sibling_sex).trigger("change");
+                        // }, 500);
+                        // setTimeout(function () {
+                        // $(".sibling_education").val(data.sibling_education).trigger("change");
+                        // }, 500);
                     });
                 }else{
                     $(".btn-next").show();

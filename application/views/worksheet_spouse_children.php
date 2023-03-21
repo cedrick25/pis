@@ -558,7 +558,7 @@
                                     <div class="col col-md-1"><label for="text-input" class=" form-control-label" >Sex</label></div>
                                     <div class="col-3 col-md-3">
                                         <select class="form-control child_sex select2">
-                                            <option value="" selected disabled>Sex</option>
+                                            <option value="${data.child_sex}" selected disabled>${data.child_sex}</option>
                                             <option value="FEMALE">Female</option>
                                             <option value="MALE">Male</option>
                                             <option value="LGBT">LGBT</option>
@@ -569,7 +569,7 @@
                                     <div class="col col-md-1"><label for="text-input" class=" form-control-label">Education</label></div>
                                     <div class="col-3 col-md-3">
                                         <select class="form-control child_education select2">
-                                            <option value="" selected disabled>Education</option>
+                                            <option value="${data.child_education}" selected disabled>${data.child_education}</option>
                                             <option value="COLLEGE GRADUATE">College Graduate</option>
                                             <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
                                             <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
