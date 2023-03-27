@@ -40,9 +40,9 @@
                                         Successfully Added  
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control pb_client_type select2">
+                                        <select class="form-control pb_client select2">
                                         </select>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case Number</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
                                 </div>
 			                    <div class="row form-group col-md-6">
@@ -107,7 +107,7 @@
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
-			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
+			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court of Origin</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
 			                    </div>
                                 <div class="row form-group col-md-6 false_manual">
@@ -384,15 +384,15 @@
         __select();
 
         var __selectclient = function(){
-            $('.pb_client_type').empty();
+            $('.pb_client').empty();
             __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
-                    $('.pb_client_type').append("<option selected disabled> - - Select Client - - </option>");
+                    $('.pb_client').append("<option selected disabled> - - Select Client - - </option>");
                     result.content.forEach(function(data){
                         var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
                         console.log(name)
-                        $('.pb_client_type').append(
+                        $('.pb_client').append(
                             '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
                     });
                 } else {

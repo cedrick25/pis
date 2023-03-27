@@ -346,7 +346,7 @@
                         var fi = $(this).data("fi");
                         window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
-                    }, 5000);
+                    }, 1000);
                 }
             })
         }
@@ -452,7 +452,7 @@
                         var fi = $(this).data("fi");
                         window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
-                    }, 3000);
+                    }, 1000);
                 }
             })
         }

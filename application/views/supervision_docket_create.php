@@ -79,9 +79,9 @@
                                         <div class="col-md-12 manual_true" style="display:none">
 
                                             <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                                 <div class="col-12 col-md-9">
-                                                    <select class="form-control pb_client_type_sup select2">
+                                                    <select class="form-control pb_client_sup select2">
                                                     </select>
                                                 </div>
                                             </div>
@@ -146,7 +146,7 @@
                                                 </div>
                                             </div>
                                             <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case Number</label></div>
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no_true" ></div>
                                             </div>
                                             <div class="row form-group col-md-6">
@@ -154,7 +154,7 @@
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense_true"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court of Origin</label></div>
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin_true"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
@@ -236,21 +236,28 @@
                                         </div>
 
                                         <div class="col-md-12 manual_false" style="display:none">
+                                            <!-- <div class="row form-group col-md-6">
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
+                                                <div class="col-12 col-md-9">
+                                                    <select class="form-control pb_client_sup_false select2">
+                                                    </select>
+                                                </div>
+                                            </div> -->
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_false"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_false" disabled></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_false"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_false" disabled></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_false"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_false" disabled></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_false" ></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_false" disabled></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
@@ -297,7 +304,7 @@
                                                 </div>
                                             </div>
                                             <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">CC No.</label></div>
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no_false" ></div>
                                             </div>
                                             <div class="row form-group col-md-6">
@@ -305,7 +312,7 @@
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense_false"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">CO</label></div>
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court of Origin</label></div>
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin_false"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
@@ -629,15 +636,15 @@
     })
 
         var __selectclient = function(){
-            $('.pb_client_type_sup').empty();
+            $('.pb_client_sup').empty();
             __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
-                    $('.pb_client_type_sup').append("<option selected disabled> - - Select Client - - </option>");
+                    $('.pb_client_sup').append("<option selected disabled> - - Select Client - - </option>");
                     result.content.forEach(function(data){
                         var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
                         console.log(name)
-                        $('.pb_client_type_sup').append(
+                        $('.pb_client_sup').append(
                             '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
                     });
                 } else {
@@ -675,6 +682,7 @@
                                         // $(".client_type").val(result.clientType).trigger("change");
                                         $(".cc_no_false").val(result.criminalCaseNumber);
                                         $(".offense_false").val(result.offense);
+                                        $(".pb_client_sup_false").val(result.caseloadType).trigger("change");
                                             setTimeout(function () {
                                                 $(".field_office_false").val(result.fieldOfficeId).trigger("change");
                                             }, 3000);
@@ -807,10 +815,10 @@
             $(".btn-confirm_true").unbind("click").on("click", function(){
                 console.log("clicked true")
 
-            var fname = $('.pb_client_type_sup option:selected').data('fname');
-            var mname = $('.pb_client_type_sup option:selected').data('mname');
-            var lname = $('.pb_client_type_sup option:selected').data('lname');
-            var sname = $('.pb_client_type_sup option:selected').data('sname');
+            var fname = $('.pb_client_sup option:selected').data('fname');
+            var mname = $('.pb_client_sup option:selected').data('mname');
+            var lname = $('.pb_client_sup option:selected').data('lname');
+            var sname = $('.pb_client_sup option:selected').data('sname');
 
             console.log(fname+","+mname+","+lname+","+sname)
 
@@ -920,10 +928,10 @@
             $(".btn-confirm_false").unbind("click").on("click", function(){
                 console.log("clicked false")
 
-            var fname = $('.pb_client_type_sup option:selected').data('fname');
-            var mname = $('.pb_client_type_sup option:selected').data('mname');
-            var lname = $('.pb_client_type_sup option:selected').data('lname');
-            var sname = $('.pb_client_type_sup option:selected').data('sname');
+            var fname = $('.pb_client_sup option:selected').data('fname');
+            var mname = $('.pb_client_sup option:selected').data('mname');
+            var lname = $('.pb_client_sup option:selected').data('lname');
+            var sname = $('.pb_client_sup option:selected').data('sname');
 
             const sentence = [];
             const sentence_inputs = $(".sentence_false");
