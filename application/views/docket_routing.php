@@ -354,18 +354,36 @@
                 const docket_number = this.value
                 console.log(docket_number)
                 __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+                    console.log("++fo++")
                     console.log(result)
+                    console.log("++fo++")
                     var result = result.response;
                     if (result.status != "ERROR") {
+                        var tcsi = "PROBATION_INV_TCSI"
+                        var tpi = "PROBATION_INV_TPI"
+                        var tssi = "PROBATION_INV_TSSI"
+                        var tcss = "PROBATION_SUP_TCSS"
+                        var tps = "PROBATION_SUP_TPS"
+                        var tsss = "PROBATION_SUP_TSSS"
                         // console.log(result.caseloadType)
 
                         setTimeout(function () {
                         $(".caseload").val(result.caseloadType).trigger("change");
                         }, 500);
 
-                        // setTimeout(function () {
-                        // $(".field_office").val(result.fieldOfficeId).trigger("change");
-                        // }, 500);
+                        if (result.caseloadType != tcsi && result.caseloadType != tpi && result.caseloadType != tssi && result.caseloadType != tcss &&
+                            result.caseloadType != tps && result.caseloadType != tsss){
+                            setTimeout(function () {
+                            $(".field_office").val(result.fieldOfficeId).trigger("change");
+                            }, 500);
+                        }
+                        else{
+                            setTimeout(function () {
+                            $(".field_office").val('').trigger("change");
+                            }, 500);
+                        }
+
+
 
                     } else {
                         console.log("failed fetching docket number")
@@ -381,6 +399,7 @@
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
+                        // console.log(data)
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                     });

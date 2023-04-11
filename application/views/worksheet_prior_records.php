@@ -105,10 +105,10 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alleged By</label></div>
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input petitioner" name="optradio" value="PETITIONER">Petitioner 
-                                            <input type="radio" class="form-check-input sources" name="optradio" value="OTHER SOURCES">Other Sources
-                                        </label>
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="allegedby" value="PETITIONER">Petitioner<br>
+                                                <input type="radio" class="form-check-input" name="allegedby" value="OTHER SOURCES">Other Sources
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -117,8 +117,8 @@
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input no_record" name="optradio">No Record
-                                            <input type="radio" class="form-check-input w_record" name="optradio">With Derogatory Record
+                                            <input type="radio" class="form-check-input" name="derogatoryRecord" value="NO RECORD">No Record<br>
+                                            <input type="radio" class="form-check-input" name="derogatoryRecord" value="WITH DEROGATORY RECORD">With Derogatory Record
                                         </label>
                                         </div>
                                     </div>
@@ -140,8 +140,8 @@
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input petitioner" name="optradio" value="YES"> Yes
-                                            <input type="radio" class="form-check-input sources" name="optradio" value="NO"> No
+                                            <input type="radio" class="form-check-input" name="probation" value="YES"> Yes <br>
+                                            <input type="radio" class="form-check-input" name="probation" value="NO"> No
                                         </label>
                                         </div>
                                     </div>
@@ -281,7 +281,6 @@
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
 
-
         $(".list").html(`
             <div class="list_records">
                 <div class="row form-group col-md-12">
@@ -400,6 +399,7 @@
             const pos = $(".pos");
             const particulars = $(".particulars");
 
+
             for(var i = 0; i < agency.length; i++){
 
                 const list = {};
@@ -481,12 +481,17 @@
                     $(".btn-update").show();
                     $(".btn-next").hide();
 
+                    // console.log($('input[name="derogatoryRecord"]').val())
 
-                    console.log(JSON.parse(result.jsonData))
+                    $('input[name="derogatoryRecord"]').val(JSON.parse(result.jsonData).derogatoryRecord).prop("checked",true);
+                    $('input[name="allegedby"]').val(JSON.parse(result.jsonData).allegedBy).prop("checked",true);
+                    $('input[name="probation"]').val(JSON.parse(result.jsonData).probation).prop("checked",true);
+
+                    // console.log(JSON.parse(result.jsonData))
 
                     const recordList = JSON.parse(result.jsonData)
 
-                    console.log(recordList)
+                    // console.log(recordList)
 
 
                     recordList.priorRecord.forEach(function(data){
@@ -531,6 +536,8 @@
 
         $(".btn-update").unbind("click").on("click", function(){
 
+            
+
             const records = [];
             const agency = $(".agency");
             const cc_no = $(".cc_no");
@@ -544,6 +551,18 @@
             const date = $(".date");
             const pos = $(".pos");
             const particulars = $(".particulars");
+
+            // const allegedBy = [];
+            // const petitioner = $(".petitioner");
+            // const otherSources = $(".otherSources");
+
+            // for(var i = 0; i < petitioner.length; i++){
+
+            //     const list_alleged = {};
+            //     list_alleged.petitioner = $(petitioner[i]).val();
+            //     list_alleged.otherSources = $(otherSources[i]).val();
+            //     allegedBy.push(list_alleged);
+            // }
 
             for(var i = 0; i < agency.length; i++){
 
@@ -572,6 +591,9 @@
 
             var priorRecords = {
 
+                derogatoryRecord    : $('input[name="derogatoryRecord"]:checked').val(),
+                allegedBy           : $('input[name="allegedby"]:checked').val(),
+                probation           : $('input[name="probation"]:checked').val(),
                 priorRecord         : records,
                 recordsInfo         : recordInfo
 
@@ -617,6 +639,17 @@
                         setTimeout(function () {
                             // window.location.reload(true);
                             window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".presOff").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -708,6 +741,14 @@
                         }, 500);
                 });
         });
+
+
+
+        // $('.petitioner').click(function(){
+        //     // console.log("clicked")
+        //     var petitionerRadio = $('.petitioner').val()
+        //     console.log(petitionerRadio)
+        // });
 
 
     } )( jQuery );

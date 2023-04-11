@@ -136,9 +136,28 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control fam_prob"></div>
+                                </div> -->
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control fam_prob select2">
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="ECONOMIC">Economic</option>
+                                            <option value="HUSBAND-WIFE_CONFLICT">Husband-wife conflict</option>
+                                            <option value="MARITAL_PROBLEM">Marital problem</option>
+                                            <option value="MENTAL_ILLNESS">Mental illness</option>
+                                            <option value="ONE-PARENT FAMILY">One-parent family</option>
+                                            <option value="PARENT-CHILD CONFLICT">Parent-child conflict</option>
+                                            <option value="PHYSICAL_ILLNESS">Physical illness</option>
+                                            <option value="SIBLING_CONFLICT">Sibling conflict</option>
+                                            <option value="OTHERS">Others</option>
+                                            <option value="NO_APPARENT_PROBLEM">No apparent problem</option>
+                                            <option value="SATISFACTORY">Satisfactory</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Economic Status</label></div>
@@ -409,7 +428,7 @@
                         $(".family_rel").val(JSON.parse(result.jsonData).family_rel).trigger("change");
                         $(".family_rep").val(JSON.parse(result.jsonData).family_rep).trigger("change");
                         $(".home_cond").val(JSON.parse(result.jsonData).home_cond).trigger("change");
-                        $(".fam_prob").val(JSON.parse(result.jsonData).fam_prob);
+                        $(".fam_prob").val(JSON.parse(result.jsonData).fam_prob).trigger("change");
                         $(".eco_status").val(JSON.parse(result.jsonData).eco_status).trigger("change");
                         $(".stability").val(JSON.parse(result.jsonData).stability).trigger("change");
                         $(".comments").val(JSON.parse(result.jsonData).comments);

@@ -59,19 +59,19 @@
                                 </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_update" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_update" disabled></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
@@ -342,7 +342,7 @@
                     </div>
                     <div class="row form-group col-md-6">
                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                        <div class="col-3 col-md-9"><input type="text" class="form-control max_d" placeholder="Robbery"></div>
+                        <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery"></div>
                     </div>
                     <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
                 </div>`
@@ -386,9 +386,7 @@
                     $(".docket_num").val(result.docketNumber);
                     $(".firstName_update").val(result.firstName);
                     $(".middleName_update").val(result.middleName);
-                    setTimeout(function () {
                     $(".caseload_type_update").val(result.caseloadType).trigger("change");
-                    }, 3000);
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
                     setTimeout(function () {
@@ -486,7 +484,7 @@
                               "type": "PIS_SUP",
                               "docketNumber": $(".docket_num").val(),
                               "docketSeries": "NONE",
-                              "caseloadType": $(".caseload_update").val(),
+                              "caseloadType": $(".caseload_type_update").val(),
                               "fieldOfficeId": $(".field_office_update").val(),
                               "clientType": "PROBATIONER",
                               "clientId": "",

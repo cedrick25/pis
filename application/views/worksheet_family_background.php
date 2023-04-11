@@ -343,6 +343,7 @@
                                             <option value="JEHOVA">Jehova's Witness, Mormons, IFC, etc.</option>
                                             <option value="NONE">None</option>
                                             <option value="OTHER">Other/s</option>
+                                            <option value="PROTESTANTS">Protestants</option>
                                             <option value="CATHOLIC">Roman Catholic</option>
                                             <option value="SEVENTH DAY ADVENTIST">Seventh Day Adventist</option>
                                         </select>
@@ -433,13 +434,7 @@
                                         </div>
                                         <div class="row form-group col-md-6">
                                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control father_bplace select2">
-                                                    <option value="" selected disabled>-- select one --</option>
-                                                    <option value="MOLE">X</option>
-                                                    <option value="OTHERS">Y</option>
-                                                </select>
-                                            </div>
+                                            <div class="col-12 col-md-9"><input type="text" class="form-control father_bplace"></div>
                                         </div>
                                         <div class="row form-group col-md-12">
                                             <div class="col col-md-2"><label for="text-input" class=" form-control-label">Address</label></div>
@@ -730,13 +725,7 @@
                                         </div>
                                         <div class="row form-group col-md-6">
                                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control mother_bplace select2">
-                                                    <option value="" selected disabled>-- select one --</option>
-                                                    <option value="MOLE">X</option>
-                                                    <option value="OTHERS">Y</option>
-                                                </select>
-                                            </div>
+                                            <div class="col-12 col-md-9"><input type="text" class="form-control mother_bplace"></div>
                                         </div>
                                         <div class="row form-group col-md-12">
                                             <div class="col col-md-2"><label for="text-input" class=" form-control-label">Address</label></div>
@@ -1401,7 +1390,7 @@
                     $(".mother_bday").val(JSON.parse(result.jsonData).motherBday);
                     $(".mother_bplace").val(JSON.parse(result.jsonData).motherBplace).trigger("change");
                     $(".mother_add").val(JSON.parse(result.jsonData).motherAdd);
-                    $(".mother_citizenship").val(JSON.parse(result.jsonData).motherCitizenship);
+                    $(".mother_citizenship").val(JSON.parse(result.jsonData).motherCitizenship).trigger("change");
                     $(".mother_religion").val(JSON.parse(result.jsonData).motherReligion).trigger("change");
                     $(".mother_education").val(JSON.parse(result.jsonData).motherEducation).trigger("change");
                     $(".mother_occupation").val(JSON.parse(result.jsonData).motherOccupation);
@@ -1423,7 +1412,7 @@
                                 <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age" value="${data.age}"></div>
                                 <div class="col-3 col-md-2">
                                     <select class="form-control sibling_sex select2">
-                                        <option value="${data.sibling_sex}" selected disabled>${data.sibling_sex}</option>
+                                        <option value="${data.sibling_sex}">${data.sibling_sex}</option>
                                         <option value="FEMALE">Female</option>
                                         <option value="MALE">Male</option>
                                         <option value="LGBT">LGBT</option>
@@ -1431,7 +1420,7 @@
                                 </div>
                                 <div class="col-3 col-md-2">
                                     <select class="form-control sibling_education select2">
-                                        <option value="${data.child_education}" selected disabled>${data.child_education}</option>
+                                        <option value="${data.sibling_education}">${data.sibling_education}</option>
                                         <option value="COLLEGE GRADUATE">College Graduate</option>
                                         <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
                                         <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>

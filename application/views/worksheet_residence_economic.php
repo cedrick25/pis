@@ -204,9 +204,28 @@
                                         </div>
                                         <div class="col-12">
 
-                                            <div class="row form-group col-md-12">
+                                            <!-- <div class="row form-group col-md-12">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Family Problems</label></div>
                                                 <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control maj_fam_prob"></textarea></div>
+                                            </div> -->
+                                            <div class="row form-group col-md-12">
+                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
+                                                <div class="col-12 col-md-5">
+                                                    <select class="form-control maj_fam_prob select2">
+                                                        <option value="" selected disabled>-- select one --</option>
+                                                        <option value="ECONOMIC">Economic</option>
+                                                        <option value="HUSBAND-WIFE_CONFLICT">Husband-wife conflict</option>
+                                                        <option value="MARITAL_PROBLEM">Marital problem</option>
+                                                        <option value="MENTAL_ILLNESS">Mental illness</option>
+                                                        <option value="ONE-PARENT FAMILY">One-parent family</option>
+                                                        <option value="PARENT-CHILD CONFLICT">Parent-child conflict</option>
+                                                        <option value="PHYSICAL_ILLNESS">Physical illness</option>
+                                                        <option value="SIBLING_CONFLICT">Sibling conflict</option>
+                                                        <option value="OTHERS">Others</option>
+                                                        <option value="NO_APPARENT_PROBLEM">No apparent problem</option>
+                                                        <option value="SATISFACTORY">Satisfactory</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             
                                             <div class="row form-group col-md-12">
@@ -497,7 +516,7 @@
                         $(".dependants").val(JSON.parse(result.jsonData).dependants);
                         $(".no_dependants").val(JSON.parse(result.jsonData).no_dependants);
                         $(".fam_comments").val(JSON.parse(result.jsonData).fam_comments);
-                        $(".maj_fam_prob").val(JSON.parse(result.jsonData).maj_fam_prob);
+                        $(".maj_fam_prob").val(JSON.parse(result.jsonData).maj_fam_prob).trigger("change");
 
                 }else{
 

@@ -236,7 +236,7 @@
                                         </div>
 
                                         <div class="col-md-12 manual_false" style="display:none">
-                                            <!-- <div class="row form-group col-md-6">
+<!--                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                                 <div class="col-12 col-md-9">
                                                     <select class="form-control pb_client_sup_false select2">
@@ -637,16 +637,28 @@
 
         var __selectclient = function(){
             $('.pb_client_sup').empty();
+            $('.pb_client_sup_false').empty();
             __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+                console.log("++client result++")
                 console.log(result)
+                console.log("++client result++")
+                console.log(" ")
+                console.log(" ")
                 if (result.status != "ERROR") {
                     $('.pb_client_sup').append("<option selected disabled> - - Select Client - - </option>");
                     result.content.forEach(function(data){
                         var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                        console.log(name)
+                        // console.log(name)
                         $('.pb_client_sup').append(
                             '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
                     });
+                    // $('.pb_client_sup_false').append("<option selected disabled> - - Select Client - - </option>");
+                    // result.content.forEach(function(data){
+                    //     var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                    //     // console.log(name)
+                    //     $('.pb_client_sup_false').append(
+                    //         '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    // });
                 } else {
                     console.log("failed fetching docket list")
                 }
@@ -662,6 +674,7 @@
                 // if manual docket is false
                 $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
                     result.response.forEach(function(data){
+                        console.log(data)
                         $('.docket_num').append(
                             "<option value="+data.docketNumber+">"+data.docketNumber+"</option>");
                     });

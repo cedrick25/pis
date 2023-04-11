@@ -417,11 +417,88 @@
             )
         });
 
-        $('.children').on('click', '.remove', function(e) {
+        $('.spousechild').on('click', '.remove', function(e) {
             e.preventDefault();
 
             $(this).parent().remove();
         });
+
+        $(".btn-next").unbind("click").on("click", function(){
+
+            const children = [];
+            const child_fname = $(".child_fname");
+            const child_mname = $(".child_mname");
+            const child_lname = $(".child_lname");
+            const child_sname = $(".child_sname");
+            const child_bdate = $(".child_bdate");
+            const child_age = $(".child_age");
+            const child_sex = $(".child_sex");
+            const child_education = $(".child_education");
+            const child_occupation = $(".child_occupation");
+
+            for(var i = 0; i < child_fname.length; i++){
+                
+                const list = {};
+                list.child_fname = $(child_fname[i]).val();
+                list.child_mname = $(child_mname[i]).val();
+                list.child_lname = $(child_lname[i]).val();
+                list.child_sname = $(child_sname[i]).val();
+                list.child_bdate = $(child_bdate[i]).val();
+                list.child_age = $(child_age[i]).val();
+                list.childSex = $(child_sex[i]).val();
+                list.child_education = $(child_education[i]).val();
+                list.child_occupation = $(child_occupation[i]).val();
+                children.push(list);
+            }
+            var spouseChildren = {
+
+                children            : children,
+                civilStatus           : $(".civilStatus").val(),
+                spouseFname      : $(".spouse_fname").val(),
+                spouseMname        : $(".spouse_mname").val(),
+                spouseLname           : $(".spouse_lname").val(),
+                spouseEname         : $(".spouse_ename").val(),
+                presentAddress         : $(".pAddress").val(),
+                spouse_region           : $(".spouse_region").val(),
+                spouse_bday      : $(".spouse_bday").val(),
+                spouseProvince        : $(".spouseProvince").val(),
+                spouseMunicipality           : $(".spouseMunicipality").val(),
+                spouse_work_add         : $(".spouse_work_add").val(),
+                spouse_ceremony         : $(".spouse_ceremony").val(),
+                spouse_bplace_others           : $(".spouse_bplace_others").val(),
+                spouse_occupation      : $(".spouse_occupation").val(),
+                date_marriage        : $(".date_marriage").val(),
+                spouse_remarks           : $(".spouse_remarks").val(),
+                spouse_relationship         : $(".spouse_relationship").val(),
+
+            }
+            console.log(spouseChildren)
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(spouseChildren),
+            "type"                      : "spouseChildren",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid")
+            }
+            console.log(payload)
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+
+        })
 
         $(".btn-update").unbind("click").on("click", function(){
 
@@ -558,7 +635,7 @@
                                     <div class="col col-md-1"><label for="text-input" class=" form-control-label" >Sex</label></div>
                                     <div class="col-3 col-md-3">
                                         <select class="form-control child_sex select2">
-                                            <option value="${data.child_sex}" selected disabled>${data.child_sex}</option>
+                                            <option value="${data.childSex}">${data.childSex}</option>
                                             <option value="FEMALE">Female</option>
                                             <option value="MALE">Male</option>
                                             <option value="LGBT">LGBT</option>
@@ -569,7 +646,7 @@
                                     <div class="col col-md-1"><label for="text-input" class=" form-control-label">Education</label></div>
                                     <div class="col-3 col-md-3">
                                         <select class="form-control child_education select2">
-                                            <option value="${data.child_education}" selected disabled>${data.child_education}</option>
+                                            <option value="${data.child_education}">${data.child_education}</option>
                                             <option value="COLLEGE GRADUATE">College Graduate</option>
                                             <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
                                             <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
@@ -591,16 +668,8 @@
                             </div>`
                         )
                     });
-                    
-                        $('.child').on('click', '.remove', function(e) {
-                            e.preventDefault();
-
-                            $(this).parent().remove();
-                        });
-
 
                     }else{
-
                         $(".btn-next").show();
                         $(".btn-update").hide();
                     } 

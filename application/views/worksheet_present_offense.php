@@ -187,11 +187,25 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Extent of Participation</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control ep"></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control custody select2">
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="ON_BAIL">On Bail</option>
+                                            <option value="ON_DETENTION">On Detention</option>
+                                            <option value="ROR">ROR</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Custody</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control custody"></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control ep select2">
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="ACCESSORY">Accessory</option>
+                                            <option value="ACCOMPLICE">Accomplice</option>
+                                            <option value="PRINCIPAL">Principal</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manner of Commision</label></div>
@@ -199,7 +213,17 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Motives</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control motives"></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control motives select2">
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="CIRCUMSTANTIAL">Circumstantial</option>
+                                            <option value="HIGH_TIMES">High Times</option>
+                                            <option value="IMPRUDENCE">Imprudence</option>
+                                            <option value="OTHERS">Others</option>
+                                            <option value="TEMPER">Temper</option>
+                                            <option value="UNINTENTIONAL">Unintentional</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
@@ -442,10 +466,10 @@
                     $(".ca").val(JSON.parse(result.jsonData).coAccused);
                     $(".ac").val(JSON.parse(result.jsonData).aggravatingCirsumstances);
                     $(".mc").val(JSON.parse(result.jsonData).mitigatingCircumstances);
-                    $(".ep").val(JSON.parse(result.jsonData).extentParticipation);
-                    $(".custody").val(JSON.parse(result.jsonData).custody);
+                    $(".ep").val(JSON.parse(result.jsonData).extentParticipation).trigger("change");
+                    $(".custody").val(JSON.parse(result.jsonData).custody).trigger("change");
                     $(".commision").val(JSON.parse(result.jsonData).mannerofCommision);
-                    $(".motives").val(JSON.parse(result.jsonData).motives);
+                    $(".motives").val(JSON.parse(result.jsonData).motives).trigger("change");
                     $(".explain").val(JSON.parse(result.jsonData).explain);
 
                 }else{
