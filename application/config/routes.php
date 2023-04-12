@@ -127,7 +127,11 @@ $route['worksheet_residence_economic'] = "routes/worksheet_residence_economic";
 $route['worksheet_education_history'] = "routes/worksheet_education_history";
 $route['worksheet_employment_history'] = "routes/worksheet_employment_history";
 $route['worksheet_environmental_factor'] = "routes/worksheet_environmental_factor";
+$route['psir_identifying_data'] = "routes/psir_identifying_data"; 
+$route['psir_present_offense'] = "routes/psir_present_offense"; 
+$route['psir_prior_records'] = "routes/psir_prior_records";
 
+p
 // AMS end
 
 $route['request_user'] = "routes/request_user";

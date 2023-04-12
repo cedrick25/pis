@@ -377,5 +377,16 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('worksheet_environmental_factor');
 	}
-	
+	public function psir_identifying_data()
+	{
+		$this->load->view('psir_identifying_data');
+	}
+	public function psir_present_offense()
+	{
+		$this->load->view('psir_present_offense');
+	}
+	public function psir_prior_records()
+	{
+		$this->load->view('psir_prior_records');
+	}
 }
