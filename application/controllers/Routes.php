@@ -389,4 +389,32 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('psir_prior_records');
 	}
+	public function psir_family_background()
+	{
+		$this->load->view('psir_family_background');
+	}
+	public function psir_socio_economic()
+	{
+		$this->load->view('psir_socio_economic');
+	}
+	public function psir_residence_economic()
+	{
+		$this->load->view('psir_residence_economic');
+	}
+	public function psir_spouse_children()
+	{
+		$this->load->view('psir_spouse_children');
+	}
+	public function psir_education_history()
+	{
+		$this->load->view('psir_education_history');
+	}
+	public function psir_employment_history()
+	{
+		$this->load->view('psir_employment_history');
+	}
+	public function psir_environmental_factor()
+	{
+		$this->load->view('psir_environmental_factor');
+	}
 }

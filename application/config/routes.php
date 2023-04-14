@@ -130,8 +130,14 @@ $route['worksheet_environmental_factor'] = "routes/worksheet_environmental_facto
 $route['psir_identifying_data'] = "routes/psir_identifying_data"; 
 $route['psir_present_offense'] = "routes/psir_present_offense"; 
 $route['psir_prior_records'] = "routes/psir_prior_records";
+$route['psir_family_background'] = "routes/psir_family_background"; 
+$route['psir_socio_economic'] = "routes/psir_socio_economic";
+$route['psir_residence_economic'] = "routes/psir_residence_economic";
+$route['psir_spouse_children'] = "routes/psir_spouse_children";
+$route['psir_education_history'] = "routes/psir_education_history";
+$route['psir_employment_history'] = "routes/psir_employment_history"; 
+$route['psir_environmental_factor'] = "routes/psir_environmental_factor";
 
-p
 // AMS end
 
 $route['request_user'] = "routes/request_user";

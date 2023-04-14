@@ -264,7 +264,7 @@
                         result.content.forEach(function(data){
                             // __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (resultfo) {
                             //     console.log(resultfo.name);
-                            let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button>";
+                            let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> PSIR</button>";
                             $('.table_body_pb').append("<tr>"+
                                 "<td>"+data.id+"</td>"+
                                 "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
@@ -304,6 +304,11 @@
                     $(".btn_view").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
                         window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
+                    })
+                    $(".btn_psir").unbind("click").on("click", function(){
+                        var client_id   = $(this).data("id");
+                        var foid        = $(this).data("foid");
+                        window.location.href = 'http://localhost/pis/psir_identifying_data?client_id='+client_id+'&field_office_id='+foid;
                     })                   
                 }
             })

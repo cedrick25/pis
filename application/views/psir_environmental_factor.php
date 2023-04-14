@@ -1,6 +1,7 @@
 <?php $this->load->view('templates/header.php'); ?> 
 
 <body>
+    <!-- Left Panel -->
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
@@ -28,8 +29,6 @@
         </div>
     </div>
 
-    <!-- Left Panel -->
-
     <?php $this->load->view('templates/left-panel.php'); ?> 
     
     <!-- /#left-panel -->
@@ -46,8 +45,8 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list">Client</a></li>
-                            <li><a href="">Worksheet</a></li>
-                            <li class="active">Petitioner's Criminal History</li>
+                            <li><a href="">Worksheet Create</a></li>
+                            <li class="active">Environmental Factors</li>
                         </ol>
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Present Offense</strong>
+                                <strong class="card-title">Community Background/Environmental Factors</strong>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -71,7 +70,7 @@
                                         <a class="nav-link presOff" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active priorRec" href="#">Prior Records</a>
+                                        <a class="nav-link priorRec" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
@@ -92,7 +91,7 @@
                                         <a class="nav-link empHis" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                        <a class="nav-link active envFac" href="#">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -101,59 +100,79 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alleged By</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="allegedby" value="PETITIONER" disabled>Petitioner<br>
-                                                <input type="radio" class="form-check-input" name="allegedby" value="OTHER SOURCES" disabled>Other Sources
-                                            </label>
-                                        </div>
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <select class="form-control neighborhood select2" disabled>
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="RURAL">Rural</option>
+                                            <option value="URBAN">Urban</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Records</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="derogatoryRecord" value="NO RECORD" disabled>No Record<br>
-                                            <input type="radio" class="form-check-input" name="derogatoryRecord" value="WITH DEROGATORY RECORD" disabled>With Derogatory Record
-                                        </label>
-                                        </div>
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <select class="form-control area select2" disabled>
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="NON-SLUM AREA">Non-Slum Area</option>
+                                            <option value="SLUM-AREA">Slum Area</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <fieldset class="row col col-md-12">
-                                        <legend>Records</legend>
-                                        <div class="list">
-                                        </div>
-                                        <div class="col-12">
-                                            <!-- <button type="button" class="add_more btn btn-success btn-sm float-right">Add more</button> -->
-                                        </div>
-                                </fieldset>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Describe</label></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control neighborhoodDescribe" disabled></textarea></div>
                                 </div>
+
                                 <div class="row form-group col-md-6">
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Has Been of Probation:</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Neighborhood Criminality</label></div>
                                     <div class="col-12 col-md-9">
-                                        <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="probation" value="YES" disabled> Yes <br>
-                                            <input type="radio" class="form-check-input" name="probation" value="NO" disabled> No
-                                        </label>
-                                        </div>
+                                        <select class="form-control neighCrim select2" disabled>
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="HIGH">High</option>
+                                            <option value="LOW">Low</option>
+                                            <option value="MINIMAL">Minimal</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <fieldset class="row col col-md-12">
-                                        <legend>Information</legend>
-                                        <div class="list_info">
-                                        </div>
-                                        <div class="col-12">
-                                            <!-- <button type="button" class="add_more_info btn btn-success btn-sm float-right">Add more</button> -->
-                                        </div>
-                                </fieldset>
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Explain</label></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control criminalityExplain" disabled></textarea></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Community Acceptance</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control comAcceptance select2" disabled>
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="FAIR">Fair</option>
+                                            <option value="POOR">Poor</option>
+                                            <option value="SATISFACTORY">Satisfactory</option>
+                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control acceptanceSpecify" disabled></textarea></div>
+                                </div>
+
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Peer Group Relationship</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control peerRel select2" disabled>
+                                            <option value="" selected disabled>-- select one --</option>
+                                            <option value="DESIRABLE">Desirable</option>
+                                            <option value="UNDESIRABLE WITH POTENTIAL">Undesirable with Potential for Improvement</option>
+                                            <option value="UNDESIRABLE WITH NO POTENTIAL">Undesirable with no Potential for Improvement</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control peerSpecify" disabled></textarea></div>
+                                </div>
+                                
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-success btn-next btn-sm">Next</button>
@@ -262,6 +281,7 @@
             
             return d.promise();
         };
+
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -278,99 +298,147 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
-
+       
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
 
-        var __select = function(){
-            $('.field_office').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                // console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-                    setTimeout(function () {
-                        $(".field_office").val($.cookie("field_office_id")).trigger("change");
-                    }, 2000);
-                    
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
+        // $(".btn-next").unbind("click").on("click", function(){
 
+        //     var envFactor = {
+
+        //         neighborhood            : $(".neighborhood").val(),
+        //         neighborhoodDescribe    : $(".neighborhoodDescribe").val(),
+        //         neighCrim               : $(".neighCrim").val(),
+        //         criminalityExplain      : $(".criminalityExplain").val(),
+        //         comAcceptance           : $(".comAcceptance").val(),
+        //         acceptanceSpecify       : $(".acceptanceSpecify").val(),
+        //         peerRel                 : $(".peerRel").val(),
+        //         peerSpecify             : $(".peerSpecify").val(),
+        //         area                    : $(".area").val()
+
+        //     }
+
+        //     console.log(envFactor)
+
+
+        //     var payload = {
+        //     "petitionerId"              : client_id,
+        //     "jsonData"                  : JSON.stringify(envFactor),
+        //     "type"                      : "environmentalFactor",
+        //     "worksheetStatus"           : "COMPLETED",
+        //     "createdBy"                 : $.cookie("uuid")
+        //     }
+
+        //     console.log(payload)
+
+
+        //     __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+        //         console.log(result);
+        //         if (result.status != "ERROR") {
+        //             $(".form-control").val('');
+        //             $('#success').show();
+        //             setTimeout(function () {
+        //                 $('#success').hide();
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/client_list';
+        //                 }, 500);
+        //             }, 2000);
+        //         }else{
+        //             alert("failed")
+        //         }
+        //         })
+
+        //     })
 
         $(".btn-next").unbind("click").on("click", function(){
-            window.location.href = 'http://localhost/pis/psir_family_background?client_id='+client_id;
+                window.location.href = 'http://localhost/pis/client_list';
+            })
+
+        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/environmentalFactor/'+client_id).done(function (result) {
+                console.log("==========")
+                console.log(result)
+                console.log("==========")
+
+                var result = result.response;
+
+                if (result.status != "ERROR") {
+
+                    if (result.worksheetStatus == "COMPLETED"){
+
+                        JSON.parse(result.jsonData)
+
+                        console.log(JSON.parse(result.jsonData))
+
+                        // var spouseChild = JSON.parse(result.jsonData);
+
+                        $(".neighborhood").val(JSON.parse(result.jsonData).neighborhood).trigger("change");
+                        $(".area").val(JSON.parse(result.jsonData).area).trigger("change");
+                        $(".neighborhoodDescribe").val(JSON.parse(result.jsonData).neighborhoodDescribe);
+                        $(".neighCrim").val(JSON.parse(result.jsonData).neighCrim).trigger("change");
+                        $(".criminalityExplain").val(JSON.parse(result.jsonData).criminalityExplain);
+                        $(".comAcceptance").val(JSON.parse(result.jsonData).comAcceptance).trigger("change");
+                        $(".acceptanceSpecify").val(JSON.parse(result.jsonData).acceptanceSpecify);
+                        $(".peerRel").val(JSON.parse(result.jsonData).peerRel).trigger("change");
+                        $(".peerSpecify").val(JSON.parse(result.jsonData).peerSpecify);
+
+                    }else{
+
+                    } 
+
+                }
         })
 
-            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/priorRecords/'+client_id).done(function (result) {
+        // $(".btn-update").unbind("click").on("click", function(){
 
-            var result = result.response;
+        //     var envFactor = {
 
-            if (result.status != "ERROR") {
+        //         neighborhood            : $(".neighborhood").val(),
+        //         neighborhoodDescribe    : $(".neighborhoodDescribe").val(),
+        //         neighCrim               : $(".neighCrim").val(),
+        //         criminalityExplain      : $(".criminalityExplain").val(),
+        //         comAcceptance           : $(".comAcceptance").val(),
+        //         acceptanceSpecify       : $(".acceptanceSpecify").val(),
+        //         peerRel                 : $(".peerRel").val(),
+        //         peerSpecify             : $(".peerSpecify").val(),
+        //         area                    : $(".area").val()
 
-                if (result.worksheetStatus == "INCOMPLETE"){
+        //     }
 
-                    $('.list').empty();
-                    $('.list_info').empty();
-
-                    // console.log($('input[name="derogatoryRecord"]').val())
-
-                    $('input[name="derogatoryRecord"]').val(JSON.parse(result.jsonData).derogatoryRecord).prop("checked",true);
-                    $('input[name="allegedby"]').val(JSON.parse(result.jsonData).allegedBy).prop("checked",true);
-                    $('input[name="probation"]').val(JSON.parse(result.jsonData).probation).prop("checked",true);
-
-                    // console.log(JSON.parse(result.jsonData))
-
-                    const recordList = JSON.parse(result.jsonData)
-
-                    // console.log(recordList)
+        //     console.log(envFactor)
 
 
-                    recordList.priorRecord.forEach(function(data){
-                        $(".list").append(`
-                            <div class="list_records">
-                                <div class="row form-group col-md-12">
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency" value="${data.agency}" disabled></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No." value="${data.cc_no}" disabled></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense" value="${data.offense}" disabled></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When" value="${data.when}" disabled></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where" value="${data.where}" disabled></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition" value="${data.disposition}" disabled></div>
-                                </div>
-                            </div>`
-                        )
-                    });
+        //     var payload = {
+        //     "petitionerId"              : client_id,
+        //     "jsonData"                  : JSON.stringify(envFactor),
+        //     "type"                      : "environmentalFactor",
+        //     "worksheetStatus"           : "COMPLETED",
+        //     "createdBy"                 : $.cookie("uuid")
+        //     }
 
-                    recordList.recordsInfo.forEach(function(data){
-                        $(".list_info").append(`
-                            <div class="list_information">
-                                <div class="row form-group col-md-12">
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source" value="${data.source}" disabled></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date" value="${data.date}" disabled></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position" value="${data.pos}" disabled></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars" value="${data.particulars}" disabled></div>
-                                </div>
-                            </div>
-                        `)
-                    });
+        //     console.log(payload)
 
 
+        //     __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/environmentalFactor/'+client_id,JSON.stringify(payload)).done(function (result) {
+        //         console.log(result);
+        //         if (result.status != "ERROR") {
+        //             $(".form-control").val('');
+        //             $('#success').show();
+        //             setTimeout(function () {
+        //                 $('#success').hide();
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/client_list';
+        //                 }, 500);
+        //             }, 2000);
+        //         }else{
+        //             alert("failed")
+        //         }
+        //         })
 
-
-                }else{
-
-                } 
-
-            }
-        })
+        //     })
 
         $(".idenData").unbind("click").on("click", function(){
             // console.log("clicked")
@@ -380,6 +448,17 @@
                         setTimeout(function () {
                             // window.location.reload(true);
                             window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".priorRec").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -394,17 +473,6 @@
                         }, 500);
                 });
         });
-        // $(".priorRec").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
         $(".famBg").unbind("click").on("click", function(){
             // console.log("clicked")
                 $(".btn_warning").unbind("click").on("click", function(){
@@ -471,26 +539,17 @@
                         }, 500);
                 });
         });
-        $(".envFac").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
-                        }, 500);
-                });
-        });
-
-
-
-        // $('.petitioner').click(function(){
+        // $(".envFac").unbind("click").on("click", function(){
         //     // console.log("clicked")
-        //     var petitionerRadio = $('.petitioner').val()
-        //     console.log(petitionerRadio)
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+        //                 }, 500);
+        //         });
         // });
-
 
     } )( jQuery );
     </script>
