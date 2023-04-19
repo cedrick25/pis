@@ -309,8 +309,11 @@
 
         var client_id = GetURLParameter('client_id');
         var field_office_id = GetURLParameter('field_office_id');
-        console.log(client_id)
-        console.log(field_office_id)
+        // console.log(client_id)
+        // console.log(field_office_id)
+
+        // var fieldOffice = $.cookie("field_office_id")
+        // console.log(fieldOffice)
 
         __executeExternalGet('http://localhost:8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
             if (result.status != "ERROR") {
@@ -510,6 +513,7 @@
             "type"                      : "identifyingData",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)
@@ -586,6 +590,7 @@
             "type"                      : "identifyingData",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)

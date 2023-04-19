@@ -42,7 +42,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control pb_client select2">
+                                        <select class="form-control pb_client_type select2">
                                         </select>
                                     </div>
                                 </div>
@@ -388,11 +388,11 @@
             __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
-                    $('.pb_client').append("<option selected disabled> - - Select Client - - </option>");
+                    $('.pb_client_type').append("<option selected disabled> - - Select Client - - </option>");
                     result.content.forEach(function(data){
                         var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
                         console.log(name)
-                        $('.pb_client').append(
+                        $('.pb_client_type').append(
                             '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
                     });
                 } else {
@@ -465,7 +465,8 @@
                 "probationMonth"        : "",
                 "probationDay"          :"",
                 "status"                : 1,
-                "legalAge"              : $(".client_type").val()
+                "legalAge"              : $(".client_type").val(),
+                "clientId"              : $(".pb_client_type").val(),
             }
                 
             console.log(payload)

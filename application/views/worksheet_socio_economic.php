@@ -206,7 +206,8 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-success btn-next btn-sm">Next</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -329,6 +330,8 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
+        var field_office_id = GetURLParameter('field_office_id');
+        console.log(field_office_id)
        
         // $(".btn-reset").unbind("click").on("click", function(){
         //     $(".form-control").val('');
@@ -380,7 +383,8 @@
             "jsonData"                  : JSON.stringify(socioEco),
             "type"                      : "socioEconomic",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)
@@ -487,7 +491,8 @@
             "jsonData"                  : JSON.stringify(socioEco),
             "type"                      : "socioEconomic",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)

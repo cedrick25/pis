@@ -425,7 +425,9 @@
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         console.log('clicked')
-                        
+
+                        var clientId = result.clientId;
+                        console.log(clientId)
                         const sentence = [];
                         const sentence_inputs = $(".sentence");
                         const min_y = $(".min_y");
@@ -483,6 +485,7 @@
                             "probationDay"          :"",
                             "status"                : 1,
                             "legalAge"              : $(".client_type_update").val(),
+                            "clientId"              : clientId
                         }
 
                         __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {

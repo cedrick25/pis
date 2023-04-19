@@ -417,4 +417,16 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('psir_environmental_factor');
 	}
+	public function pdf_generate()
+	{
+		$this->load->view('pdf_generate');
+	}
+	public function psir_evaluation()
+	{
+		$this->load->view('psir_evaluation');
+	}
+	public function psir_recommendation()
+	{
+		$this->load->view('psir_recommendation');
+	}
 }

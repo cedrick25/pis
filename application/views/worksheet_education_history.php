@@ -301,7 +301,7 @@
 
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
+                                <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
                                 <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
                                 <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
@@ -426,6 +426,9 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
+
+        var field_office_id = GetURLParameter('field_office_id');
+        console.log(field_office_id)
        
         // $(".btn-reset").unbind("click").on("click", function(){
         //     $(".form-control").val('');
@@ -534,7 +537,8 @@
             "jsonData"                  : JSON.stringify(educHistory),
             "type"                      : "educationHistory",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)
@@ -548,8 +552,8 @@
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            // window.location.reload(true);
-                            // window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                            window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -605,7 +609,8 @@
             "jsonData"                  : JSON.stringify(educHistory),
             "type"                      : "educationHistory",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)
@@ -620,7 +625,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id
                         }, 500);
                     }, 2000);
                 }else{
@@ -638,7 +643,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id=';
                         }, 500);
                 });
         });
@@ -649,7 +654,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id=';
                         }, 500);
                 });
         });
@@ -660,7 +665,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id=';
                         }, 500);
                 });
         });
@@ -671,7 +676,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id=';
                         }, 500);
                 });
         });
@@ -682,7 +687,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id=';
                         }, 500);
                 });
         });
@@ -693,7 +698,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id=';
                         }, 500);
                 });
         });
@@ -704,7 +709,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id=';
                         }, 500);
                 });
         });
@@ -726,7 +731,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id=';
                         }, 500);
                 });
         });
@@ -737,7 +742,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id=';
                         }, 500);
                 });
         });

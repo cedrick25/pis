@@ -264,7 +264,7 @@
                         result.content.forEach(function(data){
                             // __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (resultfo) {
                             //     console.log(resultfo.name);
-                            let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> PSIR</button>";
+                            let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Generate PSIR</button>";
                             $('.table_body_pb').append("<tr>"+
                                 "<td>"+data.id+"</td>"+
                                 "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
@@ -309,6 +309,68 @@
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
                         window.location.href = 'http://localhost/pis/psir_identifying_data?client_id='+client_id+'&field_office_id='+foid;
+                    })
+                    $(".btn_pdfPSIR").unbind("click").on("click", function(){
+                        var client_id   = $(this).data("id");
+                        var foid        = $(this).data("foid");
+
+                        // __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+                        //     console.log(result)
+                        //     var result = result.response;
+
+                        //     if (result.status != "ERROR"){
+
+                        //         var doc = new jsPDF();
+                        //         doc.setFontSize(14);         
+                        //         doc.text('PPA FORM 3/p. 1', 10, 10, {
+                        //             align: 'left'});
+                        //         doc.text(10,20, 'PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, { 
+                        //             align: 'left'});
+                        //         doc.text(10,30, 'Criminal Case Number: '+result.criminalCaseNo, { 
+                        //             align: 'left'});
+                        //         doc.text(150,10, 'PPA-FO-FR-003 ',{ 
+                        //             align: 'right'});
+                        //         doc.text(150,20, 'Investigation Docket No.: ', { 
+                        //             align: 'right'});
+                        //         doc.text(150,30, result.criminalCaseNo, { 
+                        //             align: 'right'});
+
+                        //         doc.save('PSIR.pdf');
+
+                        //     }else{
+                        //         console.log("error fetching data")
+                        //     }
+
+                        // });
+                        
+                        // __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+                        //     console.log(result)
+                        //     var result = result.response;
+                                
+                        //     if (result.status != "ERROR"){
+
+                        //         var doc = new jsPDF();
+                        //         doc.setFontSize(14);         
+                        //         // doc.text('PPA FORM 3/p. 1', 10, 10, {
+                        //         //     align: 'left'});
+                        //         // doc.text(10,20, 'PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, { 
+                        //         //     align: 'left'});
+                        //         // doc.text(10,30, 'Criminal Case Number: '+result.criminalCaseNo, { 
+                        //         //     align: 'left'});
+                        //         doc.text(150,10, 'PPA-FO-FR-003 ',{ 
+                        //             align: 'right'});
+                        //         doc.text(150,20, 'Investigation Docket No.: ', { 
+                        //             align: 'right'});
+                        //         doc.text(150,30, result.criminalCaseNo, { 
+                        //             align: 'right'});
+
+                        //         doc.save('PSIR.pdf');
+
+                        //     }else{
+                        //         console.log("error fetching data")
+                        //     }
+
+                        // });
                     })                   
                 }
             })

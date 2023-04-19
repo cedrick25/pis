@@ -137,6 +137,9 @@ $route['psir_spouse_children'] = "routes/psir_spouse_children";
 $route['psir_education_history'] = "routes/psir_education_history";
 $route['psir_employment_history'] = "routes/psir_employment_history"; 
 $route['psir_environmental_factor'] = "routes/psir_environmental_factor";
+$route['pdf_generate'] = "routes/pdf_generate";
+$route['psir_evaluation'] = "routes/psir_evaluation";
+$route['psir_recommendation'] = "routes/psir_recommendation";
 
 // AMS end
 

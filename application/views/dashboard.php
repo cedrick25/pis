@@ -203,6 +203,8 @@
             return d.promise();
         };
 
+        console.log($.cookie("field_office_id"))
+
         var __select = function(){
             $('.field_office').empty();
 

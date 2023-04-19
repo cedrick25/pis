@@ -1139,6 +1139,8 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
+        var field_office_id = GetURLParameter('field_office_id');
+        console.log(field_office_id)
        
         // $(".btn-reset").unbind("click").on("click", function(){
         //     $(".form-control").val('');
@@ -1313,7 +1315,8 @@
             "jsonData"                  : JSON.stringify(familyBG),
             "type"                      : "familyBackground",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)
@@ -1533,7 +1536,8 @@
             "jsonData"                  : JSON.stringify(familyBG),
             "type"                      : "familyBackground",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)

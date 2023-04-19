@@ -223,7 +223,7 @@
 
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
+                                <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
                                 <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
                                 <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
@@ -348,6 +348,8 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
+        var field_office_id = GetURLParameter('field_office_id');
+        console.log(field_office_id)
        
         // $(".btn-reset").unbind("click").on("click", function(){
         //     $(".form-control").val('');
@@ -478,7 +480,8 @@
             "jsonData"                  : JSON.stringify(spouseChildren),
             "type"                      : "spouseChildren",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
             console.log(payload)
             __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
@@ -555,7 +558,8 @@
             "jsonData"                  : JSON.stringify(spouseChildren),
             "type"                      : "spouseChildren",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
             console.log(payload)
             __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/spouseChildren/'+client_id,JSON.stringify(payload)).done(function (result) {

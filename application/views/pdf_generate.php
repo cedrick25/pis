@@ -1,4 +1,6 @@
-<?php $this->load->view('templates/header.php'); ?> 
+
+
+<?php $this->load->view('templates/header.php'); ?>
 
 <body>
     <!-- Left Panel -->
@@ -18,7 +20,7 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                        Proceed to the select tab ? 
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -103,7 +105,7 @@
                                 <div class="row form-group col-md-9">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
                                     <div class="col-12 col-md-6">
-                                        <select class="form-control neighborhood select2">
+                                        <select class="form-control neighborhood select2" disabled>
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="RURAL">Rural</option>
                                             <option value="URBAN">Urban</option>
@@ -113,7 +115,7 @@
                                 <div class="row form-group col-md-9">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
                                     <div class="col-12 col-md-6">
-                                        <select class="form-control area select2">
+                                        <select class="form-control area select2" disabled>
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="NON-SLUM AREA">Non-Slum Area</option>
                                             <option value="SLUM-AREA">Slum Area</option>
@@ -122,13 +124,13 @@
                                 </div>
                                 <div class="row form-group col-md-9">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Describe</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control neighborhoodDescribe"></textarea></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control neighborhoodDescribe" disabled></textarea></div>
                                 </div>
 
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Neighborhood Criminality</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control neighCrim select2">
+                                        <select class="form-control neighCrim select2" disabled>
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="HIGH">High</option>
                                             <option value="LOW">Low</option>
@@ -138,12 +140,12 @@
                                 </div>
                                 <div class="row form-group col-md-9">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control criminalityExplain"></textarea></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control criminalityExplain" disabled></textarea></div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Community Acceptance</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control comAcceptance select2">
+                                        <select class="form-control comAcceptance select2" disabled>
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="FAIR">Fair</option>
                                             <option value="POOR">Poor</option>
@@ -154,13 +156,13 @@
                                 </div>
                                 <div class="row form-group col-md-9">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control acceptanceSpecify"></textarea></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control acceptanceSpecify" disabled></textarea></div>
                                 </div>
 
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Peer Group Relationship</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control peerRel select2">
+                                        <select class="form-control peerRel select2" disabled>
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="DESIRABLE">Desirable</option>
                                             <option value="UNDESIRABLE WITH POTENTIAL">Undesirable with Potential for Improvement</option>
@@ -170,14 +172,12 @@
                                 </div>
                                 <div class="row form-group col-md-9">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control peerSpecify"></textarea></div>
+                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control peerSpecify" disabled></textarea></div>
                                 </div>
                                 
                             </div>
                             <div class="card-footer">
-                                <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
-                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
-                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm">Next</button>
                             </div>
                         </div>
                     </div>
@@ -299,64 +299,143 @@
 
 
         var client_id = GetURLParameter('client_id');
-        console.log(client_id)
-        var field_office_id = GetURLParameter('field_office_id');
-        console.log(field_office_id)
+        // console.log(client_id)
        
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
 
 
+        // $(".btn-next").unbind("click").on("click", function(){
+
+        //     var envFactor = {
+
+        //         neighborhood            : $(".neighborhood").val(),
+        //         neighborhoodDescribe    : $(".neighborhoodDescribe").val(),
+        //         neighCrim               : $(".neighCrim").val(),
+        //         criminalityExplain      : $(".criminalityExplain").val(),
+        //         comAcceptance           : $(".comAcceptance").val(),
+        //         acceptanceSpecify       : $(".acceptanceSpecify").val(),
+        //         peerRel                 : $(".peerRel").val(),
+        //         peerSpecify             : $(".peerSpecify").val(),
+        //         area                    : $(".area").val()
+
+        //     }
+
+        //     console.log(envFactor)
+
+
+        //     var payload = {
+        //     "petitionerId"              : client_id,
+        //     "jsonData"                  : JSON.stringify(envFactor),
+        //     "type"                      : "environmentalFactor",
+        //     "worksheetStatus"           : "COMPLETED",
+        //     "createdBy"                 : $.cookie("uuid")
+        //     }
+
+        //     console.log(payload)
+
+
+        //     __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+        //         console.log(result);
+        //         if (result.status != "ERROR") {
+        //             $(".form-control").val('');
+        //             $('#success').show();
+        //             setTimeout(function () {
+        //                 $('#success').hide();
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/client_list';
+        //                 }, 500);
+        //             }, 2000);
+        //         }else{
+        //             alert("failed")
+        //         }
+        //         })
+
+        //    
+
+            var doc = new jsPDF();
+            doc.setFontSize(14);         
+            doc.text('PPA-RFO-FOR-006', 150, 20, {
+                align: 'right',
+            }); 
+            doc.text(105, 30, 'Republic of the Philippines', 'center');  
+            doc.text(105, 36, 'Department of Justice', 'center');  
+
+            doc.setFontSize(13);         
+            doc.text(105, 42, 'PAROLE AND PROBATION ADMINISTRATION', 'center');  
+
+            doc.text(105, 50, region_name, 'center');  
+            doc.text(105, 56, field_office, 'center');  
+            doc.text(105, 64, '___________________________________________________', 'center');  
+            doc.text(105, 72, '__________________________________________', 'center'); 
+
+            doc.text(105, 82, '________________________________________________________________', 'center');  
+            doc.text(105, 82, '________________________________________________________________', 'center');  
+
+            doc.setFontType("bold");
+            doc.text(105, 100, 'CERTIFICATION', 'center');  
+
+            doc.setFontType("normal");
+            doc.text(30, 110, 'This is to certify that ____________________________________ has not', {
+                align: 'left',
+            });   
+            doc.text(22, 118, 'received any referrals pertinent to the following for the month of '+GetMonthName(result[1])+',', {
+                align: 'left',
+            });   
+            doc.text(22, 124, 'year '+result[0]+'.', {
+                align: 'left',
+            });   
+            doc.setFontType("bold");
+            doc.text(40, 136, 'Suspended Sentence', {
+                align: 'left',
+            });    
+            doc.setFontType("normal");
+            doc.text(30, 148, 'Issued this '+daten+nth(daten)+' day of '+month+', '+year+' for whatever legal purpose this may', {
+                align: 'left',
+            });  
+            doc.text(22, 154, 'serve.', {
+                align: 'left',
+            });  
+       
+            doc.text('______________________', 128, 175, {
+                align: 'right',
+            }); 
+            doc.text('Name over Signature', 137, 181, {
+                align: 'right',
+            });
+            doc.text('Position of the Head of the Field Office', 120, 187, {
+                align: 'right',
+            }); 
+ 
+
+            $('.btn-download-cert').click(function () {
+                // doc.fromHTML($('#content').html(), 15, 15, {
+                //     'width': 170,
+                //         'elementHandlers': specialElementHandlers
+                // });         
+                doc.save('Certificates.pdf');
+            });
+
         $(".btn-next").unbind("click").on("click", function(){
-
-            var envFactor = {
-
-                neighborhood            : $(".neighborhood").val(),
-                neighborhoodDescribe    : $(".neighborhoodDescribe").val(),
-                neighCrim               : $(".neighCrim").val(),
-                criminalityExplain      : $(".criminalityExplain").val(),
-                comAcceptance           : $(".comAcceptance").val(),
-                acceptanceSpecify       : $(".acceptanceSpecify").val(),
-                peerRel                 : $(".peerRel").val(),
-                peerSpecify             : $(".peerSpecify").val(),
-                area                    : $(".area").val()
-
-            }
-
-            console.log(envFactor)
-
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(envFactor),
-            "type"                      : "environmentalFactor",
-            "worksheetStatus"           : "COMPLETED",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            console.log(payload)
-
-
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/client_list';
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-                })
-
+                // window.location.href = 'http://localhost/pis/client_list';
+            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/environmentalFactor/'+client_id).done(function (result) {
+                console.log(result)
+                   if (result.status != "ERROR") {
+ 
+                                // $('.btn-download-cert').click(function () {
+                                //     // doc.fromHTML($('#content').html(), 15, 15, {
+                                //     //     'width': 170,
+                                //     //         'elementHandlers': specialElementHandlers
+                                //     // });         
+                                //     doc.save('Certificates.pdf');
+                                // });
+                    } else {
+                        console.log("failed fetching docket list")
+                    }
             })
+        })
 
         __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/environmentalFactor/'+client_id).done(function (result) {
                 console.log("==========")
@@ -368,9 +447,6 @@
                 if (result.status != "ERROR") {
 
                     if (result.worksheetStatus == "COMPLETED"){
-
-                        $(".btn-update").show();
-                        $(".btn-next").hide();
 
                         JSON.parse(result.jsonData)
 
@@ -390,62 +466,59 @@
 
                     }else{
 
-                        $(".btn-next").show();
-                        $(".btn-update").hide();
                     } 
 
                 }
         })
 
-        $(".btn-update").unbind("click").on("click", function(){
+        // $(".btn-next").unbind("click").on("click", function(){
 
-            var envFactor = {
+        //     var envFactor = {
 
-                neighborhood            : $(".neighborhood").val(),
-                neighborhoodDescribe    : $(".neighborhoodDescribe").val(),
-                neighCrim               : $(".neighCrim").val(),
-                criminalityExplain      : $(".criminalityExplain").val(),
-                comAcceptance           : $(".comAcceptance").val(),
-                acceptanceSpecify       : $(".acceptanceSpecify").val(),
-                peerRel                 : $(".peerRel").val(),
-                peerSpecify             : $(".peerSpecify").val(),
-                area                    : $(".area").val()
+        //         neighborhood            : $(".neighborhood").val(),
+        //         neighborhoodDescribe    : $(".neighborhoodDescribe").val(),
+        //         neighCrim               : $(".neighCrim").val(),
+        //         criminalityExplain      : $(".criminalityExplain").val(),
+        //         comAcceptance           : $(".comAcceptance").val(),
+        //         acceptanceSpecify       : $(".acceptanceSpecify").val(),
+        //         peerRel                 : $(".peerRel").val(),
+        //         peerSpecify             : $(".peerSpecify").val(),
+        //         area                    : $(".area").val()
 
-            }
+        //     }
 
-            console.log(envFactor)
-
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(envFactor),
-            "type"                      : "environmentalFactor",
-            "worksheetStatus"           : "COMPLETED",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            console.log(payload)
+        //     console.log(envFactor)
 
 
-            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/environmentalFactor/'+client_id,JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/client_list';
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-                })
+        //     var payload = {
+        //     "petitionerId"              : client_id,
+        //     "jsonData"                  : JSON.stringify(envFactor),
+        //     "type"                      : "environmentalFactor",
+        //     "worksheetStatus"           : "COMPLETED",
+        //     "createdBy"                 : $.cookie("uuid")
+        //     }
 
-            })
+        //     console.log(payload)
+
+
+        //     __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/environmentalFactor/'+client_id,JSON.stringify(payload)).done(function (result) {
+        //         console.log(result);
+        //         if (result.status != "ERROR") {
+        //             $(".form-control").val('');
+        //             $('#success').show();
+        //             setTimeout(function () {
+        //                 $('#success').hide();
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/client_list';
+        //                 }, 500);
+        //             }, 2000);
+        //         }else{
+        //             alert("failed")
+        //         }
+        //         })
+
+        //     })
 
         $(".idenData").unbind("click").on("click", function(){
             // console.log("clicked")
@@ -454,7 +527,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_identifying_data?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -465,7 +538,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_prior_records?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -476,7 +549,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_present_offense?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -487,7 +560,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_family_background?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -498,7 +571,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_socio_economic?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -509,7 +582,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_residence_economic?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -520,7 +593,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_spouse_children?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -531,7 +604,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -542,7 +615,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_employment_history?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -553,7 +626,7 @@
         //             $(".form-control").val('');
         //                 setTimeout(function () {
         //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+        //                     window.location.href = 'http://localhost/pis/psir_environmental_factor?client_id='+client_id;
         //                 }, 500);
         //         });
         // });

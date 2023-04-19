@@ -355,6 +355,8 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
+        var field_office_id = GetURLParameter('field_office_id');
+        console.log(field_office_id)
 
 
         $(".btn-next").unbind("click").on("click", function(){
@@ -399,6 +401,7 @@
             "type"                      : "presentOffense",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)
@@ -524,6 +527,7 @@
             "type"                      : "presentOffense",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)

@@ -1,6 +1,7 @@
 <?php $this->load->view('templates/header.php'); ?> 
 
 <body>
+    <!-- Left Panel -->
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
@@ -27,7 +28,6 @@
             </div>
         </div>
     </div>
-    <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
     
@@ -46,7 +46,7 @@
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list">Client</a></li>
                             <li><a href="">Worksheet Create</a></li>
-                            <li class="active">Socio-Economic Background</li>
+                            <li class="active">Environmental Factors</li>
                         </ol>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Socio-Economic Background</strong>
+                                <strong class="card-title">Community Background/Environmental Factors</strong>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -73,10 +73,10 @@
                                         <a class="nav-link priorRec" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link  famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active socioEco" href="#">Socio-Economic Background</a>
+                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
@@ -94,7 +94,7 @@
                                         <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link eval" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
+                                        <a class="nav-link eval active" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link rec" href="#" data-toggle="modal" data-target="#warningModal">Recommendation</a>
@@ -106,110 +106,61 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Relationship</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control family_rel select2" disabled>
+<!--                                 <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <select class="form-control neighborhood select2" disabled>
                                             <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                            <option value="RURAL">Rural</option>
+                                            <option value="URBAN">Urban</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Reputation in Community</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control family_rep select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Home Condition</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control home_cond select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control fam_prob"></div>
                                 </div> -->
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control fam_prob select2" disabled>
+<!--                                 <div class="row form-group col-md-9">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <select class="form-control area select2" disabled>
                                             <option value="" selected disabled>-- select one --</option>
-                                            <option value="ECONOMIC">Economic</option>
-                                            <option value="HUSBAND-WIFE_CONFLICT">Husband-wife conflict</option>
-                                            <option value="MARITAL_PROBLEM">Marital problem</option>
-                                            <option value="MENTAL_ILLNESS">Mental illness</option>
-                                            <option value="ONE-PARENT FAMILY">One-parent family</option>
-                                            <option value="PARENT-CHILD CONFLICT">Parent-child conflict</option>
-                                            <option value="PHYSICAL_ILLNESS">Physical illness</option>
-                                            <option value="SIBLING_CONFLICT">Sibling conflict</option>
-                                            <option value="OTHERS">Others</option>
-                                            <option value="NO_APPARENT_PROBLEM">No apparent problem</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
+                                            <option value="NON-SLUM AREA">Non-Slum Area</option>
+                                            <option value="SLUM-AREA">Slum Area</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Economic Status</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control eco_status select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="POOR">Poor (Less than 7,890/mo)</option>
-                                            <option value="LOW INCOME">Low Income (Php 7,890-15,780/mo)</option>
-                                            <option value="LOWER MIDDLE INCOME">Lower Middle Income (Php 15,780-31,560/mo)</option>
-                                            <option value="MIDDLE CLASS">Middle Class (Php 31,560-78,900/mo)</option>
-                                            <option value="UPPER MIDDLE CLASS">Upper Middle Class (Php 78,900-118,350/mo)</option>
-                                            <option value="UPPER INCOME">Upper Income (Php 118,350-157,800/mo)</option>
-                                            <option value="RICH">Rich (at least Php 157,800/mo)</option>
-                                        </select>
+                                </div> -->
+                                <fieldset class="row col col-md-12">
+                                    <legend>Petitioners Traits</legend>
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Positive</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control positiveTraits"></textarea></div>
                                     </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stability of Residence</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control stability select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FREQUENT CHANGE">Frequent Change</option>
-                                            <option value="NO STABILITY">No Stability</option>
-                                            <option value="OCCASIONAL CHANGE">Occasional Change</option>
-                                            <option value="STABLE">Stable</option>
-                                        </select>
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Negative</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control negativeTraits"></textarea></div>
                                     </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Comments</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control comments" disabled></textarea></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Childhood Circumstances</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control circumstances select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="SAD">Sad</option>
-                                            <option value="HAPPY">Happy</option>
-                                        </select>
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Overall Impression of the Client</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control overallTraits"></textarea></div>
                                     </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control explain" disabled></textarea></div>
-                                </div>
+                                </fieldset>
+                                <fieldset class="row col col-md-12">
+                                    <legend>Petitioner's Background in the Community & Collateral Information</legend>
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label"></label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="4" cols="50" class="form-control communityBackground"></textarea></div>
+                                    </div>
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Analysis and Evaluation</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control analysisAndEvaluation"></textarea></div>
+                                    </div>
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Projected Thrust of Rehabilitation</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control projectedThrust"></textarea></div>
+                                    </div>
+                                    <div class="collateralInfo">
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="button" class="addMoreCollInfo btn btn-success btn-sm float-right">Add more</button>
+                                    </div>
+                                </fieldset>                               
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
@@ -337,40 +288,70 @@
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
        
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
+        $(".addMoreCollInfo").unbind("click").on("click", function(){
+            // console.log("clicked");
 
+            $(".collateralInfo").append(`
+            <div class="collateralInformation">
+                <div class="row form-group col-md-9">
+                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
+                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo"></textarea></div>
+                </div>
+                <div class="row form-group col-md-9">
+                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
+                    <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient"></div>
+                </div>
+                <div class="row form-group col-md-9">
+                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
+                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered"></textarea></div>
+                </div>
+                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
+            </div>`
+            )
+        });
 
-        // $(".btn-next").unbind("click").on("click", function(){
+        $('.collateralInfo').on('click', '.remove', function(e) {
+            e.preventDefault();
 
-        //     window.location.href = 'http://localhost/pis/psir_residence_economic?client_id='+client_id;
+            $(this).parent().remove();
+        });
 
-        // })
 
         $(".btn-next").unbind("click").on("click", function(){
 
-            var socioEco = {
+            const collateralInfo = [];
+            const collInfo = $(".collInfo");
+            const relClient = $(".relClient");
+            const collGathered = $(".collGathered");
 
-                family_rel          : $(".family_rel").val(),
-                family_rep          : $(".family_rep").val(),
-                home_cond           : $(".home_cond").val(),
-                fam_prob            : $(".fam_prob").val(),
-                eco_status          : $(".eco_status").val(),
-                stability           : $(".stability").val(),
-                comments            : $(".comments").val(),
-                circumstances       : $(".circumstances").val(),
-                explain             : $(".explain").val(),
-
+            for(var i = 0; i < collInfo.length; i++){
+                
+                const list = {};
+                list.collInfo = $(collInfo[i]).val();
+                list.relClient = $(relClient[i]).val();
+                list.collGathered = $(collGathered[i]).val();
+                collateralInfo.push(list);
             }
 
-            // console.log(socioEco)
+
+            var evaluation = {
+
+                collateralInfo          : collateralInfo,
+                positiveTraits          : $(".positiveTraits").val(),
+                negativeTraits          : $(".negativeTraits").val(),
+                overallTraits           : $(".overallTraits").val(),
+                analysisAndEvaluation   : $(".analysisAndEvaluation").val(),
+                projectedThrust         : $(".projectedThrust").val(),
+                communityBackground     : $(".communityBackground").val(),
+            }
+
+            // console.log(familyBG)
 
 
             var payload = {
             "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(socioEco),
-            "type"                      : "psirSocioEconomic",
+            "jsonData"                  : JSON.stringify(evaluation),
+            "type"                      : "psirEvaluation",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
             "fieldOfficeId"             : $.cookie("field_office_id")
@@ -388,7 +369,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_residence_economic?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -398,77 +379,41 @@
 
             })
 
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/socioEconomic/'+client_id).done(function (result) {
-                
-                __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result) {
-
-                    var result = result.response;
-
-                    console.log(result)
-
-                    if (result.status != "ERROR") {
-
-                        if (result.worksheetStatus == "INCOMPLETE"){
-                            $(".btn-next").hide();
-                            $(".btn-update").show();
-
-                        }else{
-                            $(".btn-update").hide();
-                            $(".btn-next").show();
-                        } 
-                    }
-                })
-
-                var result = result.response;
-
-                if (result.status != "ERROR") {
-
-                    if (result.worksheetStatus == "INCOMPLETE"){
-
-                        JSON.parse(result.jsonData)
-
-                        console.log(JSON.parse(result.jsonData))
-
-                        $(".family_rel").val(JSON.parse(result.jsonData).family_rel).trigger("change");
-                        $(".family_rep").val(JSON.parse(result.jsonData).family_rep).trigger("change");
-                        $(".home_cond").val(JSON.parse(result.jsonData).home_cond).trigger("change");
-                        $(".fam_prob").val(JSON.parse(result.jsonData).fam_prob).trigger("change");
-                        $(".eco_status").val(JSON.parse(result.jsonData).eco_status).trigger("change");
-                        $(".stability").val(JSON.parse(result.jsonData).stability).trigger("change");
-                        $(".comments").val(JSON.parse(result.jsonData).comments);
-                        $(".circumstances").val(JSON.parse(result.jsonData).circumstances).trigger("change");
-                        $(".explain").val(JSON.parse(result.jsonData).explain);
-
-                    }else{
-                        $(".btn-update").hide();
-                        $(".btn-next").show();
-                    } 
-
-                }
-            })
-
         $(".btn-update").unbind("click").on("click", function(){
-            var socioEco = {
 
-                family_rel          : $(".family_rel").val(),
-                family_rep          : $(".family_rep").val(),
-                home_cond           : $(".home_cond").val(),
-                fam_prob            : $(".fam_prob").val(),
-                eco_status          : $(".eco_status").val(),
-                stability           : $(".stability").val(),
-                comments            : $(".comments").val(),
-                circumstances       : $(".circumstances").val(),
-                explain             : $(".explain").val(),
+            const collateralInfo = [];
+            const collInfo = $(".collInfo");
+            const relClient = $(".relClient");
+            const collGathered = $(".collGathered");
 
+            for(var i = 0; i < collInfo.length; i++){
+                
+                const list = {};
+                list.collInfo = $(collInfo[i]).val();
+                list.relClient = $(relClient[i]).val();
+                list.collGathered = $(collGathered[i]).val();
+                collateralInfo.push(list);
             }
 
-            // console.log(socioEco)
+
+            var evaluation = {
+
+                collateralInfo          : collateralInfo,
+                positiveTraits          : $(".positiveTraits").val(),
+                negativeTraits          : $(".negativeTraits").val(),
+                overallTraits           : $(".overallTraits").val(),
+                analysisAndEvaluation   : $(".analysisAndEvaluation").val(),
+                projectedThrust         : $(".projectedThrust").val(),
+                communityBackground     : $(".communityBackground").val(),
+            }
+
+            // console.log(familyBG)
 
 
             var payload = {
             "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(socioEco),
-            "type"                      : "psirSocioEconomic",
+            "jsonData"                  : JSON.stringify(evaluation),
+            "type"                      : "psirEvaluation",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
             "fieldOfficeId"             : $.cookie("field_office_id")
@@ -477,7 +422,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/psirSocioEconomic/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/psirEvaluation/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -486,7 +431,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_residence_economic?client_id='+client_id;
+                            // window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -496,6 +441,67 @@
 
             })
 
+        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirEvaluation/'+client_id).done(function (result) {
+            console.log("==========")
+            console.log(result)
+            console.log("==========")
+
+            var result = result.response;
+
+            if (result.status != "ERROR") {
+
+                if (result.worksheetStatus == "INCOMPLETE"){
+
+                    $(".btn-update").show();
+                    $(".btn-next").hide();
+
+                    console.log(JSON.parse(result.jsonData))
+
+                    var evaluation = JSON.parse(result.jsonData);
+
+
+
+                    $(".positiveTraits").val(JSON.parse(result.jsonData).positiveTraits);
+                    $(".negativeTraits").val(JSON.parse(result.jsonData).negativeTraits);
+                    $(".overallTraits").val(JSON.parse(result.jsonData).overallTraits);
+                    $(".analysisAndEvaluation").val(JSON.parse(result.jsonData).analysisAndEvaluation);
+                    $(".projectedThrust").val(JSON.parse(result.jsonData).projectedThrust);
+                    $(".communityBackground").val(JSON.parse(result.jsonData).communityBackground);
+
+                    evaluation.collateralInfo.forEach(function(data){
+                        console.log(data);
+                        $(".collateralInfo").append(`
+                            <div class="collateralInfo">
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
+                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo" value="${data.collInfo}">${data.collInfo}</textarea></div>
+                                </div>
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
+                                    <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient" value="${data.relClient}"></div>
+                                </div>
+                                <div class="row form-group col-md-9">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
+                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered" value="${data.collGathered}">${data.collGathered}</textarea></div>
+                                </div>
+                                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
+                            </div>
+                        `
+                        )
+                        // setTimeout(function () {
+                        // $(".sibling_sex").val(data.sibling_sex).trigger("change");
+                        // }, 500);
+                        // setTimeout(function () {
+                        // $(".sibling_education").val(data.sibling_education).trigger("change");
+                        // }, 500);
+                    });
+                }else{
+                    $(".btn-next").show();
+                    $(".btn-update").hide();
+                } 
+
+            }
+        })
 
         $(".idenData").unbind("click").on("click", function(){
             // console.log("clicked")
@@ -541,17 +547,17 @@
                         }, 500);
                 });
         });
-        // $(".socioEco").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/psir_socio_economic?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
+        $(".socioEco").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/psir_socio_economic?client_id='+client_id;
+                        }, 500);
+                });
+        });
         $(".resEco").unbind("click").on("click", function(){
             // console.log("clicked")
                 $(".btn_warning").unbind("click").on("click", function(){
@@ -607,17 +613,17 @@
                         }, 500);
                 });
         });
-        $(".eval").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_evaluation?client_id='+client_id;
-                        }, 500);
-                });
-        });
+        // $(".eval").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
         $(".rec").unbind("click").on("click", function(){
             // console.log("clicked")
                 $(".btn_warning").unbind("click").on("click", function(){

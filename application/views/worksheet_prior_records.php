@@ -280,6 +280,8 @@
 
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
+        var field_office_id = GetURLParameter('field_office_id');
+        console.log(field_office_id)
 
         $(".list").html(`
             <div class="list_records">
@@ -440,7 +442,8 @@
             "jsonData"                  : JSON.stringify(priorRecords),
             "type"                      : "priorRecords",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)
@@ -607,7 +610,8 @@
             "jsonData"                  : JSON.stringify(priorRecords),
             "type"                      : "priorRecords",
             "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid")
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             console.log(payload)

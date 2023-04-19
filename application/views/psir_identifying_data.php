@@ -144,6 +144,12 @@
                                     <li class="nav-item">
                                         <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link eval" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link rec" href="#" data-toggle="modal" data-target="#warningModal">Recommendation</a>
+                                    </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
                                 </div>
@@ -186,8 +192,8 @@
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
-                                <button type="button" class="btn btn-success btn-next btn-sm">Next</button>
-                                <!-- <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button> -->
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -322,15 +328,55 @@
         })
 
         
+        // $(".btn-next").unbind("click").on("click", function(){
+        //     window.location.href = 'http://localhost/pis/psir_present_offense?client_id='+client_id;
+        // })
+
         $(".btn-next").unbind("click").on("click", function(){
-            window.location.href = 'http://localhost/pis/psir_present_offense?client_id='+client_id;
+
+            var identifyingData = {
+                name                : $(".data_name").val(),
+                interview           : $(".data_interview").val(),
+                alias               : $(".alias").val(),
+                trueName            : $(".true_name").val(),
+                presentAddress      : $(".present_add").val(),
+                permanentAdress     : $(".permanent_add").val()
+            }
+
+            console.log(identifyingData)
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(identifyingData),
+            "type"                      : "psirIdentifyingData",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
+            }
+
+            console.log(payload)
+
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                        // window.location.reload(true);
+                        console.log(client_id)
+                        window.location.href = 'http://localhost/pis/psir_present_offense?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+            })
         })
 
 
             __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
-                console.log("=====identifyingData=====")
-                console.log(result)
-                console.log("=====identifyingData=====")
 
                 var result = result.response;
 
@@ -338,6 +384,24 @@
 
                     if (result.worksheetStatus == "INCOMPLETE"){
 
+                        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
+
+                            var result = result.response;
+
+                            console.log(result)
+
+                            if (result.status != "ERROR") {
+
+                                if (result.worksheetStatus == "INCOMPLETE"){
+                                    $(".btn-next").hide();
+                                    $(".btn-update").show();
+
+                                }else{
+                                    $(".btn-update").hide();
+                                    $(".btn-next").show();
+                                } 
+                            }
+                        })
 
                         JSON.parse(result.jsonData)
 
@@ -351,11 +415,55 @@
                         $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
 
                     }else{
-
+                        $(".btn-update").hide();
+                        $(".btn-next").show();
                     } 
-
                 }
             })
+
+
+        $(".btn-update").unbind("click").on("click", function(){
+
+            var identifyingData = {
+                name                : $(".data_name").val(),
+                interview           : $(".data_interview").val(),
+                alias               : $(".alias").val(),
+                trueName            : $(".true_name").val(),
+                presentAddress      : $(".present_add").val(),
+                permanentAdress     : $(".permanent_add").val()
+            }
+
+            console.log(identifyingData)
+
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(identifyingData),
+            "type"                      : "psirIdentifyingData",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
+            }
+
+            console.log(payload)
+
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/psirIdentifyingData/'+client_id,JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                        // window.location.reload(true);
+                        console.log(client_id)
+                        window.location.href = 'http://localhost/pis/psir_present_offense?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+            })
+        })
 
 
 
@@ -467,6 +575,28 @@
                         setTimeout(function () {
                             // window.location.reload(true);
                             window.location.href = 'http://localhost/pis/psir_environmental_factor?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".eval").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/psir_evaluation?client_id='+client_id;
+                        }, 500);
+                });
+        });
+        $(".rec").unbind("click").on("click", function(){
+            // console.log("clicked")
+                $(".btn_warning").unbind("click").on("click", function(){
+                    // console.log("clicked")
+                    $(".form-control").val('');
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
                         }, 500);
                 });
         });

@@ -17,7 +17,7 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                        Proceed to the select tab ? 
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -92,6 +92,12 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link eval" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link rec" href="#" data-toggle="modal" data-target="#warningModal">Recommendation</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -223,7 +229,8 @@
 
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-success btn-next btn-sm">Next</button>
+                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
+                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -351,15 +358,110 @@
         //     $(".form-control").val('');
         // });
 
+        // $(".btn-next").unbind("click").on("click", function(){
+        //     window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
+        // })
+
         $(".btn-next").unbind("click").on("click", function(){
-            window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
-        })
+
+            const children = [];
+            const child_fname = $(".child_fname");
+            const child_mname = $(".child_mname");
+            const child_lname = $(".child_lname");
+            const child_sname = $(".child_sname");
+            const child_bdate = $(".child_bdate");
+            const child_age = $(".child_age");
+            const child_sex = $(".child_sex");
+            const child_education = $(".child_education");
+            const child_occupation = $(".child_occupation");
+
+            for(var i = 0; i < child_fname.length; i++){
+                
+                const list = {};
+                list.child_fname = $(child_fname[i]).val();
+                list.child_mname = $(child_mname[i]).val();
+                list.child_lname = $(child_lname[i]).val();
+                list.child_sname = $(child_sname[i]).val();
+                list.child_bdate = $(child_bdate[i]).val();
+                list.child_age = $(child_age[i]).val();
+                list.childSex = $(child_sex[i]).val();
+                list.child_education = $(child_education[i]).val();
+                list.child_occupation = $(child_occupation[i]).val();
+                children.push(list);
+            }
+            var spouseChildren = {
+
+                children            : children,
+                civilStatus           : $(".civilStatus").val(),
+                spouseFname      : $(".spouse_fname").val(),
+                spouseMname        : $(".spouse_mname").val(),
+                spouseLname           : $(".spouse_lname").val(),
+                spouseEname         : $(".spouse_ename").val(),
+                presentAddress         : $(".pAddress").val(),
+                spouse_region           : $(".spouse_region").val(),
+                spouse_bday      : $(".spouse_bday").val(),
+                spouseProvince        : $(".spouseProvince").val(),
+                spouseMunicipality           : $(".spouseMunicipality").val(),
+                spouse_work_add         : $(".spouse_work_add").val(),
+                spouse_ceremony         : $(".spouse_ceremony").val(),
+                spouse_bplace_others           : $(".spouse_bplace_others").val(),
+                spouse_occupation      : $(".spouse_occupation").val(),
+                date_marriage        : $(".date_marriage").val(),
+                spouse_remarks           : $(".spouse_remarks").val(),
+                spouse_relationship         : $(".spouse_relationship").val(),
+
+            }
+            console.log(spouseChildren)
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(spouseChildren),
+            "type"                      : "psirSpouseChildren",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
+            }
+            console.log(payload)
+            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+
+            })
 
 
             __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
                 console.log("==========")
-                console.log(result)
-                console.log("==========")
+                
+                __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result) {
+
+                    var result = result.response;
+
+                    console.log(result)
+
+                    if (result.status != "ERROR") {
+
+                        if (result.worksheetStatus == "INCOMPLETE"){
+                            $(".btn-next").hide();
+                            $(".btn-update").show();
+
+                        }else{
+                            $(".btn-update").hide();
+                            $(".btn-next").show();
+                        } 
+                    }
+                })
 
                 var result = result.response;
 
@@ -447,7 +549,8 @@
                     });
 
                     }else{
-
+                        $(".btn-update").hide();
+                        $(".btn-next").show();
                     } 
 
                 }
@@ -479,6 +582,84 @@
             }
         });
 
+        $(".btn-update").unbind("click").on("click", function(){
+
+            const children = [];
+            const child_fname = $(".child_fname");
+            const child_mname = $(".child_mname");
+            const child_lname = $(".child_lname");
+            const child_sname = $(".child_sname");
+            const child_bdate = $(".child_bdate");
+            const child_age = $(".child_age");
+            const child_sex = $(".child_sex");
+            const child_education = $(".child_education");
+            const child_occupation = $(".child_occupation");
+
+            for(var i = 0; i < child_fname.length; i++){
+                
+                const list = {};
+                list.child_fname = $(child_fname[i]).val();
+                list.child_mname = $(child_mname[i]).val();
+                list.child_lname = $(child_lname[i]).val();
+                list.child_sname = $(child_sname[i]).val();
+                list.child_bdate = $(child_bdate[i]).val();
+                list.child_age = $(child_age[i]).val();
+                list.childSex = $(child_sex[i]).val();
+                list.child_education = $(child_education[i]).val();
+                list.child_occupation = $(child_occupation[i]).val();
+                children.push(list);
+            }
+            var spouseChildren = {
+
+                children            : children,
+                civilStatus           : $(".civilStatus").val(),
+                spouseFname      : $(".spouse_fname").val(),
+                spouseMname        : $(".spouse_mname").val(),
+                spouseLname           : $(".spouse_lname").val(),
+                spouseEname         : $(".spouse_ename").val(),
+                presentAddress         : $(".pAddress").val(),
+                spouse_region           : $(".spouse_region").val(),
+                spouse_bday      : $(".spouse_bday").val(),
+                spouseProvince        : $(".spouseProvince").val(),
+                spouseMunicipality           : $(".spouseMunicipality").val(),
+                spouse_work_add         : $(".spouse_work_add").val(),
+                spouse_ceremony         : $(".spouse_ceremony").val(),
+                spouse_bplace_others           : $(".spouse_bplace_others").val(),
+                spouse_occupation      : $(".spouse_occupation").val(),
+                date_marriage        : $(".date_marriage").val(),
+                spouse_remarks           : $(".spouse_remarks").val(),
+                spouse_relationship         : $(".spouse_relationship").val(),
+
+            }
+            console.log(spouseChildren)
+            var payload = {
+            "petitionerId"              : client_id,
+            "jsonData"                  : JSON.stringify(spouseChildren),
+            "type"                      : "psirSpouseChildren",
+            "worksheetStatus"           : "INCOMPLETE",
+            "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id")
+            }
+            console.log(payload)
+            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/psirSpouseChildren/'+client_id,JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                if (result.status != "ERROR") {
+                    $(".form-control").val('');
+                    $('#success').show();
+                    setTimeout(function () {
+                        $('#success').hide();
+                        setTimeout(function () {
+                            // window.location.reload(true);
+                            window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
+                        }, 500);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+                })
+
+            })
+
 
         $(".idenData").unbind("click").on("click", function(){
             // console.log("clicked")
@@ -487,7 +668,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_identifying_data?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -498,7 +679,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_prior_records?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -509,7 +690,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_present_offense?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -520,7 +701,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_family_background?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -531,7 +712,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_socio_economic?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -542,7 +723,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_residence_economic?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -553,7 +734,7 @@
         //             $(".form-control").val('');
         //                 setTimeout(function () {
         //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+        //                     window.location.href = 'http://localhost/pis/psir_spouse_children?client_id='+client_id;
         //                 }, 500);
         //         });
         // });
@@ -564,29 +745,29 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
                         }, 500);
                 });
         });
-        $(".empHis").unbind("click").on("click", function(){
+        $(".eval").unbind("click").on("click", function(){
             // console.log("clicked")
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_evaluation?client_id='+client_id;
                         }, 500);
                 });
         });
-        $(".envFac").unbind("click").on("click", function(){
+        $(".rec").unbind("click").on("click", function(){
             // console.log("clicked")
                 $(".btn_warning").unbind("click").on("click", function(){
                     // console.log("clicked")
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
                         }, 500);
                 });
         });
