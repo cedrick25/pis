@@ -123,43 +123,71 @@
             
             return d.promise();
         };
-        console.log()
+
+        const roleId = ["1"];
+        if (roleId.includes("1")) {
+            $(".org_module").show()
+        }
+        var data = JSON.parse(localStorage.getItem('permission'));
+        console.log(data)
+
+        if (data != null) {
+            data.forEach(function(data){
+                if (data.type == "ACTION") {
+                    // console.log(data.value)
+                    setTimeout(function() {
+                        if (!data.value) {
+                            var element = $('.' + data.detail);
+                            element.hide();
+                        }else{
+                            var element = $('.' + data.detail);
+                            element.show();
+                        }
+                    }, 1000);
+                }else if (data.type == "VIEW") {
+                    if (!data.value) {
+                        var element = $('.' + data.detail);
+                        element.hide();
+                    }else{
+                        var element = $('.' + data.detail);
+                        element.show();
+                    }
+                }else{
+                }
+            });
+        }
         if ($.cookie("uuid") != undefined) {
             __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
-                console.log("====this is user logged in=====");
-                console.log(result);
-                console.log("====this is user logged in=====");
                 if (result.status != "ERROR") {
+                    console.log("====this is user logged in=====");
+                    console.log(result);
+                    console.log("====this is user logged in=====");
                     $(".f_name").html(result.username);
                     var field_office_id = result.departmentId
                     $.cookie("field_office_id", field_office_id);
-                    const roleId = ["1"];
-                    if (roleId.includes("1")) {
-                        $(".org_module").show()
-                    }
-                    result.permissions.forEach(function(data){
-                        if (data.type == "ACTION") {
-                            // console.log(data.value)
-                            setTimeout(function() {
-                                if (!data.value) {
-                                    var element = $('.' + data.detail);
-                                    element.hide();
-                                }else{
-                                    var element = $('.' + data.detail);
-                                    element.show();
-                                }
-                            }, 1000);
-                        }else if (data.type == "VIEW") {
-                            if (!data.value) {
-                                var element = $('.' + data.detail);
-                                element.hide();
-                            }else{
-                                var element = $('.' + data.detail);
-                                element.show();
-                            }
-                        }else{
-                        }
-                    });
+                    // result.permissions.forEach(function(data){
+                    //     if (data.type == "ACTION") {
+                    //         // console.log(data.value)
+                    //         setTimeout(function() {
+                    //             if (!data.value) {
+                    //                 var element = $('.' + data.detail);
+                    //                 element.hide();
+                    //             }else{
+                    //                 var element = $('.' + data.detail);
+                    //                 element.show();
+                    //             }
+                    //         }, 1000);
+                    //     }else if (data.type == "VIEW") {
+                    //         if (!data.value) {
+                    //             var element = $('.' + data.detail);
+                    //             element.hide();
+                    //         }else{
+                    //             var element = $('.' + data.detail);
+                    //             element.show();
+                    //         }
+                    //     }else{
+                    //     }
+                    // });
                 }
             })
         } else {
@@ -167,6 +195,8 @@
         }
         $(".btn_logout").unbind("click").on("click", function(){
             console.log('clicked')
+            $.removeCookie('uuid');
+            localStorage.clear();
             setTimeout(function () {
                 window.location.href="./"
             },500);

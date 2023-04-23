@@ -122,8 +122,18 @@
                             $('#prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i> Login Successfully </div>');  
                             var uuid = result.uuid
                             // var roleid = result.role.roleId
-                            $.cookie("uuid", uuid);
                             // $.cookie("roleid", roleid);
+                            $.cookie("uuid", uuid);
+
+                            localStorage.clear();
+                            
+                            // check if localstorage is clear
+                            // var data = JSON.parse(localStorage.getItem('permission'));
+                            // console.log(data)
+
+                            var permission_role = result.rolePermission
+                            localStorage.setItem('permission', JSON.stringify(permission_role));
+
                             setTimeout(function () {
                                 window.location.href="dashboard"
                             },1000);
