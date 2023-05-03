@@ -259,12 +259,12 @@
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
-                    console.log(result.name)
+                    // console.log(result.name)
                     if (result.status != "ERROR") {
                         result.content.forEach(function(data){
                             // __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (resultfo) {
                             //     console.log(resultfo.name);
-                            let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Generate PSIR</button>";
+                            let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Generate PSIR</button>";
                             $('.table_body_pb').append("<tr>"+
                                 "<td>"+data.id+"</td>"+
                                 "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
@@ -314,169 +314,163 @@
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
 
-                        // __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
-                        //     console.log(result)
-                        //     var result = result.response;
+                        __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+                            console.log("first result")
+                            console.log(result)
+                            var result = result.response;
+                                __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result2){
+                                    console.log("second result")
+                                    console.log(result2)
+                                        
+                                        var result2 = result2.response;
+                                            if (result.status != "ERROR"){
 
-                        //     if (result.status != "ERROR"){
+                                                var doc = new jsPDF();
 
-                        //         var doc = new jsPDF();
-                        //         doc.setFontSize(14);         
-                        //         doc.text('PPA FORM 3/p. 1', 10, 10, {
-                        //             align: 'left'});
-                        //         doc.text(10,20, 'PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, { 
-                        //             align: 'left'});
-                        //         doc.text(10,30, 'Criminal Case Number: '+result.criminalCaseNo, { 
-                        //             align: 'left'});
-                        //         doc.text(150,10, 'PPA-FO-FR-003 ',{ 
-                        //             align: 'right'});
-                        //         doc.text(150,20, 'Investigation Docket No.: ', { 
-                        //             align: 'right'});
-                        //         doc.text(150,30, result.criminalCaseNo, { 
-                        //             align: 'right'});
+                                                // Add Old English font
+                                                doc.addFont('fonts/OLDENG.TTF', 'OldEnglish', 'bold');
 
-                        //         doc.save('PSIR.pdf');
+                                                // Set font size and style
+                                                doc.setFontSize(12);
 
-                        //     }else{
-                        //         console.log("error fetching data")
-                        //     }
+                                                // Calculate line height
+                                                var lineHeight = doc.getLineHeight() - 8;
 
-                        // });
-                        
-                        // __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
-                        //     console.log(result)
-                        //     var result = result.response;
-                                
-                        //     if (result.status != "ERROR"){
+                                                // Add some text with adjusted line height
+                                                doc.text('PPA FORM 3/p. 1', 10, 10);
+                                                doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+                                                doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+                                                doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+                                                doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
 
-                        //         var doc = new jsPDF();
-                        //         doc.setFontSize(14);         
-                        //         // doc.text('PPA FORM 3/p. 1', 10, 10, {
-                        //         //     align: 'left'});
-                        //         // doc.text(10,20, 'PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, { 
-                        //         //     align: 'left'});
-                        //         // doc.text(10,30, 'Criminal Case Number: '+result.criminalCaseNo, { 
-                        //         //     align: 'left'});
-                        //         doc.text(150,10, 'PPA-FO-FR-003 ',{ 
-                        //             align: 'right'});
-                        //         doc.text(150,20, 'Investigation Docket No.: ', { 
-                        //             align: 'right'});
-                        //         doc.text(150,30, result.criminalCaseNo, { 
-                        //             align: 'right'});
+                                                // doc.addImage('path/to/your/image.png', 'PNG', 10, 10, 50, 50);
+                                                doc.setFont('times', 'bold');
+                                                doc.setFontSize(10);
+                                                doc.text('Republic of the Philippines', 80, 10 + lineHeight*3, { align: 'center' });
+                                                doc.setFont('bold');
+                                                doc.text('Department of Justice', 85, 10 + lineHeight*4, { align: 'center' });
+                                                doc.text('PAROLE AND PROBATION ADMINISTRATION', 60, 10 + lineHeight*5, { align: 'center' });
+                                                doc.text('REGIONAL OFFICE NO.', 83, 10 + lineHeight*6, { align: 'center' });
+                                                doc.text('Parole and Probation Office', 80, 10 + lineHeight*7, { align: 'center' });
+                                                // doc.addImage('assets/images/piss.png', 'PNG', 10, 10, 50, 50);
+                                                doc.text('POST-SENTENCE INVESTIGATION REPORT', 63, 12 + lineHeight*8, { align: 'center' });
 
-                        //         doc.save('PSIR.pdf');
+                                                doc.text('I. BASIC INFORMATION', 10, 12 + lineHeight*9, { align: 'left' });
 
-                        //     }else{
-                        //         console.log("error fetching data")
-                        //     }
+                                                doc.save('PSIR.pdf');
 
-                        // });
-                    })                   
+                                            }
+                                            else{
+                                                console.log("error fetching data")
+                                            }
+                                });
+                        });
+                    });                 
                 }
             })
         }
         __tablePB();
 
-        var __tablePR = function(){
-            $('.table_head_pr').DataTable().destroy();
-            $('.table_body_pr').empty();
+        // var __tablePR = function(){
+        //     $('.table_head_pr').DataTable().destroy();
+        //     $('.table_body_pr').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PAROLEE').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
-                        $('.table_body_pr').append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
-                            "<td>"+data.sex+"</td>"+
-                            "<td>"+data.clientType+"</td>"+
-                            "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
-                            "<td class='actions'> "+actions+"")
-                    });
+        //     __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PAROLEE').done(function (result) {
+        //         console.log("==========")
+        //         console.log(result)
+        //         console.log("==========")
+        //         if (result.status != "ERROR") {
+        //             result.content.forEach(function(data){
+        //                 let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
+        //                 $('.table_body_pr').append("<tr>"+
+        //                     "<td>"+data.id+"</td>"+
+        //                     "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
+        //                     "<td>"+data.sex+"</td>"+
+        //                     "<td>"+data.clientType+"</td>"+
+        //                     "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
+        //                     "<td class='actions'> "+actions+"")
+        //             });
                     
-                    $(document).ready(function () {
-                        $('.table_head_pr tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head_pr').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "40%", "targets": 5 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    });
+        //             $(document).ready(function () {
+        //                 $('.table_head_pr tbody tr').each(function (idx) {
+        //                    $(this).children("td:eq(0)").html(idx + 1);
+        //                 });
+        //                 var table = $('.table_head_pr').DataTable({
+        //                     order: [[0, 'asc']],
+        //                     // "columnDefs": [
+        //                     //     { "width": "40%", "targets": 5 }
+        //                     // ]
+        //                 });
+        //                 $('.dataTables_length').addClass('bs-select');
+        //             });
 
 
-                    $(".btn_update").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
-                    })
-                    $(".btn_upload").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id;
-                    })
-                    $(".btn_view").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
-                    })
-                }
-            })
-        }
-        __tablePR();
+        //             $(".btn_update").unbind("click").on("click", function(){
+        //                 var client_id = $(this).data("id");
+        //                 window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
+        //             })
+        //             $(".btn_upload").unbind("click").on("click", function(){
+        //                 var client_id = $(this).data("id");
+        //                 window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id;
+        //             })
+        //             $(".btn_view").unbind("click").on("click", function(){
+        //                 var client_id = $(this).data("id");
+        //                 window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
+        //             })
+        //         }
+        //     })
+        // }
+        // __tablePR();
 
-        var __tablePD = function(){
-            $('.table_head_pd').DataTable().destroy();
-            $('.table_body_pd').empty();
+        // var __tablePD = function(){
+        //     $('.table_head_pd').DataTable().destroy();
+        //     $('.table_body_pd').empty();
 
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PARDONEE').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
-                        $('.table_body_pd').append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
-                            "<td>"+data.sex+"</td>"+
-                            "<td>"+data.clientType+"</td>"+
-                            "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
-                            "<td class='actions'> "+actions+"")
-                    });
-                    $(document).ready(function () {
-                        $('.table_head_pd tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head_pd').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "30%", "targets": 5 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    });
+        //     __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PARDONEE').done(function (result) {
+        //         console.log("==========")
+        //         console.log(result)
+        //         console.log("==========")
+        //         if (result.status != "ERROR") {
+        //             result.content.forEach(function(data){
+        //                 let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"'><i class='fa fa-upload'></i> View</button>";
+        //                 $('.table_body_pd').append("<tr>"+
+        //                     "<td>"+data.id+"</td>"+
+        //                     "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
+        //                     "<td>"+data.sex+"</td>"+
+        //                     "<td>"+data.clientType+"</td>"+
+        //                     "<td value="+data.fieldOfficeId+">"+data.fieldOfficeId+"</td>"+
+        //                     "<td class='actions'> "+actions+"")
+        //             });
+        //             $(document).ready(function () {
+        //                 $('.table_head_pd tbody tr').each(function (idx) {
+        //                    $(this).children("td:eq(0)").html(idx + 1);
+        //                 });
+        //                 var table = $('.table_head_pd').DataTable({
+        //                     order: [[0, 'asc']],
+        //                     // "columnDefs": [
+        //                     //     { "width": "30%", "targets": 5 }
+        //                     // ]
+        //                 });
+        //                 $('.dataTables_length').addClass('bs-select');
+        //             });
 
-                    $(".btn_update").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
-                    })
-                    $(".btn_upload").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id;
-                    })
-                    $(".btn_view").unbind("click").on("click", function(){
-                        var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
-                    })
+        //             $(".btn_update").unbind("click").on("click", function(){
+        //                 var client_id = $(this).data("id");
+        //                 window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
+        //             })
+        //             $(".btn_upload").unbind("click").on("click", function(){
+        //                 var client_id = $(this).data("id");
+        //                 window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id;
+        //             })
+        //             $(".btn_view").unbind("click").on("click", function(){
+        //                 var client_id = $(this).data("id");
+        //                 window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id;
+        //             })
                    
-                }
-            })
-        }
-        __tablePD();
+        //         }
+        //     })
+        // }
+        // __tablePD();
 
 
     } )( jQuery );
