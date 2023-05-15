@@ -93,6 +93,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link medHistory" href="#" data-toggle="modal" data-target="#warningModal">Medical History</a>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a class="nav-link eval" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
                                     </li>
@@ -106,16 +109,41 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <fieldset class="row col col-md-12">
+<!--                                 <fieldset class="row col col-md-12">
                                     <legend>Recommendation</legend>
                                     <div class="recommendation">      
                                     </div>
+                                      <div class="row justify-content-center">
+                                        <div class="col-12">
+                                          One of two columns
+                                        </div>
+                                      </div>
+                                </fieldset> -->
+                                <fieldset>
+                                    <legend>Recommendation</legend>
+                                        <div class="container">
+                                            <div class="row justify-content-center">
+                                                <div class="col-12 recommendation">
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center">
+                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Period of Supervision</label></div>
+                                                <div class="col-2 col-md-1"><input type="text" class="form-control supYear" placeholder="Year/s"></div>
+                                                <div class="col-2 col-md-1"><input type="text" class="form-control supMonth" placeholder="Month/s"></div>
+                                                <div class="col-2 col-md-1"><input type="text" class="form-control supDay" placeholder="Day/s"></div>
+                                            </div>
+                                            <div class="row justify-content-center">
+                                                <p> <br> to be counted from the Probationer's initial report for supervision and subject to the following conditions: 
+                                                </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </fieldset>
                                 <fieldset class="row col col-md-12">
                                     <legend>Recommendation</legend>
                                     <div class="row form-group col-md-12">
-                                        <div class="col col-md-5"><label for="text-input" class=" form-control-label">1. Probationers shall report initially to the Chief Probation and Parole Officer at:</label></div>
-                                        <div class="col-12 col-md-3"><select class="form-control reportOffice select2"></select></div>
+                                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">1. Probationers shall report initially to the Chief Probation and Parole Officer at:</label></div>
+                                        <div class="col-12 col-md-3"><select class="reportOffice select2"></select></div>
                                         <div class="col col-md-4"><label for="text-input" class=" form-control-label">Within seventy-two (72) hours from the receipt of the Order Granting Probation</label></div>
                                     </div>
                                     <div class="row form-group col-md-12">
@@ -273,18 +301,6 @@
                                                                 <option value="DENIED">Denied</option>
                                                                 </select>
                                 for a period of:
-                            <div class="col-12" align="center">
-                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Period of Supervision</label></div>
-                            <div class="col-2 col-md-3"><input type="text" class="form-control supYear" placeholder="Year/s"></div>
-                            <div class="col-2 col-md-3"><input type="text" class="form-control supMonth" placeholder="Month/s"></div>
-                            <div class="col-2 col-md-3"><input type="text" class="form-control supDay" placeholder="Day/s"></div>
-                            </p>
-                            
-                            <div>
-
-                        </div>
-                        <div class="col-12">
-                            <p align="center"> <br> to be counted from the Probationer's initial report for supervision and subject to the following conditions: 
                             </p>
                         </div>
                     </div>`
@@ -292,18 +308,25 @@
             }
         })
 
+
         $(".addMoreRec").unbind("click").on("click", function(){
             // console.log("clicked");
 
             $(".addRec").append(`
             <div class="addRecommendation">
                 <div class="row form-group col-md-9">
-                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control rec"></textarea></div>
+                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control recs"></textarea></div>
+                    <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                 </div>
-                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
             </div>
                 `
             )
+        });
+
+        $('.addRec').on('click', '.remove', function(e) {
+            e.preventDefault();
+
+            $(this).parent().remove();
         });
 
         $('.addRec').on('click', '.remove', function(e) {
@@ -316,13 +339,12 @@
         $(".btn-next").unbind("click").on("click", function(){
 
             const recommendations = [];
-            const rec = $(".rec");
+            const recs = $(".recs");
 
-
-            for(var i = 0; i < rec.length; i++){
+            for(var i = 0; i < recs.length; i++){
                 
                 const list = {};
-                list.rec = $(rec[i]).val();
+                list.recs = $(recs[i]).val();
                 recommendations.push(list);
             }
 
@@ -375,16 +397,16 @@
         $(".btn-update").unbind("click").on("click", function(){
 
             const recommendations = [];
-            const rec = $(".rec");
+            const recs = $(".recs");
 
-
-            for(var i = 0; i < rec.length; i++){
+            for(var i = 0; i < recs.length; i++){
                 
                 const list = {};
-                list.rec = $(rec[i]).val();
+                list.recs = $(recs[i]).val();
                 recommendations.push(list);
             }
 
+            // console.log(recommendations)
 
             var psirRecommendations = {
 
@@ -397,7 +419,7 @@
 
             }
 
-            // console.log(familyBG)
+            
 
 
             var payload = {
@@ -458,7 +480,7 @@
                         $(".addRec").append(`
                             <div class="addRecommendation">
                                 <div class="row form-group col-md-9">
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control rec" value="${data.rec}">${data.rec}</textarea></div>
+                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control recs" value="${data.recs}">${data.recs}</textarea></div>
                                 </div>
                                 <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                             </div>
@@ -623,6 +645,17 @@
         //                 setTimeout(function () {
         //                     // window.location.reload(true);
         //                     window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
+        // $(".medhistory").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/psir_med_history?client_id='+client_id;
         //                 }, 500);
         //         });
         // });

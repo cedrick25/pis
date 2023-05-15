@@ -93,6 +93,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link medHistory" href="#" data-toggle="modal" data-target="#warningModal">Medical History</a>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a class="nav-link eval" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
                                     </li>
@@ -771,7 +774,17 @@
                         }, 500);
                 });
         });
-
+        // $(".medhistory").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/psir_med_history?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
     } )( jQuery );
     </script>
 

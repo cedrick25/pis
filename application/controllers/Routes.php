@@ -429,4 +429,8 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('psir_recommendation');
 	}
+	public function psir_med_history()
+	{
+		$this->load->view('psir_med_history');
+	}
 }

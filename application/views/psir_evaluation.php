@@ -93,6 +93,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link medHistory" href="#" data-toggle="modal" data-target="#warningModal">Medical History</a>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a class="nav-link eval active" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
                                     </li>
@@ -144,9 +147,22 @@
                                 <fieldset class="row col col-md-12">
                                     <legend>Petitioner's Background in the Community & Collateral Information</legend>
                                     <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label"></label></div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">PETITIONER'S BACKGROUND IN THE COMMUNITY & COLLATERAL INFORMATION</label></div>
                                         <div class="col-12 col-md-9"><textarea rows="4" cols="50" class="form-control communityBackground"></textarea></div>
                                     </div>
+                                    <div class="collateralInfo">
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="button" class="addMoreCollInfo btn btn-success btn-sm float-right">Add more</button>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="row col col-md-12">
+                                    <legend>Analysis and Evaluation</legend>
+<!--                                     <legend>Petitioner's Background in the Community & Collateral Information</legend>
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">PETITIONER'S BACKGROUND IN THE COMMUNITY & COLLATERAL INFORMATION</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="4" cols="50" class="form-control communityBackground"></textarea></div>
+                                    </div> -->
                                     <div class="row form-group col-md-9">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Analysis and Evaluation</label></div>
                                         <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control analysisAndEvaluation"></textarea></div>
@@ -154,11 +170,6 @@
                                     <div class="row form-group col-md-9">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Projected Thrust of Rehabilitation</label></div>
                                         <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control projectedThrust"></textarea></div>
-                                    </div>
-                                    <div class="collateralInfo">
-                                    </div>
-                                    <div class="col-12">
-                                        <button type="button" class="addMoreCollInfo btn btn-success btn-sm float-right">Add more</button>
                                     </div>
                                 </fieldset>                               
                             </div>
@@ -431,7 +442,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            // window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
+                            window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -635,6 +646,17 @@
                         }, 500);
                 });
         });
+        // $(".medhistory").unbind("click").on("click", function(){
+        //     // console.log("clicked")
+        //         $(".btn_warning").unbind("click").on("click", function(){
+        //             // console.log("clicked")
+        //             $(".form-control").val('');
+        //                 setTimeout(function () {
+        //                     // window.location.reload(true);
+        //                     window.location.href = 'http://localhost/pis/psir_med_history?client_id='+client_id;
+        //                 }, 500);
+        //         });
+        // });
 
     } )( jQuery );
     </script>
