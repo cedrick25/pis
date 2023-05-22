@@ -251,6 +251,9 @@
         };
 
 
+
+
+
         var __tablePB = function(){
             $('.table_head_pb').DataTable().destroy();
             $('.table_body_pb').empty();
@@ -314,56 +317,160 @@
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
 
-                        __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
-                            console.log("first result")
-                            console.log(result)
-                            var result = result.response;
-                                __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result2){
-                                    console.log("second result")
-                                    console.log(result2)
-                                        
-                                        var result2 = result2.response;
+    __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+        // console.log("1st result")
+        // console.log(result)
+        var result = result.response;
+            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result2){
+                // console.log("2nd result")
+                // console.log(result2)
+
+                var result2 = result2.response;
+                    __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirPresentOffense/'+client_id).done(function (result3){
+                    // console.log("3rd result")
+                    // console.log(result3)
+
+                    var result3 = result3.response;
+                        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirPriorRecords/'+client_id).done(function (result4){
+                        // console.log("4th result")
+                        // console.log(result4)
+
+                        var result4 = result4.response;
+
+                            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirFamilyBackground/'+client_id).done(function (result5){
+                            // console.log("5th result")
+                            // console.log(result5)
+
+                            var result5 = result5.response;
+
+                                __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result6){
+                                // console.log("6th result")
+                                // console.log(result6)
+
+                                var result6 = result6.response;
+
+                                    __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirResidenceEconomic/'+client_id).done(function (result7){
+                                    // console.log("7th result")
+                                    // console.log(result7)
+
+                                    var result7 = result7.response;
+
+                                        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result8){
+                                        // console.log("8th result")
+                                        // console.log(result8)
+
+                                        var result8 = result8.response;
+
+                                            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirEducationHistory/'+client_id).done(function (result9){
+                                            // console.log("9th result")
+                                            // console.log(result9)
+
+                                            var result9 = result9.response;
+
+                                                __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirEmploymentHistory/'+client_id).done(function (result10){
+                                                // console.log("10th result")
+                                                // console.log(result10)
+
+                                                var result10 = result10.response;
+
+                                                    __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirEnvironmentalFactor/'+client_id).done(function (result11){
+                                                //    console.log("11th result")
+                                                //    console.log(result11)
+
+                                                    var result11 = result11.response;
+
+                                                        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirEvaluation/'+client_id).done(function (result12){
+                                                //        console.log("12th result")
+                                                //        console.log(result12)
+
+                                                        var result12 = result12.response;
+
+                                                            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result13){
+                                                //            console.log("13th result")
+                                                //            console.log(result13)
+
+                                                            var result13 = result13.response;
+
                                             if (result.status != "ERROR"){
 
-                                                var doc = new jsPDF();
+																								var doc = new jsPDF();
 
-                                                // Add Old English font
-                                                doc.addFont('fonts/OLDENG.TTF', 'OldEnglish', 'bold');
+																								// Add Old English font
+																								// doc.addFont('fonts/OLDENG.TTF', 'OldEnglish', 'bold');
 
-                                                // Set font size and style
-                                                doc.setFontSize(12);
+																								// Set font size and style
+																								doc.setFontSize(14)
+																								// Calculate line height
+																								var lineHeight = doc.getLineHeight() - 8;
 
-                                                // Calculate line height
-                                                var lineHeight = doc.getLineHeight() - 8;
+																								// Add some text with adjusted line height
+																								doc.text('PPA FORM 3/p. 1', 10, 10);
+																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
 
-                                                // Add some text with adjusted line height
-                                                doc.text('PPA FORM 3/p. 1', 10, 10);
-                                                doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-                                                doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-                                                doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-                                                doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																								// doc.addImage('path/to/your/image.png', 'PNG', 10, 10, 50, 50);
+																								doc.setFont('times', 'bold');
+																								doc.setFontSize(10);
+																								doc.text('Republic of the Philippines', 80, 10 + lineHeight*3, { align: 'center' });
+																								doc.setFont('bold');
+																								doc.text('Department of Justice', 85, 10 + lineHeight*4, { align: 'center' });
+																								doc.text('PAROLE AND PROBATION ADMINISTRATION', 60, 10 + lineHeight*5, { align: 'center' });
+																								doc.text('REGIONAL OFFICE NO.', 83, 10 + lineHeight*6, { align: 'center' });
+																								doc.text('Parole and Probation Office', 80, 10 + lineHeight*7, { align: 'center' });
+																								// doc.addImage('assets/images/piss.png', 'PNG', 10, 10, 50, 50);
+																								doc.text('POST-SENTENCE INVESTIGATION REPORT', 63, 12 + lineHeight*8, { align: 'center' });
 
-                                                // doc.addImage('path/to/your/image.png', 'PNG', 10, 10, 50, 50);
-                                                doc.setFont('times', 'bold');
-                                                doc.setFontSize(10);
-                                                doc.text('Republic of the Philippines', 80, 10 + lineHeight*3, { align: 'center' });
-                                                doc.setFont('bold');
-                                                doc.text('Department of Justice', 85, 10 + lineHeight*4, { align: 'center' });
-                                                doc.text('PAROLE AND PROBATION ADMINISTRATION', 60, 10 + lineHeight*5, { align: 'center' });
-                                                doc.text('REGIONAL OFFICE NO.', 83, 10 + lineHeight*6, { align: 'center' });
-                                                doc.text('Parole and Probation Office', 80, 10 + lineHeight*7, { align: 'center' });
-                                                // doc.addImage('assets/images/piss.png', 'PNG', 10, 10, 50, 50);
-                                                doc.text('POST-SENTENCE INVESTIGATION REPORT', 63, 12 + lineHeight*8, { align: 'center' });
+																								doc.text('I. BASIC INFORMATION', 80, 12 + lineHeight*9, { align: 'left' });
+																								doc.text("PETIONER's NAME: "+JSON.parse(result2.jsonData).name, 10, 10 + lineHeight*10.5);
+																								doc.text('True Name: '+JSON.parse(result2.jsonData).trueName, 10, 10 + lineHeight*11.5);
+																								doc.text('Aliases: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*11.5);
+																								doc.text('Gender: '+result.sex, 10, 10 + lineHeight*12.5);
+																								doc.text('Age: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*12.5);
+																								doc.text('Birthday: '+JSON.parse(result5.jsonData).bday, 10, 10 + lineHeight*13.5);
+																								doc.text('Birthplace: '+JSON.parse(result5.jsonData).bprovince+' '+JSON.parse(result5.jsonData).bcity+' '+JSON.parse(result5.jsonData).bplace, 130, 10 + lineHeight*13.5);
+																								doc.text('Nationality: '+JSON.parse(result5.jsonData).citizenship, 10, 10 + lineHeight*14.5);
+																								doc.text('Religion: '+JSON.parse(result5.jsonData).religion, 130, 10 + lineHeight*14.5);
+																								doc.text('Educational Attainment: '+JSON.parse(result9.jsonData).elemHigh+','+JSON.parse(result9.jsonData).secHigh+','+JSON.parse(result9.jsonData).collegeHigh+','+JSON.parse(result9.jsonData).pcollegeHigh+','+JSON.parse(result9.jsonData).vocHigh, 10, 10 + lineHeight*15.5);
+																								doc.text('Civil Status: '+JSON.parse(result5.jsonData).civilStatus, 130, 10 + lineHeight*15.5);
+																								doc.text('Birth Order: '+result.sex, 10, 10 + lineHeight*16.5);
+																								doc.text('Occupation: '+JSON.parse(result5.jsonData).job_held, 130, 10 + lineHeight*16.5);
+																								doc.text("Father's Name: "+JSON.parse(result5.jsonData).fatherName, 10, 10 + lineHeight*17.5);
+																								doc.text("Mother's Name: "+JSON.parse(result5.jsonData).motherName, 130, 10 + lineHeight*17.5);
+																								doc.text('Spouse: '+JSON.parse(result8.jsonData).spouseLname+','+JSON.parse(result8.jsonData).spouseFname+' '+JSON.parse(result8.jsonData).spouseMname+','+JSON.parse(result8.jsonData).spouseEname, 10, 10 + lineHeight*18.5);
+																								doc.text('Occupation: '+JSON.parse(result8.jsonData).spouse_occupation, 130, 10 + lineHeight*18.5);
+																								
+																								doc.text('Identifying Marks/Unusual Features:'+JSON.parse(result5.jsonData).identifyingMarks,10, 10 + lineHeight*19.5)
+																								doc.text('Present Address:'+JSON.parse(result2.jsonData).presentAddress,10, 10 + lineHeight*20.5)
+																								doc.text('Permanent Address:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*21.5)
 
-                                                doc.text('I. BASIC INFORMATION', 10, 12 + lineHeight*9, { align: 'left' });
-
-                                                doc.save('PSIR.pdf');
+																								doc.text('II. PERSONAL AND SOCIAL HISTORY', 80, 12 + lineHeight*22.5, { align: 'left' });
+																								doc.text('A. SUBJECTIVE SOCIO-ECONOMIC STATUS: '+JSON.parse(result6.jsonData).eco_status,10, 10 + lineHeight*23.5)
+																								doc.text('B. FAMILY RELATIONSHIP:'+JSON.parse(result6.jsonData).family_rel,10, 10 + lineHeight*24.5)
+																								doc.text('C. FAMILY REPUTATION:'+JSON.parse(result7.jsonData).fam_status,10, 10 + lineHeight*25.5)
+																								doc.text('D. OVERALL WELL-BEING:'+JSON.parse(result10.jsonData).empHealth,10, 10 + lineHeight*26.5)
+																								doc.text('E. FAMILY SUPPORT:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*27.5)
+																								doc.text('F. COMMUNITY SUPPORT:'+JSON.parse(result11.jsonData).comAcceptance,10, 10 + lineHeight*28.5)
+																								
+																								doc.save('PSIR.pdf');
 
                                             }
                                             else{
                                                 console.log("error fetching data")
                                             }
-                                });
+                                }); //result 2 end
+                                        }); //result 3 end
+                                            }); // result 4 end
+                                                }); // result 5 end
+                                                    }); // result 6 end
+                                                        }); // result 7 end        
+                                                            }); // result 8 end        
+                                                                }); // result 9 end
+                                                                    }); // result 10 end
+                                                                        }); // result 11 end
+                                                                            }); // result 12 end   
+                                                                                }); // result 13 end           
                         });
                     });                 
                 }
