@@ -183,7 +183,80 @@
             
             return d.promise();
         };
+        
+        // $(document).ready(function() {
+        //     $('.table_head').DataTable({
+        //         "processing": true,
+        //         "serverSide": true,
+        //         "ajax": {
+        //             "url": 'http://localhost:8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id"),
+        //             "type": "GET",
+        //             "dataSrc": "response"
+        //         },
+        //         "columns": [
+        //             { 
+        //               "data": null,
+        //               "render": function (data, type, row, meta) {
+        //                 // Return the row index plus one as the auto-increment value
+        //                 return meta.row + 1;
+        //               }
+        //             },
+        //             { "data": "docketNumber" },
+        //             { "data": "receivedDateByPPO" },
+        //             { 
+        //                 "data": null,
+        //                 "render": function (data, type, row) {
+        //                     // console.log(row)
+        //                     return row.firstName + " " + row.middleName + " " + row.lastName + " " + row.suffixName;
+        //                 }
+        //             },
+        //             { "data": "criminalCaseNumber" },
+        //             { "data": "fieldOfficeName" },
+        //             {
+        //                 "data": null,
+        //                 "width": '20%', 
+        //                 "render": function (data, type, row) {
+        //                     console.log(data.docketNumber)
+        //                     console.log(row.docketNumber)
+        //                     return "<button class='btn btn-sm btn-primary btn_update pb_inv_update' style='display:none;' type='submit' data-docket='"+row.docketNumber+"'><i class='fa fa-refresh'></i> Update</button>" +
+        //                      " <button class='btn btn-sm btn-danger btn_remove pb_inv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+row.docketNumber+"' data-oi='"+row.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+        //                 }
+        //             }
+        //         ],
+        //     });
+        //     $('.table_head').on('click', '.btn_remove', function() {
+        //         var docket_number = $(this).data("docket");
+        //         console.log(docket_number);
+        //         var office_id = $(this).data("oi");
+        //         $(".docket").html(docket_number);
+        //         // $(".btn_remove_confirm").unbind("click").on("click", function(){
 
+        //         //     __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
+        //         //         if (result.status != "ERROR") {
+        //         //                 $(".form-control").val('');
+        //         //                 $('#success_remove').show();
+        //         //                     setTimeout(function () {
+        //         //                         $('#removeModal').modal('hide');
+        //         //                         $('#success_remove').hide();
+        //         //                         __table();
+        //         //                     }, 1000);
+                                
+        //         //             // $(".form-control").val('');
+        //         //             // $('#removeModal').modal('hide');
+        //         //             // __table();
+        //         //         }else{
+        //         //             alert("failed")
+        //         //         }
+        //         //     })
+        //         // })
+        //     })
+
+        //     $(".btn_update").unbind("click").on("click", function(){
+        //         var docket_number = $(this).data("docket");
+        //         console.log(docket_number)
+        //         window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number;
+        //     })
+        // });
         var __table = function(){
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
@@ -250,7 +323,7 @@
                 }
             })
         }
-        __table();
+        // __table();
 
     } )( jQuery );
     </script>
