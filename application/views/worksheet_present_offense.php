@@ -188,7 +188,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Extent of Participation</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control custody select2">
+                                        <select class="form-control ep select2">
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="ON_BAIL">On Bail</option>
                                             <option value="ON_DETENTION">On Detention</option>
@@ -199,7 +199,7 @@
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Custody</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select class="form-control ep select2">
+                                        <select class="form-control custody select2">
                                             <option value="" selected disabled>-- select one --</option>
                                             <option value="ACCESSORY">Accessory</option>
                                             <option value="ACCOMPLICE">Accomplice</option>

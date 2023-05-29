@@ -380,8 +380,8 @@
                                                     var result11 = result11.response;
 
                                                         __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirEvaluation/'+client_id).done(function (result12){
-                                                //        console.log("12th result")
-                                                //        console.log(result12)
+                                                        // console.log("12th result")
+                                                        // console.log(result12)
 
                                                         var result12 = result12.response;
 
@@ -399,7 +399,8 @@
 																								// doc.addFont('fonts/OLDENG.TTF', 'OldEnglish', 'bold');
 
 																								// Set font size and style
-																								doc.setFontSize(14)
+																								doc.setFont('times', 'bold');
+																								doc.setFontSize(13)
 																								// Calculate line height
 																								var lineHeight = doc.getLineHeight() - 8;
 
@@ -411,10 +412,10 @@
 																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
 
 																								// doc.addImage('path/to/your/image.png', 'PNG', 10, 10, 50, 50);
-																								doc.setFont('times', 'bold');
+																								// doc.setFont('times', 'bold');
 																								doc.setFontSize(10);
 																								doc.text('Republic of the Philippines', 80, 10 + lineHeight*3, { align: 'center' });
-																								doc.setFont('bold');
+																								// doc.setFont('bold');
 																								doc.text('Department of Justice', 85, 10 + lineHeight*4, { align: 'center' });
 																								doc.text('PAROLE AND PROBATION ADMINISTRATION', 60, 10 + lineHeight*5, { align: 'center' });
 																								doc.text('REGIONAL OFFICE NO.', 83, 10 + lineHeight*6, { align: 'center' });
@@ -452,9 +453,188 @@
 																								doc.text('D. OVERALL WELL-BEING:'+JSON.parse(result10.jsonData).empHealth,10, 10 + lineHeight*26.5)
 																								doc.text('E. FAMILY SUPPORT:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*27.5)
 																								doc.text('F. COMMUNITY SUPPORT:'+JSON.parse(result11.jsonData).comAcceptance,10, 10 + lineHeight*28.5)
-																								
-																								doc.save('PSIR.pdf');
 
+																								// PAGE 2
+
+																								doc.addPage();
+																								doc.setFontSize(13)
+																								doc.text('PPA FORM 3/p. 1', 10, 10);
+																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																								doc.text('III. CRIMINAL HISTORY', 80, 12 + lineHeight*3, { align: 'left' });
+																								doc.text('A. PRESENT OFFENSE', 10, 12 + lineHeight*4, { align: 'left' });
+																								doc.text('Charged With: '+JSON.parse(result3.jsonData).chargedWith, 10, 12 + lineHeight*5, { align: 'left' });
+																								doc.text('Date:'+JSON.parse(result3.jsonData).dateCharged, 130, 10 + lineHeight*5);
+																								doc.text('Convicted of: '+JSON.parse(result3.jsonData).convictedOf, 10, 12 + lineHeight*6, { align: 'left' });
+																								doc.text('Date:'+JSON.parse(result3.jsonData).dateConvicted, 130, 10 + lineHeight*6);
+																								doc.text('Sentence: ', 10, 12 + lineHeight*7, { align: 'left' });
+																								doc.text('Judge: '+JSON.parse(result3.jsonData).judge, 10, 12 + lineHeight*8, { align: 'left' });
+																								doc.text('Court:'+JSON.parse(result3.jsonData).court, 130, 10 + lineHeight*8);
+																								doc.text('Custodial Status: '+JSON.parse(result3.jsonData).custody, 10, 12 + lineHeight*9, { align: 'left' });
+																								doc.text('B. PRIOR AND PENDING RECORDS', 10, 12 + lineHeight*10.5, { align: 'left' });
+
+																								// Define table properties
+																								var columns = ["Agency", "CC no.", "Offense", "Date Charged", "Decision of the case"];
+																								var data = [JSON.parse(result4.jsonData).priorRecord];
+																								var tableX = 10; // X position of the table
+																								var tableY = 95; // Y position of the table
+																								var rowHeight = 10; // Height of each row
+																								var columnWidth = 40; // Width of each column
+
+																								// Set the font size and style for the table
+																								doc.setFontSize(12);
+																								doc.setFontStyle("bold");
+
+																								// Draw the table headers
+																								for (var i = 0; i < columns.length; i++) {
+																								  doc.text(tableX + i * columnWidth, tableY, columns[i]);
+																								}
+
+																								// Draw the table rows
+																								doc.setFontStyle("normal");
+																								for (var j = 0; j < data.length; j++) {
+																								  var row = data[j];
+																								 // console.log(row);
+																								  for (var k = 0; k < row.length; k++) {
+																								    var value = row[k];
+																								    // console.log(value)
+																								    if (typeof value === "object") {
+																								      value = Object.values(value).join(", ");
+																								      // console.log(value)
+																								    } else {
+																								      value = value.toString();
+																								    }
+
+																								    // Calculate the Y position based on the column index
+																								    var yPos = tableY + ((k + 1) * rowHeight);
+																								    // console.log(yPos)
+																								    var xPos = (tableX);
+																								    // console.log(xPos)
+																								    doc.text(xPos, yPos, value); // Adjust the Y position to separate rows
+																								  }
+																								}
+
+																								doc.addPage();
+																								doc.setFontSize(13)
+																								doc.text('PPA FORM 3/p. 1', 10, 10);
+																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																								doc.text('IV Analysis and Evaluation', 80, 12 + lineHeight*3, { align: 'left' });
+
+
+																								var maxWidth = 180; // Maximum width per line in pixels
+																								var analysisLineHeight = 5; // Height of each line in pixels
+																								var analysisMargin = 5; // Margin for the content
+																								var text = JSON.parse(result12.jsonData).analysisAndEvaluation;
+
+																								var lines = doc.splitTextToSize(text, maxWidth);
+
+																								var x = 10; // Starting x-coordinate
+																								var y = 45; // Starting y-coordinate
+
+																								for (var i = 0; i < lines.length; i++) {
+																								  // Check if there is enough space on the current page for the line
+																								  if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
+																								    doc.addPage(); // Add a new page if there is not enough space
+																								    y = 10; // Reset the y-coordinate to the top margin
+																								  }
+
+																								  doc.setFontSize(12);
+																								  doc.text(lines[i], x, y);
+																								  y += analysisLineHeight; // Increase the y-coordinate for the next line
+																								}
+
+																								y += analysisMargin; // Create some space before adding the second paragraph
+
+																								doc.text('V. PROJECTED THRUSTS OF REHABILITATION', 60, y, { align: 'left' });
+
+																								var secondParagraph = JSON.parse(result12.jsonData).projectedThrust;
+																								y += analysisLineHeight + analysisMargin; // Increase the y-coordinate for the new paragraph
+
+																								var secondLines = doc.splitTextToSize(secondParagraph, maxWidth);
+
+																								for (var j = 0; j < secondLines.length; j++) {
+																								  // Check if there is enough space on the current page for the line
+																								  if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
+																								    doc.addPage(); // Add a new page if there is not enough space
+																								    y = 10; // Reset the y-coordinate to the top margin
+																								  }
+
+																								  doc.setFontSize(12);
+																								  doc.text(secondLines[j], x, y);
+																								  y += analysisLineHeight; // Increase the y-coordinate for the next line
+																								}
+
+																								doc.addPage();
+																								doc.setFontSize(13)
+																								doc.text('PPA FORM 3/p. 1', 10, 10);
+																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																								doc.text('VI RECOMMENDATION', 80, 12 + lineHeight*3, { align: 'left' });
+
+																								var rec = JSON.parse(result13.jsonData);
+																								console.log(rec)
+
+																								var recommendation =  [JSON.parse(result13.jsonData).recommendations];
+																								console.log(recommendation)
+
+																								var textRec = "WHEREFORE, in view of the foregoing, it is respectfully recommended to this Honorable Court that the petition for probation of "+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName+' be '+JSON.parse(result13.jsonData).grant+',  subject to the following conditions:';
+																								console.log(textRec)
+
+																								var maxWidth = 190; // Maximum width per line in pixels
+																								var linesRec = doc.splitTextToSize(textRec, maxWidth);
+																								console.log(linesRec)
+
+																								var xRec = 20; // Starting x-coordinate
+																								var yRec = 45; // Starting y-coordinate
+
+																								for (var i = 0; i < linesRec.length; i++) {
+																									doc.setFontSize(11)
+																								  doc.text(linesRec[i], xRec, yRec); // Adjust the coordinates based on your requirements
+																								  yRec += 10; // Increase the y-coordinate for the next line
+																								}
+
+																								var curYRec = yRec;
+																								var lineHeight = 5; // Height of each line in pixels
+																								var margin = 5; // Margin for the content
+																								console.log(curYRec)
+
+																								for (var j = 0; j < recommendation.length; j++) {
+																								  var row = recommendation[j];
+																								 	// console.log(row);
+																								  for (var k = 0; k < row.length; k++) {
+																								    var value = row[k];
+																								    // console.log(value)
+																								    var num = k + 1;
+																								    if (typeof value === "object") {
+																								      value = Object.values(value).join(", ");
+																								     	// console.log(value)
+																								    } else {
+																								      value = value.toString();
+																								    }
+																								    
+																								    var textSample = num + '. ' + value;
+																								    console.log(textSample)
+																								    var linesRecList = doc.splitTextToSize(textSample, maxWidth);
+																								    console.log(linesRecList)
+
+																								    if (curYRec + (linesRecList.length * lineHeight) + margin > doc.internal.pageSize.height) {
+																								      doc.addPage(); // Add a new page if there is not enough space
+																								      curYRec = margin; // Reset the y-coordinate to the top margin
+																								    }
+
+																								    		doc.text(10, curYRec, linesRecList); // Adjust the Y position to separate rows
+																								    		curYRec += linesRecList.length * lineHeight;
+																								  }
+																								}
+
+																								doc.save('PSIR.pdf');
                                             }
                                             else{
                                                 console.log("error fetching data")
