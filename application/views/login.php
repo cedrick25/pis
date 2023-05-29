@@ -12,30 +12,50 @@
                     <span>Probation and Parole Information System</span>
                 </div>
                 <div class="login-form">
-                    <div style="margin-bottom: 30px; text-align: center;">
+                    <!-- <div style="margin-bottom: 30px; text-align: center;">
                         <img class="align-content" src="images/pis_logo.png" alt="" style="max-width: 32%;">
-                    </div>
-                    <div id="prompt">
-                        
-                    </div>
-                    <hr>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                            <input type="text" class="form-control username" placeholder="Username">
+                    </div> -->
+                    <div class="login_div">
+                        <div class="prompt">
+                            
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                <input type="text" class="form-control username" placeholder="Username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                                <input type="password" class="form-control password" placeholder="********">
+                            </div>
+                        </div>
+                        <a href="#!">
+                            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30 btn-confirm">Sign in</button>
+                        </a>
+                        <div class="register-link m-t-15 text-center">
+                            <p>Don't have account ? <a href="#!" data-toggle="modal" data-target="#newUserModal"> Sign Up Here</a></p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-                            <input type="password" class="form-control password" placeholder="********">
+                    <div class="OTP_div" style="display:none;">
+                        <div class="prompt_OTP">
+                            
                         </div>
-                    </div>
-                    <a href="#!">
-                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30 btn-confirm">Sign in</button>
-                    </a>
-                    <div class="register-link m-t-15 text-center">
-                        <p>Don't have account ? <a href="#!" data-toggle="modal" data-target="#newUserModal"> Sign Up Here</a></p>
+                        <hr>
+
+                        <div id="timer"></div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                                <input type="password" class="form-control OTP" placeholder="OTP ********">
+                            </div>
+                        </div>
+                        <a href="#!">
+                            <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30 btn-resend" style="display:none;">Resend OTP</button>
+                            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30 btn-OTP">Enter OTP</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -119,24 +139,83 @@
                         console.log('authenticated = true')
                         if (result.isLocked != true) {
                             console.log("not lock")
-                            $('#prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check"></i> Login Successfully </div>');  
-                            var uuid = result.uuid
-                            // var roleid = result.role.roleId
-                            // $.cookie("roleid", roleid);
-                            $.cookie("uuid", uuid);
+                            $('.prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> Login Successfully </div>');
+                            $(".OTP_div").show();
+                            $(".login_div").hide();
+                            function generateOTP() {
+                                var otp = Math.floor(10000 + Math.random() * 90000); // Generate a random number between 10000 and 99999
+                                return otp.toString(); // Convert the number to a string
+                            }
 
-                            localStorage.clear();
-                            
-                            // check if localstorage is clear
-                            // var data = JSON.parse(localStorage.getItem('permission'));
-                            // console.log(data)
+                            var otp = generateOTP(); // Generate the OTP
+                            console.log(otp); // Print the OTP to the console
 
-                            var permission_role = result.rolePermission
-                            localStorage.setItem('permission', JSON.stringify(permission_role));
+                            var timerInterval;
+                            var duration = 300; // Duration in seconds (5 minutes)
 
-                            setTimeout(function () {
-                                window.location.href="dashboard"
-                            },1000);
+                            function startTimer() {
+                                var timerElement = $("#timer");
+                                var minutes, seconds;
+
+                                timerInterval = setInterval(function() {
+                                    minutes = parseInt(duration / 60, 10);
+                                    seconds = parseInt(duration % 60, 10);
+
+                                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                                    timerElement.text("Remaining time: " + minutes + ":" + seconds);
+
+                                    if (--duration < 0) {
+                                        clearInterval(timerInterval);
+                                        timerElement.text("Time's up! OTP expired.");
+                                        $(".btn-resend").show()
+                                        $(".btn-OTP").hide()
+                                    }
+                                }, 1000);   
+                            }
+
+                            $(".btn-resend").unbind("click").on("click", function(){
+                                $(".btn-resend").hide();
+                                $(".btn-OTP").show();
+                                $("#timer").html("");
+                                clearInterval(timerInterval);
+                                duration = 300; // Reset the duration to 5 minutes
+                                startTimer();
+                                generateOTP();
+                                console.log(otp); // Print the OTP to the console
+                            });
+
+                            startTimer();
+
+                            $(".btn-OTP").unbind("click").on("click", function(){
+                                console.log("submit OTP");
+                                if ($(".OTP").val() == "") {
+                                    $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Please enter the OTP to proceed."</div>');
+                                } else if ($(".OTP").val() == otp) {
+                                    $('.prompt_OTP').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> "OTP verified successfully. You can now proceed."</div>');
+                                    
+                                    var uuid = result.uuid
+                                    // var roleid = result.role.roleId
+                                    // $.cookie("roleid", roleid);
+                                    $.cookie("uuid", uuid);
+                                    localStorage.clear();
+                                    
+                                    // check if localstorage is clear
+                                    // var data = JSON.parse(localStorage.getItem('permission'));
+                                    // console.log(data)
+
+                                    var permission_role = result.rolePermission
+                                    localStorage.setItem('permission', JSON.stringify(permission_role));
+
+                                    setTimeout(function () {
+                                        window.location.href="dashboard"
+                                    },1000);
+                                } else{
+                                    $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Invalid OTP. Please enter the correct OTP to proceed." </div>');
+                                    console.log("OTP not approved")
+                                }
+                            });
                         } else {
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                             // console.log("this account is locked")
