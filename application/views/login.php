@@ -16,14 +16,14 @@
                         <img class="align-content" src="images/pis_logo.png" alt="" style="max-width: 32%;">
                     </div> -->
                     <div class="login_div">
-                        <div class="prompt">
+                        <div class="prompt" id="prompt">
                             
                         </div>
                         <hr>
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                <input type="text" class="form-control username" placeholder="Username">
+                                <input type="text" class="form-control email" placeholder="Email address">
                             </div>
                         </div>
                         <div class="form-group">
@@ -32,8 +32,7 @@
                                 <input type="password" class="form-control password" placeholder="********">
                             </div>
                         </div>
-                        <a href="#!">
-                            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30 btn-confirm">Sign in</button>
+                        <a><button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30 btn-confirm">Sign in</button>
                         </a>
                         <div class="register-link m-t-15 text-center">
                             <p>Don't have account ? <a href="#!" data-toggle="modal" data-target="#newUserModal"> Sign Up Here</a></p>
@@ -52,8 +51,7 @@
                                 <input type="password" class="form-control OTP" placeholder="OTP ********">
                             </div>
                         </div>
-                        <a href="#!">
-                            <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30 btn-resend" style="display:none;">Resend OTP</button>
+                        <a><button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30 btn-resend" style="display:none;">Resend OTP</button>
                             <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30 btn-OTP">Enter OTP</button>
                         </a>
                     </div>
@@ -120,16 +118,24 @@
             return d.promise();
         };
 
+        var urlParams = new URLSearchParams(window.location.search);
+        // Retrieve the value of the "key" parameter
+        var keyValue = urlParams.get('key');
+        // Print the value to the console
+        console.log(keyValue);
 
-        $(".btn-confirm").unbind("click").on("click", function(){
-            // console.log('clicked')
+        if (keyValue != null) {
+            console.log('auto login');
 
-            var username = $(".username").val();
+            // $(".OTP_div").show();
+            // $(".login_div").hide();
+            var email = $(".email").val();
             var password = $(".password").val();
 
             var payload = {
-                   username : username,
-                   password : password
+                keyValue : keyValue,
+                email    : email,
+                password : password
             }
             console.log(payload);
             __executeExternalPost('http://localhost:8088/authenticate',JSON.stringify(payload)).done(function (result) {
@@ -146,9 +152,36 @@
                                 var otp = Math.floor(10000 + Math.random() * 90000); // Generate a random number between 10000 and 99999
                                 return otp.toString(); // Convert the number to a string
                             }
-
+                            
                             var otp = generateOTP(); // Generate the OTP
                             console.log(otp); // Print the OTP to the console
+
+                            function SMSEmail(){
+                                var myDate = new Date();
+                                dt = (myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds());
+                                
+                                var payloadSMS  = {
+                                    api_key : "202441593920230529142109",
+                                    message_CONTENT : "Hi " + "test"  + ", your OTP KEY is " + otp +".",
+                                    message_TO : "09066245890",
+                                    CREATED_BY : "1",
+                                    message_DATETIME : dt
+                                }
+                                __executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
+                                // __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
+                                    console.log(resultSMS)
+                                });
+
+                                var payloadEmail  = {
+                                    "message_CONTENT" : "Hi " + "testt" + ", your OTP KEY is " + otp +".",
+                                    "message_TO" : "jssantos@probation.gov.ph",
+                                }
+                                // __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                                __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                                   console.log(resultemail)
+                                });
+                            }
+                            SMSEmail();
 
                             var timerInterval;
                             var duration = 300; // Duration in seconds (5 minutes)
@@ -160,7 +193,7 @@
                                 timerInterval = setInterval(function() {
                                     minutes = parseInt(duration / 60, 10);
                                     seconds = parseInt(duration % 60, 10);
-
+                                    $('.OTP').prop("disabled", false);
                                     minutes = minutes < 10 ? "0" + minutes : minutes;
                                     seconds = seconds < 10 ? "0" + seconds : seconds;
 
@@ -171,6 +204,7 @@
                                         timerElement.text("Time's up! OTP expired.");
                                         $(".btn-resend").show()
                                         $(".btn-OTP").hide()
+                                        $('.OTP').prop("disabled", true);
                                     }
                                 }, 1000);   
                             }
@@ -183,6 +217,7 @@
                                 duration = 300; // Reset the duration to 5 minutes
                                 startTimer();
                                 generateOTP();
+                                SMSEmail();
                                 console.log(otp); // Print the OTP to the console
                             });
 
@@ -194,7 +229,7 @@
                                     $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Please enter the OTP to proceed."</div>');
                                 } else if ($(".OTP").val() == otp) {
                                     $('.prompt_OTP').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> "OTP verified successfully. You can now proceed."</div>');
-                                    
+
                                     var uuid = result.uuid
                                     // var roleid = result.role.roleId
                                     // $.cookie("roleid", roleid);
@@ -202,8 +237,8 @@
                                     localStorage.clear();
                                     
                                     // check if localstorage is clear
-                                    // var data = JSON.parse(localStorage.getItem('permission'));
-                                    // console.log(data)
+                                    var data = JSON.parse(localStorage.getItem('permission'));
+                                    console.log(data)
 
                                     var permission_role = result.rolePermission
                                     localStorage.setItem('permission', JSON.stringify(permission_role));
@@ -222,7 +257,7 @@
                         }
                     } else {
                         // console.log('no data found,inactive or removed')
-                            $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> No data found,inactive or removed! </div>')
+                            $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> No record found,inactive or removed! </div>')
                         if (result.failedAttemptsCount == 4) {
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle""></i> Attempt 4, last failed attempt your account will be locked! </div>')
                             // console.log("attempt 4, last failed attempt your account will be locked")
@@ -239,9 +274,72 @@
                     
                 }
             })
-        })
+        } else{
+            console.log('manual login');
 
-        $(".username,.password").keyup(function(event){
+            $(".btn-confirm").unbind("click").on("click", function(){
+                // console.log('clicked')
+
+                var email    = $(".email").val();
+                var password = $(".password").val();
+
+                var payload = {
+                    keyValue : keyValue,
+                    email    : email,
+                    password : password
+                }
+                console.log(payload);
+                __executeExternalPost('http://localhost:8088/authenticate',JSON.stringify(payload)).done(function (result) {
+                    console.log(result);
+                    if (result.status != "ERROR") {
+                        if (result.authenticated == true) {
+                            console.log('authenticated = true')
+                            if (result.isLocked != true) {
+                                console.log("not lock")
+                                $('.prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> Login Successfully </div>');
+                                var uuid = result.uuid
+                                // var roleid = result.role.roleId
+                                // $.cookie("roleid", roleid);
+                                $.cookie("uuid", uuid);
+                                localStorage.clear();
+                                
+                                // check if localstorage is clear
+                                var data = JSON.parse(localStorage.getItem('permission'));
+                                console.log(data)
+
+                                var permission_role = result.rolePermission
+                                localStorage.setItem('permission', JSON.stringify(permission_role));
+
+                                setTimeout(function () {
+                                    window.location.href="dashboard"
+                                },1000);
+                            } else {
+                                $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
+                                // console.log("this account is locked")
+                            }
+                        } else {
+                            // console.log('no data found,inactive or removed')
+                                $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> No record found,inactive or removed! </div>')
+                            if (result.failedAttemptsCount == 4) {
+                                $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle""></i> Attempt 4, last failed attempt your account will be locked! </div>')
+                                // console.log("attempt 4, last failed attempt your account will be locked")
+                            }else if(result.failedAttemptsCount >= 5){
+                                $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle""></i> Your account is locked now! </div>')
+                                // console.log("your account is locked now")
+                            }else if(result.failedAttemptsCount != null){
+                                $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i>'+' Your failed attempt is ' + result.failedAttemptsCount + '</div>')
+                                // console.log("Your failed attempt is " +result.failedAttemptsCount)
+                            }
+                        }
+
+                    }else{
+                        
+                    }
+                })
+            })
+        }
+
+        $(".email,.password").keyup(function(event){
             if(event.keyCode == 13){
                 $(".btn-confirm").click();
             }
