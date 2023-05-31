@@ -543,7 +543,6 @@
 
                 
                     if (result.status != "ERROR") {
-                        __executeExternalGet('http://localhost:8088/role/list').done(function (result2) {
                             
                                 result.content.forEach(function(data){
                                     var status;
@@ -580,18 +579,14 @@
                                     };
                                     
                                         $('.table_body').append("<tr>"+
-    "<td></td>"+
-    "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
-    "<td>"+data.username+"</td>"+
-    "<td>"+data.email+"</td>");
-
-result2.forEach(function(data2){
-    $('.table_body').append("<td value="+data.roleId+">"+data2.name+"</td>");
-});
-
-$('.table_body').append("<td>"+data.createdBy+"</td>"+
-    "<td>"+status+"</td>"+
-    "<td align='center' class='actions'> "+actions+"</td></tr>");
+                                            "<td></td>"+
+                                            "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
+                                            "<td>"+data.username+"</td>"+
+                                            "<td>"+data.email+"</td>"+
+                                            "<td value="+data.roleId+">"+data.name+"</td>"+
+                                            "<td>"+data.createdBy+"</td>"+
+                                            "<td>"+status+"</td>"+
+                                            "<td align='center' class='actions'> "+actions+"")
                                         
                                         
                                     });
@@ -815,7 +810,6 @@ $('.table_body').append("<td>"+data.createdBy+"</td>"+
                                 })
 
                             })
-                        })
                         })
                     }
 
