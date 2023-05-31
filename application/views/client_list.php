@@ -332,11 +332,9 @@
 
                     var result3 = result3.response;
                         __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirPriorRecords/'+client_id).done(function (result4){
-                        // console.log("4th result")
-                        // console.log(result4)
-
                         var result4 = result4.response;
-
+                            console.log("4th result")
+                            console.log(result4)
                             __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirFamilyBackground/'+client_id).done(function (result5){
                             // console.log("5th result")
                             // console.log(result5)
@@ -391,250 +389,301 @@
 
                                                             var result13 = result13.response;
 
-                                            if (result.status != "ERROR"){
+                                                                if (result.status != "ERROR"){
 
-																								var doc = new jsPDF();
+																	var doc = new jsPDF();
 
-																								// Add Old English font
-																								// doc.addFont('fonts/OLDENG.TTF', 'OldEnglish', 'bold');
+																	// Add Old English font
+																	// doc.addFont('fonts/OLDENG.TTF', 'OldEnglish', 'bold');
 
-																								// Set font size and style
-																								doc.setFont('times', 'bold');
-																								doc.setFontSize(13)
-																								// Calculate line height
-																								var lineHeight = doc.getLineHeight() - 8;
+																	// Set font size and style
+																	doc.setFont('times', 'normal');
+																	doc.setFontSize(13)
+																	// Calculate line height
+																	var lineHeight = doc.getLineHeight() - 8;
 
-																								// Add some text with adjusted line height
-																								doc.text('PPA FORM 3/p. 1', 10, 10);
-																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																	// Add some text with adjusted line height
+																	doc.text('PPA FORM 3/p. 1', 10, 10);
+																	doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																	doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																	doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																	doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
 
-																								// doc.addImage('path/to/your/image.png', 'PNG', 10, 10, 50, 50);
-																								// doc.setFont('times', 'bold');
-																								doc.setFontSize(10);
-																								doc.text('Republic of the Philippines', 80, 10 + lineHeight*3, { align: 'center' });
-																								// doc.setFont('bold');
-																								doc.text('Department of Justice', 85, 10 + lineHeight*4, { align: 'center' });
-																								doc.text('PAROLE AND PROBATION ADMINISTRATION', 60, 10 + lineHeight*5, { align: 'center' });
-																								doc.text('REGIONAL OFFICE NO.', 83, 10 + lineHeight*6, { align: 'center' });
-																								doc.text('Parole and Probation Office', 80, 10 + lineHeight*7, { align: 'center' });
-																								// doc.addImage('assets/images/piss.png', 'PNG', 10, 10, 50, 50);
-																								doc.text('POST-SENTENCE INVESTIGATION REPORT', 63, 12 + lineHeight*8, { align: 'center' });
+																	// doc.addImage('path/to/your/image.png', 'PNG', 10, 10, 50, 50);
+																	// doc.setFont('times', 'bold');
+																	doc.setFontSize(10);
+																	doc.text('Republic of the Philippines', 80, 10 + lineHeight*3, { align: 'center' });
+																	// doc.setFont('bold');
+																	doc.text('Department of Justice', 85, 10 + lineHeight*4, { align: 'center' });
+																	doc.text('PAROLE AND PROBATION ADMINISTRATION', 60, 10 + lineHeight*5, { align: 'center' });
+																	doc.text('REGIONAL OFFICE NO.', 83, 10 + lineHeight*6, { align: 'center' });
+																	doc.text('Parole and Probation Office', 80, 10 + lineHeight*7, { align: 'center' });
+																	// doc.addImage('assets/images/piss.png', 'PNG', 10, 10, 50, 50);
+																	doc.text('POST-SENTENCE INVESTIGATION REPORT', 63, 12 + lineHeight*8, { align: 'center' });
 
-																								doc.text('I. BASIC INFORMATION', 80, 12 + lineHeight*9, { align: 'left' });
-																								doc.text("PETIONER's NAME: "+JSON.parse(result2.jsonData).name, 10, 10 + lineHeight*10.5);
-																								doc.text('True Name: '+JSON.parse(result2.jsonData).trueName, 10, 10 + lineHeight*11.5);
-																								doc.text('Aliases: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*11.5);
-																								doc.text('Gender: '+result.sex, 10, 10 + lineHeight*12.5);
-																								doc.text('Age: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*12.5);
-																								doc.text('Birthday: '+JSON.parse(result5.jsonData).bday, 10, 10 + lineHeight*13.5);
-																								doc.text('Birthplace: '+JSON.parse(result5.jsonData).bprovince+' '+JSON.parse(result5.jsonData).bcity+' '+JSON.parse(result5.jsonData).bplace, 130, 10 + lineHeight*13.5);
-																								doc.text('Nationality: '+JSON.parse(result5.jsonData).citizenship, 10, 10 + lineHeight*14.5);
-																								doc.text('Religion: '+JSON.parse(result5.jsonData).religion, 130, 10 + lineHeight*14.5);
-																								doc.text('Educational Attainment: '+JSON.parse(result9.jsonData).elemHigh+','+JSON.parse(result9.jsonData).secHigh+','+JSON.parse(result9.jsonData).collegeHigh+','+JSON.parse(result9.jsonData).pcollegeHigh+','+JSON.parse(result9.jsonData).vocHigh, 10, 10 + lineHeight*15.5);
-																								doc.text('Civil Status: '+JSON.parse(result5.jsonData).civilStatus, 130, 10 + lineHeight*15.5);
-																								doc.text('Birth Order: '+result.sex, 10, 10 + lineHeight*16.5);
-																								doc.text('Occupation: '+JSON.parse(result5.jsonData).job_held, 130, 10 + lineHeight*16.5);
-																								doc.text("Father's Name: "+JSON.parse(result5.jsonData).fatherName, 10, 10 + lineHeight*17.5);
-																								doc.text("Mother's Name: "+JSON.parse(result5.jsonData).motherName, 130, 10 + lineHeight*17.5);
-																								doc.text('Spouse: '+JSON.parse(result8.jsonData).spouseLname+','+JSON.parse(result8.jsonData).spouseFname+' '+JSON.parse(result8.jsonData).spouseMname+','+JSON.parse(result8.jsonData).spouseEname, 10, 10 + lineHeight*18.5);
-																								doc.text('Occupation: '+JSON.parse(result8.jsonData).spouse_occupation, 130, 10 + lineHeight*18.5);
-																								
-																								doc.text('Identifying Marks/Unusual Features:'+JSON.parse(result5.jsonData).identifyingMarks,10, 10 + lineHeight*19.5)
-																								doc.text('Present Address:'+JSON.parse(result2.jsonData).presentAddress,10, 10 + lineHeight*20.5)
-																								doc.text('Permanent Address:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*21.5)
+																	doc.text('I. BASIC INFORMATION', 80, 12 + lineHeight*9, { align: 'left' });
+																	doc.text("PETIONER's NAME: "+JSON.parse(result2.jsonData).name, 10, 10 + lineHeight*10.5);
+																	doc.text('True Name: '+JSON.parse(result2.jsonData).trueName, 10, 10 + lineHeight*11.5);
+																	doc.text('Aliases: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*11.5);
+																	doc.text('Gender: '+result.sex, 10, 10 + lineHeight*12.5);
+																	doc.text('Age: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*12.5);
+																	doc.text('Birthday: '+JSON.parse(result5.jsonData).bday, 10, 10 + lineHeight*13.5);
+																	doc.text('Birthplace: '+JSON.parse(result5.jsonData).bprovince+' '+JSON.parse(result5.jsonData).bcity+' '+JSON.parse(result5.jsonData).bplace, 130, 10 + lineHeight*13.5);
+																	doc.text('Nationality: '+JSON.parse(result5.jsonData).citizenship, 10, 10 + lineHeight*14.5);
+																	doc.text('Religion: '+JSON.parse(result5.jsonData).religion, 130, 10 + lineHeight*14.5);
+																	doc.text('Educational Attainment: '+JSON.parse(result9.jsonData).elemHigh+','+JSON.parse(result9.jsonData).secHigh+','+JSON.parse(result9.jsonData).collegeHigh+','+JSON.parse(result9.jsonData).pcollegeHigh+','+JSON.parse(result9.jsonData).vocHigh, 10, 10 + lineHeight*15.5);
+																	doc.text('Civil Status: '+JSON.parse(result5.jsonData).civilStatus, 130, 10 + lineHeight*15.5);
+																	doc.text('Birth Order: '+result.sex, 10, 10 + lineHeight*16.5);
+																	doc.text('Occupation: '+JSON.parse(result5.jsonData).job_held, 130, 10 + lineHeight*16.5);
+																	doc.text("Father's Name: "+JSON.parse(result5.jsonData).fatherName, 10, 10 + lineHeight*17.5);
+																	doc.text("Mother's Name: "+JSON.parse(result5.jsonData).motherName, 130, 10 + lineHeight*17.5);
+																	doc.text('Spouse: '+JSON.parse(result8.jsonData).spouseLname+','+JSON.parse(result8.jsonData).spouseFname+' '+JSON.parse(result8.jsonData).spouseMname+','+JSON.parse(result8.jsonData).spouseEname, 10, 10 + lineHeight*18.5);
+																	doc.text('Occupation: '+JSON.parse(result8.jsonData).spouse_occupation, 130, 10 + lineHeight*18.5);
+																	
+																	doc.text('Identifying Marks/Unusual Features:'+JSON.parse(result5.jsonData).identifyingMarks,10, 10 + lineHeight*19.5)
+																	doc.text('Present Address:'+JSON.parse(result2.jsonData).presentAddress,10, 10 + lineHeight*20.5)
+																	doc.text('Permanent Address:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*21.5)
 
-																								doc.text('II. PERSONAL AND SOCIAL HISTORY', 80, 12 + lineHeight*22.5, { align: 'left' });
-																								doc.text('A. SUBJECTIVE SOCIO-ECONOMIC STATUS: '+JSON.parse(result6.jsonData).eco_status,10, 10 + lineHeight*23.5)
-																								doc.text('B. FAMILY RELATIONSHIP:'+JSON.parse(result6.jsonData).family_rel,10, 10 + lineHeight*24.5)
-																								doc.text('C. FAMILY REPUTATION:'+JSON.parse(result7.jsonData).fam_status,10, 10 + lineHeight*25.5)
-																								doc.text('D. OVERALL WELL-BEING:'+JSON.parse(result10.jsonData).empHealth,10, 10 + lineHeight*26.5)
-																								doc.text('E. FAMILY SUPPORT:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*27.5)
-																								doc.text('F. COMMUNITY SUPPORT:'+JSON.parse(result11.jsonData).comAcceptance,10, 10 + lineHeight*28.5)
+																	doc.text('II. PERSONAL AND SOCIAL HISTORY', 80, 12 + lineHeight*22.5, { align: 'left' });
+																	doc.text('A. SUBJECTIVE SOCIO-ECONOMIC STATUS: '+JSON.parse(result6.jsonData).eco_status,10, 10 + lineHeight*23.5)
+																	doc.text('B. FAMILY RELATIONSHIP:'+JSON.parse(result6.jsonData).family_rel,10, 10 + lineHeight*24.5)
+																	doc.text('C. FAMILY REPUTATION:'+JSON.parse(result7.jsonData).fam_status,10, 10 + lineHeight*25.5)
+																	doc.text('D. OVERALL WELL-BEING:'+JSON.parse(result10.jsonData).empHealth,10, 10 + lineHeight*26.5)
+																	doc.text('E. FAMILY SUPPORT:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*27.5)
+																	doc.text('F. COMMUNITY SUPPORT:'+JSON.parse(result11.jsonData).comAcceptance,10, 10 + lineHeight*28.5)
 
-																								// PAGE 2
+                                                                    // Define checkbox properties
+                                                                    var checkboxSize = 10; // Size of the checkbox square
+                                                                    var checkboxTextMargin = 5; // Margin between the checkbox and the text
+                                                                    var checkboxFontSize = 12; // Font size of the text
 
-																								doc.addPage();
-																								doc.setFontSize(13)
-																								doc.text('PPA FORM 3/p. 1', 10, 10);
-																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
-																								doc.text('III. CRIMINAL HISTORY', 80, 12 + lineHeight*3, { align: 'left' });
-																								doc.text('A. PRESENT OFFENSE', 10, 12 + lineHeight*4, { align: 'left' });
-																								doc.text('Charged With: '+JSON.parse(result3.jsonData).chargedWith, 10, 12 + lineHeight*5, { align: 'left' });
-																								doc.text('Date:'+JSON.parse(result3.jsonData).dateCharged, 130, 10 + lineHeight*5);
-																								doc.text('Convicted of: '+JSON.parse(result3.jsonData).convictedOf, 10, 12 + lineHeight*6, { align: 'left' });
-																								doc.text('Date:'+JSON.parse(result3.jsonData).dateConvicted, 130, 10 + lineHeight*6);
-																								doc.text('Sentence: ', 10, 12 + lineHeight*7, { align: 'left' });
-																								doc.text('Judge: '+JSON.parse(result3.jsonData).judge, 10, 12 + lineHeight*8, { align: 'left' });
-																								doc.text('Court:'+JSON.parse(result3.jsonData).court, 130, 10 + lineHeight*8);
-																								doc.text('Custodial Status: '+JSON.parse(result3.jsonData).custody, 10, 12 + lineHeight*9, { align: 'left' });
-																								doc.text('B. PRIOR AND PENDING RECORDS', 10, 12 + lineHeight*10.5, { align: 'left' });
+                                                                    // Function to draw a checkbox at the specified position
+                                                                    function drawCheckbox(x, y, checked, text) {
+                                                                      doc.rect(x, y, checkboxSize, checkboxSize); // Draw the checkbox square
+                                                                        if (checked) {
+                                                                        doc.setFont("Helvetica", "bold"); // Set font for the tick mark
+                                                                        doc.setFontSize(checkboxSize); // Set font size to match checkbox size
+                                                                        doc.text("✓", x, y + checkboxSize, { align: "left" }); // Draw the tick mark
+                                                                      }
+                                                                        if (typeof text === "string") {
+                                                                            doc.setFont("Helvetica", "normal"); // Set font for the text
+                                                                            doc.setFontSize(checkboxFontSize); // Set font size for the text
+                                                                            doc.text(text, x + checkboxSize + checkboxTextMargin, y + checkboxSize / 2); // Draw the text next to the checkbox
+                                                                        }
+                                                                    }
 
-																								// Define table properties
-																								var columns = ["Agency", "CC no.", "Offense", "Date Charged", "Decision of the case"];
-																								var data = [JSON.parse(result4.jsonData).priorRecord];
-																								var tableX = 10; // X position of the table
-																								var tableY = 95; // Y position of the table
-																								var rowHeight = 10; // Height of each row
-																								var columnWidth = 40; // Width of each column
-
-																								// Set the font size and style for the table
-																								doc.setFontSize(12);
-																								doc.setFontStyle("bold");
-
-																								// Draw the table headers
-																								for (var i = 0; i < columns.length; i++) {
-																								  doc.text(tableX + i * columnWidth, tableY, columns[i]);
-																								}
-
-																								// Draw the table rows
-																								doc.setFontStyle("normal");
-																								for (var j = 0; j < data.length; j++) {
-																								  var row = data[j];
-																								 // console.log(row);
-																								  for (var k = 0; k < row.length; k++) {
-																								    var value = row[k];
-																								    // console.log(value)
-																								    if (typeof value === "object") {
-																								      value = Object.values(value).join(", ");
-																								      // console.log(value)
-																								    } else {
-																								      value = value.toString();
-																								    }
-
-																								    // Calculate the Y position based on the column index
-																								    var yPos = tableY + ((k + 1) * rowHeight);
-																								    // console.log(yPos)
-																								    var xPos = (tableX);
-																								    // console.log(xPos)
-																								    doc.text(xPos, yPos, value); // Adjust the Y position to separate rows
-																								  }
-																								}
-
-																								doc.addPage();
-																								doc.setFontSize(13)
-																								doc.text('PPA FORM 3/p. 1', 10, 10);
-																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
-																								doc.text('IV Analysis and Evaluation', 80, 12 + lineHeight*3, { align: 'left' });
+                                                                    // Usage
+                                                                    // drawCheckbox(50, 50, true); // Draw a checked checkbox at position (50, 50)
 
 
-																								var maxWidth = 180; // Maximum width per line in pixels
-																								var analysisLineHeight = 5; // Height of each line in pixels
-																								var analysisMargin = 5; // Margin for the content
-																								var text = JSON.parse(result12.jsonData).analysisAndEvaluation;
+                                                                    var famRel = JSON.parse(result6.jsonData).family_rel;
+                                                                    console.log(famRel)
+                                                                    
+                                                                    if (famRel == "VERY SATISFACTORY"){
+                                                                    console.log("true")
+                                                                    drawCheckbox(10, 20, true, "VERY SATISFACTORY");
+                                                                    drawCheckbox(10, 30, false, "SATISFACTORY");
+                                                                    drawCheckbox(10, 40, false, "FAIR");
+                                                                    drawCheckbox(10, 50, false, "POOR");
+                                                                    drawCheckbox(10, 60, false, "VERY POOR");
+                                                                    doc.text
+                                                                    }else if (famRel == "POOR"){ 
+                                                                    console.log("true")
+                                                                    drawCheckbox(10, 20, false, "VERY SATISFACTORY");
+                                                                    drawCheckbox(10, 30, false, "SATISFACTORY");
+                                                                    drawCheckbox(10, 40, false, "FAIR");
+                                                                    drawCheckbox(10, 50, true, "POOR");
+                                                                    drawCheckbox(10, 60, false, "VERY POOR");
+                                                                    }else{
+                                                                    console.log(false)
+                                                                    }
 
-																								var lines = doc.splitTextToSize(text, maxWidth);
+																	// PAGE 2
 
-																								var x = 10; // Starting x-coordinate
-																								var y = 45; // Starting y-coordinate
+																	doc.addPage();
+																	doc.setFontSize(13)
+																	doc.text('PPA FORM 3/p. 1', 10, 10);
+																	doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																	doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																	doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																	doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																	doc.text('III. CRIMINAL HISTORY', 80, 12 + lineHeight*3, { align: 'left' });
+																	doc.text('A. PRESENT OFFENSE', 10, 12 + lineHeight*4, { align: 'left' });
+																	doc.text('Charged With: '+JSON.parse(result3.jsonData).chargedWith, 10, 12 + lineHeight*5, { align: 'left' });
+																	doc.text('Date:'+JSON.parse(result3.jsonData).dateCharged, 130, 10 + lineHeight*5);
+																	doc.text('Convicted of: '+JSON.parse(result3.jsonData).convictedOf, 10, 12 + lineHeight*6, { align: 'left' });
+																	doc.text('Date:'+JSON.parse(result3.jsonData).dateConvicted, 130, 10 + lineHeight*6);
+																	doc.text('Sentence: ', 10, 12 + lineHeight*7, { align: 'left' });
+																	doc.text('Judge: '+JSON.parse(result3.jsonData).judge, 10, 12 + lineHeight*8, { align: 'left' });
+																	doc.text('Court:'+JSON.parse(result3.jsonData).court, 130, 10 + lineHeight*8);
+																	doc.text('Custodial Status: '+JSON.parse(result3.jsonData).custody, 10, 12 + lineHeight*9, { align: 'left' });
+																	doc.text('B. PRIOR AND PENDING RECORDS', 10, 12 + lineHeight*10.5, { align: 'left' });
 
-																								for (var i = 0; i < lines.length; i++) {
-																								  // Check if there is enough space on the current page for the line
-																								  if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
-																								    doc.addPage(); // Add a new page if there is not enough space
-																								    y = 10; // Reset the y-coordinate to the top margin
-																								  }
+																	// Define table properties
+                                                                    var columns = ["Agency", "Criminal Case No.", "Offense", "Date Charged","Decision"];
+                                                                    var dataPrior = JSON.parse(result4.jsonData).priorRecord;
+                                                                    // console.log(dataPrior[0].agency)
+                                                                    var tableX = 10; // X position of the table
+                                                                    var tableY = 95; // Y position of the table
+                                                                    var rowHeight = 10; // Height of each row
+                                                                    var columnWidth = 40; // Width of each column
 
-																								  doc.setFontSize(12);
-																								  doc.text(lines[i], x, y);
-																								  y += analysisLineHeight; // Increase the y-coordinate for the next line
-																								}
+                                                                    // Set the font size and style for the table
+                                                                    doc.setFontSize(12);
+                                                                    doc.setFontStyle("bold");
 
-																								y += analysisMargin; // Create some space before adding the second paragraph
+                                                                    // Draw the table headers
+                                                                    for (var i = 0; i < columns.length; i++) {
+                                                                      doc.text(tableX + i * columnWidth, tableY, columns[i]);
+                                                                    }
 
-																								doc.text('V. PROJECTED THRUSTS OF REHABILITATION', 60, y, { align: 'left' });
+                                                                    for (var k = 0; k < dataPrior.length; k++) {
+                                                                        // console.log(dataPrior[k].agency)
+                                                                        var rowData = [
+                                                                        [dataPrior[k].agency, dataPrior[k].cc_no, dataPrior[k].offense, dataPrior[k].when, dataPrior[k].disposition]
+                                                                        ]
+                                                                        // console.log(data)
+                                                                        
+                                                                        for (var j = 0; j < rowData.length; j++) {
+                                                                            var row = rowData[j];
+                                                                            // console.log(row)
+                                                                                for (var l = 0; l < row.length; l++) {
+                                                                                    var xPos = tableX + l * columnWidth;
+                                                                                    // console.log(xPos)
+                                                                                    var yPos = tableY + (k * rowData.length + j + 1) * rowHeight;
+                                                                                    // console.log(yPos)
+                                                                                    doc.text(xPos, yPos, row[l]);
+                                                                                    // console.log(xPos, yPos, row[l])
+                                                                                }
+                                                                        }
+                                                                        
+                                                                    }
 
-																								var secondParagraph = JSON.parse(result12.jsonData).projectedThrust;
-																								y += analysisLineHeight + analysisMargin; // Increase the y-coordinate for the new paragraph
+                                                                    // PAGE 3
 
-																								var secondLines = doc.splitTextToSize(secondParagraph, maxWidth);
+																	doc.addPage();
+																	doc.setFontSize(13)
+                                                                    doc.setFont('times', 'normal');
+																	doc.text('PPA FORM 3/p. 1', 10, 10);
+																	doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																	doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																	doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																	doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																	doc.text('IV Analysis and Evaluation', 80, 12 + lineHeight*3, { align: 'left' });
 
-																								for (var j = 0; j < secondLines.length; j++) {
-																								  // Check if there is enough space on the current page for the line
-																								  if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
-																								    doc.addPage(); // Add a new page if there is not enough space
-																								    y = 10; // Reset the y-coordinate to the top margin
-																								  }
 
-																								  doc.setFontSize(12);
-																								  doc.text(secondLines[j], x, y);
-																								  y += analysisLineHeight; // Increase the y-coordinate for the next line
-																								}
+																	var maxWidth = 180; // Maximum width per line in pixels
+																	var analysisLineHeight = 5; // Height of each line in pixels
+																	var analysisMargin = 5; // Margin for the content
+																	var text = JSON.parse(result12.jsonData).analysisAndEvaluation;
 
-																								doc.addPage();
-																								doc.setFontSize(13)
-																								doc.text('PPA FORM 3/p. 1', 10, 10);
-																								doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-																								doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-																								doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-																								doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
-																								doc.text('VI RECOMMENDATION', 80, 12 + lineHeight*3, { align: 'left' });
+																	var lines = doc.splitTextToSize(text, maxWidth);
 
-																								var rec = JSON.parse(result13.jsonData);
-																								console.log(rec)
+																	var x = 10; // Starting x-coordinate
+																	var y = 45; // Starting y-coordinate
 
-																								var recommendation =  [JSON.parse(result13.jsonData).recommendations];
-																								console.log(recommendation)
+																	for (var i = 0; i < lines.length; i++) {
+																	  // Check if there is enough space on the current page for the line
+																	  if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
+																	    doc.addPage(); // Add a new page if there is not enough space
+																	    y = 10; // Reset the y-coordinate to the top margin
+																	  }
 
-																								var textRec = "WHEREFORE, in view of the foregoing, it is respectfully recommended to this Honorable Court that the petition for probation of "+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName+' be '+JSON.parse(result13.jsonData).grant+',  subject to the following conditions:';
-																								console.log(textRec)
+																	  doc.setFontSize(12);
+																	  doc.text(lines[i], x, y);
+																	  y += analysisLineHeight; // Increase the y-coordinate for the next line
+																	}
 
-																								var maxWidth = 190; // Maximum width per line in pixels
-																								var linesRec = doc.splitTextToSize(textRec, maxWidth);
-																								console.log(linesRec)
+																	y += analysisMargin; // Create some space before adding the second paragraph
 
-																								var xRec = 20; // Starting x-coordinate
-																								var yRec = 45; // Starting y-coordinate
+																	doc.text('V. PROJECTED THRUSTS OF REHABILITATION', 60, y, { align: 'left' });
 
-																								for (var i = 0; i < linesRec.length; i++) {
-																									doc.setFontSize(11)
-																								  doc.text(linesRec[i], xRec, yRec); // Adjust the coordinates based on your requirements
-																								  yRec += 10; // Increase the y-coordinate for the next line
-																								}
+																	var secondParagraph = JSON.parse(result12.jsonData).projectedThrust;
+																	y += analysisLineHeight + analysisMargin; // Increase the y-coordinate for the new paragraph
 
-																								var curYRec = yRec;
-																								var lineHeight = 5; // Height of each line in pixels
-																								var margin = 5; // Margin for the content
-																								console.log(curYRec)
+																	var secondLines = doc.splitTextToSize(secondParagraph, maxWidth);
 
-																								for (var j = 0; j < recommendation.length; j++) {
-																								  var row = recommendation[j];
-																								 	// console.log(row);
-																								  for (var k = 0; k < row.length; k++) {
-																								    var value = row[k];
-																								    // console.log(value)
-																								    var num = k + 1;
-																								    if (typeof value === "object") {
-																								      value = Object.values(value).join(", ");
-																								     	// console.log(value)
-																								    } else {
-																								      value = value.toString();
-																								    }
-																								    
-																								    var textSample = num + '. ' + value;
-																								    console.log(textSample)
-																								    var linesRecList = doc.splitTextToSize(textSample, maxWidth);
-																								    console.log(linesRecList)
+																	for (var j = 0; j < secondLines.length; j++) {
+																	  // Check if there is enough space on the current page for the line
+																	  if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
+																	    doc.addPage(); // Add a new page if there is not enough space
+																	    y = 10; // Reset the y-coordinate to the top margin
+																	  }
 
-																								    if (curYRec + (linesRecList.length * lineHeight) + margin > doc.internal.pageSize.height) {
-																								      doc.addPage(); // Add a new page if there is not enough space
-																								      curYRec = margin; // Reset the y-coordinate to the top margin
-																								    }
+																	  doc.setFontSize(12);
+																	  doc.text(secondLines[j], x, y);
+																	  y += analysisLineHeight; // Increase the y-coordinate for the next line
+																	}
 
-																								    		doc.text(10, curYRec, linesRecList); // Adjust the Y position to separate rows
-																								    		curYRec += linesRecList.length * lineHeight;
-																								  }
-																								}
+																	doc.addPage();
+																	doc.setFontSize(13)
+																	doc.text('PPA FORM 3/p. 1', 10, 10);
+																	doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
+																	doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
+																	doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
+																	doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+																	doc.text('VI RECOMMENDATION', 80, 12 + lineHeight*3, { align: 'left' });
 
-																								doc.save('PSIR.pdf');
+																	var rec = JSON.parse(result13.jsonData);
+																	// console.log(rec)
+
+																	var recommendation =  [JSON.parse(result13.jsonData).recommendations];
+																	// console.log(recommendation)
+
+																	var textRec = "WHEREFORE, in view of the foregoing, it is respectfully recommended to this Honorable Court that the petition for probation of "+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName+' be '+JSON.parse(result13.jsonData).grant+',  subject to the following conditions:';
+																	// console.log(textRec)
+
+																	var maxWidth = 190; // Maximum width per line in pixels
+																	var linesRec = doc.splitTextToSize(textRec, maxWidth);
+																	// console.log(linesRec)
+
+																	var xRec = 20; // Starting x-coordinate
+																	var yRec = 45; // Starting y-coordinate
+
+																	for (var i = 0; i < linesRec.length; i++) {
+																		doc.setFontSize(11)
+																	  doc.text(linesRec[i], xRec, yRec); // Adjust the coordinates based on your requirements
+																	  yRec += 10; // Increase the y-coordinate for the next line
+																	}
+
+																	var curYRec = yRec;
+																	var lineHeight = 5; // Height of each line in pixels
+																	var margin = 5; // Margin for the content
+																	// console.log(curYRec)
+
+																	for (var j = 0; j < recommendation.length; j++) {
+																	  var row = recommendation[j];
+																	 	// console.log(row);
+																	  for (var k = 0; k < row.length; k++) {
+																	    var value = row[k];
+																	    // console.log(value)
+																	    var num = k + 1;
+																	    if (typeof value === "object") {
+																	      value = Object.values(value).join(", ");
+																	     	// console.log(value)
+																	    } else {
+																	      value = value.toString();
+																	    }
+																	    
+																	    var textSample = num + '. ' + value;
+																	    // console.log(textSample)
+																	    var linesRecList = doc.splitTextToSize(textSample, maxWidth);
+																	    // console.log(linesRecList)
+
+																	    if (curYRec + (linesRecList.length * lineHeight) + margin > doc.internal.pageSize.height) {
+																	      doc.addPage(); // Add a new page if there is not enough space
+																	      curYRec = margin; // Reset the y-coordinate to the top margin
+																	    }
+
+																	    		doc.text(10, curYRec, linesRecList); // Adjust the Y position to separate rows
+																	    		curYRec += linesRecList.length * lineHeight;
+                                                                                
+																	  }
+                                                                      doc.text('Prepared and submitted by: ', 130,curYRec, { align: 'right' });
+																	}
+                                                                    
+
+																	doc.save('PSIR.pdf');
                                             }
                                             else{
                                                 console.log("error fetching data")
