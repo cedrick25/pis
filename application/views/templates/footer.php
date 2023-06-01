@@ -130,6 +130,7 @@
         if (roleId.includes("1")) {
             $(".org_module").show()
         }
+        
         var data = JSON.parse(localStorage.getItem('permission'));
         // console.log(data)
 

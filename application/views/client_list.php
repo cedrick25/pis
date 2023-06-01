@@ -444,58 +444,205 @@
 																	doc.text('Present Address:'+JSON.parse(result2.jsonData).presentAddress,10, 10 + lineHeight*20.5)
 																	doc.text('Permanent Address:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*21.5)
 
-																	doc.text('II. PERSONAL AND SOCIAL HISTORY', 80, 12 + lineHeight*22.5, { align: 'left' });
-																	doc.text('A. SUBJECTIVE SOCIO-ECONOMIC STATUS: '+JSON.parse(result6.jsonData).eco_status,10, 10 + lineHeight*23.5)
-																	doc.text('B. FAMILY RELATIONSHIP:'+JSON.parse(result6.jsonData).family_rel,10, 10 + lineHeight*24.5)
-																	doc.text('C. FAMILY REPUTATION:'+JSON.parse(result7.jsonData).fam_status,10, 10 + lineHeight*25.5)
-																	doc.text('D. OVERALL WELL-BEING:'+JSON.parse(result10.jsonData).empHealth,10, 10 + lineHeight*26.5)
-																	doc.text('E. FAMILY SUPPORT:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*27.5)
-																	doc.text('F. COMMUNITY SUPPORT:'+JSON.parse(result11.jsonData).comAcceptance,10, 10 + lineHeight*28.5)
+																	doc.text('II. PERSONAL AND SOCIAL HISTORY', 80, 12 + 155, { align: 'left' });
+																	// doc.text('A. SUBJECTIVE SOCIO-ECONOMIC STATUS: '+JSON.parse(result6.jsonData).eco_status,10, 10 + lineHeight*23.5)
+																	// doc.text('B. FAMILY RELATIONSHIP:'+JSON.parse(result6.jsonData).family_rel,10, 10 + lineHeight*24.5)
+																	// doc.text('C. FAMILY REPUTATION:'+JSON.parse(result7.jsonData).fam_status,10, 10 + lineHeight*25.5)
+																	// doc.text('D. OVERALL WELL-BEING:'+JSON.parse(result10.jsonData).empHealth,10, 10 + lineHeight*26.5)
+																	// doc.text('E. FAMILY SUPPORT:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*27.5)
+																	// doc.text('F. COMMUNITY SUPPORT:'+JSON.parse(result11.jsonData).comAcceptance,10, 10 + lineHeight*28.5)
 
                                                                     // Define checkbox properties
-                                                                    var checkboxSize = 10; // Size of the checkbox square
-                                                                    var checkboxTextMargin = 5; // Margin between the checkbox and the text
+                                                                    var checkboxSize = 5; // Size of the checkbox square
+                                                                    var checkboxTextMargin = 2; // Margin between the checkbox and the text
                                                                     var checkboxFontSize = 12; // Font size of the text
 
                                                                     // Function to draw a checkbox at the specified position
                                                                     function drawCheckbox(x, y, checked, text) {
                                                                       doc.rect(x, y, checkboxSize, checkboxSize); // Draw the checkbox square
-                                                                        if (checked) {
-                                                                        doc.setFont("Helvetica", "bold"); // Set font for the tick mark
-                                                                        doc.setFontSize(checkboxSize); // Set font size to match checkbox size
-                                                                        doc.text("✓", x, y + checkboxSize, { align: "left" }); // Draw the tick mark
+                                                                      if (checked) {
+                                                                        var checkmarkSize = checkboxSize - 1; // Calculate the size of the checkmark to fit inside the checkbox
+                                                                        console.log(checkmarkSize)
+                                                                        var checkmarkX = x + (checkboxSize - checkmarkSize) / 2 - 0.5; // Calculate the x position for the checkmark
+                                                                        console.log(checkmarkX)
+                                                                        var checkmarkY = y + (checkboxSize - checkmarkSize) / 2 + checkmarkSize - 3.5; // Calculate the y position for the checkmark
+                                                                        console.log(checkmarkY)
+                                                                        doc.rect(checkmarkX, checkmarkY, checkmarkSize, checkmarkSize, "F"); // Draw the checkmark
                                                                       }
-                                                                        if (typeof text === "string") {
-                                                                            doc.setFont("Helvetica", "normal"); // Set font for the text
-                                                                            doc.setFontSize(checkboxFontSize); // Set font size for the text
-                                                                            doc.text(text, x + checkboxSize + checkboxTextMargin, y + checkboxSize / 2); // Draw the text next to the checkbox
-                                                                        }
+                                                                      if (typeof text === "string") {
+                                                                        doc.setFont("Helvetica", "normal"); // Set font for the text
+                                                                        doc.setFontSize(checkboxFontSize); // Set font size for the text
+                                                                        doc.text(text, x + checkboxSize + checkboxTextMargin, y + checkboxSize / 2); // Draw the text next to the checkbox
+                                                                      }
                                                                     }
 
                                                                     // Usage
-                                                                    // drawCheckbox(50, 50, true); // Draw a checked checkbox at position (50, 50)
+                                                                    // drawCheckbox(70, 50, true); // Draw a checked checkbox at position (50, 50)
 
-
+                                                                    var ecoStatus = JSON.parse(result6.jsonData).eco_status;
                                                                     var famRel = JSON.parse(result6.jsonData).family_rel;
-                                                                    console.log(famRel)
-                                                                    
-                                                                    if (famRel == "VERY SATISFACTORY"){
-                                                                    console.log("true")
-                                                                    drawCheckbox(10, 20, true, "VERY SATISFACTORY");
-                                                                    drawCheckbox(10, 30, false, "SATISFACTORY");
-                                                                    drawCheckbox(10, 40, false, "FAIR");
-                                                                    drawCheckbox(10, 50, false, "POOR");
-                                                                    drawCheckbox(10, 60, false, "VERY POOR");
-                                                                    doc.text
-                                                                    }else if (famRel == "POOR"){ 
-                                                                    console.log("true")
-                                                                    drawCheckbox(10, 20, false, "VERY SATISFACTORY");
-                                                                    drawCheckbox(10, 30, false, "SATISFACTORY");
-                                                                    drawCheckbox(10, 40, false, "FAIR");
-                                                                    drawCheckbox(10, 50, true, "POOR");
-                                                                    drawCheckbox(10, 60, false, "VERY POOR");
+                                                                    var famStatus = JSON.parse(result6.jsonData).family_rep;
+                                                                    // console.log(ecoStatus)
+                                                                    doc.text('A. SUBJECTIVE SOCIO-',10, 10 + 165)
+                                                                    doc.text('ECONOMIC STATUS: ',10, 10 + 170)
+
+                                                                    if (ecoStatus == "POOR"){
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, true, "Poor");
+                                                                    drawCheckbox(10, 200, false, "Low income");
+                                                                    drawCheckbox(10, 210, false, "Lower Middle Income");
+                                                                    drawCheckbox(10, 220, false, "Middle Class");
+                                                                    drawCheckbox(10, 230, false, "Upper Middle Class");
+                                                                    drawCheckbox(10, 240, false, "Upper Income");
+                                                                    drawCheckbox(10, 250, false, "Rich");
+                                                                    }else if (ecoStatus == "LOW INCOME"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Poor");
+                                                                    drawCheckbox(10, 200, true, "Low income");
+                                                                    drawCheckbox(10, 210, false, "Lower Middle Income");
+                                                                    drawCheckbox(10, 220, false, "Middle Class");
+                                                                    drawCheckbox(10, 230, false, "Upper Middle Class");
+                                                                    drawCheckbox(10, 240, false, "Upper Income");
+                                                                    drawCheckbox(10, 250, false, "Rich");
+                                                                    }else if (ecoStatus == "LOWER MIDDLE INCOME"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Poor");
+                                                                    drawCheckbox(10, 200, false, "Low income");
+                                                                    drawCheckbox(10, 210, true, "Lower Middle Income");
+                                                                    drawCheckbox(10, 220, false, "Middle Class");
+                                                                    drawCheckbox(10, 230, false, "Upper Middle Class");
+                                                                    drawCheckbox(10, 240, false, "Upper Income");
+                                                                    drawCheckbox(10, 250, false, "Rich");
+                                                                    }else if (ecoStatus == "MIDDLE CLASS"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Poor");
+                                                                    drawCheckbox(10, 200, false, "Low income");
+                                                                    drawCheckbox(10, 210, false, "Lower Middle Income");
+                                                                    drawCheckbox(10, 220, true, "Middle Class");
+                                                                    drawCheckbox(10, 230, false, "Upper Middle Class");
+                                                                    drawCheckbox(10, 240, false, "Upper Income");
+                                                                    drawCheckbox(10, 250, false, "Rich");
+                                                                    }else if (ecoStatus == "UPPER MIDDLE CLASS"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Poor");
+                                                                    drawCheckbox(10, 200, false, "Low income");
+                                                                    drawCheckbox(10, 210, false, "Lower Middle Income");
+                                                                    drawCheckbox(10, 220, false, "Middle Class");
+                                                                    drawCheckbox(10, 230, true, "Upper Middle Class");
+                                                                    drawCheckbox(10, 240, false, "Upper Income");
+                                                                    drawCheckbox(10, 250, false, "Rich");
+                                                                    }else if (ecoStatus == "UPPER INCOME"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Poor");
+                                                                    drawCheckbox(10, 200, false, "Low income");
+                                                                    drawCheckbox(10, 210, false, "Lower Middle Income");
+                                                                    drawCheckbox(10, 220, false, "Middle Class");
+                                                                    drawCheckbox(10, 230, false, "Upper Middle Class");
+                                                                    drawCheckbox(10, 240, true, "Upper Income");
+                                                                    drawCheckbox(10, 250, false, "Rich");
+                                                                    }else if (ecoStatus == "RICH"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Poor");
+                                                                    drawCheckbox(10, 200, false, "Low income");
+                                                                    drawCheckbox(10, 210, false, "Lower Middle Income");
+                                                                    drawCheckbox(10, 220, false, "Middle Class");
+                                                                    drawCheckbox(10, 230, false, "Upper Middle Class");
+                                                                    drawCheckbox(10, 240, false, "Upper Income");
+                                                                    drawCheckbox(10, 250, true, "Rich");
                                                                     }else{
                                                                     console.log(false)
+                                                                    }
+
+                                                                    // Family Relationship
+
+                                                                    doc.setFontSize(10);
+                                                                    doc.text('B. FAMILY RELATIONSHIP',70, 10 + 165);
+
+                                                                    if (famRel == "VERY SATISFACTORY"){
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, true, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "SATISFACTORY"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, true, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "FAIR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, true, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, true, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "VERY POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, true, "Very poor");
+                                                                    }else{
+                                                                    console.log(false)
+                                                                    }
+
+                                                                    // Family Reputation
+
+                                                                    doc.setFontSize(10);
+                                                                    doc.text('C. FAMILY REPUTATION',130, 10 + 165);
+                                                                    console.log(famStatus)
+
+                                                                    if (famStatus == "VERY SATISFACTORY"){
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, true, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (famStatus == "SATISFACTORY"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, true, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (famStatus == "FAIR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, true, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (famStatus == "POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, true, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (famStatus == "VERY POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, true, "Very poor");
+                                                                    }else{
+                                                                    console.log(false)
+                                                                    }
+
+
                                                                     }
 
 																	// PAGE 2
@@ -507,6 +654,143 @@
 																	doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
 																	doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
 																	doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
+
+                                                                    // Employee Health
+
+                                                                    var empHealth = JSON.parse(result10.jsonData).empHealth;
+                                                                    doc.setFontSize(10);
+                                                                    doc.text('D. OVERALL WELL-BEING',10, 10 + 165);
+                                                                    console.log(famStatus)
+
+                                                                    if (empHealth == "VERY SATISFACTORY"){
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, true, "Very satisfactory");
+                                                                    drawCheckbox(10, 200, false, "Satisfactory");
+                                                                    drawCheckbox(10, 210, false, "Fair");
+                                                                    drawCheckbox(10, 220, false, "Poor");
+                                                                    drawCheckbox(10, 230, false, "Very poor");
+                                                                    }else if (empHealth == "SATISFACTORY"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(10, 200, true, "Satisfactory");
+                                                                    drawCheckbox(10, 210, false, "Fair");
+                                                                    drawCheckbox(10, 220, false, "Poor");
+                                                                    drawCheckbox(10, 230, false, "Very poor");
+                                                                    }else if (empHealth == "FAIR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(10, 200, false, "Satisfactory");
+                                                                    drawCheckbox(10, 210, true, "Fair");
+                                                                    drawCheckbox(10, 220, false, "Poor");
+                                                                    drawCheckbox(10, 230, false, "Very poor");
+                                                                    }else if (empHealth == "POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(10, 200, false, "Satisfactory");
+                                                                    drawCheckbox(10, 210, false, "Fair");
+                                                                    drawCheckbox(10, 220, true, "Poor");
+                                                                    drawCheckbox(10, 230, false, "Very poor");
+                                                                    }else if (empHealth == "VERY POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(10, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(10, 200, false, "Satisfactory");
+                                                                    drawCheckbox(10, 210, false, "Fair");
+                                                                    drawCheckbox(10, 220, false, "Poor");
+                                                                    drawCheckbox(10, 230, true, "Very poor");
+                                                                    }else{
+                                                                    console.log(false)
+
+                                                                    // Family Support
+
+                                                                    doc.setFontSize(10);
+                                                                    doc.text('E. FAMILY SUPPORT',70, 10 + 165);
+
+                                                                    if (famRel == "VERY SATISFACTORY"){
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, true, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "SATISFACTORY"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, true, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "FAIR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, true, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, true, "Poor");
+                                                                    drawCheckbox(70, 230, false, "Very poor");
+                                                                    }else if (famRel == "VERY POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(70, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(70, 200, false, "Satisfactory");
+                                                                    drawCheckbox(70, 210, false, "Fair");
+                                                                    drawCheckbox(70, 220, false, "Poor");
+                                                                    drawCheckbox(70, 230, true, "Very poor");
+                                                                    }else{
+                                                                    console.log(false)
+                                                                    }
+
+                                                                    // Community Acceptance
+
+                                                                    doc.setFontSize(10);
+                                                                    doc.text('C. FAMILY REPUTATION',130, 10 + 165);
+                                                                    // console.log(famStatus)
+                                                                    var comAcc = JSON.parse(result11.jsonData).comAcceptance;
+
+                                                                    if (comAcc == "VERY SATISFACTORY"){
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, true, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (comAcc == "SATISFACTORY"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, true, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (comAcc == "FAIR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, true, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (comAcc == "POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, true, "Poor");
+                                                                    drawCheckbox(130, 230, false, "Very poor");
+                                                                    }else if (comAcc == "VERY POOR"){ 
+                                                                    // console.log("true")
+                                                                    drawCheckbox(130, 190, false, "Very satisfactory");
+                                                                    drawCheckbox(130, 200, false, "Satisfactory");
+                                                                    drawCheckbox(130, 210, false, "Fair");
+                                                                    drawCheckbox(130, 220, false, "Poor");
+                                                                    drawCheckbox(130, 230, true, "Very poor");
+                                                                    }else{
+                                                                    console.log(false)
+                                                                    }
+
+
 																	doc.text('III. CRIMINAL HISTORY', 80, 12 + lineHeight*3, { align: 'left' });
 																	doc.text('A. PRESENT OFFENSE', 10, 12 + lineHeight*4, { align: 'left' });
 																	doc.text('Charged With: '+JSON.parse(result3.jsonData).chargedWith, 10, 12 + lineHeight*5, { align: 'left' });
