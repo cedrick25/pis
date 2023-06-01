@@ -134,7 +134,7 @@
 
             var payload = {
                 keyValue : keyValue,
-                email    : email,
+                username    : email,
                 password : password
             }
             console.log(payload);
@@ -284,8 +284,8 @@
                 var password = $(".password").val();
 
                 var payload = {
-                    keyValue : keyValue,
-                    email    : email,
+                    // keyValue : keyValue,
+                    username    : email,
                     password : password
                 }
                 console.log(payload);
@@ -301,15 +301,17 @@
                                 // var roleid = result.role.roleId
                                 // $.cookie("roleid", roleid);
                                 $.cookie("uuid", uuid);
-                                localStorage.clear();
+                                // localStorage.clear();
                                 
                                 // check if localstorage is clear
-                                var data = JSON.parse(localStorage.getItem('permission'));
-                                console.log(data)
+                                // var data = JSON.parse(localStorage.getItem('permission'));
+                                // console.log(data)
 
-                                var permission_role = result.rolePermission
-                                localStorage.setItem('permission', JSON.stringify(permission_role));
-
+                                // var permission_role = result.rolePermission
+                                // localStorage.setItem('permission', JSON.stringify(permission_role));
+                                
+                                // var data = JSON.parse(localStorage.getItem('permission'));
+                                // console.log(data)
                                 setTimeout(function () {
                                     window.location.href="dashboard"
                                 },1000);
