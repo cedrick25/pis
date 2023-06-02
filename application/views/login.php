@@ -133,11 +133,11 @@
 
             // $(".OTP_div").show();
             // $(".login_div").hide();
-            var email = $(".email").val();
-            var password = $(".password").val();
+            // var email = $(".email").val();
+            // var password = $(".password").val();
 
             var payload = {
-                isEncoded : true,
+                encoded : true,
                 username    : keyParts[0],
                 password : keyParts[1]
             }
@@ -152,109 +152,109 @@
                             $('.prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> Login Successfully </div>');
                             $(".OTP_div").show();
                             $(".login_div").hide();
-                            // function generateOTP() {
-                            //     var otp = Math.floor(10000 + Math.random() * 90000); // Generate a random number between 10000 and 99999
-                            //     return otp.toString(); // Convert the number to a string
-                            // }
+                            function generateOTP() {
+                                var otp = Math.floor(10000 + Math.random() * 90000); // Generate a random number between 10000 and 99999
+                                return otp.toString(); // Convert the number to a string
+                            }
                             
-                            // var otp = generateOTP(); // Generate the OTP
-                            // console.log(otp); // Print the OTP to the console
+                            var otp = generateOTP(); // Generate the OTP
+                            console.log(otp); // Print the OTP to the console
 
-                            // function SMSEmail(){
-                            //     var myDate = new Date();
-                            //     dt = (myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds());
+                            function SMSEmail(){
+                                var myDate = new Date();
+                                dt = (myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds());
                                 
-                            //     var payloadSMS  = {
-                            //         api_key : "202441593920230529142109",
-                            //         message_CONTENT : "Hi " + "test"  + ", your OTP KEY is " + otp +".",
-                            //         message_TO : "09066245890",
-                            //         CREATED_BY : "1",
-                            //         message_DATETIME : dt
-                            //     }
-                            //     __executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
-                            //     // __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
-                            //         console.log(resultSMS)
-                            //     });
+                                var payloadSMS  = {
+                                    api_key : "202441593920230529142109",
+                                    message_CONTENT : "Hi " + "test"  + ", your OTP KEY is " + otp +".",
+                                    message_TO : "09066245890",
+                                    CREATED_BY : "1",
+                                    message_DATETIME : dt
+                                }
+                                __executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
+                                // __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
+                                    console.log(resultSMS)
+                                });
 
-                            //     var payloadEmail  = {
-                            //         "message_CONTENT" : "Hi " + "testt" + ", your OTP KEY is " + otp +".",
-                            //         "message_TO" : "jssantos@probation.gov.ph",
-                            //     }
-                            //     // __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
-                            //     __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
-                            //        console.log(resultemail)
-                            //     });
-                            // }
-                            // SMSEmail();
+                                var payloadEmail  = {
+                                    "message_CONTENT" : "Hi " + "testt" + ", your OTP KEY is " + otp +".",
+                                    "message_TO" : "jssantos@probation.gov.ph",
+                                }
+                                // __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                                __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                                   console.log(resultemail)
+                                });
+                            }
+                            SMSEmail();
 
-                            // var timerInterval;
-                            // var duration = 300; // Duration in seconds (5 minutes)
+                            var timerInterval;
+                            var duration = 300; // Duration in seconds (5 minutes)
 
-                            // function startTimer() {
-                            //     var timerElement = $("#timer");
-                            //     var minutes, seconds;
+                            function startTimer() {
+                                var timerElement = $("#timer");
+                                var minutes, seconds;
 
-                            //     timerInterval = setInterval(function() {
-                            //         minutes = parseInt(duration / 60, 10);
-                            //         seconds = parseInt(duration % 60, 10);
-                            //         $('.OTP').prop("disabled", false);
-                            //         minutes = minutes < 10 ? "0" + minutes : minutes;
-                            //         seconds = seconds < 10 ? "0" + seconds : seconds;
+                                timerInterval = setInterval(function() {
+                                    minutes = parseInt(duration / 60, 10);
+                                    seconds = parseInt(duration % 60, 10);
+                                    $('.OTP').prop("disabled", false);
+                                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                                    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                            //         timerElement.text("Remaining time: " + minutes + ":" + seconds);
+                                    timerElement.text("Remaining time: " + minutes + ":" + seconds);
 
-                            //         if (--duration < 0) {
-                            //             clearInterval(timerInterval);
-                            //             timerElement.text("Time's up! OTP expired.");
-                            //             $(".btn-resend").show()
-                            //             $(".btn-OTP").hide()
-                            //             $('.OTP').prop("disabled", true);
-                            //         }
-                            //     }, 1000);   
-                            // }
+                                    if (--duration < 0) {
+                                        clearInterval(timerInterval);
+                                        timerElement.text("Time's up! OTP expired.");
+                                        $(".btn-resend").show()
+                                        $(".btn-OTP").hide()
+                                        $('.OTP').prop("disabled", true);
+                                    }
+                                }, 1000);   
+                            }
 
-                            // $(".btn-resend").unbind("click").on("click", function(){
-                            //     $(".btn-resend").hide();
-                            //     $(".btn-OTP").show();
-                            //     $("#timer").html("");
-                            //     clearInterval(timerInterval);
-                            //     duration = 300; // Reset the duration to 5 minutes
-                            //     startTimer();
-                            //     generateOTP();
-                            //     SMSEmail();
-                            //     console.log(otp); // Print the OTP to the console
-                            // });
+                            $(".btn-resend").unbind("click").on("click", function(){
+                                $(".btn-resend").hide();
+                                $(".btn-OTP").show();
+                                $("#timer").html("");
+                                clearInterval(timerInterval);
+                                duration = 300; // Reset the duration to 5 minutes
+                                startTimer();
+                                generateOTP();
+                                SMSEmail();
+                                console.log(otp); // Print the OTP to the console
+                            });
 
-                            // startTimer();
+                            startTimer();
 
-                            // $(".btn-OTP").unbind("click").on("click", function(){
-                            //     console.log("submit OTP");
-                            //     if ($(".OTP").val() == "") {
-                            //         $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Please enter the OTP to proceed."</div>');
-                            //     } else if ($(".OTP").val() == otp) {
-                            //         $('.prompt_OTP').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> "OTP verified successfully. You can now proceed."</div>');
+                            $(".btn-OTP").unbind("click").on("click", function(){
+                                console.log("submit OTP");
+                                if ($(".OTP").val() == "") {
+                                    $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Please enter the OTP to proceed."</div>');
+                                } else if ($(".OTP").val() == otp) {
+                                    $('.prompt_OTP').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> "OTP verified successfully. You can now proceed."</div>');
 
-                            //         var uuid = result.uuid
-                            //         // var roleid = result.role.roleId
-                            //         // $.cookie("roleid", roleid);
-                            //         $.cookie("uuid", uuid);
-                            //         localStorage.clear();
+                                    var uuid = result.uuid
+                                    // var roleid = result.role.roleId
+                                    // $.cookie("roleid", roleid);
+                                    $.cookie("uuid", uuid);
+                                    localStorage.clear();
                                     
-                            //         // check if localstorage is clear
-                            //         var data = JSON.parse(localStorage.getItem('permission'));
-                            //         console.log(data)
+                                    // check if localstorage is clear
+                                    var data = JSON.parse(localStorage.getItem('permission'));
+                                    console.log(data)
 
-                            //         var permission_role = result.rolePermission
-                            //         localStorage.setItem('permission', JSON.stringify(permission_role));
+                                    var permission_role = result.rolePermission
+                                    localStorage.setItem('permission', JSON.stringify(permission_role));
 
-                            //         // setTimeout(function () {
-                            //         //     window.location.href="dashboard"
-                            //         // },1000);
-                            //     } else{
-                            //         $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Invalid OTP. Please enter the correct OTP to proceed." </div>');
-                            //         console.log("OTP not approved")
-                            //     }
-                            // });
+                                    // setTimeout(function () {
+                                    //     window.location.href="dashboard"
+                                    // },1000);
+                                } else{
+                                    $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Invalid OTP. Please enter the correct OTP to proceed." </div>');
+                                    console.log("OTP not approved")
+                                }
+                            });
                         } else {
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                             // console.log("this account is locked")
@@ -288,7 +288,7 @@
                 var password = $(".password").val();
 
                 var payload = {
-                    isEncoded : false,
+                    encoded : false,
                     username    : email,
                     password : password
                 }
@@ -315,10 +315,10 @@
                                 localStorage.setItem('permission', JSON.stringify(permission_role));
 
                                 var data = JSON.parse(localStorage.getItem('permission'));
-                                // console.log(data)
-                                // setTimeout(function () {
-                                //     window.location.href="dashboard"
-                                // },1000);
+                                console.log(data)
+                                setTimeout(function () {
+                                    window.location.href="dashboard"
+                                },1000);
                             } else {
                                 $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                                 // console.log("this account is locked")
