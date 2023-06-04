@@ -323,7 +323,7 @@
                 }
             })
         }
-        // __table();
+        __table();
 
     } )( jQuery );
     </script>

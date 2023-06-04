@@ -231,19 +231,18 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
-                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                        // __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            // var fo = result.name;
+                        // __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
                             $('.table_body').append("<tr>"+
                                 "<td>"+data.id+"</td>"+
                                 "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
+                                "<td>"+data.fieldOfficeName+"</td>"+
                                 "<td>"+data.details+"</td>"+
-                                "<td>"+receiver+"</td>"+
+                                "<td>"+data.receiverName+"</td>"+
                                 "<td>"+data.status+"</td>")
-                        })
-                        })
+                        // })
+                        // })
                     });
                     setTimeout(function () {
                         $(document).ready(function () {

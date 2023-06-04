@@ -415,7 +415,7 @@
                                     console.log(data)
                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                     $('.user_account').append(
-                                        "<option value="+data.uuid+">"+fullname+"</option>");
+                                        '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>');
                                 });
                             } else {
                                 console.log("failed fetching user list")
@@ -432,11 +432,19 @@
             $(".btn-confirm_forward").unbind("click").on("click", function(){
                 console.log('clicked')
 
+                var fname = $('.user_account option:selected').data('fname');
+                var mname = $('.user_account option:selected').data('mname');
+                var lname = $('.user_account option:selected').data('lname');
+                var sname = $('.user_account option:selected').data('sname');
+
+                var receivername = fname + " " + mname + " " + lname + " " + sname;
+
                 var payload = {
                     "type"                  : $('.type').val(),
                     "caseloadType"          : $(".caseload").val(),
                     "senderId"              : $.cookie("uuid"),
                     "receiverId"            : $(".user_account").val(),
+                    "receiverName"          : receivername,
                     "fieldOfficeId"         : $(".field_office").val(),
                     "docketNumber"          : $(".docket_num").val(),
                     "details"               : $(".details").val(),
