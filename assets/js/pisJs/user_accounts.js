@@ -226,8 +226,8 @@
                                             "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix+"</td>"+
                                             "<td>"+data.username+"</td>"+
                                             "<td>"+data.email+"</td>"+
-                                            "<td value="+data.roleId+">"+data.name+"</td>"+
-                                            "<td>"+data.createdBy+"</td>"+
+                                            "<td value="+data.roleId+">"+data.roleName+"</td>"+
+                                            "<td>"+data.departmentId+"</td>"+
                                             "<td>"+status+"</td>"+
                                             "<td align='center' class='actions'> "+actions+"")
                                         

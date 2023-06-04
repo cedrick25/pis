@@ -324,7 +324,7 @@
                                 <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add User Account</button>
                             </div>
                             <div class="card-body">
-                                <table id="" class="table table_head">
+                                <table id="" class="table table_head" width="100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -332,7 +332,7 @@
                                             <th>Username</th>
                                             <th>Email Address</th>
                                             <th>User Role</th>
-                                            <th>Created By</th>
+                                            <th>Field Office</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
