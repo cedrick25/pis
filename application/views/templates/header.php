@@ -8,12 +8,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Probation and Parole Information System</title>
+    <title>PPIS</title>
     <meta name="description" content="Brgy Culong">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-icon.png">
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="images/guimba_logo.png"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/pis_logo.png">
 
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
