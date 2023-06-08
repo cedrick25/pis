@@ -251,7 +251,7 @@
                         $(".btn_update").unbind("click").on("click", function(){
                             var data_id = $(this).data("id");
                             console.log(data_id)
-                            __executeExternalGet('http://localhost:8088/user/'+data_id).done(function (result) {
+                            __executeExternalGet('http://ppis.probation.gov.ph:8088/user/'+data_id).done(function (result) {
                                 console.log(result);
                                 if (result.status != "ERROR") {
                                     $(".firstName_update").val(result.firstName);
