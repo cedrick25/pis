@@ -227,7 +227,7 @@
                                             "<td>"+data.username+"</td>"+
                                             "<td>"+data.email+"</td>"+
                                             "<td value="+data.roleId+">"+data.roleName+"</td>"+
-                                            "<td>"+data.departmentId+"</td>"+
+                                            "<td>"+data.departmentName+"</td>"+
                                             "<td>"+status+"</td>"+
                                             "<td align='center' class='actions'> "+actions+"")
                                         
