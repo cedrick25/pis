@@ -97,7 +97,7 @@
             $('.field_office').empty();
             $('.field_office_update').empty();
 
-            __executeExternalGet('http://ppis.probation.gov.ph:8088/department/list').done(function (result) {
+            __executeExternalGet('department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -120,7 +120,7 @@
             $('.user_roles').empty();
             $('.user_roles_update').empty();
 
-            __executeExternalGet('http://ppis.probation.gov.ph:8088/role/list').done(function (result) {
+            __executeExternalGet('role/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.user_roles').append("<option selected disabled> - - Select User Roles - - </option>");
@@ -158,7 +158,7 @@
                     "roleId"        : $(".user_roles").val(),
                 }
             console.log(payload);
-            __executeExternalPost('http://ppis.probation.gov.ph:8088/user/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('user/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -183,7 +183,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://ppis.probation.gov.ph:8088/user?page=0&size=50').done(function (result) {
+            __executeExternalGet('user?page=0&size=50').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -255,7 +255,7 @@
                         $(".btn_update").unbind("click").on("click", function(){
                             var data_id = $(this).data("id");
                             console.log(data_id)
-                            __executeExternalGet('http://ppis.probation.gov.ph:8088/user/'+data_id).done(function (result) {
+                            __executeExternalGet('user/'+data_id).done(function (result) {
                                 console.log(result);
                                 if (result.status != "ERROR") {
                                     $(".firstName_update").val(result.firstName);
