@@ -141,6 +141,10 @@ $route['pdf_generate'] = "routes/pdf_generate";
 $route['psir_evaluation'] = "routes/psir_evaluation";
 $route['psir_recommendation'] = "routes/psir_recommendation";
 $route['psir_med_history'] = "routes/psir_med_history";
+$route['docket'] = "routes/docket";
+$route['factSheetSeperate'] = "routes/factSheetSeperate";
+$route['factSheet'] = "routes/factSheet";
+$route['factSheetText'] = "routes/factSheetText";
 
 // AMS end
 

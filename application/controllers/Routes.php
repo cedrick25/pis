@@ -433,4 +433,20 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('psir_med_history');
 	}
+	public function factSheetSeperate()
+	{
+		$this->load->view('factSheetSeperate');
+	}
+	public function docket()
+	{
+		$this->load->view('docket');
+	}
+	public function factSheet()
+	{
+		$this->load->view('factSheet');
+	}
+	public function factSheetText()
+	{
+		$this->load->view('factSheetText');
+	}
 }
