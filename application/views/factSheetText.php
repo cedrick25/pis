@@ -2,15 +2,12 @@
 
 <body>
     <!-- Left Panel -->
-
-    <?php $this->load->view('templates/left-panel.php'); ?> 
     
     <!-- /#left-panel -->
 
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
-        <?php $this->load->view('templates/avatar.php'); ?> 
         <!-- /header -->
         <div class="content mt-3">
             <div class="animated fadeIn">

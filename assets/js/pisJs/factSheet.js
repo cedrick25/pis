@@ -1,4 +1,4 @@
-    ( function ( $ ) {
+( function ( $ ) {
         var ___ctx = '';
 
         var __setContext = function(newctx) {
@@ -89,77 +89,95 @@
             return d.promise();
         };
 
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
 
+        var firstName = GetURLParameter('firstName');
+        var lastName = GetURLParameter('lastName');
+        var fieldOfficeId = GetURLParameter('fieldOfficeId');
 
-
+        var payload = {
+            "firstName"      : firstName,
+            "lastName"       : lastName,
+            "fieldOfficeId"  : fieldOfficeId
+            
+        }
 
         var __tablePB = function(){
-            // $('.table_head_pb').DataTable().destroy();
-            // $('.table_body_pb').empty();
+            __executeExternalPost('http://localhost:8000/petitioner/search',JSON.stringify(payload)).done(function (result) {
+                // console.log(result);
+                // var result = result.response;
+                if (result.status != "ERROR") {
+                    // var type = docketBookResponses.type;
+                    // console.log(result.docketBookResponses)
+                    for (var i = 0; i < result.length; i++) {
+                      // console.log(result[i].docketBookResponses)
+                      var data = result[i].docketBookResponses;
+                      for (var j = 0; j < data.length; j++){
+                        var rowData = data[j]
+                        console.log(rowData)
+                        let actions = "<button class='btn btn-sm btn-success btn_viewWorksheet' type='submit' data-type='"+rowData.clientType+"' data-id='"+rowData.clientId+"'><i class='fa fa-eye'></i> View Worksheet</button> <button class='btn btn-sm btn-primary btn_viewDocuments' type='submit' data-id='"+rowData.clientId+"' data-type='"+rowData.clientType+"' data-fo='"+rowData.fieldOfficeId+"'><i class='fa fa-eye'></i> View Documents</button> <button class='btn btn-sm btn-success btn_viewClient' data-id='"+rowData.clientId+"'><i class='fa fa-eye'></i> View Client Info</button>";
+                            $('.table_body_pb').append("<tr>"+
+                                "<td></td>"+
+                                "<td>"+rowData.firstName+" "+rowData.middleName+" "+rowData.lastName+" "+rowData.suffixName+"</td>"+
+                                "<td>"+rowData.fieldOfficeName+"</td>"+
+                                "<td>"+rowData.docketNumber+"</td>"+
+                                "<td class='actions'>"+actions+"")
+                      }
+                    }
+                    $(document).ready(function () {
+                        $('.table_head_pb tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head_pb').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "40%", "targets": 4}
+                            ]        
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    });
 
-            // __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
-            //     console.log("==========")
-            //     console.log(result)
-            //     console.log("==========")
-            //         // console.log(result.name)
-            //         if (result.status != "ERROR") {
-            //             result.content.forEach(function(data){
-            //                 // __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (resultfo) {
-            //                 //     console.log(resultfo.name);
-            //                 let actions = "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"' data-type='"+data.clientType+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"' data-type='"+data.clientType+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Generate PSIR</button>";
-            //                 $('.table_body_pb').append("<tr>"+
-            //                     "<td>"+data.id+"</td>"+
-            //                     "<td>"+data.firstName+ " " +data.middleName+ " " +data.lastName+ " " +data.suffixName+"</td>"+
-            //                     "<td>"+data.sex+"</td>"+
-            //                     "<td>"+data.clientType+"</td>"+
-            //                     "<td value="+data.fieldOfficeId+">"+data.fieldOfficeName+"</td>"+
-            //                     "<td class='actions'> "+actions+"")
-            //                 // });
-            //         })  
-                    
-            //         $(document).ready(function () {
-            //             $('.table_head_pb tbody tr').each(function (idx) {
-            //                $(this).children("td:eq(0)").html(idx + 1);
-            //             });
-            //             var table = $('.table_head_pb').DataTable({
-            //                 order: [[0, 'asc']],
-            //                 "columnDefs": [
-            //                     { "width": "40%", "targets": 5 }
-            //                 ],
-            //                 searching: true // Enable search bar
-            //             });
-            //             $('.dataTables_length').addClass('bs-select');
-            //         });
-
-            //         $(".btn_worksheet").unbind("click").on("click", function(){
-            //             var client_id   = $(this).data("id");
-            //             var foid        = $(this).data("foid");
-            //             window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
-            //         })
-            //         $(".btn_view").unbind("click").on("click", function(){
-            //             var client_id = $(this).data("id");
-            //             var client_type = $(this).data("type");
-            //             // console.log(client_type)
-            //             window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id+'&client_type='+client_type;
-            //         })
-           
-            //     }
-            // })
-            $(document).ready(function () {
-                $('.table_head_pb tbody tr').each(function (idx) {
-                   $(this).children("td:eq(0)").html(idx + 1);
-                });
-                var table = $('.table_head_pb').DataTable({
-                    order: [[0, 'asc']],
-                    "columnDefs": [
-                        { "width": "40%", "targets": 5 }
-                    ],
-                    searching: true // Enable search bar
-                });
-                $('.dataTables_length').addClass('bs-select');
-            });
+                    $(".btn_viewClient").unbind("click").on("click", function(){
+                        var cId     = $(this).data("id");
+                        console.log(cId)
+                        window.location.href = 'http://localhost/pis/factSheetClientInfo?clientId='+cId;
+                    })
+                    $(".btn_viewDocuments").unbind("click").on("click", function(){
+                        var clientId     = $(this).data("id");
+                        console.log(clientId)
+                        var fieldOfficeId = $(this).data("fo")
+                        console.log(fieldOfficeId)
+                        var clientType =$(this).data("type")
+                        console.log(clientType)
+                        window.location.href = 'http://localhost/pis/factSheetUploadedDocuments?clientId='+clientId+'&clientType='+clientType+'&fieldOfficeId='+fieldOfficeId;
+                    })
+                    $(".btn_viewWorksheet").unbind("click").on("click", function(){
+                        var clientId     = $(this).data("id");
+                        console.log(clientId)
+                        // var fieldOfficeId = $(this).data("fo")
+                        // console.log(fieldOfficeId)
+                        var clientType =$(this).data("type")
+                        console.log(clientType)
+                        window.location.href = 'http://localhost/pis/factSheetText?clientId='+clientId+'&clientType='+clientType;
+                    })
+                }else{
+                    alert("failed")
+                }
+            })
+            
         }
         __tablePB();
 
 
-    } )( jQuery );
+} )( jQuery );
