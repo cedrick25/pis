@@ -1,5 +1,8 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -105,7 +108,7 @@
         var __fields = function(){
             console.log(client_id)
 
-            __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+            __executeExternalGet('petitioner/'+client_id).done(function (result) {
                 console.log(result);
                 
                 var result = result.response;
@@ -156,7 +159,7 @@
 
                         console.log(payload)
 
-                        __executeExternalPost('http://localhost:8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
@@ -181,7 +184,7 @@
         var __select = function(){
             $('.field_office_update').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");

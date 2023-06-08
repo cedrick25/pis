@@ -1,6 +1,9 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
+        
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -138,7 +141,7 @@
             // Set up an AJAX request to send the file data to the server
 
             $.ajax({
-              url: "http://localhost:8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
+              url: "file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
               type: 'POST',
               data: formData,
               contentType: false,
@@ -225,7 +228,7 @@
                             formData.append('file', blob, 'image.jpg');
                             // Make an AJAX request to upload the image
                             $.ajax({
-                                url: "http://localhost:8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
+                                url: "file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
                                 type: 'POST',
                                     data: formData,
                                     contentType: false,
@@ -313,7 +316,7 @@
 
             console.log(payload)
 
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -333,7 +336,7 @@
         })
 
 
-            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
+            __executeExternalGet('worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
                 console.log("=====identifyingData=====")
                 console.log(result)
                 console.log("=====identifyingData=====")
@@ -390,7 +393,7 @@
 
             console.log(payload)
 
-            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/identifyingData/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('worksheet/updatePetitioner/identifyingData/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

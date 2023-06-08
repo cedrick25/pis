@@ -1,6 +1,8 @@
 ( function ( $ ) {
-
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -53,7 +55,7 @@
             return d.promise();
         };
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -95,7 +97,7 @@
             $('.dep_loc').empty();
             $('.dep_loc_update').empty();
 
-            __executeExternalGet('http://localhost:8088/location/list').done(function (result) {
+            __executeExternalGet('location/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.dep_loc').append("<option selected disabled> - - Select Region - - </option>");
@@ -118,7 +120,7 @@
             $('.parent_name').empty();
             $('.parent_name_update').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.parent_name').append("<option selected disabled> - - Select Department - - </option>");
@@ -150,7 +152,7 @@
                 "locationId"    : $(".dep_loc").val()
             }
             // console.log(payload)
-            __executeExternalPost('http://localhost:8088/department/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('department/create',JSON.stringify(payload)).done(function (result) {
                 // console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -173,7 +175,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     result.forEach(function(data){
@@ -211,7 +213,7 @@
                     // console.log("clicked button update")
                     var data_id = $(this).data("id");
                     // console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
+                    __executeExternalGet('department/'+data_id).done(function (result) {
                         // console.log(result);
                         if (result.status != "ERROR") {
                             $(".dep_name_update").val(result.name);
@@ -228,7 +230,7 @@
                                     "locationId"    : $(".dep_loc_update").val()
                                 }
                                 // console.log(payload);
-                                __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                __executeExternalPost('department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     // console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');
@@ -256,7 +258,7 @@
                     // console.log("clicked button update")
                     var data_id = $(this).data("id");
                    // console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
+                    __executeExternalGet('department/'+data_id).done(function (result) {
                         // console.log(result);
                         if (result.status != "ERROR") {
                             $(".region_add").html(result.locationName);
@@ -273,7 +275,7 @@
                                     "locationId"    : result.locationId
                                 };
                                 // console.log(payload);
-                                __executeExternalPost('http://localhost:8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                __executeExternalPost('department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     // console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');
@@ -299,7 +301,7 @@
                     // console.log("clicked button update")
                     var data_id = $(this).data("id");
                     // console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/department/'+data_id).done(function (result) {
+                    __executeExternalGet('department/'+data_id).done(function (result) {
                         // console.log(result);
                         if (result.status != "ERROR") {
                             $(".region_view").html(result.locationName);
@@ -307,7 +309,7 @@
                             $(".desc_view").html(result.description);
                             if (result.parentId != 0 ) {
 
-                                __executeExternalGet('http://localhost:8088/department/'+result.parentId).done(function (result) {
+                                __executeExternalGet('department/'+result.parentId).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".parent_name_view").html(result.name);

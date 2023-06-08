@@ -1,5 +1,8 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -96,7 +99,7 @@
         //         $('.docket_num').empty();
         //         const type = this.value
         //         console.log(type)
-        //         __executeExternalGet('http://localhost:8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
+        //         __executeExternalGet('docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
         //             console.log(result)
         //             if (result.status != "ERROR") {
 
@@ -113,7 +116,7 @@
         //         });
         //     });
 
-        //     __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+        //     __executeExternalGet('department/list').done(function (result) {
         //         // console.log(result)
         //         if (result.status != "ERROR") {
         //             $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -124,7 +127,7 @@
         //             $('.field_office').on('change', function() {
         //                 $('.user_account').empty();
         //                 const dep_id = this.value
-        //                 __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
+        //                 __executeExternalGet('user/list/'+dep_id).done(function (result) {
         //                     console.log(result)
         //                     if (result.status != "ERROR") {
         //                         $(".user_display").show()
@@ -162,7 +165,7 @@
         //             "lastStatusUpdateDate"  : "",
         //         }
         //         console.log(payload)
-        //         __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+        //         __executeExternalPost('workflow/create',JSON.stringify(payload)).done(function (result) {
         //             console.log(result);
         //             if (result.status != "ERROR") {
         //             $(".form-control").val('');
@@ -186,7 +189,7 @@
                 $('.docket_num').empty();
                 const type = this.value
                 console.log(type)
-                __executeExternalGet('http://localhost:8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
+                __executeExternalGet('docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
                     console.log(result)
                     if (result.status != "ERROR") {
 
@@ -206,7 +209,7 @@
             $('.docket_num').on('change', function() {
                 const docket_number = this.value
                 console.log(docket_number)
-                __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+                __executeExternalGet('docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                     console.log("++fo++")
                     console.log(result)
                     console.log("++fo++")
@@ -247,7 +250,7 @@
             });
 
                     
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -259,7 +262,7 @@
                     $('.field_office').on('change', function() {
                         $('.user_account').empty();
                         const dep_id = this.value
-                        __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
+                        __executeExternalGet('user/list/'+dep_id).done(function (result) {
                             console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
@@ -306,7 +309,7 @@
                     "lastStatusUpdateDate"  : "",
                 }
                 console.log(payload)
-                __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                __executeExternalPost('workflow/create',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
                     if (result.status != "ERROR") {
                     $(".form-control").val('');

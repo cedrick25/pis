@@ -1,6 +1,9 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
+        
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -237,7 +240,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -257,7 +260,7 @@
             })
 
 
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/employmentHistory/'+client_id).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/employmentHistory/'+client_id).done(function (result) {
             console.log("==========")
             console.log(result)
             console.log("==========")
@@ -400,7 +403,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/employmentHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('worksheet/updatePetitioner/employmentHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

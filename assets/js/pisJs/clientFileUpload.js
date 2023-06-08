@@ -1,5 +1,8 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -136,7 +139,7 @@
             var client_type = GetURLParameter('client_type');
 
 
-            __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+            __executeExternalGet('user/'+$.cookie("uuid")).done(function (result) {
 
                 console.log(result);
                 // console.log(client_type);
@@ -151,7 +154,7 @@
 
                     $(".uploader").val(fullname);
 
-                    __executeExternalGet('http://localhost:8000/petitioner/'+client_id).done(function (result) {
+                    __executeExternalGet('petitioner/'+client_id).done(function (result) {
                         console.log(result)
                         console.log(client_id)
 
@@ -174,7 +177,7 @@
                             // console.log(form)
 
                             var settings = {
-                                "url": "http://localhost:8080/file/upload?uuid="+client_id+"&type="+client_type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
+                                "url": api+"file/upload?uuid="+client_id+"&type="+client_type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

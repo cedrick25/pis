@@ -1,6 +1,9 @@
 ( function ( $ ) {
-        var ___ctx = '';
-
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
+        
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -8,6 +11,7 @@
         var __getContext = function() {
             return ___ctx;
         };
+
 
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
@@ -52,7 +56,7 @@
             return d.promise();
         };
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -286,7 +290,7 @@
                                             "roleId"        : $(".user_roles_update").val(),
                                         }
 
-                                        __executeExternalPost('http://localhost:8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                        __executeExternalPost('user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                             console.log(result);
                                             if (result.status != "ERROR") {
                                             $(".form-control").val('');
@@ -316,7 +320,7 @@
 
                             $(".btn_activate_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('http://localhost:8088/user/active/'+data_id).done(function (result) {
+                                __executeExternalPost('user/active/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_activated').show();
@@ -345,7 +349,7 @@
 
                             $(".btn_deactivate_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('http://localhost:8088/user/inactive/'+data_id).done(function (result) {
+                                __executeExternalPost('user/inactive/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_deactivate').show();
@@ -373,7 +377,7 @@
 
                             $(".btn_restrict_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('http://localhost:8088/user/restrict/'+data_id).done(function (result) {
+                                __executeExternalPost('user/restrict/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_restrict').show();
@@ -402,7 +406,7 @@
 
                             $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('http://localhost:8088/user/remove/'+data_id).done(function (result) {
+                                __executeExternalPost('user/remove/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_remove').show();
@@ -430,7 +434,7 @@
                             console.log(data_id)
                             $(".btn_lift_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('http://localhost:8088/user/lift/'+data_id).done(function (result) {
+                                __executeExternalPost('user/lift/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_lift').show();

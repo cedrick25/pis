@@ -1,5 +1,8 @@
 ( function ( $ ) {
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -105,7 +108,7 @@
         var clientId = GetURLParameter('clientId');
         var clientType = GetURLParameter('clientType');
 
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/identifyingData/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/identifyingData/'+clientId).done(function (result) {
 
             var result = result.response;
 
@@ -137,7 +140,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/presentOffense/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/presentOffense/'+clientId).done(function (result) {
             // console.log(result)
 
             var result = result.response;
@@ -200,7 +203,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/priorRecords/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/priorRecords/'+clientId).done(function (result) {
             // console.log(result)
             var result = result.response;
 
@@ -258,7 +261,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/familyBackground/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/familyBackground/'+clientId).done(function (result) {
             // console.log(result)
             var result = result.response;
 
@@ -367,7 +370,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/socioEconomic/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/socioEconomic/'+clientId).done(function (result) {
             // console.log(result)
             var result = result.response;
 
@@ -402,7 +405,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/residenceEconomic/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/residenceEconomic/'+clientId).done(function (result) {
             // console.log(result)
             var result = result.response;
 
@@ -458,7 +461,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/spouseChildren/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/spouseChildren/'+clientId).done(function (result) {
             // console.log(result)
             var result = result.response;
 
@@ -525,7 +528,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/educationHistory/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/educationHistory/'+clientId).done(function (result) {
             // console.log(result)
             var result = result.response;
 
@@ -605,7 +608,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/employmentHistory/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/employmentHistory/'+clientId).done(function (result) {
             var result = result.response;
 
             if (result.status != "ERROR") {
@@ -650,7 +653,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/environmentalFactor/'+clientId).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/environmentalFactor/'+clientId).done(function (result) {
 
             var result = result.response;
 
