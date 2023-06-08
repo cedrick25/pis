@@ -144,9 +144,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script type="text/javascript">
-
-    </script>
+    <script src="assets/js/pisJs/docketRoutingProbation.js"></script> 
 
 </body>
 

@@ -232,7 +232,6 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('parolee_supervision_update');
 	}
-
 	public function pardonee_courtesy_investigation_create()
 	{
 		$this->load->view('pardonee_courtesy_investigation_create');
@@ -448,5 +447,13 @@ class routes extends CI_Controller {
 	public function factSheetText()
 	{
 		$this->load->view('factSheetText');
+	}
+	public function factSheetClientInfo()
+	{
+		$this->load->view('factSheetClientInfo');
+	}
+	public function factSheetUploadedDocuments()
+	{
+		$this->load->view('factSheetUploadedDocuments');
 	}
 }

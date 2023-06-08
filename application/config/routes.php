@@ -145,6 +145,8 @@ $route['docket'] = "routes/docket";
 $route['factSheetSeperate'] = "routes/factSheetSeperate";
 $route['factSheet'] = "routes/factSheet";
 $route['factSheetText'] = "routes/factSheetText";
+$route['factSheetClientInfo'] = "routes/factSheetClientInfo";
+$route['factSheetUploadedDocuments'] = "routes/factSheetUploadedDocuments";
 
 // AMS end
 
