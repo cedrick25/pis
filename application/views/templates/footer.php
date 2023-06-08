@@ -39,7 +39,13 @@
                 width: '100%',
             });
         });
-        var ___ctx = '';
+        localStorage.removeItem('api');
+        // localStorage.setItem('api', 'http://ppis.probation.gov.ph:8088/');
+        localStorage.setItem('api', 'http://localhost:8088/');
+        var api = localStorage.getItem('api');
+
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -50,7 +56,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -158,7 +164,7 @@
             });
         }
         if ($.cookie("uuid") != undefined) {
-            __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+            __executeExternalGet('user/'+$.cookie("uuid")).done(function (result) {
                 if (result.status != "ERROR") {
                     console.log("====this is user logged in=====");
                     console.log(result);
