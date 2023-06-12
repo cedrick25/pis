@@ -40,7 +40,7 @@
             });
         });
         localStorage.removeItem('api');
-        localStorage.setItem('api', 'http://ppis.probation.gov.ph:8088/');
+        localStorage.setItem('api', 'http://192.168.1.147:8088/');
         // localStorage.setItem('api', 'http://localhost:8088/');
         var api = localStorage.getItem('api');
 
