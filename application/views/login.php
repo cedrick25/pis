@@ -173,8 +173,8 @@
                                     CREATED_BY : "1",
                                     message_DATETIME : dt
                                 }
+                                console.log(payloadSMS)
                                 __executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
-                                // __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
                                     console.log(resultSMS)
                                 });
 
@@ -183,7 +183,6 @@
                                     "message_TO" : "jssantos@probation.gov.ph",
                                 }
                                 __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
-                                // __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
                                    console.log(resultemail)
                                 });
                             }
