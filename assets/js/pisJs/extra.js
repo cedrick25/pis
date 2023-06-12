@@ -123,60 +123,54 @@
                     for (var i = 0; i < result.length; i++) {
                       // console.log(result[i].docketBookResponses)
                       var data = result[i].docketBookResponses;
-                        if (data.length === 0){
-                            console.log("EMPTY ARRAY")
-                        }
-                        else{
-                            console.log("ARRAY IS NOT EMPTY")
-                        }
-                      // for (var j = 0; j < data.length; j++){
-                      //   var rowData = data[j]
-                      //   console.log(rowData)
-                      //   // let actions = "<button class='btn btn-sm btn-success btn_viewWorksheet' type='submit' data-type='"+rowData.clientType+"' data-id='"+rowData.clientId+"'><i class='fa fa-eye'></i> View Worksheet</button> <button class='btn btn-sm btn-primary btn_viewDocuments' type='submit' data-id='"+rowData.clientId+"' data-type='"+rowData.clientType+"' data-fo='"+rowData.fieldOfficeId+"'><i class='fa fa-eye'></i> View Documents</button> <button class='btn btn-sm btn-success btn_viewClient' data-id='"+rowData.clientId+"'><i class='fa fa-eye'></i> View Client Info</button>";
-                      //   //     $('.table_body_pb').append("<tr>"+
-                      //   //         "<td></td>"+
-                      //   //         "<td>"+rowData.firstName+" "+rowData.middleName+" "+rowData.lastName+" "+rowData.suffixName+"</td>"+
-                      //   //         "<td>"+rowData.fieldOfficeName+"</td>"+
-                      //   //         "<td>"+rowData.docketNumber+"</td>"+
-                      //   //         "<td class='actions'>"+actions+"")
-                      // }
+                      for (var j = 0; j < data.length; j++){
+                        var rowData = data[j]
+                        console.log(rowData)
+                        let actions = "<button class='btn btn-sm btn-success btn_viewWorksheet' type='submit' data-type='"+rowData.clientType+"' data-id='"+rowData.clientId+"'><i class='fa fa-eye'></i> View Worksheet</button> <button class='btn btn-sm btn-primary btn_viewDocuments' type='submit' data-id='"+rowData.clientId+"' data-type='"+rowData.clientType+"' data-fo='"+rowData.fieldOfficeId+"'><i class='fa fa-eye'></i> View Documents</button> <button class='btn btn-sm btn-success btn_viewClient' data-id='"+rowData.clientId+"'><i class='fa fa-eye'></i> View Client Info</button>";
+                            $('.table_body_pb').append("<tr>"+
+                                "<td></td>"+
+                                "<td>"+rowData.firstName+" "+rowData.middleName+" "+rowData.lastName+" "+rowData.suffixName+"</td>"+
+                                "<td>"+rowData.fieldOfficeName+"</td>"+
+                                "<td>"+rowData.docketNumber+"</td>"+
+                                "<td class='actions'>"+actions+"")
+                      }
                     }
-                    // $(document).ready(function () {
-                    //     $('.table_head_pb tbody tr').each(function (idx) {
-                    //        $(this).children("td:eq(0)").html(idx + 1);
-                    //     });
-                    //     var table = $('.table_head_pb').DataTable({
-                    //         order: [[0, 'asc']],
-                    //         "columnDefs": [
-                    //             { "width": "40%", "targets": 4}
-                    //         ]        
-                    //     });
-                    //     $('.dataTables_length').addClass('bs-select');
-                    // });
+                    $(document).ready(function () {
+                        $('.table_head_pb tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head_pb').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "40%", "targets": 4}
+                            ]        
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    });
 
-                    // $(".btn_viewClient").unbind("click").on("click", function(){
-                    //     var cId     = $(this).data("id");
-                    //     console.log(cId)
-                    //     window.location.href = 'http://localhost/pis/factSheetClientInfo?clientId='+cId;
-                    // })
-                    // $(".btn_viewDocuments").unbind("click").on("click", function(){
-                    //     var clientId     = $(this).data("id");
-                    //     console.log(clientId)
-                    //     var fieldOfficeId = $(this).data("fo")
-                    //     console.log(fieldOfficeId)
-                    //     var clientType =$(this).data("type")
-                    //     console.log(clientType)
-                    //     window.location.href = 'http://localhost/pis/factSheetUploadedDocuments?clientId='+clientId+'&clientType='+clientType+'&fieldOfficeId='+fieldOfficeId;
-                    // })
-                    // $(".btn_viewWorksheet").unbind("click").on("click", function(){
-                    //     var clientId     = $(this).data("id");
-                    //     console.log(clientId)
-                    //     // var fieldOfficeId = $(this).data("fo")
-                    //     // console.log(fieldOfficeId)
-                    //     var clientType =$(this).data("type")
-                    //     console.log(clientType)
-                    //     window.location.href = 'http://localhost/pis/factSheetText?clientId='+clientId+'&clientType='+clientType;
-                    // })
+                    $(".btn_viewClient").unbind("click").on("click", function(){
+                        var cId     = $(this).data("id");
+                        console.log(cId)
+                        window.location.href = 'http://localhost/pis/factSheetClientInfo?clientId='+cId;
+                    })
+                    $(".btn_viewDocuments").unbind("click").on("click", function(){
+                        var clientId     = $(this).data("id");
+                        console.log(clientId)
+                        var fieldOfficeId = $(this).data("fo")
+                        console.log(fieldOfficeId)
+                        var clientType =$(this).data("type")
+                        console.log(clientType)
+                        window.location.href = 'http://localhost/pis/factSheetUploadedDocuments?clientId='+clientId+'&clientType='+clientType+'&fieldOfficeId='+fieldOfficeId;
+                    })
+                    $(".btn_viewWorksheet").unbind("click").on("click", function(){
+                        var clientId     = $(this).data("id");
+                        console.log(clientId)
+                        // var fieldOfficeId = $(this).data("fo")
+                        // console.log(fieldOfficeId)
+                        var clientType =$(this).data("type")
+                        console.log(clientType)
+                        window.location.href = 'http://localhost/pis/factSheetText?clientId='+clientId+'&clientType='+clientType;
+                    })
                 }else{
                     alert("failed")
                 }

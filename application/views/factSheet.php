@@ -54,6 +54,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card-body" style="display:none;">
+                                <div class="tab-content pl-3 p-1" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="pb" role="tabpanel" aria-labelledby="home-tab">
+
+                                        <div class="col col-md-12">
+                                            <fieldset class="row col col-md-12">
+                                                <legend></legend>
+                                                     <div class="col col-md-4"><label for="text-input" class=" form-control-label">NO RESULTS FOUND</label></div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>

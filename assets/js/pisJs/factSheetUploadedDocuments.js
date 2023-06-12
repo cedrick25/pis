@@ -109,21 +109,19 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8080/file/list/'+clientId+'/'+clientType+'/'+fieldOfficeId).done(function (result) {
-                console.log("======")
-                console.log(result)
-                console.log("======")
+            __executeExternalGet('http://localhost:8080/file/list/'+clientType+'/'+clientId+'/'+fieldOfficeId).done(function (result) {
+                // console.log("======")
+                // console.log(result)
+                // console.log("======")
 
                 if (result.status != "ERROR") {
-                    // result.files.forEach(function(data){
-                    //     $('.table_body').append("<tr>"+
-                    //         "<td></td>"+
-                    //         "<td>"+data.kind+"</td>"+
-                    //         "<td>"+data.fileName+"</td>"+
-                    //         "<td>"+data.version+"</td>"+
-                    //         "<td class='options'><a href="+'http://localhost:8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
-                    //     )
-                    // });
+                    console.log(result)
+                    result.files.forEach(function(data){
+                        $('.table_body').append("<tr>"+
+                            "<td></td>"+
+                            "<td>"+data.fileName+"</td>"+
+                            "<td>"+data.version+"</td>")
+                    });
                     $(document).ready(function () {
                         $('.table_head tbody tr').each(function (idx) {
                            $(this).children("td:eq(0)").html(idx + 1);
@@ -131,7 +129,7 @@
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "40%", "targets": 3 }
+                                { "width": "40%", "targets": 2 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');
