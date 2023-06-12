@@ -27,7 +27,7 @@
                                                 <th>#</th>
                                                 <th>File Name</th>
                                                 <th>Version</th>
-                                                <th>Actions</th>
+                                                <!-- <th>Actions</th> -->
                                             </tr>
                                         </thead>
                                         <tbody class="table_body">
