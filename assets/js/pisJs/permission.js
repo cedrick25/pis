@@ -1,6 +1,8 @@
     ( function ( $ ) {
-
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -52,7 +54,7 @@
             return d.promise();
         };
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -92,7 +94,7 @@
         var __select = function(){
             $('.permission_add').empty();
 
-            __executeExternalGet('http://localhost:8088/permission/list').done(function (result) {
+            __executeExternalGet('permission/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.permission_add').append("<option selected value='0'> - - None - - </option>");
@@ -120,7 +122,7 @@
                   "parentId"   : $(".permission_add").val()
             }
             console.log(payload)
-            __executeExternalPost('http://localhost:8088/permission/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('permission/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -143,7 +145,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8088/permission/list').done(function (result) {
+            __executeExternalGet('permission/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     result.forEach(function(data){
@@ -174,7 +176,7 @@
                     console.log("clicked button update")
                     var data_id = $(this).data("id");
                     console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/permission/'+data_id).done(function (result) {
+                    __executeExternalGet('permission/'+data_id).done(function (result) {
                         console.log(result);
                         if (result.status != "ERROR") {
                             $(".permission_name_update").val(result.name);
@@ -189,7 +191,7 @@
                                     "type"          : $(".type_update").val(),
                                 }
                                 console.log(payload);
-                                __executeExternalPost('http://localhost:8088/permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                __executeExternalPost('permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');

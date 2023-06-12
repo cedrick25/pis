@@ -1,7 +1,9 @@
 ( function ( $ ) {
-
-        var ___ctx = '';
-
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
+        
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -9,6 +11,7 @@
         var __getContext = function() {
             return ___ctx;
         };
+
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -52,7 +55,7 @@
             return d.promise();
         };
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -100,7 +103,7 @@
              }
              console.log(payload);
 
-            __executeExternalPost('http://localhost:8088/role/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('role/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -120,7 +123,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8088/role/list').done(function (result) {
+            __executeExternalGet('role/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     result.forEach(function(data){
@@ -147,7 +150,7 @@
                     console.log("clicked button update")
                     var data_id = $(this).data("id");
                     console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/role/'+data_id).done(function (result) {
+                    __executeExternalGet('role/'+data_id).done(function (result) {
                         console.log(result);
                         if (result.status != "ERROR") {
                             $(".user_role_name_update").val(result.name);
@@ -162,7 +165,7 @@
                                     "departmentId"     : "0"
                                 }
                                 console.log(payload);
-                                __executeExternalPost('http://localhost:8088/role/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                __executeExternalPost('role/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                     $(".form-control").val('');
@@ -186,7 +189,7 @@
                     console.log("clicked button grant")
                     var data_id = $(this).data("id");
                     console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/permission/list').done(function (result) {
+                    __executeExternalGet('permission/list').done(function (result) {
                         // console.log(result);
 
                         $('.permission_list').empty();
@@ -233,7 +236,7 @@
                             "permissionList": sentence
                         }
                         console.log(payload)
-                        __executeExternalPost('http://localhost:8088/role-permission/update',JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('role-permission/update',JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                                 $('#success_grant').show();
@@ -251,7 +254,7 @@
                     var data_id = $(this).data("id");
                     console.log(data_id)
 
-                    __executeExternalGet('http://localhost:8088/role-permission/'+data_id).done(function (result_rp) {
+                    __executeExternalGet('role-permission/'+data_id).done(function (result_rp) {
                         console.log(result_rp);
 
                         $('.permission_list_update').empty();
@@ -310,7 +313,7 @@
                             "permissionList": sentence
                         }
                         console.log(payload)
-                        __executeExternalPost('http://localhost:8088/role-permission/update',JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('role-permission/update',JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                                 $('#success_grant_update').show();

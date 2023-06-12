@@ -65,9 +65,10 @@
     <?php $this->load->view('templates/footer.php'); ?> 
     <script type="text/javascript">
     ( function ( $ ) {
-
-        var ___ctx = '';
-
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -142,7 +143,7 @@
                 password : keyParts[1]
             }
             console.log(payload);
-            __executeExternalPost('http://localhost:8088/authenticate',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     if (result.authenticated == true) {
@@ -293,7 +294,7 @@
                     password : password
                 }
                 console.log(payload);
-                __executeExternalPost('http://localhost:8088/authenticate',JSON.stringify(payload)).done(function (result) {
+                __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
                     if (result.status != "ERROR") {
                         if (result.authenticated == true) {
@@ -305,7 +306,6 @@
                                 // var roleid = result.role.roleId
                                 // $.cookie("roleid", roleid);
                                 $.cookie("uuid", uuid);
-                                // localStorage.clear();
                                 
                                 // check if localstorage is clear
                                 var data = JSON.parse(localStorage.getItem('permission'));

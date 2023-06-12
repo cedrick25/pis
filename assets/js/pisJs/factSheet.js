@@ -1,5 +1,8 @@
 ( function ( $ ) {
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -114,7 +117,7 @@
         }
 
         var __tablePB = function(){
-            __executeExternalPost('http://localhost:8000/petitioner/search',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('petitioner/search',JSON.stringify(payload)).done(function (result) {
                 // console.log(result);
                 // var result = result.response;
                 if (result.status != "ERROR") {

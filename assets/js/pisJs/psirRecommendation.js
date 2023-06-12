@@ -1,6 +1,9 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
+        
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -10,7 +13,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -106,7 +109,7 @@
         var client_id = GetURLParameter('client_id');
         console.log(client_id)
         
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
 
             var result = result.response;
 
@@ -196,7 +199,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -255,7 +258,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/psirRecommendation/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('worksheet/updatePetitioner/psirRecommendation/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -274,7 +277,7 @@
 
             })
 
-        __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result) {
+        __executeExternalGet('worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result) {
             console.log("==========")
             console.log(result)
             console.log("==========")
@@ -318,7 +321,7 @@
 
         var __select = function(){
             $('.reportOffice').empty();
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.reportOffice').append("<option selected disabled> - - Select Field Office - - </option>");
