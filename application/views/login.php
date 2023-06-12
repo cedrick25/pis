@@ -66,8 +66,9 @@
     <script type="text/javascript">
     ( function ( $ ) {
         
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
+        // var api = localStorage.getItem('api');
+        // var ___ctx = api;
+        var ___ctx = "";
         console.log(___ctx)
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -143,7 +144,7 @@
                 password : keyParts[1]
             }
             console.log(payload);
-            __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('http://ppis.probation.gov.ph:8088/authenticate',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     if (result.authenticated == true) {
@@ -181,8 +182,8 @@
                                     "message_CONTENT" : "Hi " + "testt" + ", your OTP KEY is " + otp +".",
                                     "message_TO" : "jssantos@probation.gov.ph",
                                 }
-                                // __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
-                                __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                                __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                                // __executeExternalPost('http://192.168.100.3/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
                                    console.log(resultemail)
                                 });
                             }
@@ -294,7 +295,7 @@
                     password : password
                 }
                 console.log(payload);
-                __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
+                __executeExternalPost('http://ppis.probation.gov.ph:8088/authenticate',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
                     if (result.status != "ERROR") {
                         if (result.authenticated == true) {
