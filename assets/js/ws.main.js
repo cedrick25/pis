@@ -165,6 +165,44 @@ $.ws = (function() {
         return d.promise();
     };
 
+var __executeExternalPost2 = function(path, jsonObj, customLoader) {
+        var d = $.Deferred();
+        if(customLoader != ""){
+            $("#"+customLoader).show();
+            $("#"+customLoader).removeClass("hide");
+        }
+        $.ajax({
+            method: "POST",
+            url: path,
+            dataType: "json",
+            data: jsonObj
+        }).done(function (data, textStatus, jqXHR) {
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+            d.resolve(data)
+        }).fail(function (jqXHR, textStatus, errorThrown,request) {
+            console.log('---FAILED---');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+            console.log('---FAILED---');
+            
+            d.resolve({
+                status : 'ERROR',
+                message : request
+            });
+            
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+        });
+        
+        return d.promise();
+    };
+
     var __executeExternalGet = function(path, customLoader) {
         // path = $.wms.getContextPath() + path;
         var d = $.Deferred();
@@ -251,6 +289,7 @@ $.ws = (function() {
         getImgPath : __getImgPath,
         executePost : __executePost,
         executeExternalPost : __executeExternalPost,
+        executeExternalPost2 : __executeExternalPost2,
         executeGet : __executeGet,
         executeFile : __executeFile,
         executeExternalGet : __executeExternalGet,
