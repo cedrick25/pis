@@ -160,7 +160,8 @@
                                 return otp.toString(); // Convert the number to a string
                             }
                             
-                            var otp = generateOTP(); // Generate the OTP
+                            // var otp = generateOTP(); // Generate the OTP
+                            var otp = "34587"; // Generate the OTP
                             console.log(otp); // Print the OTP to the console
 
                             // function SMSEmail(){
