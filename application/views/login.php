@@ -66,9 +66,8 @@
     <script type="text/javascript">
     ( function ( $ ) {
         
-        // var api = localStorage.getItem('api');
-        // var ___ctx = api;
-        var ___ctx = "";
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
         console.log(___ctx)
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -90,7 +89,9 @@
                 dataType: "json",
                 headers: {
                     // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
+                    'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin': "*",
+                    'Access-Control-Allow-Methods': "*"
                 },
                 data: jsonObj
             }).done(function (data, textStatus, jqXHR) {
@@ -144,7 +145,7 @@
                 password : keyParts[1]
             }
             console.log(payload);
-            __executeExternalPost('http://ppis.probation.gov.ph:8088/authenticate',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     if (result.authenticated == true) {
@@ -162,31 +163,31 @@
                             var otp = generateOTP(); // Generate the OTP
                             console.log(otp); // Print the OTP to the console
 
-                            function SMSEmail(){
-                                var myDate = new Date();
-                                dt = (myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds());
+                            // function SMSEmail(){
+                            //     var myDate = new Date();
+                            //     dt = (myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds());
                                 
-                                var payloadSMS  = {
-                                    api_key : "202441593920230529142109",
-                                    message_CONTENT : "Hi " + "test"  + ", your OTP KEY is " + otp +".",
-                                    message_TO : "09066245890",
-                                    CREATED_BY : "1",
-                                    message_DATETIME : dt
-                                }
-                                console.log(payloadSMS)
-                                __executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
-                                    console.log(resultSMS)
-                                });
+                            //     var payloadSMS  = {
+                            //         api_key : "202441593920230529142109",
+                            //         message_CONTENT : "Hi " + "test"  + ", your OTP KEY is " + otp +".",
+                            //         message_TO : "09066245890",
+                            //         CREATED_BY : "1",
+                            //         message_DATETIME : dt
+                            //     }
+                            //     console.log(payloadSMS)
+                            //     __executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
+                            //         console.log(resultSMS)
+                            //     });
 
-                                var payloadEmail  = {
-                                    "message_CONTENT" : "Hi " + "testt" + ", your OTP KEY is " + otp +".",
-                                    "message_TO" : "jssantos@probation.gov.ph",
-                                }
-                                __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
-                                   console.log(resultemail)
-                                });
-                            }
-                            SMSEmail();
+                            //     var payloadEmail  = {
+                            //         "message_CONTENT" : "Hi " + "testt" + ", your OTP KEY is " + otp +".",
+                            //         "message_TO" : "jssantos@probation.gov.ph",
+                            //     }
+                            //     __executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                            //        console.log(resultemail)
+                            //     });
+                            // }
+                            // SMSEmail();
 
                             var timerInterval;
                             var duration = 300; // Duration in seconds (5 minutes)
@@ -294,7 +295,7 @@
                     password : password
                 }
                 console.log(payload);
-                __executeExternalPost('http://ppis.probation.gov.ph:8088/authenticate',JSON.stringify(payload)).done(function (result) {
+                __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
                     if (result.status != "ERROR") {
                         if (result.authenticated == true) {
