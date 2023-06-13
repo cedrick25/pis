@@ -1,7 +1,8 @@
 ( function ( $ ) {
         
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
+        // var api = localStorage.getItem('api');
+        // var ___ctx = api;
+        var ___ctx = "http://192.168.1.147:8000/";
         console.log(___ctx)
 
         var __setContext = function(newctx) {
@@ -62,7 +63,9 @@
                 dataType: "json",
                 headers: {
                     // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
+                    'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin': "*",
+                    'Access-Control-Allow-Methods': "*"
                 },
                 data: jsonObj
             }).done(function (data, textStatus, jqXHR) {

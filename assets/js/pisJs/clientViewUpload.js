@@ -124,13 +124,13 @@
                 var officeId = result.fieldOfficeId;
                 var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
                 console.log(officeId)
-                __executeExternalGet('http://localhost:8080/file/list/'+clientType+'/'+client_id+'/'+officeId).done(function (result) {
+                __executeExternalGet('file/list/'+clientType+'/'+client_id+'/'+officeId).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.files.forEach(function(data){
-                        let actions = "<a href="+'http://localhost:8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                        let actions = "<a href="+'file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+fullname+"</td>"+
