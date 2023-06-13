@@ -113,12 +113,12 @@
         // var fieldOffice = $.cookie("field_office_id")
         // console.log(fieldOffice)
 
-        __executeExternalGet('http://localhost:8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
+        __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
             if (result.status != "ERROR") {
                 console.log(result.files.length)
                 if (result.files.length != 0) {
                     console.log(result.files[0].id)
-                    $('#client_photo').attr('src', 'http://localhost:8080/file/view/'+result.files[0].id);
+                    $('#client_photo').attr('src', 'file/view/'+result.files[0].id);
                 }
             }
         })
@@ -316,7 +316,7 @@
 
             console.log(payload)
 
-            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -336,7 +336,7 @@
         })
 
 
-            __executeExternalGet('worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
+            __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
                 console.log("=====identifyingData=====")
                 console.log(result)
                 console.log("=====identifyingData=====")
@@ -393,7 +393,7 @@
 
             console.log(payload)
 
-            __executeExternalPost('worksheet/updatePetitioner/identifyingData/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/identifyingData/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

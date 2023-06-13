@@ -241,7 +241,7 @@
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -319,7 +319,7 @@
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/worksheet/updatePetitioner/spouseChildren/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/spouseChildren/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -338,7 +338,7 @@
 
             })
 
-            __executeExternalGet('http://localhost:8000/worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
+            __executeExternalGet('8000/worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")

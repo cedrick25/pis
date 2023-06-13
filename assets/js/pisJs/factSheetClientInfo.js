@@ -107,7 +107,7 @@
 
         var clientId = GetURLParameter('clientId');
 
-        __executeExternalGet('petitioner/'+clientId).done(function (result) {
+        __executeExternalGet('8000/petitioner/'+clientId).done(function (result) {
                 console.log(result);
                 
                 var result = result.response;

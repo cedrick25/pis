@@ -139,7 +139,7 @@
             var client_type = GetURLParameter('client_type');
 
 
-            __executeExternalGet('user/'+$.cookie("uuid")).done(function (result) {
+            __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
 
                 console.log(result);
                 // console.log(client_type);
@@ -154,7 +154,7 @@
 
                     $(".uploader").val(fullname);
 
-                    __executeExternalGet('petitioner/'+client_id).done(function (result) {
+                    __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                         console.log(result)
                         console.log(client_id)
 

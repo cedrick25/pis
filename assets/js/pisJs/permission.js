@@ -94,7 +94,7 @@
         var __select = function(){
             $('.permission_add').empty();
 
-            __executeExternalGet('permission/list').done(function (result) {
+            __executeExternalGet('8088/permission/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.permission_add').append("<option selected value='0'> - - None - - </option>");
@@ -122,7 +122,7 @@
                   "parentId"   : $(".permission_add").val()
             }
             console.log(payload)
-            __executeExternalPost('permission/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8088/permission/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

@@ -1,6 +1,9 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
+        
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -109,7 +112,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8080/file/list/'+clientType+'/'+clientId+'/'+fieldOfficeId).done(function (result) {
+            __executeExternalGet('8080/file/list/'+clientType+'/'+clientId+'/'+fieldOfficeId).done(function (result) {
                 // console.log("======")
                 // console.log(result)
                 // console.log("======")

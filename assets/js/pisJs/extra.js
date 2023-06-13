@@ -1,5 +1,8 @@
 ( function ( $ ) {
-        var ___ctx = '';
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -9,8 +12,9 @@
             return ___ctx;
         };
 
+
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();

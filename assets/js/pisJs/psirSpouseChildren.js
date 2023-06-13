@@ -176,7 +176,7 @@
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
             console.log(payload)
-            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -196,10 +196,10 @@
             })
 
 
-            __executeExternalGet('worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
+            __executeExternalGet('8000/worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
                 console.log("==========")
                 
-                __executeExternalGet('worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result) {
+                __executeExternalGet('8000/worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result) {
 
                     var result = result.response;
 
@@ -396,7 +396,7 @@
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
             console.log(payload)
-            __executeExternalPost('worksheet/updatePetitioner/psirSpouseChildren/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/psirSpouseChildren/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

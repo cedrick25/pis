@@ -182,7 +182,7 @@
                 password : keyParts[1]
             }
             console.log(payload);
-            __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8088/authenticate',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     if (result.authenticated == true) {
@@ -332,7 +332,7 @@
                     password : password
                 }
                 console.log(payload);
-                __executeExternalPost('authenticate',JSON.stringify(payload)).done(function (result) {
+                __executeExternalPost('8088/authenticate',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
                     if (result.status != "ERROR") {
                         if (result.authenticated == true) {

@@ -117,14 +117,14 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('petitioner/'+client_id).done(function (result) {
+            __executeExternalGet('8088/petitioner/'+client_id).done(function (result) {
 
                 console.log(result)
                 var result = result.response;
                 var officeId = result.fieldOfficeId;
                 var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
                 console.log(officeId)
-                __executeExternalGet('file/list/'+clientType+'/'+client_id+'/'+officeId).done(function (result) {
+                __executeExternalGet('8080/file/list/'+clientType+'/'+client_id+'/'+officeId).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")

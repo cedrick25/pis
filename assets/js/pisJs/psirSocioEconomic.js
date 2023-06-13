@@ -151,7 +151,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -170,9 +170,9 @@
 
             })
 
-        __executeExternalGet('worksheet/getPetitioner/socioEconomic/'+client_id).done(function (result) {
+        __executeExternalGet('8000/worksheet/getPetitioner/socioEconomic/'+client_id).done(function (result) {
                 
-                __executeExternalGet('worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result) {
+                __executeExternalGet('8000/worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result) {
 
                     var result = result.response;
 
@@ -249,7 +249,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/updatePetitioner/psirSocioEconomic/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/psirSocioEconomic/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

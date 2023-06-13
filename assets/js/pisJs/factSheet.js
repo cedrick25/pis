@@ -2,7 +2,7 @@
         
         // var api = localStorage.getItem('api');
         // var ___ctx = api;
-        var ___ctx = "http://192.168.1.147:8000/";
+        var ___ctx = "http://192.168.1.147:";
         console.log(___ctx)
 
         var __setContext = function(newctx) {
@@ -120,7 +120,7 @@
         }
 
         var __tablePB = function(){
-            __executeExternalPost('petitioner/search',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/petitioner/search',JSON.stringify(payload)).done(function (result) {
                 // console.log(result);
                 // var result = result.response;
                 if (result.status != "ERROR") {

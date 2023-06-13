@@ -40,8 +40,8 @@
             });
         });
         localStorage.removeItem('api');
-        localStorage.setItem('api', 'http://192.168.1.147:8088/');
-        // localStorage.setItem('api', 'http://localhost:8088/');
+        // localStorage.setItem('api', 'http://192.168.1.147:');
+        localStorage.setItem('api', 'http://localhost:');
         var api = localStorage.getItem('api');
 
         var ___ctx = api;
@@ -164,7 +164,7 @@
             });
         }
         if ($.cookie("uuid") != undefined) {
-            __executeExternalGet('user/'+$.cookie("uuid")).done(function (result) {
+            __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
                 if (result.status != "ERROR") {
                     console.log("====this is user logged in=====");
                     console.log(result);

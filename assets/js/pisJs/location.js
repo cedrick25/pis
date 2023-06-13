@@ -100,7 +100,7 @@
                     "address"      : $(".new_add").val(),
                     "parentId"     : "0"
                 }
-            __executeExternalPost('location/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8088/location/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -121,7 +121,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('location/list').done(function (result) {
+            __executeExternalGet('8088/location/list').done(function (result) {
                 console.log(result)
 
                 result.forEach(function(data){
@@ -148,7 +148,7 @@
 
                 $(".btn_update").unbind("click").on("click", function(){
                     var data_id = $(this).data("id");
-                    __executeExternalGet('location/'+data_id).done(function (result) {
+                    __executeExternalGet('8088/location/'+data_id).done(function (result) {
                         console.log(result);
 
                         if (result.status != "ERROR") {
@@ -163,7 +163,7 @@
                                     "parentId"  : "0"
                         }
 
-                            __executeExternalPost('location/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                            __executeExternalPost('8088/location/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                 console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');

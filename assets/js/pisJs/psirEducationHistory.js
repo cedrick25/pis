@@ -113,8 +113,8 @@
         //     $(".form-control").val('');
         // });
 
-        __executeExternalGet('worksheet/getPetitioner/educationHistory/'+client_id).done(function (result) {
-                __executeExternalGet('worksheet/getPetitioner/psirEducationHistory/'+client_id).done(function (result) {
+        __executeExternalGet('8000/worksheet/getPetitioner/educationHistory/'+client_id).done(function (result) {
+                __executeExternalGet('8000/worksheet/getPetitioner/psirEducationHistory/'+client_id).done(function (result) {
 
                             var result = result.response;
 
@@ -238,7 +238,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result){
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result){
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -309,7 +309,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/updatePetitioner/psirEducationHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/psirEducationHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

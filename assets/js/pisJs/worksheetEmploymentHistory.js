@@ -240,7 +240,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -260,7 +260,7 @@
             })
 
 
-        __executeExternalGet('worksheet/getPetitioner/employmentHistory/'+client_id).done(function (result) {
+        __executeExternalGet('8000/worksheet/getPetitioner/employmentHistory/'+client_id).done(function (result) {
             console.log("==========")
             console.log(result)
             console.log("==========")
@@ -403,7 +403,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/updatePetitioner/employmentHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/employmentHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

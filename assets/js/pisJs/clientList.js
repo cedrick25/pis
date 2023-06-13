@@ -100,7 +100,7 @@
             $('.table_head_pb').DataTable().destroy();
             $('.table_body_pb').empty();
 
-            __executeExternalGet('petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -162,73 +162,73 @@
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
 
-    __executeExternalGet('petitioner/'+client_id).done(function (result) {
+    __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
         // console.log("1st result")
         // console.log(result)
         var result = result.response;
-            __executeExternalGet('worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result2){
+            __executeExternalGet('8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result2){
                 // console.log("2nd result")
                 // console.log(result2)
 
                 var result2 = result2.response;
-                    __executeExternalGet('worksheet/getPetitioner/psirPresentOffense/'+client_id).done(function (result3){
+                    __executeExternalGet('8000/worksheet/getPetitioner/psirPresentOffense/'+client_id).done(function (result3){
                     // console.log("3rd result")
                     // console.log(result3)
 
                     var result3 = result3.response;
-                        __executeExternalGet('worksheet/getPetitioner/psirPriorRecords/'+client_id).done(function (result4){
+                        __executeExternalGet('8000/worksheet/getPetitioner/psirPriorRecords/'+client_id).done(function (result4){
                         var result4 = result4.response;
                             console.log("4th result")
                             console.log(result4)
-                            __executeExternalGet('worksheet/getPetitioner/psirFamilyBackground/'+client_id).done(function (result5){
+                            __executeExternalGet('8000/worksheet/getPetitioner/psirFamilyBackground/'+client_id).done(function (result5){
                             // console.log("5th result")
                             // console.log(result5)
 
                             var result5 = result5.response;
 
-                                __executeExternalGet('worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result6){
+                                __executeExternalGet('8000/worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result6){
                                 // console.log("6th result")
                                 // console.log(result6)
 
                                 var result6 = result6.response;
 
-                                    __executeExternalGet('worksheet/getPetitioner/psirResidenceEconomic/'+client_id).done(function (result7){
+                                    __executeExternalGet('8000/worksheet/getPetitioner/psirResidenceEconomic/'+client_id).done(function (result7){
                                     // console.log("7th result")
                                     // console.log(result7)
 
                                     var result7 = result7.response;
 
-                                        __executeExternalGet('worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result8){
+                                        __executeExternalGet('8000/worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result8){
                                         // console.log("8th result")
                                         // console.log(result8)
 
                                         var result8 = result8.response;
 
-                                            __executeExternalGet('worksheet/getPetitioner/psirEducationHistory/'+client_id).done(function (result9){
+                                            __executeExternalGet('8000/worksheet/getPetitioner/psirEducationHistory/'+client_id).done(function (result9){
                                             // console.log("9th result")
                                             // console.log(result9)
 
                                             var result9 = result9.response;
 
-                                                __executeExternalGet('worksheet/getPetitioner/psirEmploymentHistory/'+client_id).done(function (result10){
+                                                __executeExternalGet('8000/worksheet/getPetitioner/psirEmploymentHistory/'+client_id).done(function (result10){
                                                 // console.log("10th result")
                                                 // console.log(result10)
 
                                                 var result10 = result10.response;
 
-                                                    __executeExternalGet('worksheet/getPetitioner/psirEnvironmentalFactor/'+client_id).done(function (result11){
+                                                    __executeExternalGet('8000/worksheet/getPetitioner/psirEnvironmentalFactor/'+client_id).done(function (result11){
                                                 //    console.log("11th result")
                                                 //    console.log(result11)
 
                                                     var result11 = result11.response;
 
-                                                        __executeExternalGet('worksheet/getPetitioner/psirEvaluation/'+client_id).done(function (result12){
+                                                        __executeExternalGet('8000/worksheet/getPetitioner/psirEvaluation/'+client_id).done(function (result12){
                                                         // console.log("12th result")
                                                         // console.log(result12)
 
                                                         var result12 = result12.response;
 
-                                                            __executeExternalGet('worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result13){
+                                                            __executeExternalGet('8000/worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result13){
                                                 //            console.log("13th result")
                                                 //            console.log(result13)
 
@@ -899,7 +899,7 @@
         //     $('.table_head_pr').DataTable().destroy();
         //     $('.table_body_pr').empty();
 
-        //     __executeExternalGet('petitioner?page=0&size=50&type=PAROLEE').done(function (result) {
+        //     __executeExternalGet('8088/petitioner?page=0&size=50&type=PAROLEE').done(function (result) {
         //         console.log("==========")
         //         console.log(result)
         //         console.log("==========")

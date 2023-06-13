@@ -97,7 +97,7 @@
             $('.field_office').empty();
             $('.field_office_update').empty();
 
-            __executeExternalGet('department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -120,7 +120,7 @@
             $('.user_roles').empty();
             $('.user_roles_update').empty();
 
-            __executeExternalGet('role/list').done(function (result) {
+            __executeExternalGet('8088/role/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.user_roles').append("<option selected disabled> - - Select User Roles - - </option>");
@@ -158,7 +158,7 @@
                     "roleId"        : $(".user_roles").val(),
                 }
             console.log(payload);
-            __executeExternalPost('user/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8088/user/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -183,7 +183,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('user?page=0&size=50').done(function (result) {
+            __executeExternalGet('8088/user?page=0&size=50').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -255,7 +255,7 @@
                         $(".btn_update").unbind("click").on("click", function(){
                             var data_id = $(this).data("id");
                             console.log(data_id)
-                            __executeExternalGet('user/'+data_id).done(function (result) {
+                            __executeExternalGet('8088/user/'+data_id).done(function (result) {
                                 console.log(result);
                                 if (result.status != "ERROR") {
                                     $(".firstName_update").val(result.firstName);
@@ -290,7 +290,7 @@
                                             "roleId"        : $(".user_roles_update").val(),
                                         }
 
-                                        __executeExternalPost('user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                        __executeExternalPost('8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                             console.log(result);
                                             if (result.status != "ERROR") {
                                             $(".form-control").val('');
@@ -320,7 +320,7 @@
 
                             $(".btn_activate_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('user/active/'+data_id).done(function (result) {
+                                __executeExternalPost('8088/user/active/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_activated').show();
@@ -349,7 +349,7 @@
 
                             $(".btn_deactivate_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('user/inactive/'+data_id).done(function (result) {
+                                __executeExternalPost('8088/user/inactive/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_deactivate').show();
@@ -377,7 +377,7 @@
 
                             $(".btn_restrict_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('user/restrict/'+data_id).done(function (result) {
+                                __executeExternalPost('8088/user/restrict/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_restrict').show();
@@ -406,7 +406,7 @@
 
                             $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('user/remove/'+data_id).done(function (result) {
+                                __executeExternalPost('8088/user/remove/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_remove').show();
@@ -434,7 +434,7 @@
                             console.log(data_id)
                             $(".btn_lift_confirm").unbind("click").on("click", function(){
 
-                                __executeExternalPost('user/lift/'+data_id).done(function (result) {
+                                __executeExternalPost('8088/user/lift/'+data_id).done(function (result) {
                                     if (result.status != "ERROR") {
                                             $(".form-control").val('');
                                             $('#success_lift').show();

@@ -291,7 +291,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -311,7 +311,7 @@
             })
         
 
-        __executeExternalGet('worksheet/getPetitioner/familyBackground/'+client_id).done(function (result) {
+        __executeExternalGet('8000/worksheet/getPetitioner/familyBackground/'+client_id).done(function (result) {
             console.log("==========")
             console.log(result)
             console.log("==========")
@@ -512,7 +512,7 @@
             console.log(payload)
 
 
-            __executeExternalPost('worksheet/updatePetitioner/familyBackground/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/familyBackground/'+client_id,JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
