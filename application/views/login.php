@@ -286,9 +286,9 @@
                                     var permission_role = result.rolePermission
                                     localStorage.setItem('permission', JSON.stringify(permission_role));
 
-                                    // setTimeout(function () {
-                                    //     window.location.href="dashboard"
-                                    // },1000);
+                                    setTimeout(function () {
+                                        window.location.href="dashboard"
+                                    },1000);
                                 } else{
                                     $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Invalid OTP. Please enter the correct OTP to proceed." </div>');
                                     console.log("OTP not approved")
