@@ -206,8 +206,8 @@
                                 
                                 var payloadSMS  = {
                                     api_key : "202441593920230529142109",
-                                    message_CONTENT : "Hi " + "test"  + ", your OTP KEY is " + otp +".",
-                                    message_TO : "09066245890",
+                                    message_CONTENT : "Hi " + result.firstName  + ", your OTP KEY is " + otp +".",
+                                    message_TO : result.mobileNumber,
                                     CREATED_BY : "1",
                                     message_DATETIME : dt
                                 }
@@ -217,8 +217,8 @@
                                 });
 
                                 var payloadEmail  = {
-                                    "message_CONTENT" : "Hi " + "testt" + ", your OTP KEY is " + otp +".",
-                                    "message_TO" : "jssantos@probation.gov.ph",
+                                    "message_CONTENT" : "Hi " + result.firstName+ ", your OTP KEY is " + otp +".",
+                                    "message_TO" : result.email,
                                 }
                                 __executeExternalPost2('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
                                    console.log(resultemail)
@@ -286,9 +286,9 @@
                                     var permission_role = result.rolePermission
                                     localStorage.setItem('permission', JSON.stringify(permission_role));
 
-                                    setTimeout(function () {
-                                        window.location.href="dashboard"
-                                    },1000);
+                                    // setTimeout(function () {
+                                    //     window.location.href="dashboard"
+                                    // },1000);
                                 } else{
                                     $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Invalid OTP. Please enter the correct OTP to proceed." </div>');
                                     console.log("OTP not approved")
