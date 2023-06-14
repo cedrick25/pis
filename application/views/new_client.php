@@ -240,7 +240,7 @@
                     "status"            : 1
             }
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('http://192.168.1.147:8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -259,7 +259,7 @@
         var __select = function(){
             $('.field_office').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('http://192.168.1.147:8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
