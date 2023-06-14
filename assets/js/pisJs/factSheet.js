@@ -129,6 +129,7 @@
                     for (var i = 0; i < result.length; i++) {
                       // console.log(result[i].docketBookResponses)
                       var data = result[i].docketBookResponses;
+                      console.log(data)
                         if (data.length === 0){
                             console.log("EMPTY ARRAY")
                             $('.noresult').show()
