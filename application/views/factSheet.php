@@ -39,7 +39,6 @@
                                             <table class="table table_head_pb">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
                                                         <th>Name</th>
                                                         <th>Field Office</th>
                                                         <th>Docket Number</th>
