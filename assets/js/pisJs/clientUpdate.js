@@ -108,7 +108,7 @@
         var __fields = function(){
             console.log(client_id)
 
-            __executeExternalGet('8088/petitioner/'+client_id).done(function (result) {
+            __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                 console.log(result);
                 
                 var result = result.response;
@@ -159,7 +159,7 @@
 
                         console.log(payload)
 
-                        __executeExternalPost('8088/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8088/8000/update/'+client_id,JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
