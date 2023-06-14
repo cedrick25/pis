@@ -158,7 +158,7 @@
                             $(".btn_viewClient").unbind("click").on("click", function(){
                                 var cId     = $(this).data("id");
                                 console.log(cId)
-                                window.location.href = 'http://http://192.168.1.147/pis/factSheetClientInfo?clientId='+cId;
+                                window.location.href = 'http://ppis.probation.gov.ph/pis/factSheetClientInfo?clientId='+cId;
                             })
                             $(".btn_viewDocuments").unbind("click").on("click", function(){
                                 var clientId     = $(this).data("id");
@@ -167,7 +167,7 @@
                                 console.log(fieldOfficeId)
                                 var clientType =$(this).data("type")
                                 console.log(clientType)
-                                window.location.href = 'http://http://192.168.1.147/pis/factSheetUploadedDocuments?clientId='+clientId+'&clientType='+clientType+'&fieldOfficeId='+fieldOfficeId;
+                                window.location.href = 'http://ppis.probation.gov.ph/pis/factSheetUploadedDocuments?clientId='+clientId+'&clientType='+clientType+'&fieldOfficeId='+fieldOfficeId;
                             })
                             $(".btn_viewWorksheet").unbind("click").on("click", function(){
                                 var clientId     = $(this).data("id");
@@ -176,7 +176,7 @@
                                 // console.log(fieldOfficeId)
                                 var clientType =$(this).data("type")
                                 console.log(clientType)
-                                window.location.href = 'http://http://192.168.1.147/pis/factSheetText?clientId='+clientId+'&clientType='+clientType;
+                                window.location.href = 'http://ppis.probation.gov.ph/pis/factSheetText?clientId='+clientId+'&clientType='+clientType;
                             })
                         }
                     }
