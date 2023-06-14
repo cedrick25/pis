@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body" style="display:none;">
+                            <div class="card-body noresult" style="display:none;">
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="pb" role="tabpanel" aria-labelledby="home-tab">
 

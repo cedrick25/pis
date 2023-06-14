@@ -131,9 +131,11 @@
                       var data = result[i].docketBookResponses;
                         if (data.length === 0){
                             console.log("EMPTY ARRAY")
+                            $('.noresult').show()
                         }
                         else{
                             console.log("ARRAY IS NOT EMPTY")
+                            $('.noresult').hide()
                         }
                       // for (var j = 0; j < data.length; j++){
                       //   var rowData = data[j]
