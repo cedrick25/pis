@@ -136,27 +136,27 @@
                     $(".btn_worksheet").unbind("click").on("click", function(){
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
-                        window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
                     })
                     $(".btn_update").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/client_update?client_id='+client_id;
                     })
                     $(".btn_upload").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
                         var client_type = $(this).data("type");
-                        window.location.href = 'http://localhost/pis/client_file_upload?client_id='+client_id+'&client_type='+client_type;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/client_file_upload?client_id='+client_id+'&client_type='+client_type;
                     })
                     $(".btn_view").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
                         var client_type = $(this).data("type");
                         // console.log(client_type)
-                        window.location.href = 'http://localhost/pis/client_view_upload?client_id='+client_id+'&client_type='+client_type;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/client_view_upload?client_id='+client_id+'&client_type='+client_type;
                     })
                     $(".btn_psir").unbind("click").on("click", function(){
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
-                        window.location.href = 'http://localhost/pis/psir_identifying_data?client_id='+client_id+'&field_office_id='+foid;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/psir_identifying_data?client_id='+client_id+'&field_office_id='+foid;
                     })
                     $(".btn_pdfPSIR").unbind("click").on("click", function(){
                         var client_id   = $(this).data("id");
