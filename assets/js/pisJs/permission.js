@@ -145,7 +145,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('permission/list').done(function (result) {
+            __executeExternalGet('8088/permission/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     result.forEach(function(data){
@@ -176,7 +176,7 @@
                     console.log("clicked button update")
                     var data_id = $(this).data("id");
                     console.log(data_id)
-                    __executeExternalGet('permission/'+data_id).done(function (result) {
+                    __executeExternalGet('8088/permission/'+data_id).done(function (result) {
                         console.log(result);
                         if (result.status != "ERROR") {
                             $(".permission_name_update").val(result.name);
@@ -191,7 +191,7 @@
                                     "type"          : $(".type_update").val(),
                                 }
                                 console.log(payload);
-                                __executeExternalPost('permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                __executeExternalPost('8088/permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                         $(".form-control").val('');

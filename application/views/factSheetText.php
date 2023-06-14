@@ -18,7 +18,15 @@
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Fact Sheet</strong>
                             </div>
-                                <div class="card-body">
+                            <div class="card-body noresult" style="display:none;">
+                                <div class="col col-md-12">
+                                    <fieldset class="row col col-md-12">
+                                        <legend></legend>
+                                             <div class="col col-md-4"><label for="text-input" class=" form-control-label">NO RESULTS FOUND</label></div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                                <div class="card-body identityTab">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" id="identifyingDataTab" data-toggle="tab" href="#idenData" role="tab" aria-selected="true">Identifying Data</a>

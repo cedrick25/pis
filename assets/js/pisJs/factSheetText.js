@@ -109,10 +109,13 @@
         var clientType = GetURLParameter('clientType');
 
         __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+clientId).done(function (result) {
-
-            var result = result.response;
+            console.log(result)
 
             if (result.status != "ERROR") {
+                
+                $(".noresult").hide()
+                $(".identityTab").show()
+                var result = result.response;
 
                 JSON.parse(result.jsonData)
 
@@ -138,14 +141,16 @@
             }
             else{
                 console.log("error fetching data")
+                $(".noresult").show()
+                $(".identityTab").hide()
             }
         })
         __executeExternalGet('8000/worksheet/getPetitioner/presentOffense/'+clientId).done(function (result) {
-            // console.log(result)
+            console.log(result)
 
-            var result = result.response;
 
             if (result.status != "ERROR") {
+                var result = result.response;
 
                 JSON.parse(result.jsonData)
 
@@ -204,11 +209,11 @@
             }
         })
         __executeExternalGet('8000/worksheet/getPetitioner/priorRecords/'+clientId).done(function (result) {
-            // console.log(result)
-            var result = result.response;
+            console.log(result)
 
             if (result != "ERROR"){
                 // console.log(result)
+                var result = result.response;
 
                 JSON.parse(result.jsonData)
 
@@ -262,11 +267,11 @@
             }
         })
         __executeExternalGet('8000/worksheet/getPetitioner/familyBackground/'+clientId).done(function (result) {
-            // console.log(result)
-            var result = result.response;
+            console.log(result)
 
             if (result != "ERROR"){
                 // console.log(result)
+                var result = result.response;
 
                 JSON.parse(result.jsonData)
 
@@ -371,11 +376,11 @@
             }
         })
         __executeExternalGet('8000/worksheet/getPetitioner/socioEconomic/'+clientId).done(function (result) {
-            // console.log(result)
-            var result = result.response;
+            console.log(result)
 
             if (result != "ERROR"){
                 // console.log(result)
+                var result = result.response;
 
                 JSON.parse(result.jsonData)
 
@@ -406,12 +411,12 @@
             }
         })
         __executeExternalGet('8000/worksheet/getPetitioner/residenceEconomic/'+clientId).done(function (result) {
-            // console.log(result)
-            var result = result.response;
+            console.log(result)
 
             if (result != "ERROR"){
                 // console.log(result)
 
+                var result = result.response;
                 JSON.parse(result.jsonData)
 
                 // console.log(JSON.parse(result.jsonData))
@@ -462,12 +467,12 @@
             }
         })
         __executeExternalGet('8000/worksheet/getPetitioner/spouseChildren/'+clientId).done(function (result) {
-            // console.log(result)
-            var result = result.response;
+            console.log(result)
 
             if (result != "ERROR"){
                 // console.log(result)
 
+                var result = result.response;
                 JSON.parse(result.jsonData)
 
                 // console.log(JSON.parse(result.jsonData))
@@ -529,12 +534,12 @@
             }
         })
         __executeExternalGet('8000/worksheet/getPetitioner/educationHistory/'+clientId).done(function (result) {
-            // console.log(result)
-            var result = result.response;
+            console.log(result)
 
             if (result != "ERROR"){
                 // console.log(result)
 
+                var result = result.response;
                 JSON.parse(result.jsonData)
 
                 // console.log(JSON.parse(result.jsonData))

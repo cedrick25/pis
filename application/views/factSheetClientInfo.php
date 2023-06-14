@@ -20,7 +20,15 @@
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Client Info</strong>
                             </div>
-                                <div class="card-body">
+                            <div class="card-body noresult" style="display:none;">
+                                <div class="col col-md-12">
+                                    <fieldset class="row col col-md-12">
+                                        <legend></legend>
+                                             <div class="col col-md-4"><label for="text-input" class=" form-control-label">NO RESULTS FOUND</label></div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                                <div class="card-body clientInfo">
                                     <fieldset class="row col col-md-12">
                                         <legend>Client</legend>
                                             <div class="client">
