@@ -159,7 +159,7 @@
 
                         console.log(payload)
 
-                        __executeExternalPost('8088/8000/update/'+client_id,JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
