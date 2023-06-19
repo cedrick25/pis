@@ -1,15 +1,14 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -110,14 +109,14 @@
         var id = GetURLParameter('id');
         var __fields = function(){
 
-            __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
+            __executeExternalGet('8000/workflow/'+id).done(function (result) {
                 console.log(result);
 
                 var result = result.response;
                 if (result.status != "ERROR") {
-                        __executeExternalGet('http://localhost:8088/department/'+result.fieldOfficeId).done(function (result2) {
+                        __executeExternalGet('8088/department/'+result.fieldOfficeId).done(function (result2) {
                             var fo = result2.name;
-                        __executeExternalGet('http://localhost:8088/user/'+result.senderId).done(function (result3) {
+                        __executeExternalGet('8088/user/'+result.senderId).done(function (result3) {
                             var senderId = result3.firstName+" "+result3.middleName+" "+result3.lastName+" "+result3.suffix;
                             $(".docket_number").html(result.docketNumber);
                             $(".type").html(result.type);
@@ -141,7 +140,7 @@
                                 "lastStatusUpdateDate"  : "",
                             }
                             console.log(payload)
-                            __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                            __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {
                                 console.log(result);
                                 if (result.status != "ERROR") {
                                 $(".form-control").val('');
