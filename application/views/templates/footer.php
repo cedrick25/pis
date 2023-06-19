@@ -131,10 +131,6 @@
             return d.promise();
         };
 
-        const roleId = ["1"];
-        if (roleId.includes("1")) {
-            $(".org_module").show()
-        }
         var data = JSON.parse(localStorage.getItem('permission'));
         console.log(data)
 
@@ -172,6 +168,15 @@
                     $(".f_name").html(result.username);
                     var field_office_id = result.departmentId
                     $.cookie("field_office_id", field_office_id);
+
+                    // const roleId = ["1"];
+                    // if (roleId.includes("1")) {
+                    //     $(".org_module").show()
+                    // }
+
+                    if (result.roleId == "1" {
+                        $(".org_module").show()
+                    }
                     // result.permissions.forEach(function(data){
                     //     if (data.type == "ACTION") {
                     //         // console.log(data.value)
