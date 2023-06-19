@@ -88,29 +88,7 @@
             return d.promise();
         };
 
-        var __select = function(){
-            $('.field_office').empty();
-            $('.field_office_update').empty();
 
-            __executeExternalGet('8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        console.log(data)
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.field_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-
-                    });
-                } else {
-                    console.log("failed fetching department list")
-                }
-            })
-        }
-        __select();
 
         var __table = function(){
             $('.table_head').DataTable().destroy();
@@ -143,7 +121,7 @@
                             var table = $('.table_head').DataTable({
                                 order: [[0, 'asc']],
                                 "columnDefs": [
-                                    // { "width": "30%", "targets": 6 }
+                                    { "width": "40%", "targets": 5 }
                                 ]
                             });
                             $('.dataTables_length').addClass('bs-select');
@@ -169,19 +147,14 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        __executeExternalGet('8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('8088/user/'+data.receiverId).done(function (result) {
-                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            $('.table_body_sup').append("<tr>"+
-                                "<td>"+data.id+"</td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>")
-                        })
-                        })
+                        var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                        $('.table_body_sup').append("<tr>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.docketNumber+"</td>"+
+                            "<td>"+fo+"</td>"+
+                            "<td>"+data.details+"</td>"+
+                            "<td>"+receiver+"</td>"+
+                            "<td>"+data.status+"</td>")
                     })
                     setTimeout(function () {
                         $(document).ready(function () {
@@ -206,4 +179,28 @@
             })
         }
         __table_sup();
+
+        var __select = function(){
+            $('.field_office').empty();
+            $('.field_office_update').empty();
+
+            __executeExternalGet('8088/department/list').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        console.log(data)
+                        $('.field_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                        $('.field_office_update').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+
+                    });
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
+        }
+        __select();
     } )( jQuery );
