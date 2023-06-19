@@ -141,7 +141,7 @@
             // Set up an AJAX request to send the file data to the server
 
             $.ajax({
-              url: "file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
+              url: api+"file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
               type: 'POST',
               data: formData,
               contentType: false,
@@ -228,7 +228,7 @@
                             formData.append('file', blob, 'image.jpg');
                             // Make an AJAX request to upload the image
                             $.ajax({
-                                url: "file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
+                                url: api+"file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
                                 type: 'POST',
                                     data: formData,
                                     contentType: false,
