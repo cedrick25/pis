@@ -122,7 +122,7 @@
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/supervision_docket_update?docket_number='+docket_number;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/supervision_docket_update?docket_number='+docket_number;
                     })
 
                     $(".btn_remove").unbind("click").on("click", function(){
