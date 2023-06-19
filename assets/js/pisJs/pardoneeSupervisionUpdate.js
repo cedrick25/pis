@@ -102,7 +102,7 @@
 
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('http://8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result);
                 console.log(docket_number)
                 var result = result.response;
@@ -221,7 +221,7 @@
                         }
 
                         console.log(payload)
-                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
@@ -244,7 +244,7 @@
         var __select = function(){
             $('.ref_office_update').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
