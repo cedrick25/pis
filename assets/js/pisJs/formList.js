@@ -1,5 +1,7 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +12,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -93,13 +95,13 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8080/file/list/FORM').done(function (result) {
+            __executeExternalGet('8080/file/list/FORM').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.files.forEach(function(data){
-                        let actions = "<a href="+'http://localhost:8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-download form_download' style='display:none;' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                        let actions = "<a href="+'8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-download form_download' style='display:none;' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.fileName+"</td>"+
@@ -111,9 +113,9 @@
                         });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "20%", "targets": 5 }
-                            // ]
+                            "columnDefs": [
+                                { "width": "50%", "targets": 2 }
+                            ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });               
@@ -121,5 +123,11 @@
             })
         }
         __table();
+
+        $(".btn_add").unbind("click").on("click", function(){
+            // var client_id   = $(this).data("id");
+            // var foid        = $(this).data("foid");
+            window.location.href = 'http://ppis.probation.gov.ph/pis/form_upload';
+        })
 
     } )( jQuery );

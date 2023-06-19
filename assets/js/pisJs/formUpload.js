@@ -1,5 +1,7 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +12,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -88,6 +90,7 @@
             
             return d.promise();
         };
+
         var __executeFile = function(path, jsonObj) {
             var d = $.Deferred();
             $.ajax({
@@ -132,7 +135,7 @@
             }
         }
 
-            __executeExternalGet('http://localhost:8088/user/'+$.cookie("uuid")).done(function (result) {
+            __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
 
                 console.log(result);
 
@@ -163,7 +166,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
 
                             var settings = {
-                                "url": "http://localhost:8080/file/upload?uuid="+"00000"+"&type="+"FORM"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
+                                "url": api+"8080/file/upload?uuid="+"00000"+"&type="+"FORM"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,
@@ -186,20 +189,6 @@
 
                                 }
                             });
-
-
-                            // var formdata = new FormData();
-                            // formdata.append("file", fileToUpload, fileToUpload.name);
-                            // console.log(formdata)
-                            // __executeFile("http://localhost:8080/file/upload?uuid="+$.cookie('uuid')+"&type="+$('.type').val()+"&createdby="+$('.uploader').val()+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,formdata).done(function (result) {
-                            //     console.log(result)
-                            //     if(result){
-                            //         // list_upload();
-
-                            //     }else{
-                            //         // alert ("upload Failed");
-                            //     }
-                            // });
                         }
                     })
 

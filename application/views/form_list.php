@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Forms List</strong>
-                                <a href="form_upload"> <button class="btn btn-sm btn-success btn_add float-right form_add"style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Document</button> </a>
+                                <button class="btn btn-sm btn-success btn_add float-right form_add"style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Document</button>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">
