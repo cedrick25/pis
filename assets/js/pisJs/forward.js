@@ -1,15 +1,14 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -112,7 +111,7 @@
         console.log(id)
         var __fields = function(){
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -123,7 +122,7 @@
                     $('.field_office').on('change', function() {
                         $('.user_account').empty();
                         const dep_id = this.value
-                        __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
+                        __executeExternalGet('8088/user/list/'+dep_id).done(function (result) {
                             // console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
@@ -144,13 +143,13 @@
                     console.log("failed fetching department list")
                 }
             })
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 // console.log(result);
                 var result = result.response;
 
                 if (result.status != "ERROR") {
 
-                    __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
+                    __executeExternalGet('8000/workflow/'+id).done(function (result) {
                         console.log(result);
 
                         var result = result.response;
@@ -177,7 +176,7 @@
                                 "lastStatusUpdateDate"  : "",
                             }
 
-                            __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                            __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {
                                 console.log(result);
                                 if (result.status != "ERROR") {
                                 $(".form-control").val('');
