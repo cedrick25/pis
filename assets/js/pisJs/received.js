@@ -98,9 +98,9 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        __executeExternalGet('8088/user/'+data.senderId).done(function (result) {
-                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            var field = result.departmentId;
+                        // __executeExternalGet('8088/user/'+data.senderId).done(function (result) {
+                            // var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                            // var field = result.departmentId;
                             let actions;
                             switch (data.approvalStatus) {
                             case "COMPLETED":
@@ -115,9 +115,9 @@
                                 "<td>"+data.docketNumber+"</td>"+
                                 "<td>"+data.fieldOfficeName+"</td>"+
                                 "<td>"+data.details+"</td>"+
-                                "<td>"+senderId+"</td>"+
+                                "<td>"+data.senderName+"</td>"+
                                 "<td align='center' class='actions'>"+actions+"")
-                        });
+                        // });
                     });
                     setTimeout(function () {
                     $(document).ready(function () {
