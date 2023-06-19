@@ -153,7 +153,7 @@
 
         var __selectclient = function(){
             $('.pb_client_type_sup_update').empty();
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.pb_client_type_sup_update').append("<option selected disabled> - - Select Client - - </option>");
@@ -172,7 +172,7 @@
 
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result);
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
@@ -332,7 +332,7 @@
                               "militaryCourt": $(".military_court_update").val()
                         }
 
-                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
@@ -355,7 +355,7 @@
         var __select = function(){
             $('.field_office_update').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('http://8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
