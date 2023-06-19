@@ -122,6 +122,7 @@
 
 
                     $(".firstName_update").val(result.firstName);
+                    $(".client_type_update").val(result.clientType).trigger("change");
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
