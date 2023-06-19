@@ -1,4 +1,5 @@
     ( function ( $ ) {
+        var api = localStorage.getItem('api');
         var ___ctx = '';
 
         var __setContext = function(newctx) {
