@@ -101,7 +101,7 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.files.forEach(function(data){
-                        let actions = "<a href="+'8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-download form_download' style='display:none;' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                        let actions = "<a href="+api+'8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-download form_download' style='display:none;' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.fileName+"</td>"+
