@@ -104,7 +104,7 @@
 
         var docket_number = GetURLParameter('docket_number');
         var type = GetURLParameter('type');
-        var fi = GetURLParameter('fi')
+        var fi = $.cookie("field_office_id");
 
         console.log(docket_number)
         console.log(type)
