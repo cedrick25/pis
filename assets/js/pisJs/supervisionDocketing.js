@@ -1,15 +1,14 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -93,7 +92,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/PIS_SUP/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/docketbook/list/PIS_SUP/'+$.cookie("field_office_id")).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -132,7 +131,7 @@
                         $(".docket").html(docket_number)
                         $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
+                            __executeExternalPost('8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
                                 if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#success_remove').show();
