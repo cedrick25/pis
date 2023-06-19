@@ -1,15 +1,14 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -88,36 +87,7 @@
             
             return d.promise();
         };
-        var __executeFile = function(path, jsonObj) {
-            var d = $.Deferred();
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                cache: false,
-                "mimeType": "multipart/form-data",
-                processData: false,
-                contentType: false,
-                /*data: JSON.stringify(jsonObj)*/
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                d.resolve(data);
-                $(".loadDiv").hide();
-                $(".overlay-back").hide();
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : errorThrown
-                });
-            });
-            return d.promise();
-        };
+
         
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
@@ -144,7 +114,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
 
                 console.log(result)
                 var result = result.response;
@@ -154,7 +124,7 @@
                 // console.log (client_type)
                 // console.log (docket_num)
 
-                __executeExternalGet('http://localhost:8080/file/list/'+type+'/'+docket_number+'/'+fi).done(function (result) {
+                __executeExternalGet('8080/file/list/'+type+'/'+docket_number+'/'+fi).done(function (result) {
                 console.log("======")
                 console.log(result)
                 console.log("======")
@@ -188,7 +158,7 @@
         list_upload();
         
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
                 console.log(result);
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -206,7 +176,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
 
                             var settings = {
-                                "url": "http://localhost:8080/file/upload?uuid="+result.docketNumber+"&type="+result.type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+fi,
+                                "url": "8080/file/upload?uuid="+result.docketNumber+"&type="+result.type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+fi,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

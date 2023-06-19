@@ -204,8 +204,8 @@
                 // console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
-                        __executeExternalGet('8088/user/'+data.senderId).done(function (result) {
-                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
+                        // __executeExternalGet('8088/user/'+data.senderId).done(function (result) {
+                            // var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
                             var field = result.departmentId;
                             let actions;
                             switch (data.approvalStatus) {
@@ -221,9 +221,9 @@
                                 "<td>"+data.docketNumber+"</td>"+
                                 "<td>"+data.fieldOfficeName+"</td>"+
                                 "<td>"+data.details+"</td>"+
-                                "<td>"+senderId+"</td>"+
+                                "<td>"+data.senderName+"</td>"+
                                 "<td align='center' class='actions'>"+actions+"")
-                        });
+                        // });
                     });
                     setTimeout(function () {
                     $(document).ready(function () {
@@ -232,9 +232,9 @@
                         });
                         var table = $('.table_head_sup').DataTable({
                             order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "40%", "targets": 5 }
-                            // ]
+                            "columnDefs": [
+                                { "width": "40%", "targets": 5 }
+                            ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     }); 
