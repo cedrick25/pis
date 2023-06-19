@@ -117,37 +117,37 @@
             __executeExternalGet('8088/petitioner/'+client_id).done(function (result) {
 
                 console.log(result)
-                var result = result.response;
-                var officeId = result.fieldOfficeId;
-                var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
-                console.log(officeId)
-                __executeExternalGet('8080/file/list/'+clientType+'/'+client_id+'/'+$.cookie("field_office_id")).done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.files.forEach(function(data){
-                        let actions = "<a href="+'file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
-                        $('.table_body').append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+fullname+"</td>"+
-                            "<td>"+data.fileName+"</td>"+
-                            "<td align='center' class='actions'> "+actions+"")
-                    });
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "60%", "targets": 3 }
-                            ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    });               
-                }
-                })
+                // var result = result.response;
+                // var officeId = result.fieldOfficeId;
+                // var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
+                // console.log(officeId)
+                // __executeExternalGet('8080/file/list/'+clientType+'/'+client_id+'/'+$.cookie("field_office_id")).done(function (result) {
+                // console.log("==========")
+                // console.log(result)
+                // console.log("==========")
+                // if (result.status != "ERROR") {
+                //     result.files.forEach(function(data){
+                //         let actions = "<a href="+'file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                //         $('.table_body').append("<tr>"+
+                //             "<td>"+data.id+"</td>"+
+                //             "<td>"+fullname+"</td>"+
+                //             "<td>"+data.fileName+"</td>"+
+                //             "<td align='center' class='actions'> "+actions+"")
+                //     });
+                //     $(document).ready(function () {
+                //         $('.table_head tbody tr').each(function (idx) {
+                //            $(this).children("td:eq(0)").html(idx + 1);
+                //         });
+                //         var table = $('.table_head').DataTable({
+                //             order: [[0, 'asc']],
+                //             "columnDefs": [
+                //                 { "width": "60%", "targets": 3 }
+                //             ]
+                //         });
+                //         $('.dataTables_length').addClass('bs-select');
+                //     });               
+                // }
+                // })
 
             })    
             
