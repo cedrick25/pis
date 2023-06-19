@@ -108,7 +108,7 @@
 
         var client_id = GetURLParameter('client_id');
         var type = GetURLParameter('type');
-        var officeid = GetURLParameter('fieldOfficeId');
+        var officeid = $.cookie("field_office_id");
         var clientType = GetURLParameter('client_type');
 
         console.log(client_id)
@@ -124,7 +124,7 @@
                 var officeId = result.fieldOfficeId;
                 var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
                 console.log(officeId)
-                __executeExternalGet('8080/file/list/'+clientType+'/'+client_id+'/'+officeId).done(function (result) {
+                __executeExternalGet('8080/file/list/'+clientType+'/'+client_id+'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -143,9 +143,9 @@
                         });
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "20%", "targets": 5 }
-                            // ]
+                            "columnDefs": [
+                                { "width": "60%", "targets": 3 }
+                            ]
                         });
                         $('.dataTables_length').addClass('bs-select');
                     });               
