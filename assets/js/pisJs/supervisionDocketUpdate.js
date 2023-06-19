@@ -354,7 +354,7 @@
         var __select = function(){
             $('.field_office_update').empty();
 
-            __executeExternalGet('http://8088/department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
