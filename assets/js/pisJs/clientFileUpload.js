@@ -177,7 +177,7 @@
                             // console.log(form)
 
                             var settings = {
-                                "url": api+"file/upload?uuid="+client_id+"&type="+client_type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
+                                "url": api+"8080/file/upload?uuid="+client_id+"&type="+client_type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,
