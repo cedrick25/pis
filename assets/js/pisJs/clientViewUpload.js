@@ -91,7 +91,7 @@
             
             return d.promise();
         };
-        
+
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -117,7 +117,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('8088/petitioner/'+client_id).done(function (result) {
+            __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
 
                 console.log(result)
                 var result = result.response;
