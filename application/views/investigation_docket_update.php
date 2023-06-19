@@ -47,19 +47,19 @@
                                 </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update" disabled></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Mid Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update" disabled></div>
                                 </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_update"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_update" disabled></div>
 			                    </div>
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_update"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_update" disabled></div>
 			                    </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>

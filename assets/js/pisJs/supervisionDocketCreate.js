@@ -1,16 +1,50 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
+        var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
+            // path = $.wms.getContextPath() + path;
+            var d = $.Deferred();
+            if(customLoader != ""){
+                $("#"+customLoader).show();
+                $("#"+customLoader).removeClass("hide");
+            }
+            $.ajax({
+                method: "GET",
+                url: path,
+                dataType: "json",
+            }).done(function (data, textStatus, jqXHR) {
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+                d.resolve(data)
+            }).fail(function (jqXHR, textStatus, errorThrown,request) {
+                console.log('---FAILED---');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                console.log('---FAILED---');
+                
+                d.resolve({
+                    status : 'ERROR',
+                    message : request
+                });
+                
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+            });
+            
+            return d.promise();
+        };
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -53,44 +87,6 @@
             
             return d.promise();
         };
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
-
         $(".list_true").html(`
             <div class="list_sentence_true">
                 <div class="row form-group col-md-12">
@@ -221,7 +217,7 @@
         $('.docket_num').empty();
         $('.field_office').empty();
 
-        __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+        __executeExternalGet('8088/department/list').done(function (result) {
             // console.log(result)
             if (result.status != "ERROR") {
                 $('.field_office_true').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -243,7 +239,7 @@
         var __selectclient = function(){
             $('.pb_client_sup').empty();
             $('.pb_client_sup_false').empty();
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
                 console.log("++client result++")
                 console.log(result)
                 console.log("++client result++")
@@ -272,7 +268,7 @@
         __selectclient();
 
 // manual docket is set to false
-        __executeExternalGet('http://localhost:8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
+        __executeExternalGet('8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
         console.log(result)
             if (result.status != "ERROR") {
 
@@ -288,7 +284,7 @@
                         $('.docket_num').on('change', function() {
                             $(".manual_false").show();
                             const docket = this.value
-                                __executeExternalGet('http://localhost:8000/docketbook/'+docket+'/'+$.cookie("field_office_id")).done(function (result) {
+                                __executeExternalGet('8000/docketbook/'+docket+'/'+$.cookie("field_office_id")).done(function (result) {
                                     console.log(result)
                                     var result = result.response;
                                     if (result.status != "ERROR") {
@@ -638,7 +634,7 @@
                   "militaryCourt": $(".military_court_false").val()
             }
             console.log(payload_false)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload_false)).done(function (result) {
+            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload_false)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
