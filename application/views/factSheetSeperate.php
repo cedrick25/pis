@@ -994,7 +994,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <!-- <script src="assets/js/pisJs/factSheetSeperate.js"></script> -->
+    <script src="assets/js/pisJs/factSheetSeperate.js"></script>
 
 
 </body>
