@@ -144,7 +144,7 @@
                         var table = $('.table_head').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "60%", "targets": 3 }
+                                { "width": "40%", "targets": 3 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');
