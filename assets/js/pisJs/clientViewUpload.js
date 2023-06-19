@@ -4,16 +4,13 @@
         var ___ctx = api;
         console.log(___ctx)
 
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
-
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
             path = __getContext() + path;
+            // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -91,7 +88,7 @@
             
             return d.promise();
         };
-
+        
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
