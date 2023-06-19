@@ -153,7 +153,7 @@
                             "<td>"+data.docketNumber+"</td>"+
                             "<td>"+data.fieldOfficeName+"</td>"+
                             "<td>"+data.details+"</td>"+
-                            "<td>"+receiver+"</td>"+
+                            "<td>"+receiverName+"</td>"+
                             "<td>"+data.status+"</td>")
                     })
                     setTimeout(function () {

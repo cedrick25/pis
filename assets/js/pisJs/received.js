@@ -188,7 +188,7 @@
                         var fi = $(this).data("fi");
                         window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
-                    }, 1000);
+                    }, 5000);
                 }
             })
         }
