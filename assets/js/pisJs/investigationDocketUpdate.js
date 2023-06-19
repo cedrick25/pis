@@ -150,7 +150,7 @@
             $(".form-control").val('');
         });
         var docket_number = GetURLParameter('docket_number');
-        var officeId = GetURLParameter('officeId');
+        var officeId = $.cookie("field_office_id");
         console.log(officeId)
         var __fields = function(){
             __executeExternalGet('8000/docketbook/'+docket_number+'/'+officeId).done(function (result) {

@@ -223,6 +223,7 @@
                         var docket_number = $(this).data("docket");
                         var officeId = $.cookie("field_office_id");
                         window.location.href = 'http://192.168.1.147/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
+                        // window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
                     })
                    
                 }
