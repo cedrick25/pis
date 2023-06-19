@@ -34,63 +34,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
-                                    <div class="card-header">
+                                    <!-- <div class="card-header">
                                         <strong class="card-title">Dashboard</strong>
-                                    </div>
-                                    <!-- <div class="card-body" style="height:490px; overflow:auto; background:#fff;"> -->
+                                    </div> -->
                                     <div class="card-body">
-                                        <div class="row form-group col-md-6">         
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select name="select" id="" class="form-control type select2">
-                                                    <option value="" selected disabled> - - Select Type - - </option>
-                                                    <option value="PIS_INV">Investigation</option>
-                                                    <option value="PIS_SUP">Supervision</option>
-                                                    <!-- <option value="PIS_SC">Single Carpeta</option> -->
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group col-md-6">         
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select name="select" id="" class="form-control docket_num select2">
-                                                    <option selected disabled> - - Select Docket Number - - </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col col-md-6 docket_result" style="display: none">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Workflow</h4>   
-                                                </div>
-                                            </div><br>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="an_body" style="height:490px; overflow:auto; background:#fff;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col col-md-6 docket_result" style="display: none">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Uploaded File</h4>   
-                                                </div>
-                                            </div><br>
-                                            <table class="table table_head">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>File name</th>
-                                                        <th>Date Uploaded</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body">
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                    <!-- <div class="card-body"> -->
+                                        Welcome to<strong> Parole and Probation Information System</strong>
                                     </div>
                                 </div>
                             </div>

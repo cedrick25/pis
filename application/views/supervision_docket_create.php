@@ -18,13 +18,6 @@
                     <div class="col-sm-4">
                         <div class="page-header float-left">
                             <div class="page-title">
-                                <h1>Create</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="page-header float-right">
-                            <div class="page-title">
                                 <ol class="breadcrumb text-right">
                                     <li><a href="dashboard">Dashboard</a></li>
                                     <li><a href="supervision_docketing">Supervision Docket</a></li>
@@ -42,7 +35,7 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <strong class="card-title">Create Supervision Docket</strong>
+                                        <strong class="card-title">Create Supervision</strong>
                                         <div id="prompt">
                                         </div>
                                     </div>
@@ -85,22 +78,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        <!-- <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_true"></div>
-                                                </div>
-                                                <div class="row form-group col-md-6">
-                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_true"></div>
-                                                </div>
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_true"></div>
-                                            </div>
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix_true" ></div>
-                                            </div> -->
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                                 <div class="col-12 col-md-9">
