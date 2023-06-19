@@ -110,31 +110,31 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8080/file/list/CLIENT/'+docket_number+'/'+officeid).done(function (result) {
+            __executeExternalGet('8080/file/list/CLIENT/'+docket_number+'/'+officeid).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
-                // if (result.status != "ERROR") {
-                //     result.files.forEach(function(data){
-                //         let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Download</button>";
-                //         $('.table_body').append("<tr>"+
-                //             "<td>"+data.id+"</td>"+
-                //             "<td>"+data.fileName+"</td>"+
-                //             "<td align='center' class='actions'> "+actions+"")
-                //     });
-                //     $(document).ready(function () {
-                //         $('.table_head tbody tr').each(function (idx) {
-                //            $(this).children("td:eq(0)").html(idx + 1);
-                //         });
-                //         var table = $('.table_head').DataTable({
-                //             order: [[0, 'asc']],
-                //             // "columnDefs": [
-                //             //     { "width": "20%", "targets": 5 }
-                //             // ]
-                //         });
-                //         $('.dataTables_length').addClass('bs-select');
-                //     });               
-                // }
+                if (result.status != "ERROR") {
+                    result.files.forEach(function(data){
+                        let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Download</button>";
+                        $('.table_body').append("<tr>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.fileName+"</td>"+
+                            "<td align='center' class='actions'> "+actions+"")
+                    });
+                    $(document).ready(function () {
+                        $('.table_head tbody tr').each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $('.table_head').DataTable({
+                            order: [[0, 'asc']],
+                            "columnDefs": [
+                                { "width": "40%", "targets": 5 }
+                            ]
+                        });
+                        $('.dataTables_length').addClass('bs-select');
+                    });               
+                }
             })
         }
         __table();
