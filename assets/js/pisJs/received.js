@@ -93,9 +93,9 @@
             $('.table_body').empty();
 
             __executeExternalGet('8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=PIS_INV').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
+                console.log("==========")
+                console.log(result)
+                console.log("==========")
                 if (result.status != "ERROR") {
                     result.content.forEach(function(data){
                         __executeExternalGet('8088/user/'+data.senderId).done(function (result) {
@@ -188,7 +188,7 @@
                         var fi = $(this).data("fi");
                         window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
-                    }, 5000);
+                    }, 3000);
                 }
             })
         }
