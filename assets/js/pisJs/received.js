@@ -174,19 +174,19 @@
                     $(".btn_return").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/return?docket_number='+docket_number+'&id='+id;
                     })
                     $(".btn_forward").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/forward?docket_number='+docket_number+'&id='+id;
                     })
                     $(".btn_upload").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
                         var type = $(this).data("type");
                         var fi = $(this).data("fi");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
                     }, 3000);
                 }
@@ -233,7 +233,7 @@
                         var table = $('.table_head_sup').DataTable({
                             order: [[0, 'asc']],
                             "columnDefs": [
-                                { "width": "40%", "targets": 5 }
+                                { "width": "30%", "targets": 5 }
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');
@@ -280,19 +280,19 @@
                     $(".btn_return").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/return?docket_number='+docket_number+'&id='+id;
                     })
                     $(".btn_forward").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/forward?docket_number='+docket_number+'&id='+id;
                     })
                     $(".btn_upload").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
                         var id = $(this).data("id");
                         var type = $(this).data("type");
                         var fi = $(this).data("fi");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
                     })
                     }, 1000);
                 }
