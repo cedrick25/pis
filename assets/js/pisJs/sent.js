@@ -151,7 +151,7 @@
                         $('.table_body_sup').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+fo+"</td>"+
+                            "<td>"+data.fieldOfficeName+"</td>"+
                             "<td>"+data.details+"</td>"+
                             "<td>"+receiver+"</td>"+
                             "<td>"+data.status+"</td>")
