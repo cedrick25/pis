@@ -106,14 +106,14 @@
         }
 
         var client_id = GetURLParameter('client_id');
-        var field_office_id = GetURLParameter('field_office_id');
+        var field_office_id = $.cookie("field_office_id");
         // console.log(client_id)
         // console.log(field_office_id)
 
         // var fieldOffice = $.cookie("field_office_id")
         // console.log(fieldOffice)
 
-        __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+$.cookie("field_office_id")).done(function (result) {
+        __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
             if (result.status != "ERROR") {
                 console.log(result.files.length)
                 if (result.files.length != 0) {
