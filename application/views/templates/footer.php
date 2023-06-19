@@ -174,7 +174,7 @@
                     //     $(".org_module").show()
                     // }
 
-                    if (result.roleId == "1" {
+                    if (result.roleId == "1") {
                         $(".org_module").show()
                     }
                     // result.permissions.forEach(function(data){
