@@ -100,7 +100,7 @@
                     result.content.forEach(function(data){
                         // __executeExternalGet('8088/user/'+data.senderId).done(function (result) {
                             // var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            // var field = result.departmentId;
+                            var field = result.departmentId;
                             let actions;
                             switch (data.approvalStatus) {
                             case "COMPLETED":
