@@ -153,7 +153,7 @@
         var officeId = GetURLParameter('officeId');
         console.log(officeId)
         var __fields = function(){
-            __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+officeId).done(function (result) {
                 console.log(result);
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
@@ -290,7 +290,7 @@
                             "clientId"              : clientId
                         }
 
-                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+officeId,JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $('#success_update').show();
