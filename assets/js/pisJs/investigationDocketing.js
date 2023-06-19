@@ -221,7 +221,7 @@
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        var officeId = $(this).data("oi");
+                        var officeId = $.cookie("field_office_id");
                         window.location.href = 'http://192.168.1.147/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
                     })
                    
