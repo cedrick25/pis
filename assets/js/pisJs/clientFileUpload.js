@@ -195,7 +195,7 @@
                                     setTimeout(function () {
                                         $('#success_upload').hide();
                                         window.location.reload(true);
-                                    }, 2000);
+                                    }, 1000);
                                 } else {
 
                                 }
