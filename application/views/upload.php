@@ -94,7 +94,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/uploads.js">
+    <script src="assets/js/pisJs/upload.js">
 
     </script>
 
