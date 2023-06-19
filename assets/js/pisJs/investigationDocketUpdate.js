@@ -1,16 +1,14 @@
     ( function ( $ ) {
         var api = localStorage.getItem('api');
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -89,18 +87,6 @@
             
             return d.promise();
         };
-        function GetURLParameter(sParam){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++)
-            {
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == sParam)
-                {
-                    return decodeURIComponent(sParameterName[1]);
-                }
-            }
-        }
 
         $('.plea_bargain_update').change(function(){
             if ($('.plea_bargain_update').val() == "true") {
