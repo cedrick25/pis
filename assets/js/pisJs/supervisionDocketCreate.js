@@ -523,7 +523,7 @@
                 "militaryCourt": $(".military_court_true").val()
             }
             console.log(payload_true)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload_true)).done(function (result) {
+            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload_true)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
