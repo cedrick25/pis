@@ -91,6 +91,7 @@
             
             return d.promise();
         };
+
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -189,27 +190,27 @@
             $(".form-control").val('');
         });
 
-        var __select = function(){
-            $('.field_office').empty();
+        // var __select = function(){
+        //     $('.field_office').empty();
 
-            __executeExternalGet('8080/department/list').done(function (result) {
-                // console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-                    setTimeout(function () {
-                        $(".field_office").val($.cookie("field_office_id")).trigger("change");
-                    }, 2000);
+        //     __executeExternalGet('8080/department/list').done(function (result) {
+        //         // console.log(result)
+        //         if (result.status != "ERROR") {
+        //             $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+        //             result.forEach(function(data){
+        //                 $('.field_office').append(
+        //                     "<option value="+data.id+">"+data.name+"</option>");
+        //             });
+        //             setTimeout(function () {
+        //                 $(".field_office").val($.cookie("field_office_id")).trigger("change");
+        //             }, 2000);
                     
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
+        //         } else {
+        //             console.log("failed fetching docket list")
+        //         }
+        //     })
+        // }
+        // __select();
 
 
             $(".btn-next").unbind("click").on("click", function(){
