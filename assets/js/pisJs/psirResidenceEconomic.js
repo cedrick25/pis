@@ -116,7 +116,7 @@
 
         // $(".btn-next").unbind("click").on("click", function(){
 
-        //     window.location.href = 'http://localhost/pis/psir_spouse_children?client_id='+client_id;
+        //     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_spouse_children?client_id='+client_id;
 
         // })
 
@@ -176,7 +176,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_spouse_children?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_spouse_children?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -311,7 +311,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_spouse_children?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_spouse_children?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -329,7 +329,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_identifying_data?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_identifying_data?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -340,7 +340,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_prior_records?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_prior_records?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -351,7 +351,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_present_offense?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_present_offense?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -362,7 +362,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_family_background?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_family_background?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -373,7 +373,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_socio_economic?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_socio_economic?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -384,7 +384,7 @@
         //             $(".form-control").val('');
         //                 setTimeout(function () {
         //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/psir_residence_economic?client_id='+client_id;
+        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_residence_economic?client_id='+client_id;
         //                 }, 500);
         //         });
         // });
@@ -395,7 +395,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_spouse_children?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_spouse_children?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -406,7 +406,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_education_history?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_education_history?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -417,7 +417,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_employment_history?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_employment_history?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -428,7 +428,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_environmental_factor?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_environmental_factor?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -439,7 +439,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_evaluation?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_evaluation?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -450,7 +450,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/psir_recommendation?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_recommendation?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -461,7 +461,7 @@
         //             $(".form-control").val('');
         //                 setTimeout(function () {
         //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/psir_med_history?client_id='+client_id;
+        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_med_history?client_id='+client_id;
         //                 }, 500);
         //         });
         // });
