@@ -167,7 +167,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_prior_records?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -293,7 +293,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_prior_records?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
@@ -311,7 +311,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_identifying_data?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -322,7 +322,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_prior_records?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_prior_records?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -333,7 +333,7 @@
         //             $(".form-control").val('');
         //                 setTimeout(function () {
         //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_present_offense?client_id='+client_id;
         //                 }, 500);
         //         });
         // });
@@ -345,7 +345,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_family_background?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_family_background?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -356,7 +356,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_socio_economic?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_socio_economic?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -367,7 +367,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_residence_economic?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_residence_economic?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -378,7 +378,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_spouse_children?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_spouse_children?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -389,7 +389,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_education_history?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_education_history?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -400,7 +400,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_employment_history?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_employment_history?client_id='+client_id;
                         }, 500);
                 });
         });
@@ -411,7 +411,7 @@
                     $(".form-control").val('');
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://localhost/pis/worksheet_environmental_factor?client_id='+client_id;
+                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_environmental_factor?client_id='+client_id;
                         }, 500);
                 });
         });

@@ -326,7 +326,7 @@
                         setTimeout(function () {
                         // window.location.reload(true);
                         console.log(client_id)
-                        window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_present_offense?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{
