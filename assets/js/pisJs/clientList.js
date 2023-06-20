@@ -646,7 +646,7 @@
                                                                     // Community Acceptance
 
                                                                     doc.setFontSize(10);
-                                                                    doc.text('C. FAMILY REPUTATION',130, 10 + 25);
+                                                                    doc.text('F. FAMILY REPUTATION',130, 10 + 25);
                                                                     // console.log(famStatus)
                                                                     var comAcc = JSON.parse(result11.jsonData).comAcceptance;
 

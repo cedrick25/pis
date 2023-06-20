@@ -56,7 +56,7 @@
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-                  <div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Community Background/Environmental Factors</strong>
@@ -109,16 +109,6 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-<!--                                 <fieldset class="row col col-md-12">
-                                    <legend>Recommendation</legend>
-                                    <div class="recommendation">      
-                                    </div>
-                                      <div class="row justify-content-center">
-                                        <div class="col-12">
-                                          One of two columns
-                                        </div>
-                                      </div>
-                                </fieldset> -->
                                 <fieldset>
                                     <legend>Recommendation</legend>
                                         <div class="container">
@@ -135,7 +125,6 @@
                                             <div class="row justify-content-center">
                                                 <p> <br> to be counted from the Probationer's initial report for supervision and subject to the following conditions: 
                                                 </p>
-                                                </div>
                                             </div>
                                         </div>
                                 </fieldset>
@@ -157,7 +146,7 @@
                                     <div class="col-12">
                                         <button type="button" class="addMoreRec btn btn-success btn-sm float-right">Add more</button>
                                     </div>
-                                </fieldset>                               
+                                </fieldset>  
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
