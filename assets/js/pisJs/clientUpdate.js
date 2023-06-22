@@ -201,6 +201,10 @@
         }
         __select();
 
+        setTimeout(function () {
+            __fields();
+        }, 500);
+
         var checkbox = document.getElementsByClassName("middleNameCheck")[0];
         checkbox.addEventListener("change", toggleCheckbox);
         var inputBoxMiddleName = document.getElementsByClassName("middleName_update")[0];
