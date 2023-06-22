@@ -2638,3 +2638,11 @@ input:checked + .slider:before {
 
   font-weight: bolder;
 }
+
+.italic-font {
+    font-style: italic;
+}
+
+.small-font {
+    font-size: 12px; /* Adjust the font size as needed */
+}

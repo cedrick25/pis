@@ -96,29 +96,37 @@
 
         var checkbox = document.getElementsByClassName("middleNameCheck")[0];
         checkbox.addEventListener("change", toggleCheckbox);
+        var inputBoxMiddleName = document.getElementsByClassName("middleName")[0];
 
         function toggleCheckbox() {
             if (checkbox.checked) {
-                // console.log("The checkbox is checked.");
-                $('.middleName').hide();
+                console.log("The checkbox is checked.");
+                inputBoxMiddleName.disabled = true;
+                inputBoxMiddleName.placeholder = "N/A";
             } else {
-                // console.log("The checkbox is not checked.");
-                $('.middleName').show();
+                console.log("The checkbox is not checked.");
+                inputBoxMiddleName.disabled = false;
+                inputBoxMiddleName.placeholder = "e.g A.";
             }
         }
 
+
         var checkboxUpdate = document.getElementsByClassName("middleNameCheckUpdate")[0];
         checkboxUpdate.addEventListener("change", toggleCheckboxUpdate);
+        var inputBoxMiddleNameUpdate = document.getElementsByClassName("middleName_update")[0];
 
         function toggleCheckboxUpdate() {
             if (checkboxUpdate.checked) {
                 console.log("The checkbox is checked.");
-                $('.middleName_update').hide();
+                inputBoxMiddleNameUpdate.disabled = true;
+                inputBoxMiddleNameUpdate.placeholder = "N/A";
             } else {
                 console.log("The checkbox is not checked.");
-                $('.middleName_update').show();
+                inputBoxMiddleNameUpdate.disabled = false;
+                inputBoxMiddleNameUpdate.placeholder = "e.g A.";
             }
         }
+
 
 
         var __select = function(){

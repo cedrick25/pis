@@ -207,16 +207,20 @@
 
         var checkbox = document.getElementsByClassName("middleNameCheck")[0];
         checkbox.addEventListener("change", toggleCheckbox);
+        var inputBoxMiddleName = document.getElementsByClassName("middleName_update")[0];
 
         function toggleCheckbox() {
             if (checkbox.checked) {
                 console.log("The checkbox is checked.");
-                $('.middleName_update').show();
+                inputBoxMiddleName.disabled = true;
+                inputBoxMiddleName.placeholder = "N/A";
             } else {
                 console.log("The checkbox is not checked.");
-                $('.middleName_update').hide();
+                inputBoxMiddleName.disabled = false;
+                inputBoxMiddleName.placeholder = "e.g A.";
             }
         }
+
 
 
     } )( jQuery );
