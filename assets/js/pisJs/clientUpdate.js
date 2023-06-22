@@ -120,7 +120,7 @@
                         $(".field_office_update").val(result.fieldOfficeId).trigger("change");
                         $(".client_type_update").val(result.clientType).trigger("change");
                         $(".gender_update").val(result.sex).trigger("change");
-                    }, 1000);
+                    }, 3000);
 
 
                     $(".firstName_update").val(result.firstName);
