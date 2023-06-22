@@ -99,11 +99,11 @@
 
         function toggleCheckbox() {
             if (checkbox.checked) {
-                console.log("The checkbox is checked.");
-                $('.middleName').show();
-            } else {
-                console.log("The checkbox is not checked.");
+                // console.log("The checkbox is checked.");
                 $('.middleName').hide();
+            } else {
+                // console.log("The checkbox is not checked.");
+                $('.middleName').show();
             }
         }
 
@@ -113,10 +113,10 @@
         function toggleCheckboxUpdate() {
             if (checkboxUpdate.checked) {
                 console.log("The checkbox is checked.");
-                $('.middleName_update').show();
+                $('.middleName_update').hide();
             } else {
                 console.log("The checkbox is not checked.");
-                $('.middleName_update').hide();
+                $('.middleName_update').show();
             }
         }
 

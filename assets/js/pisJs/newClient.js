@@ -155,11 +155,11 @@
 
         function toggleCheckbox() {
             if (checkbox.checked) {
-                console.log("The checkbox is checked.");
-                $('.middleName').show();
-            } else {
-                console.log("The checkbox is not checked.");
+                // console.log("The checkbox is checked.");
                 $('.middleName').hide();
+            } else {
+                // console.log("The checkbox is not checked.");
+                $('.middleName').show();
             }
         }
 
