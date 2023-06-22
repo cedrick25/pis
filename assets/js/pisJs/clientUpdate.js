@@ -119,6 +119,7 @@
 
                         $(".field_office_update").val(result.fieldOfficeId).trigger("change");
                         $(".client_type_update").val(result.clientType).trigger("change");
+                        $(".gender_update").val(result.sex).trigger("change");
                     }, 3000);
 
 
@@ -126,7 +127,7 @@
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
-                    $(".gender_update").val(result.sex);
+                    
                     $(".education_update").val(result.education);
                     $(".occupation_update").val(result.occupation);
                     $(".cc_no_update").val(result.criminalCaseNo);
