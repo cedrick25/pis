@@ -29,8 +29,8 @@
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John" class="form-control firstName_update form_capitalized"></div>
                     </div>
                     <div class="row form-group col-md-6">
-                        <div class="col col-md-3 form-check"><label class="form-control-label" for="mNameCheck">No Middle Name</label>
-                            <input type="checkbox" class="form-check-input middleNameCheckUpdate" id="mNameCheck" style="width: 20px; height: 20px;">
+                        <div class="col col-md-3 form-check"><label class="form-control-label" for="mNameCheck">No Middle Name <input type="checkbox" class="form-check-input middleNameCheckUpdate" id="mNameCheck" style="width: 20px; height: 20px;"></label>
+                           
                         </div>
                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update form_capitalized" style="display:none;"></div>
                     </div>
