@@ -100,7 +100,7 @@
             $('.table_head_pb').DataTable().destroy();
             $('.table_body_pb').empty();
 
-            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -140,7 +140,9 @@
                     })
                     $(".btn_update").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");
-                        window.location.href = 'http://ppis.probation.gov.ph/pis/client_update?client_id='+client_id;
+                        // window.location.href = 'http://ppis.probation.gov.ph/pis/client_update?client_id='+client_id;
+                        window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
+
                     })
                     $(".btn_upload").unbind("click").on("click", function(){
                         var client_id = $(this).data("id");

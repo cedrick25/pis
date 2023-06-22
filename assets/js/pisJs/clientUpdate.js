@@ -118,11 +118,11 @@
                     setTimeout(function () {
 
                         $(".field_office_update").val(result.fieldOfficeId).trigger("change");
+                        $(".client_type_update").val(result.clientType).trigger("change");
                     }, 3000);
 
 
                     $(".firstName_update").val(result.firstName);
-                    $(".client_type_update").val(result.clientType).trigger("change");
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
@@ -144,6 +144,7 @@
                         "middleName"        : $(".middleName_update").val(),
                         "lastName"          : $(".lastName_update").val(),
                         "suffixName"        : $(".suffix_update").val(),
+                        "clientType"        : $(".client_type_update").val(),
                         "sex"               : $(".gender_update").val(),
                         "education"         : $(".education_update").val(),
                         "occupation"        : $(".occupation_update").val(),
