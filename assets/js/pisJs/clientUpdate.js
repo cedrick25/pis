@@ -120,7 +120,7 @@
                         $(".field_office_update").val(result.fieldOfficeId).trigger("change");
                         $(".client_type_update").val(result.clientType).trigger("change");
                         $(".gender_update").val(result.sex).trigger("change");
-                    }, 3000);
+                    }, 1000);
 
 
                     $(".firstName_update").val(result.firstName);
@@ -200,10 +200,6 @@
             })
         }
         __select();
-
-        setTimeout(function () {
-            __fields();
-        }, 500);
 
         var checkbox = document.getElementsByClassName("middleNameCheck")[0];
         checkbox.addEventListener("change", toggleCheckbox);

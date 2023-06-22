@@ -159,6 +159,7 @@
                 console.log("The checkbox is checked.");
                 inputBoxMiddleName.disabled = true;
                 inputBoxMiddleName.placeholder = "N/A";
+                inputBoxMiddleName.value = "";
             } else {
                 console.log("The checkbox is not checked.");
                 inputBoxMiddleName.disabled = false;
