@@ -127,11 +127,9 @@
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
                     $(".suffix_update").val(result.suffixName);
-                    
                     $(".education_update").val(result.education);
                     $(".occupation_update").val(result.occupation);
                     $(".cc_no_update").val(result.criminalCaseNo);
-                    $(".field_office_update").val(result.fieldOfficeId);
                     $(".birthdate_update").val(result.birthDate);
                     $(".b_place_update").val(result.birthCity);
                     $(".address_update").val(result.permanentAddress);
