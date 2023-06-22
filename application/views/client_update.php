@@ -54,10 +54,16 @@
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName_update"></div>
 			                    </div>
-			                    <div class="row form-group col-md-6">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3 form-check"><label class="form-control-label" for="mNameCheck">Middle Name (Optional)</label>
+                                        <input type="checkbox" class="form-check-input middleNameCheck" id="mNameCheck" style="width: 20px; height: 20px;">
+                                    </div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update" style="display:none;"></div>
+                                </div>
+<!-- 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update"></div>
-			                    </div>
+			                    </div> -->
 			                    <div class="row form-group col-md-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName_update"></div>

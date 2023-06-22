@@ -93,6 +93,34 @@
             return d.promise();
         };
 
+
+        var checkbox = document.getElementsByClassName("middleNameCheck")[0];
+        checkbox.addEventListener("change", toggleCheckbox);
+
+        function toggleCheckbox() {
+            if (checkbox.checked) {
+                console.log("The checkbox is checked.");
+                $('.middleName').show();
+            } else {
+                console.log("The checkbox is not checked.");
+                $('.middleName').hide();
+            }
+        }
+
+        var checkboxUpdate = document.getElementsByClassName("middleNameCheckUpdate")[0];
+        checkboxUpdate.addEventListener("change", toggleCheckboxUpdate);
+
+        function toggleCheckboxUpdate() {
+            if (checkboxUpdate.checked) {
+                console.log("The checkbox is checked.");
+                $('.middleName_update').show();
+            } else {
+                console.log("The checkbox is not checked.");
+                $('.middleName_update').hide();
+            }
+        }
+
+
         var __select = function(){
             $('.field_office').empty();
             $('.field_office_update').empty();

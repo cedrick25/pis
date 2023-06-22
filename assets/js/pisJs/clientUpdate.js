@@ -205,5 +205,18 @@
             __fields();
         }, 500);
 
+        var checkbox = document.getElementsByClassName("middleNameCheck")[0];
+        checkbox.addEventListener("change", toggleCheckbox);
+
+        function toggleCheckbox() {
+            if (checkbox.checked) {
+                console.log("The checkbox is checked.");
+                $('.middleName_update').show();
+            } else {
+                console.log("The checkbox is not checked.");
+                $('.middleName_update').hide();
+            }
+        }
+
 
     } )( jQuery );

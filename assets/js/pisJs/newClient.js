@@ -88,6 +88,8 @@
             
             return d.promise();
         };
+
+
        
 
         $(".btn-confirm").unbind("click").on("click", function(){
@@ -146,4 +148,19 @@
             })
         }
         __select();
+
+
+        var checkbox = document.getElementsByClassName("middleNameCheck")[0];
+        checkbox.addEventListener("change", toggleCheckbox);
+
+        function toggleCheckbox() {
+            if (checkbox.checked) {
+                console.log("The checkbox is checked.");
+                $('.middleName').show();
+            } else {
+                console.log("The checkbox is not checked.");
+                $('.middleName').hide();
+            }
+        }
+
     } )( jQuery );
