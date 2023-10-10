@@ -118,7 +118,7 @@
                 console.log(result.files.length)
                 if (result.files.length != 0) {
                     console.log(result.files[0].id)
-                    $('#client_photo').attr('src', '8080/file/view/'+result.files[0].id);
+                    $('#client_photo').attr('src', api+'8080/file/view/'+result.files[0].id);
                 }
             }
         })
