@@ -141,7 +141,7 @@
             // Set up an AJAX request to send the file data to the server
 
             $.ajax({
-              url: api+"file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
+              url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
               type: 'POST',
               data: formData,
               contentType: false,
