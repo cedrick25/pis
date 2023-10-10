@@ -192,7 +192,7 @@
 
         var __selectclient = function(){
             $('.pb_client').empty();
-            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
+            __executeExternalGet('8000/petitioner/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.pb_client_type').append("<option selected disabled> - - Select Client - - </option>");

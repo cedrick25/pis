@@ -57,7 +57,6 @@
                                     <div class="col-md-6"><a id='retake' class='btn btn-block m-1 hov'><i class="fa fa-refresh"></i></a></div>
                                     <div class="col-md-6"><a id='snap' class='btn btn-block m-1 hov'><i class="fa fa-camera"></i></a></div>
                                     <!-- <div class="col-md-4"><a id='close' class='btn btn-block m-1 hov'><i class="fa fa-times"></i></a></div> -->
-
                                   </div>
                                 </div>
                             </div>
