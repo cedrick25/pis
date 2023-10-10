@@ -118,7 +118,7 @@
                 console.log(result.files.length)
                 if (result.files.length != 0) {
                     console.log(result.files[0].id)
-                    $('#client_photo').attr('src', 'file/view/'+result.files[0].id);
+                    $('#client_photo').attr('src', '8080/file/view/'+result.files[0].id);
                 }
             }
         })
@@ -228,7 +228,7 @@
                             formData.append('file', blob, 'image.jpg');
                             // Make an AJAX request to upload the image
                             $.ajax({
-                                url: api+"file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
+                                url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
                                 type: 'POST',
                                     data: formData,
                                     contentType: false,
