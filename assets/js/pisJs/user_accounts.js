@@ -228,7 +228,8 @@
                 
                     if (result.status != "ERROR") {
                             
-                                result.content.forEach(function(data){
+                                // result.content.forEach(function(data){
+                                result.forEach(function(data){
                                     var status;
                                     let actions;
                                     switch (data.accountStatus) {
