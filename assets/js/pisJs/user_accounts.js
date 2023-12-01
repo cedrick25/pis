@@ -219,7 +219,8 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('8088/user?page=0&size=2000').done(function (result) {
+            // __executeExternalGet('8088/user?page=0&size=2000').done(function (result) {
+            __executeExternalGet('8088/user/list').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
