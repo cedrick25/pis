@@ -345,7 +345,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">User Account List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add User Account</button>
+                                <!-- <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add User Account</button> -->
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">
