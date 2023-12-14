@@ -88,119 +88,140 @@
             return d.promise();
         };
 
+        var uuid = $.cookie("uuid");
 
-
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
-
-            __executeExternalGet('8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=PIS_INV').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        // __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            // var fo = result.name;
-                        // __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
-                            $('.table_body').append("<tr>"+
-                                "<td>"+data.id+"</td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+data.fieldOfficeName+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+data.receiverName+"</td>"+
-                                "<td>"+data.status+"</td>")
-                        // })
-                        // })
-                    });
-                    setTimeout(function () {
-                        $(document).ready(function () {
-                            $('.table_head tbody tr').each(function (idx) {
-                               $(this).children("td:eq(0)").html(idx + 1);
-                            });
-                            var table = $('.table_head').DataTable({
-                                order: [[0, 'asc']],
-                                "columnDefs": [
-                                    { "width": "40%", "targets": 5 }
-                                ]
-                            });
-                            $('.dataTables_length').addClass('bs-select');
+        function drawTable(type,uuid) {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "15px", "targets": [0] },
+                        { "width": "100px", "targets": [2] },
+                        { "width": "150px", "targets": [3] },
+                        { "width": "200px", "targets": [1,4] },
+                        { "width": "600px", "targets": [5] }
+                    ],
+                    "ajax": function(data, callback, settings) {
+                        const size = 10;
+                        const page = data.start / size;
+                        const apiUrl = api+"8000/workflow/sender/"+uuid+"?page="+page+"&size="+size+"&type="+type;
+                        $.ajax({
+                            url: apiUrl,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(res) {
+                                callback({
+                                    recordsTotal: res.totalElements,
+                                    recordsFiltered: res.totalElements,
+                                    data: res.content
+                                });
+                            },
+                            error: function(err) {
+                                console.error("Failed to fetch data:", err);
+                            }
                         });
-                        $(".btn_view").unbind("click").on("click", function(){
-                            var id = $(this).data("id");
-                            var docket_number = $(this).data("docket");
-                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
-                        })
-                    }, 400);
-                }
-            })
-        } 
-        __table();
-
-        var __table_sup = function(){
-            $('.table_head_sup').DataTable().destroy();
-            $('.table_body_sup').empty();
-
-            __executeExternalGet('8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=PIS_SUP').done(function (result) {
-                console.log("=====this is=====")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                        $('.table_body_sup').append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.fieldOfficeName+"</td>"+
-                            "<td>"+data.details+"</td>"+
-                            "<td>"+data.receiverName+"</td>"+
-                            "<td>"+data.status+"</td>")
-                    })
-                    setTimeout(function () {
-                        $(document).ready(function () {
-                            $('.table_head_sup tbody tr').each(function (idx) {
-                               $(this).children("td:eq(0)").html(idx + 1);
-                            });
-                            var table = $('.table_head_sup').DataTable({
-                                order: [[0, 'asc']],
-                                // "columnDefs": [
-                                //     { "width": "30%", "targets": 6 }
-                                // ]
-                            });
-                            $('.dataTables_length').addClass('bs-select');
-                        }); 
-                        $(".btn_view_sup").unbind("click").on("click", function(){
-                            var id = $(this).data("id");
-                            var docket_number = $(this).data("docket");
-                            window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
-                        })
-                    }, 400);
-                }
+                    },
+                    "columns": tableColumns()
+                });
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
+                    buttonVisibility();
+                });
             })
         }
-        __table_sup();
 
-        var __select = function(){
-            $('.field_office').empty();
-            $('.field_office_update').empty();
+        function buttonVisibility (){
+            var data = JSON.parse(localStorage.getItem('permission'));
+            if (data != null) {
+                data.forEach(function(data){
+                    if (data.type == "ACTION") {
+                        // console.log(data.value)
+                        setTimeout(function() {
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
+                            }
+                        }, 10);
+                    }else if (data.type == "VIEW") {
+                        if (!data.value) {
+                            var element = $('.' + data.detail);
+                            element.hide();
+                        }else{
+                            var element = $('.' + data.detail);
+                            element.show();
+                        }
+                    }else{
+                    }
+                });
+            }
+        }
 
-            __executeExternalGet('8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        console.log(data)
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.field_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-
-                    });
-                } else {
-                    console.log("failed fetching department list")
-                }
+        function buttonFunctionality(){
+            $(".btn_view").unbind("click").on("click", function(){
+                var id = $(this).data("id");
+                var docket_number = $(this).data("docket");
+                window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
             })
         }
-        __select();
+
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'docketNumber'
+                },
+                {
+                    "data": 'fieldOfficeName'
+                },
+                {
+                    "data": 'details',
+                },
+                {
+                    "data": 'receiverName'
+                },
+                {
+                    "data": null,
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.departmentId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                    }
+                }
+            ]
+        }
+
+        var tableInv = document.getElementById('inv_tab')
+
+        if (tableInv.classList.contains("active")) {
+            $('.table_head').DataTable().destroy();
+            var type = "PIS_INV";
+            drawTable(type,uuid)
+        }
+
+        tableInv.addEventListener('click', function() {
+            $('.table_head').DataTable().destroy();
+            var type = "PIS_INV";
+            drawTable(type,uuid)
+        });
+
+        var tableSup = document.getElementById('sup_tab')
+        tableSup.addEventListener('click', function() {
+            $('.table_head').DataTable().destroy();
+            var type = "PIS_SUP";
+            drawTable(type,uuid)
+        });
     } )( jQuery );

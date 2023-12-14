@@ -87,74 +87,152 @@
             
             return d.promise();
         };
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
 
-            __executeExternalGet('8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.response.forEach(function(data){
-                        $('.table_body').append("<tr>"+
-                            "<td></td>"+
-                            "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.receivedDateByPPO+"</td>"+
-                            "<td>"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</td>"+
-                            "<td>"+data.criminalCaseNumber+"</td>"+
-                            "<td>"+data.fieldOfficeName+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update pb_inv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pb_inv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>")
-                    });
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "30%", "targets": 6 }
-                            ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    });
+        function buttonVisibility (){
+            var data = JSON.parse(localStorage.getItem('permission'));
+            if (data != null) {
+                data.forEach(function(data){
+                    if (data.type == "ACTION") {
+                        // console.log(data.value)
+                        setTimeout(function() {
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
+                            }
+                        }, 10);
+                    }else if (data.type == "VIEW") {
+                        if (!data.value) {
+                            var element = $('.' + data.detail);
+                            element.hide();
+                        }else{
+                            var element = $('.' + data.detail);
+                            element.show();
+                        }
+                    }else{
+                    }
+                });
+            }
+        }
 
-                    $(".btn_remove").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var office_id = $(this).data("oi");
-                        $(".docket").html(docket_number)
-                        $(".btn_remove_confirm").unbind("click").on("click", function(){
+        function buttonFunctionality(){
+            $(".btn_remove").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var office_id = $(this).data("oi");
+                $(".docket").html(docket_number)
+                $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                            __executeExternalPost('8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
-                                if (result.status != "ERROR") {
-                                        $(".form-control").val('');
-                                        $('#success_remove').show();
-                                            setTimeout(function () {
-                                                $('#removeModal').modal('hide');
-                                                $('#success_remove').hide();
-                                                __table();
-                                            }, 1000);
-                                        
-                                    // $(".form-control").val('');
-                                    // $('#removeModal').modal('hide');
-                                    // __table();
-                                }else{
-                                    alert("failed")
-                                }
-                            })
-                        })
+                    __executeExternalPost('8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
+                        if (result.status != "ERROR") {
+                                $(".form-control").val('');
+                                $('#success_remove').show();
+                                    setTimeout(function () {
+                                        $('#removeModal').modal('hide');
+                                        $('#success_remove').hide();
+                                        __table();
+                                    }, 1000);
+                                
+                            // $(".form-control").val('');
+                            // $('#removeModal').modal('hide');
+                            // __table();
+                        }else{
+                            alert("failed")
+                        }
                     })
+                })
+            })
 
-                    $(".btn_update").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var officeId = $.cookie("field_office_id");
-                        window.location.href = 'http://ppis.probation.gov.ph/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
-                        // window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
-                    })
-                   
-                }
+            $(".btn_update").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var officeId = $.cookie("field_office_id");
+                // window.location.href = 'http://ppis.probation.gov.ph/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
+                window.location.href = 'http://localhost/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
             })
         }
-        __table();
+
+        function drawTable() {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "20px", "targets": [0] },
+                        { "width": "190px", "targets": [1,2,3,4,5] },
+                        { "width": "255px", "targets": [6] }
+                    ],
+                    "ajax": function(data, callback, settings) {
+                        const size = 10;
+                        const page = data.start / size;
+                        const apiUrl = api+"8000/docketbook?page="+page+"&size="+size+"&type=PIS_INV&officeId="+$.cookie('field_office_id');
+                        $.ajax({
+                            url: apiUrl,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(res) {
+                                callback({
+                                    recordsTotal: res.totalElements,
+                                    recordsFiltered: res.totalElements,
+                                    data: res.content
+                                });
+                            },
+                            error: function(err) {
+                                console.error("Failed to fetch data:", err);
+                            }
+                        });
+                    },
+                    "columns": tableColumns()
+                });
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
+                    buttonVisibility();
+                });
+            })
+        }
+
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'docketNumber'
+                },
+                {
+                    "data": 'receivedDateByPPO'
+                },
+                {
+                    "data": null,
+                    render: function (data, type, row) {
+                        var fullName = data.firstName + " " + data.middleName + " " + data.lastName + " " + data.suffixName;
+                        return fullName;
+                    }
+                },
+                {
+                    "data": 'criminalCaseNumber'
+                },
+                {
+                    "data": 'fieldOfficeName'
+                },
+                {
+                    "data": null,
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary btn_update pb_inv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pb_inv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                    }
+                }
+            ]
+        }
+        drawTable()
 
     } )( jQuery );

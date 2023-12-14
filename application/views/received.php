@@ -32,31 +32,6 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="completeModal_sup" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Complete Docket</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="alert alert-success" role="alert" id="complete_success_sup" style="display:none">
-                    <i class="fa fa-check"></i>
-                        Complete Successfully  
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure you want to Complete this Docket <b><span class="docket_sup"></span></b>? 
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_complete_confirm_sup btn-sm">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -87,12 +62,12 @@
                                 <strong class="card-title">Received List</strong>
                             </div>
                             <div class="card-body">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="inv_tab" data-toggle="tab" href="#inv" role="tab" aria-controls="investigation" aria-selected="true">Investigation</a>
+                                        <a class="nav-link active" id="inv_tab" data-toggle="tab" style="cursor: pointer;">Investigation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="sup_tab" data-toggle="tab" href="#sup" role="tab" aria-controls="supervision" aria-selected="false">Supervision</a>
+                                        <a class="nav-link" id="sup_tab" data-toggle="tab" style="cursor: pointer;">Supervision</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
@@ -104,7 +79,7 @@
                                             <table class="table table_head">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <th>ID</th>
                                                         <th>Docket No.</th>
                                                         <th>Field Office</th>
                                                         <th>Details</th>
@@ -113,28 +88,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body">
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="sup" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="col col-md-12">
-                                            <h3>Supervision</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head_sup">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Docket No.</th>
-                                                        <th>Field Office</th>
-                                                        <th>Details</th>
-                                                        <th>Sender</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_sup">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -153,10 +106,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
-
-    <script src="assets/js/pisJs/received.js">
-
-    </script>
+    <script src="assets/js/pisJs/received.js"></script>
 
 </body>
 

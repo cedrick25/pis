@@ -66,22 +66,22 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="client_pb" data-toggle="tab" href="#pb" role="tab" aria-controls="investigation" aria-selected="true">Probationer</a>
-                                    </li>
-<!--                                     <li class="nav-item">
-                                        <a class="nav-link" id="client_pr" data-toggle="tab" href="#pr" role="tab" aria-controls="supervision" aria-selected="false">Parolee</a>
+                                        <a class="nav-link active" id="client_pb" data-toggle="tab" href="#pb" role="tab">Probationer</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="client_pd" data-toggle="tab" href="#pd" role="tab" aria-controls="single_carpeta" aria-selected="false">Pardonee</a>
-                                    </li> -->
+                                        <a class="nav-link" id="client_pr" data-toggle="tab" href="#pr" role="tab">Parolee</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="client_pd" data-toggle="tab" href="#pd" role="tab">Pardonee</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="pb" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="col col-md-12">
-                                            <h3>Probationer</h3>
+                                            <h3 id="tableTitle"></h3>
                                         </div><br><br>
                                         <div class="col col-md-12">
-                                            <table class="table table_head_pb">
+                                            <table class="table table_head">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -92,52 +92,8 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="table_body_pb">
+                                                <tbody class="table_body">
                                                      
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pr" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="col col-md-12">
-                                            <h3>Parolee</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head_pr">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Full Name</th>
-                                                        <th>Gender</th>
-                                                        <th>Client Type</th>
-                                                        <th>Field Office</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_pr">
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pd" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="col col-md-12">
-                                            <h3>Pardonee</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head_pd">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Full Name</th>
-                                                        <th>Gender</th>
-                                                        <th>Client Type</th>
-                                                        <th>Field Office</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_pd">
-
                                                 </tbody>
                                             </table>
                                         </div>

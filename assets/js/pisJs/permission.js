@@ -99,7 +99,6 @@
                 if (result.status != "ERROR") {
                     $('.permission_add').append("<option selected value='0'> - - None - - </option>");
                     result.forEach(function(data){
-                        console.log(data)
                         $('.permission_add').append(
                             "<option value="+data.id+">"+data.name+"</option>");
 
@@ -121,9 +120,7 @@
                   "detail"     : $(".permission_desc").val(),
                   "parentId"   : $(".permission_add").val()
             }
-            console.log(payload)
             __executeExternalPost('8088/permission/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#permission_success').show();
@@ -131,7 +128,7 @@
                     setTimeout(function () {
                         $('#newPermission').modal('hide');
                         $('#permission_success').hide();
-                        __table();
+                        window.location.reload(true)
                         __select();
                     }, 1000);
 
@@ -141,73 +138,141 @@
             })
         })
 
-        var __table = function(){
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'name'
+                },
+                {
+                    "data": 'type'
+                },
+                {
+                    "data": 'detail'
+                },
+                {
+                    "data": 'id',
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updatePermissionModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>"
+                    }
+                }
+            ]
+        }
+
+        function drawTable(name) {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "15px", "targets": [0]},
+                        { "width": "400px", "targets": [1]},
+                        { "width": "305px", "targets": [2,3,4]}
+                    ],
+                    ajax: {
+                        url: api+'8088/permission',
+                        cache: true,
+                        data: function (d) {
+                            return {
+                                page: d.start / d.length,
+                                size: d.length,
+                                name: searchBarContent,
+                            };
+                        },
+                        dataFilter: function(data){
+                            var json = jQuery.parseJSON(data);
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    "columns": tableColumns()
+                })
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
+                });
+            })
+        }
+
+        const searchBarValue = document.getElementById('searchBar');
+        let searchBarContent;
+
+        searchBarValue.addEventListener('keyup', function() {
+            searchBarContent = searchBarValue.value;
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
+            drawTable(searchBarContent);
+        });
 
-            __executeExternalGet('8088/permission/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    result.forEach(function(data){
-                        console.log(data)
-                        $('.table_body').append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+data.name+"</td>"+
-                            "<td>"+data.type+"</td>"+
-                            "<td>"+data.detail+"</td>"+
+        function buttonFunctionality() {
+            $(".btn_update").unbind("click").on("click", function(){
+                console.log("clicked button update")
+                var data_id = $(this).data("id");
+                console.log(data_id)
+                __executeExternalGet('8088/permission/'+data_id).done(function (result) {
+                    console.log(result);
+                    if (result.status != "ERROR") {
+                        $(".permission_name_update").val(result.name);
+                        $(".permission_desc_update").val(result.detail);
+                        $(".type_update").val(result.type).trigger('change');
 
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updatePermissionModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>");
-                    });
-                } else {
-                    console.log("failed fetching department list")
-                }
-                
-                $(document).ready(function () {
-                    var table = $('.table_head').DataTable({
-                        order: [[0, 'asc']],
-                        // "columnDefs": [
-                            // { "width": "30%", "targets": 6 }
-                        // ]
-                    });
-                    $('.dataTables_length').addClass('bs-select');
-                });
-
-                $(".btn_update").unbind("click").on("click", function(){
-                    console.log("clicked button update")
-                    var data_id = $(this).data("id");
-                    console.log(data_id)
-                    __executeExternalGet('8088/permission/'+data_id).done(function (result) {
-                        console.log(result);
-                        if (result.status != "ERROR") {
-                            $(".permission_name_update").val(result.name);
-                            $(".permission_desc_update").val(result.detail);
-                            $(".type_update").val(result.type).trigger('change');
-
-                            $(".btn_confirm_update").unbind("click").on("click", function(){
-                                console.log('clicked btn update confirm')
-                                var payload = {
-                                    "name"          : $(".permission_name_update").val(),
-                                    "detail"        : $(".permission_desc_update").val(),
-                                    "type"          : $(".type_update").val(),
+                        $(".btn_confirm_update").unbind("click").on("click", function(){
+                            console.log('clicked btn update confirm')
+                            var payload = {
+                                "name"          : $(".permission_name_update").val(),
+                                "detail"        : $(".permission_desc_update").val(),
+                                "type"          : $(".type_update").val(),
+                            }
+                            console.log(payload);
+                            __executeExternalPost('8088/permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                console.log(result);
+                                if (result.status != "ERROR") {
+                                    $(".form-control").val('');
+                                    $('#permission_update').show();
+                                        setTimeout(function () {
+                                            $('#updatePermissionModal').modal('hide');
+                                            $('#permission_update').hide();
+                                            __select();
+                                            window.location.reload(true);
+                                        }, 1000);
+                                }else{
+                                    alert("failed")
                                 }
-                                console.log(payload);
-                                __executeExternalPost('8088/permission/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                                    console.log(result);
-                                    if (result.status != "ERROR") {
-                                        $(".form-control").val('');
-                                        $('#permission_update').show();
-                                            setTimeout(function () {
-                                                $('#updatePermissionModal').modal('hide');
-                                                $('#permission_update').hide();
-                                                __table();
-                                                __select();
-                                            }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
                             })
+                        })
 
+                    }else{
+                        alert("failed")
+                    }
+                })
+            })
+
+            $(".btn_remove").unbind("click").on("click", function(){
+                var data_id = $(this).data("id");
+                $(".btn_confirm_remove").unbind("click").on("click", function(){
+                    __executeExternalPost('8088/permission/remove/'+data_id).done(function (result) {
+                        if (result.status != "ERROR") {
+                            $('#success_remove').show();
+                                setTimeout(function () {
+                                    $('#removeModal').modal('hide');
+                                    $('#success_remove').hide();
+                                    window.location.reload(true)
+                                    __select();
+                                    __select_parent();
+                                }, 1000);
                         }else{
                             alert("failed")
                         }
@@ -215,6 +280,7 @@
                 })
             })
         }
-        __table();
+
+        drawTable(searchBarContent)
 
     } )( jQuery );

@@ -10,46 +10,6 @@
     <!-- modal -->
 
     <!-- Update modal -->
-<!--     <div class="modal fade" id="forwardDocket" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document" style="">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Forward Docket</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                    <i class="fa fa-check"></i>
-                        Successfully Forward  
-                </div>
-                <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                        <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label">PIS-00000-0001</label></div>
-                    </div>
-                    <div class="row form-group col-md-12">         
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
-                        <div class="col-12 col-md-9">
-                            <select name="select" id="" class="form-control caseload_supervision select2">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-3"><label for="uploadFile" class=" form-control-label">Upload a File</label></div>
-                        <div class="col-12 col-md-9"><input type="file" class="form-control-file" id="uploadFile"></div>
-                    </div>
-                </div>                            
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Update modal -->
-
-    <!-- Update modal -->
     <div class="modal fade" id="updateOfficemodal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">

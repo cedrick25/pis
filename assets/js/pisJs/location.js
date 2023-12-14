@@ -111,74 +111,138 @@
                             __table();
                         }, 1000);
                 }else{
-                //     console.log(result.status);
-                //     alert(result.message)
                 }
              })
         })
 
-        var __table = function(){
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'name'
+                },
+                {
+                    "data": 'address'
+                },
+                {
+                    "data": 'id',
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateLocModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>"
+                    }
+                }
+            ]
+        }
+
+        function drawTable(name) {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "10px", "targets": [0]},
+                        { "width": "500px", "targets": [1,2] },
+                        { "width": "353px", "targets": [3]}
+                    ],
+                    ajax: {
+                        url: api+'8088/location',
+                        cache: true,
+                        data: function (d) {
+                            return {
+                                page: d.start / d.length,
+                                size: d.length,
+                                name: searchBarContent,
+                            };
+                        },
+                        dataFilter: function(data){
+                            var json = jQuery.parseJSON(data);
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    "columns": tableColumns()
+                })
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
+                });
+            })
+        }
+
+        const searchBarValue = document.getElementById('searchBar');
+        let searchBarContent;
+
+        searchBarValue.addEventListener('keyup', function() {
+            searchBarContent = searchBarValue.value;
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
+            drawTable(searchBarContent);
+        });
 
-            __executeExternalGet('8088/location/list').done(function (result) {
-                console.log(result)
+        function buttonFunctionality() {
+            $(".btn_update").unbind("click").on("click", function(){
+                var data_id = $(this).data("id");
+                __executeExternalGet('8088/location/'+data_id).done(function (result) {
+                    console.log(result);
 
-                result.forEach(function(data){
-                    let actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateLocModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button>";
+                    if (result.status != "ERROR") {
+                        $(".loc_name_update").val(result.name);
+                        $(".loc_add_update").val(result.address);
 
-                    $('.table_body').append("<tr>"+
-                        "<td>"+data.id+"</td>"+
-                        "<td>"+data.name+"</td>"+ 
-                        "<td>"+data.address+"</td>"+  
-                        "<td align='center' class='actions'> "+actions+"")
-                });
-                
+                        $(".btn_confirm_update").unbind("click").on("click", function(){
+                            console.log('clicked')
+                            var payload = {
+                                "name"      : $(".loc_name_update").val(),
+                                "address"   : $(".loc_add_update").val(),
+                                "parentId"  : "0"
+                    }
 
-                $(document).ready(function () {
-                    var table = $('.table_head').DataTable({
-                        order: [[0, 'asc']],
-                        //"columnDefs": [
-                        //    { "width": "30%", "targets": 6 }
-                        //]
-                    });
-                    $('.dataTables_length').addClass('bs-select');
-                });
-                
+                        __executeExternalPost('8088/location/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                            console.log(result);
+                                if (result.status != "ERROR") {
+                                    $(".form-control").val('');
+                                    $('#success_update').show();
+                                        setTimeout(function () {
+                                            $('#updateLocModal').modal('hide');
+                                            $('#success_update').hide();
+                                            window.location.reload(true);
+                                        }, 1000);
+                                }else{
+                                    alert("failed")
+                                }
+                             })
+                        })
 
-                $(".btn_update").unbind("click").on("click", function(){
-                    var data_id = $(this).data("id");
-                    __executeExternalGet('8088/location/'+data_id).done(function (result) {
-                        console.log(result);
-
+                    }else{
+                        alert("failed")
+                    }
+                })
+            })
+            $(".btn_remove").unbind("click").on("click", function(){
+                var data_id = $(this).data("id");
+                $(".btn_confirm_remove").unbind("click").on("click", function(){
+                    __executeExternalPost('8088/location/remove/'+data_id).done(function (result) {
                         if (result.status != "ERROR") {
-                            $(".loc_name_update").val(result.name);
-                            $(".loc_add_update").val(result.address);
-
-                            $(".btn_confirm_update").unbind("click").on("click", function(){
-                                console.log('clicked')
-                                var payload = {
-                                    "name"      : $(".loc_name_update").val(),
-                                    "address"   : $(".loc_add_update").val(),
-                                    "parentId"  : "0"
-                        }
-
-                            __executeExternalPost('8088/location/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                                console.log(result);
-                                    if (result.status != "ERROR") {
-                                        $(".form-control").val('');
-                                        $('#success_update').show();
-                                            setTimeout(function () {
-                                                $('#updateLocModal').modal('hide');
-                                                $('#success_update').hide();
-                                                __table();
-                                            }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                 })
-                            })
-
+                            $('#success_remove').show();
+                                setTimeout(function () {
+                                    $('#removeModal').modal('hide');
+                                    $('#success_remove').hide();
+                                    window.location.reload(true)
+                                    __select();
+                                    __select_parent();
+                                }, 1000);
                         }else{
                             alert("failed")
                         }
@@ -186,7 +250,8 @@
                 })
             })
         }
-        __table();
+
+        drawTable(searchBarContent);
 
 
     } )( jQuery );

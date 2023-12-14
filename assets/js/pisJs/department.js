@@ -151,7 +151,6 @@
                 "parentId"      : "0",
                 "locationId"    : $(".dep_loc").val()
             }
-            // console.log(payload)
             __executeExternalPost('8088/department/create',JSON.stringify(payload)).done(function (result) {
                 // console.log(result);
                 if (result.status != "ERROR") {
@@ -160,7 +159,7 @@
                         setTimeout(function () {
                             $('#newDeptModal').modal('hide');
                             $('success').hide();
-                            __table();
+                            window.location.reload(true)
                             __select();
                             __select_parent();
                         }, 1000);
@@ -171,165 +170,219 @@
             })
         })
 
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
-
-            __executeExternalGet('8088/department/list').done(function (result) {
-                // console.log(result)
-                if (result.status != "ERROR") {
-                    result.forEach(function(data){
-                        // console.log(data)
-                        var actions;
-                        switch (data.hasChild) {
-                        case true:
-                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button> <button class='btn btn-sm btn-info btn_view' type='submit' data-toggle='modal' data-target='#viewModal' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button></td>";
-                        default:
-                            actions = "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data.id+"'><i class='fa fa-plus-circle'></i> Add</button> <button class='btn btn-sm btn-info btn_view' type='submit' data-toggle='modal' data-target='#viewModal' data-id='"+data.id+"'><i class='fa fa-eye'></i> View</button></td>";
-                            break;
-                        };
-                        $('.table_body').append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+data.name+"</td>"+
-                            "<td>"+data.description+"</td>"+
-                            "<td value="+data.locationId+">"+data.locationName+"</td>"+
-                            "<td align='center' class='actions' width='35%'> "+actions+" ");
-                    });
-                } else {
-                    console.log("failed fetching department list")
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'name'
+                },
+                {
+                    "data": 'description'
+                },
+                {
+                    "data": 'locationName'
+                },
+                {
+                    "data": 'id',
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updateDeptModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_add' type='submit' data-toggle='modal' data-target='#addModal' data-id='"+data+"'><i class='fa fa-plus-circle'></i> Add</button> <button class='btn btn-sm btn-info btn_view' type='submit' data-toggle='modal' data-target='#viewModal' data-id='"+data+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>"
+                    }
                 }
-                
-                $(document).ready(function () {
-                    var table = $('.table_head').DataTable({
-                        order: [[0, 'asc']],
-                        // "columnDefs": [
-                            // { "width": "30%", "targets": 6 }
-                        // ]
-                    });
-                    $('.dataTables_length').addClass('bs-select');
+            ]
+        }
+
+        function drawTable(name) {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "20%", "targets": [1,2,3,4] },
+                        { "width": "5%", "targets": [0]}
+                    ],
+                    ajax: {
+                        url: api+'8088/department',
+                        cache: true,
+                        data: function (d) {
+                            return {
+                                page: d.start / d.length,
+                                size: d.length,
+                                name: searchBarContent,
+                            };
+                        },
+                        dataFilter: function(data){
+                            var json = jQuery.parseJSON(data);
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    "columns": tableColumns()
+                })
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
                 });
+            })
+        }
 
-                $(".btn_update").unbind("click").on("click", function(){
-                    // console.log("clicked button update")
-                    var data_id = $(this).data("id");
-                    // console.log(data_id)
-                    __executeExternalGet('8088/department/'+data_id).done(function (result) {
-                        // console.log(result);
-                        if (result.status != "ERROR") {
-                            $(".dep_name_update").val(result.name);
-                            $(".dep_desc_update").val(result.description);
-                            $(".dep_loc_update").val(result.locationId).trigger('change');
+        function buttonFunctionality() { 
+            $(".btn_update").unbind("click").on("click", function(){
+                // console.log("clicked button update")
+                var data_id = $(this).data("id");
+                // console.log(data_id)
+                __executeExternalGet('8088/department/'+data_id).done(function (result) {
+                    // console.log(result);
+                    if (result.status != "ERROR") {
+                        $(".dep_name_update").val(result.name);
+                        $(".dep_desc_update").val(result.description);
+                        $(".dep_loc_update").val(result.locationId).trigger('change');
 
-                            $(".btn_confirm_update").unbind("click").on("click", function(){
-                                // console.log('clicked btn update confirm')
-                                var payload = {
-                                    "updatedBy"     : "1",
-                                    "name"          : $(".dep_name_update").val(),
-                                    "description"   : $(".dep_desc_update").val(),
-                                    "parentId"      : "0",
-                                    "locationId"    : $(".dep_loc_update").val()
-                                }
-                                // console.log(payload);
-                                __executeExternalPost('8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                                    // console.log(result);
-                                    if (result.status != "ERROR") {
-                                        $(".form-control").val('');
-                                        $('#success_update').show();
-                                            setTimeout(function () {
-                                                $('#updateDeptModal').modal('hide');
-                                                $('#success_update').hide();
-                                                __table();
-                                                __select();
-                                                __select_parent();
-                                            }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            })
-
-                        }else{
-                            alert("failed")
-                        }
-                    })
-                })
-
-                $(".btn_add").unbind("click").on("click", function(){
-                    // console.log("clicked button update")
-                    var data_id = $(this).data("id");
-                   // console.log(data_id)
-                    __executeExternalGet('8088/department/'+data_id).done(function (result) {
-                        // console.log(result);
-                        if (result.status != "ERROR") {
-                            $(".region_add").html(result.locationName);
-                            $(".field_office_add").html(result.name);
-                            $(".desc_add").html(result.description);
-
-                            $(".btn-confirm_add").unbind("click").on("click", function(){
-                                // console.log('clicked btn update confirm')
-                                var payload = {
-                                    "updatedBy"     : "1",
-                                    "name"          : result.name,
-                                    "description"   : result.description,
-                                    "parentId"      : $(".parent_name").val(),
-                                    "locationId"    : result.locationId
-                                };
-                                // console.log(payload);
-                                __executeExternalPost('8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                                    // console.log(result);
-                                    if (result.status != "ERROR") {
-                                        $(".form-control").val('');
-                                        $('#success_update_parent').show();
-                                            setTimeout(function () {
-                                                $('#addModal').modal('hide');
-                                                $('#success_update_parent').hide();
-                                                __table();
-                                                __select();
-                                                __select_parent();
-                                            }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            })
-                        }else{
-                            alert("failed")
-                        }
-                    })
-                })
-                $(".btn_view").unbind("click").on("click", function(){
-                    // console.log("clicked button update")
-                    var data_id = $(this).data("id");
-                    // console.log(data_id)
-                    __executeExternalGet('8088/department/'+data_id).done(function (result) {
-                        // console.log(result);
-                        if (result.status != "ERROR") {
-                            $(".region_view").html(result.locationName);
-                            $(".field_office_view").html(result.name);
-                            $(".desc_view").html(result.description);
-                            if (result.parentId != 0 ) {
-
-                                __executeExternalGet('8088/department/'+result.parentId).done(function (result) {
-                                    console.log(result);
-                                    if (result.status != "ERROR") {
-                                        $(".parent_name_view").html(result.name);
-
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            } else {
-                                $(".parent_name_view").html(" - - no parent added - - ");
-
+                        $(".btn_confirm_update").unbind("click").on("click", function(){
+                            // console.log('clicked btn update confirm')
+                            var payload = {
+                                "updatedBy"     : "1",
+                                "name"          : $(".dep_name_update").val(),
+                                "description"   : $(".dep_desc_update").val(),
+                                "parentId"      : "0",
+                                "locationId"    : $(".dep_loc_update").val()
                             }
+                            // console.log(payload);
+                            __executeExternalPost('8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                // console.log(result);
+                                if (result.status != "ERROR") {
+                                    $(".form-control").val('');
+                                    $('#success_update').show();
+                                        setTimeout(function () {
+                                            $('#updateDeptModal').modal('hide');
+                                            $('#success_update').hide();
+                                            window.location.reload(true)
+                                            __select();
+                                            __select_parent();
+                                        }, 1000);
+                                }else{
+                                    alert("failed")
+                                }
+                            })
+                        })
 
+                    }else{
+                        alert("failed")
+                    }
+                })
+            })
+            $(".btn_remove").unbind("click").on("click", function(){
+                var data_id = $(this).data("id");
+                $(".btn_confirm_remove").unbind("click").on("click", function(){
+                    __executeExternalPost('8088/department/remove/'+data_id).done(function (result) {
+                        if (result.status != "ERROR") {
+                            $('#success_remove').show();
+                                setTimeout(function () {
+                                    $('#removeModal').modal('hide');
+                                    $('#success_remove').hide();
+                                    window.location.reload(true)
+                                    __select();
+                                    __select_parent();
+                                }, 1000);
                         }else{
                             alert("failed")
                         }
                     })
                 })
             })
+            $(".btn_add").unbind("click").on("click", function(){
+                var data_id = $(this).data("id");
+                __executeExternalGet('8088/department/'+data_id).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".region_add").html(result.locationName);
+                        $(".field_office_add").html(result.name);
+                        $(".desc_add").html(result.description);
+
+                        $(".btn-confirm_add").unbind("click").on("click", function(){
+                            var payload = {
+                                "updatedBy"     : "1",
+                                "name"          : result.name,
+                                "description"   : result.description,
+                                "parentId"      : $(".parent_name").val(),
+                                "locationId"    : result.locationId
+                            };
+                            __executeExternalPost('8088/department/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                if (result.status != "ERROR") {
+                                    $(".form-control").val('');
+                                    $('#success_update_parent').show();
+                                        setTimeout(function () {
+                                            $('#addModal').modal('hide');
+                                            $('#success_update_parent').hide();
+                                            window.location.reload(true)
+                                            __select();
+                                            __select_parent();
+                                        }, 1000);
+                                }else{
+                                    alert("failed")
+                                }
+                            })
+                        })
+                    }else{
+                        alert("failed")
+                    }
+                })
+            })
+            $(".btn_view").unbind("click").on("click", function(){
+                // console.log("clicked button update")
+                var data_id = $(this).data("id");
+                // console.log(data_id)
+                __executeExternalGet('8088/department/'+data_id).done(function (result) {
+                    // console.log(result);
+                    if (result.status != "ERROR") {
+                        $(".region_view").html(result.locationName);
+                        $(".field_office_view").html(result.name);
+                        $(".desc_view").html(result.description);
+                        if (result.parentId != 0 ) {
+
+                            __executeExternalGet('8088/department/'+result.parentId).done(function (result) {
+                                console.log(result);
+                                if (result.status != "ERROR") {
+                                    $(".parent_name_view").html(result.name);
+
+                                }else{
+                                    alert("failed")
+                                }
+                            })
+                        } else {
+                            $(".parent_name_view").html(" - - no parent added - - ");
+
+                        }
+
+                    }else{
+                        alert("failed")
+                    }
+                })
+            })
         }
-        __table();
+
+        const searchBarValue = document.getElementById('searchBar');
+        let searchBarContent;
+
+        searchBarValue.addEventListener('keyup', function() {
+            searchBarContent = searchBarValue.value;
+            $('.table_head').DataTable().destroy();
+            $('.table_body').empty();
+            drawTable(searchBarContent);
+        });
+
+        drawTable(searchBarContent);
+
 
     } )( jQuery );

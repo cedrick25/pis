@@ -154,7 +154,6 @@
                 "legalAge"                          : true,
                 "militaryCourt"                     : true
             }
-            console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
@@ -163,7 +162,7 @@
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            window.location.reload(true);
+                            window.location.href = api+'/pis/investigation_docketing'
                         }, 500);
                     }, 2000);
                 }else{

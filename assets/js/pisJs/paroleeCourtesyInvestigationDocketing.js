@@ -1,16 +1,15 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -89,71 +88,138 @@
             return d.promise();
         };
 
-        var __table = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
+        function buttonVisibility (){
+            var data = JSON.parse(localStorage.getItem('permission'));
+            if (data != null) {
+                data.forEach(function(data){
+                    if (data.type == "ACTION") {
+                        // console.log(data.value)
+                        setTimeout(function() {
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
+                            }
+                        }, 10);
+                    }else if (data.type == "VIEW") {
+                        if (!data.value) {
+                            var element = $('.' + data.detail);
+                            element.hide();
+                        }else{
+                            var element = $('.' + data.detail);
+                            element.show();
+                        }
+                    }else{
+                    }
+                });
+            }
+        }
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/SC_PR_CINV/'+$.cookie("field_office_id")).done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.response.forEach(function(data){
-                        $('.table_body').append("<tr>"+
-                            "<td></td>"+
-                            "<td>"+data.docketNumber+"</td>"+
-                            "<td>"+data.docketSeries+"</td>"+
-                            "<td>"+data.clientType+"</td>"+
-                            "<td>"+data.status+"</td>"+
-                            "<td align='center' class='actions'> <button class='btn btn-sm btn-primary btn_update pr_cinv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pr_cinv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>")
-                    });
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            "columnDefs": [
-                                { "width": "20%", "targets": 5 }
-                            ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    });
+        function buttonFunctionality(){
+            $(".btn_remove").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var office_id = $(this).data("oi");
+                $(".docket").html(docket_number)
+                $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                    $(".btn_remove").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var office_id = $(this).data("oi");
-                        $(".docket").html(docket_number)
-                        $(".btn_remove_confirm").unbind("click").on("click", function(){
-
-                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
-                                if (result.status != "ERROR") {
-                                        $(".form-control").val('');
-                                        $('#success_remove').show();
-                                            setTimeout(function () {
-                                                $('#removeModal').modal('hide');
-                                                $('#success_remove').hide();
-                                                __table();
-                                            }, 1000);
-                                        
-                                    // $(".form-control").val('');
-                                    // $('#removeModal').modal('hide');
-                                    // __table();
-                                }else{
-                                    alert("failed")
-                                }
-                            })
-                        })
+                    __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
+                        if (result.status != "ERROR") {
+                                $(".form-control").val('');
+                                $('#success_remove').show();
+                                    setTimeout(function () {
+                                        $('#removeModal').modal('hide');
+                                        $('#success_remove').hide();
+                                        __table();
+                                    }, 1000);
+                        }else{
+                            alert("failed")
+                        }
                     })
+                })
+            })
 
-                    $(".btn_update").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/parolee_courtesy_investigation_update?docket_number='+docket_number;
-                    })
-                   
-                }
+            $(".btn_update").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                window.location.href = 'http://localhost/pis/parolee_courtesy_investigation_update?docket_number='+docket_number;
             })
         }
-        __table();
+
+        function drawTable() {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "20px", "targets": [0] },
+                        { "width": "240px", "targets": [1,2,3,4] },
+                        { "width": "300px", "targets": [5] }
+                    ],
+                    "ajax": function(data, callback, settings) {
+                        const size = 10;
+                        const page = data.start / size;
+                        const apiUrl = api+"8000/docketbook?page="+page+"&size="+size+"&type=SC_PR_CINV&officeId="+$.cookie('field_office_id');
+                        $.ajax({
+                            url: apiUrl,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(res) {
+                                callback({
+                                    recordsTotal: res.totalElements,
+                                    recordsFiltered: res.totalElements,
+                                    data: res.content
+                                });
+                            },
+                            error: function(err) {
+                                console.error("Failed to fetch data:", err);
+                            }
+                        });
+                    },
+                    "columns": tableColumns()
+                });
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
+                    buttonVisibility();
+                });
+            })
+        }
+
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'docketNumber'
+                },
+                {
+                    "data": 'docketSeries'
+                },
+                {
+                    "data": 'clientType'
+                },
+                {
+                    "data": 'status'
+                },
+                {
+                    "data": null,
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary btn_update pr_cinv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pr_cinv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                    }
+                }
+            ]
+        }
+        drawTable()
 
     } )( jQuery );

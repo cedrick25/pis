@@ -1,4 +1,4 @@
-<?php $this->load->view('templates/header.php'); ?> 
+<?php $this->load->view('templates/header.php'); ?>
 
 <body>
     <!-- Left Panel -->
@@ -39,7 +39,7 @@
         </div>
     </div>
     <!-- Update modal -->
-
+    
     <!-- new User account modal -->
     <div class="modal fade" id="newRoleModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document" style="">
@@ -165,11 +165,14 @@
                                 <strong class="card-title">User Roles List</strong>
                                 <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newRoleModal"><i class="fa fa-plus-circle"></i> Add Role</button>
                             </div>
+                            <div class="dataTables_filter">
+                                <label style=" display: inline-flex; margin-left: 5px; margin-right: 20px; margin-top: 25px" class="float-right" >Search:<input type="search" class="form-control form-control-sm searchBar" id= "searchBar" placeholder="Search" style="margin-left: 7px"></label>
+                            </div>
                             <div class="card-body">
-                                <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
+                                <table id="" class="table table-striped table-bordered table_head">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>Id</th>
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>Actions</th>

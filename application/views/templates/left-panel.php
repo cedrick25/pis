@@ -29,8 +29,8 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="parolee_investigastion_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="parolee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_supervision_docketing">Supervision</a></li>
-<!--                         <li style='display:none;' class="parolee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
-                        <li style='display:none;' class="parolee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_supervision_docketing">Courtesy Supervision</a></li> -->
+                        <li style='display:none;' class="parolee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
+                        <li style='display:none;' class="parolee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
@@ -38,8 +38,8 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="pardonee_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="pardonee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_supervision_docketing">Supervision</a></li>
-<!--                         <li style='display:none;' class="pardonee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
-                        <li style='display:none;' class="pardonee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_supervision_docketing">Courtesy Supervision</a></li> -->
+                        <li style='display:none;' class="pardonee_courtesy_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
+                        <li style='display:none;' class="pardonee_courtesy_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title">Docket Routing</h3>

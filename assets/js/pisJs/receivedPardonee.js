@@ -1,14 +1,50 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
+        var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
+            // path = $.wms.getContextPath() + path;
+            var d = $.Deferred();
+            if(customLoader != ""){
+                $("#"+customLoader).show();
+                $("#"+customLoader).removeClass("hide");
+            }
+            $.ajax({
+                method: "GET",
+                url: path,
+                dataType: "json",
+            }).done(function (data, textStatus, jqXHR) {
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+                d.resolve(data)
+            }).fail(function (jqXHR, textStatus, errorThrown,request) {
+                console.log('---FAILED---');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                console.log('---FAILED---');
+                
+                d.resolve({
+                    status : 'ERROR',
+                    message : request
+                });
+                
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+            });
+            
+            return d.promise();
+        };
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -51,488 +87,235 @@
             
             return d.promise();
         };
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
+
+        var uuid = $.cookie("uuid");
+
+        function buttonVisibility (){
+            var data = JSON.parse(localStorage.getItem('permission'));
+            if (data != null) {
+                data.forEach(function(data){
+                    if (data.type == "ACTION") {
+                        // console.log(data.value)
+                        setTimeout(function() {
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
+                            }
+                        }, 10);
+                    }else if (data.type == "VIEW") {
+                        if (!data.value) {
+                            var element = $('.' + data.detail);
+                            element.hide();
+                        }else{
+                            var element = $('.' + data.detail);
+                            element.show();
+                        }
+                    }else{
+                    }
                 });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
+            }
+        }
 
-        var __table_inv = function(){
-            $('.table_head_inv').DataTable().destroy();
-            $('.table_body_inv').empty();
+        function buttonFunctionality(){
+            $(".btn_complete").unbind("click").on("click", function(){
+                var id = $(this).data("id");
+                var docket_number = $(this).data("docket");
+                $(".docket").html(docket_number)
+                __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
+                    var result = result.response;
+                    $(".btn_complete_confirm_csup").unbind("click").on("click", function(){
+                        console.log('clicked')
+                        var payload = {
+                            "type"                  : result.type,
+                            "caseload_type"         : result.caseloadType,
+                            "senderId"              : result.senderId,
+                            "receiverId"            : result.receiverId,
+                            "fieldOfficeId"         : result.fieldOfficeId,
+                            "docketNumber"          : result.docketNumber,
+                            "details"               : result.details,
+                            "remarks"               : result.remarks,
+                            "approvalStatus"        : "",
+                            "lastStatusUpdateDate"  : "",
+                        }
+                        __executeExternalPost('http://localhost:8000/workflow/complete/'+id,JSON.stringify(payload)).done(function (result) {
+                            if (result.status != "ERROR") {
+                                    $(".form-control").val('');
+                                    $('#complete_success').show();
+                                        setTimeout(function () {
+                                            $('#completeModal_csup').modal('hide');
+                                            $('#complete_success_csup').hide();
+                                            window.location.reload(true);
+                                        }, 1000);
+                            }else{
+                                alert("failed")
+                            }
+                        })
+                    })
+                })
+            })
+            $(".btn_return").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var id = $(this).data("id");
+                window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
+            })
+            $(".btn_forward").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var id = $(this).data("id");
+                window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
+            })
+            $(".btn_upload").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var id = $(this).data("id");
+                var type = $(this).data("type");
+                var fi = $(this).data("fi");
+                window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+            })
+        }
 
-            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_INV').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
-                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            var field = result.departmentId;
-                            let actions;
-                            switch (data.approvalStatus) {
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'docketNumber'
+                },
+                {
+                    "data": 'fieldOfficeName'
+                },
+                {
+                    "data": 'details',
+                },
+                {
+                    "data": 'senderName'
+                },
+                {
+                    "data": null,
+                    render: function(data, type, row) {
+                        switch (data.approvalStatus) {
                             case "COMPLETED":
                                 actions = "<h5>This Docket is Completed</h5>";
                                 break;
                             default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_inv pd_inv_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_inv pd_inv_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_inv pd_inv_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_inv pd_inv_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_inv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                actions = "<button class='btn btn-sm btn-primary' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.departmentId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 break;
-                            };
-                            $('.table_body_inv').append("<tr>"+
-                                "<td></td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+senderId+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'>"+actions+"")
-                            });
-                        });
-                    });
-                    setTimeout(function () {
-                    $(document).ready(function () {
-                        $('.table_head_inv tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head_inv').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "40%", "targets": 6 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
-
-                    $(".btn_complete_inv").unbind("click").on("click", function(){
-                        var id = $(this).data("id");
-                        var docket_number = $(this).data("docket");
-                        $(".docket").html(docket_number)
-                        __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
-                            console.log(result)
-                            var result = result.response;
-                            $(".btn_complete_confirm_inv").unbind("click").on("click", function(){
-                                console.log('clicked')
-                                
-                                var payload = {
-                                    "type"                  : result.type,
-                                    "caseload_type"         : result.caseloadType,
-                                    "senderId"              : result.senderId,
-                                    "receiverId"            : result.receiverId,
-                                    "fieldOfficeId"         : result.fieldOfficeId,
-                                    "docketNumber"          : result.docketNumber,
-                                    "details"               : result.details,
-                                    "remarks"               : result.remarks,
-                                    "approvalStatus"        : "",
-                                    "lastStatusUpdateDate"  : "",
-                                }
-                                console.log(payload)
-                                __executeExternalPost('http://localhost:8000/workflow/complete/'+id,JSON.stringify(payload)).done(function (result) {
-                                    if (result.status != "ERROR") {
-                                            $(".form-control").val('');
-                                            $('#complete_success_inv').show();
-                                                setTimeout(function () {
-                                                    $('#completeModal_inv').modal('hide');
-                                                    $('#complete_success_inv').hide();
-                                                    window.location.reload(true);
-                                                }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            })
-                        })
-                    })
-
-                    $(".btn_return_inv").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_forward_inv").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_upload_inv").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        var type = $(this).data("type");
-                        var fi = $(this).data("fi");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
-                    })
-                    }, 500);
+                        };
+                    }
                 }
+            ]
+        }
+
+        function drawTable(type,uuid) {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "15px", "targets": [0] },
+                        { "width": "200px", "targets": [1,2,3,4,5] },
+                    ],
+                    "ajax": function(data, callback, settings) {
+                        const size = 10;
+                        const page = data.start / size;
+                        const apiUrl = api+"8000/workflow/receiver/"+uuid+"?page="+page+"&size="+size+"&type="+type;
+                        $.ajax({
+                            url: apiUrl,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(res) {
+                                callback({
+                                    recordsTotal: res.totalElements,
+                                    recordsFiltered: res.totalElements,
+                                    data: res.content
+                                });
+                            },
+                            error: function(err) {
+                                console.error("Failed to fetch data:", err);
+                            }
+                        });
+                    },
+                    "columns": tableColumns()
+                });
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
+                    buttonVisibility();
+                    if (type == "SC_PD_INV") {
+                        $('#btn_upload').addClass('pd_inv_upload')
+                        $('#btn_return').addClass('pd_inv_return')
+                        $('#btn_forward').addClass('pd_inv_forward')
+                        $('#btn_complete').addClass('pd_inv_complete')
+                    } else if (type == "SC_PD_CINV") {
+                        $('#btn_upload').addClass('pd_cinv_upload')
+                        $('#btn_return').addClass('pd_cinv_return')
+                        $('#btn_forward').addClass('pd_cinv_forward')
+                        $('#btn_complete').addClass('pd_cinv_complete')
+                    } else if (type == "SC_PD_SUP") {
+                        $('#btn_upload').addClass('pd_sup_upload')
+                        $('#btn_return').addClass('pd_sup_return')
+                        $('#btn_forward').addClass('pd_sup_forward')
+                        $('#btn_complete').addClass('pd_sup_complete')
+                    } else if (type == "SC_PD_CSUP") {
+                        $('#btn_upload').addClass('pd_csup_upload')
+                        $('#btn_return').addClass('pd_csup_return')
+                        $('#btn_forward').addClass('pd_csup_forward')
+                        $('#btn_complete').addClass('pd_csup_complete')
+                    } else {
+                        alert("Error!")
+                    }     
+                });
             })
         }
-        __table_inv();
 
-        var __table_cinv = function(){
-            $('.table_head_cinv').DataTable().destroy();
-            $('.table_body_cinv').empty();
-
-            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_CINV').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
-                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            var field = result.departmentId;
-                            let actions;
-                            switch (data.approvalStatus) {
-                            case "COMPLETED":
-                                actions = "<h5>This Docket is Completed</h5>";
-                                break;
-                            default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_cinv pd_cinv_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_cinv pd_cinv_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_cinv pd_cinv_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_cinv pd_cinv_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_cinv'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
-                                break;
-                            };
-                            $('.table_body_cinv').append("<tr>"+
-                                "<td></td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+senderId+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'>"+actions+"")
-                            });
-                        });
-                    });
-                    setTimeout(function () {
-                    $(document).ready(function () {
-                        $('.table_head_cinv tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head_cinv').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "40%", "targets": 6 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
-
-                    $(".btn_complete_cinv").unbind("click").on("click", function(){
-                        var id = $(this).data("id");
-                        var docket_number = $(this).data("docket");
-                        $(".docket").html(docket_number)
-                        __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
-                            console.log(result)
-                            var result = result.response;
-                            $(".btn_complete_confirm_cinv").unbind("click").on("click", function(){
-                                console.log('clicked')
-                                var payload = {
-                                    "type"                  : result.type,
-                                    "caseload_type"         : result.caseloadType,
-                                    "senderId"              : result.senderId,
-                                    "receiverId"            : result.receiverId,
-                                    "fieldOfficeId"         : result.fieldOfficeId,
-                                    "docketNumber"          : result.docketNumber,
-                                    "details"               : result.details,
-                                    "remarks"               : result.remarks,
-                                    "approvalStatus"        : "",
-                                    "lastStatusUpdateDate"  : "",
-                                }
-                                console.log(payload)
-                                __executeExternalPost('http://localhost:8000/workflow/complete/'+id,JSON.stringify(payload)).done(function (result) {
-                                    if (result.status != "ERROR") {
-                                            $(".form-control").val('');
-                                            $('#complete_success_cinv').show();
-                                                setTimeout(function () {
-                                                    $('#completeModal_cinv').modal('hide');
-                                                    $('#complete_success_cinv').hide();
-                                                    window.location.reload(true);
-                                                }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            })
-                        })
-                    })
-
-                    $(".btn_return_cinv").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_forward_cinv").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_upload_cinv").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        var type = $(this).data("type");
-                        var fi = $(this).data("fi");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
-                    })
-                    }, 500);
-                }
-            })
+        var tableInv = document.getElementById('inv_tab')
+        if (tableInv.classList.contains("active")){
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Investigation")
+            var type = "SC_PD_INV"
+            drawTable(type,uuid)
         }
-        __table_cinv();
 
-        var __table_sup = function(){
-            $('.table_head_sup').DataTable().destroy();
-            $('.table_body_sup').empty();
+        tableInv.addEventListener('click', function () {
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Investigation")
+            var type = "SC_PD_INV"
+            drawTable(type,uuid)
+        })
 
-            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_SUP').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
-                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            var field = result.departmentId;
-                            let actions;
-                            switch (data.approvalStatus) {
-                            case "COMPLETED":
-                                actions = "<h5>This Docket is Completed</h5>";
-                                break;
-                            default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_sup pd_sup_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_sup pd_sup_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_sup pd_sup_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_sup pd_sup_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_sup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
-                                break;
-                            };
-                            $('.table_body_sup').append("<tr>"+
-                                "<td></td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+senderId+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'>"+actions+"")
-                            });
-                        });
-                    });
-                    setTimeout(function () {
-                    $(document).ready(function () {
-                        $('.table_head_sup tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head_sup').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "40%", "targets": 6 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
+        var tableSup = document.getElementById('sup_tab')
+        tableSup.addEventListener('click', function () {
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Supervision")
+            var type = "SC_PD_SUP"
+            drawTable(type,uuid)
+        })
 
-                    $(".btn_complete_sup").unbind("click").on("click", function(){
-                        var id = $(this).data("id");
-                        var docket_number = $(this).data("docket");
-                        $(".docket").html(docket_number)
-                        __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
-                            console.log(result)
-                            var result = result.response;
-                            $(".btn_complete_confirm_sup").unbind("click").on("click", function(){
-                                console.log('clicked')
-                                var payload = {
-                                    "type"                  : result.type,
-                                    "caseload_type"         : result.caseloadType,
-                                    "senderId"              : result.senderId,
-                                    "receiverId"            : result.receiverId,
-                                    "fieldOfficeId"         : result.fieldOfficeId,
-                                    "docketNumber"          : result.docketNumber,
-                                    "details"               : result.details,
-                                    "remarks"               : result.remarks,
-                                    "approvalStatus"        : "",
-                                    "lastStatusUpdateDate"  : "",
-                                }
-                                console.log(payload)
-                                __executeExternalPost('http://localhost:8000/workflow/complete/'+id,JSON.stringify(payload)).done(function (result) {
-                                    if (result.status != "ERROR") {
-                                            $(".form-control").val('');
-                                            $('#complete_success_sup').show();
-                                                setTimeout(function () {
-                                                    $('#completeModal_sup').modal('hide');
-                                                    $('#complete_success_sup').hide();
-                                                    window.location.reload(true);
-                                                }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            })
-                        })
-                    })
+        var table_cinv = document.getElementById('cinv_tab')
+        table_cinv.addEventListener('click', function(){
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Courtesy Investigation")
+            var type = "SC_PD_CINV"
+            drawTable(type,uuid)
+        })
 
-                    $(".btn_return_sup").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_forward_sup").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_upload_sup").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        var type = $(this).data("type");
-                        var fi = $(this).data("fi");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
-                    })
-                    }, 500);
-                }
-            })
-        }
-        __table_sup();
-
-        var __table_csup = function(){
-            $('.table_head_csup').DataTable().destroy();
-            $('.table_body_csup').empty();
-
-            __executeExternalGet('http://localhost:8000/workflow/receiver/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_CSUP').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
-                            var senderId = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            var field = result.departmentId
-                            let actions;
-                            switch (data.approvalStatus) {
-                            case "COMPLETED":
-                                actions = "<h5>This Docket is Completed</h5>";
-                                break;
-                            default:
-                                actions = " <button class='btn btn-sm btn-primary btn_upload_csup pd_csup_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+field+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger btn_return_csup pd_csup_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info btn_forward_csup pd_csup_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success btn_complete_csup pd_csup_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal_csup'data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-check-circle'></i> Complete</button>";
-                                break;
-                            };
-                            $('.table_body_csup').append("<tr>"+
-                                "<td></td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+senderId+"</td>"+
-                                "<td>"+data.status+"</td>"+
-                                "<td align='center' class='actions'>"+actions+"")
-                            });
-                        });
-                    });
-                    setTimeout(function () {
-                    $(document).ready(function () {
-                        $('.table_head_csup tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head_csup').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                            //     { "width": "40%", "targets": 6 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
-
-                    $(".btn_complete_csup").unbind("click").on("click", function(){
-                        var id = $(this).data("id");
-                        var docket_number = $(this).data("docket");
-                        $(".docket").html(docket_number)
-                        __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result) {
-                            console.log(result)
-                            var result = result.response;
-                            $(".btn_complete_confirm_csup").unbind("click").on("click", function(){
-                                console.log('clicked')
-                                var payload = {
-                                    "type"                  : result.type,
-                                    "caseload_type"         : result.caseloadType,
-                                    "senderId"              : result.senderId,
-                                    "receiverId"            : result.receiverId,
-                                    "fieldOfficeId"         : result.fieldOfficeId,
-                                    "docketNumber"          : result.docketNumber,
-                                    "details"               : result.details,
-                                    "remarks"               : result.remarks,
-                                    "approvalStatus"        : "",
-                                    "lastStatusUpdateDate"  : "",
-                                }
-                                console.log(payload)
-                                __executeExternalPost('http://localhost:8000/workflow/complete/'+id,JSON.stringify(payload)).done(function (result) {
-                                    if (result.status != "ERROR") {
-                                            $(".form-control").val('');
-                                            $('#complete_success').show();
-                                                setTimeout(function () {
-                                                    $('#completeModal_csup').modal('hide');
-                                                    $('#complete_success_csup').hide();
-                                                    window.location.reload(true);
-                                                }, 1000);
-                                    }else{
-                                        alert("failed")
-                                    }
-                                })
-                            })
-                        })
-                    })
-
-                    $(".btn_return_csup").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/return?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_forward_csup").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        window.location.href = 'http://localhost/pis/forward?docket_number='+docket_number+'&id='+id;
-                    })
-                    $(".btn_upload_csup").unbind("click").on("click", function(){
-                        var docket_number = $(this).data("docket");
-                        var id = $(this).data("id");
-                        var type = $(this).data("type");
-                        var fi = $(this).data("fi");
-                        window.location.href = 'http://localhost/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
-                    })
-                    }, 500);
-                }
-            })
-        }
-        __table_csup();
-
+        var table_csup = document.getElementById('csup_tab')
+        table_csup.addEventListener('click', function(){
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Courtesy Supervision")
+            var type = "SC_PD_CSUP"
+            drawTable(type,uuid)
+        })
 
     } )( jQuery );

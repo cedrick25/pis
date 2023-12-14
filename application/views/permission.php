@@ -53,6 +53,34 @@
     </div>
     <!-- Update modal -->
 
+    <!-- Remove modal -->
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Remove Field Office</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Remove Successfully  
+                </div>
+                <div class="modal-body col-md-12">
+                    <p>
+                        Are you sure you want to remove this field office? 
+                    </p>
+                </div>                            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_confirm_remove">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Remove modal -->
+
 
     <!-- new permission modal -->
     <div class="modal fade" id="newPermission" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -137,11 +165,14 @@
                                 <strong class="card-title">Permission List</strong>
                                 <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newPermission"><i class="fa fa-plus-circle"></i> Add Permission </button>
                             </div>
+                            <div class="dataTables_filter">
+                                <label style=" display: inline-flex; margin-left: 5px; margin-right: 20px; margin-top: 25px" class="float-right" >Search:<input type="search" class="form-control form-control-sm searchBar" id= "searchBar" placeholder="Search" style="margin-left: 7px"></label>
+                            </div>
                             <div class="card-body">
-                                <table id="bootstrap-data-table-export" class="table table-striped table-bordered table_head">
+                                <table id="" class="table table-striped table-bordered table_head">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>ID</th>
                                             <th>Permission Name</th>
                                             <th>Type</th>
                                             <th>Detail</th>

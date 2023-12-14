@@ -65,8 +65,8 @@
                             <div class="card-body">
                                 <table id="" class="table table_head">
                                     <thead>
-                                        <tr align="center">
-                                            <th>#</th>
+                                        <tr>
+                                            <th>ID</th>
                                             <th>Docket Number</th>
                                             <th>Docket Series</th>
                                             <th>Client Type</th>
@@ -74,7 +74,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table_body" align="center">
+                                    <tbody class="table_body">
                                     </tbody>
                                 </table>
                             </div>

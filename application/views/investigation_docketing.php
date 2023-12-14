@@ -65,17 +65,15 @@
                             <div class="card-body">
                                 <table id="" class="table table_head">
                                     <thead>
-                                        <tr align="center">
-                                            <th>#</th>
-                                            <th>Docket Number</th>
-                                            <th>Received Date</th>
-                                            <th>Name</th>
-                                            <th>Criminal Case No.</th>
-                                            <th>Field Office</th>
-                                            <th>Actions</th>
-                                        </tr>
+                                        <th>#</th>
+                                        <th>Docket Number</th>
+                                        <th>Received Date</th>
+                                        <th>Name</th>
+                                        <th>Criminal Case No.</th>
+                                        <th>Field Office</th>
+                                        <th>Actions</th>
                                     </thead>
-                                    <tbody class="table_body" align="center">
+                                    <tbody class="table_body">
                                     </tbody>
                                 </table>
                             </div>

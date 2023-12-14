@@ -87,138 +87,8 @@
             
             return d.promise();
         };
-        $(".list_true").html(`
-            <div class="list_sentence_true">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_true"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y_true" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m_true" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d_true" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y_true" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m_true" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d_true" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                    <div class="col-3 col-md-9"><input type="text" class="form-control cl_true" placeholder="Robbery"></div>
-                </div>
-            </div>`
-        );
-
-        $(".list_false").html(`
-            <div class="list_sentence_false">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_false"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_y_false" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_m_false" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control min_d_false" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_y_false" placeholder="Year"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_m_false" placeholder="Month"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control max_d_false" placeholder="Day"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                    <div class="col-3 col-md-9"><input type="text" class="form-control cl_false" placeholder="Robbery"></div>
-                </div>
-            </div>`
-        );
-
-        $(".add_more_true").unbind("click").on("click", function(){
-            console.log("clicked");
-
-            $(".list_true").append(`
-                <div class="list_sentence_true">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_true"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y_true" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m_true" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d_true" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y_true" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m_true" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d_true" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                        <div class="col-3 col-md-9"><input type="text" class="form-control cl_true" placeholder="Robbery"></div>
-                    </div>
-                    <button type="button" class="remove_true btn btn-danger btn-sm float-left">Remove</button>
-                </div>
-                `
-            )
-        });
-
-        $(".add_more_false").unbind("click").on("click", function(){
-            console.log("clicked");
-
-            $(".list_false").append(`
-                <div class="list_sentence_false">
-                    <div class="row form-group col-md-12">
-                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_false"></textarea></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y_false" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m_false" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d_false" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y_false" placeholder="Year"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m_false" placeholder="Month"></div>
-                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d_false" placeholder="Day"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                        <div class="col-3 col-md-9"><input type="text" class="form-control cl_false" placeholder="Robbery"></div>
-                    </div>
-                    <button type="button" class="remove_false btn btn-danger btn-sm float-left">Remove</button>
-                </div>
-                `
-            )
-        });
-
-
-        $('.list_true').on('click', '.remove_true', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
-
-        $('.list_false').on('click', '.remove_false', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
-
-// select manual docket is set to false
-    var __select = function(){
-        $('.docket_num').empty();
-        $('.field_office').empty();
 
         __executeExternalGet('8088/department/list').done(function (result) {
-            // console.log(result)
             if (result.status != "ERROR") {
                 $('.field_office_true').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
@@ -234,32 +104,19 @@
             } else {
                     console.log("failed fetching docket list")
                     }
-    })
+        })
 
         var __selectclient = function(){
             $('.pb_client_sup').empty();
             $('.pb_client_sup_false').empty();
-            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER').done(function (result) {
-                console.log("++client result++")
-                console.log(result)
-                console.log("++client result++")
-                console.log(" ")
-                console.log(" ")
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER&officeId='+$.cookie('field_office_id')).done(function (result) {
                 if (result.status != "ERROR") {
                     $('.pb_client_sup').append("<option selected disabled> - - Select Client - - </option>");
                     result.content.forEach(function(data){
                         var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                        // console.log(name)
                         $('.pb_client_sup').append(
                             '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
                     });
-                    // $('.pb_client_sup_false').append("<option selected disabled> - - Select Client - - </option>");
-                    // result.content.forEach(function(data){
-                    //     var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                    //     // console.log(name)
-                    //     $('.pb_client_sup_false').append(
-                    //         '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
-                    // });
                 } else {
                     console.log("failed fetching docket list")
                 }
@@ -267,39 +124,138 @@
         }
         __selectclient();
 
-// manual docket is set to false
-        __executeExternalGet('8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
-        console.log(result)
-            if (result.status != "ERROR") {
 
-                // if manual docket is false
+
+        var docketSwitch = document.getElementById('docketSwitch');
+        var sentenceTrue = document.getElementById('sentenceTrue');
+        var sentenceFalse = document.getElementById('sentenceFalse');
+        let sentenceFormCounter = 1;
+
+        function sentenceForms() {
+            let currentCounter = sentenceFormCounter++;
+            return `
+                <div id="sentenceForm${currentCounter}">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control" id="sentence"></textarea></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control" id="minYear" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control" id="minMonth" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control" id="minDay" placeholder="Day"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control" id="maxYear" placeholder="Year"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control" id="maxMonth" placeholder="Month"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control" id="maxDay" placeholder="Day"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
+                        <div class="col-3 col-md-9"><input type="text" class="form-control" id="civilLiability" placeholder="Robbery"></div>
+                    </div>
+                    <div class="row form-group col-md-6"> <button type="button" class="btn btn-danger btn-sm float-left" id="rmvButton">Remove</button> </div>
+                </div>`
+        }
+
+        function updateForms(data) {
+            let currentCounter = sentenceFormCounter++;
+            return `
+                <div id="sentenceForm${currentCounter}">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_false" id="sentence">${data.sentence}</textarea></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y_false" id="minYear" placeholder="Year" value="${data.max_y}"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m_false" id="minMonth" placeholder="Month" value="${data.max_m}"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d_false" id="minDay" placeholder="Day" value="${data.max_d}"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y_false" id="maxYear" placeholder="Year" value="${data.max_y}"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m_false" id="maxMonth" placeholder="Month" value="${data.max_m}"></div>
+                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d_false" id="maxDay" placeholder="Day" value="${data.max_d}"></div>
+                    </div>
+                    <div class="row form-group col-md-6">
+                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
+                        <div class="col-3 col-md-9"><input type="text" class="form-control cl_false" id="civilLiability" placeholder="Robbery" value="${data.civil_liability}"></div>
+                    </div>
+                    <div class="row form-group col-md-6"> <button type="button" class="btn btn-danger btn-sm float-left remove_false">Remove</button> </div>
+                </div>`
+        }
+
+        function classNames(senName,yMin,mMin,dMin,yMax,mMax,dMax,clName,rmvName) {
+            $('.sentence-container, #sentence').addClass(senName)
+            $('.sentence-container, #minYear').addClass(yMin)
+            $('.sentence-container, #minMonth').addClass(mMin)
+            $('.sentence-container, #minDay').addClass(dMin)
+            $('.sentence-container, #maxYear').addClass(yMax)
+            $('.sentence-container, #maxMonth').addClass(mMax)
+            $('.sentence-container, #maxDay').addClass(dMax)
+            $('.sentence-container, #civilLiability').addClass(clName)
+            $('.sentence-container, #rmvButton').addClass(rmvName)
+
+        }
+
+        function sentenceArray(senVal,yMinVal,mMinVal,dMinVal,yMaxVal,mMaxVal,dMaxVal,clVal) {
+            const sentence = [];
+            const sentence_inputs = $("."+senVal);
+            const min_y = $("."+yMinVal);
+            const min_m = $("."+mMinVal);
+            const min_d = $("."+dMinVal);
+            const max_y = $("."+yMaxVal);
+            const max_m = $("."+mMaxVal);
+            const max_d = $("."+dMaxVal);
+            const cl_true = $("."+clVal);
+
+            for(var i = 0; i < sentence_inputs.length; i++){
+                const list = {};
+                list.sentence = $(sentence_inputs[i]).val()
+                list.min_y = $(min_y[i]).val();
+                list.min_m = $(min_m[i]).val();
+                list.min_d = $(min_d[i]).val();
+                list.max_y = $(max_y[i]).val();
+                list.max_m = $(max_m[i]).val();
+                list.max_d = $(max_d[i]).val();
+                list.cl_true = $(cl_true[i]).val();
+                sentence.push(list);
+            }
+            console.log(sentence)
+        }
+
+        var cNamesTrue = ['sentence_true','min_y_true','min_m_true','min_d_true','max_y_true','max_m_true','max_d_true','cl_true','remove_true'];
+        var cNamesFalse = ['sentence_false','min_y_false','min_m_false','min_d_false','max_y_false','max_m_false','max_d_false','cl_false','remove_false'];
+        var office_id = $.cookie('field_office_id');
+
+        if (docketSwitch.value == "false"){
+            $('.docket_display').show();
+            __executeExternalGet('8000/docketbook/list/PIS_INV/'+$.cookie("field_office_id")).done(function (result) {
                 $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
                     result.response.forEach(function(data){
-                        console.log(data)
                         $('.docket_num').append(
                             "<option value="+data.docketNumber+">"+data.docketNumber+"</option>");
                     });
-
-
-                        $('.docket_num').on('change', function() {
-                            $(".manual_false").show();
-                            const docket = this.value
-                                __executeExternalGet('8000/docketbook/'+docket+'/'+$.cookie("field_office_id")).done(function (result) {
-                                    console.log(result)
-                                    var result = result.response;
+                    $('.docket_num').on('change', function() {
+                        $(".manual_false").show();
+                        $('.confirmButton').show();
+                        const docket = this.value
+                            __executeExternalGet('8000/docketbook/'+docket+'/'+$.cookie("field_office_id")).done(function (result) {
+                                var result = result.response;
                                     if (result.status != "ERROR") {
                                         $(".docket_num").val(result.docketNumber);
                                         $(".firstName_false").val(result.firstName);
                                         $(".middleName_false").val(result.middleName);
                                         $(".lastName_false").val(result.lastName);
                                         $(".suffix_false").val(result.suffixName);
-                                        // $(".client_type").val(result.clientType).trigger("change");
                                         $(".cc_no_false").val(result.criminalCaseNumber);
                                         $(".offense_false").val(result.offense);
                                         $(".pb_client_sup_false").val(result.caseloadType).trigger("change");
                                             setTimeout(function () {
                                                 $(".field_office_false").val(result.fieldOfficeId).trigger("change");
-                                            }, 3000);
+                                            }, 100);
                                                     if (result.legalAge == true) {
                                                         var la = "true"
                                                     } else {
@@ -328,324 +284,80 @@
                                                     }
                                         $(".plea_bargain_false").val(plea).trigger("change");
                                         $(".classification_false").val(result.caseClassification).trigger("change");
-
-                                            $(".list_false").empty();
-                                            console.log(JSON.parse(result.sentence))
-                                            JSON.parse(result.sentence).forEach(function(data){
-                                                $(".list_false").append(`
-                                                    <div class="list_sentence_false">
-                                                        <div class="row form-group col-md-12">
-                                                            <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                                            <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence_false">${data.sentence}</textarea></div>
-                                                        </div>
-                                                        <div class="row form-group col-md-6">
-                                                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control min_y_false" placeholder="Year" value="${data.min_y}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control min_m_false" placeholder="Month" value="${data.min_m}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control min_d_false" placeholder="Day" value="${data.min_d}"></div>
-                                                        </div>
-                                                        <div class="row form-group col-md-6">
-                                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control max_y_false" placeholder="Year" value="${data.max_y}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control max_m_false" placeholder="Month" value="${data.max_m}"></div>
-                                                            <div class="col-3 col-md-3"><input type="text" class="form-control max_d_false" placeholder="Day" value="${data.max_d}"></div>
-                                                        </div>
-                                                        <div class="row form-group col-md-6">
-                                                            <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                                                            <div class="col-3 col-md-9"><input type="text" class="form-control cl_false" placeholder="Robbery" value="${data.civil_liability}"></div>
-                                                        </div>
-                                                        <button type="button" class="remove btn btn-danger btn-sm float-left">Remove</button>
-                                                    </div>`
-                                                )
-                                            });
+                                        var sentenceData = JSON.parse(result.sentence)
+                                        sentenceData.forEach(function(data){
+                                            sentenceFalse.innerHTML += updateForms(data);
+                                        });
+                                    } else {
+                                        alert("Error!")
                                     };
-                                });
-                        });
-            } else {
-            console.log("failed fetching docket number")
-            }
-    });
-}
-// select manual docket is set to false
-
-
-        // manual docket
-        var manual = $('.manual_docket').val()
-        console.log(manual)
-        if ($('.manual_docket').val() == "false"){
-            __select();
-            $(".manual_false").hide();
-            $(".manual_true").hide();
-        } else {
-            $(".manual_false").hide();
-            $(".manual_true").hide();
-            $(".docket_display").hide();
+                            })
+                    })
+            })
         }
-        $('.manual_docket').change(function(){
-            cb = $(this);
-            cb.val(cb.prop('checked'));
-            console.log($('.manual_docket').val())
-            if ($('.manual_docket').val() == "true") {
-                $(".docket_display").hide();
-                $(".form-control").val('');
-                $(".manual_false").hide();
-                $(".manual_true").show();
-                
+
+        docketSwitch.addEventListener('change', function() {
+            if (docketSwitch.checked) {
+                docketSwitch.value = true;
+                $('.manual_true').show();
+                $('.manual_false').hide();
+                $('.docket_display').hide();
+                $('.confirmButton').show();
+                sentenceTrue.innerHTML = sentenceForms();
+                classNames(cNamesTrue[0],cNamesTrue[1],cNamesTrue[2],cNamesTrue[3],cNamesTrue[4],cNamesTrue[5],cNamesTrue[6],cNamesTrue[7],cNamesTrue[8]);
+                setTimeout(function () {
+                    $('.field_office_true').val(office_id).trigger("change")
+                }, 100);
+                $('.form-group').val('')
             } else {
-                $(".manual_false").hide();
-                $(".manual_true").hide();
-                $(".docket_display").show();
-                $(".form-control").val('');
-                __select();
+                docketSwitch.value = false;
+                $('.docket_display').show();
+                $('.manual_true').hide();
+                $('.manual_false').hide();
+                $('.confirmButton').hide();
+                $('.form-control').val('')
             }
         });
 
-        $('.plea_bargain_false').change(function(){
-            if ($('.plea_bargain_false').val() == "true") {
-                $(".class_sel_false").show();
-            } else {
-                $(".class_sel_false").hide();
-            }
-            if ($('.plea_bargain_false').val() == "false"){
-                $(".class_sel_false").hide();
-            } else {
-                $(".class_sel_false").show();
-            }
+        $(".add_more_true").unbind("click").on("click", function() {
+            sentenceTrue.innerHTML += sentenceForms();
+            classNames(cNamesTrue[0], cNamesTrue[1], cNamesTrue[2], cNamesTrue[3], cNamesTrue[4], cNamesTrue[5], cNamesTrue[6], cNamesTrue[7],cNamesTrue[8]);
         });
 
-        $('.plea_bargain_true').change(function(){
-            if ($('.plea_bargain_true').val() == "true") {
-                $(".class_sel_true").show();
-            } else {
-                $(".class_sel_true").hide();
-            }
-            if ($('.plea_bargain_true').val() == "false"){
-                $(".class_sel_true").hide();
-            } else {
-                $(".class_sel_true").show();
-            }
+        $('#sentenceTrue').on('click', '.remove_true', function(e) {
+            const closestSentenceForm = $(this).closest('div');
+            const rmvDiv = closestSentenceForm.parent()
+            rmvDiv.remove();
         });
 
-            $(".btn-confirm_true").unbind("click").on("click", function(){
-                console.log("clicked true")
+        $(".add_more_false").unbind("click").on("click", function(){
+            sentenceFalse.innerHTML += sentenceForms();
+            classNames(cNamesFalse[0], cNamesFalse[1], cNamesFalse[2], cNamesFalse[3], cNamesFalse[4], cNamesFalse[5], cNamesFalse[6], cNamesFalse[7], cNamesFalse[8]);
+        })
+
+        $('#sentenceFalse').on("click", ".remove_false", function(e) {
+            const closestSentenceForm = $(this).closest('div');
+            const rmvDiv = closestSentenceForm.parent()
+            rmvDiv.remove();
+        });
+
+        $(".btn-confirm").unbind("click").on("click", function(){
 
             var fname = $('.pb_client_sup option:selected').data('fname');
             var mname = $('.pb_client_sup option:selected').data('mname');
             var lname = $('.pb_client_sup option:selected').data('lname');
             var sname = $('.pb_client_sup option:selected').data('sname');
 
-            console.log(fname+","+mname+","+lname+","+sname)
-
-            const sentence = [];
-            const sentence_inputs = $(".sentence_true");
-            const min_y = $(".min_y_true");
-            const min_m = $(".min_m_true");
-            const min_d = $(".min_d_true");
-            const max_y = $(".max_y_true");
-            const max_m = $(".max_m_true");
-            const max_d = $(".max_d_true");
-            const cl_true = $(".cl_true_true");
-
-            for(var i = 0; i < sentence_inputs.length; i++){
-                const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                list.cl_true = $(cl_true[i]).val();
-                sentence.push(list);
-            }
             var md;
-            if ($(".manual_docket").val() == "true") {
+            if (docketSwitch.value == "true") {
                 md = true
+                sentenceArray(cNamesTrue[0],cNamesTrue[1],cNamesTrue[2],cNamesTrue[3],cNamesTrue[4],cNamesTrue[5],cNamesTrue[6],cNamesTrue[7]);
             } else {
                 md = false
+                sentenceArray(cNamesFalse[0],cNamesFalse[1],cNamesFalse[2],cNamesFalse[3],cNamesFalse[4],cNamesFalse[5],cNamesFalse[6],cNamesFalse[7]);
             }
-            
-            var payload_true = {
-                "type": "PIS_SUP",
-                "docketNumber": "",
-                "docketSeries": "NONE",
-                "caseloadType": $(".caseload_true").val(),
-                "fieldOfficeId": $(".field_office_true").val(),
-                "clientType": "PROBATIONER",
-                "clientId": "",
-                "firstName": fname,
-                "middleName": mname,
-                "lastName": lname,
-                "suffixName": sname,
-                "fullName": "",
-                "pleaBargain": $(".plea_bargain_true").val(),
-                "caseClassification": $(".classification_true").val(),
-                "criminalCaseNumber": $(".cc_no_true").val(),
-                "offense": $(".offense_true").val(),
-                "courtOfOrigin": $(".court_origin_true").val(),
-                "courtOrderDate": $(".cod_true").val(),
-                "investigatingOfficer": $(".inv_off_true").val(),
-                "receivedDateByPPO": $(".rd_true").val(),
-                "sentence": JSON.stringify(sentence),
-                "manualDocket": false,
-                "referral": false,
-                "referralData": "",
-                "remarks": "",
-                "probationStartDate": "",
-                "probationYear": "",
-                "probationMonth": "",
-                "probationDay": "",
-                "prisonName": "",
-                "investigationReportSubmittedDate": "",
-                "ppoRecommendation": "",
-                "recommendationState": "",
-                "dateOfTransfer": "",
-                "transferredOfficeId": "",
-                "dateOrderReceivedFromTheBoard": "",
-                "boardOrder": "",
-                "boardOrderStatus": "",
-                "referringOfficeId": "",
-                "dateCICAR": "",
-                "supervisingOfficer": "",
-                "supervisionStartDate": "",
-                "supervisionEndDate": "",
-                "probationEndDate": "",
-                "reportType": "",
-                "referralType": "",
-                "dateReportSubmittedToTheBoard": "",
-                "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                "resolutionType": "",
-                "dateResolutionFromTheBoard": "",
-                "dateResolutionFromTheRDForTransfer": "",
-                "createdBy": "",
-                "updatedBy": "",
-                "legalAge": $(".client_type_true").val(),
-                "militaryCourt": $(".military_court_true").val()
-            }
-            console.log(payload_true)
-            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload_true)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        window.location.reload(true);
-                    }, 2000);
-                }else{
-                }
-            })   
+
         })
 
-
-
-            $(".btn-confirm_false").unbind("click").on("click", function(){
-                console.log("clicked false")
-
-            var fname = $('.pb_client_sup option:selected').data('fname');
-            var mname = $('.pb_client_sup option:selected').data('mname');
-            var lname = $('.pb_client_sup option:selected').data('lname');
-            var sname = $('.pb_client_sup option:selected').data('sname');
-
-            const sentence = [];
-            const sentence_inputs = $(".sentence_false");
-            const min_y = $(".min_y_false");
-            const min_m = $(".min_m_false");
-            const min_d = $(".min_d_false");
-            const max_y = $(".max_y_false");
-            const max_m = $(".max_m_false");
-            const max_d = $(".max_d_false");
-            const cl_false = $(".cl_false");
-
-            for(var i = 0; i < sentence_inputs.length; i++){
-                const list = {};
-                list.sentence = $(sentence_inputs[i]).val()
-                list.min_y = $(min_y[i]).val();
-                list.min_m = $(min_m[i]).val();
-                list.min_d = $(min_d[i]).val();
-                list.max_y = $(max_y[i]).val();
-                list.max_m = $(max_m[i]).val();
-                list.max_d = $(max_d[i]).val();
-                list.cl_false = $(cl_false[i]).val();
-                sentence.push(list);
-            }
-            var md;
-            if ($(".manual_docket").val() == "false") {
-                md = false
-            } else {
-                md = true
-            }
-
-            var payload_false = {
-                  "type": "PIS_SUP",
-                  "docketNumber": "",
-                  "docketSeries": "NONE",
-                  "caseloadType": $(".caseload_false").val(),
-                  "fieldOfficeId": $(".field_office_false").val(),
-                  "clientType": "PROBATIONER",
-                  "clientId": "",
-                  "firstName": $(".firstName_false").val(),
-                  "middleName": $(".middleName_false").val(),
-                  "lastName": $(".lastName_false").val(),
-                  "suffixName": $(".suffix_false").val(),
-                  "fullName": "",
-                  "pleaBargain": $(".plea_bargain_false").val(),
-                  "caseClassification": $(".classification_false").val(),
-                  "criminalCaseNumber": $(".cc_no_false").val(),
-                  "offense": $(".offense_false").val(),
-                  "courtOfOrigin": $(".court_origin_false").val(),
-                  "courtOrderDate": $(".cod_false").val(),
-                  "investigatingOfficer": $(".inv_off_false").val(),
-                  "receivedDateByPPO": $(".rd_false").val(),
-                  "sentence": JSON.stringify(sentence),
-                  "manualDocket": false,
-                  "referral": false,
-                  "referralData": "",
-                  "remarks": "",
-                  "probationStartDate": "",
-                  "probationYear": "",
-                  "probationMonth": "",
-                  "probationDay": "",
-                  "prisonName": "",
-                  "investigationReportSubmittedDate": "",
-                  "ppoRecommendation": "",
-                  "recommendationState": "",
-                  "dateOfTransfer": "",
-                  "transferredOfficeId": "",
-                  "dateOrderReceivedFromTheBoard": "",
-                  "boardOrder": "",
-                  "boardOrderStatus": "",
-                  "referringOfficeId": "",
-                  "dateCICAR": "",
-                  "supervisingOfficer": "",
-                  "supervisionStartDate": "",
-                  "supervisionEndDate": "",
-                  "probationEndDate": "",
-                  "reportType": "",
-                  "referralType": "",
-                  "dateReportSubmittedToTheBoard": "",
-                  "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                  "resolutionType": "",
-                  "dateResolutionFromTheBoard": "",
-                  "dateResolutionFromTheRDForTransfer": "",
-                  "createdBy": "",
-                  "updatedBy": "",
-                  "legalAge": $(".client_type_false").val(),
-                  "militaryCourt": $(".military_court_false").val()
-            }
-            console.log(payload_false)
-            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload_false)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        window.location.reload(true);
-                    }, 2000);
-                }else{
-                }
-            })   
-        })
 
     } )( jQuery );

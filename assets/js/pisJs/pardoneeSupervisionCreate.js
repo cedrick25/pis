@@ -157,7 +157,6 @@
                 "supervisionStartDate"      : $(".start_sup").val(),
                 "supervisionEndDate"        : $(".end_sup").val()
             }
-            console.log(payload)
             __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
@@ -177,7 +176,7 @@
 
         var __selectclient = function(){
             $('.client').empty();
-            __executeExternalGet('http://localhost:8000/petitioner?page=0&size=50&type=PARDONEE').done(function (result) {
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.client').append("<option selected disabled> - - Select Client - - </option>");

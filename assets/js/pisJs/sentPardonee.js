@@ -1,14 +1,50 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
+        var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
+            // path = $.wms.getContextPath() + path;
+            var d = $.Deferred();
+            if(customLoader != ""){
+                $("#"+customLoader).show();
+                $("#"+customLoader).removeClass("hide");
+            }
+            $.ajax({
+                method: "GET",
+                url: path,
+                dataType: "json",
+            }).done(function (data, textStatus, jqXHR) {
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+                d.resolve(data)
+            }).fail(function (jqXHR, textStatus, errorThrown,request) {
+                console.log('---FAILED---');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                console.log('---FAILED---');
+                
+                d.resolve({
+                    status : 'ERROR',
+                    message : request
+                });
+                
+                if(customLoader != ""){
+                    $("#"+customLoader).hide();
+                    $("#"+customLoader).addClass("hide");
+                }
+            });
+            
+            return d.promise();
+        };
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -51,49 +87,12 @@
             
             return d.promise();
         };
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
 
         var __select = function(){
             $('.field_office').empty();
             $('.field_office_update').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -113,176 +112,156 @@
         }
         __select();
 
-        var __table_SC_PD_INV = function(){
-            $('.table_head_inv').DataTable().destroy();
-            $('.table_body_inv').empty();
+        var uuid = $.cookie("uuid");
 
-            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_INV').done(function (result) {
-                console.log("=====this is=====")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
-                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            $('.table_body_inv').append("<tr>"+
-                                "<td>"+data.id+"</td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>")
-                        })
-                        })
-                    })
-                    setTimeout(function () {
-                        $(document).ready(function () {
-                            $('.table_head_inv tbody tr').each(function (idx) {
-                               $(this).children("td:eq(0)").html(idx + 1);
-                            });
-                            var table = $('.table_head_inv').DataTable({
-                                order: [[0, 'asc']],
-                                // "columnDefs": [
-                                //     { "width": "30%", "targets": 6 }
-                                // ]
-                            });
-                            $('.dataTables_length').addClass('bs-select');
-                        }); 
-                    }, 400);
-                }
+        function buttonVisibility (){
+            var data = JSON.parse(localStorage.getItem('permission'));
+            if (data != null) {
+                data.forEach(function(data){
+                    if (data.type == "ACTION") {
+                        // console.log(data.value)
+                        setTimeout(function() {
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
+                            }
+                        }, 10);
+                    }else if (data.type == "VIEW") {
+                        if (!data.value) {
+                            var element = $('.' + data.detail);
+                            element.hide();
+                        }else{
+                            var element = $('.' + data.detail);
+                            element.show();
+                        }
+                    }else{
+                    }
+                });
+            }
+        }
+
+        function buttonFunctionality(){
+            $(".btn_view").unbind("click").on("click", function(){
+                var id = $(this).data("id");
+                var docket_number = $(this).data("docket");
+                window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
             })
         }
-        __table_SC_PD_INV();
 
-        var __table_SC_PD_CINV = function(){
-            $('.table_head_cinv').DataTable().destroy();
-            $('.table_body_cinv').empty();
+        function tableColumns() {
+            return [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        if (data.id == null){
+                            return "No id";
+                        } else {
+                            return data.id;
+                        }
+                    }
+                },
+                {
+                    "data": 'docketNumber'
+                },
+                {
+                    "data": 'fieldOfficeName'
+                },
+                {
+                    "data": 'details',
+                },
+                {
+                    "data": 'senderName'
+                },
+                {
+                    "data": null,
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.departmentId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                    }
+                }
+            ]
+        }
 
-            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_CINV').done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
-                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            $('.table_body_cinv').append("<tr>"+
-                                "<td>"+data.id+"</td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>")
-                        })
-                        })
-                    });
-                    setTimeout(function () {
-                        $(document).ready(function () {
-                            $('.table_head_cinv tbody tr').each(function (idx) {
-                               $(this).children("td:eq(0)").html(idx + 1);
-                            });
-                            var table = $('.table_head_cinv').DataTable({
-                                order: [[0, 'asc']],
-                                "columnDefs": [
-                                    // { "width": "30%", "targets": 6 }
-                                ]
-                            });
-                            $('.dataTables_length').addClass('bs-select');
+        function drawTable(type,uuid) {
+            $(document).ready(function(){
+                $('.table_head').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "columnDefs": [
+                        { "width": "15px", "targets": [0] },
+                        { "width": "200px", "targets": [1,2,3,4,5] },
+                    ],
+                    "ajax": function(data, callback, settings) {
+                        const size = 10;
+                        const page = data.start / size;
+                        const apiUrl = api+"8000/workflow/sender/"+uuid+"?page="+page+"&size="+size+"&type="+type;
+                        $.ajax({
+                            url: apiUrl,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(res) {
+                                callback({
+                                    recordsTotal: res.totalElements,
+                                    recordsFiltered: res.totalElements,
+                                    data: res.content
+                                });
+                            },
+                            error: function(err) {
+                                console.error("Failed to fetch data:", err);
+                            }
                         });
-                    }, 400);
-                }
-            })
-        } 
-        __table_SC_PD_CINV();
-
-        var __table_SC_PD_CSUP = function(){
-            $('.table_head_csup').DataTable().destroy();
-            $('.table_body_csup').empty();
-
-            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_CSUP').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
-                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            $('.table_body_csup').append("<tr>"+
-                                "<td>"+data.id+"</td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>")
-                        })
-                        })
-                    })
-                    setTimeout(function () {
-                        $(document).ready(function () {
-                            $('.table_head_csup tbody tr').each(function (idx) {
-                               $(this).children("td:eq(0)").html(idx + 1);
-                            });
-                            var table = $('.table_head_csup').DataTable({
-                                order: [[0, 'asc']],
-                                // "columnDefs": [
-                                //     { "width": "30%", "targets": 6 }
-                                // ]
-                            });
-                            $('.dataTables_length').addClass('bs-select');
-                        }); 
-
-                    }, 400);
-                }
+                    },
+                    "columns": tableColumns()
+                });
+                $('.table_head').on('draw.dt', function() {
+                    buttonFunctionality();
+                    buttonVisibility();   
+                });
             })
         }
-        __table_SC_PD_CSUP();
 
-        var __table_SC_PD_SUP = function(){
-            $('.table_head_sup').DataTable().destroy();
-            $('.table_body_sup').empty();
-
-            __executeExternalGet('http://localhost:8000/workflow/sender/'+$.cookie("uuid")+'?page=0&size=100&type=SC_PD_SUP').done(function (result) {
-                // console.log("==========")
-                // console.log(result)
-                // console.log("==========")
-                if (result.status != "ERROR") {
-                    result.content.forEach(function(data){
-                        __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
-                            var fo = result.name;
-                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
-                            var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                            $('.table_body_sup').append("<tr>"+
-                                "<td>"+data.id+"</td>"+
-                                "<td>"+data.docketNumber+"</td>"+
-                                "<td>"+fo+"</td>"+
-                                "<td>"+data.details+"</td>"+
-                                "<td>"+receiver+"</td>"+
-                                "<td>"+data.status+"</td>")
-                        })
-                        })
-                    })
-                    setTimeout(function () {
-                        $(document).ready(function () {
-                            $('.table_head_sup tbody tr').each(function (idx) {
-                               $(this).children("td:eq(0)").html(idx + 1);
-                            });
-                            var table = $('.table_head_sup').DataTable({
-                                order: [[0, 'asc']],
-                                // "columnDefs": [
-                                //     { "width": "30%", "targets": 6 }
-                                // ]
-                            });
-                            $('.dataTables_length').addClass('bs-select');
-                        }); 
-                    }, 400);
-                }
-            })
+        var tableInv = document.getElementById('inv_tab')
+        if (tableInv.classList.contains("active")){
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Investigation")
+            var type = "SC_PD_INV"
+            drawTable(type,uuid)
         }
-        __table_SC_PD_SUP();
+
+        tableInv.addEventListener('click', function () {
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Investigation")
+            var type = "SC_PD_INV"
+            drawTable(type,uuid)
+        })
+
+        var tableSup = document.getElementById('sup_tab')
+        tableSup.addEventListener('click', function () {
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Supervision")
+            var type = "SC_PD_SUP"
+            drawTable(type,uuid)
+        })
+
+        var table_cinv = document.getElementById('cinv_tab')
+        table_cinv.addEventListener('click', function(){
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Courtesy Investigation")
+            var type = "SC_PD_CINV"
+            drawTable(type,uuid)
+        })
+
+        var table_csup = document.getElementById('csup_tab')
+        table_csup.addEventListener('click', function(){
+            $('.table_head').DataTable().destroy()
+            $('#tableTitle').text("Courtesy Supervision")
+            var type = "SC_PD_CSUP"
+            drawTable(type,uuid)
+        })
+
     } )( jQuery );

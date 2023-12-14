@@ -1,12 +1,8 @@
     ( function ( $ ) {
-
+        
         var api = localStorage.getItem('api');
         var ___ctx = api;
         console.log(___ctx)
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
 
         var __getContext = function() {
             return ___ctx;
@@ -92,11 +88,7 @@
             return d.promise();
         };
 
-
-       
-
         $(".btn-confirm").unbind("click").on("click", function(){
-                
             var payload = {
                     "firstName"         : $(".firstName").val(),
                     "middleName"        : $(".middleName").val(),
@@ -110,13 +102,12 @@
                     "birthDate"         : $(".birthdate").val(),
                     "birthCity"         : $(".b_place").val(),
                     "permanentAddress"  : $(".address").val(),
-                    "createdBy"         : "",
+                    "createdBy"         : $.cookie('uuid'),
                     "updatedBy"         : "",
                     "id"                : "",
                     "clientType"        : $(".client_type").val(),
                     "status"            : 1
             }
-            console.log(payload)
             __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
@@ -125,7 +116,7 @@
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            window.location.reload(true);
+                            window.location.href = api+'/pis/client_list';
                         }, 500);
                     }, 2000);
                 }else{

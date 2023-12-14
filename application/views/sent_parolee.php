@@ -39,102 +39,36 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#inv" role="tab" aria-controls="home" aria-selected="true">Investigation</a>
+                                        <a class="nav-link active" id="inv_tab" data-toggle="tab" style="cursor: pointer;">Investigation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#sup" role="tab" aria-controls="profile" aria-selected="false">Supervision</a>
+                                        <a class="nav-link" id="sup_tab" data-toggle="tab" style="cursor: pointer;">Supervision</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#cinv" role="tab" aria-controls="profile" aria-selected="false">Courtesy Investigation</a>
+                                        <a class="nav-link" id="cinv_tab" data-toggle="tab" style="cursor: pointer;">Courtesy Investigation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#csup" role="tab" aria-controls="profile" aria-selected="false">Courtesy Supervision</a>
+                                        <a class="nav-link" id="csup_tab" data-toggle="tab" style="cursor: pointer;">Courtesy Supervision</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="inv" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="col col-md-12">
-                                            <h3>Investigation</h3>
+                                            <h3 id="tableTitle"></h3>
                                         </div><br><br>
                                         <div class="col col-md-12">
-                                            <table class="table table_head_inv">
+                                            <table class="table table_head">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <th>ID</th>
                                                         <th>Docket No.</th>
                                                         <th>Field Office</th>
                                                         <th>Details</th>
                                                         <th>Receiver</th>
-                                                        <th>Status</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table_body_inv">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="sup" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="col col-md-12">
-                                            <h3>Supervision</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head_sup">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Docket No.</th>
-                                                        <th>Field Office</th>
-                                                        <th>Details</th>
-                                                        <th>Receiver</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_sup">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="cinv" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="col col-md-12">
-                                            <h3>Courtesy Investigation</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head_cinv">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Docket No.</th>
-                                                        <th>Field Office</th>
-                                                        <th>Details</th>
-                                                        <th>Receiver</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_cinv">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="csup" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="col col-md-12">
-                                            <h3>Courtesy Supervision</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head_csup">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Docket No.</th>
-                                                        <th>Field Office</th>
-                                                        <th>Details</th>
-                                                        <th>Receiver</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_csup">
 
                                                 </tbody>
                                             </table>

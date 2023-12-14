@@ -40,12 +40,11 @@
             });
         });
         // localStorage.removeItem('api');
-        localStorage.setItem('api', 'http://192.168.1.147:');
-        // localStorage.setItem('api', 'http://localhost:');
+        // localStorage.setItem('api', 'http://192.168.1.147:');
+        localStorage.setItem('api', 'http://localhost:');
         var api = localStorage.getItem('api');
 
         var ___ctx = api;
-        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -131,14 +130,23 @@
             return d.promise();
         };
 
-        var data = JSON.parse(localStorage.getItem('permission'));
-        console.log(data)
 
-        if (data != null) {
-            data.forEach(function(data){
-                if (data.type == "ACTION") {
-                    // console.log(data.value)
-                    setTimeout(function() {
+        function buttonVisibility (){
+            var data = JSON.parse(localStorage.getItem('permission'));
+            if (data != null) {
+                data.forEach(function(data){
+                    if (data.type == "ACTION") {
+                        // console.log(data.value)
+                        setTimeout(function() {
+                            if (!data.value) {
+                                var element = $('.' + data.detail);
+                                element.hide();
+                            }else{
+                                var element = $('.' + data.detail);
+                                element.show();
+                            }
+                        }, 10);
+                    }else if (data.type == "VIEW") {
                         if (!data.value) {
                             var element = $('.' + data.detail);
                             element.hide();
@@ -146,19 +154,15 @@
                             var element = $('.' + data.detail);
                             element.show();
                         }
-                    }, 1000);
-                }else if (data.type == "VIEW") {
-                    if (!data.value) {
-                        var element = $('.' + data.detail);
-                        element.hide();
                     }else{
-                        var element = $('.' + data.detail);
-                        element.show();
                     }
-                }else{
-                }
-            });
+                });
+            }
         }
+
+        buttonVisibility();
+
+
         if ($.cookie("uuid") != undefined) {
             __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
                 if (result.status != "ERROR") {
