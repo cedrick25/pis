@@ -1,15 +1,14 @@
-    ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+   ( function ( $ ) {
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -101,55 +100,41 @@
             }
         }
 
+        var __selectclient = function(){
+            __executeExternalGet('8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.client_update').append("<option selected disabled> - - Select Client - - </option>");
+                    result.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        $('.client_update').append(
+                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
-                console.log(result);
-                console.log(docket_number)
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 var result = result.response;
-                // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
                     $(".docket_num_update").val(result.docketNumber);
 
                     setTimeout(function () {
                     $(".docket_series_update").val(result.docketSeries).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".client_update").val(result.clientId).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".type_update").val(result.caseloadType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".client_type_update").val(result.clientType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".case_class_update").val(result.caseClassification).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".report_type_update").val(result.reportType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".referral_type_update").val(result.referralType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".res_type_update").val(result.resolutionType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".board_order_update").val(result.referralType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".board_status_update").val(result.resolutionType).trigger("change");
-                    }, 3000);
+                    }, 1000);
 
                     $(".dr_ppo_update").val(result.receivedDateByPPO);
                     $(".sup_officer_update").val(result.supervisingOfficer);
@@ -161,7 +146,12 @@
                     $(".date_sub_trans_update").val(result.dateReportSubmittedToRDForTransferToOtherPPO)
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
-                        console.log('clicked')
+
+                        var fname = $('.client_update option:selected').data('fname');
+                        var mname = $('.client_update option:selected').data('mname');
+                        var lname = $('.client_update option:selected').data('lname');
+                        var sname = $('.client_update option:selected').data('sname');
+                        var clientId = $('.client_update option:selected').data('id');
 
                         var payload = {
                         "type"                      : "SC_PR_SUP",
@@ -170,10 +160,11 @@
                         "caseloadType"              : $(".type_update").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
                         "clientType"                : "PAROLEE",
-                        "firstName"                 : "",
-                        "middleName"                : "",
-                        "lastName"                  : "",
-                        "suffixName"                : "",
+                        "clientId"                  : clientId,
+                        "firstName"                 : fname,
+                        "middleName"                : mname,
+                        "lastName"                  : lname,
+                        "suffixName"                : sname,
                         "fullName"                  : "",
                         "pleaBargain"               : true,
                         "caseClassification"        : $(".case_class_update").val(),
@@ -220,16 +211,14 @@
                         "supervisionEndDate"        : $(".end_sup_update").val()
 
                         }
-
-                        console.log(payload)
-                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
                             $('#success_update').show();
                                 setTimeout(function () {
                                     $('#success_update').hide();
-                                    window.location.href = 'http://localhost/pis/parolee_supervision_docketing';
+                                    window.location.href = api+'/pis/parolee_supervision_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")
@@ -245,7 +234,7 @@
         var __select = function(){
             $('.ref_office_update').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");

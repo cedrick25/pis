@@ -1,15 +1,14 @@
-    ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+   ( function ( $ ) {
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -88,17 +87,26 @@
             
             return d.promise();
         };
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
        
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
-
         $(".btn-confirm").unbind("click").on("click", function(){
 
             var fname = $('.client option:selected').data('fname');
             var mname = $('.client option:selected').data('mname');
             var lname = $('.client option:selected').data('lname');
             var sname = $('.client option:selected').data('sname');
+            var clientId = $('.client option:selected').data('id');
                 
             var payload = {
                 "type"                              : "SC_PD_INV",
@@ -107,6 +115,7 @@
                 "caseloadType"                      :$(".caseload").val(),
                 "fieldOfficeId"                     : $.cookie('field_office_id'),
                 "clientType"                        : "PARDONEE",
+                "clientId"                          : clientId,
                 "firstName"                         : fname,
                 "middleName"                        : mname,
                 "lastName"                          : lname,

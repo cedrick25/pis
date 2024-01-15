@@ -107,38 +107,10 @@
 
 
         var client_id = GetURLParameter('client_id');
-        console.log(client_id)
-        var field_office_id = GetURLParameter('field_office_id');
-        console.log(field_office_id)
-       
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
+        var foid = GetURLParameter('field_office_id');
+        var field_office_id = $.cookie('field_office_id');
 
-
-        $(".btn-next").unbind("click").on("click", function(){
-
-            // const siblings = [];
-            // const sibling_name = $(".sibling_name");
-            // const relationship = $(".relationship");
-            // const age = $(".age");
-            // const sibling_sex = $(".sibling_sex");
-            // const sibling_education = $(".sibling_education");
-            // const sibling_occupation = $(".sibling_occupation");
-
-            // for(var i = 0; i < sibling_name.length; i++){
-                
-            //     const list = {};
-            //     list.sibling_name = $(sibling_name[i]).val();
-            //     list.relationship = $(relationship[i]).val();
-            //     list.age = $(age[i]).val();
-            //     list.sibling_sex = $(sibling_sex[i]).val();
-            //     list.sibling_education = $(sibling_education[i]).val();
-            //     list.sibling_occupation = $(sibling_occupation[i]).val();
-            //     siblings.push(list);
-            // }
-
-
+        function gatheredDataSocioEconomic() {
             var socioEco = {
 
                 family_rel          : $(".family_rel").val(),
@@ -153,9 +125,6 @@
 
             }
 
-            // console.log(socioEco)
-
-
             var payload = {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(socioEco),
@@ -165,19 +134,19 @@
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
-            console.log(payload)
+            return payload
+        }
 
-
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
+        $(".btn-next").unbind("click").on("click", function(){
+            var dataPayload = gatheredDataSocioEconomic();
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_residence_economic?client_id='+client_id;
+                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;;
                         }, 500);
                     }, 2000);
                 }else{
@@ -188,9 +157,6 @@
             })
 
         __executeExternalGet('8000/worksheet/getPetitioner/socioEconomic/'+client_id).done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
 
                 var result = result.response;
 
@@ -202,8 +168,6 @@
                         $(".btn-next").hide();
 
                         JSON.parse(result.jsonData)
-
-                        console.log(JSON.parse(result.jsonData))
 
                         $(".family_rel").val(JSON.parse(result.jsonData).family_rel).trigger("change");
                         $(".family_rep").val(JSON.parse(result.jsonData).family_rep).trigger("change");
@@ -225,67 +189,15 @@
             })
 
         $(".btn-update").unbind("click").on("click", function(){
-
-            // const siblings = [];
-            // const sibling_name = $(".sibling_name");
-            // const relationship = $(".relationship");
-            // const age = $(".age");
-            // const sibling_sex = $(".sibling_sex");
-            // const sibling_education = $(".sibling_education");
-            // const sibling_occupation = $(".sibling_occupation");
-
-            // for(var i = 0; i < sibling_name.length; i++){
-                
-            //     const list = {};
-            //     list.sibling_name = $(sibling_name[i]).val();
-            //     list.relationship = $(relationship[i]).val();
-            //     list.age = $(age[i]).val();
-            //     list.sibling_sex = $(sibling_sex[i]).val();
-            //     list.sibling_education = $(sibling_education[i]).val();
-            //     list.sibling_occupation = $(sibling_occupation[i]).val();
-            //     siblings.push(list);
-            // }
-
-
-            var socioEco = {
-
-                family_rel          : $(".family_rel").val(),
-                family_rep          : $(".family_rep").val(),
-                home_cond           : $(".home_cond").val(),
-                fam_prob            : $(".fam_prob").val(),
-                eco_status          : $(".eco_status").val(),
-                stability           : $(".stability").val(),
-                comments            : $(".comments").val(),
-                circumstances       : $(".circumstances").val(),
-                explain             : $(".explain").val(),
-
-            }
-
-            // console.log(socioEco)
-
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(socioEco),
-            "type"                      : "socioEconomic",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            console.log(payload)
-
-
-            __executeExternalPost('8000/worksheet/updatePetitioner/socioEconomic/'+client_id,JSON.stringify(payload)).done(function (result) {
-                console.log(result);
+            var dataPayload = gatheredDataSocioEconomic();
+            __executeExternalPost('8000/worksheet/updatePetitioner/socioEconomic/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_residence_economic?client_id='+client_id;
+                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;;
                         }, 500);
                     }, 2000);
                 }else{
@@ -295,115 +207,25 @@
 
             })
 
-        $(".idenData").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
+            function setupWorksheetClickHandler(worksheetType) {
+                $(`.${worksheetType}`).unbind("click").on("click", function () {
+                    $(".btn_warning").unbind("click").on("click", function () {
+                        $(".form-control").val('');
                         setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_identifying_data?client_id='+client_id;
+                            window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
+                    });
                 });
-        });
-        $(".priorRec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_prior_records?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".presOff").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_present_offense?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".famBg").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_family_background?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        // $(".socioEco").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_socio_economic?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
-        $(".resEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_residence_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".spouseChild").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_spouse_children?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".educHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_education_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".empHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_employment_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".envFac").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_environmental_factor?client_id='+client_id;
-                        }, 500);
-                });
-        });
-
+            }
+            
+            setupWorksheetClickHandler("prior_records");
+            setupWorksheetClickHandler("present_offense");
+            setupWorksheetClickHandler("identifying_data");
+            setupWorksheetClickHandler("family_background");
+            setupWorksheetClickHandler("socio_economic");
+            setupWorksheetClickHandler("residence_economic");
+            setupWorksheetClickHandler("spouse_children");
+            setupWorksheetClickHandler("education_history");
+            setupWorksheetClickHandler("employment_history");
+            setupWorksheetClickHandler("environmental_factor")
     } )( jQuery );

@@ -88,20 +88,13 @@
             
             return d.promise();
         };
-
         var __select = function(){
             $('.field_office').empty();
-
             $('.type').on('change', function() {
-                $('.docket_num').empty();
                 const type = this.value
-                console.log(type)
                 __executeExternalGet('http://localhost:8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
-                    console.log(result)
                     if (result.status != "ERROR") {
-
                         $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
-
                         result.response.forEach(function(data){
                             $('.docket_num').append(
                                 "<option value="+data.docketNumber+" data-id="+data.type+">"+data.docketNumber+"</option>");
@@ -115,20 +108,12 @@
 
             $('.docket_num').on('change', function() {
                 const docket_number = this.value
-                console.log(docket_number)
                 __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
-                    console.log(result)
                     var result = result.response;
                     if (result.status != "ERROR") {
-                        // console.log(result.caseloadType)
-
                         setTimeout(function () {
                         $(".caseload").val(result.caseloadType).trigger("change");
                         }, 500);
-
-                        // setTimeout(function () {
-                        // $(".field_office").val(result.fieldOfficeId).trigger("change");
-                        // }, 500);
 
                     } else {
                         console.log("failed fetching docket number")
@@ -140,7 +125,6 @@
 
                     
             __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){
@@ -151,12 +135,10 @@
                         $('.user_account').empty();
                         const dep_id = this.value
                         __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
-                            console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
                                 $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
                                 result.forEach(function(data){
-                                    console.log(data)
                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                     $('.user_account').append(
                                         "<option value="+data.uuid+">"+fullname+"</option>");
@@ -174,8 +156,6 @@
 
 
             $(".btn-confirm_forward").unbind("click").on("click", function(){
-                console.log('clicked')
-
                 var payload = {
                     "type"                  : $('.type').val(),
                     "caseloadType"          : $(".caseload").val(),
@@ -188,9 +168,7 @@
                     "approvalStatus"        : "",
                     "lastStatusUpdateDate"  : "",
                 }
-                console.log(payload)
                 __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                    console.log(result);
                     if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success_forwarding').show();
@@ -205,9 +183,5 @@
             })
         }
         __select();
-
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
 
     } )( jQuery );

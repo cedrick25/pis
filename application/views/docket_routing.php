@@ -52,7 +52,7 @@
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                                     <div class="col-12 col-md-9">
-                                        <select name="select" id="" class="form-control docket_num select2">
+                                        <select name="select" id="" class="form-control docket_num select2" disabled>
                                         </select>
                                     </div>
                                 </div>

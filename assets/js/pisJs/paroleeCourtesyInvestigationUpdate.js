@@ -104,29 +104,16 @@
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
-                console.log(result);
-                console.log(docket_number)
                 var result = result.response;
-                // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
                     $(".docket_num_update").val(result.docketNumber);
 
                     setTimeout(function () {
-                    $(".docket_series_update").val(result.docketSeries).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
+                        $(".docket_series_update").val(result.docketSeries).trigger("change");
+                        $(".ref_office_update").val(result.referringOfficeId).trigger("change");
                         $(".task_update").val(result.caseloadType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
                         $(".client_type_update").val(result.clientType).trigger("change");
                     }, 3000);
-
-                    setTimeout(function () {
-                        $(".ref_office_update").val(result.referringOfficeId).trigger("change");
-                    }, 3000);
-
 
                     $(".inv_off_update").val(result.investigatingOfficer);
                     $(".reason_update").val(result.referralData);
@@ -197,17 +184,13 @@
                         "supervisionEndDate"        : ""
 
                         }
-
-                        console.log(payload)
-
                         __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
-                            console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
                             $('#success_update').show();
                                 setTimeout(function () {
                                     $('#success_update').hide();
-                                    window.location.href = 'http://localhost/pis/parolee_courtesy_investigation_docketing';
+                                    window.location.href = api+'/pis/parolee_courtesy_investigation_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")

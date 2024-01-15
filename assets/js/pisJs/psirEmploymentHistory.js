@@ -107,56 +107,17 @@
 
 
         var client_id = GetURLParameter('client_id');
-        console.log(client_id)
+        var foid = GetURLParameter('field_office_id');
+        var field_office_id = $.cookie('field_office_id');
        
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
-
-        if ($('.emp_treatment').val() == "NONE"){
-            $(".hosp_name").hide();
-            $(".date_hosp").hide();
-            $(".use_drug").hide();
-            $(".drug_explain").hide();
-        } else {
-            $(".hosp_name").hide();
-            $(".date_hosp").hide();
-            $(".use_drug").hide();
-            $(".drug_explain").hide();
-        }
-        $('.emp_treatment').change(function(){
-            // cb = $(this);
-            // cb.val(cb.prop('checked'));
-            console.log($('.emp_treatment').val())
-            if ($('.emp_treatment').val() == "YES") {
-                $(".hosp_name").show();
-                $(".date_hosp").show();
-                $(".use_drug").show();
-                $(".drug_explain").show();
-            } else {
-                $(".hosp_name").hide();
-                $(".date_hosp").hide();
-                $(".use_drug").hide();
-                $(".drug_explain").hide();
-            }
-        });
-
-        // $(".btn-next").unbind("click").on("click", function(){
-
-        //         window.location.href = 'http://ppis.probation.gov.ph/pis/psir_environmental_factor?client_id='+client_id;
-        //     })
-
-        $(".btn-next").unbind("click").on("click", function(){
-
+        function gatheredData () {
             const empHistory = [];
             const job_held = $(".job_held");
             const emp_add = $(".emp_add");
             const emp_dateFrom = $(".emp_dateFrom");
             const emp_dateTo = $(".emp_dateTo");
             const emp_Income = $(".emp_Income");
-
             for(var i = 0; i < job_held.length; i++){
-                
                 const list = {};
                 list.job_held = $(job_held[i]).val();
                 list.emp_add = $(emp_add[i]).val();
@@ -165,10 +126,7 @@
                 list.emp_Income = $(emp_Income[i]).val();
                 empHistory.push(list);
             }
-
-
             var employmentHistory = {
-
                 empHistory              : empHistory,
                 empStatus               : $(".emp_status").val(),
                 empSpecStatus           : $(".emp_specStatus").val(),
@@ -183,13 +141,7 @@
                 empDateHos              : $(".emp_dateHos").val(),
                 empUseDrug              : $(".emp_useDrug").val(),
                 empExplainDrug          : $(".emp_explainDrug").val(),
-
-
             }
-
-            console.log(employmentHistory)
-
-
             var payload = {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(employmentHistory),
@@ -198,20 +150,19 @@
             "createdBy"                 : $.cookie("uuid"),
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
+            return payload;
+        }
 
-            console.log(payload)
-
-
+        $(".btn-next").unbind("click").on("click", function(){
+            var payload = gatheredData()
             __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_environmental_factor?client_id='+client_id;
+                            window.location.href = api+'/pis/psir_environmental_factor?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
@@ -223,38 +174,26 @@
 
 
         __executeExternalGet('8000/worksheet/getPetitioner/employmentHistory/'+client_id).done(function (result) {
-
             __executeExternalGet('8000/worksheet/getPetitioner/psirEmploymentHistory/'+client_id).done(function (result) {
+                var result = result.response;
+                if (result.status != "ERROR") {
 
-                            var result = result.response;
+                    if (result.worksheetStatus == "INCOMPLETE"){
+                        $(".btn-next").hide();
+                        $(".btn-update").show();
 
-                            console.log(result)
-
-                            if (result.status != "ERROR") {
-
-                                if (result.worksheetStatus == "INCOMPLETE"){
-                                    $(".btn-next").hide();
-                                    $(".btn-update").show();
-
-                                }else{
-                                    $(".btn-update").hide();
-                                    $(".btn-next").show();
-                                } 
-                            }
-                        })
+                    }else{
+                        $(".btn-update").hide();
+                        $(".btn-next").show();
+                    } 
+                }
+            })
 
             var result = result.response;
-
             if (result.status != "ERROR") {
-
                 if (result.worksheetStatus == "INCOMPLETE"){
-
                     JSON.parse(result.jsonData)
-
-                    console.log(JSON.parse(result.jsonData))
-
                     var empHis = JSON.parse(result.jsonData);
-
                     $(".emp_status").val(JSON.parse(result.jsonData).empStatus).trigger("change");
                     $(".emp_specStatus").val(JSON.parse(result.jsonData).empSpecSupp);
                     $(".emp_support").val(JSON.parse(result.jsonData).empSupport).trigger("change");
@@ -268,13 +207,7 @@
                     $(".emp_dateHos").val(JSON.parse(result.jsonData).empDateHos);
                     $(".emp_useDrug").val(JSON.parse(result.jsonData).empUseDrug).trigger("change");
                     $(".emp_explainDrug").val(JSON.parse(result.jsonData).empExplainDrug);
-
-
-
-
                 empHis.empHistory.forEach(function(data){
-                    console.log(data)
-
                     $(".emp_history").append(`
                         <div class="emp_his">
                             <div class="row form-group col-md-6">
@@ -314,71 +247,15 @@
         })
 
         $(".btn-update").unbind("click").on("click", function(){
-
-            const empHistory = [];
-            const job_held = $(".job_held");
-            const emp_add = $(".emp_add");
-            const emp_dateFrom = $(".emp_dateFrom");
-            const emp_dateTo = $(".emp_dateTo");
-            const emp_Income = $(".emp_Income");
-
-            for(var i = 0; i < job_held.length; i++){
-                
-                const list = {};
-                list.job_held = $(job_held[i]).val();
-                list.emp_add = $(emp_add[i]).val();
-                list.emp_dateFrom = $(emp_dateFrom[i]).val();
-                list.emp_dateTo = $(emp_dateTo[i]).val();
-                list.emp_Income = $(emp_Income[i]).val();
-                empHistory.push(list);
-            }
-
-
-            var employmentHistory = {
-
-                empHistory              : empHistory,
-                empStatus               : $(".emp_status").val(),
-                empSpecStatus           : $(".emp_specStatus").val(),
-                empSupport              : $(".emp_support").val(),
-                empSpecSupp             : $(".emp_specSupp").val(),
-                empHealth               : $(".emp_health").val(),
-                empExplainHealth        : $(".emp_explainHealth").val(),
-                empSkills               : $(".emp_skills").val(),
-                empOtherSource          : $(".emp_otherSource").val(),
-                empTreatment            : $(".emp_treatment").val(),
-                empHosName              : $(".emp_hosName").val(),
-                empDateHos              : $(".emp_dateHos").val(),
-                empUseDrug              : $(".emp_useDrug").val(),
-                empExplainDrug          : $(".emp_explainDrug").val(),
-
-
-            }
-
-            console.log(employmentHistory)
-
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(employmentHistory),
-            "type"                      : "psirEmploymentHistory",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            console.log(payload)
-
-
+            var payload = gatheredData();
             __executeExternalPost('8000/worksheet/updatePetitioner/psirEmploymentHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
-                console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_environmental_factor?client_id='+client_id;
+                            window.location.href = api+'/pis/psir_environmental_factor?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
@@ -389,148 +266,27 @@
             })
 
 
-        $(".idenData").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
+            function setupWorksheetClickHandler(psirType) {
+                $(`.${psirType}`).unbind("click").on("click", function () {
+                    $(".btn_warning").unbind("click").on("click", function () {
+                        $(".form-control").val('');
                         setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_identifying_data?client_id='+client_id;
+                            window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
+                    });
                 });
-        });
-        $(".priorRec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_prior_records?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".presOff").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_present_offense?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".famBg").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_family_background?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".socioEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_socio_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".resEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_residence_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".spouseChild").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_spouse_children?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".educHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_education_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        // $(".empHis").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_employment_history?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
-        $(".envFac").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_environmental_factor?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".eval").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_evaluation?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".rec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_recommendation?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        // $(".medhistory").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_med_history?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
+            }
+            setupWorksheetClickHandler("prior_records");
+            setupWorksheetClickHandler("present_offense");
+            setupWorksheetClickHandler("identifying_data");
+            setupWorksheetClickHandler("family_background");
+            setupWorksheetClickHandler("socio_economic");
+            setupWorksheetClickHandler("residence_economic");
+            setupWorksheetClickHandler("spouse_children");
+            setupWorksheetClickHandler("education_history");
+            setupWorksheetClickHandler("employment_history");
+            setupWorksheetClickHandler("environmental_factor")
+            setupWorksheetClickHandler("evaluation");
+            setupWorksheetClickHandler("recommendation")
 
     } )( jQuery );

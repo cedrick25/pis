@@ -65,34 +65,34 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link idenData" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
+                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link presOff" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
+                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link active priorRec" href="#">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
+                                        <a class="nav-link socio_economic" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
+                                        <a class="nav-link residence_economic" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouseChild" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
+                                        <a class="nav-link spouse_children" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link educHis" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link empHis" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
+                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -106,8 +106,8 @@
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="allegedby" value="PETITIONER">Petitioner<br>
-                                                <input type="radio" class="form-check-input" name="allegedby" value="OTHER SOURCES">Other Sources
+                                                <input type="radio" class="form-check-input" name="allegedby" value="PETITIONER" id="petitioner">Petitioner<br>
+                                                <input type="radio" class="form-check-input" name="allegedby" value="OTHER SOURCES" id="otherSources">Other Sources
                                             </label>
                                         </div>
                                     </div>

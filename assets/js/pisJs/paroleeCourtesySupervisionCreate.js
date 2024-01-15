@@ -1,16 +1,15 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -88,10 +87,20 @@
             
             return d.promise();
         };
+        
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
        
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
 
         $(".btn-confirm").unbind("click").on("click", function(){
                 
@@ -152,16 +161,14 @@
                         "supervisionStartDate"      : $(".start_sup_date").val(),
                         "supervisionEndDate"        : $(".end_sup_date").val()
             }
-            console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
+            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            window.location.reload(true);
+                            window.location.href=api+'/pis/parolee_courtesy_supervision_docketing';
                         }, 500);
                     }, 2000);
                 }else{
@@ -171,9 +178,7 @@
         })
         var __select = function(){
             $('.ref_office').empty();
-
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                console.log(result)
+            __executeExternalGet('8088/department/list').done(function (result) {
                 if (result.status != "ERROR") {
                     $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
                     result.forEach(function(data){

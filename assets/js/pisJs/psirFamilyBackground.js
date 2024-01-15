@@ -107,60 +107,10 @@
 
 
         var client_id = GetURLParameter('client_id');
-        console.log(client_id)
-       
-        // $(".btn-reset").unbind("click").on("click", function(){
-        //     $(".form-control").val('');
-        // });
-
-        // $(".add_more_siblings").unbind("click").on("click", function(){
-        //     // console.log("clicked");
-
-        //     $(".list_siblings").append(`
-        //     <div class="list_sibling">
-        //         <div class="row form-group col-md-12">
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name"></div>
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship"></div>
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age"></div>
-        //             <div class="col-3 col-md-2">
-        //                 <select class="form-control sibling_sex select2">
-        //                     <option value="" selected disabled>Sex</option>
-        //                     <option value="FEMALE">Female</option>
-        //                     <option value="MALE">Male</option>
-        //                     <option value="LGBT">LGBT</option>
-        //                 </select>
-        //             </div>
-        //             <div class="col-3 col-md-2">
-        //                 <select class="form-control sibling_education select2">
-        //                     <option value="" selected disabled>Education</option>
-        //                     <option value="COLLEGE GRADUATE">College Graduate</option>
-        //                     <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
-        //                     <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
-        //                     <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
-        //                     <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
-        //                     <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
-        //                     <option value="ILLITERATE">No Education/Illiterate</option>
-        //                     <option value="POST-GRADUATE">Post-Graduate Studies</option>
-        //                     <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
-        //                     <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
-        //                     <option value="VOCATIONAL">Vocational</option>
-        //                 </select>
-        //             </div>
-        //             <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation"></div>
-        //         </div>
-        //         <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-        //     </div>`
-        //     )
-        // });
-
-        // $('.list_siblings').on('click', '.remove', function(e) {
-        //     e.preventDefault();
-
-        //     $(this).parent().remove();
-        // });
+        var foid = GetURLParameter('field_office_id');
+        var field_office_id = $.cookie('field_office_id');
 
         var fatherDeceased = $('.father_deceased').val()
-        // console.log(fatherDeceased)
         if (fatherDeceased == "FALSE"){
             $(".fatherDateDeceased").hide();
             $(".fatherDeceasedCause").hide();
@@ -169,9 +119,6 @@
             $(".fatherDeceasedCause").hide();
         }
         $('.father_deceased').change(function(){
-            // cb = $(this);
-            // cb.val(cb.prop('checked'));
-            console.log($('.father_deceased').val())
             if ($('.father_deceased').val() == "TRUE") {
                 $(".fatherDateDeceased").show();
                 $(".fatherDeceasedCause").show();
@@ -182,7 +129,6 @@
         });
 
         var motherDeceased = $('.mother_deceased').val()
-        // console.log(motherDeceased)
         if (motherDeceased == "FALSE"){
             $(".motherDateDeceased").hide();
             $(".motherDeceasedCause").hide();
@@ -191,9 +137,6 @@
             $(".motherDeceasedCause").hide();
         }
         $('.mother_deceased').change(function(){
-            // cb = $(this);
-            // cb.val(cb.prop('checked'));
-            console.log($('.mother_deceased').val())
             if ($('.mother_deceased').val() == "TRUE") {
                 $(".motherDateDeceased").show();
                 $(".motherDeceasedCause").show();
@@ -203,12 +146,7 @@
             }
         });
 
-        // $(".btn-next").unbind("click").on("click", function(){
-        //     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_socio_economic?client_id='+client_id;
-        // })
-
-        $(".btn-next").unbind("click").on("click", function(){
-
+        function gatheredData () {
             const siblings = [];
             const sibling_name = $(".sibling_name");
             const relationship = $(".relationship");
@@ -278,9 +216,6 @@
 
             }
 
-            console.log(familyBG)
-
-
             var payload = {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(familyBG),
@@ -290,10 +225,13 @@
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
-            console.log(payload)
+            return payload;
+        }
 
+        $(".btn-next").unbind("click").on("click", function(){
 
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+            var dataPayload = gatheredData()
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -302,7 +240,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_socio_economic?client_id='+client_id;
+                            window.location.href = api+'/pis/psir_socio_economic?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
@@ -314,40 +252,23 @@
         
 
         __executeExternalGet('8000/worksheet/getPetitioner/familyBackground/'+client_id).done(function (result) {
-            console.log("==========")
-            console.log(result)
-            console.log("==========")
-
             var result = result.response;
-
             if (result.status != "ERROR") {
-
                 if (result.worksheetStatus == "INCOMPLETE"){
-
                     __executeExternalGet('8000/worksheet/getPetitioner/psirFamilyBackground/'+client_id).done(function (result) {
-
-                            var result = result.response;
-
-                            console.log(result)
-
-                            if (result.status != "ERROR") {
-
-                                if (result.worksheetStatus == "INCOMPLETE"){
-                                    $(".btn-next").hide();
-                                    $(".btn-update").show();
-
-                                }else{
-                                    $(".btn-update").hide();
-                                    $(".btn-next").show();
-                                } 
-                            }
-                        })
-
-                    console.log(JSON.parse(result.jsonData))
+                        var result = result.response;
+                        if (result.status != "ERROR") {
+                            if (result.worksheetStatus == "INCOMPLETE"){
+                                $(".btn-next").hide();
+                                $(".btn-update").show();
+                            }else{
+                                $(".btn-update").hide();
+                                $(".btn-next").show();
+                            } 
+                        }
+                    })
 
                     const familybg = JSON.parse(result.jsonData)
-
-                    console.log(familybg)
 
                     $(".sex").val(JSON.parse(result.jsonData).sex).trigger("change");
                     $(".civilStatus").val(JSON.parse(result.jsonData).civilStatus).trigger("change");
@@ -393,7 +314,6 @@
 
 
                     familybg.siblings.forEach(function(data){
-                        console.log(data);
                         $(".list_siblings").append(`
                         <div class="list_sibling">
                             <div class="row form-group col-md-12">
@@ -429,12 +349,6 @@
                             
                         </div>`
                         )
-                        // setTimeout(function () {
-                        // $(".sibling_sex").val(data.sibling_sex).trigger("change");
-                        // }, 500);
-                        // setTimeout(function () {
-                        // $(".sibling_education").val(data.sibling_education).trigger("change");
-                        // }, 500);
                     });
                 }else{
 
@@ -445,91 +359,9 @@
 
         $(".btn-update").unbind("click").on("click", function(){
 
-            const siblings = [];
-            const sibling_name = $(".sibling_name");
-            const relationship = $(".relationship");
-            const age = $(".age");
-            const sibling_sex = $(".sibling_sex");
-            const sibling_education = $(".sibling_education");
-            const sibling_occupation = $(".sibling_occupation");
+            var dataPayload = gatheredData();
 
-            for(var i = 0; i < sibling_name.length; i++){
-                
-                const list = {};
-                list.sibling_name = $(sibling_name[i]).val();
-                list.relationship = $(relationship[i]).val();
-                list.age = $(age[i]).val();
-                list.sibling_sex = $(sibling_sex[i]).val();
-                list.sibling_education = $(sibling_education[i]).val();
-                list.sibling_occupation = $(sibling_occupation[i]).val();
-                siblings.push(list);
-            }
-
-
-            var familyBG = {
-
-                siblings            : siblings,
-                sex                 : $(".sex").val(),
-                civilStatus         : $(".civilStatus").val(),
-                citizenship         : $(".citizenship").val(),
-                religion            : $(".religion").val(),
-                bday                : $(".bday").val(),
-                bplace              : $(".bplace").val(),
-                bprovince           : $(".bprovince").val(),
-                bcity               : $(".bcity").val(),
-                bplaceOthers        : $(".bplace_others").val(),
-                identifyingMarks    : $(".identifyingMarks").val(),
-                handicap            : $(".handicap").val(),
-                desc                : $(".desc").val(),
-                parentsRelationship : $(".parentsRelation").val(),
-                fatherName          : $(".father_name").val(),
-                fatherBday          : $(".father_bday").val(),
-                fatherBplace        : $(".father_bplace").val(),
-                fatherAdd           : $(".father_add").val(),
-                fatherCitizenship   : $(".father_citizenship").val(),
-                fatherReligion      : $(".father_religion").val(),
-                fatherEducation     : $(".father_education").val(),
-                fatherOccupation    : $(".father_occupation").val(),
-                fatherWork_add      : $(".father_work_add").val(),
-                fatherTelNo         : $(".father_tel_no").val(),
-                fatherIncome        : $(".father_income").val(),
-                fatherDeceased      : $(".father_deceased").val(),
-                fatherDeceasedCause : $(".father_deceased_cause").val(),
-                fatherDateDeceased  : $(".father_date_deceased").val(),
-
-                motherName          : $(".mother_name").val(),
-                motherBday          : $(".mother_bday").val(),
-                motherBplace        : $(".mother_bplace").val(),
-                motherAdd           : $(".mother_add").val(),
-                motherCitizenship   : $(".mother_citizenship").val(),
-                motherReligion      : $(".mother_religion").val(),
-                motherEducation     : $(".mother_education").val(),
-                motherOccupation    : $(".mother_occupation").val(),
-                motherWork_add      : $(".mother_work_add").val(),
-                motherTelNo         : $(".mother_tel_no").val(),
-                motherIncome        : $(".mother_income").val(),
-                motherDeceased      : $(".mother_deceased").val(),
-                motherDeceasedCause : $(".mother_deceased_cause").val(),
-                motherDateDeceased  : $(".mother_date_deceased").val(),
-
-            }
-
-            console.log(familyBG)
-
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(familyBG),
-            "type"                      : "psirFamilyBackground",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            console.log(payload)
-
-
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirFamilyBackground/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/psirFamilyBackground/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -538,7 +370,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                             // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_socio_economic?client_id='+client_id;
+                            window.location.href = api+'/pis/psir_socio_economic?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
@@ -548,150 +380,30 @@
 
             })
 
-        $(".idenData").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
+        function setupWorksheetClickHandler(psirType) {
+            $(`.${psirType}`).unbind("click").on("click", function () {
+                $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_identifying_data?client_id='+client_id;
-                        }, 500);
+                    setTimeout(function () {
+                        window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
+                    }, 500);
                 });
-        });
-        $(".priorRec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_prior_records?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".presOff").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_present_offense?client_id='+client_id;
-                        }, 500);
-                });
-        });
+            });
+        }
+        
+        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("present_offense");
+        setupWorksheetClickHandler("identifying_data");
+        setupWorksheetClickHandler("family_background");
+        setupWorksheetClickHandler("socio_economic");
+        setupWorksheetClickHandler("residence_economic");
+        setupWorksheetClickHandler("spouse_children");
+        setupWorksheetClickHandler("education_history");
+        setupWorksheetClickHandler("employment_history");
+        setupWorksheetClickHandler("environmental_factor")
+        setupWorksheetClickHandler("evaluation");
+        setupWorksheetClickHandler("recommendation")
 
-        // $(".famBg").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_family_background?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
-        $(".socioEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_socio_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".resEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_residence_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".spouseChild").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_spouse_children?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".educHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_education_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".empHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_employment_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".envFac").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_environmental_factor?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".eval").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_evaluation?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".rec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/psir_recommendation?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        // $(".medhistory").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/psir_med_history?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
 
 
 

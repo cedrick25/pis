@@ -70,7 +70,7 @@
                                             <th>Docket Number</th>
                                             <th>Docket Series</th>
                                             <th>Client Type</th>
-                                            <th>Status</th>
+                                            <th>Board Order Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>

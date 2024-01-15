@@ -60,7 +60,7 @@
                 method: "POST",
                 url: path,
                 dataType: "json",
-                headers: {
+                header: {
                     // 'Content-Type': 'multipart/form-data;'
                     'Content-Type':'application/json'
                 },
@@ -93,6 +93,52 @@
         };
 
         var officeId = $.cookie("field_office_id");
+        let petitionerData;
+        let clientType;
+
+        var clientDataStorage = [];
+
+        function fetchPetitioner(clientType) {
+            const apiUrl = api+'8000/petitioner/list?type='+clientType+'&officeId='+officeId;
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    result.forEach(function(data){
+                        fetchPetitionerWorksheet(data.id);
+                    })
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
+                }
+            });
+        }
+
+        function fetchPetitionerWorksheet (petitionerId) {
+            const apiUrl = api+'8000/worksheet/getPetitioner/environmentalFactor/'+petitionerId;
+            var resultNo = 0;
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        var result = result.response;
+                        if (result.worksheetStatus == null){
+                            console.log("Cannot save worksheet status that is null")
+                        } else {   
+                            var dataToBeStored = {
+                                petitionerId    : result.petitionerId,
+                                worksheetStatus : result.worksheetStatus
+                            }
+                            clientDataStorage.push(dataToBeStored)
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', status, error);
+                    }
+                });
+        }
 
         function buttonFunctionality(){
 
@@ -100,7 +146,7 @@
                 var client_id   = $(this).data("id");
                 var foid        = $(this).data("foid");
                 // window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
-                window.location.href = api+'8080/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
+                window.location.href = api+'/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
             })
             $(".btn_update").unbind("click").on("click", function(){
                 var client_id = $(this).data("id");
@@ -122,641 +168,571 @@
             $(".btn_psir").unbind("click").on("click", function(){
                 var client_id   = $(this).data("id");
                 var foid        = $(this).data("foid");
-                window.location.href = api+'8080/pis/psir_identifying_data?client_id='+client_id+'&field_office_id='+foid;
+                window.location.href = api+'/pis/psir_identifying_data?client_id='+client_id+'&field_office_id='+foid;
             })
             $(".btn_pdfPSIR").unbind("click").on("click", function(){
                 var client_id   = $(this).data("id");
                 var foid        = $(this).data("foid");
 
-                __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
-                    var result = result.response;
-
-    __executeExternalGet('8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result2){
-
-        var result2 = result2.response;
-            __executeExternalGet('8000/worksheet/getPetitioner/psirPresentOffense/'+client_id).done(function (result3){
-
-            var result3 = result3.response;
-                __executeExternalGet('8000/worksheet/getPetitioner/psirPriorRecords/'+client_id).done(function (result4){
-                var result4 = result4.response;
-
-                    __executeExternalGet('8000/worksheet/getPetitioner/psirFamilyBackground/'+client_id).done(function (result5){
-                    var result5 = result5.response;
-
-                        __executeExternalGet('8000/worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result6){
-                        var result6 = result6.response;
-
-                            __executeExternalGet('8000/worksheet/getPetitioner/psirResidenceEconomic/'+client_id).done(function (result7){
-                            var result7 = result7.response;
-
-                                __executeExternalGet('8000/worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result8){
-                                var result8 = result8.response;
-
-                                    __executeExternalGet('8000/worksheet/getPetitioner/psirEducationHistory/'+client_id).done(function (result9){
-                                    var result9 = result9.response;
-
-                                        __executeExternalGet('8000/worksheet/getPetitioner/psirEmploymentHistory/'+client_id).done(function (result10){
-                                        var result10 = result10.response;
-
-                                            __executeExternalGet('8000/worksheet/getPetitioner/psirEnvironmentalFactor/'+client_id).done(function (result11){
-                                            var result11 = result11.response;
-
-                                                __executeExternalGet('8000/worksheet/getPetitioner/psirEvaluation/'+client_id).done(function (result12){
-                                                var result12 = result12.response;
-
-                                                    __executeExternalGet('8000/worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result13){
-                                                    var result13 = result13.response;
-
-                                                        if (result.status != "ERROR"){
-
-                                                            var doc = new jsPDF();
-
-                                                            doc.setFont('times', 'normal');
-                                                            doc.setFontSize(13)
-                                                            var lineHeight = doc.getLineHeight() - 8;
-
-                                                            doc.text('PPA FORM 3/p. 1', 10, 10);
-                                                            doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-                                                            doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-                                                            doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-                                                            doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
-
-                                                            doc.setFontSize(10);
-                                                            doc.text('Republic of the Philippines', 80, 10 + lineHeight*3, { align: 'center' });
-                                                            doc.text('Department of Justice', 85, 10 + lineHeight*4, { align: 'center' });
-                                                            doc.text('PAROLE AND PROBATION ADMINISTRATION', 60, 10 + lineHeight*5, { align: 'center' });
-                                                            doc.text('REGIONAL OFFICE NO.', 83, 10 + lineHeight*6, { align: 'center' });
-                                                            doc.text('Parole and Probation Office', 80, 10 + lineHeight*7, { align: 'center' });
-                                                            doc.text('POST-SENTENCE INVESTIGATION REPORT', 63, 12 + lineHeight*8, { align: 'center' });
-
-                                                            doc.text('I. BASIC INFORMATION', 80, 12 + lineHeight*9, { align: 'left' });
-                                                            doc.text("PETIONER's NAME: "+JSON.parse(result2.jsonData).name, 10, 10 + lineHeight*10.5);
-                                                            doc.text('True Name: '+JSON.parse(result2.jsonData).trueName, 10, 10 + lineHeight*11.5);
-                                                            doc.text('Aliases: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*11.5);
-                                                            doc.text('Gender: '+result.sex, 10, 10 + lineHeight*12.5);
-                                                            doc.text('Age: '+JSON.parse(result2.jsonData).alias, 130, 10 + lineHeight*12.5);
-                                                            doc.text('Birthday: '+JSON.parse(result5.jsonData).bday, 10, 10 + lineHeight*13.5);
-                                                            doc.text('Birthplace: '+JSON.parse(result5.jsonData).bprovince+' '+JSON.parse(result5.jsonData).bcity+' '+JSON.parse(result5.jsonData).bplace, 130, 10 + lineHeight*13.5);
-                                                            doc.text('Nationality: '+JSON.parse(result5.jsonData).citizenship, 10, 10 + lineHeight*14.5);
-                                                            doc.text('Religion: '+JSON.parse(result5.jsonData).religion, 130, 10 + lineHeight*14.5);
-                                                            doc.text('Educational Attainment: '+JSON.parse(result9.jsonData).elemHigh+','+JSON.parse(result9.jsonData).secHigh+','+JSON.parse(result9.jsonData).collegeHigh+','+JSON.parse(result9.jsonData).pcollegeHigh+','+JSON.parse(result9.jsonData).vocHigh, 10, 10 + lineHeight*15.5);
-                                                            doc.text('Civil Status: '+JSON.parse(result5.jsonData).civilStatus, 130, 10 + lineHeight*16.5);
-                                                            doc.text('Birth Order: '+result.sex, 10, 10 + lineHeight*16.5);
-                                                            doc.text('Occupation: '+JSON.parse(result5.jsonData).job_held, 130, 10 + lineHeight*17.5);
-                                                            doc.text("Father's Name: "+JSON.parse(result5.jsonData).fatherName, 10, 10 + lineHeight*17.5);
-                                                            doc.text("Mother's Name: "+JSON.parse(result5.jsonData).motherName, 130, 10 + lineHeight*18.5);
-                                                            doc.text('Spouse: '+JSON.parse(result8.jsonData).spouseLname+','+JSON.parse(result8.jsonData).spouseFname+' '+JSON.parse(result8.jsonData).spouseMname+','+JSON.parse(result8.jsonData).spouseEname, 10, 10 + lineHeight*18.5);
-                                                            doc.text('Occupation: '+JSON.parse(result8.jsonData).spouse_occupation, 130, 10 + lineHeight*19.5);
-                                                            
-                                                            doc.text('Identifying Marks/Unusual Features:'+JSON.parse(result5.jsonData).identifyingMarks,10, 10 + lineHeight*19.5)
-                                                            doc.text('Present Address:'+JSON.parse(result2.jsonData).presentAddress,10, 10 + lineHeight*20.5)
-                                                            doc.text('Permanent Address:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*21.5)
-
-                                                            doc.text('II. PERSONAL AND SOCIAL HISTORY', 80, 12 + 155, { align: 'left' });
-                                                            // doc.text('A. SUBJECTIVE SOCIO-ECONOMIC STATUS: '+JSON.parse(result6.jsonData).eco_status,10, 10 + lineHeight*23.5)
-                                                            // doc.text('B. FAMILY RELATIONSHIP:'+JSON.parse(result6.jsonData).family_rel,10, 10 + lineHeight*24.5)
-                                                            // doc.text('C. FAMILY REPUTATION:'+JSON.parse(result7.jsonData).fam_status,10, 10 + lineHeight*25.5)
-                                                            // doc.text('D. OVERALL WELL-BEING:'+JSON.parse(result10.jsonData).empHealth,10, 10 + lineHeight*26.5)
-                                                            // doc.text('E. FAMILY SUPPORT:'+JSON.parse(result2.jsonData).permanentAdress,10, 10 + lineHeight*27.5)
-                                                            // doc.text('F. COMMUNITY SUPPORT:'+JSON.parse(result11.jsonData).comAcceptance,10, 10 + lineHeight*28.5)
-
-                                                            // Define checkbox properties
-                                                            var checkboxSize = 5; // Size of the checkbox square
-                                                            var checkboxTextMargin = 2; // Margin between the checkbox and the text
-                                                            var checkboxFontSize = 12; // Font size of the text
-
-                                                            // Function to draw a checkbox at the specified position
-                                                            function drawCheckbox(x, y, checked, text) {
-                                                              doc.rect(x, y, checkboxSize, checkboxSize); // Draw the checkbox square
-                                                              if (checked) {
-                                                                var checkmarkSize = checkboxSize - 1; // Calculate the size of the checkmark to fit inside the checkbox
-                                                                console.log(checkmarkSize)
-                                                                var checkmarkX = x + (checkboxSize - checkmarkSize) / 2 - 0.5; // Calculate the x position for the checkmark
-                                                                console.log(checkmarkX)
-                                                                var checkmarkY = y + (checkboxSize - checkmarkSize) / 2 + checkmarkSize - 3.5; // Calculate the y position for the checkmark
-                                                                console.log(checkmarkY)
-                                                                doc.rect(checkmarkX, checkmarkY, checkmarkSize, checkmarkSize, "F"); // Draw the checkmark
-                                                              }
-                                                              if (typeof text === "string") {
-                                                                doc.setFont("Helvetica", "normal"); // Set font for the text
-                                                                doc.setFontSize(checkboxFontSize); // Set font size for the text
-                                                                doc.text(text, x + checkboxSize + checkboxTextMargin, y + checkboxSize / 2); // Draw the text next to the checkbox
-                                                              }
-                                                            }
-
-                                                            // Usage
-                                                            // drawCheckbox(70, 50, true); // Draw a checked checkbox at position (50, 50)
-
-                                                            var ecoStatus = JSON.parse(result6.jsonData).eco_status;
-                                                            var famRel = JSON.parse(result6.jsonData).family_rel;
-                                                            var famStatus = JSON.parse(result6.jsonData).family_rep;
-                                                            // console.log(ecoStatus)
-                                                            doc.text('A. SUBJECTIVE SOCIO-',10, 10 + 165)
-                                                            doc.text('ECONOMIC STATUS: ',10, 10 + 170)
-
-                                                        if (ecoStatus == "POOR"){
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 190, true, "Poor");
-                                                            drawCheckbox(10, 200, false, "Low income");
-                                                            drawCheckbox(10, 210, false, "Lower Middle Income");
-                                                            drawCheckbox(10, 220, false, "Middle Class");
-                                                            drawCheckbox(10, 230, false, "Upper Middle Class");
-                                                            drawCheckbox(10, 240, false, "Upper Income");
-                                                            drawCheckbox(10, 250, false, "Rich");
-                                                            }else if (ecoStatus == "LOW INCOME"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 190, false, "Poor");
-                                                            drawCheckbox(10, 200, true, "Low income");
-                                                            drawCheckbox(10, 210, false, "Lower Middle Income");
-                                                            drawCheckbox(10, 220, false, "Middle Class");
-                                                            drawCheckbox(10, 230, false, "Upper Middle Class");
-                                                            drawCheckbox(10, 240, false, "Upper Income");
-                                                            drawCheckbox(10, 250, false, "Rich");
-                                                            }else if (ecoStatus == "LOWER MIDDLE INCOME"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 190, false, "Poor");
-                                                            drawCheckbox(10, 200, false, "Low income");
-                                                            drawCheckbox(10, 210, true, "Lower Middle Income");
-                                                            drawCheckbox(10, 220, false, "Middle Class");
-                                                            drawCheckbox(10, 230, false, "Upper Middle Class");
-                                                            drawCheckbox(10, 240, false, "Upper Income");
-                                                            drawCheckbox(10, 250, false, "Rich");
-                                                            }else if (ecoStatus == "MIDDLE CLASS"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 190, false, "Poor");
-                                                            drawCheckbox(10, 200, false, "Low income");
-                                                            drawCheckbox(10, 210, false, "Lower Middle Income");
-                                                            drawCheckbox(10, 220, true, "Middle Class");
-                                                            drawCheckbox(10, 230, false, "Upper Middle Class");
-                                                            drawCheckbox(10, 240, false, "Upper Income");
-                                                            drawCheckbox(10, 250, false, "Rich");
-                                                            }else if (ecoStatus == "UPPER MIDDLE CLASS"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 190, false, "Poor");
-                                                            drawCheckbox(10, 200, false, "Low income");
-                                                            drawCheckbox(10, 210, false, "Lower Middle Income");
-                                                            drawCheckbox(10, 220, false, "Middle Class");
-                                                            drawCheckbox(10, 230, true, "Upper Middle Class");
-                                                            drawCheckbox(10, 240, false, "Upper Income");
-                                                            drawCheckbox(10, 250, false, "Rich");
-                                                            }else if (ecoStatus == "UPPER INCOME"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 190, false, "Poor");
-                                                            drawCheckbox(10, 200, false, "Low income");
-                                                            drawCheckbox(10, 210, false, "Lower Middle Income");
-                                                            drawCheckbox(10, 220, false, "Middle Class");
-                                                            drawCheckbox(10, 230, false, "Upper Middle Class");
-                                                            drawCheckbox(10, 240, true, "Upper Income");
-                                                            drawCheckbox(10, 250, false, "Rich");
-                                                            }else if (ecoStatus == "RICH"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 190, false, "Poor");
-                                                            drawCheckbox(10, 200, false, "Low income");
-                                                            drawCheckbox(10, 210, false, "Lower Middle Income");
-                                                            drawCheckbox(10, 220, false, "Middle Class");
-                                                            drawCheckbox(10, 230, false, "Upper Middle Class");
-                                                            drawCheckbox(10, 240, false, "Upper Income");
-                                                            drawCheckbox(10, 250, true, "Rich");
-                                                            }else{
-                                                            console.log(false)
-                                                            }
-
-                                                            doc.text('B. FAMILY RELATIONSHIP',70, 10 + 165);
-
-                                                            if (famRel == "VERY SATISFACTORY"){
-                                                            drawCheckbox(70, 190, true, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }else if (famRel == "SATISFACTORY"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, true, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }else if (famRel == "FAIR"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, true, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }else if (famRel == "POOR"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, true, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }else if (famRel == "VERY POOR"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, true, "Very poor");
-                                                            }
-                                                        else{
-                                                            console.log(false)
-                                                        }
-
-                                                        if (famRel == "VERY SATISFACTORY"){
-                                                            drawCheckbox(70, 190, true, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "SATISFACTORY"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, true, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "FAIR"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, true, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "POOR"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, true, "Poor");
-                                                            drawCheckbox(70, 230, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "VERY POOR"){ 
-                                                            drawCheckbox(70, 190, false, "Very satisfactory");
-                                                            drawCheckbox(70, 200, false, "Satisfactory");
-                                                            drawCheckbox(70, 210, false, "Fair");
-                                                            drawCheckbox(70, 220, false, "Poor");
-                                                            drawCheckbox(70, 230, true, "Very poor");
-                                                            }
-                                                        else{
-                                                            console.log(false)
-                                                        }
-
-                                                            doc.text('C. FAMILY REPUTATION',130, 10 + 165);
-
-                                                        if (famStatus == "VERY SATISFACTORY"){
-                                                            // console.log("true")
-                                                            drawCheckbox(130, 190, true, "Very satisfactory");
-                                                            drawCheckbox(130, 200, false, "Satisfactory");
-                                                            drawCheckbox(130, 210, false, "Fair");
-                                                            drawCheckbox(130, 220, false, "Poor");
-                                                            drawCheckbox(130, 230, false, "Very poor");
-                                                            }
-                                                        else if (famStatus == "SATISFACTORY"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(130, 190, false, "Very satisfactory");
-                                                            drawCheckbox(130, 200, true, "Satisfactory");
-                                                            drawCheckbox(130, 210, false, "Fair");
-                                                            drawCheckbox(130, 220, false, "Poor");
-                                                            drawCheckbox(130, 230, false, "Very poor");
-                                                            }
-                                                        else if (famStatus == "FAIR"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(130, 190, false, "Very satisfactory");
-                                                            drawCheckbox(130, 200, false, "Satisfactory");
-                                                            drawCheckbox(130, 210, true, "Fair");
-                                                            drawCheckbox(130, 220, false, "Poor");
-                                                            drawCheckbox(130, 230, false, "Very poor");
-                                                            }
-                                                        else if (famStatus == "POOR"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(130, 190, false, "Very satisfactory");
-                                                            drawCheckbox(130, 200, false, "Satisfactory");
-                                                            drawCheckbox(130, 210, false, "Fair");
-                                                            drawCheckbox(130, 220, true, "Poor");
-                                                            drawCheckbox(130, 230, false, "Very poor");
-                                                            }
-                                                        else if (famStatus == "VERY POOR"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(130, 190, false, "Very satisfactory");
-                                                            drawCheckbox(130, 200, false, "Satisfactory");
-                                                            drawCheckbox(130, 210, false, "Fair");
-                                                            drawCheckbox(130, 220, false, "Poor");
-                                                            drawCheckbox(130, 230, true, "Very poor");
-                                                        }else{
-                                                            console.log(false)
-                                                        }
-
-                                                            // PAGE 2
-
-                                                            doc.addPage();
-                                                            doc.setFontSize(13)
-                                                            doc.text('PPA FORM 3/p. 1', 10, 10);
-                                                            doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-                                                            doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-                                                            doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-                                                            doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
-
-                                                            // Employee Health
-
-                                                        var empHealth = JSON.parse(result10.jsonData).empHealth;
-                                                        doc.setFontSize(10);
-                                                        doc.text('D. OVERALL WELL-BEING',10, 10 + 25);
-                                                        console.log(famStatus)
-
-                                                        if (empHealth == "VERY SATISFACTORY"){
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 40, true, "Very satisfactory");
-                                                            drawCheckbox(10, 50, false, "Satisfactory");
-                                                            drawCheckbox(10, 60, false, "Fair");
-                                                            drawCheckbox(10, 70, false, "Poor");
-                                                            drawCheckbox(10, 80, false, "Very poor");
-                                                            }
-                                                        else if (empHealth == "SATISFACTORY"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 40, false, "Very satisfactory");
-                                                            drawCheckbox(10, 50, true, "Satisfactory");
-                                                            drawCheckbox(10, 60, false, "Fair");
-                                                            drawCheckbox(10, 70, false, "Poor");
-                                                            drawCheckbox(10, 80, false, "Very poor");
-                                                            }
-                                                        else if (empHealth == "FAIR"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 40, false, "Very satisfactory");
-                                                            drawCheckbox(10, 50, false, "Satisfactory");
-                                                            drawCheckbox(10, 60, true, "Fair");
-                                                            drawCheckbox(10, 70, false, "Poor");
-                                                            drawCheckbox(10, 80, false, "Very poor");
-                                                            }
-                                                        else if (empHealth == "POOR"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 40, false, "Very satisfactory");
-                                                            drawCheckbox(10, 50, false, "Satisfactory");
-                                                            drawCheckbox(10, 60, false, "Fair");
-                                                            drawCheckbox(10, 70, true, "Poor");
-                                                            drawCheckbox(10, 80, false, "Very poor");
-                                                            }
-                                                        else if (empHealth == "VERY POOR"){ 
-                                                            // console.log("true")
-                                                            drawCheckbox(10, 40, false, "Very satisfactory");
-                                                            drawCheckbox(10, 50, false, "Satisfactory");
-                                                            drawCheckbox(10, 60, false, "Fair");
-                                                            drawCheckbox(10, 70, false, "Poor");
-                                                            drawCheckbox(10, 80, true, "Very poor");
-                                                            }
-                                                        else{
-                                                            console.log(false)
-                                                        }
-                                                            doc.setFontSize(10);
-                                                            doc.text('E. FAMILY SUPPORT',70, 10 + 25);
-
-                                                        if (famRel == "VERY SATISFACTORY"){
-                                                            drawCheckbox(70, 40, true, "Very satisfactory");
-                                                            drawCheckbox(70, 50, false, "Satisfactory");
-                                                            drawCheckbox(70, 60, false, "Fair");
-                                                            drawCheckbox(70, 70, false, "Poor");
-                                                            drawCheckbox(70, 80, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "SATISFACTORY"){ 
-                                                            drawCheckbox(70, 40, false, "Very satisfactory");
-                                                            drawCheckbox(70, 50, true, "Satisfactory");
-                                                            drawCheckbox(70, 60, false, "Fair");
-                                                            drawCheckbox(70, 70, false, "Poor");
-                                                            drawCheckbox(70, 80, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "FAIR"){ 
-                                                            drawCheckbox(70, 40, false, "Very satisfactory");
-                                                            drawCheckbox(70, 50, false, "Satisfactory");
-                                                            drawCheckbox(70, 60, true, "Fair");
-                                                            drawCheckbox(70, 70, false, "Poor");
-                                                            drawCheckbox(70, 80, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "POOR"){ 
-                                                            drawCheckbox(70, 40, false, "Very satisfactory");
-                                                            drawCheckbox(70, 50, false, "Satisfactory");
-                                                            drawCheckbox(70, 60, false, "Fair");
-                                                            drawCheckbox(70, 70, true, "Poor");
-                                                            drawCheckbox(70, 80, false, "Very poor");
-                                                            }
-                                                        else if (famRel == "VERY POOR"){ 
-                                                            drawCheckbox(70, 40, false, "Very satisfactory");
-                                                            drawCheckbox(70, 50, false, "Satisfactory");
-                                                            drawCheckbox(70, 60, false, "Fair");
-                                                            drawCheckbox(70, 70, false, "Poor");
-                                                            drawCheckbox(70, 80, true, "Very poor");
-                                                            }
-                                                        else{
-                                                            console.log(false)
-                                                            }
-
-                                                            doc.setFontSize(10);
-                                                            doc.text('F. FAMILY REPUTATION',130, 10 + 25);
-                                                            var comAcc = JSON.parse(result11.jsonData).comAcceptance;
-
-                                                        if (comAcc == "VERY SATISFACTORY"){
-                                                            drawCheckbox(130, 40, true, "Very satisfactory");
-                                                            drawCheckbox(130, 50, false, "Satisfactory");
-                                                            drawCheckbox(130, 60, false, "Fair");
-                                                            drawCheckbox(130, 70, false, "Poor");
-                                                            drawCheckbox(130, 80, false, "Very poor");
-                                                            }
-                                                        else if (comAcc == "SATISFACTORY"){ 
-                                                            drawCheckbox(130, 40, false, "Very satisfactory");
-                                                            drawCheckbox(130, 50, true, "Satisfactory");
-                                                            drawCheckbox(130, 60, false, "Fair");
-                                                            drawCheckbox(130, 70, false, "Poor");
-                                                            drawCheckbox(130, 80, false, "Very poor");
-                                                            }
-                                                        else if (comAcc == "FAIR"){ 
-                                                            drawCheckbox(130, 40, false, "Very satisfactory");
-                                                            drawCheckbox(130, 50, false, "Satisfactory");
-                                                            drawCheckbox(130, 60, true, "Fair");
-                                                            drawCheckbox(130, 70, false, "Poor");
-                                                            drawCheckbox(130, 80, false, "Very poor");
-                                                            }
-                                                        else if (comAcc == "POOR"){ 
-                                                            drawCheckbox(130, 40, false, "Very satisfactory");
-                                                            drawCheckbox(130, 50, false, "Satisfactory");
-                                                            drawCheckbox(130, 60, false, "Fair");
-                                                            drawCheckbox(130, 70, true, "Poor");
-                                                            drawCheckbox(130, 80, false, "Very poor");
-                                                            }
-                                                        else if (comAcc == "VERY POOR"){ 
-                                                            drawCheckbox(130, 40, false, "Very satisfactory");
-                                                            drawCheckbox(130, 50, false, "Satisfactory");
-                                                            drawCheckbox(130, 60, false, "Fair");
-                                                            drawCheckbox(130, 70, false, "Poor");
-                                                            drawCheckbox(130, 80, true, "Very poor");
-                                                            }
-                                                        else{
-                                                            console.log(false)
-                                                            }
-
-                                                            doc.text('III. CRIMINAL HISTORY', 80, 12 + 90, { align: 'left' });
-                                                            doc.text('A. PRESENT OFFENSE', 10, 12 + 100, { align: 'left' });
-                                                            doc.text('Charged With: '+JSON.parse(result3.jsonData).chargedWith, 10, 12 + 110, { align: 'left' });
-                                                            doc.text('Date:'+JSON.parse(result3.jsonData).dateCharged, 130, 10 + 110);
-                                                            doc.text('Convicted of: '+JSON.parse(result3.jsonData).convictedOf, 10, 12 + 120, { align: 'left' });
-                                                            doc.text('Date:'+JSON.parse(result3.jsonData).dateConvicted, 130, 10 + 120);
-                                                            doc.text('Sentence: ', 10, 12 + 130, { align: 'left' });
-                                                            doc.text('Judge: '+JSON.parse(result3.jsonData).judge, 10, 12 + 140, { align: 'left' });
-                                                            doc.text('Court:'+JSON.parse(result3.jsonData).court, 130, 10 + 140);
-                                                            doc.text('Custodial Status: '+JSON.parse(result3.jsonData).custody, 10, 12 + 150, { align: 'left' });
-                                                            doc.text('B. PRIOR AND PENDING RECORDS', 10, 12 + 165, { align: 'left' });
-
-                                                            var columns = ["Agency", "Criminal Case No.", "Offense", "Date Charged","Decision"];
-                                                            var dataPrior = JSON.parse(result4.jsonData).priorRecord;
-                                                            var tableX = 10;
-                                                            var tableY = 190;
-                                                            var rowHeight = 10;
-                                                            var columnWidth = 40;
-
-                                                            doc.setFontSize(12);
-                                                            doc.setFontStyle("bold");
-
-                                                            for (var i = 0; i < columns.length; i++) {
-                                                              doc.text(tableX + i * columnWidth, tableY, columns[i]);
-                                                            }
-
-                                                            for (var k = 0; k < dataPrior.length; k++) {
-                                                                var rowData = [
-                                                                [dataPrior[k].agency, dataPrior[k].cc_no, dataPrior[k].offense, dataPrior[k].when, dataPrior[k].disposition]
-                                                                ]
-                                                                
-                                                                for (var j = 0; j < rowData.length; j++) {
-                                                                    var row = rowData[j];
-                                                                        for (var l = 0; l < row.length; l++) {
-                                                                            var xPos = tableX + l * columnWidth;
-                                                                            var yPos = tableY + (k * rowData.length + j + 1) * rowHeight;
-                                                                            doc.text(xPos, yPos, row[l]);
-                                                                        }
-                                                                }
-                                                                
-                                                            }
-
-                                                            doc.addPage();
-                                                            doc.setFontSize(13)
-                                                            doc.setFont('times', 'normal');
-                                                            doc.text('PPA FORM 3/p. 1', 10, 10);
-                                                            doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-                                                            doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-                                                            doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-                                                            doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
-                                                            doc.text('IV Analysis and Evaluation', 80, 12 + lineHeight*3, { align: 'left' });
-
-
-                                                            var maxWidth = 180; // Maximum width per line in pixels
-                                                            var analysisLineHeight = 5; // Height of each line in pixels
-                                                            var analysisMargin = 5; // Margin for the content
-                                                            var text = JSON.parse(result12.jsonData).analysisAndEvaluation;
-
-                                                            var lines = doc.splitTextToSize(text, maxWidth);
-
-                                                            var x = 10; // Starting x-coordinate
-                                                            var y = 45; // Starting y-coordinate
-
-                                                            for (var i = 0; i < lines.length; i++) {
-                                                              if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
-                                                                doc.addPage();
-                                                                y = 10;
-                                                              }
-
-                                                              doc.setFontSize(12);
-                                                              doc.text(lines[i], x, y);
-                                                              y += analysisLineHeight;
-                                                            }
-
-                                                            y += analysisMargin;
-
-                                                            doc.text('V. PROJECTED THRUSTS OF REHABILITATION', 60, y, { align: 'left' });
-
-                                                            var secondParagraph = JSON.parse(result12.jsonData).projectedThrust;
-                                                            y += analysisLineHeight + analysisMargin; // Increase the y-coordinate for the new paragraph
-
-                                                            var secondLines = doc.splitTextToSize(secondParagraph, maxWidth);
-
-                                                            for (var j = 0; j < secondLines.length; j++) {
-                                                              if (y + analysisLineHeight + analysisMargin > doc.internal.pageSize.height) {
-                                                                doc.addPage();
-                                                                y = 10;
-                                                              }
-
-                                                              doc.setFontSize(12);
-                                                              doc.text(secondLines[j], x, y);
-                                                              y += analysisLineHeight;
-                                                            }
-
-                                                            doc.addPage();
-                                                            doc.setFontSize(13)
-                                                            doc.text('PPA FORM 3/p. 1', 10, 10);
-                                                            doc.text('PSIR Re: '+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName, 10, 10 + lineHeight);
-                                                            doc.text('Criminal Case Number: '+result.criminalCaseNo, 10, 10 + lineHeight*2);
-                                                            doc.text('PPA-FO-FR-003 ', 170, 10, { align: 'right' });
-                                                            doc.text('Investigation Docket No.: '+result.criminalCaseNo, 130, 10 + lineHeight, { align: 'right' });
-                                                            doc.text('VI RECOMMENDATION', 80, 12 + lineHeight*3, { align: 'left' });
-
-                                                            var rec = JSON.parse(result13.jsonData);
-
-                                                            var recommendation =  [JSON.parse(result13.jsonData).recommendations];
-
-                                                            var textRec = "WHEREFORE, in view of the foregoing, it is respectfully recommended to this Honorable Court that the petition for probation of "+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName+' be '+JSON.parse(result13.jsonData).grant+',  subject to the following conditions:';
-
-                                                            var maxWidth = 190; // Maximum width per line in pixels
-                                                            var linesRec = doc.splitTextToSize(textRec, maxWidth);
-
-                                                            var xRec = 20;
-                                                            var yRec = 45;
-
-                                                            for (var i = 0; i < linesRec.length; i++) {
-                                                                doc.setFontSize(11)
-                                                              doc.text(linesRec[i], xRec, yRec);
-                                                              yRec += 10;
-                                                            }
-
-                                                            var curYRec = yRec;
-                                                            var lineHeight = 5;
-                                                            var margin = 5;
-
-                                                            for (var j = 0; j < recommendation.length; j++) {
-                                                              var row = recommendation[j];
-                                                              for (var k = 0; k < row.length; k++) {
-                                                                var value = row[k];
-                                                                var num = k + 1;
-                                                                if (typeof value === "object") {
-                                                                  value = Object.values(value).join(", ");
-                                                                } else {
-                                                                  value = value.toString();
-                                                                }
-                                                                
-                                                                var textSample = num + '. ' + value;
-                                                                var linesRecList = doc.splitTextToSize(textSample, maxWidth);
-
-                                                                if (curYRec + (linesRecList.length * lineHeight) + margin > doc.internal.pageSize.height) {
-                                                                  doc.addPage();
-                                                                  curYRec = margin;
-                                                                }
-
-                                                                        doc.text(10, curYRec, linesRecList);
-                                                                        curYRec += linesRecList.length * lineHeight;
-                                                                        
-                                                              }
-                                                              doc.text('Prepared and submitted by: ', 130,curYRec, { align: 'right' });
-                                                            }
-
-                                                            doc.save('Simplified PSIR.pdf');
+                function calculateAge(birthdate) {
+                    const currentDate = new Date();
+                    const birthDate = new Date(birthdate);
+
+                    let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+                    // Check if the birthday has occurred this year
+                    const hasBirthdayOccurred = (
+                        currentDate.getMonth() > birthDate.getMonth() ||
+                        (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() >= birthDate.getDate())
+                    );
+
+                    // If the birthday hasn't occurred yet this year, subtract 1 from the age
+                    if (!hasBirthdayOccurred) {
+                        age--;
+                    }
+
+                    return age;
+                }
+
+                async function fetchData(url) {
+                    try {
+                        const response = await __executeExternalGet(url);
+                        return response.response;
+                    } catch (error) {
+                        console.error(`Error fetching data from ${url}`, error);
+                        throw error;
+                    }
+                }
+
+                async function getData(client_id, endpoint) {
+                    const url = `8000/worksheet/getPetitioner/${endpoint}/${client_id}`;
+                    return await fetchData(url);
+                }
+
+                async function getDataPetitioner(client_id) {
+                    const url = `8000/petitioner/${client_id}`;
+                    return await fetchData(url);
+                }
+
+                async function fetchAllData(client_id) {
+                    try {
+                        const result2 = await getData(client_id, 'psirIdentifyingData');
+                        const result3 = await getData(client_id, 'psirPresentOffense');
+                        const result4 = await getData(client_id, 'psirPriorRecords');
+                        const result5 = await getData(client_id, 'psirFamilyBackground');
+                        const result6 = await getData(client_id, 'psirSocioEconomic');
+                        const result7 = await getData(client_id, 'psirResidenceEconomic');
+                        const result8 = await getData(client_id, 'psirSpouseChildren');
+                        const result9 = await getData(client_id, 'psirEducationHistory');
+                        const result10 = await getData(client_id, 'psirEmploymentHistory');
+                        const result11 = await getData(client_id, 'psirEnvironmentalFactor');
+                        const result12 = await getData(client_id, 'psirEvaluation');
+                        const result13 = await getData(client_id, 'psirRecommendation');
+                        const resultPetitioner = await getDataPetitioner(client_id);
+
+                        // Process results as needed
+                        var result = resultPetitioner;
+
+                        // console.log(resultPetitioner)
+
+                        // Create a new jsPDF instance
+                        var doc = new jsPDF();
+
+                        // Set border and separation in the middle
+                        var pageWidth = doc.internal.pageSize.width;
+                        var pageHeight = doc.internal.pageSize.height;
+
+                        const borderThickness = 0.5;
+                        const borderColor = "#000000";
+
+                        // Set the position and size of the rectangle
+                        const x = 10;
+                        const y = 10;
+                        const width = 190;
+                        const height = 277;
+                        const halfWidth = width / 2;
+                        const separation = halfWidth-20;
+                        // for checkbox 
+                        var newSeperation = 60;
+                        var checkboxSize = 5;
+                        var checkboxTextMargin = 4;
+                        var checkboxFontSize = 12;
+                        let yCoordinateLeft = 16;
+                        let yCoordinateRight = 16;
+                        let yCoordinate = 16;
+                        // for prior records table
+                        var headers = ["Agency", "Criminal Case No.", "Offense", "Date Charged","Decision"];
+                        var dataPrior = JSON.parse(result4.jsonData).priorRecord;
+                        var totalWidth = 37;
+                        var columnCount = headers.length;
+                        var colWidth = 190 / columnCount;
+                        var cellPadding = 13;
+                        var statusSatisfaction = ["VERY SATISFACTORY","SATISFACTORY","FAIR","POOR","VERY POOR"]
+
+
+                        function pageOrientation () {
+                            // Draw a rectangle with border
+                            doc.setDrawColor(borderColor);
+                            doc.setLineWidth(borderThickness);
+                            doc.rect(x, y, width, height);
+
+                            doc.setFont('times', 'normal');
+                            doc.setFontSize(12);
+                        }
+                        pageOrientation();
+
+                        const splitText = (text, xCoordinate, yCoord) => {
+                            const textArray = doc.splitTextToSize(text, separation);
+                            if (textArray.length > 0) {
+                                for (let i = 0; i < textArray.length; i++){
+                                    doc.text(textArray[i], xCoordinate, yCoord);
+                                    yCoord += 6;
+                                }
+                            } else {
+                                doc.text(textArray.slice(0).join('\n'), xCoordinate, yCoord);
+                                yCoord += 6;
+                            }
+                            return yCoord;
+                        };
+
+                        const longSplitText = (text, xCoordinate, yCoord) => {
+                            const textArray = doc.splitTextToSize(text, width);
+                            if (textArray.length > 0) {
+                                for (let i = 0; i < textArray.length; i++){
+                                    doc.text(textArray[i], xCoordinate, yCoord);
+                                    yCoord += 6;
+                                }
+                            } else {
+                                doc.text(textArray.slice(0).join('\n'), xCoordinate, yCoord);
+                                yCoord += 6;
+                            }
+                            return yCoord;
+                        };
+
+                        const drawTextLeft = (text, xCoordinate, yCoord) => {
+                            yCoordinateLeft = splitText(text, xCoordinate, yCoord);
+
+                        };
+                        const drawTextRight = (text, xCoordinate, yCoord) => {
+                            yCoordinateRight = splitText(text, xCoordinate, yCoord);
+
+                        };
+                        const drawTextFree = (text, xCoordinate, yCoord) => {
+                            yCoordinate = longSplitText(text, xCoordinate, yCoord);
+                        };
+                        const drawCheckBox = (text,xBoxCoordinate,yBoxCoordinate,checked) => {
+                            doc.text(text, xBoxCoordinate + checkboxSize + checkboxTextMargin, yBoxCoordinate + checkboxSize / 2 + checkboxFontSize / 6);
+                            doc.rect(xBoxCoordinate,yBoxCoordinate,checkboxSize,checkboxSize)
+                            if (checked) {
+                                var checkmarkSize = checkboxSize;
+                                var checkmarkX = xBoxCoordinate;
+                                var checkmarkY = yBoxCoordinate;
+                                doc.rect(checkmarkX, checkmarkY, checkmarkSize, checkmarkSize, "F");
+                            }
+                            yBoxCoordinate+=6;
+                            return yBoxCoordinate;
+                        }
+
+
+                        function header () {
+                            drawTextLeft('PPA FORM 3/p. 1', 13, yCoordinateLeft);
+                            drawTextLeft('PSIR Re: ' + result.firstName + ' ' + result.middleName + ' ' + result.lastName + ' ' + result.suffixName, 13, yCoordinateLeft);
+                            drawTextLeft('Criminal Case Number: ' + result.criminalCaseNo, 13, yCoordinateLeft);
+                            drawTextRight('PPA-FO-FR-003 ', 127, yCoordinateRight)
+                            drawTextRight('Investigation Docket No.: '+result.criminalCaseNo, 127, yCoordinateRight)
+                            drawTextLeft('',13,yCoordinateLeft)
+                        }
+
+                        // Part 1 Page 1 PSIR
+
+                        header();
+                        yCoordinate = yCoordinateLeft + 0;
+                        drawTextFree('Republic of The Philippines',80,yCoordinate)
+                        drawTextFree('Department of Justice',85,yCoordinate)
+                        drawTextFree('PAROLE AND PROBATION ADMINISTRATION',60,yCoordinate)
+                        drawTextFree('REGIONAL OFFICE NO.',83,yCoordinate)
+                        drawTextFree('Parole and Probation Office',80,yCoordinate)
+                        drawTextFree('POST-SENTENCE INVESTIGATION REPORT',63,yCoordinate)
+                        drawTextFree('',80,yCoordinate)
+                        drawTextFree('I. BASIC INFORMATION',80,yCoordinate)
+                        drawTextFree('',80,yCoordinate)
+                        yCoordinateLeft = (yCoordinate - yCoordinateLeft)+yCoordinateLeft;
+                        yCoordinateRight = (yCoordinate - yCoordinateRight)+yCoordinateRight;
+                        drawTextLeft("PETIONER's NAME: "+JSON.parse(result2.jsonData).name,13,yCoordinateLeft)
+                        drawTextLeft('True Name: '+JSON.parse(result2.jsonData).trueName,13,yCoordinateLeft)
+                        drawTextLeft('Gender: '+result.sex,13,yCoordinateLeft);
+                        drawTextLeft('Birthday: '+JSON.parse(result5.jsonData).bday,13,yCoordinateLeft);
+                        drawTextLeft('Nationality: '+JSON.parse(result5.jsonData).citizenship,13,yCoordinateLeft);
+                        drawTextLeft('Educational Attainment: '+JSON.parse(result9.jsonData).elemHigh+','+JSON.parse(result9.jsonData).secHigh+','+JSON.parse(result9.jsonData).collegeHigh+','+JSON.parse(result9.jsonData).pcollegeHigh+','+JSON.parse(result9.jsonData).vocHigh,13,yCoordinateLeft)
+                        // drawTextLeft('Birth Order: '+result.sex,13,yCoordinateLeft)
+                        drawTextLeft('Birth Order: '+result.sex,13,yCoordinateLeft)
+                        drawTextLeft("Father's Name: "+JSON.parse(result5.jsonData).fatherName,13,yCoordinateLeft)
+                        drawTextLeft('Spouse: '+JSON.parse(result8.jsonData).spouseLname+','+JSON.parse(result8.jsonData).spouseFname+' '+JSON.parse(result8.jsonData).spouseMname+','+JSON.parse(result8.jsonData).spouseEname,13,yCoordinateLeft)
+                        drawTextLeft('Identifying Marks/Unusual Features:'+JSON.parse(result5.jsonData).identifyingMarks,13,yCoordinateLeft)
+                        yCoordinate = (yCoordinateLeft - yCoordinate)+yCoordinate;
+                        drawTextFree('Present Address:'+JSON.parse(result2.jsonData).presentAddress,13,yCoordinate)
+                        drawTextFree('Permanent Address:'+JSON.parse(result2.jsonData).permanentAdress,13,yCoordinate)
+                        // yCoordinateRight = yCoordinate + 0;
+                        drawTextRight('Alias: '+JSON.parse(result2.jsonData).alias,127,yCoordinateRight)
+                        const birthdate = JSON.parse(result5.jsonData).bday;
+                        const age = calculateAge(birthdate);
+                        drawTextRight('Age: '+age,127,yCoordinateRight)
+                        drawTextRight('Birthplace: '+JSON.parse(result5.jsonData).bprovince+' '+JSON.parse(result5.jsonData).bcity+' '+JSON.parse(result5.jsonData).bplace,127,yCoordinateRight)
+                        drawTextRight('Religion: '+JSON.parse(result5.jsonData).religion,127,yCoordinateRight)
+                        drawTextRight('Civil Status: '+JSON.parse(result5.jsonData).civilStatus,127,yCoordinateRight)
+                        drawTextRight('Occupation: '+JSON.parse(result5.jsonData).job_held,127,yCoordinateRight)
+                        drawTextRight("Mother's Name: "+JSON.parse(result5.jsonData).motherName,127,yCoordinateRight)
+                        drawTextRight('Occupation: '+JSON.parse(result8.jsonData).spouse_occupation,127,yCoordinateRight)
+                        yCoordinateLeft = (yCoordinate - yCoordinateLeft)+yCoordinateLeft;
+                        yCoordinateRight = (yCoordinate - yCoordinateRight)+yCoordinateRight;
+
+                        if (yCoordinate == yCoordinateLeft && yCoordinate == yCoordinateRight){
+                            if (yCoordinate >= 220) {
+                                doc.addPage('a4', 'portrait')
+                                pageOrientation();
+                                yCoordinateLeft = 16;
+                                yCoordinateRight = 16;
+                                yCoordinate = 16;
+                                header();
+                                chapterIIpart1_PSIR();
+                            } else {
+                                chapterIIpart1_PSIR();
+                            }
+                        }
+
+                        function chapterIIpart1_PSIR() {
+
+                            yCoordinate = ((yCoordinateLeft - yCoordinate) + yCoordinate)+6;
+                            drawTextFree('II. PERSONAL AND SOCIAL HISTORY',70,yCoordinate);
+                            drawTextFree('',70,yCoordinate);
+
+                            yCoordinateLeft = (yCoordinate - yCoordinateLeft)+yCoordinateLeft;
+                            yCoordinateRight = (yCoordinate - yCoordinateRight)+yCoordinateRight;
+
+                            const sssText = doc.splitTextToSize('A. SUBJECTIVE SOCIO-ECONOMIC STATUS:', newSeperation);
+                            drawTextLeft(sssText,13,yCoordinateLeft)
+
+                            var ecoStatus = ["POOR","LOW INCOME","LOWER MIDDLE INCOME","MIDDLE CLASS","UPPER INCOME","RICH"]
+                            var ecoStatusResult = JSON.parse(result6.jsonData).eco_status;
+
+                            for (var i=0; i<ecoStatus.length; i++){
+                                if (ecoStatus[i] == ecoStatusResult){
+                                    yCoordinateLeft = drawCheckBox(ecoStatus[i],13,yCoordinateLeft,true)
+                                } else {
+                                    yCoordinateLeft = drawCheckBox(ecoStatus[i],13,yCoordinateLeft,false)
+                                }
+                            }
+
+                            const frText = doc.splitTextToSize('B. FAMILY RELATIONSHIP', newSeperation);
+                            drawTextFree(frText,80,yCoordinate)
+                            var famRel = JSON.parse(result6.jsonData).family_rel;
+                            yCoordinate+=6;
+
+                            for (var i=0; i<statusSatisfaction.length; i++){
+                                if (statusSatisfaction[i] == famRel){
+                                    yCoordinate = drawCheckBox(statusSatisfaction[i],80,yCoordinate,true)
+                                } else {
+                                    yCoordinate = drawCheckBox(statusSatisfaction[i],80,yCoordinate,false)
+                                }
+                            }
+
+                            const famRepText = doc.splitTextToSize('C. FAMILY REPUTATION', newSeperation);
+                            drawTextRight(famRepText,145,yCoordinateRight)
+                            var famStatus = JSON.parse(result6.jsonData).family_rep;
+                            yCoordinateRight+=6;
+
+                            for (var i=0; i<statusSatisfaction.length; i++){
+                                if (statusSatisfaction[i] == famStatus){
+                                    yCoordinateRight = drawCheckBox(statusSatisfaction[i],145,yCoordinateRight,true)
+                                } else {
+                                    yCoordinateRight = drawCheckBox(statusSatisfaction[i],145,yCoordinateRight,false)
+                                }
+                            }
+
+                            yCoordinate = ((yCoordinateLeft - yCoordinate)+yCoordinate)+6;
+                            yCoordinateRight = ((yCoordinateLeft - yCoordinate)+yCoordinate)+6;
+                            yCoordinateLeft = yCoordinateLeft+6;
+
+                            if (yCoordinate == yCoordinateLeft && yCoordinateRight == yCoordinateLeft){
+                                if (yCoordinateLeft >= 250){
+                                    doc.addPage('a4','portrait');
+                                    pageOrientation();
+
+                                    yCoordinateLeft = 16;
+                                    yCoordinateRight = 16;
+                                    yCoordinate = 16;
+
+                                    header();
+                                    chapterIIpart2_PSIR ();
+                                } else {
+                                    chapterIIpart2_PSIR ();
+                                }
+                            } else {
+                                    console.log("ERROR")
+                            }
+                            
+                        }
+
+                        function chapterIIpart2_PSIR () {
+
+                            yCoordinate = (yCoordinateLeft - yCoordinate)+yCoordinate;                            
+                            yCoordinateRight = (yCoordinateLeft - yCoordinateRight)+yCoordinateRight;
+                            const owbText = doc.splitTextToSize('D. OVERALL WELL-BEING', newSeperation);
+                            drawTextLeft(owbText,13,yCoordinateLeft)
+                            var empHealth = JSON.parse(result10.jsonData).empHealth;
+
+                            for (var i=0; i<statusSatisfaction.length; i++){
+                                if (statusSatisfaction[i] == empHealth){
+                                    yCoordinateLeft = drawCheckBox(statusSatisfaction[i],13,yCoordinateLeft,true)
+                                } else {
+                                    yCoordinateLeft = drawCheckBox(statusSatisfaction[i],13,yCoordinateLeft,false)
+                                }
+                            }
+
+                            const fsText = doc.splitTextToSize('E. FAMILY SUPPORT', newSeperation);
+                            drawTextFree(fsText,80,yCoordinate)
+                            var famSupp = JSON.parse(result6.jsonData).family_rel
+
+                            for (var i=0; i<statusSatisfaction.length; i++){
+                                if (statusSatisfaction[i] == famSupp){
+                                    yCoordinate = drawCheckBox(statusSatisfaction[i],80,yCoordinate,true)
+                                } else {
+                                    yCoordinate = drawCheckBox(statusSatisfaction[i],80,yCoordinate,false)
+                                }
+                            }
+
+                            const csText = doc.splitTextToSize('F. COMMUNITY SUPPORT', newSeperation);
+                            drawTextRight(csText,145,yCoordinateRight)
+                            var comAcc = JSON.parse(result11.jsonData).comAcceptance;
+
+                            for (var i=0; i<statusSatisfaction.length; i++){
+                                if (statusSatisfaction[i] == comAcc){
+                                    yCoordinateRight = drawCheckBox(statusSatisfaction[i],145,yCoordinateRight,true)
+                                } else {
+                                    yCoordinateRight = drawCheckBox(statusSatisfaction[i],145,yCoordinateRight,false)
+                                }
+                            }
+
+                            yCoordinate = yCoordinate + 12;
+                            yCoordinateLeft = yCoordinateLeft + 12;
+                            yCoordinateRight = yCoordinateRight + 12;
+
+                            drawTextFree('III. CRIMINAL HISTORY',80,yCoordinate);
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextLeft('A. PRESENT OFFENSE',13,yCoordinateLeft);
+                            drawTextLeft('Charged With: '+JSON.parse(result3.jsonData).chargedWith,13,yCoordinateLeft)
+                            drawTextLeft('Convicted of: '+JSON.parse(result3.jsonData).convictedOf,13,yCoordinateLeft)
+                            drawTextLeft('Sentence: ',13,yCoordinateLeft)
+                            drawTextLeft('Judge: '+JSON.parse(result3.jsonData).judge,13,yCoordinateLeft)
+                            drawTextLeft('Custodial Status: '+JSON.parse(result3.jsonData).custody,13,yCoordinateLeft)
+                            drawTextRight('',127,yCoordinateRight)
+                            drawTextRight('',127,yCoordinateRight)
+                            drawTextRight('Date:'+JSON.parse(result3.jsonData).dateCharged,127,yCoordinateRight)
+                            drawTextRight('Date:'+JSON.parse(result3.jsonData).dateConvicted,127,yCoordinateRight)
+                            drawTextRight('Court:'+JSON.parse(result3.jsonData).court,127,yCoordinateRight)
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextLeft('B. PRIOR AND PENDING RECORDS',13,yCoordinateLeft);
+
+                            yCoordinate = (yCoordinateLeft-yCoordinate)+yCoordinate;
+                            yCoordinateRight = (yCoordinateLeft-yCoordinateRight)+yCoordinateRight;
+
+                            for (var j = 0; j < headers.length; j++) {
+
+                                var headerValue = headers[j];
+                                var currentX = cellPadding + j * (colWidth);
+                                var lines = doc.splitTextToSize(headerValue, totalWidth);
+
+                                for (var k = 0; k < lines.length; k++) {
+                                    doc.text(currentX, yCoordinateLeft + k * 10, lines[k]);
+                                }
+                            }
+                            for (var i = 0; i < dataPrior.length; i++) {
+                                var row = [dataPrior[i].agency, dataPrior[i].cc_no, dataPrior[i].offense, dataPrior[i].when, dataPrior[i].disposition];
+                                yCoordinateLeft += 6
+
+                                for (var j = 0; j < row.length; j++) {
+                                    var cellValue = row[j];
+                                    var currentX = cellPadding + j * (colWidth);
+
+                                    var lines = doc.splitTextToSize(cellValue, totalWidth);
+                                    if (lines.length >= 2) {
+                                        if (yCoordinateLeft >= 272){
+                                            doc.addPage('a4','portrait')
+                                            pageOrientation();
+                                            yCoordinateLeft = 16;
+                                            yCoordinateRight = 16;
+                                            yCoordinate = 16;
+                                            header();
+                                            doc.text(currentX, yCoordinateLeft, lines.slice(0).join('\n'));
+                                            yCoordinateLeft+=6;
+                                        } else {
+                                            doc.text(currentX, yCoordinateLeft, lines.slice(0).join('\n'));
+                                            yCoordinateLeft+=6;
+                                        }
+                                    } else if (lines.length == 1){
+                                        if (yCoordinateLeft >= 272){
+                                            doc.addPage('a4','portrait')
+                                            pageOrientation();
+                                            yCoordinateLeft = 16;
+                                            yCoordinateRight = 16;
+                                            yCoordinate = 16;
+                                            header();
+                                            doc.text(lines, currentX, yCoordinateLeft);
+                                        } else {
+                                            doc.text(lines, currentX, yCoordinateLeft);
+                                        }
+                                    } else {
+                                        console.log("ERROR")
                                     }
+                                }
+                            }
+                        }
 
-                        }); // result 2 end
-                                }); // result 3 end
-                                    }); // result 4 end
-                                        }); // result 5 end
-                                            }); // result 6 end
-                                                }); // result 7 end        
-                                                    }); // result 8 end        
-                                                        }); // result 9 end
-                                                            }); // result 10 end
-                                                                }); // result 11 end
-                                                                    }); // result 12 end   
-                                                                        }); // result 13 end           
-                });
+                        function chapterIV_psir() {
+                            drawTextLeft('',13,yCoordinateLeft)
+                            yCoordinate = (yCoordinateLeft - yCoordinate)+yCoordinate;
+                            yCoordinateRight = (yCoordinateLeft - yCoordinateRight)+yCoordinateRight;
+                            drawTextFree('IV Analysis and Evaluation', 80, yCoordinate);
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextRight('',127,yCoordinateRight)
+
+                            var analysisText = JSON.parse(result12.jsonData).analysisAndEvaluation;
+                            var linesAnalysisText = doc.splitTextToSize(analysisText, 185);
+
+                            for (var i = 0; i < linesAnalysisText.length; i++){
+                                if (yCoordinateLeft >= 272){
+                                    doc.addPage('a4','portrait')
+                                    pageOrientation();
+                                    yCoordinateLeft = 16;
+                                    yCoordinateRight = 16;
+                                    yCoordinate = 16;
+                                    header();
+                                    doc.text(linesAnalysisText[i],13,yCoordinateLeft)
+                                    yCoordinateLeft+=6;
+                                } else {
+                                    doc.text(linesAnalysisText[i],13,yCoordinateLeft)
+                                    yCoordinateLeft+=6;
+                                }
+                            }
+
+                        }
+
+                        function chapterV_psir() {
+                            drawTextLeft('',13,yCoordinateLeft)
+                            yCoordinate = (yCoordinateLeft - yCoordinate)+yCoordinate;
+                            yCoordinateRight = (yCoordinateLeft - yCoordinateRight)+yCoordinateRight;
+                            drawTextFree('V. PROJECTED THRUSTS OF REHABILITATION', 60, yCoordinate);
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextRight('',127,yCoordinateRight)
+
+                            var trustText = JSON.parse(result12.jsonData).projectedThrust;
+                            var linesTrustText = doc.splitTextToSize(trustText,185)
+
+                            for (var i = 0; i < linesTrustText.length; i++){
+                                if (yCoordinateLeft >= 272){
+                                    doc.addPage('a4','portrait')
+                                    pageOrientation();
+                                    yCoordinateLeft = 16;
+                                    yCoordinateRight = 16;
+                                    yCoordinate = 16;
+                                    header();
+                                    doc.text(linesTrustText[i],13,yCoordinateLeft)
+                                    yCoordinateLeft+=6;
+                                } else {
+                                    doc.text(linesTrustText[i],13,yCoordinateLeft)
+                                    yCoordinateLeft+=6;
+                                }
+                            }
+                        }
+
+                        function chapterVI_psir() {
+                            drawTextLeft('',13,yCoordinateLeft)
+                            yCoordinate = (yCoordinateLeft - yCoordinate)+yCoordinate;
+                            yCoordinateRight = (yCoordinateLeft - yCoordinateRight)+yCoordinateRight;
+                            drawTextFree('VI RECOMMENDATION', 80, yCoordinate);
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextRight('',127,yCoordinateRight)
+                            drawTextFree('',13,yCoordinate);
+                            var text = "WHEREFORE, in view of the foregoing, it is respectfully recommended to this Honorable Court that the petition for probation of "+result.firstName+' '+result.middleName+' '+result.lastName+' '+result.suffixName+' be '+JSON.parse(result13.jsonData).grant+',  subject to the following conditions:';
+                            // var textLines = doc.splitTextToSize(text,185)
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextLeft('',13,yCoordinateLeft)
+                            drawTextFree(text,13,yCoordinate);
+                            var recommendation =  JSON.parse(result13.jsonData).recommendations;
+                            for (var i = 0; i < recommendation.length; i++){
+                                var row = [recommendation[i].recs];
+                                
+                                for (var k = 0; k < row.length; k++){
+                                    var rowValue = row[k];
+                                    var recLinesText = doc.splitTextToSize(rowValue,180)
+                                        for (var j = 0; j < recLinesText.length; j++){
+                                            if (yCoordinateLeft >= 272){
+                                                doc.addPage('a4','portrait')
+                                                pageOrientation();
+                                                yCoordinateLeft = 16;
+                                                yCoordinateRight = 16;
+                                                yCoordinate = 16;
+                                                header();
+                                                doc.text(recLinesText[j],13,yCoordinateLeft)
+                                                yCoordinateLeft+=6;
+                                            } else {
+                                                doc.text(recLinesText[j],13,yCoordinateLeft)
+                                                yCoordinateLeft+=6;
+                                            }
+                                        }
+                                    }
+                                }
+                                // var recLinesText = doc.splitTextToSize(contentRecommendation,180)
+                        }
+
+                        function footer(){
+
+                            var currentDate = new Date();
+                            var currentYear = currentDate.getFullYear();
+                            var currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+                            var currentDay = currentDate.getDate();
+                            var formattedDate = currentYear + '-' + (currentMonth < 10 ? '0' : '') + currentMonth + '-' + (currentDay < 10 ? '0' : '') + currentDay;
+
+                            yCoordinate = (yCoordinateLeft - yCoordinate)+yCoordinate
+                            yCoordinateRight = (yCoordinateLeft - yCoordinateRight)+yCoordinateRight;
+                            drawTextRight('Prepared and submitted by: ',127,yCoordinateRight)
+                            drawTextRight(resultPetitioner.createdBy,127,yCoordinateRight)
+                            drawTextRight('Investigating Officer',127,yCoordinateRight)
+                            drawTextRight('Date: '+formattedDate,127,yCoordinateRight)
+                        }
+
+                        chapterIV_psir();
+                        chapterV_psir();
+                        chapterVI_psir();
+                        footer();
+
+                        console.log("This is yCoordinate: ", yCoordinate)
+                        console.log("This is yCoordinateLeft: ", yCoordinateLeft)
+                        console.log("This is yCoordinateRight: ", yCoordinateRight)
+                        console.log("This is the full page width: ", pageWidth)
+                        console.log("This is the full page height: ", pageHeight)
+                        console.log("This is the page height with border: ", pageHeight - y)
+                        console.log("This is the page width with border: ", pageWidth - x)
+
+
+                        // drawTextLeft('',yCoordinateLeft)
+                        // drawTextLeft()
+
+                        //Save the PDF
+                        doc.save('Simplified PSIR.pdf'); 
+                    } catch (error) {
+                        console.error('Error fetching data:', error);
+                    }
+                }
+                fetchAllData(client_id);
             });       
         }
-
+        
+        var loggedValues = new Set();
+        
         function drawTable(type,officeId) {
             $(document).ready(function(){
                 $('.table_head').DataTable({
@@ -795,6 +771,7 @@
                 })
                 $('.table_head').on('draw.dt', function() {
                     buttonFunctionality();
+                    fetchPetitioner(clientType)
                 });
             })
         }
@@ -829,28 +806,42 @@
                 },
                 {
                     "data": null,
-                    render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='"+data.id+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='"+data.id+"' data-type='"+data.clientType+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='"+data.id+"' data-type='"+data.clientType+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='"+data.id+"' data-foid='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Generate PSIR</button>"
+                    "render": function (data, type, row) {
+                        // setTimeout (function (){
+                        // },1000)
+                        // console.log(clientDataStorage.length)
+                        // if (!loggedValues.has(data)) {
+                        //     if (clientDataStorage.length > 0 && clientDataStorage[0].petitionerId == data.id) {
+                        //         if (clientDataStorage[0].worksheetStatus == "COMPLETED") {
+                        //             console.log("Show")
+                        //             return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
+                        //         }
+                        //     } else {
+                        //         console.log("Hide")
+                        //         // return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button>";
+                        //     }
+                        //     loggedValues.add(data);
+                        // }
+                        // // Return an empty string if the condition is not met
+                        // return "";
+                        return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
                     }
                 }
             ]
-        } 
-
+        }
         var tableProbation = document.getElementById('client_pb')
 
         if (tableProbation.classList.contains("active")) {
             $('.table_head').DataTable().destroy();
             $('#tableTitle').text("Probationers")
-            var clientType = "PROBATIONER";
-
+            clientType = "PROBATIONER";
             drawTable(clientType,officeId)
         }
 
         tableProbation.addEventListener('click', function() {
             $('.table_head').DataTable().destroy();
             $('#tableTitle').text("Probationers")
-            var clientType = "PROBATIONER";
-
+            clientType = "PROBATIONER";
             drawTable(clientType,officeId)
         });
 
@@ -859,7 +850,7 @@
         tableParolee.addEventListener('click', function() {
             $('.table_head').DataTable().destroy();
             $('#tableTitle').text("Parolee")
-            var clientType = "PAROLEE";
+            clientType = "PAROLEE";
             drawTable(clientType,officeId)
         });
 
@@ -868,7 +859,7 @@
         tablePardonee.addEventListener('click', function() {
             $('.table_head').DataTable().destroy();
             $('#tableTitle').text("Pardonee")
-            var clientType = "PARDONEE";
+            clientType = "PARDONEE";
             drawTable(clientType,officeId)
         });
 

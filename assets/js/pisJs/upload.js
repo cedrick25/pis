@@ -104,69 +104,85 @@
 
         var docket_number = GetURLParameter('docket_number');
         var type = GetURLParameter('type');
+        var id = GetURLParameter('id');
         var fi = $.cookie("field_office_id");
 
-        console.log(docket_number)
-        console.log(type)
-        console.log(fi)
-
-        var list_upload = function(){
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
-
-            __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
-
-                console.log(result)
-                var result = result.response;
-                var client_type = result.clientType;
-                var docket_num = result.docketNumber;
-
-                // console.log (client_type)
-                // console.log (docket_num)
-
-                __executeExternalGet('8080/file/list/'+type+'/'+docket_number+'/'+fi).done(function (result) {
-                console.log("======")
-                console.log(result)
-                console.log("======")
-
-                if (result.status != "ERROR") {
-                    result.files.forEach(function(data){
-                        $('.table_body').append("<tr>"+
-                            "<td></td>"+
-                            "<td>"+data.kind+"</td>"+
-                            "<td>"+data.fileName+"</td>"+
-                            "<td>"+data.version+"</td>"+
-                            "<td class='options'><a href="+api+'8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
-                        )
-                    });
-                    $(document).ready(function () {
-                        $('.table_head tbody tr').each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $('.table_head').DataTable({
-                            order: [[0, 'asc']],
-                            // "columnDefs": [
-                                // { "width": "30%", "targets": 6 }
-                            // ]
-                        });
-                        $('.dataTables_length').addClass('bs-select');
-                    }); 
+        function storeData(postUrl, postData) {
+            $.ajax({
+                url: postUrl,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(postData),
+                success: function (result) {
+                    // console.log('User data received:', result);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error);
                 }
-                });
-            })
+            });
         }
-        list_upload();
+
+        function fetchWorkflow (){
+            var apiUrl = api+'8000/workflow/'+id
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        var data = result.response;
+                        $(".docket_number").html(data.docketNumber);
+                        $(".type").html(data.type);
+                        $(".return_to").html(data.senderName)
+                        $(".details").html(data.details)
+                        $(".field_office").html(data.fieldOfficeName)
+                        var postUrl = api+'8000/workflow/update/'+id;
+                        let approvalStatus;
+                        if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
+                        approvalStatus = "Pending of CPPO"
+                        } else if (data.approvalStatus == "New - (Forwarded to FO)" ){
+                            approvalStatus = "Pending of FO"
+                        } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                            approvalStatus = "Pending of CPPO for Approval"
+                        }
+                        var postData = {
+                            "type": data.type,
+                            "caseloadType": data.caseloadType,
+                            "senderId": data.senderId,
+                            "senderName": data.senderName,
+                            "receiverId": data.receiverId,
+                            "fieldOfficeId": data.fieldOfficeId,
+                            "docketNumber": data.docketNumber,
+                            "details": data.details,
+                            "remarks": data.remarks,
+                            "approvalStatus": approvalStatus,
+                            "lastStatusUpdateDate": "",
+                        };
+                        if (approvalStatus == "Pending of FO"){
+                            approvalStatus == "Pending of FO";
+                            storeData(postUrl,postData)
+                        } else if (approvalStatus == "Pending of CPPO"){
+                            approvalStatus == "Pending of CPPO";
+                            storeData(postUrl,postData)
+                        } else if (approvalStatus == "Pending of CPPO for Approval"){
+                            approvalStatus = "Pending of CPPO for Approval"
+                            storeData(postUrl,postData)
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', status, error);
+                    }
+                })   
+        }
         
         var __fields = function(){
             __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
-                console.log(result);
                 var result = result.response;
                 if (result.status != "ERROR") {
                     $(".type").html(result.clientType);
                     $(".docket_number").html(result.docketNumber);
 
                     $(".btn-confirm").unbind("click").on("click", function(){
-                        console.log("clicked")
                         var fileToUpload = $('#fileupload').prop('files')[0];
 
                         if (fileToUpload === undefined) {
@@ -186,7 +202,6 @@
                             };
 
                             $.ajax(settings).done(function (response) {
-                                console.log(response);
                                 if (response) {
                                     $('#success_upload').show();
                                     setTimeout(function () {
@@ -197,20 +212,6 @@
 
                                 }
                             });
-
-
-                            // var formdata = new FormData();
-                            // formdata.append("files", fileToUpload, fileToUpload.name);
-                            // console.log(formdata)
-                            // __executeFile("http://localhost:8080/file/upload?uuid="+result.docketNumber+"&type="+result.type+"&version=0&kind="+$('.kind').val(),formdata).done(function (result) {
-                            //     console.log(result)
-                            //     if(result){
-                            //         // list_upload();
-
-                            //     }else{
-                            //         // alert ("upload Failed");
-                            //     }
-                            // });
                         }
                     })
                 }else{
@@ -218,6 +219,37 @@
                 }
             })
         }
-        __fields();
+
+        function fetchFiles() {
+            const apiUrl = api+'8080/file/list/'+type+'/'+docket_number+'/'+fi;
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    var result = result.files;
+                    result.forEach(function(data){
+                        $('.table_body').append("<tr>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.kind+"</td>"+
+                            "<td>"+data.fileName+"</td>"+
+                            "<td>"+data.version+"</td>"+
+                            "<td class='options'><a href="+api+'8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                        )
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            fetchFiles();
+            __fields();
+            fetchWorkflow();
+        })
+
+
 
     } )( jQuery );

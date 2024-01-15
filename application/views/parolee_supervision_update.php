@@ -126,24 +126,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control client_type_update select2">
-                                            <option selected value="select">Select</option>
-                                            <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option>
-                                        </select>
-                                    </div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_update select2">
-                                            <option selected value="none" disabled>Select</option>
-                                            <option value="select">Select</option>
-                                            <option value="pending">John Doe</option>
-                                            <option value="approve">Doe John</option>
                                         </select>
                                     </div>
                                 </div>
@@ -204,7 +190,6 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
                                 <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
                             </div>
                         </div>

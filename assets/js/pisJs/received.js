@@ -88,13 +88,13 @@
         };
         
         var uuid = $.cookie("uuid");
+        var roleId = $.cookie("role_id");
 
         function buttonVisibility (){
             var data = JSON.parse(localStorage.getItem('permission'));
             if (data != null) {
                 data.forEach(function(data){
                     if (data.type == "ACTION") {
-                        // console.log(data.value)
                         setTimeout(function() {
                             if (!data.value) {
                                 var element = $('.' + data.detail);
@@ -103,7 +103,7 @@
                                 var element = $('.' + data.detail);
                                 element.show();
                             }
-                        }, 10);
+                        }, 100);
                     }else if (data.type == "VIEW") {
                         if (!data.value) {
                             var element = $('.' + data.detail);
@@ -119,27 +119,25 @@
         }
 
         function buttonFunctionality(){
-            $("#btn_return").unbind("click").on("click", function(){
+            $(".pb_inv_return").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
-                console.log("btn_return click")
                 window.location.href = api+'/pis/return?docket_number='+docket_number+'&id='+id;
             })
-            $("#btn_forward").unbind("click").on("click", function(){
+            $(".pb_inv_forward").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
-                console.log("btn_forward click")
-                window.location.href = api+'/pis/forward?docket_number='+docket_number+'&id='+id;
+                var fi = $(this).data("fi");
+                window.location.href = api+'/pis/forward?docket_number='+docket_number+'&id='+id+'&fo='+fi;
             })
-            $("#btn_upload").unbind("click").on("click", function(){
+            $(".pb_inv_upload").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var type = $(this).data("type");
                 var fi = $(this).data("fi");
-                console.log("btn_upload click")
                 window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
             })
-            $("#btn_complete").unbind("click").on("click", function(){
+            $(".pb_inv_complete").unbind("click").on("click", function(){
                 var id = $(this).data("id");
                 var docket_number = $(this).data("docket");
                 var type = $(this).data("type")
@@ -181,6 +179,23 @@
                     })
                 })
             })
+            $(".pb_inv_worksheet").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var fi = $(this).data("fi");
+                var apiUrl = api+'8000/docketbook/'+docket_number+'/'+fi
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        var data = result.response;
+                        window.location.href = api+'/pis/worksheet_identifying_data?client_id='+data.clientId+'&field_office_id='+data.fieldOfficeId;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', status, error);
+                    }
+                })
+            })
         }
 
         function tableColumns() {
@@ -189,10 +204,38 @@
                     "data": null,
                     "render": function (data, type, row, meta) {
                         if (data.id == null){
-                            return "No id";
+                            var idText = "No id"
+                            if (data.approvalStatus == "New - (Forwarded to CPPO)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Forwarded to FO)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Return to Clerk)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Return to CPPO)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            }else {
+                                idText;
+                            }
+                            return idText;
                         } else {
-                            return data.id;
-                        }
+                            var idText = data.id
+                            if (data.approvalStatus == "New - (Forwarded to CPPO)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Forwarded to FO)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Return to Clerk)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Return to CPPO)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                                idText += ' <span style="color: red;">*</span>';
+                            } else {
+                                idText;
+                            }   
+                            return idText;
+                        } 
                     }
                 },
                 {
@@ -208,14 +251,60 @@
                     "data": 'senderName'
                 },
                 {
+                    "data": 'approvalStatus',
+                    render: function (data, type, row){
+                        if (data == "New - (Forwarded to CPPO)")
+                        {
+                            var statusText = "New"
+                            return statusText;
+                        } else if (data == "New - (Forwarded to FO)")
+                        {
+                            var statusText = "New"
+                            return statusText;
+                        } else if (data == "New - (Returned to FO)")
+                        {
+                            var statusText = "New"
+                            return statusText;
+                        } else if (data == "New - (Returned to CPPO)")
+                        {
+                            var statusText = "New"
+                            return statusText;
+                        } else if (data == "New - (Forward to CPPO for Approval)")
+                        {
+                            var statusText = "New"
+                            return statusText;
+                        } if (data == null){
+                            var statusText = "Error! value is null"
+                            return statusText
+                        } else {
+                            var statusText = "Pending"
+                            return statusText
+                        }
+                    }
+                },
+                {
                     "data": null,
                     render: function(data, type, row) {
                         switch (data.approvalStatus) {
                             case "COMPLETED":
                                 return "<h5>This Docket is Completed</h5>";
                                 break;
+                            case "New - (Forward to CPPO for Approval)":
+                                if (roleId == "32"){
+                                    return "<button class='btn btn-sm btn-primary pb_inv_upload pb_sup_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_inv_return pb_sup_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-success pb_inv_complete pb_sup_complete' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button>"
+                                }
+                            case "Pending of CPPO for Approval":
+                                if (roleId == "32"){
+                                    return "<button class='btn btn-sm btn-primary pb_inv_upload pb_sup_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_inv_return pb_sup_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-success pb_inv_complete pb_sup_complete' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button>"
+                                }
                             default:
-                                return "<button class='btn btn-sm btn-primary' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.departmentId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                if (roleId == "32"){
+                                    return "<button class='btn btn-sm btn-primary pb_inv_upload pb_sup_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_inv_return pb_sup_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_inv_forward pb_sup_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button>"
+                                } else if (roleId == "4"){
+                                    return "<button class='btn btn-sm btn-primary pb_inv_upload pb_sup_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_inv_return pb_sup_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_inv_forward pb_sup_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet' style='display:none;' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"'><i class='fa fa-plus-circle'></i> Worksheet</button>"
+                                } else {
+                                    return "<button class='btn btn-sm btn-primary pb_inv_upload pb_sup_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_inv_return pb_sup_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_inv_forward pb_sup_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pb_inv_complete pb_sup_complete' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet' style='display:none;' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"'><i class='fa fa-plus-circle'></i> Worksheet</button>";                                    
+                                }
                                 break;
                         };
                     }
@@ -224,6 +313,7 @@
         }
 
         function drawTable(type,uuid) {
+            let responseData;
             $(document).ready(function(){
                 $('.table_head').DataTable({
                     "processing": true,
@@ -232,11 +322,9 @@
                     "lengthChange": false,
                     "searching": false,
                     "columnDefs": [
-                        { "width": "15px", "targets": [0] },
-                        { "width": "100px", "targets": [2] },
-                        { "width": "150px", "targets": [3] },
-                        { "width": "200px", "targets": [1,4] },
-                        { "width": "600px", "targets": [5] }
+                        { "width": "5%", "targets": [0] },
+                        { "width": "7%", "targets": [1,2,3,4,5] },
+                        { "width": "15%", "targets": [6] }
                     ],
                     "ajax": function(data, callback, settings) {
                         const size = 10;
@@ -247,6 +335,7 @@
                             method: 'GET',
                             dataType: 'json',
                             success: function(res) {
+                                responseData = res.content;
                                 callback({
                                     recordsTotal: res.totalElements,
                                     recordsFiltered: res.totalElements,
@@ -263,25 +352,10 @@
                 $('.table_head').on('draw.dt', function() {
                     buttonFunctionality();
                     buttonVisibility();
-                    if ( type == "PIS_INV" ){
-                        $('#btn_upload').addClass('pb_inv_upload')
-                        $('#btn_forward').addClass('pb_inv_forward')
-                        $('#btn_complete').addClass('pb_inv_complete')
-                        $('#btn_return').addClass('pb_inv_return')
-                    } else {
-                        $('#btn_upload').removeClass('pb_inv_upload')
-                        $('#btn_forward').removeClass('pb_inv_forward')
-                        $('#btn_complete').removeClass('pb_inv_complete')
-                        $('#btn_return').removeClass('pb_inv_return')
-                        $('#btn_upload').addClass('pb_sup_upload')
-                        $('#btn_forward').addClass('pb_sup_forward')
-                        $('#btn_complete').addClass('pb_sup_complete')
-                        $('#btn_return').addClass('pb_sup_return')
-                    }
                 });
             })
         }
-                    
+
         var tableInv = document.getElementById('inv_tab')
 
         if (tableInv.classList.contains("active")) {

@@ -84,7 +84,6 @@
     <?php $this->load->view('templates/footer.php'); ?> 
 
     <script src="assets/js/pisJs/forward.js">
-
     </script>
 
 </body>

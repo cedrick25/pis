@@ -65,10 +65,6 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num"></div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Ser.</label></div>
                                     <div class="col-12 col-md-9">
@@ -80,12 +76,6 @@
                                             <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
                                             <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
                                             <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-<!--                                             <option value="PR">PAROLE SUPERVISION</option>
-                                            <option value="PD">PARDON SUPERVISION</option>
-                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
-                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
-                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -101,16 +91,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">State</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control state select2">
-                                            <option selected value="select" disabled>Select</option>
-                                            <option value="grant">Grant</option>
-                                            <option value="denial">Denial</option>
-                                        </select>
-                                    </div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
@@ -152,20 +132,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control client_type select2">
-                                            <option selected value="select">Select</option>
-                                            <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
@@ -236,7 +202,6 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
                             </div>
                         </div>

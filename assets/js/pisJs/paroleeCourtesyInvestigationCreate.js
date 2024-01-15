@@ -1,16 +1,15 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -88,6 +87,7 @@
             
             return d.promise();
         };
+        
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -165,47 +165,34 @@
                 "supervisionEndDate"        : ""
 
                 }
-
-                console.log(payload)
-
-                __executeExternalPost('http://localhost:8000/docketbook/create/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
-                    console.log(result);
+                __executeExternalPost('8000/docketbook/create/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                     if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                         setTimeout(function () {
                             $('#success').hide();
-                            window.location.href = 'http://localhost/pis/parolee_courtesy_investigation_docketing';
+                            window.location.href = api+'/pis/parolee_courtesy_investigation_docketing';
                         }, 2000);
                     }else{
                         alert("failed")
                     }
                 })
             })
+                var __select = function(){
+                    $('.ref_office').empty();
 
+                    __executeExternalGet('8088/department/list').done(function (result) {
+                        if (result.status != "ERROR") {
+                            $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                            result.forEach(function(data){
+                                $('.ref_office').append(
+                                    "<option value="+data.id+">"+data.name+"</option>");
+                            });
 
-        var __select = function(){
-            $('.ref_office').empty();
-
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.ref_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-
-                } else {
-                    console.log("failed fetching docket list")
+                        } else {
+                            console.log("failed fetching docket list")
+                        }
+                    })
                 }
-            })
-        }
-        __select();
-
-        setTimeout(function () {
-            __fields();
-        }, 500);
-
-
+                __select();
     } )( jQuery );

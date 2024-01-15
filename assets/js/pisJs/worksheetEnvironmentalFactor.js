@@ -1,12 +1,7 @@
     ( function ( $ ) {
-        
         var api = localStorage.getItem('api');
         var ___ctx = api;
         console.log(___ctx)
-        
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
 
         var __getContext = function() {
             return ___ctx;
@@ -14,6 +9,7 @@
 
         var __executeExternalGet = function(path, customLoader) {
             path = __getContext() + path;
+            // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -91,7 +87,6 @@
             
             return d.promise();
         };
-
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -107,17 +102,10 @@
 
 
         var client_id = GetURLParameter('client_id');
-        console.log(client_id)
-        var field_office_id = GetURLParameter('field_office_id');
-        console.log(field_office_id)
-       
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
+        var foid = GetURLParameter('field_office_id');
+        var field_office_id = $.cookie('field_office_id');
 
-
-        $(".btn-next").unbind("click").on("click", function(){
-
+        function gatheredData () {
             var envFactor = {
 
                 neighborhood            : $(".neighborhood").val(),
@@ -132,9 +120,6 @@
 
             }
 
-            console.log(envFactor)
-
-
             var payload = {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(envFactor),
@@ -144,48 +129,34 @@
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
-            console.log(payload)
+            return payload;
+        }
 
-
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
+        function setupWorksheetClickHandler(worksheetType) {
+            $(`.${worksheetType}`).unbind("click").on("click", function () {
+                $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
-                    $('#success').show();
                     setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/client_list';
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-                })
+                        window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
+                    }, 500);
+                });
+            });
+        }
 
-            })
+        var worksheetDataStorage = [];
 
-        __executeExternalGet('8000/worksheet/getPetitioner/environmentalFactor/'+client_id).done(function (result) {
-                console.log("==========")
-                console.log(result)
-                console.log("==========")
-
-                var result = result.response;
-
-                if (result.status != "ERROR") {
-
+        function getEnvFacData (worksheetType) {
+            const apiUrl = api+'8000/worksheet/getPetitioner/'+worksheetType+'/'+client_id;
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    var result = result.response;
                     if (result.worksheetStatus == "COMPLETED"){
-
                         $(".btn-update").show();
                         $(".btn-next").hide();
-
                         JSON.parse(result.jsonData)
-
-                        console.log(JSON.parse(result.jsonData))
-
-                        // var spouseChild = JSON.parse(result.jsonData);
-
                         $(".neighborhood").val(JSON.parse(result.jsonData).neighborhood).trigger("change");
                         $(".area").val(JSON.parse(result.jsonData).area).trigger("change");
                         $(".neighborhoodDescribe").val(JSON.parse(result.jsonData).neighborhoodDescribe);
@@ -195,175 +166,94 @@
                         $(".acceptanceSpecify").val(JSON.parse(result.jsonData).acceptanceSpecify);
                         $(".peerRel").val(JSON.parse(result.jsonData).peerRel).trigger("change");
                         $(".peerSpecify").val(JSON.parse(result.jsonData).peerSpecify);
-
                     }else{
-
                         $(".btn-next").show();
                         $(".btn-update").hide();
-                    } 
+                    }
 
+                    $(".btn-next").unbind("click").on("click", function(){
+                        if (worksheetDataStorage.length < 9) {
+                            alert("Please Complete the pre-requisite forms before proceeding")
+                        } else {
+                            var dataPayload = gatheredData();
+                            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
+                            if (result.status != "ERROR") {
+                                $(".form-control").val('');
+                                $('#success').show();
+                                setTimeout(function () {
+                                    $('#success').hide();
+                                    setTimeout(function () {
+                                        window.location.href = api+'/pis/client_list';
+                                    }, 500);
+                                }, 2000);
+                            }else{
+                                alert("failed")
+                            }
+                            })
+                        }
+                    })
+                    $(".btn-update").unbind("click").on("click", function(){
+                        var dataPayload = gatheredData();
+                        __executeExternalPost('8000/worksheet/updatePetitioner/environmentalFactor/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
+                            if (result.status != "ERROR") {
+                                $(".form-control").val('');
+                                $('#success').show();
+                                setTimeout(function () {
+                                    $('#success').hide();
+                                    setTimeout(function () {
+                                        window.location.href = api+'/pis/client_list';
+                                    }, 500);
+                                }, 2000);
+                            }else{
+                                alert("failed")
+                            }
+                        })
+                    })
+
+                    setupWorksheetClickHandler("prior_records");
+                    setupWorksheetClickHandler("present_offense");
+                    setupWorksheetClickHandler("identifying_data");
+                    setupWorksheetClickHandler("family_background");
+                    setupWorksheetClickHandler("socio_economic");
+                    setupWorksheetClickHandler("residence_economic");
+                    setupWorksheetClickHandler("spouse_children");
+                    setupWorksheetClickHandler("education_history");
+                    setupWorksheetClickHandler("employment_history");
+                    setupWorksheetClickHandler("environmental_factor")
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
                 }
+            });
+        }
+
+        function fetchPetitioner(worksheetType) {
+            const apiUrl = api+'8000/worksheet/getPetitioner/'+worksheetType+'/'+client_id;
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    var result = result.response;
+                    var dataToBeStored = {
+                        id              : result.id,
+                        worksheetStatus : result.worksheetStatus
+                    }
+                    if (result.worksheetStatus == null){
+                        console.log("Cannot save worksheet status that is null")
+                    } else {
+                        worksheetDataStorage.push(dataToBeStored);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
+                }
+            });
+        }
+        var worksheetType = ['identifyingData', 'presentOffense', 'priorRecords', 'familyBackground', 'socioEconomic', 'residenceEconomic', 'spouseChildren', 'educationHistory', 'employmentHistory']
+        worksheetType.forEach(function(data){
+            fetchPetitioner(data);
         })
-
-        $(".btn-update").unbind("click").on("click", function(){
-
-            var envFactor = {
-
-                neighborhood            : $(".neighborhood").val(),
-                neighborhoodDescribe    : $(".neighborhoodDescribe").val(),
-                neighCrim               : $(".neighCrim").val(),
-                criminalityExplain      : $(".criminalityExplain").val(),
-                comAcceptance           : $(".comAcceptance").val(),
-                acceptanceSpecify       : $(".acceptanceSpecify").val(),
-                peerRel                 : $(".peerRel").val(),
-                peerSpecify             : $(".peerSpecify").val(),
-                area                    : $(".area").val()
-
-            }
-
-            console.log(envFactor)
-
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(envFactor),
-            "type"                      : "environmentalFactor",
-            "worksheetStatus"           : "COMPLETED",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            console.log(payload)
-
-
-            __executeExternalPost('8000/worksheet/updatePetitioner/environmentalFactor/'+client_id,JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/client_list';
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-                })
-
-            })
-
-        $(".idenData").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_identifying_data?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".priorRec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_prior_records?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".presOff").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_present_offense?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".famBg").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_family_background?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".socioEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_socio_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".resEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_residence_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".spouseChild").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_spouse_children?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".educHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_education_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".empHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_employment_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        // $(".envFac").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_environmental_factor?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
+        getEnvFacData("environmentalFactor")
 
     } )( jQuery );

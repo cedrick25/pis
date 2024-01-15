@@ -47,7 +47,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Ser.</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control docket_series select2">
-                                            <option selected value="none" disabled>Select</option>
+                                            <option selected value="none" disabled>- - Select - -</option>
                                             <option value="PR">PAROLE SUPERVISION</option>
                                             <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
                                             <option value="CPR">COURTESY PAROLE SUPERVISION</option>
@@ -58,7 +58,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control referral_type select2">
-                                            <option selected value="select">Select</option>
+                                            <option selected value="select" disabled>- - Select - -</option>
                                             <option value="BPP">From Board of Pardons and Parole</option>
                                             <option value="parolee">Transferred from otther PPO</option>
                                         </select>
@@ -68,7 +68,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Report Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control report_type select2">
-                                            <option selected value="select">Select</option>
+                                            <option selected value="select" disabled>- - Select - -</option>
                                             <option value="summary">Summary</option>
                                             <option value="infraction">Infraction</option>
                                             <option value="death">Death</option>
@@ -80,7 +80,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control caseload select2">
-                                            <option selected value="none" disabled>Select</option>
+                                            <option selected value="none" disabled>- - Select - -</option>
                                             <option value="SINGLE_CARPETA_PAPWA">Process Application for Permit to Work Abroad</option>
                                             <option value="SINGLE_CARPETA_PAR">Process Arrival Report</option>
                                             <option value="SINGLE_CARPETA_PBR">Process Briefing Report</option>
@@ -131,7 +131,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client select2">
-                                            <option selected value="none" disabled>Select</option>
+                                            <option selected value="none" disabled>- - Select - -</option>
                                             <option value="select">Select</option>
                                             <option value="pending">John Doe</option>
                                             <option value="approve">Doe John</option>
@@ -142,7 +142,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control case_class select2">
-                                            <option selected value="select" disabled>Select</option>
+                                            <option selected value="select" disabled>- - Select - -</option>
                                             <option value="high">High</option>
                                             <option value="medium">Medium</option>
                                             <option value="low">Low</option>
@@ -157,7 +157,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Resolution Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control res_type select2">
-                                            <option selected value="select" disabled>Select</option>
+                                            <option selected value="select" disabled>--Select--</option>
                                             <option value="final">Final Release and Discharge</option>
                                             <option value="arrest">Arrest and Recommitment</option>
                                             <option value="death">Death</option>
@@ -165,30 +165,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Central Office" class="form-control ref_office"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control inv_off"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reason referral</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Parolee" class="form-control reason"></div>
-                                </div> -->
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control case_class select2">
-                                            <option selected value="select" disabled>Select</option>
-                                            <option selected value="high">High</option>
-                                            <option selected value="medium">Medium</option>
-                                            <option selected value="low">Low</option>
-                                        </select>
-                                    </div>
-                                </div> -->
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received by PPO</label></div>
                                     <div class="col-12 col-md-9"><input type="date" class="form-control dr_ppo"></div>
@@ -219,8 +195,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
                             </div>
                         </div>
                     </div>

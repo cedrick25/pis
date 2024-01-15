@@ -101,65 +101,118 @@
             }
         }
 
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
-
         var docket_number = GetURLParameter('docket_number');
         var id = GetURLParameter('id');
-        var __fields = function(){
+        var fieldOffice = GetURLParameter('fo');
 
-            __executeExternalGet('8000/workflow/'+id).done(function (result) {
-                console.log(result);
+        function storeData(postUrl, postData) {
+            $.ajax({
+                url: postUrl,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(postData),
+                success: function (result) {
+                    // console.log('User data received:', result);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error);
+                }
+            });
+        }
+        function fetchWorfklow() {
+            var apiUrl = api+'8000/workflow/'+id
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    var data = result.response;
+                    $(".docket_number").html(data.docketNumber);
+                    $(".type").html(data.type);
+                    $(".return_to").html(data.senderName)
+                    $(".details").html(data.details)
+                    $(".field_office").html(data.fieldOfficeName)
+                    var postUrl = api+'8000/workflow/update/'+id;
+                    let approvalStatus;
+                    if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
+                        approvalStatus = "Pending of CPPO"
+                    } else if (data.approvalStatus == "New - (Forwarded to FO)" ){
+                        approvalStatus = "Pending of FO"
+                    } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                        approvalStatus = "Pending of CPPO for Approval"
+                    }
+                    var postData = {
+                        "type": data.type,
+                        "caseloadType": data.caseloadType,
+                        "senderId": data.senderId,
+                        "senderName": data.senderName,
+                        "receiverId": data.receiverId,
+                        "fieldOfficeId": data.fieldOfficeId,
+                        "docketNumber": data.docketNumber,
+                        "details": data.details,
+                        "remarks": data.remarks,
+                        "approvalStatus": approvalStatus,
+                        "lastStatusUpdateDate": "",
+                    };
+                    if (approvalStatus == "Pending of FO"){
+                        approvalStatus == "Pending of FO";
+                        storeData(postUrl,postData)
+                    } else if (approvalStatus == "Pending of CPPO"){
+                        approvalStatus == "Pending of CPPO";
+                        storeData(postUrl,postData)
+                    } else if (approvalStatus == "Pending of CPPO for Approval"){
+                        approvalStatus == "Pending of CPPO for Approval"
+                        storeData(postUrl,postData)
+                    }
 
-                var result = result.response;
-                if (result.status != "ERROR") {
-                        __executeExternalGet('8088/department/'+result.fieldOfficeId).done(function (result2) {
-                            var fo = result2.name;
-                        __executeExternalGet('8088/user/'+result.senderId).done(function (result3) {
-                            var senderId = result3.firstName+" "+result3.middleName+" "+result3.lastName+" "+result3.suffix;
-                            $(".docket_number").html(result.docketNumber);
-                            $(".type").html(result.type);
-                            $(".field_office").html(fo);
-                            $(".return_to").html(senderId);
-                            $(".details").html(result.details);
-
-                            $(".btn-confirm_return").unbind("click").on("click", function(){
-                            console.log('clicked')
-
-                            var payload = {
-                                "type"                  : result.type,
-                                "caseloadType"          : result.caseloadType,
-                                "senderId"              : $.cookie("uuid"),
-                                "receiverId"            : result.senderId,
-                                "fieldOfficeId"         : result.fieldOfficeId,
-                                "docketNumber"          : $(".docket_number").html(),
-                                "details"               : $(".details").html(),
-                                "remarks"               : $(".remarks").val(),
-                                "approvalStatus"        : "",
-                                "lastStatusUpdateDate"  : "",
-                            }
-                            console.log(payload)
-                            __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {
-                                console.log(result);
-                                if (result.status != "ERROR") {
-                                $(".form-control").val('');
-                                $('#success_forwarding').show();
-                                    setTimeout(function () {
-                                        $('#success_forwarding').hide();
-                                        window.location.reload(true);
-                                    }, 2000);
-                                }else{
-                                    alert("failed")
+                    $(".btn-confirm_return").unbind("click").on("click", function(){
+                        var apiUrl = api+'8000/workflow/'+id
+                        $.ajax({
+                            url: apiUrl,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(result) {
+                                var data = result.response;
+                                let approvalStatus;
+                                var postUrl = api+'8000/workflow/create';
+                                function postDatas() {
+                                    return {
+                                        "type"                  : data.type,
+                                        "caseloadType"          : data.caseloadType,
+                                        "senderId"              : $.cookie("uuid"),
+                                        "receiverId"            : data.senderId,
+                                        "fieldOfficeId"         : data.fieldOfficeId,
+                                        "docketNumber"          : data.docketNumber,
+                                        "details"               : data.details,
+                                        "remarks"               : $(".remarks").val(),
+                                        "approvalStatus"        : approvalStatus,
+                                        "lastStatusUpdateDate"  : "",
+                                    };
                                 }
-                            })
+                                if (data.approvalStatus == "Pending of CPPO"){
+                                    approvalStatus = "New - (Forwarded to FO)"
+                                    var postData = postDatas()
+                                    storeData(postUrl,postData)
+                                } else if (data.approvalStatus == "Pending of FO"){
+                                    approvalStatus = "New - (Returned to CPPO)"
+                                    var postData = postDatas()
+                                    storeData(postUrl,postData)
+                                } 
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error:', status, error);
+                            }
                         })
                     })
-                })
-                }else{
-                    alert("failed")
+
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
                 }
-            })
+            });
         }
-        __fields();
+        $(document).ready(function(){
+            fetchWorfklow();
+        })
     } )( jQuery );

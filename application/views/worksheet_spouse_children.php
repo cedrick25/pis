@@ -64,34 +64,34 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link idenData" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
+                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link presOff" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
+                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link priorRec" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
+                                        <a class="nav-link prior_record" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link famBg" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socioEco" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
+                                        <a class="nav-link socio_economic" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link resEco" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
+                                        <a class="nav-link residence_economic" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link active spouseChild" href="#">Spouse/Children</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link educHis" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link empHis" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
+                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link envFac" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -122,19 +122,19 @@
                                         <legend>SPOUSE</legend>
                                         <div class="spouse">
                                         </div>
-                                        <div class="col-12">
-                                            <div class="row form-group col-md-12 spouseModule" style="display:none;">
+                                        <div class="col-12 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-12 " >
                                                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
                                                 <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control spouse_fname"></div>
                                                 <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control spouse_mname"></div>
                                                 <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control spouse_lname"></div>
                                                 <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Extended Name" class="form-control spouse_ename"></div>
                                             </div>
-                                            <div class="row form-group col-md-12 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-12">
                                                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Present Address</label></div>
                                                 <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control pAddress"></textarea></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Region</label></div>
                                                 <div class="col-12 col-md-10">
                                                     <select class="form-control spouse_region select2">
@@ -158,46 +158,46 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Date</label></div>
                                                 <div class="col-12 col-md-10"><input type="date" class="form-control spouse_bday"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Province</label></div>
                                                 <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Address" class="form-control spouseProvince"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Work Address</label></div>
                                                 <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Address" class="form-control spouse_work_add"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Municipality</label></div>
                                                 <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Address" class="form-control spouseMunicipality"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Nature of Ceremony</label></div>
                                                 <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Ceremony" class="form-control spouse_ceremony"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
                                                 <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Birth Place" class="form-control spouse_bplace_others"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Occupation</label></div>
                                                 <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Occupation" class="form-control spouse_occupation"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Marriage Date</label></div>
                                                 <div class="col-12 col-md-10"><input type="date" class="form-control date_marriage"></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 
                                             </div>
-                                            <div class="row form-group col-md-12 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-12">
                                                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Remarks</label></div>
                                                 <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control spouse_remarks"></textarea></div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
+                                            <div class="row form-group col-md-6">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Spouse Relationship</label></div>
                                                 <div class="col-12 col-md-10">
                                                     <select class="form-control spouse_relationship select2">

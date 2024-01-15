@@ -204,13 +204,27 @@
                     "data": 'docketNumber'
                 },
                 {
-                    "data": 'docketSeries'
+                    "data": 'docketSeries',
+                    render: function(data, type, row){
+                        var docketSeries = ['PRE-PAROLE INVESTIGATION','PRE-EXECUTIVE CLEMENCY INVESTIGATION','TRANSFERRED PRE-PAROLE INVESTIGATION','TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION','COURTESY PRE-PAROLE INVESTIGATION','COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION']
+                        var docketSeriesShort = ['PPI','PECI','TPPI','TPECI','CPPI','CPECI'] 
+                        if ( docketSeriesShort.length == docketSeries.length ){
+                            for (var i = 0; i <= docketSeriesShort.length; ++i){
+                                if (docketSeriesShort[i] == data){
+                                    return docketSeries[i]
+                                }
+                            }  
+                        }                    
+                    }
                 },
                 {
                     "data": 'clientType'
                 },
                 {
-                    "data": 'status'
+                    "data": 'boardOrderStatus',
+                    render: function(data, type, row){
+                        return data.toUpperCase();
+                    }
                 },
                 {
                     "data": null,

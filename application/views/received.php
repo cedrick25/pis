@@ -84,6 +84,7 @@
                                                         <th>Field Office</th>
                                                         <th>Details</th>
                                                         <th>Sender</th>
+                                                        <th>Status</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>

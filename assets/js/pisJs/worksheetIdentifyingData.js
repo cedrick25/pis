@@ -1,12 +1,7 @@
     ( function ( $ ) {
-        
         var api = localStorage.getItem('api');
         var ___ctx = api;
         console.log(___ctx)
-        
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
 
         var __getContext = function() {
             return ___ctx;
@@ -14,6 +9,7 @@
 
         var __executeExternalGet = function(path, customLoader) {
             path = __getContext() + path;
+            // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -107,39 +103,21 @@
 
         var client_id = GetURLParameter('client_id');
         var field_office_id = $.cookie("field_office_id");
-        // console.log(client_id)
-        // console.log(field_office_id)
-
-        // var fieldOffice = $.cookie("field_office_id")
-        // console.log(fieldOffice)
+        var foid = GetURLParameter('field_office_id');
 
         __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
             if (result.status != "ERROR") {
-                console.log(result.files.length)
                 if (result.files.length != 0) {
-                    console.log(result.files[0].id)
                     $('#client_photo').attr('src', api+'8080/file/view/'+result.files[0].id);
                 }
             }
         })
-          // Listen for the file input change event
+
         $('#file-input').on('change', function() {
-
             var imgavat = $('#client_photo');
-
-            console.log(imgavat);
-
             var file = this.files[0];
-
-            console.log(file);
-
-            // Create a FormData object to store the file data
             var formData = new FormData();
-
             formData.append('file', file);
-
-            // Set up an AJAX request to send the file data to the server
-
             $.ajax({
               url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
               type: 'POST',
@@ -147,20 +125,15 @@
               contentType: false,
               processData: false,
               success: function(response) {
-                // Handle the server response here
-                console.log(response);
               },
               error: function(xhr, status, error) {
-                // Handle any errors here
                 console.log(error);
               }
             });
 
             if (this.files[0]) {   
                 var reader  = new FileReader();
-                
                 reader.readAsDataURL(this.files[0]);
-                
                 reader.onloadend = function () {
                     imgavat.attr('src', reader.result);
                 };
@@ -169,11 +142,9 @@
         });
 
         $('.btn-upload').on('click', function() {
-            console.log("clicked")
             $('#file-input').click();
         });
 
-        // this function is for take photo
         $(document).ready(function() {
             $('#control').hide();
             $('#video').resize(function(){
@@ -202,13 +173,10 @@
                         $('#capture').css('z-index','30');
 
                         $('.btn_confirm').unbind("click").on("click", function(){
-                            console.log("clicked confirm ")
                             var dataURL = canvas.toDataURL();
                             var blob = dataURItoBlob(dataURL);
-                              // Call a function to handle the blob object
                             handleBlob(blob);
                         });
-                        // Function to convert data URL to a Blob object
                         function dataURItoBlob(dataURI) {
                           var byteString = atob(dataURI.split(',')[1]);
                           var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
@@ -221,12 +189,8 @@
                         }
 
                         function handleBlob(blob) {
-                          // Create a new FormData object
-                          console.log(blob);
                             var formData = new FormData();
-                            // Append the blob object to the FormData object
                             formData.append('file', blob, 'image.jpg');
-                            // Make an AJAX request to upload the image
                             $.ajax({
                                 url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
                                 type: 'POST',
@@ -234,15 +198,12 @@
                                     contentType: false,
                                     processData: false,
                                     success: function(response) {
-                                        // Handle the server response here
-                                        console.log(response);
                                         $("#success_photo_capture").show()
                                         setTimeout(function () {
                                             window.location.reload(true);
                                         }, 1000);
                                     },
                                     error: function(xhr, status, error) {
-                                        // Handle any errors here
                                         console.log(error);
                                     }
                             });
@@ -291,10 +252,9 @@
               closecam();
             });
         });
-        
-        $(".btn-next").unbind("click").on("click", function(){
 
-            var identifyingData = {
+        function functionIdentifyingData () {
+            return {
                 name                : $(".data_name").val(),
                 interview           : $(".data_interview").val(),
                 alias               : $(".alias").val(),
@@ -302,10 +262,10 @@
                 presentAddress      : $(".present_add").val(),
                 permanentAdress     : $(".permanent_add").val()
             }
+        }
 
-            console.log(identifyingData)
-
-            var payload = {
+        function functionPayload (identifyingData) {
+            return {
             "petitionerId"              : client_id,
             "jsonData"                  : JSON.stringify(identifyingData),
             "type"                      : "identifyingData",
@@ -313,20 +273,22 @@
             "createdBy"                 : $.cookie("uuid"),
             "fieldOfficeId"             : $.cookie("field_office_id")
             }
+        }
+        
+        $(".btn-next").unbind("click").on("click", function(){
 
-            console.log(payload)
+            var identifyingData = functionIdentifyingData();
+            var payload = functionPayload();
+
 
             __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                        // window.location.reload(true);
-                        console.log(client_id)
-                        window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_present_offense?client_id='+client_id;
+                        window.location.href = api+'/pis/worksheet_present_offense?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
@@ -337,9 +299,6 @@
 
 
             __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
-                console.log("=====identifyingData=====")
-                console.log(result)
-                console.log("=====identifyingData=====")
 
                 var result = result.response;
 
@@ -350,8 +309,6 @@
                         $(".btn-next").hide();
 
                         JSON.parse(result.jsonData)
-
-                        console.log(JSON.parse(result.jsonData))
 
                         $(".data_name").val(JSON.parse(result.jsonData).name);
                         $(".data_interview").val(JSON.parse(result.jsonData).interview);
@@ -371,39 +328,17 @@
 
         $(".btn-update").unbind("click").on("click", function(){
 
-            var identifyingData = {
-                name                : $(".data_name").val(),
-                interview           : $(".data_interview").val(),
-                alias               : $(".alias").val(),
-                trueName            : $(".true_name").val(),
-                presentAddress      : $(".present_add").val(),
-                permanentAdress     : $(".permanent_add").val()
-            }
-
-            console.log(identifyingData)
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(identifyingData),
-            "type"                      : "identifyingData",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            console.log(payload)
+            var identifyingData = functionIdentifyingData();
+            var payload = functionPayload(identifyingData);
 
             __executeExternalPost('8000/worksheet/updatePetitioner/identifyingData/'+client_id,JSON.stringify(payload)).done(function (result) {
-                console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                        // window.location.reload(true);
-                        console.log(client_id)
-                        window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_present_offense?client_id='+client_id;
+                        window.location.href = api+'/pis/worksheet_present_offense?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
@@ -412,121 +347,25 @@
             })
         })
 
-
-        // $(".idenData").unbind("click").on("click", function(){
-        //     // console.log("clicked")
-        //         $(".btn_warning").unbind("click").on("click", function(){
-        //             // console.log("clicked")
-        //             $(".form-control").val('');
-        //                 setTimeout(function () {
-        //                     // window.location.reload(true);
-        //                     window.location.href = 'http://localhost/pis/worksheet_identifying_data?client_id='+client_id;
-        //                 }, 500);
-        //         });
-        // });
-        $(".priorRec").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
+        function setupWorksheetClickHandler(worksheetType) {
+            $(`.${worksheetType}`).unbind("click").on("click", function () {
+                $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_prior_records?client_id='+client_id;
-                        }, 500);
+                    setTimeout(function () {
+                        // window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}`;
+                        window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
+                    }, 500);
                 });
-        });
-        $(".presOff").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_present_offense?client_id='+client_id;
-                        }, 500);
-                });
-        });
-
-        $(".famBg").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_family_background?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".socioEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_socio_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".resEco").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_residence_economic?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".spouseChild").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_spouse_children?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".educHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_education_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".empHis").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_employment_history?client_id='+client_id;
-                        }, 500);
-                });
-        });
-        $(".envFac").unbind("click").on("click", function(){
-            // console.log("clicked")
-                $(".btn_warning").unbind("click").on("click", function(){
-                    // console.log("clicked")
-                    $(".form-control").val('');
-                        setTimeout(function () {
-                            // window.location.reload(true);
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_environmental_factor?client_id='+client_id;
-                        }, 500);
-                });
-        });
-
-
-
-
-
+            });
+        }
+        
+        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("present_offense");
+        setupWorksheetClickHandler("family_background");
+        setupWorksheetClickHandler("socio_economic");
+        setupWorksheetClickHandler("residence_economic");
+        setupWorksheetClickHandler("spouse_children");
+        setupWorksheetClickHandler("education_history");
+        setupWorksheetClickHandler("employment_history");
+        setupWorksheetClickHandler("environmental_factor");
     } )( jQuery );
