@@ -181,7 +181,7 @@
                 "supervisionEndDate"        : ""
 
                 }
-                __executeExternalPost('8000/docketbook/create/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
+                __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                     if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
