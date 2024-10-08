@@ -190,13 +190,23 @@
                                         "lastStatusUpdateDate"  : "",
                                     };
                                 }
-                                if (data.approvalStatus == "Pending of CPPO"){
+                                if (data.approvalStatus == "Pending of CPPO for Approval"){
                                     approvalStatus = "New - (Forwarded to FO)"
                                     var postData = postDatas()
+                                    console.log(postData)
+                                    $("#success_forwarding").show()
+                                    setTimeout(function () {
+                                        $("#success_forwarding").hide()
+                                    }, 2000);
                                     storeData(postUrl,postData)
                                 } else if (data.approvalStatus == "Pending of FO"){
-                                    approvalStatus = "New - (Returned to CPPO)"
+                                    approvalStatus = "Pending of CPPO"
                                     var postData = postDatas()
+                                    console.log(postData)
+                                    $("#success_forwarding").show()
+                                    setTimeout(function () {
+                                        $("#success_forwarding").hide()
+                                    }, 2000);
                                     storeData(postUrl,postData)
                                 } 
                             },

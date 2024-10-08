@@ -101,8 +101,25 @@
             }
         }
 
+        var __selectclient = function(){
+            $('.client').empty();
+            __executeExternalGet('8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.client').append("<option selected disabled> - - Select Client - - </option>");
+                    result.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        $('.client').append(
+                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
         var docket_number = GetURLParameter('docket_number');
-        __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+        __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
             var result = result.response;
             if (result.status != "ERROR") {
                 $(".docket_num_update").val(result.docketNumber);
@@ -113,6 +130,7 @@
                     $(".client_type_update").val(result.clientType).trigger("change");
                     $(".case_class_update").val(result.caseClassification).trigger("change");
                     $(".ref_office_update").val(result.referringOfficeId).trigger("change");
+                    $(".client").val(result.clientId).trigger("change");
                 }, 3000);
 
                 $(".sup_off_update").val(result.supervisingOfficer);
@@ -133,7 +151,7 @@
                     "caseloadType"              : $(".task_update").val(),
                     "fieldOfficeId"             : $.cookie('field_office_id'),
                     "clientType"                : "PAROLEE",
-                    "clientId"                  : "",
+                    "clientId"                  : $("clientId").val(),
                     "firstName"                 : "",
                     "middleName"                : "",
                     "lastName"                  : "",

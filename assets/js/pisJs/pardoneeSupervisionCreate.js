@@ -1,9 +1,7 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
@@ -93,6 +91,23 @@
             $(".form-control").val('');
         });
 
+        var __selectclient = function(){
+            $('.client').empty();
+            __executeExternalGet(___ctx+'8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.client').append("<option selected disabled> - - Select Client - - </option>");
+                    result.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        $('.client').append(
+                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
         $(".btn-confirm").unbind("click").on("click", function(){
 
             var fname = $('.client option:selected').data('fname');
@@ -107,7 +122,7 @@
                 "caseloadType"              : $(".caseload").val(),
                 "fieldOfficeId"             : $.cookie('field_office_id'),
                 "clientType"                : "PARDONEE",
-                "clientId"                  : "",
+                "clientId"                  : $(".client").val(),
                 "firstName"                 : "",
                 "middleName"                : "",
                 "lastName"                  : "",
@@ -157,7 +172,7 @@
                 "supervisionStartDate"      : $(".start_sup").val(),
                 "supervisionEndDate"        : $(".end_sup").val()
             }
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -165,7 +180,7 @@
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            window.location.reload(true);
+                            window.location.href=api+"/pis/pardonee_supervision_docketing";
                         }, 500);
                     }, 2000);
                 }else{
@@ -173,24 +188,5 @@
                 }
             })
         })
-
-        var __selectclient = function(){
-            $('.client').empty();
-            __executeExternalGet('8000/petitioner?page=0&size=50&type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.client').append("<option selected disabled> - - Select Client - - </option>");
-                    result.content.forEach(function(data){
-                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                        console.log(name)
-                        $('.client').append(
-                            '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
-                    });
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __selectclient();
 
     } )( jQuery );

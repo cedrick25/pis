@@ -173,7 +173,7 @@
                     $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
                     if ($.cookie('role_id') == "32"){
                         result.forEach(function(data){
-                            if (data.roleId == "4"){
+                            if (data.roleId == "4" || data.roleId == "14"){
                                 var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                 $('.user_account').append(
                                     '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
@@ -292,13 +292,20 @@
                                     approvalStatus = "New - (Forwarded to FO)"
                                     var postData = postDatas()
                                     storeData(postUrl,postData)
+
+                                    $("#success_forwarding").show()
+                                    setTimeout(function () {
+                                        $("#success_forwarding").hide()
+                                    }, 2000);
                                 } else if (data.approvalStatus == "Pending of FO"){
                                     approvalStatus = "New - (Forward to CPPO for Approval)"
-                                    // var clientType = data.clientType
-                                    // var clientDn = data.docketNumber
-                                    // var clientFo = data.fieldOfficeId
                                     var postData = postDatas()
                                     storeData(postUrl,postData)
+
+                                    $("#success_forwarding").show()
+                                    setTimeout(function () {
+                                        $("#success_forwarding").hide()
+                                    }, 2000);
                                 }                       
                             },
                             error: function(xhr, status, error) {

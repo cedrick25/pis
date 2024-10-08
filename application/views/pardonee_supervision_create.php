@@ -58,7 +58,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control referral_type select2">
-                                            <option selected value="select">Select</option>
+                                            <option selected value="select" disabled>Select</option>
                                             <option value="BPP">From Board of Pardons and Parole</option>
                                             <option value="parolee">Transferred from otther PPO</option>
                                         </select>
@@ -68,7 +68,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Report Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control report_type select2">
-                                            <option selected value="select">Select</option>
+                                            <option selected value="select" disabled>Select</option>
                                             <option value="summary">Summary</option>
                                             <option value="infraction">Infraction</option>
                                             <option value="death">Death</option>
@@ -219,7 +219,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
                             </div>
                         </div>
                     </div>

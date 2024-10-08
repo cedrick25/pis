@@ -1,5 +1,7 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -104,7 +106,7 @@
         var docket_number = GetURLParameter('docket_number');
         var __selectclient = function(){
             $('.client').empty();
-            __executeExternalGet('8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+            __executeExternalGet(___ctx+'8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
                 if (result.status != "ERROR") {
                     $('.client').append("<option selected disabled> - - Select Client - - </option>");
                     result.forEach(function(data){
@@ -119,7 +121,7 @@
         }
         __selectclient();
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 var result = result.response;
                 if (result.status != "ERROR") {
                     $(".docket_num_update").val(result.docketNumber);
@@ -129,6 +131,7 @@
                         $(".ref_office_update").val(result.referringOfficeId).trigger("change");
                         $(".task_update").val(result.caseloadType).trigger("change");
                         $(".client_type_update").val(result.clientType).trigger("change");
+                        $(".client").val(result.clientId).trigger("change");
                     }, 3000);
 
                     $(".inv_off_update").val(result.investigatingOfficer);

@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm btn-sm float-right float-right">Confirm</button>
                             </div>
                         </div>
                     </div>

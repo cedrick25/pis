@@ -41,7 +41,18 @@
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num_update"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num_update" disabled></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control client select2" disabled>
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="select">Select</option>
+                                            <option value="pending">John Doe</option>
+                                            <option value="approve">Doe John</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
@@ -104,16 +115,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control client_type_update select2">
-                                            <option selected value="select">Select</option>
-                                            <option value="parolee">Parolee</option>
-                                            <option value="parolee">Pardonee</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <!-- <div class="row form-group col-md-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supervising Officer</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control sup_officer"></div>
@@ -157,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Confirm</button>
                             </div>
                         </div>
                     </div>

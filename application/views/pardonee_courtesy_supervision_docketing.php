@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Pardonee Courtesy Supervision Docket List</strong>
-                                <a href="pardonee_courtesy_supervision_create"> <button class="btn btn-sm btn-success float-right pd_csuv_add" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <a href="pardonee_courtesy_supervision_create"> <button class="btn btn-sm btn-success float-right pd_csup_add" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head">

@@ -1,9 +1,7 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
@@ -100,49 +98,66 @@
                 }
             }
         }
+        var __select = function(){
+            $('.ref_office_update').empty();
+
+            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.ref_office_update').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
+
+        setTimeout(function () {
+            __fields();
+        }, 500);
+
+        var __selectclient = function(){
+            $('.client_update').empty();
+            __executeExternalGet(___ctx+'8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.client_update').append("<option selected disabled> - - Select Client - - </option>");
+                    result.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        $('.client_update').append(
+                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
 
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result);
                 console.log(docket_number)
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
                     $(".docket_num_update").val(result.docketNumber);
-
-                    setTimeout(function () {
-                    $(".docket_series_update").val(result.docketSeries).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
-                        $(".recommendation_update").val(result.recommendationState).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
-                        $(".task_update").val(result.caseloadType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
-                        $(".client_type_update").val(result.clientType).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
-                        $(".board_status_update").val(result.boardOrderStatus).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
-                        $(".board_order_update").val(result.boardOrder).trigger("change");
-                    }, 3000);
-
                     setTimeout(function () {
                         $(".state_update").val(result.status).trigger("change");
-                    }, 3000);
-
-                    setTimeout(function () {
+                        $(".board_order_update").val(result.boardOrder).trigger("change");
+                        $(".board_status_update").val(result.boardOrderStatus).trigger("change");
+                        $(".client_type_update").val(result.clientType).trigger("change");
+                        $(".task_update").val(result.caseloadType).trigger("change");
+                        $(".docket_series_update").val(result.docketSeries).trigger("change");
+                        $(".recommendation_update").val(result.recommendationState).trigger("change");
                         $(".ref_office_update").val(result.transferredOfficeId).trigger("change");
-                    }, 3000);
-
+                        $(".client_update").val(result.clientId).trigger("change");
+                    }, 1000);
                     $(".inv_off_update").val(result.investigatingOfficer);
                     $(".cc_no_update").val(result.criminalCaseNumber);
                     $(".offense_update").val(result.offense);
@@ -210,7 +225,7 @@
                         }
 
                         console.log(payload)
-                        __executeExternalPost('http://localhost:8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
@@ -230,48 +245,5 @@
                 }
             })
         }
-        var __select = function(){
-            $('.ref_office_update').empty();
-
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.ref_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
-
-        setTimeout(function () {
-            __fields();
-        }, 500);
-
-        var __client = function(){
-                $('.client_update').empty();
-
-
-                __executeExternalGet('http://localhost:8000/petitioner?page=0&size=100').done(function (result) {
-                    
-                    if (result.status != "ERROR") {
-                    console.log(result)
-                        $('.client_update').append("<option selected disabled> - - Select Client - - </option>");
-                        result.content.forEach(function(data){
-                            $('.client_update').append(
-                                "<option value="+data.id+">"+data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffixName+"</option>");
-                        });
-
-                    } else {
-                        console.log("failed fetching docket list")
-                    }
-                })
-            }
-            __client();
 
     } )( jQuery );

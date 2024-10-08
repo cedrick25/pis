@@ -1,9 +1,7 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
@@ -93,6 +91,23 @@
             $(".form-control").val('');
         });
 
+        var __selectclient = function(){
+            $('.client').empty();
+            __executeExternalGet(___ctx+'8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.client').append("<option selected disabled> - - Select Client - - </option>");
+                    result.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        $('.client').append(
+                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
         $(".btn-confirm").unbind("click").on("click", function(){
             
             var payload = {
@@ -102,7 +117,7 @@
                 "caseloadType"              : $(".task").val(),
                 "fieldOfficeId"             : $.cookie('field_office_id'),
                 "clientType"                : "PARDONEE",
-                "clientId"                  : "",
+                "clientId"                  : $(".client").val(),
                 "firstName"                 : "",
                 "middleName"                : "",
                 "lastName"                  : "",
@@ -153,7 +168,7 @@
                 "supervisionEndDate"        : ""
             }
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -170,23 +185,23 @@
             })
         })
    
-            var __select = function(){
-                $('.ref_office').empty();
+        var __select = function(){
+            $('.ref_office').empty();
 
-                __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                    console.log(result)
-                    if (result.status != "ERROR") {
-                        $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                        result.forEach(function(data){
-                            $('.ref_office').append(
-                                "<option value="+data.id+">"+data.name+"</option>");
-                        });
+            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.ref_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.ref_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
 
-                    } else {
-                        console.log("failed fetching docket list")
-                    }
-                })
-            }
-            __select();
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
 
     } )( jQuery );

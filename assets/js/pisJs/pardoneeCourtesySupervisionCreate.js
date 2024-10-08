@@ -1,13 +1,12 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
+        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
         };
+
 
         var __executeExternalGet = function(path, customLoader) {
             // path = $.wms.getContextPath() + path;
@@ -89,6 +88,23 @@
             return d.promise();
         };
        
+        var __selectclient = function(){
+            $('.client').empty();
+            __executeExternalGet(___ctx+'8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.client').append("<option selected disabled> - - Select Client - - </option>");
+                    result.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        $('.client').append(
+                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
+
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
         });
@@ -102,7 +118,7 @@
                         "caseloadType"              : $(".task").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
                         "clientType"                : "PARDONEE",
-                        "clientId"                  : "",
+                        "clientId"                  : $(".client").val(),
                         "firstName"                 : "",
                         "middleName"                : "",
                         "lastName"                  : "",
@@ -119,7 +135,7 @@
                         "sentence"                  : "",
                         "manualDocket"              : true,
                         "referral"                  : true,
-                        "referralData"              : "",
+                        "referralData"              : $(".reason").val(),
                         "remarks"                   : "",
                         "probationStartDate"        : "",
                         "probationYear"             : "",
@@ -153,7 +169,7 @@
                         "supervisionEndDate"        : $(".end_sup_date").val()
             }
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -161,7 +177,7 @@
                     setTimeout(function () {
                         $('#success').hide();
                         setTimeout(function () {
-                            window.location.reload(true);
+                            window.location.href=api+"/pis/pardonee_courtesy_supervision_docketing";
                         }, 500);
                     }, 2000);
                 }else{

@@ -285,6 +285,7 @@
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
+                        window.location.href=api+"/pis/investigation_docketing"
                     }, 2000);
                 }else{
                     alert("failed")
