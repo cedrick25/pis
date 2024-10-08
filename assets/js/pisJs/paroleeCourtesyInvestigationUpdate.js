@@ -102,6 +102,22 @@
         }
 
         var docket_number = GetURLParameter('docket_number');
+        var __selectclient = function(){
+            $('.client').empty();
+            __executeExternalGet('8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.client').append("<option selected disabled> - - Select Client - - </option>");
+                    result.forEach(function(data){
+                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        $('.client').append(
+                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    });
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __selectclient();
         var __fields = function(){
             __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 var result = result.response;
@@ -133,7 +149,7 @@
                         "caseloadType"              : $(".task_update").val(),
                         "fieldOfficeId"             : $.cookie('field_office_id'),
                         "clientType"                : "PAROLEE",
-                        "clientId"                  : "",
+                        "clientId"                  : $(".client").val(),
                         "firstName"                 : "",
                         "middleName"                : "",
                         "lastName"                  : "",
