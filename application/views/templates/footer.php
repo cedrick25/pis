@@ -172,8 +172,10 @@
                     $(".f_name").html(result.username);
                     var field_office_id = result.departmentId
                     var role_id = result.roleId
+                    var departmentName = result.departmentName
                     $.cookie("field_office_id", field_office_id);
                     $.cookie("role_id", role_id)
+                    $.cookie("departmentName", departmentName)
 
                     // const roleId = ["1"];
                     // if (roleId.includes("1")) {

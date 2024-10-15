@@ -25,7 +25,7 @@
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle parolee_module" style='display:none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parolee</a>
+                    <a href="#" class="dropdown-toggle parolee_module" style='display:none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parole</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="parolee_investigastion_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="parolee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="parolee_supervision_docketing">Supervision</a></li>
@@ -34,7 +34,7 @@
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle pardonee_module" style='display:none;'  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pardonee</a>
+                    <a href="#" class="dropdown-toggle pardonee_module" style='display:none;'  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pardone</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="pardonee_investigation_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_investigation_docketing">Investigation</a></li>
                         <li style='display:none;' class="pardonee_supervision_docketing"><i class="menu-icon fa fa-user"></i><a href="pardonee_supervision_docketing">Supervision</a></li>
@@ -47,32 +47,35 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Docket Routing</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="docket_routing"><i class="menu-icon fa fa-user"></i><a href="docket_routing">Probation</a></li>
-                        <li style='display:none;' class="pardonee_docket_routing"><i class="menu-icon fa fa-user"></i><a href="pardonee_docket_routing">Pardonee</a></li>
-                        <li style='display:none;' class="docket_routing_parolee"><i class="menu-icon fa fa-user"></i><a href="docket_routing_parolee">Parolee</a></li>
+                        <li style='display:none;' class="pardonee_docket_routing"><i class="menu-icon fa fa-user"></i><a href="pardonee_docket_routing">Pardone</a></li>
+                        <li style='display:none;' class="docket_routing_parolee"><i class="menu-icon fa fa-user"></i><a href="docket_routing_parolee">Parole</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Sent</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="sent"><i class="menu-icon fa fa-user"></i><a href="sent">Probation</a></li>
-                        <li style='display:none;' class="sent_pardonee"><i class="menu-icon fa fa-user"></i><a href="sent_pardonee">Pardonee</a></li>
-                        <li style='display:none;' class="sent_parolee"><i class="menu-icon fa fa-user"></i><a href="sent_parolee">Parolee</a></li>
+                        <li style='display:none;' class="sent_pardonee"><i class="menu-icon fa fa-user"></i><a href="sent_pardonee">Pardone</a></li>
+                        <li style='display:none;' class="sent_parolee"><i class="menu-icon fa fa-user"></i><a href="sent_parolee">Parole</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Received</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Inbox</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="received"><i class="menu-icon fa fa-user"></i><a href="received">Probation</a></li>
-                        <li style='display:none;' class="received_pardonee"><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardonee</a></li>
-                        <li style='display:none;' class="received_parolee"><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parolee</a></li>
+                        <li style='display:none;' class="received_pardonee"><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardone</a></li>
+                        <li style='display:none;' class="received_parolee"><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parole</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title client_list" style='display:none;'>Fact Sheet</h3>
-                <li class="client_list" style='display:none;'>
-                    <a href="client_list"> <i class="menu-icon fa fa-building-o"></i>Fact Sheet</a>
-                   <!--  <ul class="sub-menu children dropdown-menu">
-                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list">Fact Sheet</a></li>
-                    </ul> -->
+                <li class="menu-item-has-children dropdown client_list" style='display:none;'>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Fact Sheet</a>
+                    <!-- <a href="client_list"> <i class="menu-icon fa fa-building-o"></i>Fact Sheet</a> -->
+                    <ul class="sub-menu children dropdown-menu">
+                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list">Probation</a></li>
+                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_parole_and_pardone">Parole and Pardone</a></li>
+                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_single_carpeta">PDL</a></li>
+                    </ul>
                 </li>
                 <h3 class="menu-title form_list" style='display:none;'>Forms</h3>
                 <li class="form_list" style='display:none;'>

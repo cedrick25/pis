@@ -43,7 +43,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control type select2">
-                                            <option value="" selected disabled> - - Select Type - - </option>
+                                            <option value="" selected disabled>Select Type</option>
                                             <option value="SC_PR_CINV">Courtesy Investigation</option>
                                             <option value="SC_PR_CSUP">Courtesy Supervision</option>
                                             <option value="SC_PR_INV">Investigation</option>
@@ -62,7 +62,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control caseload select2" disabled>
-                                            <option value="" selected disabled> - - Select Type - - </option>
+                                            <option value="" selected disabled>Select Type</option>
                                             <option value="SINGLE_CARPETA_PAPWA">Process Application for Permit to Work Abroad</option>
                                             <option value="SINGLE_CARPETA_PAR">Process Arrival Report</option>
                                             <option value="SINGLE_CARPETA_PBR">Process Briefing Report</option>
@@ -126,8 +126,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset" style='display:none;'>Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm" style='display:none;'>Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm float-right">Confirm</button>
                             </div>
                         </div>
                     </div>

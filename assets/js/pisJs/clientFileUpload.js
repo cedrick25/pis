@@ -141,43 +141,36 @@
 
             __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
 
-                console.log(result);
+                // console.log(result);
                 // console.log(client_type);
 
                 // var result = result.response;
 
                 if (result.status != "ERROR") {
                     var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
-                    console.log(fullname)
+                    // console.log(fullname)
                     var officeId = result.departmentId;
-                    console.log(officeId);
-
+                    // console.log(officeId);
                     $(".uploader").val(fullname);
-
+                    $(".uploader").prop('disabled', true);
                     __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
-                        console.log(result)
-                        console.log(client_id)
-
+                        // console.log(result)
+                        var result = result.response;
+                        // console.log(client_id)
+                        var file_uuid = result.clientType + "_" + result.criminalCaseNo;
+                        console.log(file_uuid)
                         $(".btn-confirm").unbind("click").on("click", function(){
-                        
-                        console.log("clicked")
-                        
-                        
-                        
+                        // console.log("clicked")
                         var fileToUpload = $('#fileupload').prop('files')[0];
-
                         if (fileToUpload === undefined) {
                             alert("Please Choose File Before Upload!")
                         }
-
                         else {
                             var form = new FormData();
                             form.append("file", fileToUpload, fileToUpload.name);
 
-                            // console.log(form)
-
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+client_id+"&type="+client_type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
+                                "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+result.clientType+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,
@@ -185,8 +178,6 @@
                                 "contentType": false,
                                 "data": form
                             };
-
-                            console.log(settings)
 
                             $.ajax(settings).done(function (response) {
                                 console.log(response);

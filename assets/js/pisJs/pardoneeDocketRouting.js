@@ -1,12 +1,13 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
 
         var __getContext = function() {
             return ___ctx;
+        };
+
+        var __setContext = function(newctx) {
+            ___ctx = newctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
@@ -96,11 +97,11 @@
                 $('.docket_num').empty();
                 const type = this.value
                 console.log(type)
-                __executeExternalGet('http://localhost:8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
+                __executeExternalGet(___ctx+'8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
                     console.log(result)
                     if (result.status != "ERROR") {
 
-                        $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
+                        $('.docket_num').append("<option selected disabled>Select Docket Number</option>");
 
                         result.response.forEach(function(data){
                             $('.docket_num').append(
@@ -116,7 +117,7 @@
             $('.docket_num').on('change', function() {
                 const docket_number = this.value
                 console.log(docket_number)
-                __executeExternalGet('http://localhost:8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+                __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                     console.log(result)
                     var result = result.response;
                     if (result.status != "ERROR") {
@@ -138,10 +139,9 @@
                 });
             });
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
-                // console.log(result)
+            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
                 if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
+                    $('.field_office').append("<option selected disabled>Select Field Office</option>");
                     result.forEach(function(data){
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
@@ -149,11 +149,11 @@
                     $('.field_office').on('change', function() {
                         $('.user_account').empty();
                         const dep_id = this.value
-                        __executeExternalGet('http://localhost:8088/user/list/'+dep_id).done(function (result) {
+                        __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
                             console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
-                                $('.user_account').append("<option selected disabled> - - Select User Account - - </option>");
+                                $('.user_account').append("<option selected disabled>Select User Account</option>");
                                 result.forEach(function(data){
                                     console.log(data)
                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
@@ -202,24 +202,36 @@
             // })
 
 
+            var originFieldOfficeId = $.cookie('field_office_id');
 
             $(".btn-confirm_forward").unbind("click").on("click", function(){
-                console.log('clicked')
+                
+                var fname = $('.user_account option:selected').data('fname');
+                var mname = $('.user_account option:selected').data('mname');
+                var lname = $('.user_account option:selected').data('lname');
+                var sname = $('.user_account option:selected').data('sname');
+
+                var receivername = fname + " " + mname + " " + lname + " " + sname;
 
                 var payload = {
                     "type"                  : $('.type').val(),
                     "caseloadType"          : $(".caseload").val(),
                     "senderId"              : $.cookie("uuid"),
+                    "senderFieldOfficeId"   : $.cookie('field_office_id'),
+                    "senderFieldOfficeName" : $.cookie('departmentName'),
+                    "originFieldOfficeId"   : originFieldOfficeId,
+                    // "originFieldOfficeName" : $.cookie('departmentName'),
                     "receiverId"            : $(".user_account").val(),
+                    "receiverName"          : receivername,
                     "fieldOfficeId"         : $(".field_office").val(),
                     "docketNumber"          : $(".docket_num").val(),
                     "details"               : $(".details").val(),
                     "remarks"               : "",
-                    "approvalStatus"        : "",
+                    "approvalStatus"        : "New - (Forwarded to CPPO)",
                     "lastStatusUpdateDate"  : "",
                 }
                 console.log(payload)
-                __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {
                     console.log(result);
                     if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -235,9 +247,5 @@
             })
         }
         __select();
-
-        $(".btn-reset").unbind("click").on("click", function(){
-            $(".form-control").val('');
-        });
 
     } )( jQuery );

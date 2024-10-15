@@ -105,24 +105,18 @@
         }
 
         var client_id = GetURLParameter('client_id');
+        $('.card-body').find('input, select, button').prop('disabled', true);
+        $('.btn-confirm_update').prop('disabled', true);
+        
         var __fields = function(){
-            console.log(client_id)
-
             __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
-                console.log(result);
-                
                 var result = result.response;
 
                 if (result.status != "ERROR") {
                     console.log()
-                    setTimeout(function () {
-
-                        $(".field_office_update").val(result.fieldOfficeId).trigger("change");
-                        $(".client_type_update").val(result.clientType).trigger("change");
-                        $(".gender_update").val(result.sex).trigger("change");
-                    }, 3000);
-
-
+                    // $(".field_office_update").val(result.fieldOfficeId).trigger("change");
+                    // $(".client_type_update").val(result.clientType).trigger("change");
+                    $(".gender_update").val(result.sex).trigger("change");
                     $(".firstName_update").val(result.firstName);
                     $(".middleName_update").val(result.middleName);
                     $(".lastName_update").val(result.lastName);
@@ -135,20 +129,17 @@
                     $(".address_update").val(result.permanentAddress);
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
-                        console.log('clicked')
-
                         var payload = {
-
                         "firstName"         : $(".firstName_update").val(),
                         "middleName"        : $(".middleName_update").val(),
                         "lastName"          : $(".lastName_update").val(),
                         "suffixName"        : $(".suffix_update").val(),
-                        "clientType"        : $(".client_type_update").val(),
+                        "clientType"        : result.clientType,
                         "sex"               : $(".gender_update").val(),
                         "education"         : $(".education_update").val(),
                         "occupation"        : $(".occupation_update").val(),
                         "criminalCaseNo"    : $(".cc_no_update").val(),
-                        "fieldOfficeId"     : $(".field_office_update").val(),
+                        "fieldOfficeId"     : result.fieldOfficeId,
                         "birthDate"         : $(".birthdate_update").val(),
                         "birthCity"         : $(".b_place_update").val(),
                         "permanentAddress"  : $(".address_update").val(),
@@ -157,17 +148,14 @@
                         "status"            : 1
 
                         }
-
-                        console.log(payload)
-
                         __executeExternalPost('8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');
-                            $('#success_update').show();
+                            $('#success').show();
                                 setTimeout(function () {
-                                    $('#success_update').hide();
-                                    window.location.reload(true);
+                                    $('#success').hide();
+                                    window.location.href = api+'/pis/client_list';
                                 }, 2000);
                             }else{
                                 alert("failed")
@@ -182,46 +170,47 @@
         }
 
 
-        var __select = function(){
-            $('.field_office_update').empty();
+        // var __select = function(){
+        //     $('.field_office_update').empty();
 
-            __executeExternalGet('8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.field_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
+        //     __executeExternalGet('8088/department/list').done(function (result) {
+        //         console.log(result)
+        //         if (result.status != "ERROR") {
+        //             $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
+        //             result.forEach(function(data){
+        //                 $('.field_office_update').append(
+        //                     "<option value="+data.id+">"+data.name+"</option>");
+        //             });
 
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
+        //         } else {
+        //             console.log("failed fetching docket list")
+        //         }
+        //     })
+        // }
+        // __select();
 
         setTimeout(function () {
             __fields();
-        }, 500);
+            $("#spinner_update").hide();
+            $('.card-body').find('input, select, button').prop('disabled', false);
+            $('.btn-confirm_update').prop('disabled', false);
+        }, 1000);
 
-        var checkbox = document.getElementsByClassName("middleNameCheck")[0];
-        checkbox.addEventListener("change", toggleCheckbox);
-        var inputBoxMiddleName = document.getElementsByClassName("middleName_update")[0];
+        // var checkbox = document.getElementsByClassName("middleNameCheck")[0];
+        // checkbox.addEventListener("change", toggleCheckbox);
+        // var inputBoxMiddleName = document.getElementsByClassName("middleName_update")[0];
 
-        function toggleCheckbox() {
-            if (checkbox.checked) {
-                console.log("The checkbox is checked.");
-                inputBoxMiddleName.disabled = true;
-                inputBoxMiddleName.placeholder = "N/A";
-                inputBoxMiddleName.value = "";
-            } else {
-                console.log("The checkbox is not checked.");
-                inputBoxMiddleName.disabled = false;
-                inputBoxMiddleName.placeholder = "e.g A.";
-            }
-        }
-
-
+        // function toggleCheckbox() {
+        //     if (checkbox.checked) {
+        //         console.log("The checkbox is checked.");
+        //         inputBoxMiddleName.disabled = true;
+        //         inputBoxMiddleName.placeholder = "N/A";
+        //         inputBoxMiddleName.value = "";
+        //     } else {
+        //         console.log("The checkbox is not checked.");
+        //         inputBoxMiddleName.disabled = false;
+        //         inputBoxMiddleName.placeholder = "e.g A.";
+        //     }
+        // }
 
     } )( jQuery );

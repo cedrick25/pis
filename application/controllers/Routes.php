@@ -102,15 +102,15 @@ class routes extends CI_Controller {
 	}
 	public function docket_routing()
 	{
-		$this->load->view('docket_routing');
+		$this->load->view('PIS/Docketing/docket_routing');
 	}
 	public function investigation_docketing()
 	{
-		$this->load->view('investigation_docketing');
+		$this->load->view('PIS/Investigation/investigation_docketing');
 	}
 	public function supervision_docketing()
 	{
-		$this->load->view('supervision_docketing');
+		$this->load->view('PIS/Supervision/supervision_docketing');
 	}
 	public function field_office()
 	{
@@ -122,31 +122,39 @@ class routes extends CI_Controller {
 	}
 	public function investigation_docket_create()
 	{
-		$this->load->view('investigation_docket_create');
+		$this->load->view('PIS/Investigation/investigation_docket_create');
 	}
 	public function investigation_docket_update()
 	{
-		$this->load->view('investigation_docket_update');
+		$this->load->view('PIS/Investigation/investigation_docket_update');
+	}
+	public function investigation_docket_view()
+	{
+		$this->load->view('PIS/Investigation/investigation_docket_view');
 	}
 	public function supervision_docket_create()
 	{
-		$this->load->view('supervision_docket_create');
+		$this->load->view('PIS/Supervision/supervision_docket_create');
 	}
 	public function supervision_docket_update()
 	{
-		$this->load->view('supervision_docket_update');
+		$this->load->view('PIS/Supervision/supervision_docket_update');
+	}
+	public function supervision_docket_view()
+	{
+		$this->load->view('PIS/Supervision/supervision_docket_view');
 	}
 	public function inv_forward()
 	{
-		$this->load->view('inv_forward');
+		$this->load->view('PIS/Docketing/inv_forward');
 	}
 	public function sent()
 	{
-		$this->load->view('sent');
+		$this->load->view('PIS/Docketing/sent');
 	}
 	public function received()
 	{
-		$this->load->view('received');
+		$this->load->view('PIS/Docketing/received');
 	}
 	public function sup_forward()
 	{
@@ -158,7 +166,7 @@ class routes extends CI_Controller {
 	}
 	public function return()
 	{
-		$this->load->view('return');
+		$this->load->view('PIS/Docketing/return');
 	}
 	public function forward()
 	{
@@ -184,105 +192,149 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('new_client');
 	}
+	public function new_client_single_carpeta()
+	{
+		$this->load->view('Fact_Sheet/Single Carpeta/new_client_single_carpeta');
+	}
+	public function client_update_single_carpeta()
+	{
+		$this->load->view('Fact_Sheet/Single Carpeta/client_update_single_carpeta');
+	}
 	public function parolee_courtesy_supervision_create()
 	{
-		$this->load->view('parolee_courtesy_supervision_create');
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Supervision/parolee_courtesy_supervision_create');
 	}
 	public function parolee_courtesy_investigation_create()
 	{
-		$this->load->view('parolee_courtesy_investigation_create');
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Investigation/parolee_courtesy_investigation_create');
 	}
 	public function parolee_investigation_create()
 	{
-		$this->load->view('parolee_investigation_create');
+		$this->load->view('SINGLE_CARPETA/Parolee/Investigation/parolee_investigation_create');
 	}
 	public function parolee_supervision_create()
 	{
-		$this->load->view('parolee_supervision_create');
+		$this->load->view('SINGLE_CARPETA/Parolee/Supervision/parolee_supervision_create');
 	}
 	public function parolee_investigation_docketing()
 	{
-		$this->load->view('parolee_investigation_docketing');
+		$this->load->view('SINGLE_CARPETA/Parolee/Investigation/parolee_investigation_docketing');
 	}
 	public function parolee_supervision_docketing()
 	{
-		$this->load->view('parolee_supervision_docketing');
+		$this->load->view('SINGLE_CARPETA/Parolee/Supervision/parolee_supervision_docketing');
 	}
 	public function parolee_courtesy_supervision_docketing()
 	{
-		$this->load->view('parolee_courtesy_supervision_docketing');
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Supervision/parolee_courtesy_supervision_docketing');
 	}
 	public function parolee_courtesy_investigation_docketing()
 	{
-		$this->load->view('parolee_courtesy_investigation_docketing');
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Investigation/parolee_courtesy_investigation_docketing');
 	}
 	public function parolee_courtesy_investigation_update()
 	{
-		$this->load->view('parolee_courtesy_investigation_update');
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Investigation/parolee_courtesy_investigation_update');
+	}
+	public function parolee_courtesy_investigation_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Investigation/parolee_courtesy_investigation_view');
 	}
 	public function parolee_courtesy_supervision_update()
 	{
-		$this->load->view('parolee_courtesy_supervision_update');
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Supervision/parolee_courtesy_supervision_update');
+	}
+	public function parolee_courtesy_supervision_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Parolee/Courtesy_Supervision/parolee_courtesy_supervision_view');
 	}
 	public function parolee_investigation_update()
 	{
-		$this->load->view('parolee_investigation_update');
+		$this->load->view('SINGLE_CARPETA/Parolee/Investigation/parolee_investigation_update');
+	}
+	public function parolee_investigation_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Parolee/Investigation/parolee_investigation_view');
 	}
 	public function parolee_supervision_update()
 	{
-		$this->load->view('parolee_supervision_update');
+		$this->load->view('SINGLE_CARPETA/Parolee/Supervision/parolee_supervision_update');
+	}
+	public function parolee_supervision_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Parolee/Supervision/parolee_supervision_view');
 	}
 	public function pardonee_courtesy_investigation_create()
 	{
-		$this->load->view('pardonee_courtesy_investigation_create');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Investigation/pardonee_courtesy_investigation_create');
 	}
 	public function pardonee_courtesy_supervision_create()
 	{
-		$this->load->view('pardonee_courtesy_supervision_create');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Supervision/pardonee_courtesy_supervision_create');
 	}
 	public function pardonee_investigation_create()
 	{
-		$this->load->view('pardonee_investigation_create');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Investigation/pardonee_investigation_create');
 	}
 	public function pardonee_supervision_create()
 	{
-		$this->load->view('pardonee_supervision_create');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Supervision/pardonee_supervision_create');
 	}
 	public function pardonee_courtesy_investigation_docketing()
 	{
-		$this->load->view('pardonee_courtesy_investigation_docketing');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Investigation/pardonee_courtesy_investigation_docketing');
 	}
 	public function pardonee_courtesy_supervision_docketing()
 	{
-		$this->load->view('pardonee_courtesy_supervision_docketing');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Supervision/pardonee_courtesy_supervision_docketing');
 	}
 	public function pardonee_investigation_docketing()
 	{
-		$this->load->view('pardonee_investigation_docketing');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Investigation/pardonee_investigation_docketing');
 	}
 	public function pardonee_supervision_docketing()
 	{
-		$this->load->view('pardonee_supervision_docketing');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Supervision/pardonee_supervision_docketing');
 	}
 	public function pardonee_courtesy_investigation_update()
 	{
-		$this->load->view('pardonee_courtesy_investigation_update');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Investigation/pardonee_courtesy_investigation_update');
 	}
 	public function pardonee_courtesy_supervision_update()
 	{
-		$this->load->view('pardonee_courtesy_supervision_update');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Supervision/pardonee_courtesy_supervision_update');
+	}
+	public function pardonee_courtesy_supervision_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Supervision/pardonee_courtesy_supervision_view');
 	}
 	public function pardonee_investigation_update()
 	{
-		$this->load->view('pardonee_investigation_update');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Investigation/pardonee_investigation_update');
+	}
+	public function pardonee_investigation_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pardonee/Investigation/pardonee_investigation_view');
+	}
+	public function pardonee_courtesy_investigation_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pardonee/Courtesy_Investigation/pardonee_courtesy_investigation_view');
 	}
 	public function pardonee_supervision_update()
 	{
-		$this->load->view('pardonee_supervision_update');
+		$this->load->view('SINGLE_CARPETA/Pardonee/Supervision/pardonee_supervision_update');
+	}
+	public function pardonee_supervision_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pardonee/Supervision/pardonee_supervision_view');
 	}
 	public function client_list()
 	{
-		$this->load->view('client_list');
+		$this->load->view('Fact_Sheet/Probation/client_list');
+	}
+	public function client_list_single_carpeta()
+	{
+		$this->load->view('Fact_Sheet/Single Carpeta/client_list_single_carpeta');
 	}
 	public function client_update()
 	{
@@ -292,6 +344,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('client_view_upload');
 	}
+	public function client_view_upload_single_carpeta()
+	{
+		$this->load->view('Fact_Sheet/Single Carpeta/client_view_upload_single_carpeta');
+	}
 	public function client_uploads()
 	{
 		$this->load->view('client_uploads');
@@ -299,6 +355,10 @@ class routes extends CI_Controller {
 	public function client_file_upload()
 	{
 		$this->load->view('client_file_upload');
+	}
+	public function client_single_carpeta_upload()
+	{
+		$this->load->view('Fact_Sheet/Single Carpeta/client_single_carpeta_upload');
 	}
 	public function client_file_view()
 	{
@@ -310,7 +370,7 @@ class routes extends CI_Controller {
 	}
 	public function pardonee_docket_routing()
 	{
-		$this->load->view('pardonee_docket_routing');
+		$this->load->view('SINGLE_CARPETA/Docketing/Pardone/pardonee_docket_routing');
 	}
 	public function sent_parolee()
 	{
@@ -456,4 +516,49 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('factSheetUploadedDocuments');
 	}
+	public function pardonee_docket_forward()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Pardone/pardonee_docket_forward');
+	}
+	public function pardonee_docket_return()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Pardone/pardonee_docket_return');
+	}
+	public function parolee_docket_routing()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Parole/parolee_docket_routing');
+	}
+	public function parolee_docket_return()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Parole/parolee_docket_return');
+	}
+	public function parolee_docket_forward()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Parole/parolee_docket_forward');
+	}
+	public function pardonee_docket_uploads()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Pardone/pardonee_docket_uploads');
+	}
+	public function parolee_docket_uploads()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Parole/parolee_docket_uploads');
+	}
+	public function client_list_parole_and_pardone()
+	{
+		$this->load->view('Fact_Sheet/Parole_and_Probation/client_list_parole_and_pardone');
+	}
+	public function client_list_parole_and_pardone_create()
+	{
+		$this->load->view('Fact_Sheet/Parole_and_Probation/client_list_parole_and_pardone_create');
+	}
+	public function client_list_parole_and_pardone_update()
+	{
+		$this->load->view('Fact_Sheet/Parole_and_Probation/client_list_parole_and_pardone_update');
+	}
+	public function client_list_parole_and_pardone_view_attachments()
+	{
+		$this->load->view('Fact_Sheet/Parole_and_Probation/client_list_parole_and_pardone_view_attachments');
+	}
+	
 }

@@ -1,5 +1,14 @@
 <?php $this->load->view('templates/header.php'); ?> 
+<style>
+    .nav-link {
+        border-bottom: 3px solid transparent;
+        transition: border-bottom 0.3s ease;
+    }
 
+    .nav-link.active {
+        border-bottom: 3px solid #0069d9;
+    }
+</style>
 <body>
     <!-- Left Panel -->
 
@@ -30,14 +39,10 @@
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-
-                    <div class="col-md-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">Sent List</strong>
-                            </div>
-                            <div class="card-body">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <div class="card-header" id="pager">
+                                <ul class="nav" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="inv_tab" data-toggle="tab" style="cursor: pointer;">Investigation</a>
                                     </li>
@@ -51,28 +56,23 @@
                                         <a class="nav-link" id="csup_tab" data-toggle="tab" style="cursor: pointer;">Courtesy Supervision</a>
                                     </li>
                                 </ul>
-                                <div class="tab-content pl-3 p-1" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="inv" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="col col-md-12">
-                                            <h3 id="tableTitle"></h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
-                                            <table class="table table_head">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Docket No.</th>
-                                                        <th>Field Office</th>
-                                                        <th>Details</th>
-                                                        <th>Receiver</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table_body_inv">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active investigation_tab" id="inv_sent" role="tabpanel" aria-labelledby="home-tab">
+                                        <table id="" class="table table_head" width="100%">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>Docket No.</th>
+                                                <th>Field Office</th>
+                                                <th>Details</th>
+                                                <th>Sender</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody class="table_body">
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

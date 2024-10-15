@@ -39,55 +39,57 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
+                                        <div class="col-12 col-md-9" style="padding-right: 0px; padding-left: 20px;"><input type="text" name="text-input" placeholder="Enter Crimnal Case Number" class="form-control cc_no"></div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client_type select2">
                                             <option selected value="none" disabled>Select</option>
                                             <option value="PROBATIONER">Probationer</option>
-                                            <option value="PAROLEE">Parolee</option>
-                                            <option value="PARDONEE">Pardonee</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row form-group col-md-6">
+                                </div> -->
+                                <!-- <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control field_office select2">
-                                            <!-- <option selected value="ADULT">Adult</option>
-                                            <option value="JUVENILE">Juvenile</option> -->
                                         </select>
                                     </div>
-                                </div>
-			                    <div class="row form-group col-md-6">
+                                </div> -->
+			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter First Name" class="form-control firstName"></div>
 			                    </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3">
                                         <label class="form-check-label" for="mNameCheck">Middle Name</label>
-                                        <div class="form-check">
+                                        <!-- <div class="form-check">
                                             <input type="checkbox" class="form-check-input middleNameCheck" id="mNameCheck" style="width: 12px; height: 12px;">
                                             <label class="form-check-label italic-font small-font" for="mNameCheck">No Middle Name</label>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" name="text-input" placeholder="e.g A." class="form-control middleName form_capitalized">
+                                        <input type="text" name="text-input" placeholder="Enter Middle Name" class="form-control middleName form_capitalized">
                                     </div>
                                 </div>
-<!-- 			                    <div class="row form-group col-md-6 fieldMiddleName" >
+<!-- 			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 fieldMiddleName" >
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
 			                        
 			                    </div> -->
-			                    <div class="row form-group col-md-6">
+			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Last Name" class="form-control lastName"></div>
 			                    </div>
-			                    <div class="row form-group col-md-6">
+			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Suffix" class="form-control suffix"></div>
 			                    </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sex</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control gender select2">
@@ -97,29 +99,25 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g College" class="form-control education"></div>
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Educational Attainment</label></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Educational Attainment" class="form-control education"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Officer" class="form-control occupation"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Occupation" class="form-control occupation"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g No.1234" class="form-control cc_no"></div>
-                                </div>
-			                    <div class="row form-group col-md-6">
+			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthdate</label></div>
 			                        <div class="col-12 col-md-9"><input type="date" class="form-control birthdate"></div>
 			                    </div>
-			                    <div class="row form-group col-md-6">
+			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
-			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Quezon" class="form-control b_place"></div>
+			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Birthplace" class="form-control b_place"></div>
 			                    </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control address"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control address"></div>
                                 </div>
                             </div>
                             <div class="card-footer">

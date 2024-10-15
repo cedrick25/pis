@@ -56,24 +56,21 @@
             <div class="animated fadeIn">
                 <div class="row">
 
-                    <div class="col-md-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Forms List</strong>
-                                <a href="form_upload"> <button class="btn btn-sm btn-success btn_add float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Document</button> </a>
+                                <button class="btn btn-sm btn-success btn_add_dokyu float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Document</button>
                             </div>
                             <div class="card-body">
-                                <table id="" class="table table_head">
+                                <table class="table table_head" width="100%">
                                     <thead>
-                                        <tr align="center">
-                                            <th>#</th>
-                                            <th>Client Name</th>
-                                            <th>File Name</th>
-                                            <th>Actions</th>
-                                        </tr>
+                                        <th>#</th>
+                                        <th>Client Name</th>
+                                        <th>File Name</th>
+                                        <th>Actions</th>
                                     </thead>
-                                    <tbody class="table_body" align="center">
-
+                                    <tbody class="table_body">
                                     </tbody>
                                 </table>
                             </div>

@@ -87,6 +87,7 @@
             
             return d.promise();
         };
+        console.log($.cookie("field_office_id"));
 
         $(".btn-confirm").unbind("click").on("click", function(){
             var payload = {
@@ -98,14 +99,15 @@
                     "education"         : $(".education").val(),
                     "occupation"        : $(".occupation").val(),
                     "criminalCaseNo"    : $(".cc_no").val(),
-                    "fieldOfficeId"     : $(".field_office").val(),
+                    // "fieldOfficeId"     : $(".field_office").val(),
+                    "fieldOfficeId"     : $.cookie("field_office_id"),
                     "birthDate"         : $(".birthdate").val(),
                     "birthCity"         : $(".b_place").val(),
                     "permanentAddress"  : $(".address").val(),
                     "createdBy"         : $.cookie('uuid'),
                     "updatedBy"         : "",
                     "id"                : "",
-                    "clientType"        : $(".client_type").val(),
+                    "clientType"        : "PROBATIONER",
                     "status"            : 1
             }
             __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
@@ -144,21 +146,21 @@
         __select();
 
 
-        var checkbox = document.getElementsByClassName("middleNameCheck")[0];
-        checkbox.addEventListener("change", toggleCheckbox);
-        var inputBoxMiddleName = document.getElementsByClassName("middleName")[0];
+        // var checkbox = document.getElementsByClassName("middleNameCheck")[0];
+        // checkbox.addEventListener("change", toggleCheckbox);
+        // var inputBoxMiddleName = document.getElementsByClassName("middleName")[0];
 
-        function toggleCheckbox() {
-            if (checkbox.checked) {
-                console.log("The checkbox is checked.");
-                inputBoxMiddleName.disabled = true;
-                inputBoxMiddleName.placeholder = "N/A";
-                inputBoxMiddleName.value = "";
-            } else {
-                console.log("The checkbox is not checked.");
-                inputBoxMiddleName.disabled = false;
-                inputBoxMiddleName.placeholder = "e.g A.";
-            }
-        }
+        // function toggleCheckbox() {
+        //     if (checkbox.checked) {
+        //         console.log("The checkbox is checked.");
+        //         inputBoxMiddleName.disabled = true;
+        //         inputBoxMiddleName.placeholder = "N/A";
+        //         inputBoxMiddleName.value = "";
+        //     } else {
+        //         console.log("The checkbox is not checked.");
+        //         inputBoxMiddleName.disabled = false;
+        //         inputBoxMiddleName.placeholder = "e.g A.";
+        //     }
+        // }
 
     } )( jQuery );

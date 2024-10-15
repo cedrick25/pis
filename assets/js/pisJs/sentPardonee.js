@@ -147,7 +147,7 @@
             $(".btn_view").unbind("click").on("click", function(){
                 var id = $(this).data("id");
                 var docket_number = $(this).data("docket");
-                window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
+                window.location.href = api+'/pis/sent_view?docket_number='+docket_number+'&id='+id;
             })
         }
 
@@ -156,11 +156,7 @@
                 {
                     "data": null,
                     "render": function (data, type, row, meta) {
-                        if (data.id == null){
-                            return "No id";
-                        } else {
-                            return data.id;
-                        }
+                        return meta.settings._iDisplayStart + meta.row + 1;
                     }
                 },
                 {
@@ -178,88 +174,100 @@
                 {
                     "data": null,
                     render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.departmentId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                        return "SENT"
+                    }
+                },
+                {
+                    "data": null,
+                    render: function(data, type, row) {
+                        return "<button class='btn btn-sm btn-primary btn_view' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.departmentId+"'><i class='fa fa-eye'></i> View</button>";
                     }
                 }
             ]
         }
 
-        function drawTable(type,uuid) {
-            $(document).ready(function(){
+        var type = ""; // Declare type in a proper scope
+        var tableInv = document.getElementById('inv_tab');
+        var tableSup = document.getElementById('sup_tab');
+        var table_cinv = document.getElementById('cinv_tab')
+        var table_csup = document.getElementById('csup_tab')
+
+
+        function drawTable(type, uuid) {
+            // Check if DataTable has already been initialized
+            if (!$.fn.DataTable.isDataTable('.table_head')) {
+                // Initialize the DataTable
                 $('.table_head').DataTable({
-                    "processing": true,
+                    "processing": false,
                     "serverSide": true,
                     "scrollX": true,
-                    "lengthChange": false,
-                    "searching": false,
+                    "searching": true,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
                     "columnDefs": [
-                        { "width": "15px", "targets": [0] },
-                        { "width": "200px", "targets": [1,2,3,4,5] },
+                        { "width": "5%", "targets": [0] },
+                        { "width": "15%", "targets": [1] },
+                        { "width": "10%", "targets": [2] },
+                        { "width": "20%", "targets": [3] },
+                        { "width": "15%", "targets": [4] },
+                        { "width": "15%", "targets": [5] },
+                        { "width": "20%", "targets": [6] }
                     ],
-                    "ajax": function(data, callback, settings) {
-                        const size = 10;
-                        const page = data.start / size;
-                        const apiUrl = api+"8000/workflow/sender/"+uuid+"?page="+page+"&size="+size+"&type="+type;
-                        $.ajax({
-                            url: apiUrl,
-                            method: 'GET',
-                            dataType: 'json',
-                            success: function(res) {
-                                callback({
-                                    recordsTotal: res.totalElements,
-                                    recordsFiltered: res.totalElements,
-                                    data: res.content
-                                });
-                            },
-                            error: function(err) {
-                                console.error("Failed to fetch data:", err);
-                            }
-                        });
+                    ajax: {
+                        url: api + "8000/workflow/sender/" + uuid + "?type=" + type,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return {
+                                page: d.start / d.length,  // Pagination
+                                size: d.length,            // Page size
+                                // name: d.search.value    // Pass search term as 'keyword'
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            console.log(json.data)
+                            return JSON.stringify(json);
+                        }
                     },
-                    "columns": tableColumns()
+                    columns: tableColumns() // Call your function to get table columns
                 });
-                $('.table_head').on('draw.dt', function() {
+
+                // Event listener for when the DataTable is drawn
+                $('.table_head').on('draw.dt', function () {
                     buttonFunctionality();
-                    buttonVisibility();   
+                    buttonVisibility();
                 });
-            })
+            } else {
+                // If DataTable is already initialized, reload it with new data
+                $('.table_head').DataTable().ajax.url(api + "8000/workflow/sender/" + uuid + "?type=" + type).load();
+            }
         }
 
-        var tableInv = document.getElementById('inv_tab')
         if (tableInv.classList.contains("active")){
-            $('.table_head').DataTable().destroy()
-            $('#tableTitle').text("Investigation")
             var type = "SC_PD_INV"
             drawTable(type,uuid)
         }
 
         tableInv.addEventListener('click', function () {
-            $('.table_head').DataTable().destroy()
-            $('#tableTitle').text("Investigation")
             var type = "SC_PD_INV"
             drawTable(type,uuid)
         })
 
-        var tableSup = document.getElementById('sup_tab')
         tableSup.addEventListener('click', function () {
-            $('.table_head').DataTable().destroy()
-            $('#tableTitle').text("Supervision")
             var type = "SC_PD_SUP"
             drawTable(type,uuid)
         })
 
-        var table_cinv = document.getElementById('cinv_tab')
         table_cinv.addEventListener('click', function(){
-            $('.table_head').DataTable().destroy()
-            $('#tableTitle').text("Courtesy Investigation")
             var type = "SC_PD_CINV"
             drawTable(type,uuid)
         })
 
-        var table_csup = document.getElementById('csup_tab')
         table_csup.addEventListener('click', function(){
-            $('.table_head').DataTable().destroy()
-            $('#tableTitle').text("Courtesy Supervision")
             var type = "SC_PD_CSUP"
             drawTable(type,uuid)
         })
