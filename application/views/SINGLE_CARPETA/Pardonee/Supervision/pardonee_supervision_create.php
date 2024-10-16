@@ -234,7 +234,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/pardoneeSupervisionCreate.js">
+    <script src="assets/js/pisJs/SC_Pardonee_Supervision/pardoneeSupervisionCreate.js">
 
     </script>
 </body>
