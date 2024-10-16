@@ -59,8 +59,8 @@
                                             <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
                                             <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
                                             <option value="CPR">COURTESY PAROLE SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
-                                        </select> -->
+                                            <option value="CPD">COURTESY PARDON SUPERVISION</option> -->
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
