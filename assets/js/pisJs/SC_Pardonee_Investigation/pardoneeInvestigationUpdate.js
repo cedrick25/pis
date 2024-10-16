@@ -102,7 +102,7 @@
         var __select = function(){
             $('.ref_office_update').empty();
 
-            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 if (result.status != "ERROR") {
                     $('.ref_office_update').append("<option selected disabled>Select Field Office</option>");
                     result.forEach(function(data){
@@ -119,7 +119,7 @@
 
         var __selectclient = function(){
             $('.client_update').empty();
-            __executeExternalGet(___ctx+'8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+            __executeExternalGet('8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
                 if (result.status != "ERROR") {
                     $('.client_update').append("<option selected disabled>Select Client</option>");
                     result.forEach(function(data){
@@ -139,7 +139,7 @@
         $('.btn-confirm_update').prop('disabled', true);
         
         var __fields = function(){
-            __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 var result = result.response;
                 // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
