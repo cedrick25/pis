@@ -108,7 +108,7 @@
         var __select = function(){
             $('.ref_office').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
                 console.log(result)
                 if (result.status != "ERROR") {
                     $('.ref_office').append("<option selected disabled>Select Field Office</option>");

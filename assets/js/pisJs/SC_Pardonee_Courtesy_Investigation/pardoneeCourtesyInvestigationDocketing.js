@@ -123,14 +123,14 @@
                 $(".docket").html(docket_number)
                 $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                    __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
+                    __executeExternalPost('8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
                         if (result.status != "ERROR") {
                                 $(".form-control").val('');
                                 $('#success_remove').show();
                                     setTimeout(function () {
                                         $('#removeModal').modal('hide');
                                         $('#success_remove').hide();
-                                        __table();
+                                        $('.table_head').DataTable().ajax.reload();
                                     }, 1000);
                         }else{
                             alert("failed")

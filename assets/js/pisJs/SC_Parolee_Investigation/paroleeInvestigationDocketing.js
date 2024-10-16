@@ -131,7 +131,7 @@
                                     setTimeout(function () {
                                         $('#removeModal').modal('hide');
                                         $('#success_remove').hide();
-                                        __table();
+                                        $('.table_head').DataTable().ajax.reload();
                                     }, 1000);
                         }else{
                             alert("failed")
