@@ -57,9 +57,9 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control docket_series select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="PR">PAROLE SUPERVISION</option>
-                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
-                                            <!-- <option value="CPR">COURTESY PAROLE SUPERVISION</option> -->
+                                            <!-- <option value="PR">PAROLE SUPERVISION</option>
+                                            <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option> -->
+                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
                                         </select>
                                     </div>
                                 </div>

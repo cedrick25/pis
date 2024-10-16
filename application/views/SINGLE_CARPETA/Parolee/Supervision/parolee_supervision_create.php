@@ -50,7 +50,7 @@
                                             <option selected value="none" disabled>Select</option>
                                             <option value="PR">PAROLE SUPERVISION</option>
                                             <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
-                                            <option value="CPR">COURTESY PAROLE SUPERVISION</option>
+                                            <!-- <option value="CPR">COURTESY PAROLE SUPERVISION</option> -->
                                         </select>
                                     </div>
                                 </div>

@@ -74,8 +74,8 @@
                                             <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
                                             <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
                                             <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
-                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
+                                            <!-- <option value="CPPI">COURTESY PRE-PAROLE INVESTIGATION</option>
+                                            <option value="CPECI">COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION</option> -->
                                         </select>
                                     </div>
                                 </div>
