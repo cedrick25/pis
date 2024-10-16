@@ -50,7 +50,7 @@
                                             <option selected value="none" disabled>Select</option>
                                             <option value="PD">PARDON SUPERVISION</option>
                                             <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
-                                            <option value="CPD">COURTESY PARDON SUPERVISION</option>
+                                            <!-- <option value="CPD">COURTESY PARDON SUPERVISION</option> -->
                                         </select>
                                     </div>
                                 </div>

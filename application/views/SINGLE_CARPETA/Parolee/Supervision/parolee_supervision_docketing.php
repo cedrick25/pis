@@ -59,7 +59,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Parolee Supervision Docket List</strong>
+                                <strong class="card-title">Parole Supervision Docket List</strong>
                                 <a href="parolee_supervision_create"> <button class="btn btn-sm btn-success float-right pr_sup_add" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">

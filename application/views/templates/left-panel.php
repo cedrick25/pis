@@ -74,7 +74,7 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list">Probation</a></li>
                         <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_parole_and_pardone">Parole and Pardone</a></li>
-                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_single_carpeta">PDL</a></li>
+                        <!-- <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_single_carpeta">PDL</a></li> -->
                     </ul>
                 </li>
                 <h3 class="menu-title form_list" style='display:none;'>Forms</h3>
@@ -95,13 +95,13 @@
                         <li class=""><i class="menu-icon fa fa-lock"></i><a href="permission">Permission</a></li>
                     </ul>
                 </li>
-                <li class="menu-item-has-children dropdown hh org_module" style='display:none;'>
+<!--                 <li class="menu-item-has-children dropdown hh org_module" style='display:none;'>
                     <a href="#" class="dropdown-toggle org_module" style='display:none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Services</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li class=""><i class="menu-icon fa fa-user"></i><a href="user_accounts">TC</a></li>
                         <li class=""><i class="menu-icon fa fa-user"></i><a href="user_roles">RJ</a></li>
                         <li class=""><i class="menu-icon fa fa-building-o"></i><a href="department">Volunterism</a></li>
-                </li>
+                </li> -->
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

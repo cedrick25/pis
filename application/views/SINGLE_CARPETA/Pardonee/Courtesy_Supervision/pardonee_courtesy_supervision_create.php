@@ -59,8 +59,8 @@
                                     <div class="col-12 col-md-9">
                                         <select class="form-control docket_series select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="PD">PARDON SUPERVISION</option>
-                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option>
+                                            <!-- <option value="PD">PARDON SUPERVISION</option>
+                                            <option value="TPD">TRANSFERRED PARDON SUPERVISION</option> -->
                                             <option value="CPD">COURTESY PARDON SUPERVISION</option>
                                         </select>
                                     </div>

@@ -47,7 +47,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Ser.</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control docket_series select2">
-                                            <option selected value="none" disabled>- - Select - -</option>
+                                            <option selected value="none" disabled>Select</option>
                                             <option value="PR">PAROLE SUPERVISION</option>
                                             <option value="TPR">TRANSFERRED PAROLE SUPERVISION</option>
                                             <option value="CPR">COURTESY PAROLE SUPERVISION</option>
@@ -58,7 +58,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referral Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control referral_type select2">
-                                            <option selected value="select" disabled>- - Select - -</option>
+                                            <option selected value="select" disabled>Select</option>
                                             <option value="BPP">From Board of Pardons and Parole</option>
                                             <option value="parolee">Transferred from otther PPO</option>
                                         </select>
@@ -68,7 +68,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Report Type</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control report_type select2">
-                                            <option selected value="select" disabled>- - Select - -</option>
+                                            <option selected value="select" disabled>Select</option>
                                             <option value="summary">Summary</option>
                                             <option value="infraction">Infraction</option>
                                             <option value="death">Death</option>
@@ -131,7 +131,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control client select2">
-                                            <option selected value="none" disabled>- - Select - -</option>
+                                            <option selected value="none" disabled>Select</option>
                                             <option value="select">Select</option>
                                             <option value="pending">John Doe</option>
                                             <option value="approve">Doe John</option>
@@ -142,7 +142,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Case Class</label></div>
                                     <div class="col-12 col-md-9">
                                         <select class="form-control case_class select2">
-                                            <option selected value="select" disabled>- - Select - -</option>
+                                            <option selected value="select" disabled>Select</option>
                                             <option value="high">High</option>
                                             <option value="medium">Medium</option>
                                             <option value="low">Low</option>

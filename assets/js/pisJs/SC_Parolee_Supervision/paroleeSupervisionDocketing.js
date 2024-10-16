@@ -255,9 +255,6 @@
                     "data": 'docketNumber'
                 },
                 {
-                    "data": 'fieldOfficeName'
-                },
-                {
                     "data": 'docketSeries',
                     render: function(data, type, row){
                         var docketSeries = ['PAROLE SUPERVISION','TRANSFERRED PAROLE SUPERVISION','COURTESY PAROLE SUPERVISION']
@@ -270,6 +267,9 @@
                             }  
                         }                    
                     }
+                },
+                {
+                    "data": 'fieldOfficeName'
                 },
                 {
                     "data": null,
