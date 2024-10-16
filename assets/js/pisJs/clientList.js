@@ -644,6 +644,7 @@
                 }
 
                 function footer(){
+                    console.log(resultPetitioner)
 
                     var currentDate = new Date();
                     var currentYear = currentDate.getFullYear();
@@ -654,7 +655,7 @@
                     yCoordinate = (yCoordinateLeft - yCoordinate)+yCoordinate
                     yCoordinateRight = (yCoordinateLeft - yCoordinateRight)+yCoordinateRight;
                     drawTextRight('Prepared and submitted by: ',127,yCoordinateRight)
-                    drawTextRight(resultPetitioner.createdBy,127,yCoordinateRight)
+                    drawTextRight(resultPetitioner.createdByName,127,yCoordinateRight)
                     drawTextRight('Investigating Officer',127,yCoordinateRight)
                     drawTextRight('Date: '+formattedDate,127,yCoordinateRight)
                 }

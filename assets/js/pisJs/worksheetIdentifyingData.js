@@ -278,7 +278,9 @@
         $(".btn-next").unbind("click").on("click", function(){
 
             var identifyingData = functionIdentifyingData();
-            var payload = functionPayload();
+            var payload = functionPayload(identifyingData);
+            // console.log(payload)
+            // console.log(identifyingData)
 
 
             __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
@@ -308,7 +310,7 @@
                         $(".btn-update").show();
                         $(".btn-next").hide();
 
-                        JSON.parse(result.jsonData)
+                        console.log(JSON.parse(result.jsonData))
 
                         $(".data_name").val(JSON.parse(result.jsonData).name);
                         $(".data_interview").val(JSON.parse(result.jsonData).interview);

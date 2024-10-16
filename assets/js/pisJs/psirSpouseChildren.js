@@ -191,15 +191,22 @@
             })
 
             __executeExternalGet('8000/worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
-                __executeExternalGet('8000/worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (result) {
-                    var result = result.response;
-                    if (result.status != "ERROR") {
-                        if (result.worksheetStatus == "INCOMPLETE"){
+                __executeExternalGet('8000/worksheet/getPetitioner/psirSpouseChildren/'+client_id).done(function (resultPSIR) {
+                    var resultPSIR = resultPSIR.response;
+                    if (resultPSIR.status != "ERROR") {
+                        if (resultPSIR.worksheetStatus == "INCOMPLETE"){
                             $(".btn-next").hide();
                             $(".btn-update").show();
                         }else{
-                            $(".btn-update").hide();
-                            $(".btn-next").show();
+                            if ($(".civilStatus").val() == "SINGLE") {
+                                $(".spouseModule").hide();
+                                $(".btn-update").hide();
+                                $(".btn-next").show();
+                            } else {
+                                $(".spouseModule").show();
+                                $(".btn-update").hide();
+                                $(".btn-next").show();
+                            }
                         } 
                     }
                 })

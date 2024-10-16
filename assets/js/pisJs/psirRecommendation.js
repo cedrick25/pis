@@ -107,6 +107,7 @@
 
 
         var client_id = GetURLParameter('client_id');
+        var foid = GetURLParameter('field_office_id');
         console.log(client_id)
         
         __executeExternalGet('8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
@@ -116,6 +117,7 @@
             if (result.status != "ERROR") {
 
                 var data = JSON.parse(result.jsonData);
+                console.log(data)
 
                 $(".recommendation").append(`
                     <div class="recommendationPara">
