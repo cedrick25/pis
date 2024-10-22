@@ -119,21 +119,21 @@
         }
 
         function buttonFunctionality(){
-            $("#btn_return").unbind("click").on("click", function(){
+            $(".pb_return").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var fi = $(this).data("fi");
                 var senderId = $(this).data("sender");
                 window.location.href = api+'/pis/return?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
             })
-            $("#btn_forward").unbind("click").on("click", function(){
+            $(".pb_forward").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var fi = $(this).data("fi");
                 var senderId = $(this).data("sender");
                 window.location.href = api+'/pis/inv_forward?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
             })
-            $("#btn_upload").unbind("click").on("click", function(){
+            $(".pb_upload").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var type = $(this).data("type");
@@ -141,7 +141,7 @@
                 var senderId = $(this).data("sender");
                 window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderId='+senderId;
             })
-            $("#btn_complete").unbind("click").on("click", function(){
+            $(".pb_complete").unbind("click").on("click", function(){
                 var id = $(this).data("id");
                 var docket_number = $(this).data("docket");
                 var type = $(this).data("type")
@@ -284,7 +284,7 @@
                                 break;
                             // case "New - (Forward to CPPO for Approval)":
                             //     if (roleId == "32"){
-                            //         return "<button class='btn btn-sm btn-primary pb_inv_upload pb_sup_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_inv_return pb_sup_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.senderFieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_inv_forward pb_sup_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.senderFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button>"
+                            //         return "<button class='btn btn-sm btn-primary pb_inv_upload pb_sup_upload' id='btn_upload'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_inv_return pb_sup_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.senderFieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_inv_forward pb_sup_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.senderFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button>"
                             //     }
                             // case "Pending of CPPO for Approval":
                             //     if (roleId == "32"){
@@ -304,7 +304,7 @@
                             //     }
                             //     else {
                             default:
-                                return "<button class='btn btn-sm btn-primary pb_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.originFieldOfficeId+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pb_complete' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet' style='display:none;' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-plus-circle'></i> Worksheet</button>";                                    
+                                return "<button class='btn btn-sm btn-primary pb_upload' id='btn_upload'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_return' id='btn_return'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.originFieldOfficeId+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_forward' id='btn_forward'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pb_complete' id='btn_complete'  type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet'  data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"' data-sender='"+data.originFieldOfficeId+"' style='display:none;'><i class='fa fa-plus-circle'></i> Worksheet</button>";                                    
                                 // }
                                 // break;
                         };
@@ -365,10 +365,10 @@
                     buttonFunctionality();
                     buttonVisibility();
                     // show buttons for testing purposes only
-                    $("#btn_upload").show();
-                    $("#btn_return").show();
-                    $("#btn_forward").show();
-                    $("#btn_complete").show();
+                    // $("#btn_upload").show();
+                    // $("#btn_return").show();
+                    // $("#btn_forward").show();
+                    // $("#btn_complete").show();
                 });
             } else {
                 // If DataTable is already initialized, reload it with new data
@@ -386,12 +386,16 @@
         tableInv.addEventListener('click', function () {
             type = "PIS_INV"; // Set type for inventory
             drawTable(type, uuid); // Draw or reload the table
+
+        buttonFunctionality();
+        buttonVisibility();
         });
 
         // Event listener for supply tab click
         tableSup.addEventListener('click', function () {
             type = "PIS_SUP"; // Set type for supply
             drawTable(type, uuid); // Draw or reload the table
+
         });
 
     } )( jQuery );

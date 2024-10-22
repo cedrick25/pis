@@ -180,7 +180,7 @@
                                 } 
                             }
                         })
-                        JSON.parse(result.jsonData)
+                        console.log(JSON.parse(result.jsonData))
                         $(".data_name").val(JSON.parse(result.jsonData).name);
                         $(".data_interview").val(JSON.parse(result.jsonData).interview);
                         $(".alias").val(JSON.parse(result.jsonData).alias);
