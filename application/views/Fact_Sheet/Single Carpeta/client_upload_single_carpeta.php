@@ -27,7 +27,7 @@
             </div>
         </div>
 
-	    <div class="content mt-3">
+        <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
@@ -53,7 +53,7 @@
                                 <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Uploader</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control uploader"  placeholder="e.g John Doe"/>
+                                        <input type="text" name="type" class="form-control uploader"  placeholder="James Santos" disabled />
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
@@ -80,7 +80,7 @@
     </div>
 
     <?php $this->load->view('templates/footer.php'); ?> 
-    <script src="assets/js/pisJs/Fact_Sheet/Single_Carpeta/client_attachments_upload.js"></script>
+    <!-- <script src="assets/js/pisJs/clientFileUpload.js"></script> -->
 
 </body>
 

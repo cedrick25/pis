@@ -184,22 +184,61 @@
 
             var dataPayload = gatheredDataResEco();
 
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            window.location.href = api+'/pis/worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-                })
+            var required = ["resAdd", "dateFrom", "dateTo", "res_stability", "residence_type", "res_home_cond", "fam_status", "fam_breadwinner", "no_dependants",
+                "dependants", "maj_fam_prob", "fam_comments"];
 
-            })
+            required.forEach(function(data) {
+                // First, remove the existing error message and error class if present
+                $("." + data).removeClass("error_field");
+                $("." + data).next('.errorRequired').remove();
+        
+                // Now check if the field is empty or null
+                if ($("." + data).val() === "" || $("." + data).val() === null) {
+                    $("." + data).addClass("error_field");
+                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
+                } 
+            });
+
+            var requiredFields = $('.errorRequired:visible').length;
+            console.log('Number of required fields: ' + requiredFields);
+
+            if (requiredFields === 0) {
+                __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
+                        $(".btn-next").prop('disabled', true);
+                        setTimeout(function () {
+                            $(".overlay").show();
+                            $('#success').hide();
+                            setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
+                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;
+                            }, 500);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
+                })
+            }
+
+            // __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
+            //     if (result.status != "ERROR") {
+            //         $(".form-control").val('');
+            //         $('#success').show();
+            //         setTimeout(function () {
+            //             $('#success').hide();
+            //             setTimeout(function () {
+            //                 window.location.href = api+'/pis/worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid;
+            //             }, 500);
+            //         }, 2000);
+            //     }else{
+            //         alert("failed")
+            //     }
+            //     })
+
+            // })
 
         __executeExternalGet('8000/worksheet/getPetitioner/residenceEconomic/'+client_id).done(function (result) {
 

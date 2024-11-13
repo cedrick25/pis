@@ -144,7 +144,11 @@
                         order: [[0, 'asc']],
                         "pageLength": 10,
                         "columnDefs": [
-                            { "width": "40%", "targets": 3 }
+                            // { "width": "40%", "targets": 3 }
+                            { "width": "5%", "targets": [0] },
+                            { "width": "45%", "targets": [1] },
+                            { "width": "25%", "targets": [2] },
+                            { "width": "25%", "targets": [3] }
                         ]
                     });
                     $('.dataTables_length').addClass('bs-select');

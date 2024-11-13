@@ -560,5 +560,32 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('Fact_Sheet/Parole_and_Probation/client_list_parole_and_pardone_view_attachments');
 	}
-	
+	public function pdl_received()
+	{
+		$this->load->view('PDL Inbox/received');
+	}
+	public function pdl_upload()
+	{
+		$this->load->view('PDL Inbox/upload');
+	}
+	public function pdl_return()
+	{
+		$this->load->view('PDL Inbox/return');
+	}
+	public function pdl_forward()
+	{
+		$this->load->view('PDL Inbox/forward');
+	}
+	public function pdl_docket()
+	{
+		$this->load->view('PDL Inbox/pdl_forward');
+	}
+	public function pdl_view_history()
+	{
+		$this->load->view('PDL Inbox/view_history');
+	}
+	public function pdl_factsheet_upload()
+	{
+		$this->load->view('Fact_Sheet/Single Carpeta/client_upload_single_carpeta');
+	}
 }

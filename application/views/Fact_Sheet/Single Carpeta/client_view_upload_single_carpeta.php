@@ -45,7 +45,8 @@
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list_single_carpeta">Fact Sheet</a></li>
-                            <li class="active">Client Documents</li>
+                            <li><a href="client_list_single_carpeta">PDL</a></li>
+                            <li class="active">Attachments</li>
                         </ol>
                     </div>
                 </div>
@@ -58,10 +59,10 @@
 
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
-                            <div class="card-header" id="pager">
-                                <strong class="card-title">Forms List</strong>
+                            <!-- <div class="card-header" id="pager">
+                                <strong class="card-title">Attachments</strong>
                                 <button class="btn btn-sm btn-success btn_add_dokyu float-right" type="submit"><i class="fa fa-plus-circle"></i> Add Document</button>
-                            </div>
+                            </div> -->
                             <div class="card-body">
                                 <table class="table table_head" width="100%">
                                     <thead>
@@ -71,6 +72,15 @@
                                         <th>Actions</th>
                                     </thead>
                                     <tbody class="table_body">
+                                        <!-- <tr>
+                                            <td style="width: 5%">1</td>
+                                            <td style="width: 35%">James Santos</td>
+                                            <td style="width: 30%">example.pdf</td>
+                                            <td style="width: 30%">
+                                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-create btn-view"><i class="fa fa-upload"></i>&nbsp;&nbsp;Download</button>
+                                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-create btn-view"><i class="fa fa-eye"></i>&nbsp;&nbsp;View</button>
+                                            </td>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

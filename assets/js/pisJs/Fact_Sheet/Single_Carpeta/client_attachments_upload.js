@@ -156,6 +156,7 @@
                     __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                         // console.log(result)
                         var result = result.response;
+                        console.log(result)
                         // console.log(client_id)
                         var file_uuid = result.clientType + "_" + result.criminalCaseNo;
                         console.log(file_uuid)

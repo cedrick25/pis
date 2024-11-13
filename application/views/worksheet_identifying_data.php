@@ -1,5 +1,101 @@
 <?php $this->load->view('templates/header.php'); ?> 
-<body>
+<style>
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
+    }
+
+    /* Full screen semi-transparent overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999; /* Make sure it overlays everything */
+    }
+
+    /* Loader styles */
+    .loader {
+      width: 89px;
+      height: 89px;
+      position: relative;
+      background: rgba(255,255,255,0.13);
+      animation-duration: 2.5s;
+      animation-name: animSpin;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes animSpin {
+      50% {
+        transform: rotateZ(180deg) scale(.94);
+      }
+      100% {
+        transform: rotateZ(360deg) scale(1);
+      }
+    }
+
+    .loader:before,
+    .loader:after {
+      content: '';
+      position: absolute;
+      border: 8px solid transparent;
+      border-radius: 50%;
+    }
+
+    .loader:before {
+      width: 75%;
+      height: 75%;
+      background: rgba(255,255,255,.13);
+      left: 12.5%;
+      top: 12.5%;
+      border-left: 8px solid rgba(255,255,255,.34);
+      border-bottom: 8px solid rgba(255,255,255,.34);
+    }
+
+    .loader:after {
+      width: 40%;
+      height: 40%;
+      left: 30%;
+      top: 30%;
+      border-right: 8px solid rgba(255,255,255,1);
+      border-left: 8px solid rgba(255,255,255,1);
+      border-bottom: 8px solid rgba(255,255,255,1);
+    }
+
+    .loader span {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+    }
+
+    /* Hide the overlay once the page has fully loaded */
+    body.loaded .overlay {
+      display: none;
+    }
+</style>
+
+<body class="identifying_data_body">
+
+    <div class="overlay" style="display: none;">
+        <div class="loader">
+        <span></span>
+        </div>
+    </div>
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
@@ -158,35 +254,35 @@
                                     <button type="button" class="btn btn-primary btn-sm btn-upload">Upload Photo</button>
                                     <button type="button" type="submit" data-toggle="modal" data-target="#cameraModal" class="btn btn-success btn-sm btn-take">Take Photo</button>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control data_name"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Name" class="form-control data_name"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Initital Interview</label></div>
                                     <div class="col-12 col-md-9"><input type="date" class="form-control data_interview"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias(es)</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control alias"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Alias(es)" class="form-control alias"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">True Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control true_name"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter True Name" class="form-control true_name"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Present Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control present_add"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control present_add"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permanent Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control permanent_add"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control permanent_add"></div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
-                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
+                                <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
+                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Save</button>
+                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>

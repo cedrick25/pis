@@ -139,22 +139,45 @@
 
         $(".btn-next").unbind("click").on("click", function(){
             var dataPayload = gatheredDataSocioEconomic();
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-                })
 
-            })
+            var required = ["family_rel", "family_rep", "home_cond", "fam_prob", "eco_status", "stability", "comments", "circumstances", "explain"];
+
+            required.forEach(function(data) {
+                // First, remove the existing error message and error class if present
+                $("." + data).removeClass("error_field");
+                $("." + data).next('.errorRequired').remove();
+        
+                // Now check if the field is empty or null
+                if ($("." + data).val() === "" || $("." + data).val() === null) {
+                    $("." + data).addClass("error_field");
+                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
+                } 
+            });
+
+            var requiredFields = $('.errorRequired:visible').length;
+            console.log('Number of required fields: ' + requiredFields);
+
+            if (requiredFields === 0) {
+                __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
+                        $(".btn-next").prop('disabled', true);
+                        setTimeout(function () {
+                            $(".overlay").show();
+                            $('#success').hide();
+                            setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
+                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;
+                            }, 500);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
+                })
+            }
+        })
 
         __executeExternalGet('8000/worksheet/getPetitioner/socioEconomic/'+client_id).done(function (result) {
 
@@ -190,33 +213,40 @@
 
         $(".btn-update").unbind("click").on("click", function(){
             var dataPayload = gatheredDataSocioEconomic();
+
             __executeExternalPost('8000/worksheet/updatePetitioner/socioEconomic/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
+                        $(".overlay").show();
                         $('#success').hide();
+                        $(".btn-update").prop("disabled", true)
                         setTimeout(function () {
-                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;;
+                            $(".overlay").hide();
+                            $(".btn-update").prop("disabled", false)
+                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
                     alert("failed")
                 }
-                })
-
             })
+        })
 
-            function setupWorksheetClickHandler(worksheetType) {
-                $(`.${worksheetType}`).unbind("click").on("click", function () {
-                    $(".btn_warning").unbind("click").on("click", function () {
-                        $(".form-control").val('');
-                        setTimeout(function () {
-                            window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    });
+        function setupWorksheetClickHandler(worksheetType) {
+            $(`.${worksheetType}`).unbind("click").on("click", function () {
+                $(".btn_warning").unbind("click").on("click", function () {
+                    $(".form-control").val('');
+                    $("#warningModal").modal("hide");
+                    $(".overlay").show();
+                    setTimeout(function () {
+                        $(".overlay").hide();
+                        window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
+                    }, 500);
                 });
-            }
+            });
+        }
             
             setupWorksheetClickHandler("prior_records");
             setupWorksheetClickHandler("present_offense");

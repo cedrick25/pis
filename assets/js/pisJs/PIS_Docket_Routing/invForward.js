@@ -316,7 +316,7 @@
                 }
             })
         }
-        __fields();
+        // __fields();
 
         $(document).ready(function(){
             ___updateStatusUponViewingDocket();

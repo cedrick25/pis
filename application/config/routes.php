@@ -174,6 +174,13 @@ $route['client_list_parole_and_pardone_create'] = "routes/client_list_parole_and
 $route['client_list_parole_and_pardone_update'] = "routes/client_list_parole_and_pardone_update";
 $route['client_list_parole_and_pardone_upload'] = "routes/client_list_parole_and_pardone_upload";
 $route['client_list_parole_and_pardone_view_attachments'] = "routes/client_list_parole_and_pardone_view_attachments";
+$route['pdl-receive'] = "routes/pdl_received";
+$route['pdl-upload'] = "routes/pdl_upload";
+$route['pdl-return'] = "routes/pdl_return";
+$route['pdl-forward'] = "routes/pdl_forward";
+$route['pdl-docket'] = "routes/pdl_docket";
+$route['pdl-view-history'] = "routes/pdl_view_history";
+$route['pdl-file-upload'] = "routes/pdl_factsheet_upload";
 
 
 // AMS end

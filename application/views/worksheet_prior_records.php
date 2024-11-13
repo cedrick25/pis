@@ -1,6 +1,100 @@
 <?php $this->load->view('templates/header.php'); ?> 
+<style>
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
+    }
 
+    /* Full screen semi-transparent overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999; /* Make sure it overlays everything */
+    }
+
+    /* Loader styles */
+    .loader {
+      width: 89px;
+      height: 89px;
+      position: relative;
+      background: rgba(255,255,255,0.13);
+      animation-duration: 2.5s;
+      animation-name: animSpin;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes animSpin {
+      50% {
+        transform: rotateZ(180deg) scale(.94);
+      }
+      100% {
+        transform: rotateZ(360deg) scale(1);
+      }
+    }
+
+    .loader:before,
+    .loader:after {
+      content: '';
+      position: absolute;
+      border: 8px solid transparent;
+      border-radius: 50%;
+    }
+
+    .loader:before {
+      width: 75%;
+      height: 75%;
+      background: rgba(255,255,255,.13);
+      left: 12.5%;
+      top: 12.5%;
+      border-left: 8px solid rgba(255,255,255,.34);
+      border-bottom: 8px solid rgba(255,255,255,.34);
+    }
+
+    .loader:after {
+      width: 40%;
+      height: 40%;
+      left: 30%;
+      top: 30%;
+      border-right: 8px solid rgba(255,255,255,1);
+      border-left: 8px solid rgba(255,255,255,1);
+      border-bottom: 8px solid rgba(255,255,255,1);
+    }
+
+    .loader span {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+    }
+
+    /* Hide the overlay once the page has fully loaded */
+    body.loaded .overlay {
+      display: none;
+    }
+</style>
 <body>
+
+    <div class="overlay" style="display: none;">
+        <div class="loader">
+        <span></span>
+        </div>
+    </div>
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
@@ -105,7 +199,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alleged By</label></div>
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
-                                            <label class="form-check-label">
+                                            <label class="form-check-label radio-group">
                                                 <input type="radio" class="form-check-input" name="allegedby" value="PETITIONER" id="petitioner">Petitioner<br>
                                                 <input type="radio" class="form-check-input" name="allegedby" value="OTHER SOURCES" id="otherSources">Other Sources
                                             </label>
@@ -116,7 +210,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Records</label></div>
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
-                                        <label class="form-check-label">
+                                        <label class="form-check-label radio-group">
                                             <input type="radio" class="form-check-input" name="derogatoryRecord" value="NO RECORD">No Record<br>
                                             <input type="radio" class="form-check-input" name="derogatoryRecord" value="WITH DEROGATORY RECORD">With Derogatory Record
                                         </label>
@@ -139,7 +233,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Has Been of Probation:</label></div>
                                     <div class="col-12 col-md-9">
                                         <div class="form-check-inline">
-                                        <label class="form-check-label">
+                                        <label class="form-check-label radio-group">
                                             <input type="radio" class="form-check-input" name="probation" value="YES"> Yes <br>
                                             <input type="radio" class="form-check-input" name="probation" value="NO"> No
                                         </label>
@@ -156,9 +250,8 @@
                                 </fieldset>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button>
-                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
-                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
+                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>

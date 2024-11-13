@@ -115,37 +115,108 @@
             if (result.status != "ERROR") {
                 console.log()
                 // $(".field_office_update").val(result.fieldOfficeId).trigger("change");
-                $(".client_type").val(result.clientType).trigger("change");
-                $(".gender").val(result.sex).trigger("change");
+                // $(".client_type").val(result.clientType).trigger("change");
+                // $(".gender").val(result.sex).trigger("change");
+                // $(".firstName").val(result.firstName);
+                // $(".middleName").val(result.middleName);
+                // $(".lastName").val(result.lastName);
+                // $(".suffix").val(result.suffixName);
+                // $(".educational_attainment").val(result.education);
+                // $(".occupation").val(result.occupation);
+                // $(".file_number").val(result.criminalCaseNo);
+                // $(".birthdate").val(result.birthDate);
+                // $(".b_place").val(result.birthCity);
+                // $(".address").val(result.permanentAddress);
+                // $(".criminal_case_number").val(result.criminalCaseNo);
+                // $(".prison_number").val(result.criminalCaseNo);
+                // $(".alias").val(result.criminalCaseNo);
+                // $(".status").val(result.criminalCaseNo);
+                // $(".file_number").val(result.criminalCaseNo);
+                // $(".location").val(result.criminalCaseNo);
+                // $(".prison_name").val(result.criminalCaseNo);
+                // $(".civil_status").val(result.sex).trigger("change");
+                // $(".religion").val(result.sex).trigger("change");
+
+                $(".criminal_case_number").val(result.criminalCaseNo);
+                $(".prison_number").val(result.prisonNumber);
                 $(".firstName").val(result.firstName);
                 $(".middleName").val(result.middleName);
                 $(".lastName").val(result.lastName);
                 $(".suffix").val(result.suffixName);
-                $(".educational_attainment").val(result.education);
-                $(".occupation").val(result.occupation);
-                $(".file_number").val(result.criminalCaseNo);
+                $(".alias").val(result.alias);
+                $(".prison_name").val(result.prisonName);
+                $(".file_number").val(result.fileNumber);
+                $(".civil_status").val(result.civilStatus).trigger("change");
+                $(".nationality").val(result.nationality).trigger("change");
+                $(".gender").val(result.sex).trigger("change");
                 $(".birthdate").val(result.birthDate);
                 $(".b_place").val(result.birthCity);
+                $(".educational_attainment").val(result.education);
+                $(".occupation").val(result.occupation);
                 $(".address").val(result.permanentAddress);
+                $(".indorsement_date").val(result.endorsementDate);
+                $(".date_forwarded_bpp").val(result.dateForwardedToBpp);
+                $(".date_emailed_to_fo").val(result.dateEmailedToFO);
+                $(".date_received").val(result.dateReceived);
+                $(".date_result_from_fo").val(result.resultFromFO);
+
+
 
                 $(".btn-confirm").unbind("click").on("click", function(){
                     var payload = {
-                    "firstName"         : $(".firstName").val(),
-                    "middleName"        : $(".middleName").val(),
-                    "lastName"          : $(".lastName").val(),
-                    "suffixName"        : $(".suffix").val(),
-                    "clientType"        : result.clientType,
-                    "sex"               : $(".gender").val(),
-                    "education"         : $(".educational_attainment").val(),
-                    "occupation"        : $(".occupation").val(),
-                    "criminalCaseNo"    : $(".file_number").val(),
-                    "fieldOfficeId"     : result.fieldOfficeId,
-                    "birthDate"         : $(".birthdate").val(),
-                    "birthCity"         : $(".b_place").val(),
-                    "permanentAddress"  : $(".address").val(),
-                    "createdBy"         : "",
-                    "updatedBy"         : "",
-                    "status"            : 1
+                    // "firstName"         : $(".firstName").val(),
+                    // "middleName"        : $(".middleName").val(),
+                    // "lastName"          : $(".lastName").val(),
+                    // "suffixName"        : $(".suffix").val(),
+                    // "clientType"        : result.clientType,
+                    // "sex"               : $(".gender").val(),
+                    // "education"         : $(".educational_attainment").val(),
+                    // "occupation"        : $(".occupation").val(),
+                    // "criminalCaseNo"    : $(".file_number").val(),
+                    // "fieldOfficeId"     : result.fieldOfficeId,
+                    // "birthDate"         : $(".birthdate").val(),
+                    // "birthCity"         : $(".b_place").val(),
+                    // "permanentAddress"  : $(".address").val(),
+                    // "createdBy"         : "",
+                    // "updatedBy"         : "",
+                    // "status"            : 1
+                    "clientType"            : "PDL",
+                    "firstName"             : $(".firstName").val(),
+                    "middleName"            : $(".middleName").val(),
+                    "lastName"              : $(".lastName").val(),
+                    "suffixName"            : $(".suffix").val(),
+                    "sex"                   : $(".gender").val(),
+                    "education"             : $(".educational_attainment").val(),
+                    "occupation"            : $(".occupation").val(),
+                    "criminalCaseNo"        : $(".criminal_case_number").val(),
+                    "fieldOfficeId"         : $.cookie("field_office_id"),
+                    "birthDate"             : $(".birthdate").val(),
+                    "birthCity"             : $(".b_place").val(),
+                    "permanentAddress"      : $(".address").val(),
+                    "createdBy"             : $.cookie('uuid'),
+                    "createdByName"         : "",
+                    "updatedBy"             : "",
+                    "updatedByName"         : "",
+                    "id"                    : "",
+                    "status"                : 1,
+                    "fieldOfficeName"       : $.cookie("departmentName"),
+                    "worksheetStatus"       : "",
+                    "prisonNumber"          : $(".prison_number").val(),
+                    "prisonName"            : $(".prison_name").val(),
+                    "alias"                 : $(".alias").val(),
+                    "civilStatus"           : $(".civil_status").val(),
+                    "nationality"           : $(".nationality").val(),
+                    "fileNumber"            : $(".file_number").val(),
+                    "endorsementDate"       : $(".indorsement_date").val(),
+                    "tsdPO"                 : $(".tsd_po").val(),
+                    "dateEmailedToFO"       : $(".date_emailed_to_fo").val(),
+                    "dateReceived"          : $(".date_received").val(),
+                    "resultFromFO"          : $(".date_result_from_fo").val(),
+                    "requestType"           : $(".request_type").val(),
+                    "remarks"               : $(".pdl_remarks").val(),
+                    "dateForwardedToBpp"    : $(".date_forwarded_bpp").val(),
+                    "location"              : $(".location").val(),
+                    "religion"              : $(".religion").val()
 
                     }
                     __executeExternalPost('8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
@@ -194,7 +265,7 @@
         $("#spinner_update").hide();
         $('.card-body').find('input, select, button').prop('disabled', false);
         $('.btn-confirm_update').prop('disabled', false);
-    }, 1000);
+    }, 2000);
 
     // var checkbox = document.getElementsByClassName("middleNameCheck")[0];
     // checkbox.addEventListener("change", toggleCheckbox);

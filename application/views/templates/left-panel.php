@@ -49,7 +49,14 @@
                         <li style='display:none;' class="docket_routing"><i class="menu-icon fa fa-user"></i><a href="docket_routing">Probation</a></li>
                         <li style='display:none;' class="pardonee_docket_routing"><i class="menu-icon fa fa-user"></i><a href="pardonee_docket_routing">Pardone</a></li>
                         <li style='display:none;' class="docket_routing_parolee"><i class="menu-icon fa fa-user"></i><a href="docket_routing_parolee">Parole</a></li>
+                        <!-- <li style='' class="pdl_docketing"><i class="menu-icon fa fa-user"></i><a href="pdl-docket"></a></li> -->
                     </ul>
+                </li>
+                <li class="pdl_docketing" style=''>
+                    <a href="pdl-docket"> <i class="menu-icon fa fa-building-o"></i>PDL Routing</a>
+<!--                     <ul class="sub-menu children dropdown-menu">
+                        <li style='display:none;' class="form_list"><i class="menu-icon fa fa-user"></i><a href="form_list">Form List</a></li>
+                    </ul> -->
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Sent</a>
@@ -65,6 +72,7 @@
                         <li style='display:none;' class="received"><i class="menu-icon fa fa-user"></i><a href="received">Probation</a></li>
                         <li style='display:none;' class="received_pardonee"><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardone</a></li>
                         <li style='display:none;' class="received_parolee"><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parole</a></li>
+                        <li style='' class="from_tsd"><i class="menu-icon fa fa-user"></i><a href="pdl-receive">From TSD</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title client_list" style='display:none;'>Fact Sheet</h3>
@@ -74,7 +82,7 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list">Probation</a></li>
                         <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_parole_and_pardone">Parole and Pardone</a></li>
-                        <!-- <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_single_carpeta">PDL</a></li> -->
+                        <li style='display:none;' class="client_list"><i class="menu-icon fa fa-user"></i><a href="client_list_single_carpeta">PDL</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title form_list" style='display:none;'>Forms</h3>

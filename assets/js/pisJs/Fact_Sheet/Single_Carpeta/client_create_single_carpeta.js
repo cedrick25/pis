@@ -88,42 +88,80 @@
         return d.promise();
     };
 
-    // $(".btn-confirm").unbind("click").on("click", function(){
-    //     var payload = {
-    //         "firstName"         : $(".firstName").val(),
-    //         "middleName"        : $(".middleName").val(),
-    //         "lastName"          : $(".lastName").val(),
-    //         "suffixName"        : $(".suffix").val(),
-    //         "sex"               : $(".gender").val(),
-    //         "education"         : $(".education").val(),
-    //         "occupation"        : $(".occupation").val(),
-    //         "criminalCaseNo"    : $(".file_number").val(),
-    //         "fieldOfficeId"     : $.cookie("field_office_id"),
-    //         "birthDate"         : $(".birthdate").val(),
-    //         "birthCity"         : $(".b_place").val(),
-    //         "permanentAddress"  : $(".address").val(),
-    //         "createdBy"         : $.cookie('uuid'),
-    //         "updatedBy"         : "",
-    //         "id"                : "",
-    //         "clientType"        : $(".client_type").val(),
-    //         "status"            : 1
-    //     }
-    //     __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
-    //         console.log(result);
-    //         if (result.status != "ERROR") {
-    //             $(".form-control").val('');
-    //             $('#success').show();
-    //             setTimeout(function () {
-    //                 $('#success').hide();
-    //                 setTimeout(function () {
-    //                     window.location.href = api+'/pis/client_list_single_carpeta';
-    //                 }, 500);
-    //             }, 2000);
-    //         }else{
-    //             alert("failed")
-    //         }
-    //     })
-    // })
+    $(".btn-confirm").unbind("click").on("click", function(){
+        var payload = {
+            // "firstName"         : $(".firstName").val(),
+            // "middleName"        : $(".middleName").val(),
+            // "lastName"          : $(".lastName").val(),
+            // "suffixName"        : $(".suffix").val(),
+            // "sex"               : $(".gender").val(),
+            // "education"         : $(".education").val(),
+            // "occupation"        : $(".occupation").val(),
+            // "criminalCaseNo"    : $(".file_number").val(),
+            // "fieldOfficeId"     : $.cookie("field_office_id"),
+            // "birthDate"         : $(".birthdate").val(),
+            // "birthCity"         : $(".b_place").val(),
+            // "permanentAddress"  : $(".address").val(),
+            // "createdBy"         : $.cookie('uuid'),
+            // "updatedBy"         : "",
+            // "id"                : "",
+            // "clientType"        : $(".client_type").val(),
+            // "status"            : 1
+            "clientType"            : "PDL",
+            "firstName"             : $(".firstName").val(),
+            "middleName"            : $(".middleName").val(),
+            "lastName"              : $(".lastName").val(),
+            "suffixName"            : $(".suffix").val(),
+            "sex"                   : $(".gender").val(),
+            "education"             : $(".educational_attainment").val(),
+            "occupation"            : $(".occupation").val(),
+            "criminalCaseNo"        : $(".criminal_case_number").val(),
+            "fieldOfficeId"         : $.cookie("field_office_id"),
+            "birthDate"             : $(".birthdate").val(),
+            "birthCity"             : $(".b_place").val(),
+            "permanentAddress"      : $(".address").val(),
+            "createdBy"             : $.cookie('uuid'),
+            "createdByName"         : "",
+            "updatedBy"             : "",
+            "updatedByName"         : "",
+            "id"                    : "",
+            "status"                : 1,
+            "fieldOfficeName"       : $.cookie("departmentName"),
+            "worksheetStatus"       : "",
+            "prisonNumber"          : $(".prison_number").val(),
+            "prisonName"            : $(".prison_name").val(),
+            "alias"                 : $(".alias").val(),
+            "civilStatus"           : $(".civil_status").val(),
+            "nationality"           : $(".nationality").val(),
+            "fileNumber"            : $(".file_number").val(),
+            "endorsementDate"       : $(".indorsement_date").val(),
+            "tsdPO"                 : $(".tsd_po").val(),
+            "dateEmailedToFO"       : $(".date_emailed_to_fo").val(),
+            "dateReceived"          : $(".date_received").val(),
+            "resultFromFO"          : $(".date_result_from_fo").val(),
+            "requestType"           : $(".request_type").val(),
+            "remarks"               : $(".pdl_remarks").val(),
+            "dateForwardedToBpp"    : $(".date_forwarded_bpp").val(),
+            "location"              : $(".location").val(),
+            "religion"              : $(".religion").val()
+        }
+        // console.log(payload)
+        __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
+            console.log(result);
+            if (result.status != "ERROR") {
+                $(".form-control").val('');
+                $('#success').show();
+                setTimeout(function () {
+                    $('#success').hide();
+                    setTimeout(function () {
+                        window.location.href = api+'/pis/client_list_single_carpeta';
+                    }, 500);
+                }, 2000);
+            }else{
+                alert("failed")
+            }
+        })
+    })
     // var __select = function(){
     //     $('.field_office').empty();
 

@@ -203,21 +203,21 @@
                     "data": null,
                     "render": function (data, type, row, meta) {
                         var idText = meta.settings._iDisplayStart + meta.row + 1;
-                        if (data.approvalStatus == "New - (Forwarded to CPPO)"){
-                            idText += ' <span style="color: red;">*</span>';
-                        } else if (data.approvalStatus == "New - (Forwarded to FO)"){
-                            idText += ' <span style="color: red;">*</span>';
-                        } else if (data.approvalStatus == "New - (Return to Clerk)"){
-                            idText += ' <span style="color: red;">*</span>';
-                        } else if (data.approvalStatus == "New - (Return to CPPO)"){
-                            idText += ' <span style="color: red;">*</span>';
-                        } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
-                            idText += ' <span style="color: red;">*</span>';
-                        } else if (data.approvalStatus == "New - (Forwarded to clerk for completion)"){
-                            idText += ' <span style="color: red;">*</span>';
-                        } else {
-                            idText;
-                        }
+                        // if (data.approvalStatus == "New - (Forwarded to CPPO)"){
+                        //     idText += ' <span style="color: red;">*</span>';
+                        // } else if (data.approvalStatus == "New - (Forwarded to FO)"){
+                        //     idText += ' <span style="color: red;">*</span>';
+                        // } else if (data.approvalStatus == "New - (Return to Clerk)"){
+                        //     idText += ' <span style="color: red;">*</span>';
+                        // } else if (data.approvalStatus == "New - (Return to CPPO)"){
+                        //     idText += ' <span style="color: red;">*</span>';
+                        // } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                        //     idText += ' <span style="color: red;">*</span>';
+                        // } else if (data.approvalStatus == "New - (Forwarded to clerk for completion)"){
+                        //     idText += ' <span style="color: red;">*</span>';
+                        // } else {
+                        //     idText;
+                        // }
                         return idText;
                     }
                 },

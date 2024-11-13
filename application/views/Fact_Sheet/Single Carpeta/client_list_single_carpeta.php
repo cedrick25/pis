@@ -16,27 +16,27 @@
     
     <!-- /#left-panel -->
 
-    <div class="modal fade" id="removeModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document" style="">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Remove Docket</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">Remove PDL Client</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>
+                  </button>
                 </div>
                 <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
                     <i class="fa fa-check"></i>
-                        Removed Successfully  
+                        Remove Successfully  
                 </div>
-                <div class="modal-body">
+                <div class="modal-body col-md-12">
                     <p>
-                        Are you sure you want to remove this Docket: <b><span class="docket"></span></b>? 
+                        Are you sure you want to remove this PDL client? 
                     </p>
-                </div>
+                </div>                            
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_remove_confirm btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn_confirm_remove">Confirm</button>
                 </div>
             </div>
         </div>
@@ -48,19 +48,29 @@
         <!-- /header -->
   
         <div class="breadcrumbs">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <div class="page-header float-left">
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="client_list">Fact Sheet</a></li>
-                            <li class="active">Fact Sheet Dashboard</li>
+                            <li><a href="client_list_single_carpeta">Fact Sheet</a></li>
+                            <li><a href="client_list_single_carpeta">PDL</a></li>
+                            <li class="active">List</li>
                         </ol>
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="search-container" style="padding-top: 5px; display: flex; align-items: center; justify-content: flex-end;">
+                    <label for="text-input" class="form-control-label" style="margin-right: 10px; padding-top: 7px">Search :</label>
+                    <input type="text" name="first-name-input" placeholder="First Name" class="form-control firstName" style="margin-right: 10px; width: 160px;">
+                    <input type="text" name="last-name-input" placeholder="Last Name" class="form-control lastName" style="margin-right: 10px; width: 160px;">
+                    <button class="btn btn-primary client_search" style="display: flex; align-items: center; gap: 5px;">
+                        <i class="fa fa-search" style="padding: 3px"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
@@ -78,11 +88,11 @@
                                         <table id="" class="table table_head" width="100%">
                                             <thead>
                                                 <th>#</th>
-                                                <th>Full Name</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Criminal Case Number</th>
+                                                <th>Prison Number</th>
                                                 <th>File Number</th>
-                                                <th>Field Office</th>
-                                                <th>Client Type</th>
-                                                <th>Worksheet Status</th>
                                                 <th>Actions</th>
                                             </thead>
                                             <tbody class="table_body">
@@ -91,20 +101,6 @@
                                     </div>
                                 </div>
                             </div>
-<!--                             <div class="card-body">
-                                <table id="" class="table table_head" width="100%">
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Full Name</th>
-                                        <th>Criminal Case Number</th>
-                                        <th>Field Office</th>
-                                        <th>Worksheet Status</th>
-                                        <th>Actions</th>
-                                    </thead>
-                                    <tbody class="table_body">
-                                    </tbody>
-                                </table>
-                            </div> -->
                         </div>
                     </div>
                 </div>

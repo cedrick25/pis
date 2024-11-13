@@ -279,22 +279,48 @@
 
             var dataPayload = gatheredFamilybakcgorundData();
 
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        setTimeout(function () {
-                            window.location.href = api+'/pis/worksheet_socio_economic?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-                })
+            var required = ["sibling_name", "relationship", "age", "sibling_sex", "sibling_education", "sibling_occupation", "sex", "civilStatus", "citizenship", "religion", "bday", 
+                "bplace", "bprovince", "bcity", "bplace_others", "identifyingMarks", "handicap", "desc", "parentsRelation", "father_name", "father_bday", "father_bplace", "father_add", 
+                "father_citizenship", "father_religion", "father_education", "father_occupation", "father_work_add", "father_tel_no", "father_income", "father_deceased", "father_deceased_cause",
+                "father_date_deceased", "mother_name", "mother_bday", "mother_bplace", "mother_add", "mother_citizenship", "mother_religion", "mother_education", "mother_work_add", "mother_tel_no", 
+                "mother_income", "mother_deceased", "mother_deceased_cause", "mother_date_deceased"];
 
-            })
+            required.forEach(function(data) {
+                // First, remove the existing error message and error class if present
+                $("." + data).removeClass("error_field");
+                $("." + data).next('.errorRequired').remove();
+        
+                // Now check if the field is empty or null
+                if ($("." + data).val() === "" || $("." + data).val() === null) {
+                    $("." + data).addClass("error_field");
+                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
+                } 
+            });
+
+            var requiredFields = $('.errorRequired:visible').length;
+            console.log('Number of required fields: ' + requiredFields);
+
+            if (requiredFields === 0) {
+                __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
+                        $(".btn-next").prop('disabled', true);
+                        setTimeout(function () {
+                            $(".overlay").show();
+                            $('#success').hide();
+                            setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
+                            window.location.href = api+'/pis/worksheet_socio_economic?client_id='+client_id+'&field_office_id='+foid;
+                            }, 500);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
+                })
+            }
+        })
         
 
         __executeExternalGet('8000/worksheet/getPetitioner/familyBackground/'+client_id).done(function (result) {
@@ -399,34 +425,55 @@
 
             var dataPayload = gatheredFamilybakcgorundData();
 
+            // __executeExternalPost('8000/worksheet/updatePetitioner/familyBackground/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
+            //     console.log(result);
+            //     if (result.status != "ERROR") {
+            //         $(".form-control").val('');
+            //         $('#success').show();
+            //         setTimeout(function () {
+            //             $('#success').hide();
+            //             setTimeout(function () {
+            //                 window.location.href = api+'/pis/worksheet_socio_economic?client_id='+client_id+'&field_office_id='+foid;
+            //             }, 500);
+            //         }, 2000);
+            //     }else{
+            //         alert("failed")
+            //     }
+            //     })
             __executeExternalPost('8000/worksheet/updatePetitioner/familyBackground/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
-                console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
+                        $(".overlay").show();
                         $('#success').hide();
+                        $(".btn-update").prop("disabled", true)
                         setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".btn-update").prop("disabled", false)
                             window.location.href = api+'/pis/worksheet_socio_economic?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
                     alert("failed")
                 }
-                })
-
             })
+        })
 
         function setupWorksheetClickHandler(worksheetType) {
             $(`.${worksheetType}`).unbind("click").on("click", function () {
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
+                    $("#warningModal").modal("hide");
+                    $(".overlay").show();
                     setTimeout(function () {
+                        $(".overlay").hide();
                         window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
                     }, 500);
                 });
             });
         }
+        
         
         setupWorksheetClickHandler("prior_records");
         setupWorksheetClickHandler("present_offense");

@@ -18,9 +18,9 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="client_list_single_carpeta">Fact Sheet</a></li>
-                            <li><a href="client_list_single_carpeta">PDL</a></li>
-                            <li class="active">Upload</li>
+                            <li><a href="pdl-receive">PDL Routing</a></li>
+                            <li><a href="pdl-receive">Forward</a></li>
+                            <li class="active">Attachments</li>
                         </ol>
                     </div>
                 </div>
@@ -40,21 +40,9 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Uploaded 
                                 </div>
-<!--                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">File Name</label></div>
-                                    <div class="col-12 col-md-6"><input type="text" name="kind" class="form-control file_name"  placeholder="e.g Permit to Work Abroad"/></div>
-                                </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control type"  placeholder="e.g PDF"/>
-                                    </div>
-                                </div> -->
-                                <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Uploader</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control uploader"  placeholder="e.g John Doe"/>
-                                    </div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
+                                    <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label name"></label></div>
                                 </div>
                                 <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Kind</label></div>
@@ -71,6 +59,29 @@
                                 <button type="submit" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Files Attached</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="col col-md-12">
+                                    <table class="table table_head">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Kind</th>
+                                                <th>File Name</th>
+                                                <th>Version</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table_body">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,7 +91,7 @@
     </div>
 
     <?php $this->load->view('templates/footer.php'); ?> 
-    <script src="assets/js/pisJs/Fact_Sheet/Single_Carpeta/client_attachments_upload.js"></script>
+<script src="assets/js/pisJs/PDL_Inbox/upload.js"></script> 
 
 </body>
 

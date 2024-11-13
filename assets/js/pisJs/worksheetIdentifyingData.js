@@ -279,54 +279,77 @@
 
             var identifyingData = functionIdentifyingData();
             var payload = functionPayload(identifyingData);
-            // console.log(payload)
-            // console.log(identifyingData)
 
+            console.log(payload)
 
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
+            var required = ["data_name", "data_interview", "alias", "true_name", "present_add", "permanent_add"];
+
+            required.forEach(function(data) {
+                // First, remove the existing error message and error class if present
+                $("." + data).removeClass("error_field");
+                $("." + data).next('.errorRequired').remove();
+        
+                // Now check if the field is empty or null
+                if ($("." + data).val() === "" || $("." + data).val() === null) {
+                    $("." + data).addClass("error_field");
+                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
+                } 
+            });
+
+            var requiredFields = $('.errorRequired:visible').length;
+            console.log('Number of required fields: ' + requiredFields);
+
+            if (requiredFields === 0) {
+                __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
                         setTimeout(function () {
-                        window.location.href = api+'/pis/worksheet_present_offense?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
+                            $('#success').hide();
+                            $(".overlay").show();
+                            $(".btn-next").prop('disabled', true);
+                            setTimeout(function () {
+                                $(".overlay").hide();
+                                $(".overlay").hide();
+                                $(".btn-next").prop('disabled', false);
+                                window.location.href = api+'/pis/worksheet_present_offense?client_id='+client_id+'&field_office_id='+foid;
+                            }, 500); 
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
+                })
+            }
         })
 
 
-            __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
+        __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
 
-                var result = result.response;
+            var result = result.response;
 
-                if (result.status != "ERROR") {
+            if (result.status != "ERROR") {
 
-                    if (result.worksheetStatus == "INCOMPLETE"){
-                        $(".btn-update").show();
-                        $(".btn-next").hide();
+                if (result.worksheetStatus == "INCOMPLETE"){
+                    $(".btn-update").show();
+                    $(".btn-next").hide();
 
-                        console.log(JSON.parse(result.jsonData))
+                    // console.log(JSON.parse(result.jsonData))
 
-                        $(".data_name").val(JSON.parse(result.jsonData).name);
-                        $(".data_interview").val(JSON.parse(result.jsonData).interview);
-                        $(".alias").val(JSON.parse(result.jsonData).alias);
-                        $(".true_name").val(JSON.parse(result.jsonData).trueName);
-                        $(".present_add").val(JSON.parse(result.jsonData).presentAddress);
-                        $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
+                    $(".data_name").val(JSON.parse(result.jsonData).name);
+                    $(".data_interview").val(JSON.parse(result.jsonData).interview);
+                    $(".alias").val(JSON.parse(result.jsonData).alias);
+                    $(".true_name").val(JSON.parse(result.jsonData).trueName);
+                    $(".present_add").val(JSON.parse(result.jsonData).presentAddress);
+                    $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
 
-                    }else{
+                }else{
 
-                        $(".btn-next").show();
-                        $(".btn-update").hide();
-                    } 
+                    $(".btn-next").show();
+                    $(".btn-update").hide();
+                } 
 
-                }
-            })
+            }
+        })
 
         $(".btn-update").unbind("click").on("click", function(){
 
@@ -337,9 +360,13 @@
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
+                    $(".btn-update").prop('disabled', true);
                     setTimeout(function () {
+                        $(".overlay").show();
                         $('#success').hide();
                         setTimeout(function () {
+                        $(".overlay").hide();
+                        $(".btn-update").prop('disabled', false);
                         window.location.href = api+'/pis/worksheet_present_offense?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
@@ -353,7 +380,10 @@
             $(`.${worksheetType}`).unbind("click").on("click", function () {
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
+                    $("#warningModal").modal("hide");
+                    $(".overlay").show();
                     setTimeout(function () {
+                        $(".overlay").hide();
                         // window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}`;
                         window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
                     }, 500);
