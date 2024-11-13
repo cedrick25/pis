@@ -158,13 +158,17 @@
 
             __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
-                    $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
+                        $(".overlay").show();
+                        $(".btn-next").prop('disabled', true);
                         setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
                             window.location.href = api+'/pis/psir_prior_records?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
+                        }, 500); 
                     }, 2000);
                 }else{
                     alert("failed")
@@ -178,13 +182,17 @@
 
             __executeExternalPost('8000/worksheet/updatePetitioner/psirPresentOffense/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
-                    $(".form-control").val('');
                     $('#success').show();
                     setTimeout(function () {
                         $('#success').hide();
+                        $(".overlay").show();
+                        $(".btn-next").prop('disabled', true);
                         setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
                             window.location.href = api+'/pis/psir_prior_records?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
+                        }, 500); 
                     }, 2000);
                 }else{
                     alert("failed")
@@ -252,7 +260,10 @@
             $(`.${psirType}`).unbind("click").on("click", function () {
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
+                    $("#warningModal").modal("hide");
+                    $(".overlay").show();
                     setTimeout(function () {
+                        $(".overlay").hide();
                         window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
                     }, 500);
                 });

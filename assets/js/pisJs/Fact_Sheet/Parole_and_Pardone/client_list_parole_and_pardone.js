@@ -796,11 +796,12 @@
                     // }
                     // // Return an empty string if the condition is not met
                     // return "";
-                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
+                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button>";
                 }
             }
         ]
     }
+    // <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>
 
     var tableParolee = document.getElementById('client_pr')
 

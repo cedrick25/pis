@@ -203,31 +203,11 @@
             },
             {
                 "data": 'fileNumber',
-                // "render": function (data, type, row, meta) {
-                //     return "PDL";
-                // }
             },
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    // setTimeout (function (){
-                    // },1000)
-                    // console.log(clientDataStorage.length)
-                    // if (!loggedValues.has(data)) {
-                    //     if (clientDataStorage.length > 0 && clientDataStorage[0].petitionerId == data.id) {
-                    //         if (clientDataStorage[0].worksheetStatus == "COMPLETED") {
-                    //             console.log("Show")
-                    //             return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
-                    //         }
-                    //     } else {
-                    //         console.log("Hide")
-                    //         // return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button>";
-                    //     }
-                    //     loggedValues.add(data);
-                    // }
-                    // // Return an empty string if the condition is not met
-                    // return "";
-                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-danger btn_remove client_remove' type='submit' data-id='" + data.id + "'><i class='fa fa-trash'></i> Remove</button>";
+                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove client_remove' type='submit' data-id='" + data.id + "'><i class='fa fa-trash'></i> Remove</button>";
                 }
             }
         ]
@@ -235,44 +215,15 @@
 
     drawTable();
 
-    function  drawTableSearch () {
-
-    }
     $(".client_search").unbind("click").on("click", function() {
         console.log("btn click search");
         $('.table_head').DataTable().destroy();
         $('.table_body').empty();
-        
+
         const firstName = document.querySelector('.firstName').value;
         const lastName = document.querySelector('.lastName').value;
         const fieldOfficeId = $.cookie('field_office_id');
         const canSeeOtherOffices = true;
-
-        const data = {
-            firstName: firstName,
-            lastName: lastName,
-            fieldOfficeId: fieldOfficeId,
-            canSeeOtherOffices: canSeeOtherOffices
-        };
-
-        $.ajax({
-            url: 'http://localhost:8000/petitioner/search?page=0&size=10',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                fieldOfficeId: fieldOfficeId,
-                canSeeOtherOffices: canSeeOtherOffices
-            }),
-            success: function (data) {
-                console.log('Success:', data);
-                // Handle the search results here
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
 
         $('.table_head').DataTable({
             "processing": false,
@@ -291,24 +242,27 @@
                 { "width": "25%", "targets": [6] }
             ],
             "ajax": {
-                url: 'http://localhost:8000/petitioner/search',
+                url: ___ctx+'8000/petitioner/search?page=0&size=10',
                 type: 'POST',
-                contentType: 'application/json',
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 data: function(d) {
+                    // Set page and size as part of the payload, along with other data
                     return JSON.stringify({
+                        page: d.start / d.length,  // Page number
+                        size: d.length,            // Page size
                         firstName: firstName,
                         lastName: lastName,
                         fieldOfficeId: fieldOfficeId,
-                        canSeeOtherOffices: canSeeOtherOffices,
-                        page: d.start / d.length,  // Pagination logic
-                        size: d.length             // Page size
+                        canSeeOtherOffices: canSeeOtherOffices
                     });
                 },
-                dataFilter: function(data) {
-                    var json = jQuery.parseJSON(data);
+                dataFilter: function(d) {
+                    var json = jQuery.parseJSON(d);
                     // Prepare response in DataTables format
                     json.recordsTotal = json.totalElements;
-                    json.recordsFiltered = json.totalElements;  // You may want to adjust this if filtering is used
+                    json.recordsFiltered = json.totalElements; // Adjust if filtering
                     json.data = json.content;
                     return JSON.stringify(json);
                 }
@@ -318,7 +272,6 @@
 
         $('.table_head').on('draw.dt', function() {
             buttonFunctionality();
-            // buttonVisibility();
         });
     });
 

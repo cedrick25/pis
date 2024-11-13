@@ -273,7 +273,7 @@
                 var result = result.response;
                 if (result.status != "ERROR") {
                     console.log(result)
-                    __executeExternalGet(___ctx+'8000/petitioner/'+id).done(function (resultPetitioner) {
+                    __executeExternalGet(___ctx+'8000/petitioner/'+result.petitionerId).done(function (resultPetitioner) {
                         var resultPetitioner = resultPetitioner.response;
                         console.log(resultPetitioner)
                         $(".name").text(resultPetitioner.firstName + " " + resultPetitioner.lastName)

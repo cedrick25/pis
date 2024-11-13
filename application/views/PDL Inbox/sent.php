@@ -1,5 +1,14 @@
 <?php $this->load->view('templates/header.php'); ?> 
+<style>
+    .nav-link {
+        border-bottom: 3px solid transparent;
+        transition: border-bottom 0.3s ease;
+    }
 
+    .nav-link.active {
+        border-bottom: 3px solid #0069d9;
+    }
+</style>
 <body>
     <!-- Left Panel -->
 
@@ -7,27 +16,27 @@
     
     <!-- /#left-panel -->
 
-    <div class="modal fade" id="removeModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="completeModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Remove Docket</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">Complete Docket</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
+                <div class="alert alert-success" role="alert" id="complete_success" style="display:none">
                     <i class="fa fa-check"></i>
-                        Removed Successfully  
+                        Complete Successfully  
                 </div>
                 <div class="modal-body">
                     <p>
-                        Are you sure you want to remove this Docket: <b><span class="docket"></span></b>? 
+                        Are you sure you want to Complete this Docket <b><span class="docket"></span></b>? 
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_remove_confirm btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-primary btn_complete_confirm btn-sm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -37,16 +46,15 @@
         <!-- Header-->
         <?php $this->load->view('templates/avatar.php'); ?> 
         <!-- /header -->
-  
+
         <div class="breadcrumbs">
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-left">
+                        <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="client_list_single_carpeta">Fact Sheet</a></li>
-                            <li><a href="client_list_single_carpeta">PDL</a></li>
-                            <li class="active">Attachments</li>
+                            <li><a href="pdl-sent">PDL Routing</a></li>
+                            <li class="active">Received</li>
                         </ol>
                     </div>
                 </div>
@@ -58,12 +66,17 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
+                            <div class="card-header" id="pager">
+                                <strong class="card-title">PDL Sent</strong>
+                            </div>
                             <div class="card-body">
-                                <table class="table table_head" width="100%">
+                                <table id="" class="table table_head" width="100%">
                                     <thead>
                                         <th>#</th>
-                                        <th>Client Name</th>
-                                        <th>File Name</th>
+                                        <th>Transaction Number</th>
+                                        <th>Field Office</th>
+                                        <th>Sender</th>
+                                        <th>Subject</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody class="table_body">
@@ -82,8 +95,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
-    <script src="assets/js/pisJs/Fact_Sheet/Single_Carpeta/client_view_attachments.js"></script>
-
+    <script src="assets/js/pisJs/PDL_Inbox/sent.js"></script>
 
 </body>
 

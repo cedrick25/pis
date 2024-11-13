@@ -244,20 +244,46 @@
 
             var dataPayload = gatheredData();
 
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
+            var required = ["civilStatus", "spouse_fname", "spouse_mname", "spouse_lname", "spouse_ename", "pAddress", "spouse_region", "spouse_bday", "spouseProvince", "spouseMunicipality", "spouse_work_add",
+                "spouse_ceremony", "spouse_bplace_others", "spouse_occupation", "date_marriage", "spouse_remarks", "spouse_relationship"];
+
+            required.forEach(function(data) {
+                // First, remove the existing error message and error class if present
+                $("." + data).removeClass("error_field");
+                $("." + data).next('.errorRequired').remove();
+        
+                // Now check if the field is empty or null
+                if ($("." + data).val() === "" || $("." + data).val() === null) {
+                    $("." + data).addClass("error_field");
+                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
+                } 
+            });
+
+            var requiredFields = $('.errorRequired:visible').length;
+            console.log('Number of required fields: ' + requiredFields);
+
+            if (requiredFields === 0) {
+                __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
+                        $(".btn-next").prop('disabled', true);
                         setTimeout(function () {
-                            window.location.href = api+'/pis/worksheet_education_history?client_id='+client_id+'&field_office_id='+foid;;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
+                            $(".overlay").show();
+                            $('#success').hide();
+                            setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
+                                window.location.href = api+'/pis/worksheet_education_history?client_id='+client_id+'&field_office_id='+foid;
+                            }, 500);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
                 })
+            }
+
+            
         })
 
         $(".btn-update").unbind("click").on("click", function(){
@@ -268,16 +294,20 @@
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
+                    $(".btn-update").prop('disabled', true);
                     setTimeout(function () {
+                        $(".overlay").show();
                         $('#success').hide();
                         setTimeout(function () {
-                            window.location.href = api+'/pis/worksheet_education_history?client_id='+client_id+'&field_office_id='+foid;;
+                        $(".overlay").hide();
+                        $(".btn-next").prop('disabled', false);
+                            window.location.href = api+'/pis/worksheet_education_history?client_id='+client_id+'&field_office_id='+foid;
                         }, 500);
                     }, 2000);
                 }else{
                     alert("failed")
                 }
-                })
+            })
         })
 
         __executeExternalGet('8000/worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
@@ -398,7 +428,10 @@
             $(`.${worksheetType}`).unbind("click").on("click", function () {
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
+                    $("#warningModal").modal("hide");
+                    $(".overlay").show();
                     setTimeout(function () {
+                        $(".overlay").hide();
                         window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
                     }, 500);
                 });

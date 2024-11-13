@@ -193,41 +193,67 @@
 
         $(".btn-next").unbind("click").on("click", function(){
             var payload = gatheredData();
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
+
+            var required = ["supYear", "supMonth", "supDay"];
+
+            required.forEach(function(data) {
+                // First, remove the existing error message and error class if present
+                $("." + data).removeClass("error_field");
+                $("." + data).next('.errorRequired').remove();
+        
+                // Now check if the field is empty or null
+                if ($("." + data).val() === "" || $("." + data).val() === null) {
+                    $("." + data).addClass("error_field");
+                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
+                } 
+            });
+
+            var requiredFields = $('.errorRequired:visible').length;
+            console.log('Number of required fields: ' + requiredFields);
+
+            if (requiredFields === 0) {
+                __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
+                        $(".btn-next").prop('disabled', true);
                         setTimeout(function () {
-                            window.location.href = api+'/pis/client_list';
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
+                            $(".overlay").show();
+                            $('#success').hide();
+                            setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
+                                window.location.href = api+'/pis/client_list';
+                            }, 500);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
                 })
-
-            })
-
+            }
+        })
         $(".btn-update").unbind("click").on("click", function(){
             var payload = gatheredData();
             __executeExternalPost('8000/worksheet/updatePetitioner/psirRecommendation/'+client_id,JSON.stringify(payload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
+                    $(".btn-next").prop('disabled', true);
                     setTimeout(function () {
+                        $(".overlay").show();
                         $('#success').hide();
                         setTimeout(function () {
+                        $(".overlay").hide();
+                        $(".btn-next").prop('disabled', false);
                             window.location.href = api+'/pis/client_list';
                         }, 500);
                     }, 2000);
                 }else{
                     alert("failed")
                 }
-                })
-
             })
+
+        })
 
         __executeExternalGet('8000/worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result) {
             var result = result.response;
@@ -287,7 +313,10 @@
             $(`.${psirType}`).unbind("click").on("click", function () {
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
+                    $("#warningModal").modal("hide");
+                    $(".overlay").show();
                     setTimeout(function () {
+                        $(".overlay").hide();
                         window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
                     }, 500);
                 });

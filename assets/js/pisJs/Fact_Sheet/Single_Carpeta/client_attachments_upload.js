@@ -204,5 +204,53 @@
                     alert("failed")
                 }
             })
+
+            var __table = function(){
+                $('.table_head').DataTable().destroy();
+                $('.table_body').empty();
+
+                __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
+                    var result = result.response;
+                    // console.log(result)
+                    var officeId = result.fieldOfficeId;
+                    var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
+                    var file_uuid = result.clientType + "_" + result.criminalCaseNo;
+                    // console.log(officeId)
+                    __executeExternalGet('8080/file/list/'+result.clientType+'/'+file_uuid+'/'+$.cookie("field_office_id")).done(function (result) {
+                    // console.log("==========")
+                    // console.log(result)
+                    // console.log("==========")
+                    if (result.status != "ERROR") {
+                        result.files.forEach(function(data){
+                            let actions = "<a href="+api+'8080/file/view/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a> <a href="+api+'8080/file/download/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                            $('.table_body').append("<tr>"+
+                                "<td>"+data.id+"</td>"+
+                                "<td>"+fullname+"</td>"+
+                                "<td>"+data.fileName+"</td>"+
+                                "<td class='actions'> "+actions+"")
+                        });
+                        $(document).ready(function () {
+                            $('.table_head tbody tr').each(function (idx) {
+                               $(this).children("td:eq(0)").html(idx + 1);
+                            });
+                            var table = $('.table_head').DataTable({
+                                order: [[0, 'asc']],
+                                "pageLength": 10,
+                                "columnDefs": [
+                                    // { "width": "40%", "targets": 3 }
+                                    { "width": "5%", "targets": [0] },
+                                    { "width": "45%", "targets": [1] },
+                                    { "width": "25%", "targets": [2] },
+                                    { "width": "25%", "targets": [3] }
+                                ]
+                            });
+                            $('.dataTables_length').addClass('bs-select');
+                        });               
+                    }
+                    })
+
+                })       
+            }
+            __table();
                
     } )( jQuery );

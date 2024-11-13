@@ -41,10 +41,11 @@
 	    <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-                  <div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">New PDL</strong>
+                            <div class="card-header d-flex align-items-center">
+                                <strong class="card-title">Update PDL Details</strong>
+                                <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
@@ -62,10 +63,10 @@
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-    			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter First Name" class="form-control firstName"></div>
-    			                    </div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter First Name" class="form-control firstName"></div>
+                                    </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3">
                                             <label class="form-check-label" for="mNameCheck">Middle Name</label>
@@ -79,45 +80,41 @@
                                         </div>
                                     </div>
                                 </div>
-<!-- 			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 fieldMiddleName" >
-			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-			                        
-			                    </div> -->
+<!--                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 fieldMiddleName" >
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
+                                    
+                                </div> -->
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-    			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Last Name" class="form-control lastName"></div>
-    			                    </div>
-    			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Suffix" class="form-control suffix"></div>
-    			                    </div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Last Name" class="form-control lastName"></div>
+                                    </div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Suffix" class="form-control suffix"></div>
+                                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Alias" class="form-control alias"></div>
-    			                    </div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Alias" class="form-control alias"></div>
+                                    </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Status</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Status" class="form-control status"></div>
-    			                    </div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Prison Name" class="form-control prison_name"></div>
+                                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Prison Name" class="form-control prison_name"></div>
-    			                    </div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">File Number</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter File Number" class="form-control file_number"></div>
+                                    </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">File Number</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter File Number" class="form-control file_number"></div>
-    			                    </div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Location" class="form-control location"></div>
+                                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Location" class="form-control location"></div>
-    			                    </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Civil Status</label></div>
                                         <div class="col-12 col-md-9">
@@ -135,8 +132,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sex</label></div>
                                         <div class="col-12 col-md-9">
@@ -147,16 +142,18 @@
                                             </select>
                                         </div>
                                     </div>
-    			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthdate</label></div>
-    			                        <div class="col-12 col-md-9"><input type="date" class="form-control birthdate"></div>
-    			                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-    			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Birthplace" class="form-control b_place"></div>
-    			                    </div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthdate</label></div>
+                                        <div class="col-12 col-md-9"><input type="date" class="form-control birthdate"></div>
+                                    </div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Birthplace" class="form-control b_place"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nationality</label></div>
                                         <div class="col-12 col-md-9">
@@ -357,8 +354,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Religion</label></div>
                                         <div class="col-12 col-md-9">
@@ -378,56 +373,66 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Educational Attainment</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Educational Attainment" class="form-control educational_attainment"></div>
-    			                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Educational Attainment</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Educational Attainment" class="form-control educational_attainment"></div>
+                                    </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Occupation" class="form-control occupation"></div>
                                     </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control address"></div>
                                     </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">TSD PO</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter PO" class="form-control tsd_po"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Request Type</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Request Type" class="form-control request_type"></div>
-                                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Request Type</label></div>
+                                        <!-- <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Request Type" class="form-control request_type"></div> -->
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control request_type select2">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="Request to conduct PPIR/PECIR">Request to conduct PPIR/PECIR</option>
+                                                <option value="Request for transmittal">Request for transmittal</option>
+                                                <option value="Request for transfer">Request for transfer</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Remarks" class="form-control pdl_remarks"></div>
                                     </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
                                         <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control indorsement_date"></div>
                                     </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Forwarded by BPP</label></div>
                                         <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_forwarded_bpp"></div>
                                     </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Emailed to Field Office</label></div>
                                         <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control date_emailed_to_fo"></div>
                                     </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received</label></div>
                                         <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_received"></div>
                                     </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Result from Field Office</label></div>
                                         <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control date_result_from_fo"></div>
@@ -435,8 +440,8 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-			                    <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
-			                </div>
+                                <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -250,7 +250,7 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <button type="button" class="add_more_residence btn btn-success btn-sm float-right">Add more</button>
+                                            <button type="button" class="add_more_residence btn btn-primary btn-sm float-right">Add more</button>
                                         </div>
 
                                 </fieldset>
@@ -342,8 +342,8 @@
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
-                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
-                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
+                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>

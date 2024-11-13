@@ -40,16 +40,6 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Uploaded 
                                 </div>
-<!--                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">File Name</label></div>
-                                    <div class="col-12 col-md-6"><input type="text" name="kind" class="form-control file_name"  placeholder="e.g Permit to Work Abroad"/></div>
-                                </div>
-                                <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control type"  placeholder="e.g PDF"/>
-                                    </div>
-                                </div> -->
                                 <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Uploader</label></div>
                                     <div class="col-12 col-md-6">
@@ -69,6 +59,24 @@
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table_head" width="100%">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Client Name</th>
+                                        <th>File Name</th>
+                                        <th>Actions</th>
+                                    </thead>
+                                    <tbody class="table_body">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

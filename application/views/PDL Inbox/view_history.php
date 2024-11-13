@@ -1,7 +1,7 @@
 <?php $this->load->view('templates/header.php'); ?> 
 <style type="text/css">
     .routing-history-container {
-        max-height: 200px;
+        max-height: 300px;
         width: 600px;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -13,10 +13,20 @@
         overflow-y: auto; /* Allows vertical scrolling */
     }
     .routing-details-container {
-        max-height:200px;
+        max-height: 300px;
         width: 600px;
         padding-top: 10px;
         padding-bottom: 10px;
+        border-left: 1px solid #00000029; /* Combines width, style, and color */
+        border-right: 1px solid #00000029; /* Combines width, style, and color */
+        border-bottom: 1px solid #00000029; /* Combines width, style, and color */  
+        overflow-y: auto;
+    }
+    .date-footer-container {
+        height: 35px;
+        width: 600px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         border-left: 1px solid #00000029; /* Combines width, style, and color */
         border-right: 1px solid #00000029; /* Combines width, style, and color */
         border-bottom: 1px solid #00000029; /* Combines width, style, and color */
@@ -50,7 +60,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pdl-receive">PDL Routing</a></li>
+                            <li><a href="javascript:void(0);" class="pdl_routing_breadcrumbs">PDL Routing</a></li>
                             <li class="active">View</li>
                         </ol>
                     </div>
@@ -116,87 +126,11 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card" style="height: 622px; width: 578px;">
+                        <div class="card" style="height: 645px; width: 510px;">
                             <div class="card-header">
                                 <strong class="card-title">Routing History</strong>
                             </div>
                             <div class="card-body history_body" style="overflow: auto;">
-<!--                                 
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="row form-group col-md-12">
-                                                <div class="col col-md-12"><span class="user">You</span><span> updated this task on: </span><span class="timestamp float-right">8:05pm</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="routing-history-container mx-3">
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Sender:</span></div>
-                                                    <div class="col-12 col-md-7"><span class="sender"></span></div> 
-                                                </div>
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Forwarded To:</label></div>
-                                                    <div class="col-12 col-md-7"><span class="forward_to"></label></div>
-                                                </div>
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Remarks:</label></div>
-                                                    <div class="col-12 col-md-7"><span class="remarks"></label></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="row form-group col-md-12">
-                                                <div class="col col-md-12"><span class="user">You</span><span> updated this task on: </span><span class="timestamp float-right">8:05pm</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="routing-history-container mx-3">
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Sender:</span></div>
-                                                    <div class="col-12 col-md-7"><span class="sender"></span></div> 
-                                                </div>
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Forwarded To:</label></div>
-                                                    <div class="col-12 col-md-7"><span class="forward_to"></label></div>
-                                                </div>
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Remarks:</label></div>
-                                                    <div class="col-12 col-md-7"><span class="remarks"></label></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="row form-group col-md-12">
-                                                <div class="col col-md-12"><span class="user">You</span><span> updated this task on: </span><span class="timestamp float-right">8:05pm</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="routing-history-container mx-3">
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Sender:</span></div>
-                                                    <div class="col-12 col-md-7"><span class="sender"></span></div> 
-                                                </div>
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Forwarded To:</label></div>
-                                                    <div class="col-12 col-md-7"><span class="forward_to"></label></div>
-                                                </div>
-                                                <div class="row form-group col-md-12">
-                                                    <div class="col col-md-5"><span>Remarks:</label></div>
-                                                    <div class="col-12 col-md-7"><span class="remarks"></label></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                     </div>

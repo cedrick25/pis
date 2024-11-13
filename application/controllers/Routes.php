@@ -564,6 +564,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('PDL Inbox/received');
 	}
+	public function pdl_sent()
+	{
+		$this->load->view('PDL Inbox/sent');
+	}
 	public function pdl_upload()
 	{
 		$this->load->view('PDL Inbox/upload');

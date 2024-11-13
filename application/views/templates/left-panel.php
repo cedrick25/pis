@@ -64,6 +64,7 @@
                         <li style='display:none;' class="sent"><i class="menu-icon fa fa-user"></i><a href="sent">Probation</a></li>
                         <li style='display:none;' class="sent_pardonee"><i class="menu-icon fa fa-user"></i><a href="sent_pardonee">Pardone</a></li>
                         <li style='display:none;' class="sent_parolee"><i class="menu-icon fa fa-user"></i><a href="sent_parolee">Parole</a></li>
+                        <li style='' class="sent_pdl"><i class="menu-icon fa fa-user"></i><a href="pdl-sent">PDL</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
@@ -72,7 +73,7 @@
                         <li style='display:none;' class="received"><i class="menu-icon fa fa-user"></i><a href="received">Probation</a></li>
                         <li style='display:none;' class="received_pardonee"><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardone</a></li>
                         <li style='display:none;' class="received_parolee"><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parole</a></li>
-                        <li style='' class="from_tsd"><i class="menu-icon fa fa-user"></i><a href="pdl-receive">From TSD</a></li>
+                        <li style='' class="from_tsd"><i class="menu-icon fa fa-user"></i><a href="pdl-receive">PDL</a></li>
                     </ul>
                 </li>
                 <h3 class="menu-title client_list" style='display:none;'>Fact Sheet</h3>

@@ -1,6 +1,110 @@
 <?php $this->load->view('templates/header.php'); ?> 
+<style>
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(255,255,255,0);
+    }
 
+    /* Full screen semi-transparent overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999; /* Make sure it overlays everything */
+    }
+
+    /* Loader styles */
+    .loader {
+      width: 89px;
+      height: 89px;
+      position: relative;
+      background: rgba(255,255,255,0.13);
+      animation-duration: 2.5s;
+      animation-name: animSpin;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes animSpin {
+      50% {
+        transform: rotateZ(180deg) scale(.94);
+      }
+      100% {
+        transform: rotateZ(360deg) scale(1);
+      }
+    }
+
+    .loader:before,
+    .loader:after {
+      content: '';
+      position: absolute;
+      border: 8px solid transparent;
+      border-radius: 50%;
+    }
+
+    .loader:before {
+      width: 75%;
+      height: 75%;
+      background: rgba(255,255,255,.13);
+      left: 12.5%;
+      top: 12.5%;
+      border-left: 8px solid rgba(255,255,255,.34);
+      border-bottom: 8px solid rgba(255,255,255,.34);
+    }
+
+    .loader:after {
+      width: 40%;
+      height: 40%;
+      left: 30%;
+      top: 30%;
+      border-right: 8px solid rgba(255,255,255,1);
+      border-left: 8px solid rgba(255,255,255,1);
+      border-bottom: 8px solid rgba(255,255,255,1);
+    }
+
+    .loader span {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+    }
+
+    /* Hide the overlay once the page has fully loaded */
+    body.loaded .overlay {
+      display: none;
+    }
+    
+    .custom-col {
+      margin-right: 0;
+      margin-left: 0;
+
+      > .col,
+      > [class*="col-"] {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+    }
+</style>
 <body>
+    <div class="overlay" style="display: none;">
+        <div class="loader">
+        <span></span>
+        </div>
+    </div>
     <!-- Left Panel -->
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
@@ -153,7 +257,7 @@
                                     <div class="collateralInfo">
                                     </div>
                                     <div class="col-12">
-                                        <button type="button" class="addMoreCollInfo btn btn-success btn-sm float-right">Add more</button>
+                                        <button type="button" class="addMoreCollInfo btn btn-primary btn-sm float-right">Add more</button>
                                     </div>
                                 </fieldset>
                                 <fieldset class="row col col-md-12">
@@ -174,8 +278,8 @@
                                 </fieldset>                               
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-success btn-next btn-sm" style="display: none">Next</button>
-                                <button type="button" class="btn btn-success btn-update btn-sm" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
+                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>

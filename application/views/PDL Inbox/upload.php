@@ -19,7 +19,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="pdl-receive">PDL Routing</a></li>
-                            <li><a href="pdl-receive">Forward</a></li>
+                            <li><a href="javascript:void(0);" class="breadcrumbs_view_history">Forward</a></li>
                             <li class="active">Attachments</li>
                         </ol>
                     </div>

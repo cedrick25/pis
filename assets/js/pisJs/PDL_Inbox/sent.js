@@ -122,7 +122,7 @@
             $(".btn-view").unbind("click").on("click", function(){
                 var transactionNumber = $(this).data("tid");
                 var id = $(this).data("id");
-                window.location.href=api+"/pis/pdl-view-history?transaction_number="+transactionNumber+"&id="+id;
+                window.location.href=api+"/pis/pdl-view-history?transaction_number="+transactionNumber+"&id="+id+"&sent=yes";
             })
         }
 
@@ -132,37 +132,11 @@
                     "data": null,
                     "render": function (data, type, row, meta) {
                         var idText = meta.settings._iDisplayStart + meta.row + 1;
-                        // if (data.approvalStatus == "New - (Forwarded to CPPO)"){
-                        //     idText += ' <span style="color: red;">*</span>';
-                        // } else if (data.approvalStatus == "New - (Forwarded to FO)"){
-                        //     idText += ' <span style="color: red;">*</span>';
-                        // } else if (data.approvalStatus == "New - (Return to Clerk)"){
-                        //     idText += ' <span style="color: red;">*</span>';
-                        // } else if (data.approvalStatus == "New - (Return to CPPO)"){
-                        //     idText += ' <span style="color: red;">*</span>';
-                        // } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
-                        //     idText += ' <span style="color: red;">*</span>';
-                        // } else if (data.approvalStatus == "New - (Forwarded to clerk for completion)"){
-                        //     idText += ' <span style="color: red;">*</span>';
-                        // } else {
-                        //     idText;
-                        // }
                         return idText;
                     }
                 },
-                // {
-                //     "data": null,
-                //     render: function(data, type, row) {
-                //         var name = data.firstName+" "+data.lastName
-                //         return name;
-                //     }
-                // },
                 {
-                    "data": 'transactionNumber',
-                    // "render": function (data, type, row, meta) {
-                    //     // var idText = meta.settings._iDisplayStart + meta.row + 1;
-                    //     // return idText;
-                    // }
+                    "data": 'transactionNumber'
                 },
                 {
                     "data": 'fieldOfficeName'
@@ -206,7 +180,7 @@
                         { "width": "15%", "targets": [5] }
                     ],
                     ajax: {
-                        url: api + "8000/workflow/receiver/" + uuid + "?type=" + type,
+                        url: api + "8000/workflow/sender/" + uuid + "?type=" + type,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -231,27 +205,13 @@
                 $('.table_head').on('draw.dt', function () {
                     buttonFunctionality();
                     buttonVisibility();
-                    // show buttons for testing purposes only
-                    // $("#btn_upload").show();
-                    // $("#btn_return").show();
-                    // $("#btn_forward").show();
-                    // $("#btn_complete").show();
                 });
             } else {
                 // If DataTable is already initialized, reload it with new data
-                $('.table_head').DataTable().ajax.url(api + "8000/workflow/receiver/" + uuid + "?type=" + type).load();
+                $('.table_head').DataTable().ajax.url(api + "8000/workflow/sender/" + uuid + "?type=" + type).load();
             }
         }
 
         drawTable(type)
-        // $(".btn-upload").unbind("click").on("click", function(){
-        //     window.location.href=api+"/pis/pdl-upload"
-        // })
-        // $(".btn-return").unbind("click").on("click", function(){
-        //     window.location.href=api+"/pis/pdl-return"
-        // })
-        // $(".btn-forward").unbind("click").on("click", function(){
-        //     window.location.href=api+"/pis/pdl-forward"
-        // })
 
     } )( jQuery );

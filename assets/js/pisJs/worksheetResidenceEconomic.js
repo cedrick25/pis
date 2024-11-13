@@ -214,7 +214,7 @@
                             setTimeout(function () {
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/worksheet_residence_economic?client_id='+client_id+'&field_office_id='+foid;
+                                window.location.href = api+'/pis/worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid;
                             }, 500);
                         }, 2000);
                     }else{
@@ -238,7 +238,7 @@
             //     }
             //     })
 
-            // })
+            })
 
         __executeExternalGet('8000/worksheet/getPetitioner/residenceEconomic/'+client_id).done(function (result) {
 
@@ -297,18 +297,22 @@
             var dataPayload = gatheredDataResEco();
 
             __executeExternalPost('8000/worksheet/updatePetitioner/residenceEconomic/'+client_id,JSON.stringify(payload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
+                        $(".btn-next").prop('disabled', true);
                         setTimeout(function () {
-                            window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
+                            $(".overlay").show();
+                            $('#success').hide();
+                            setTimeout(function () {
+                            $(".overlay").hide();
+                            $(".btn-next").prop('disabled', false);
+                                window.location.href = api+'/pis/worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid;
+                            }, 500);
+                        }, 2000);
+                    }else{
+                        alert("failed")
+                    }
                 })
 
             })
@@ -317,7 +321,10 @@
             $(`.${worksheetType}`).unbind("click").on("click", function () {
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
+                    $("#warningModal").modal("hide");
+                    $(".overlay").show();
                     setTimeout(function () {
+                        $(".overlay").hide();
                         window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
                     }, 500);
                 });
@@ -333,5 +340,5 @@
         setupWorksheetClickHandler("spouse_children");
         setupWorksheetClickHandler("education_history");
         setupWorksheetClickHandler("employment_history");
-        setupWorksheetClickHandler("environmental_factor")
+        setupWorksheetClickHandler("environmental_factor");
     } )( jQuery );
