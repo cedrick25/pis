@@ -115,6 +115,25 @@
             })
         }
         __selectclient();
+        var __select = function(){
+            $('.ref_office_update').empty();
+
+            __executeExternalGet('8088/department/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
+                    result.forEach(function(data){
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    setTimeout(function () {
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
+                    }, 700);
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
 
         var docket_number = GetURLParameter('docket_number');
         $('.card-body').find('input, select, button').prop('disabled', true);

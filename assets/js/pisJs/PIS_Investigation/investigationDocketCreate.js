@@ -152,9 +152,12 @@
                     result.forEach(function(data){
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
                     });
                     setTimeout(function () {
                         $(".field_office").val($.cookie("field_office_id")).trigger("change");
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
                     }, 700);
                     
                 } else {

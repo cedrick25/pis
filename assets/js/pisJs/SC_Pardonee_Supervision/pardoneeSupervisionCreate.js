@@ -8,6 +8,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -86,6 +87,18 @@
             
             return d.promise();
         };
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
        
         $(".btn-reset").unbind("click").on("click", function(){
             $(".form-control").val('');
@@ -93,7 +106,7 @@
 
         var __selectclient = function(){
             $('.client').empty();
-            __executeExternalGet(___ctx+'8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+            __executeExternalGet('8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
                 if (result.status != "ERROR") {
                     $('.client').append("<option selected disabled>Select Client</option>");
                     result.forEach(function(data){
@@ -107,6 +120,24 @@
             })
         }
         __selectclient();
+        var __select = function(){
+            $('.office_transfered').empty();
+
+            __executeExternalGet('8088/department/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    result.forEach(function(data){
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    setTimeout(function () {
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
+                    }, 700);
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
 
         $(".btn-confirm").unbind("click").on("click", function(){
 

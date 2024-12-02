@@ -9,7 +9,7 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -87,6 +87,7 @@
             
             return d.promise();
         };
+        
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -100,13 +101,14 @@
             }
         }
 
+
         var docket_number = GetURLParameter('docket_number');
         $('.card-body').find('input, select, button').prop('disabled', true);
         $('.btn-confirm_update').prop('disabled', true);
 
         var __selectclient = function(){
             $('.client_update').empty();
-            __executeExternalGet(___ctx+'8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
+            __executeExternalGet('8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
                 if (result.status != "ERROR") {
                     $('.client_update').append("<option selected disabled>Select Client</option>");
                     result.forEach(function(data){
@@ -121,8 +123,27 @@
         }
         __selectclient();
 
+        var __select = function(){
+            $('.office_transfered').empty();
+
+            __executeExternalGet('8088/department/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    result.forEach(function(data){
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    setTimeout(function () {
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
+                    }, 700);
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
+
         var __fields = function(){
-            __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 console.log(result);
                 console.log(docket_number)
                 var result = result.response;

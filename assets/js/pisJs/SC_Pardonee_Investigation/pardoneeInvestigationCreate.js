@@ -99,6 +99,7 @@
                 }
             }
         }
+        
         var __selectclient = function(){
             $('.client').empty();
             __executeExternalGet('8000/petitioner/list?type=PARDONEE&officeId='+$.cookie('field_office_id')).done(function (result) {
@@ -126,8 +127,13 @@
                     result.forEach(function(data){
                         $('.office_transfered').append(
                             "<option value="+data.id+">"+data.name+"</option>");
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
                     });
-
+                    setTimeout(function () {
+                        $(".office_transfered").val($.cookie("field_office_id")).trigger("change");
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
+                    }, 700);
                 } else {
                     console.log("failed fetching docket list")
                 }

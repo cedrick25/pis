@@ -123,8 +123,13 @@
                     result.forEach(function(data){
                         $('.office_transfered').append(
                             "<option value="+data.id+">"+data.name+"</option>");
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
                     });
-                        $('.office_transfered').val($.cookie("field_office_id")).trigger("change")
+                    setTimeout(function () {
+                        $(".office_transfered").val($.cookie("field_office_id")).trigger("change");
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
+                    }, 700);
                 } else {
                     console.log("failed fetching docket list")
                 }

@@ -117,6 +117,29 @@
         }
         __selectclient();
 
+        var __select = function(){
+            $('.ref_office').empty();
+
+            __executeExternalGet('8088/department/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.ref_office').append("<option selected disabled>Select Field Office</option>");
+                    result.forEach(function(data){
+                        $('.ref_office').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    setTimeout(function () {
+                        $(".ref_office").val($.cookie("field_office_id")).trigger("change");
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
+                    }, 700);
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
+
         var docket_number = GetURLParameter('docket_number');
 
             $(".btn-confirm").unbind("click").on("click", function(){
@@ -198,21 +221,5 @@
                     }
                 })
             })
-                var __select = function(){
-                    $('.ref_office').empty();
 
-                    __executeExternalGet('8088/department/list').done(function (result) {
-                        if (result.status != "ERROR") {
-                            $('.ref_office').append("<option selected disabled>Select Field Office</option>");
-                            result.forEach(function(data){
-                                $('.ref_office').append(
-                                    "<option value="+data.id+">"+data.name+"</option>");
-                            });
-
-                        } else {
-                            console.log("failed fetching docket list")
-                        }
-                    })
-                }
-                __select();
     } )( jQuery );

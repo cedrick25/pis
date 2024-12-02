@@ -161,6 +161,8 @@
                     result.forEach(function(data){
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
                     });
                 } else {
                     console.log("failed fetching docket list")

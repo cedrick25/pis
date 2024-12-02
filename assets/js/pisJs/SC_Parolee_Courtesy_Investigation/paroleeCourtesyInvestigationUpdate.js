@@ -123,6 +123,31 @@
             })
         }
         __selectclient();
+
+        var __select = function(){
+            $('.ref_office_update').empty();
+
+            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
+                console.log(result)
+                if (result.status != "ERROR") {
+                    $('.ref_office_update').append("<option selected disabled>Select Field Office</option>");
+                    result.forEach(function(data){
+                        $('.ref_office_update').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
+                    });
+                    setTimeout(function () {
+                        $(".ref_office_update").val($.cookie("field_office_id")).trigger("change");
+                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
+                    }, 700);
+                } else {
+                    console.log("failed fetching docket list")
+                }
+            })
+        }
+        __select();
+
         var __fields = function(){
             __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                 var result = result.response;
@@ -225,27 +250,6 @@
                 }
             })
         }
-
-
-        var __select = function(){
-            $('.ref_office_update').empty();
-
-            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.ref_office_update').append("<option selected disabled>Select Field Office</option>");
-                    result.forEach(function(data){
-                        $('.ref_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
-
         setTimeout(function () {
             __fields();
             $("#spinner_update").hide();

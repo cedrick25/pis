@@ -127,8 +127,10 @@
                     result.forEach(function(data){
                         $('.ref_office_update').append(
                             "<option value="+data.id+">"+data.name+"</option>");
+                        $('.cmis_fo').append(
+                            "<option value="+data.id+">"+data.name+"</option>");
                     });
-
+                    $('.cmis_fo').val($.cookie("field_office_id")).trigger("change")
                 } else {
                     console.log("failed fetching docket list")
                 }

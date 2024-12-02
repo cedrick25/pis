@@ -55,21 +55,35 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" class="form-control docketNum_update" disabled></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" class="form-control docketNum_update"></div>
                                     </div>
                                 </div>
-                                <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS ID</label></div>
+                                        <div class="col-12 col-md-4"><input type="text" name="text-input" placeholder="CMIS ID" class="form-control cmis_id"></div>
+                                        <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder="CMIS Name" class="form-control cmis_name" style="background-color: white;" readonly></div>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Field Office</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control cmis_fo select2" >
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control pb_client select2" disabled>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control caseload select2">
@@ -97,7 +111,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control client_type select2">
@@ -107,30 +123,36 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case Number</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court of Origin</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control field_office select2" >
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Officer Doe" class="form-control inv_off"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control military_court select2">
@@ -140,7 +162,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control plea_bargain select2">
@@ -150,7 +172,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 class_sel" style="display: none;">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 class_sel" style="display: none;">
                                         <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control classification select2" >
@@ -160,78 +184,35 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <!-- <fieldset class="row col col-md-12">
-                                            <div class="col-12" style="padding-bottom: 20px;">
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="card" id="sentence_card" style="border-radius: 10px;">
+                                            <div class="card-header" style="background: transparent;">
+                                                <strong>Sentence</strong>
                                                 <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
                                             </div>
-                                            <legend>Sentence</legend>
-                                            <div class="list">
-                                                <div class="list_sentence" id="sentence_counter_${sentence_counter}">
-                                                    <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                                                    </div>
-                                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                                                        <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                                                        <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                                                        <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                                                    </div>
-                                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                                                        <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                                                        <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                                                        <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                                                    </div>
-                                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <div class="col col-sm-2 col-md-2 col-lg-2 col-xl-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                                                        <div class="col-3 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" class="form-control civil_liability" placeholder="Robbery"></div>
-                                                    </div>
-                                                </div>
+                                            <div class="card-body">
                                             </div>
-                                        </fieldset> -->
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <div class="card" id="sentence_card">
-                                                <div class="card-header" style="background: transparent;">
-                                                    <strong>Sentence</strong>
-                                                    <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
-                                                </div>
-                                                <div class="card-body">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                    </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
                                         <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
                                         <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
                                     </div>
                                 </div>
-<!--                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A." class="form-control middleName"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe" class="form-control lastName"></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr." class="form-control suffix"></div>
-                                </div>
- -->                                
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Confirm</button>

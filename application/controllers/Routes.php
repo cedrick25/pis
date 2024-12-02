@@ -560,6 +560,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('Fact_Sheet/Parole_and_Probation/client_list_parole_and_pardone_view_attachments');
 	}
+	public function client_list_parole_and_pardone_upload()
+	{
+		$this->load->view('Fact_Sheet/Parole_and_Probation/client_list_parole_and_pardone_upload');
+	}
 	public function pdl_received()
 	{
 		$this->load->view('PDL Inbox/received');
