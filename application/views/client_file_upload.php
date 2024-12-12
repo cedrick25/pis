@@ -55,7 +55,13 @@
                                 <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Uploader</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control uploader"  placeholder="e.g John Doe"/>
+                                        <input type="text" name="type" class="form-control uploader"  placeholder="Uploader" disabled />
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12" style="display:none;">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <input type="text" name="type" class="form-control docket_num"  placeholder="Docket Number" disabled />
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">

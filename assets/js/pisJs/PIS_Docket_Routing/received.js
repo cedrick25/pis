@@ -304,7 +304,7 @@
                             //     }
                             //     else {
                             default:
-                                return "<button class='btn btn-sm btn-primary pb_upload' id='btn_upload'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-danger pb_return' id='btn_return'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.originFieldOfficeId+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_forward' id='btn_forward'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pb_complete' id='btn_complete'  type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet'  data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"' data-sender='"+data.originFieldOfficeId+"' style='display:none;'><i class='fa fa-plus-circle'></i> Worksheet</button>";                                    
+                                return "<button class='btn btn-sm btn-primary pb_upload' id='btn_upload'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger pb_return' id='btn_return'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.originFieldOfficeId+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pb_forward' id='btn_forward'  type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pb_complete' id='btn_complete'  type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet'  data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"' data-sender='"+data.originFieldOfficeId+"' style='display:none;'><i class='fa fa-plus-circle'></i> Worksheet</button>";                                    
                                 // }
                                 // break;
                         };
@@ -333,10 +333,10 @@
                         { "width": "5%", "targets": [0] },
                         { "width": "15%", "targets": [1] },
                         { "width": "15%", "targets": [2] },
-                        { "width": "18%", "targets": [3] },
+                        { "width": "13%", "targets": [3] },
                         { "width": "12%", "targets": [4] },
                         { "width": "10%", "targets": [5] },
-                        { "width": "35%", "targets": [6] }
+                        { "width": "40%", "targets": [6] }
                     ],
                     ajax: {
                         url: api + "8000/workflow/receiver/" + uuid + "?type=" + type,

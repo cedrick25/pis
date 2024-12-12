@@ -139,7 +139,7 @@
 
             var payload = {
                 "type"                      : "SC_PD_CSUP",
-                "docketNumber"              : "",
+                "docketNumber"              : $(".docket_number").val(),
                 "docketSeries"              : $(".docket_series").val(),
                 "caseloadType"              : $(".task").val(),
                 "fieldOfficeId"             : $.cookie('field_office_id'),

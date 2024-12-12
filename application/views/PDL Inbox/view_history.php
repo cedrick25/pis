@@ -41,6 +41,19 @@
         cursor: pointer;
     }
 
+    .nav-link {
+        border-bottom: 3px solid transparent;
+        transition: border-bottom 0.3s ease;
+    }
+
+    .nav-link.active {
+        border-bottom: 3px solid #0069d9;
+    }
+    .tab-content {
+        width: 100%;
+        overflow: auto;
+    }
+
 </style>
 <body>
     <!-- Left Panel -->
@@ -137,23 +150,76 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Attachments</strong>
+                                <!-- <strong class="card-title">Attachments</strong> -->
+                                <ul class="nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="inv_tab" href="#investigation_tab" data-toggle="tab" style="cursor: pointer;">Investigation</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="sup_tab" href="#supervision_tab" data-toggle="tab" style="cursor: pointer;">Supervision</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="rehab_tab" href="#rehabilitation_tab" data-toggle="tab" style="cursor: pointer;">Rehabilitation</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="oth_tab" href="#others_tab" data-toggle="tab" style="cursor: pointer;">Others</a>
+                                    </li>
+                                </ul>
                             </div>
                             <div class="card-body">
-                                <div class="col col-md-12">
-                                    <table class="table table_head">
-                                        <thead>
-                                            <tr>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="investigation_tab" role="tabpanel" aria-labelledby="home-tab">
+                                        <table id="inv_table" class="table table_head" width="100%">
+                                            <thead>
                                                 <th>#</th>
-                                                <th>Kind</th>
                                                 <th>File Name</th>
                                                 <th>Version</th>
+                                                <th>Remarks</th>
                                                 <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table_body">
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody class="table_body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="supervision_tab" role="tabpanel" aria-labelledby="home-tab">
+                                        <table id="sup_table" class="table table_head" width="100%">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>File Name</th>
+                                                <th>Version</th>
+                                                <th>Remarks</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody class="table_body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="rehabilitation_tab" role="tabpanel" aria-labelledby="home-tab">
+                                        <table id="rehab_table" class="table table_head" width="100%">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>File Name</th>
+                                                <th>Version</th>
+                                                <th>Remarks</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody class="table_body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="others_tab" role="tabpanel" aria-labelledby="home-tab">
+                                        <table id="oth_table" class="table table_head" width="100%">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>File Name</th>
+                                                <th>Version</th>
+                                                <th>Remarks</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody class="table_body">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

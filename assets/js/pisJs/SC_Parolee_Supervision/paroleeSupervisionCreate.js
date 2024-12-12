@@ -148,7 +148,7 @@
             var payload = {
 
                 "type"                      : "SC_PR_SUP",
-                "docketNumber"              : "",
+                "docketNumber"              : $(".docket_number").val(),
                 "docketSeries"              : $(".docket_series").val(),
                 "caseloadType"              : $(".caseload").val(),
                 "fieldOfficeId"             : $.cookie('field_office_id'),

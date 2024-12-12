@@ -187,6 +187,7 @@
                             function postDatas() {
                                 return {
                                     "type"                  : data.type,
+                                    "transactionNumber"     : data.transactionNumber,
                                     "caseloadType"          : data.caseloadType,
                                     "senderId"              : $.cookie("uuid"),
                                     "receiverId"            : data.senderId,

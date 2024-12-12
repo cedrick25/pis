@@ -152,7 +152,7 @@
                 var payload = {
 
                 "type"                      : "SC_PR_CINV",
-                "docketNumber"              : "",
+                "docketNumber"              : $(".docket_number").val(),
                 "docketSeries"              : $(".docket_series").val(),
                 "caseloadType"              : $(".task").val(),
                 "fieldOfficeId"             : $.cookie('field_office_id'),

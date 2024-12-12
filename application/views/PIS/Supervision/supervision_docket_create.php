@@ -69,7 +69,7 @@
                                     <div class="row col-12 docketing" style="display:none">
                                         <div class="form-row col-12">
                                             <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                                <div class="col col-md-3"><label for="text-input" class="form-control-label new_docket_num">Docket Number</label></div>
                                                 <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Docket Number" class="form-control docket_number"></div>
                                             </div>
                                         </div>

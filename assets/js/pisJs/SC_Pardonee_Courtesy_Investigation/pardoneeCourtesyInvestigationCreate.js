@@ -138,7 +138,7 @@
             
             var payload = {
                 "type"                      : "SC_PD_CINV",
-                "docketNumber"              : "",
+                "docketNumber"              : $(".docket_number").val(),
                 "docketSeries"              : $(".docket_series").val(),
                 "caseloadType"              : $(".task").val(),
                 "fieldOfficeId"             : $.cookie('field_office_id'),

@@ -151,7 +151,7 @@
                 
             var payload = {
                 "type"                              : "SC_PD_INV",
-                "docketNumber"                      : "",
+                "docketNumber"                      : $(".docket_number").val(),
                 "docketSeries"                      :$(".docket_series").val(),
                 "caseloadType"                      :$(".caseload").val(),
                 "fieldOfficeId"                     : $.cookie('field_office_id'),

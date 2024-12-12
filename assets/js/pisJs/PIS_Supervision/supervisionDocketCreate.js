@@ -268,6 +268,7 @@
                                 var result = result.response;
                                     if (result.status != "ERROR") {
                                         $(".docket_num").val(result.docketNumber);
+                                        $(".new_docket_num").text("New Docket Number")
                                         $(".firstName").val(result.firstName);
                                         $(".middleName").val(result.middleName);
                                         $(".lastName").val(result.lastName);
@@ -393,6 +394,7 @@
             var lname = $('.pb_client_sup option:selected').data('lname');
             var sname = $('.pb_client_sup option:selected').data('sname');
             var clientId = $('.pb_client_sup option:selected').data('id');
+            var fullName = fname + " " + mname + " " + lname + " " + sname;
 
             var md;
             if (docketSwitch.value == "true") {
@@ -403,7 +405,7 @@
             sentenceArray(fields);
             var payload = {
                 "type": "PIS_SUP",
-                "docketNumber": "",
+                "docketNumber": $(".docket_number").val(),
                 "docketSeries": "NONE",
                 "caseloadType": $(".caseload").val(),
                 "fieldOfficeId": $(".field_office").val(),
@@ -413,7 +415,7 @@
                 "middleName": mname,
                 "lastName": lname,
                 "suffixName": sname,
-                "fullName": "",
+                "fullName": fullName,
                 "pleaBargain": $(".plea_bargain").val(),
                 "caseClassification": $(".classification").val(),
                 "criminalCaseNumber": $(".cc_no").val(),

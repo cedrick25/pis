@@ -331,6 +331,7 @@
             var lname = $('.pb_client_sup option:selected').data('lname');
             var sname = $('.pb_client_sup option:selected').data('sname');
             var clientId = $('.pb_client_sup option:selected').data('id');
+            var fullName = fname + " " + mname + " " + lname + " " + sname;
             
             sentenceArray(fields);
 
@@ -346,7 +347,7 @@
                 "middleName": mname,
                 "lastName": lname,
                 "suffixName": sname,
-                "fullName": "",
+                "fullName": fullName,
                 "pleaBargain": $(".plea_bargain").val(),
                 "caseClassification": $(".classification").val(),
                 "criminalCaseNumber": $(".cc_no").val(),

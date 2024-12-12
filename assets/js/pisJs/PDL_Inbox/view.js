@@ -2,17 +2,18 @@
 
         var api = localStorage.getItem('api');
         var ___ctx = api;
-
-        var __getContext = function() {
-            return ___ctx;
-        };
+        console.log(___ctx)
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
 
+        var __getContext = function() {
+            return ___ctx;
+        };
+
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            path = __getContext() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -90,7 +91,37 @@
             
             return d.promise();
         };
-
+        var __executeFile = function(path, jsonObj) {
+            var d = $.Deferred();
+            $.ajax({
+                method: "POST",
+                url: path,
+                dataType: "json",
+                cache: false,
+                "mimeType": "multipart/form-data",
+                processData: false,
+                contentType: false,
+                /*data: JSON.stringify(jsonObj)*/
+                data: jsonObj
+            }).done(function (data, textStatus, jqXHR) {
+                d.resolve(data);
+                $(".loadDiv").hide();
+                $(".overlay-back").hide();
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('---FAILED---');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                console.log('---FAILED---');
+                
+                d.resolve({
+                    status : 'ERROR',
+                    message : errorThrown
+                });
+            });
+            return d.promise();
+        };
+        
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -108,6 +139,42 @@
         var id = GetURLParameter('id');
         var sent = GetURLParameter('sent');
 
+        var load_table = function(table_id, api){
+            $(`#${table_id} .table_head`).DataTable().destroy();
+            $(`#${table_id} .table_body`).empty();
+
+            __executeExternalGet(api).done(function (result) {
+                if (result.status != "ERROR") {
+                    result.files.forEach(function(data){
+                        let actions = "<a href="+api+'8080/file/view/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a> <a href="+api+'8080/file/download/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                        $(`#${table_id}`).append("<tr>"+
+                            "<td>"+data.id+"</td>"+
+                            "<td>"+data.fileName+"</td>"+
+                            "<td>"+data.version+"</td>"+
+                            "<td>"+"N/A"+"</td>"+
+                            "<td class='actions'> "+actions+"")
+                    });
+                    $(document).ready(function () {
+                        $(`#${table_id} .table_head tbody tr`).each(function (idx) {
+                           $(this).children("td:eq(0)").html(idx + 1);
+                        });
+                        var table = $(`#${table_id} .table_head`).DataTable({
+                            order: [[0, 'asc']],
+                            autoWidth: false,
+                            fixedColumns: true,
+                            "columnDefs": [
+                                { "width": "20%", "targets": 5 }
+                            ]
+                        });
+                        $(`#${table_id}`).on('shown.bs.tab', function () {
+                            table.columns.adjust();
+                        });
+                        // $('.dataTables_length').addClass('bs-select');
+                    });               
+                }
+            })
+        }
+
         var __fields = function(){
             if(sent){
                 $(".btn-forward").hide();
@@ -124,11 +191,11 @@
                     window.location.href=api+"/pis/pdl-receive";
                 })
             }
-            __executeExternalGet(___ctx+'8000/workflow/'+id).done(function (result) {
+            __executeExternalGet('8000/workflow/'+id).done(function (result) {
                 var result = result.response;
                 console.log(result)
                 if (result.status != "ERROR") {
-                    __executeExternalGet(___ctx+'8000/petitioner/'+result.petitionerId).done(function (resultPetitioner) {
+                    __executeExternalGet('8000/petitioner/'+result.petitionerId).done(function (resultPetitioner) {
                         var resultPetitioner = resultPetitioner.response;
                         console.log(resultPetitioner)
                         $(".firstName").text(resultPetitioner.firstName)
@@ -151,7 +218,31 @@
                         window.location.href=api+"/pis/pdl-return?transaction_number="+transaction_number+"&id="+result.id;
                     })
                     $(".btn-upload").unbind("click").on("click", function(){
-                        window.location.href=api+"/pis/pdl-upload?transaction_number="+transaction_number+"&id="+result.id;
+                        window.location.href=api+"/pis/pdl-upload?transaction_number="+transaction_number+"&id="+result.id+"&petitionerId="+result.petitionerId;
+                    })
+
+                    var api_table = `8080/file/list/investigation/${result.petitionerId}/0`
+                    load_table('inv_table', api_table)
+
+                    $("#inv_tab").unbind("click").on("click", function(){
+                        console.log("clicked inv")
+                        var api_table = `8080/file/list/investigation/${result.petitionerId}/0`
+                        load_table('inv_table', api_table)
+                    })
+                    $("#sup_tab").unbind("click").on("click", function(){
+                        console.log("clicked sup")
+                        var api_table = `8080/file/list/supervision/${result.petitionerId}/0`
+                        load_table('sup_table', api_table)
+                    })
+                    $("#rehab_tab").unbind("click").on("click", function(){
+                        console.log("clicked rehab")
+                        var api_table = `8080/file/list/rehabilitation/${result.petitionerId}/0`
+                        load_table('rehab_table', api_table)
+                    })
+                    $("#oth_tab").unbind("click").on("click", function(){
+                        console.log("clicked oth")
+                        var api_table = `8080/file/list/others/${result.petitionerId}/0`
+                        load_table('oth_table', api_table)
                     })
                 }else{
                     alert("failed")
@@ -161,7 +252,7 @@
         }
 
         var historyBody = function () {
-            __executeExternalGet(___ctx+'8000/workflow/history/'+transaction_number).done(function (result) {
+            __executeExternalGet('8000/workflow/history/'+transaction_number).done(function (result) {
                 var result = result.response
                 // console.log(result)
                 result.forEach(function(data, index){
@@ -253,36 +344,12 @@
         }
         // __fields();
 
-        var type = "PDL"
-        function fetchFiles() {
-            var file_uuid = "workflow_uploads_"+transaction_number;
-            const apiUrl = api+'8080/file/list/'+type+'/'+file_uuid+'/'+$.cookie('field_office_id');
-            $.ajax({
-                url: apiUrl,
-                type: 'GET',
-                dataType: 'json',
-                success: function(result) {
-                    var result = result.files;
-                    result.forEach(function(data, index){
-                        var table_id = index + 1;
-                        $('.table_body').append("<tr>"+
-                            "<td>"+table_id+"</td>"+
-                            "<td>"+data.kind+"</td>"+
-                            "<td>"+data.fileName+"</td>"+
-                            "<td>"+data.version+"</td>"+
-                            "<td class='options'><a href="+api+'8080/file/download/'+data.id+"><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a> <a href="+api+'8080/file/view/'+data.id+"><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a></td></tr>"
-                        )
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', status, error);
-                }
-            });
-        }
+
+
+
         $(document).ready(function(){
             // ___updateStatusUponViewingDocket();
             __fields();
-            fetchFiles();
             historyBody();
             // toggleRemarks();
         })

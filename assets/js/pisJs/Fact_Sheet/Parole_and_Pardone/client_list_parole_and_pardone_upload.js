@@ -191,35 +191,38 @@
                         console.log(result)
                         // console.log(client_id)
                         var name = result.firstName + " " + result.lastName;
-                        var api_table = `8080/file/list/${result.clientType}/${result.id + "_" + result.clientType + "_" + name + "_investigation"}/${$.cookie("field_office_id")}`
+                        var api_table = `8080/file/list/investigation/ppis_${client_id}/${officeId}`
+                        console.log(api_table)
                         load_table('inv_table', api_table)
 
-                        let file_uuid; // initialize the value of the uuid
+                        var file_uuid = `ppis_${client_id}`; // initialize the value of the uuid
+
                         // set the uuid if the type is change
-                        $('.type').change(function(){
-                            file_uuid = result.id + "_" + result.clientType + "_" + name + "_" + $(".type").val();
-                            console.log(file_uuid)
-                        });
+                        // $('.type').change(function(){
+                        //     file_uuid = result.id + "_" + result.clientType + "_" + name + "_" + $(".type").val();
+                        //     console.log(file_uuid)
+                        // });
+
 
                         // event handler when a tab is clicked
                         $("#inv_tab").unbind("click").on("click", function(){
                             console.log("clicked inv")
-                            var api_table = `8080/file/list/${result.clientType}/${result.id + "_" + result.clientType + "_" + name + "_investigation"}/${$.cookie("field_office_id")}`
+                            var api_table = `8080/file/list/investigation/ppis_${client_id}/${officeId}`
                             load_table('inv_table', api_table)
                         })
                         $("#sup_tab").unbind("click").on("click", function(){
                             console.log("clicked sup")
-                            var api_table = `8080/file/list/${result.clientType}/${result.id + "_" + result.clientType + "_" + name + "_supervision"}/${$.cookie("field_office_id")}`
+                            var api_table = `8080/file/list/supervision/ppis_${client_id}/${officeId}`
                             load_table('sup_table', api_table)
                         })
                         $("#rehab_tab").unbind("click").on("click", function(){
                             console.log("clicked rehab")
-                            var api_table = `8080/file/list/${result.clientType}/${result.id + "_" + result.clientType + "_" + name + "_rehabilitation"}/${$.cookie("field_office_id")}`
+                            var api_table = `8080/file/list/rehabilitation/ppis_${client_id}/${officeId}`
                             load_table('rehab_table', api_table)
                         })
                         $("#oth_tab").unbind("click").on("click", function(){
                             console.log("clicked oth")
-                            var api_table = `8080/file/list/${result.clientType}/${result.id + "_" + result.clientType + "_" + name + "_others"}/${$.cookie("field_office_id")}`
+                            var api_table = `8080/file/list/others/ppis_${client_id}/${officeId}`
                             load_table('oth_table', api_table)
                         })
 
@@ -233,9 +236,9 @@
                             else {
                                 var form = new FormData();
                                 form.append("file", fileToUpload, fileToUpload.name);
-
+                                // console.log(fileToUpload.name)
                                 var settings = {
-                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+result.clientType+"&createdby="+$.cookie('uuid')+"&version=0&kind="+"NONE"+"&officeId="+officeId,
+                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId,
                                     "method": "POST",
                                     "timeout": 0,
                                     "processData": false,
@@ -262,5 +265,6 @@
                 }else{
                     alert("failed")
                 }
-            }) 
+            })
+               
     } )( jQuery );

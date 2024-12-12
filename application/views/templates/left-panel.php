@@ -71,8 +71,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Inbox</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li style='display:none;' class="received"><i class="menu-icon fa fa-user"></i><a href="received">Probation</a></li>
-                        <li style='display:none;' class="received_pardonee"><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardone</a></li>
                         <li style='display:none;' class="received_parolee"><i class="menu-icon fa fa-user"></i><a href="received_parolee">Parole</a></li>
+                        <li style='display:none;' class="received_pardonee"><i class="menu-icon fa fa-user"></i><a href="received_pardonee">Pardone</a></li>
                         <li style='' class="from_tsd"><i class="menu-icon fa fa-user"></i><a href="pdl-receive">PDL</a></li>
                     </ul>
                 </li>

@@ -191,7 +191,7 @@
             var mname = $('.pb_client option:selected').data('mname');
             var lname = $('.pb_client option:selected').data('lname');
             var sname = $('.pb_client option:selected').data('sname');
-            var fullName = fname + mname + lname + sname;
+            var fullName = fname + " " + mname + " " + lname + " " + sname;
 
             const sentence = [];
             const sentence_inputs = $(".sentence");
@@ -217,7 +217,7 @@
             }
             var payload = {
                 "type"                  : "PIS_INV",
-                "docketNumber"          : "",
+                "docketNumber"          : $(".docket_number").val(),
                 "docketSeries"          : "NONE",
                 "caseloadType"          : $(".caseload").val(),
                 "fieldOfficeId"         : $(".field_office").val(),

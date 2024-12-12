@@ -168,6 +168,7 @@
                 var receivername = fname + " " + mname + " " + lname + " " + sname;
                 var payload = {
                     "type"                  : $('.type').val(),
+                    "transactionNumber"     : "",
                     "caseloadType"          : $(".caseload").val(),
                     "senderId"              : $.cookie("uuid"),
                     "senderFieldOfficeId"   : $.cookie('field_office_id'),

@@ -274,7 +274,8 @@
                         var mname = $('.pb_client option:selected').data('mname');
                         var lname = $('.pb_client option:selected').data('lname');
                         var sname = $('.pb_client option:selected').data('sname');
-                        var fullName = fname + mname + lname + sname;
+                        var fullName = fname + " " + mname + " " + lname + " " + sname;
+
 
                         var clientId = result.clientId;
                         const sentence = [];
