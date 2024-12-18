@@ -58,7 +58,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g PI-01012023" class="form-control docket_num_update" disabled></div>
                                 </div>
-                                <div class="form-row col-12">
+<!--                                 <div class="form-row col-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS ID</label></div>
                                         <div class="col-12 col-md-4"><input type="text" name="text-input" placeholder="CMIS ID" class="form-control cmis_id"></div>
@@ -71,7 +71,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-row col-12">
                                     <div class="form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>

@@ -61,20 +61,20 @@
                                             <div class="col-12 col-md-9"><input type="text" name="text-input" class="form-control docketNum_update"></div>
                                         </div>
                                     </div>
-                                    <div class="form-row col-12">
-                                            <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS ID</label></div>
-                                                <div class="col-12 col-md-4"><input type="text" name="text-input" placeholder="CMIS ID" class="form-control cmis_id"></div>
-                                                <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder="CMIS Name" class="form-control cmis_name" style="background-color: white;" readonly></div>
-                                            </div>
-                                            <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Field Office</label></div>
-                                                <div class="col-12 col-md-9">
-                                                    <select class="form-control cmis_fo select2" >
-                                                    </select>
-                                                </div>
+<!--                                     <div class="form-row col-12">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS ID</label></div>
+                                            <div class="col-12 col-md-4"><input type="text" name="text-input" placeholder="CMIS ID" class="form-control cmis_id"></div>
+                                            <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder="CMIS Name" class="form-control cmis_name" style="background-color: white;" readonly></div>
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Field Office</label></div>
+                                            <div class="col-12 col-md-9">
+                                                <select class="form-control cmis_fo select2" >
+                                                </select>
                                             </div>
                                         </div>
+                                    </div> -->
                                     <div class="form-row col-12">
                                         <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>

@@ -92,12 +92,12 @@
         let sentence_counter = 0;
 
         $('.plea_bargain').change(function(){
-            if ($('.plea_bargain').val() == "true") {
+            if ($('.plea_bargain').val() == "Yes") {
                 $(".class_sel").show();
             } else {
                 $(".class-sel").hide();
             }
-            if ($('.plea_bargain').val() == "false"){
+            if ($('.plea_bargain').val() == "No"){
             $(".class_sel").hide();
             } else {
                 $(".class_sel").show();
@@ -168,10 +168,11 @@
 
         var __selectclient = function(){
             $('.pb_client').empty();
-            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/petitioner/list?type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
                 if (result.status != "ERROR") {
+                    // console.log(result)
                     $('.pb_client').append("<option selected disabled>Select Client</option>");
-                    result.content.forEach(function(data){
+                    result.forEach(function(data){
                         var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
                         $('.pb_client').append(
                             '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
@@ -249,7 +250,7 @@
                 "status"                : 1,
                 "legalAge"              : $(".client_type").val(),
             }
-
+            console.log(payload)
             __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
