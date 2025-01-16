@@ -1,4 +1,5 @@
     ( function ( $ ) {
+        
         var api = localStorage.getItem('api');
         var ___ctx = api;
         console.log(___ctx)
@@ -133,247 +134,251 @@
                 }
             }
         }
+            var client_id = GetURLParameter('petitionerId');
+            var officeid = GetURLParameter('departmentId');
+            var client_type = GetURLParameter('client_type');
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
 
-        var transaction_number = GetURLParameter('transaction_number');
-        var id = GetURLParameter('id');
-        var fi = $.cookie("field_office_id");
-        var client_id = GetURLParameter("petitionerId")
-
-        var load_table = function(table_id, api){
-            $(`#${table_id} .table_head`).DataTable().destroy();
-            $(`#${table_id} .table_body`).empty();
-
-            __executeExternalGet(api).done(function (result) {
-                if (result.status != "ERROR") {
-                    result.files.forEach(function(data){
-                        let actions = "<a href="+api+'8080/file/view/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a> <a href="+api+'8080/file/download/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
-                        $(`#${table_id}`).append("<tr>"+
-                            "<td>"+data.id+"</td>"+
-                            "<td>"+data.fileName+"</td>"+
-                            "<td>"+data.version+"</td>"+
-                            "<td>"+"N/A"+"</td>"+
-                            "<td class='actions'> "+actions+"")
-                    });
-                    $(document).ready(function () {
-                        $(`#${table_id} .table_head tbody tr`).each(function (idx) {
-                           $(this).children("td:eq(0)").html(idx + 1);
-                        });
-                        var table = $(`#${table_id} .table_head`).DataTable({
-                            order: [[0, 'asc']],
-                            autoWidth: false,
-                            fixedColumns: true,
-                            "columnDefs": [
-                                { "width": "20%", "targets": 5 }
-                            ]
-                        });
-                        $(`#${table_id}`).on('shown.bs.tab', function () {
-                            table.columns.adjust();
-                        });
-                        // $('.dataTables_length').addClass('bs-select');
-                    });               
-                }
-            })
-        }
-        
-        // var __fields = function(){
-        //     __executeExternalGet(___ctx+'8000/workflow/'+id).done(function (result) {
-        //         var result = result.response;
-        //         console.log(result)
-        //         if (result.status != "ERROR") {
-        //             __executeExternalGet(___ctx+'8000/petitioner/'+id).done(function (resultPetitioner) {
-        //                 var resultPetitioner = resultPetitioner.response;
-        //                 console.log(resultPetitioner)
-        //                 var api_table = `8080/file/list/investigation/${id}/0`
-        //                 console.log(api_table)
-        //                 load_table('inv_table', api_table)
-
-        //                 var file_uuid = `${id}`; // initialize the value of the uuid
-
-        //                 $(".name").val(resultPetitioner.firstName+" "+resultPetitioner.lastName)
-
-        //                 $(".breadcrumbs_view_history").unbind("click").on("click", function(){
-        //                     window.location.href=api+"/pis/pdl-view-history?transaction_number="+transaction_number+'&id='+id;
-        //                 })
-
-        //                 // event handler when a tab is clicked
-        //                 $("#inv_tab").unbind("click").on("click", function(){
-        //                     console.log("clicked inv")
-        //                     var api_table = `8080/file/list/investigation/${id}/0`
-        //                     load_table('inv_table', api_table)
-        //                 })
-        //                 $("#sup_tab").unbind("click").on("click", function(){
-        //                     console.log("clicked sup")
-        //                     var api_table = `8080/file/list/supervision/${id}/0`
-        //                     load_table('sup_table', api_table)
-        //                 })
-        //                 $("#rehab_tab").unbind("click").on("click", function(){
-        //                     console.log("clicked rehab")
-        //                     var api_table = `8080/file/list/rehabilitation/ppis_${id}/0`
-        //                     load_table('rehab_table', api_table)
-        //                 })
-        //                 $("#oth_tab").unbind("click").on("click", function(){
-        //                     console.log("clicked oth")
-        //                     var api_table = `8080/file/list/others/ppis_${id}/0`
-        //                     load_table('oth_table', api_table)
-        //                 })
-
-        //                 // for uploading file
-        //                 $(".btn-confirm").unbind("click").on("click", function(){
-        //                     console.log("clicked upload confirm")
-        //                     var fileToUpload = $('#fileupload').prop('files')[0];
-        //                     if (fileToUpload === undefined) {
-        //                         alert("Please Choose File Before Upload!")
-        //                     }
-        //                     else {
-        //                         var form = new FormData();
-        //                         form.append("file", fileToUpload, fileToUpload.name);
-        //                         // console.log(fileToUpload.name)
-        //                         var settings = {
-        //                             "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId=0",
-        //                             "method": "POST",
-        //                             "timeout": 0,
-        //                             "processData": false,
-        //                             "mimeType": "multipart/form-data",
-        //                             "contentType": false,
-        //                             "data": form
-        //                         };
-
-        //                         $.ajax(settings).done(function (response) {
-        //                             console.log(response);
-        //                             if (response) {
-        //                                 $('#success_upload').show();
-        //                                 setTimeout(function () {
-        //                                     $('#success_upload').hide();
-        //                                     window.location.reload(true);
-        //                                 }, 1000);
-        //                             } else {
-
-        //                             }
-        //                         });
-        //                     }
-        //                 })
-        //             })
-        //         }else{
-        //             alert("failed")
-        //         }
-        //     })
-        // }
-        
-        // // var type = "PDL"
-        // // function fetchFiles() {
-        // //     var file_uuid = "workflow_uploads_"+transaction_number;
-        // //     const apiUrl = api+'8080/file/list/'+type+'/'+file_uuid+'/'+fi;
-        // //     $.ajax({
-        // //         url: apiUrl,
-        // //         type: 'GET',
-        // //         dataType: 'json',
-        // //         success: function(result) {
-        // //             var result = result.files;
-        // //             result.forEach(function(data, index){
-        // //                 var table_id = index + 1;
-        // //                 $('.table_body').append("<tr>"+
-        // //                     "<td>"+table_id+"</td>"+
-        // //                     "<td>"+data.kind+"</td>"+
-        // //                     "<td>"+data.fileName+"</td>"+
-        // //                     "<td>"+data.version+"</td>"+
-        // //                     "<td class='options'><a href="+api+'8080/file/download/'+data.id+"><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a> <a href="+api+'8080/file/view/'+data.id+"><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a></td></tr>"
-        // //                 )
-        // //             });
-        // //         },
-        // //         error: function(xhr, status, error) {
-        // //             console.error('Error:', status, error);
-        // //         }
-        // //     });
-        // // }
-
-        // $(document).ready(function(){
-        //     // fetchFiles();
-        //     __fields();
-        //     // fetchWorkflow();
-        // })
-
-        __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
-            if (result.status != "ERROR") {
-                var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
-                // console.log(fullname)
-                var officeId = result.departmentId;
-                // console.log(officeId);
-                // $(".uploader").prop('disabled', true);
-                __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
-                    var result = result.response;
-                    console.log(result)
-                    // console.log(id)
-                    var name = result.firstName + " " + result.lastName;
-                    $(".name").val(name);
-                    var api_table = `8080/file/list/investigation/${client_id}/0`
-                    console.log(api_table)
-                    load_table('inv_table', api_table)
-
-                    var file_uuid = `${client_id}`; // initialize the value of the uuid
-
-                    // event handler when a tab is clicked
-                    $("#inv_tab").unbind("click").on("click", function(){
-                        console.log("clicked inv")
-                        var api_table = `8080/file/list/investigation/${client_id}/0`
-                        load_table('inv_table', api_table)
-                    })
-                    $("#sup_tab").unbind("click").on("click", function(){   
-                        console.log("clicked sup")
-                        var api_table = `8080/file/list/supervision/${client_id}/0`
-                        load_table('sup_table', api_table)
-                    })
-                    $("#rehab_tab").unbind("click").on("click", function(){
-                        console.log("clicked rehab")
-                        var api_table = `8080/file/list/rehabilitation/${client_id}/0`
-                        load_table('rehab_table', api_table)
-                    })
-                    $("#oth_tab").unbind("click").on("click", function(){
-                        console.log("clicked oth")
-                        var api_table = `8080/file/list/others/${client_id}/0`
-                        load_table('oth_table', api_table)
-                    })
-
-                    // for uploading file
-                    $(".btn-confirm").unbind("click").on("click", function(){
-                        console.log("clicked upload confirm")
-                        var fileToUpload = $('#fileupload').prop('files')[0];
-                        if (fileToUpload === undefined) {
-                            alert("Please Choose File Before Upload!")
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
                         }
-                        else {
-                            var form = new FormData();
-                            form.append("file", fileToUpload, fileToUpload.name);
-                            // console.log(fileToUpload.name)
-                            var settings = {
-                                "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId=0",
-                                "method": "POST",
-                                "timeout": 0,
-                                "processData": false,
-                                "mimeType": "multipart/form-data",
-                                "contentType": false,
-                                "data": form
-                            };
+                    },
+                    {
+                        "data": 'fileName',
+                    },
+                    {
+                        "data": 'version'
+                    },
+                    {
+                        "data": 'remarks',
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName); // Group by fileName
+                            const latestVersion = Math.max(...rows.map(r => r.version)); // Find the latest version
 
-                            $.ajax(settings).done(function (response) {
-                                console.log(response);
-                                if (response) {
-                                    $('#success_upload').show();
-                                    setTimeout(function () {
-                                        $('#success_upload').hide();
-                                        window.location.reload(true);
-                                    }, 1000);
-                                } else {
+                            // Render the action buttons
+                            let actions = `
+                                <a href=${___ctx}8080/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${___ctx}8080/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
 
+                            // Add "Show All Versions" button only for the latest version
+                            if (rows.length > 1) {
+                                if (data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+                            }
+
+                            return actions;
+                        }
+                    }
+                ]
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                // Group rows by file name
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                // Hide all but the latest version for each group
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA; // Descending order
+                    });
+
+                    // Keep only the first row visible, hide the rest
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var load_table = function (type, uuid, officeId) {
+                if (!dataTable) {
+                    dataTable = $('.table_head').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": false,
+                        "searching": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${api}8080/file/page/${type}/${uuid}/${officeId}`, // Base URL remains the same
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                // Dynamically add the current 'type' parameter
+                                return {
+                                    page: d.start / d.length,  // Pagination
+                                    size: d.length,            // Page size
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                // Sort the data by fileName and then by version
+                                json.content.sort((a, b) => {
+                                    if (a.fileName === b.fileName) {
+                                        return b.version - a.version; // Sort versions in descending order within the same file name
+                                    }
+                                    return a.fileName.localeCompare(b.fileName); // Sort file names alphabetically
+                                });
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Call your function to get table columns
+                    });
+
+                    $('.table_head').on('draw.dt', function () {
+                        hideDuplicateRows();
+                    });
+                } else {
+                    // Update the AJAX URL and reload the DataTable
+                    dataTable.ajax.url(`${api}8080/file/page/${type}/${uuid}/${officeId}`).load();
+                }
+            }
+
+            __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
+                if (result.status != "ERROR") {
+                    var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
+                    // console.log(fullname)
+                    var officeId = result.departmentId;
+                    // console.log(officeId);
+                    $(".uploader").val(fullname);
+                    $(".uploader").prop('disabled', true);
+                    __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
+                        var result = result.response;
+                        console.log(result)
+                        // console.log(client_id)
+                        var name = result.firstName + " " + result.lastName;
+                        load_table('investigation', client_id, 0)
+
+                        var file_uuid = `${client_id}`; // initialize the value of the uuid
+
+                        // event handler when a tab is clicked
+                        $("#inv_tab").unbind("click").on("click", function(){
+                            console.log("clicked inv")
+                            load_table('investigation', client_id, 0)
+                        })
+                        $("#sup_tab").unbind("click").on("click", function(){
+                            console.log("clicked sup")
+                            load_table('supervision', client_id, 0)
+                        })
+                        $("#rehab_tab").unbind("click").on("click", function(){
+                            console.log("clicked rehab")
+                            load_table('rehabilitation', client_id, 0)
+                        })
+                        $("#oth_tab").unbind("click").on("click", function(){
+                            console.log("clicked oth")
+                            load_table('others', client_id, 0)
+                        })
+                        // event handler to toggle visibility
+                        $('.table_head').on('click', '.btn-showVersions', function () {
+                            const fileName = $(this).data('file_name');
+
+                            // Identify rows with the same file name and sort them by version
+                            let rows = [];
+                            $('.table_head tbody tr').each(function () {
+                                if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                                    rows.push($(this));
                                 }
                             });
-                        }
+
+                            // Sort rows by version in descending order
+                            rows.sort((a, b) => {
+                                const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
+                                const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                return versionB - versionA; // Descending
+                            });
+
+                            // Keep the first (latest) version visible and toggle visibility of others
+                            rows.forEach((row, index) => {
+                                if (index === 0) {
+                                    row.removeClass('hidden'); // Ensure the latest version is always visible
+                                } else {
+                                    row.toggleClass('hidden'); // Toggle visibility for other versions
+                                }
+                            });
+
+                            // Optional: Update button text/icon based on visibility
+                            const isHidden = rows.slice(1).some(row => row.hasClass('hidden')); // Check if any non-latest rows are hidden
+                            $(this).html(isHidden 
+                                ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                                : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                        });
+
+                        // for uploading file
+                        $(".btn-confirm").unbind("click").on("click", function(){
+                            console.log("clicked upload confirm")
+                            var fileToUpload = $('#fileupload').prop('files')[0];
+                            if (fileToUpload === undefined) {
+                                alert("Please Choose File Before Upload!")
+                            }
+                            else {
+                                var form = new FormData();
+                                form.append("file", fileToUpload, fileToUpload.name);
+                                // console.log(fileToUpload.name)
+                                var settings = {
+                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId=0&remarks="+$(".remarks").val(),
+                                    "method": "POST",
+                                    "timeout": 0,
+                                    "processData": false,
+                                    "mimeType": "multipart/form-data",
+                                    "contentType": false,
+                                    "data": form
+                                };
+
+                                $.ajax(settings).done(function (response) {
+                                    console.log(response);
+                                    if (response) {
+                                        $('#success_upload').show();
+                                        setTimeout(function () {
+                                            $('#success_upload').hide();
+                                            window.location.reload(true);
+                                        }, 1000);
+                                    } else {
+
+                                    }
+                                });
+                            }
+                        })
                     })
-                })
-            }else{
-                alert("failed")
-            }
-        })
-
-
-
+                }else{
+                    alert("failed")
+                }
+            })
+               
     } )( jQuery );

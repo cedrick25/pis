@@ -40,7 +40,7 @@
             </div>
         </div>
 
-	    <div class="content mt-3">
+        <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
@@ -54,15 +54,9 @@
                                         Successfully Uploaded 
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Uploader</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control name"  placeholder="Client Name" disabled />
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-12" style="display:none;">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control docket_num"  placeholder="Docket Number" disabled />
+                                        <input type="text" name="type" class="form-control uploader"  placeholder="e.g John Doe"/>
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
@@ -75,6 +69,12 @@
                                             <option value="rehabilitation">Rehabilitation</option>
                                             <option value="others">Others</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <textarea rows="2" cols="50" class="form-control remarks"></textarea>
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">         
@@ -91,16 +91,16 @@
                                 <!-- <strong class="card-title">Upload File</strong> -->
                                 <ul class="nav">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="inv_tab" href="#investigation_tab" data-toggle="tab" style="cursor: pointer;">Investigation</a>
+                                        <a class="nav-link active" id="inv_tab" href="#" data-toggle="tab" style="cursor: pointer;">Investigation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="sup_tab" href="#supervision_tab" data-toggle="tab" style="cursor: pointer;">Supervision</a>
+                                        <a class="nav-link" id="sup_tab" href="#" data-toggle="tab" style="cursor: pointer;">Supervision</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="rehab_tab" href="#rehabilitation_tab" data-toggle="tab" style="cursor: pointer;">Rehabilitation</a>
+                                        <a class="nav-link" id="rehab_tab" href="#" data-toggle="tab" style="cursor: pointer;">Rehabilitation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="oth_tab" href="#others_tab" data-toggle="tab" style="cursor: pointer;">Others</a>
+                                        <a class="nav-link" id="oth_tab" href="#" data-toggle="tab" style="cursor: pointer;">Others</a>
                                     </li>
                                 </ul>
                                 <!-- <button class="btn btn-primary upload btn-sm ml-auto" type="submit"><i class="fa fa-upload"></i> Upload Document</button> -->
@@ -108,46 +108,7 @@
                             <div class="card-body">
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="investigation_tab" role="tabpanel" aria-labelledby="home-tab">
-                                        <table id="inv_table" class="table table_head" width="100%">
-                                            <thead>
-                                                <th>#</th>
-                                                <th>File Name</th>
-                                                <th>Version</th>
-                                                <th>Remarks</th>
-                                                <th>Actions</th>
-                                            </thead>
-                                            <tbody class="table_body">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane fade" id="supervision_tab" role="tabpanel" aria-labelledby="home-tab">
-                                        <table id="sup_table" class="table table_head" width="100%">
-                                            <thead>
-                                                <th>#</th>
-                                                <th>File Name</th>
-                                                <th>Version</th>
-                                                <th>Remarks</th>
-                                                <th>Actions</th>
-                                            </thead>
-                                            <tbody class="table_body">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane fade" id="rehabilitation_tab" role="tabpanel" aria-labelledby="home-tab">
-                                        <table id="rehab_table" class="table table_head" width="100%">
-                                            <thead>
-                                                <th>#</th>
-                                                <th>File Name</th>
-                                                <th>Version</th>
-                                                <th>Remarks</th>
-                                                <th>Actions</th>
-                                            </thead>
-                                            <tbody class="table_body">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane fade" id="others_tab" role="tabpanel" aria-labelledby="home-tab">
-                                        <table id="oth_table" class="table table_head" width="100%">
+                                        <table id="" class="table table_head" width="100%">
                                             <thead>
                                                 <th>#</th>
                                                 <th>File Name</th>

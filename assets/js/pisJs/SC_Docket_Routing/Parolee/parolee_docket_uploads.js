@@ -138,6 +138,7 @@
     var type = GetURLParameter('type');
     var id = GetURLParameter('id');
     var fi = $.cookie("field_office_id");
+    var dataTable = null; // Initialize the variable globally to store the DataTable instance
 
     function storeData(postUrl, postData) {
         $.ajax({
@@ -249,193 +250,245 @@
                 }
             });
     }
-    var load_table = function(table_id, api){
-        $(`#${table_id} .table_head`).DataTable().destroy();
-        $(`#${table_id} .table_body`).empty();
 
-        __executeExternalGet(api).done(function (result) {
-            if (result.status != "ERROR") {
-                result.files.forEach(function(data){
-                    let actions = "<a href="+api+'8080/file/view/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a> <a href="+api+'8080/file/download/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
-                    $(`#${table_id}`).append("<tr>"+
-                        "<td>"+data.id+"</td>"+
-                        "<td>"+data.fileName+"</td>"+
-                        "<td>"+data.version+"</td>"+
-                        "<td>"+"N/A"+"</td>"+
-                        "<td class='actions'> "+actions+"")
-                });
-                $(document).ready(function () {
-                    $(`#${table_id} .table_head tbody tr`).each(function (idx) {
-                       $(this).children("td:eq(0)").html(idx + 1);
-                    });
-                    var table = $(`#${table_id} .table_head`).DataTable({
-                        order: [[0, 'asc']],
-                        autoWidth: false,
-                        fixedColumns: true,
-                        "columnDefs": [
-                            { "width": "20%", "targets": 5 }
-                        ]
-                    });
-                    $(`#${table_id}`).on('shown.bs.tab', function () {
-                        table.columns.adjust();
-                    });
-                    // $('.dataTables_length').addClass('bs-select');
-                });               
+    function tableColumns() {
+        return [
+            {
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return meta.settings._iDisplayStart + meta.row + 1;
+                }
+            },
+            {
+                "data": 'fileName',
+            },
+            {
+                "data": 'version'
+            },
+            {
+                "data": 'remarks',
+            },
+            {
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName); // Group by fileName
+                    const latestVersion = Math.max(...rows.map(r => r.version)); // Find the latest version
+
+                    // Render the action buttons
+                    let actions = `
+                        <a href=${___ctx}8080/file/view/${data.id} target='_blank'>
+                            <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <i class='fa fa-eye'></i> View
+                            </button>
+                        </a>
+                        <a href=${___ctx}8080/file/download/${data.id} target='_blank'>
+                            <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <i class='fa fa-download'></i> Download
+                            </button>
+                        </a>
+                    `;
+
+                    // Add "Show All Versions" button only for the latest version
+                    if (rows.length > 1) {
+                        if (data.version === latestVersion) {
+                            actions += `
+                                <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                    <i class='fa fa-angle-down'></i> Show All Versions
+                                </button>
+                            `;
+                        }
+                    }
+
+                    return actions;
+                }
             }
-        })
+        ]
     }
-    var __fields = function(){
-        // __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
-        //     var result = result.response;
-        //     if (result.status != "ERROR") {
-        //         $(".type").html(result.clientType);
-        //         $(".docket_number").html(result.docketNumber);
+    function hideDuplicateRows() {
+        let fileGroups = {};
+        
+        // Group rows by file name
+        $('.table_head tbody tr').each(function () {
+            const fileName = $(this).find('td:eq(1)').text().trim();
+            if (!fileGroups[fileName]) {
+                fileGroups[fileName] = [];
+            }
+            fileGroups[fileName].push($(this));
+        });
 
-        //         $(".btn-confirm").unbind("click").on("click", function(){
-        //             var fileToUpload = $('#fileupload').prop('files')[0];
+        // Hide all but the latest version for each group
+        for (let fileName in fileGroups) {
+            const rows = fileGroups[fileName];
+            rows.sort((a, b) => {
+                const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
+                const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                return versionB - versionA; // Descending order
+            });
 
-        //             if (fileToUpload === undefined) {
-        //                 alert("Please Choose File Before Upload!")
-        //             }else {
-        //                 var form = new FormData();
-        //                 form.append("file", fileToUpload, fileToUpload.name);
-
-        //                 var settings = {
-        //                     "url": api+"8080/file/upload?uuid=workflow_uploads_"+result.docketNumber+"&type="+result.type+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+fi,
-        //                     "method": "POST",
-        //                     "timeout": 0,
-        //                     "processData": false,
-        //                     "mimeType": "multipart/form-data",
-        //                     "contentType": false,
-        //                     "data": form
-        //                 };
-
-        //                 $.ajax(settings).done(function (response) {
-        //                     if (response) {
-        //                         $('#success_upload').show();
-        //                         setTimeout(function () {
-        //                             $('#success_upload').hide();
-        //                             window.location.reload(true);
-        //                         }, 2000);
-        //                     } else {
-
-        //                     }
-        //                 });
-        //             }
-        //         })
-        //     }else{
-        //         alert("failed")
-        //     }
-        // })
-
-        __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (resultUser) {
-            if (resultUser.status != "ERROR") {
-                var fullname = resultUser.firstName+" "+resultUser.middleName+" "+resultUser.lastName+" "+resultUser.suffix; 
-                var officeId = resultUser.departmentId;
-                console.log(resultUser)
-                __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
-                    var result = result.response;
-                    console.log(result)
-                    if (result.status != "ERROR") {
-                        $(".name").val(result.fullName);
-                        $(".docket_num").val(result.docketNumber);
-
-                        var file_uuid = `${docket_number}`; // initialize the value of the uuid
-                        var api_table = `8080/file/list/investigation/${docket_number}/${officeId}`
-                        console.log(api_table)
-                        load_table('inv_table', api_table)
-
-                        // event handler when a tab is clicked
-                        $("#inv_tab").unbind("click").on("click", function(){
-                            console.log("clicked inv")
-                            var api_table = `8080/file/list/investigation/${docket_number}/${officeId}`
-                            load_table('inv_table', api_table)
-                        })
-                        $("#sup_tab").unbind("click").on("click", function(){   
-                            console.log("clicked sup")
-                            var api_table = `8080/file/list/supervision/${docket_number}/${officeId}`
-                            load_table('sup_table', api_table)
-                        })
-                        $("#rehab_tab").unbind("click").on("click", function(){
-                            console.log("clicked rehab")
-                            var api_table = `8080/file/list/rehabilitation/${docket_number}/${officeId}`
-                            load_table('rehab_table', api_table)
-                        })
-                        $("#oth_tab").unbind("click").on("click", function(){
-                            console.log("clicked oth")
-                            var api_table = `8080/file/list/others/${docket_number}/${officeId}`
-                            load_table('oth_table', api_table)
-                        })
-
-                        $(".btn-confirm").unbind("click").on("click", function(){
-                            var fileToUpload = $('#fileupload').prop('files')[0];
-
-                            if (fileToUpload === undefined) {
-                                alert("Please Choose File Before Upload!")
-                            }else {
-                                var form = new FormData();
-                                form.append("file", fileToUpload, fileToUpload.name);
-
-                                var settings = {
-                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId,
-                                    "method": "POST",
-                                    "timeout": 0,
-                                    "processData": false,
-                                    "mimeType": "multipart/form-data",
-                                    "contentType": false,
-                                    "data": form
-                                };
-
-                                $.ajax(settings).done(function (response) {
-                                    if (response) {
-                                        $('#success_upload').show();
-                                        setTimeout(function () {
-                                            $('#success_upload').hide();
-                                            window.location.reload(true);
-                                        }, 2000);
-                                    } else {
-
-                                    }
-                                });
+            // Keep only the first row visible, hide the rest
+            rows.slice(1).forEach(row => row.addClass('hidden'));
+        }
+    }
+    var load_table = function (type, uuid, officeId) {
+        if (!dataTable) {
+            dataTable = $('.table_head').DataTable({
+                "processing": false,
+                "serverSide": true,
+                "scrollX": false,
+                "searching": false,
+                "lengthMenu": [10, 25, 50, 100],
+                "pageLength": 10,
+                "columnDefs": [
+                    { "width": "5%", "targets": [0] },
+                    { "width": "20%", "targets": [1] },
+                    { "width": "15%", "targets": [2] },
+                    { "width": "25%", "targets": [3] },
+                    { "width": "35%", "targets": [4] },
+                ],
+                ajax: {
+                    url: `${api}8080/file/page/${type}/${uuid}/${officeId}`, // Base URL remains the same
+                    type: 'GET',
+                    cache: true,
+                    data: function (d) {
+                        // Dynamically add the current 'type' parameter
+                        return {
+                            page: d.start / d.length,  // Pagination
+                            size: d.length,            // Page size
+                        };
+                    },
+                    dataFilter: function (data) {
+                        var json = jQuery.parseJSON(data);
+                        // Sort the data by fileName and then by version
+                        json.content.sort((a, b) => {
+                            if (a.fileName === b.fileName) {
+                                return b.version - a.version; // Sort versions in descending order within the same file name
                             }
-                        })
-                    }else{
-                        alert("failed")
+                            return a.fileName.localeCompare(b.fileName); // Sort file names alphabetically
+                        });
+                        json.recordsTotal = json.totalElements;
+                        json.recordsFiltered = json.totalElements;
+                        json.data = json.content;
+                        return JSON.stringify(json);
+                    }
+                },
+                columns: tableColumns() // Call your function to get table columns
+            });
+
+            $('.table_head').on('draw.dt', function () {
+                hideDuplicateRows();
+            });
+        } else {
+            // Update the AJAX URL and reload the DataTable
+            dataTable.ajax.url(`${api}8080/file/page/${type}/${uuid}/${officeId}`).load();
+        }
+    }
+    __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
+        if (result.status != "ERROR") {
+            var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
+            var officeId = result.departmentId;
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
+                var result = result.response;
+                console.log(result)
+
+                $(".name").val(result.fullName);
+                $(".docket_num").val(result.docketNumber)
+
+                load_table('investigation', result.docketNumber, officeId)
+
+                // event handler when a tab is clicked
+                $("#inv_tab").unbind("click").on("click", function(){
+                    console.log("clicked inv")
+                    load_table('investigation', result.docketNumber, officeId)
+                })
+                $("#sup_tab").unbind("click").on("click", function(){
+                    console.log("clicked sup")
+                    load_table('supervision', result.docketNumber, officeId)
+                })
+                $("#rehab_tab").unbind("click").on("click", function(){
+                    console.log("clicked rehab")
+                    load_table('rehabilitation', result.docketNumber, officeId)
+                })
+                $("#oth_tab").unbind("click").on("click", function(){
+                    console.log("clicked oth")
+                    load_table('others', result.docketNumber, officeId)
+                })
+
+                // event handler to toggle visibility
+                $('.table_head').on('click', '.btn-showVersions', function () {
+                    const fileName = $(this).data('file_name');
+
+                    // Identify rows with the same file name and sort them by version
+                    let rows = [];
+                    $('.table_head tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    // Sort rows by version in descending order
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA; // Descending
+                    });
+
+                    // Keep the first (latest) version visible and toggle visibility of others
+                    rows.forEach((row, index) => {
+                        if (index === 0) {
+                            row.removeClass('hidden'); // Ensure the latest version is always visible
+                        } else {
+                            row.toggleClass('hidden'); // Toggle visibility for other versions
+                        }
+                    });
+
+                    // Optional: Update button text/icon based on visibility
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden')); // Check if any non-latest rows are hidden
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                // for uploading file
+                $(".btn-confirm").unbind("click").on("click", function(){
+                    console.log("clicked upload confirm")
+                    var fileToUpload = $('#fileupload').prop('files')[0];
+                    if (fileToUpload === undefined) {
+                        alert("Please Choose File Before Upload!")
+                    }
+                    else {
+                        var form = new FormData();
+                        form.append("file", fileToUpload, fileToUpload.name);
+                        // console.log(fileToUpload.name)
+                        var settings = {
+                            "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".remarks").val(),
+                            "method": "POST",
+                            "timeout": 0,
+                            "processData": false,
+                            "mimeType": "multipart/form-data",
+                            "contentType": false,
+                            "data": form
+                        };
+
+                        $.ajax(settings).done(function (response) {
+                            console.log(response);
+                            if (response) {
+                                $('#success_upload').show();
+                                setTimeout(function () {
+                                    $('#success_upload').hide();
+                                    window.location.reload(true);
+                                }, 1000);
+                            } else {
+
+                            }
+                        });
                     }
                 })
-            }
-        })
-    }
-
-    function fetchFiles() {
-        var file_uuid = "workflow_uploads_"+docket_number;
-        const apiUrl = api+'8080/file/list/'+type+'/'+file_uuid+'/'+fi;
-        $.ajax({
-            url: apiUrl,
-            type: 'GET',
-            dataType: 'json',
-            success: function(result) {
-                var result = result.files;
-                result.forEach(function(data, index){
-                    var table_id = index + 1;
-                    $('.table_body').append("<tr>"+
-                        "<td>"+table_id+"</td>"+
-                        "<td>"+data.kind+"</td>"+
-                        "<td>"+data.fileName+"</td>"+
-                        "<td>"+data.version+"</td>"+
-                        "<td class='options'><a href="+api+'8080/file/view/'+data.id+" target='_blank'><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a> <a href="+api+'8080/file/download/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a> </td></tr>"
-                    )
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', status, error);
-            }
-        });
-    }
-
+            })
+        }else{
+            alert("failed")
+        }
+    })
     $(document).ready(function(){
-        fetchFiles();
-        __fields();
         fetchWorkflow();
     })
 
