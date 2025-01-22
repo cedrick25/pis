@@ -226,7 +226,7 @@
                 }
                 var postData = {
                     "type": data.type,
-                    "transactionNumber": data.transactionNumber
+                    "transactionNumber": data.transactionNumber,
                     "caseloadType": data.caseloadType,
                     "senderId": data.senderId,
                     "senderName": data.senderName,
