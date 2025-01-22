@@ -132,9 +132,10 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-create btn-upload float-right"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</button>
-                                <button type="button" class="btn btn-sm btn-danger waves-effect btn-create btn-return float-right mx-2"><i class="fa fa-undo"></i>&nbsp;&nbsp;Return</button>
-                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-create btn-forward float-right"><i class="fa fa-forward"></i>&nbsp;&nbsp;Forward</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-complete float-right mx-2"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Complete</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-upload float-right"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</button>
+                                <button type="button" class="btn btn-sm btn-danger waves-effect btn-return float-right mx-2"><i class="fa fa-undo"></i>&nbsp;&nbsp;Return</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-forward float-right"><i class="fa fa-forward"></i>&nbsp;&nbsp;Forward</button>
                             </div>
                         </div>
                     </div>

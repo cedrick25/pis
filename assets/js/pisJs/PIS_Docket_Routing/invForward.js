@@ -104,39 +104,62 @@
             }
         }
 
-        var __userDropdownForForwarding = function (dep_id, userId, roleId, secRoleId) {
-            __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
+        // var __userDropdownForForwarding = function (dep_id, userId, roleId, secRoleId) {
+        //     __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
+        //         if (result.status != "ERROR") {
+        //             $(".user_display").show()
+        //             $('.user_account').append("<option selected disabled>Select User Account</option>");
+        //             if (userId == $.cookie('role_id')) {
+        //                 result.forEach(function(data){
+        //                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+        //                     if (userId == "32") {
+        //                         if (data.roleId == roleId || data.roleId == secRoleId){
+                                    // $('.user_account').append(
+                                    //     '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
+                                    // );   
+        //                         }
+        //                     } else if (userId == "14" || userId == "4"){
+        //                         if (data.roleId == roleId){
+        //                             $('.user_account').append(
+        //                                 '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
+        //                             );   
+        //                         }
+        //                     } else {
+        //                         $('.user_account').append(
+        //                             '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
+        //                         );
+        //                     }
+        //                 });
+        //             }
+        //         } else {
+        //             console.log("failed fetching user list")
+        //             $(".user_display").hide()
+        //         }
+        //     });
+        // }
+
+        var filterUserByRoleId = function (roleId, depId) {
+            __executeExternalGet(___ctx+'8088/user/list/'+depId).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".user_display").show()
                     $('.user_account').append("<option selected disabled>Select User Account</option>");
-                    if (userId == $.cookie('role_id')) {
-                        result.forEach(function(data){
-                            var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
-                            if (userId == "32") {
-                                if (data.roleId == roleId || data.roleId == secRoleId){
-                                    $('.user_account').append(
-                                        '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
-                                    );   
-                                }
-                            } else if (userId == "14" || userId == "4"){
-                                if (data.roleId == roleId){
-                                    $('.user_account').append(
-                                        '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
-                                    );   
-                                }
-                            } else {
-                                $('.user_account').append(
-                                    '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
-                                );
-                            }
-                        });
-                    }
+                    result.forEach(function(data){
+                        var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+                        // if (roleId === "32") {
+                        //     if (data.roleid == "")
+                        // }
+                        $('.user_account').append(
+                            '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
+                        ); 
+                    });
                 } else {
                     console.log("failed fetching user list")
                     $(".user_display").hide()
                 }
             });
         }
+
+
 
         var __select = function(){
             $('.field_office').empty();
@@ -154,19 +177,20 @@
                         var userId = $.cookie('role_id');
                         var roleId;
                         var secRoleId;
-                        if (userId == "14") {
-                            roleId = "32"
-                            __userDropdownForForwarding(dep_id, userId, roleId)
-                        } else if (userId == "32") {
-                            roleId = "4"
-                            secRoleId = "14"
-                            __userDropdownForForwarding(dep_id, userId, roleId, secRoleId)
-                        } else if (userId == "4") {
-                            roleId = "32"
-                            __userDropdownForForwarding(dep_id, userId, roleId)
-                        } else {
-                            __userDropdownForForwarding(dep_id, userId, roleId)
-                        }
+                        filterUserByRoleId(roleId, dep_id)
+                        // if (userId == "14") {
+                        //     roleId = "32"
+                        //     __userDropdownForForwarding(dep_id, userId, roleId)
+                        // } else if (userId == "32") {
+                        //     roleId = "4"
+                        //     secRoleId = "14"
+                        //     __userDropdownForForwarding(dep_id, userId, roleId, secRoleId)
+                        // } else if (userId == "4") {
+                        //     roleId = "32"
+                        //     __userDropdownForForwarding(dep_id, userId, roleId)
+                        // } else {
+                        //     __userDropdownForForwarding(dep_id, userId, roleId)
+                        // }
                     });
                 } else {
                     console.log("failed fetching department list")
@@ -226,7 +250,7 @@
                     }
                     var postData = {
                         "type": data.type,
-                        "transactionNumber": data.transactionNumber
+                        "transactionNumber": data.transactionNumber,
                         "caseloadType": data.caseloadType,
                         "senderId": data.senderId,
                         "senderName": data.senderName,
@@ -255,7 +279,7 @@
                         function postDatas() {
                             return {
                                 "type"                  : data.type,
-                                "transactionNumber"     : data.transactionNumber
+                                "transactionNumber"     : data.transactionNumber,
                                 "caseloadType"          : data.caseloadType,
                                 "senderFieldOfficeId"   : $.cookie('field_office_id'),
                                 "senderFieldOfficeName" : $.cookie('departmentName'),

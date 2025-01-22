@@ -56,6 +56,14 @@
                                         </select>
                                     </div>
                                 </div>
+<!--                                 <div class="row form-group col-md-12 user_display">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Role</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select name="select" id="" class="form-control user_role select2">
+                                            <option value="" selected disabled>Select User Role</option>
+                                        </select>
+                                    </div>
+                                </div> -->
                                 <div class="row form-group col-md-12 user_display">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Account</label></div>
                                     <div class="col-12 col-md-9">

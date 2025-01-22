@@ -95,14 +95,11 @@
         function tableColumns() {
             return [
                 {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        if (data.id == null){
-                            return "No id";
-                        } else {
-                            return data.id;
-                        }
-                    }
+                    data: null,
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.settings._iDisplayStart + meta.row + 1;
+                    },
                 },
                 {
                     "data": null,
@@ -139,25 +136,25 @@
                             case "ACTIVE":
                                 switch (row.isLocked){
                                     case true:
-                                        return "<button class='btn btn-primary btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-success btn_lift userLift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data+"'><i class='fa fa-unlock'></i> Lift</button>";
+                                        return "<button class='btn btn-primary btn-sm btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-success btn-sm btn_lift userLift' type='submit' data-toggle='modal' data-target='#liftModal' data-id='"+data+"'><i class='fa fa-unlock'></i> Lift</button>";
                                         break;
                                     case false:
-                                        return "<button class='btn btn-primary btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-danger btn_deact userDeactivate' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-danger btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-danger btn_restrict userRestrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data+"'><i class='fa fa-lock'></i> Restrict</button>";
+                                        return "<button class='btn btn-primary btn-sm btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-danger btn-sm btn_deact userDeactivate' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-danger btn-sm btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-danger btn-sm btn_restrict userRestrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data+"'><i class='fa fa-lock'></i> Restrict</button>";
                                         break;
                                     default:
-                                        return "<button class='btn btn-primary btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-danger btn_deact userDeactivate' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-danger btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-danger btn_restrict userRestrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data+"'><i class='fa fa-lock'></i> Restrict</button>";
+                                        return "<button class='btn btn-primary btn-sm btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-danger btn-sm btn_deact userDeactivate' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-danger btn-sm btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-danger btn-sm btn_restrict userRestrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data+"'><i class='fa fa-lock'></i> Restrict</button>";
                                         break;
                                 };
                                 break;
                             case "INACTIVE":
-                                return "<button class='btn btn-primary btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-success btn_activate userActivate' type='submit' data-toggle='modal' data-target='#activateModal' data-id='"+data+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-danger btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>";
+                                return "<button class='btn btn-primary btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-success btn_activate btn-sm userActivate' type='submit' data-toggle='modal' data-target='#activateModal' data-id='"+data+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-danger btn-sm btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>";
                                 break;
                             case "REMOVED":
                                 var status = "REMOVED";
                                 return status;
                                 break;
                             default:
-                                return "<button class='btn btn-primary btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-danger btn_deact userDeactivate' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-danger btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-danger btn_restrict userRestrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data+"'><i class='fa fa-lock'></i> Restrict</button>";
+                                return "<button class='btn btn-primary btn-sm btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-danger btn-sm btn_deact userDeactivate' type='submit' data-toggle='modal' data-target='#deactivateModal' data-id='"+data+"'><i class='fa fa-ban'></i> Deactivate</button> <button class='btn btn-danger btn-sm btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-danger btn-sm btn_restrict userRestrict' type='submit' data-toggle='modal' data-target='#restrictModal' data-id='"+data+"'><i class='fa fa-lock'></i> Restrict</button>";
                                 break;
                         };
                     }
@@ -375,16 +372,23 @@
             })
         }
 
-        function drawTable(name) {
+        function drawTable() {
             $(document).ready(function(){
                 $('.table_head').DataTable({
                     "processing": true,
                     "serverSide": true,
                     "scrollX": true,
-                    "lengthChange": false,
-                    "searching": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "searching": true,
                     "columnDefs": [
-                        { "width": "20%", "targets": 7 }
+                        { "width": "5%", "targets": 0 },
+                        { "width": "15%", "targets": 1 },
+                        { "width": "10%", "targets": 3 },
+                        { "width": "15%", "targets": 4 },
+                        { "width": "15%", "targets": 5 },
+                        { "width": "7%", "targets": 6 },
+                        { "width": "33%", "targets": 7 }
                     ],
                     ajax: {
                         url: api+'8088/user',
@@ -393,7 +397,7 @@
                             return {
                                 page: d.start / d.length,
                                 size: d.length,
-                                name: searchBarContent,
+                                name: name,
                             };
                         },
                         dataFilter: function(data){
@@ -412,17 +416,17 @@
             })
         }
 
-        const searchBarValue = document.getElementById('searchBar');
-        let searchBarContent;
+        // const searchBarValue = document.getElementById('searchBar');
+        // let searchBarContent;
 
-        searchBarValue.addEventListener('keyup', function() {
-            searchBarContent = searchBarValue.value;
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
-            drawTable(searchBarContent);
-        });
+        // searchBarValue.addEventListener('keyup', function() {
+        //     searchBarContent = searchBarValue.value;
+        //     $('.table_head').DataTable().destroy();
+        //     $('.table_body').empty();
+        //     drawTable(searchBarContent);
+        // });
 
-        drawTable(searchBarContent);
+        drawTable();
 
         var checkbox = document.getElementsByClassName("middleNameCheck")[0];
         checkbox.addEventListener("change", toggleCheckbox);

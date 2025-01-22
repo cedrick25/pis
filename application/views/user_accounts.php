@@ -347,9 +347,9 @@
                                 <strong class="card-title">User Account List</strong>
                                 <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add User Account</button>
                             </div>
-                            <div class="dataTables_filter">
+<!--                             <div class="dataTables_filter">
                                 <label style=" display: inline-flex; margin-left: 5px; margin-right: 20px; margin-top: 25px" class="float-right" >Search:<input type="search" class="form-control form-control-sm searchBar" id= "searchBar" placeholder="Search Name" style="margin-left: 7px"></label>
-                            </div>
+                            </div> -->
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">
                                     <thead>
