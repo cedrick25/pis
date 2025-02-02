@@ -88,6 +88,7 @@
             return d.promise();
         };
 
+
         function buttonVisibility (){
             var data = JSON.parse(localStorage.getItem('permission'));
             if (data != null) {
@@ -124,7 +125,7 @@
                 $(".docket").html(docket_number)
                 $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                    __executeExternalPost(___ctx+'8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
+                    __executeExternalPost('8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
                         if (result.status != "ERROR") {
                                 $(".form-control").val('');
                                 $('#success_remove').show();
