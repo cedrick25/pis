@@ -18,7 +18,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="sent">Sent</a></li>
+                            <li><a href="" class="sent_href">Sent</a></li>
                             <li class="active">View</li>
                         </ol>
                     </div>
