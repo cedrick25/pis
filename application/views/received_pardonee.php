@@ -132,7 +132,7 @@
                                                 <th>Field Office</th>
                                                 <th>Details</th>
                                                 <th>Sender</th>
-                                                <!-- <th>Status</th> -->
+                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </thead>
                                             <tbody class="table_body">

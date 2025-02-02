@@ -130,7 +130,7 @@
                         console.log(data)
                         var fullname = data.firstName+" "+data.lastName+" ";
                         $('.pdl_client').append(
-                            "<option value="+data.id+">"+fullname+"</option>");
+                        `<option value="${data.id}" data-fname="${data.firstName}" data-mname="${data.middleName}" data-lname="${data.lastName}" data-sname="${data.suffix}"> ${fullname} </option>`);
                     });
 
                 } else {
@@ -139,6 +139,8 @@
             })
 
             var originFieldOfficeId = $.cookie('field_office_id');
+            var user_name = localStorage.getItem("userName");
+            console.log(user_name)
 
             $(".btn-confirm_forward").unbind("click").on("click", function(){
                 
@@ -170,19 +172,19 @@
                     "petitionerId"          : $(".pdl_client").val(),
                     "caseloadType"          : "",
                     "senderId"              : $.cookie("uuid"),
-                    "senderName"            : "",
+                    "senderName"            : user_name,
                     "senderFieldOfficeId"   : $.cookie('field_office_id'),
                     "senderFieldOfficeName" : "",
                     "originFieldOfficeId"   : originFieldOfficeId,
                     "originFieldOfficeName" : "",
                     "receiverId"            : $(".user_account").val(),
-                    "receiverName"          : "",
+                    "receiverName"          : receivername,
                     "fieldOfficeId"         : $(".field_office").val(),
                     "fieldOfficeName"       : "",
                     "docketNumber"          : "",
                     "details"               : $(".details").val(),
                     "remarks"               : $(".subject").val(),
-                    "approvalStatus"        : "New - (Forwarded to PO)",
+                    "approvalStatus"        : "NEW",
                     "lastStatusUpdateDate"  : "",
                     "id"                    : "",
                     "createdBy"             : "",

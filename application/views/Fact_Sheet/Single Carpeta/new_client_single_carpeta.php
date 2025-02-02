@@ -44,7 +44,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">Update PDL Details</strong>
+                                <strong class="card-title">Create PDL Details</strong>
                                 <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
                             <div class="card-body">

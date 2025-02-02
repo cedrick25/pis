@@ -262,11 +262,12 @@
                     "pageLength": 10,
                     "columnDefs": [
                         { "width": "5%", "targets": [0] },
-                        { "width": "15%", "targets": [1] },
+                        { "width": "12%", "targets": [1] },
                         { "width": "15%", "targets": [2] },
                         { "width": "15%", "targets": [3] },
-                        { "width": "15%", "targets": [4] },
-                        { "width": "35%", "targets": [5] }
+                        { "width": "13%", "targets": [4] },
+                        { "width": "10%", "targets": [5] },
+                        { "width": "30%", "targets": [6] }
                         // { "width": "35%", "targets": [6] }
                     ],
                     ajax: {
@@ -328,11 +329,20 @@
                     "data": 'senderName'
                 },
                 {
+                    "data": 'approvalStatus'
+                },
+                {
                     "data": null,
                     render: function(data, type, row) {
                         console.log(data)
                         switch (data.approvalStatus) {
                             case "COMPLETED":
+                                // var actions = "<button class='btn btn-sm btn-info pr_inbox_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button>";
+                                // if ($.cookie("role_id") == "72") {
+                                //     return "<h5> This docket is completed </h5>"
+                                // } else {
+                                //     return actions;
+                                // }
                                 var actions = "<h5>This Docket is Completed</h5>";
                                 return actions;
                                 break;

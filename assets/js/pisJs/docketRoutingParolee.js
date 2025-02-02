@@ -95,10 +95,11 @@
                 const type = this.value
                 __executeExternalGet(___ctx+'8000/docketbook/list/'+type+"/"+$.cookie("field_office_id")).done(function (result) {
                     if (result.status != "ERROR") {
+                        $(".docket_num").empty();
                         $('.docket_num').append("<option selected disabled>Select Docket Number</option>");
                         result.response.forEach(function(data){
                             $('.docket_num').append(
-                                "<option value="+data.docketNumber+" data-id="+data.type+">"+data.docketNumber+"</option>");
+                                `<option value="${data.docketNumber}" data-id="${data.type}"> ${data.docketNumber} </option>`);
                         });
 
                     } else {
@@ -171,17 +172,18 @@
                     "transactionNumber"     : "",
                     "caseloadType"          : $(".caseload").val(),
                     "senderId"              : $.cookie("uuid"),
+                    "senderName"            : "",
                     "senderFieldOfficeId"   : $.cookie('field_office_id'),
                     "senderFieldOfficeName" : $.cookie('departmentName'),
                     "originFieldOfficeId"   : originFieldOfficeId,
                     // "originFieldOfficeName" : $.cookie('departmentName'),
                     "receiverId"            : $(".user_account").val(),
-                    "receiverName"          : receivername,
+                    "receiverName"          : "",
                     "fieldOfficeId"         : $(".field_office").val(),
                     "docketNumber"          : $(".docket_num").val(),
                     "details"               : $(".details").val(),
                     "remarks"               : "",
-                    "approvalStatus"        : "",
+                    "approvalStatus"        : "NEW",
                     "lastStatusUpdateDate"  : "",
                 }
                 __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {

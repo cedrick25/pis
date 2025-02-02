@@ -99,10 +99,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload Type</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Caseload Type" class="form-control caseload_type"></div>
-                                </div> -->
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">

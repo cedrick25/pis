@@ -105,7 +105,8 @@
 
                         result.response.forEach(function(data){
                             $('.docket_num').append(
-                                "<option value="+data.docketNumber+" data-id="+data.type+">"+data.docketNumber+"</option>");
+                                // "<option value="+data.docketNumber+" data-id="+data.type+">"+data.docketNumber+"</option>"
+                            `<option value="${data.docketNumber}" data-id="${data.type}"> ${data.docketNumber} </option>`);
                         });
 
                     } else {
@@ -116,18 +117,12 @@
 
             $('.docket_num').on('change', function() {
                 const docket_number = this.value
-                console.log(docket_number)
                 __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
                     console.log(result)
                     var result = result.response;
                     if (result.status != "ERROR") {
-                        // console.log(result.caseloadType)
-
                         setTimeout(function () {
                         $(".caseload").val(result.caseloadType).trigger("change");
-                        }, 500);
-
-                        setTimeout(function () {
                         $(".field_office").val(result.fieldOfficeId).trigger("change");
                         }, 500);
 
@@ -150,12 +145,10 @@
                         $('.user_account').empty();
                         const dep_id = this.value
                         __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
-                            console.log(result)
                             if (result.status != "ERROR") {
                                 $(".user_display").show()
                                 $('.user_account').append("<option selected disabled>Select User Account</option>");
                                 result.forEach(function(data){
-                                    console.log(data)
                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                     $('.user_account').append(
                                         "<option value="+data.uuid+">"+fullname+"</option>");
@@ -228,7 +221,7 @@
                     "docketNumber"          : $(".docket_num").val(),
                     "details"               : $(".details").val(),
                     "remarks"               : "",
-                    "approvalStatus"        : "New - (Forwarded to CPPO)",
+                    "approvalStatus"        : "NEW",
                     "lastStatusUpdateDate"  : "",
                 }
                 console.log(payload)

@@ -135,20 +135,26 @@
                 $(".details").html(data.details)
                 $(".field_office").html(data.fieldOfficeName)
                 var postUrl = api+'8000/workflow/update/'+id;
-                let approvalStatus;
-                if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
-                    approvalStatus = "Pending of CPPO";
-                } else if (data.approvalStatus == "New - (Forwarded to FO)" ){
-                    approvalStatus = "Pending of FO";
-                } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
-                    approvalStatus = "Pending of CPPO for Approval";
-                } else if (data.approvalStatus == "Pending of FO"){ 
-                    approvalStatus = "Pending of FO";
-                } else if (data.approvalStatus == "Pending of CPPO"){ 
-                    approvalStatus = "Pending of CPPO";
-                } else if (data.approvalStatus == "Pending of CPPO for Approval"){ 
-                    approvalStatus = "Pending of CPPO for Approval";
+                let approvalStatus = "PENDING";
+                
+                if (data.approvalStatus == "COMPLETED") {
+                    approvalStatus == "COMPLETED"
+                } else {
+                    approvalStatus == "PENDING"
                 }
+                // if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
+                //     approvalStatus = "Pending of CPPO";
+                // } else if (data.approvalStatus == "New - (Forwarded to FO)" ){
+                //     approvalStatus = "Pending of FO";
+                // } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                //     approvalStatus = "Pending of CPPO for Approval";
+                // } else if (data.approvalStatus == "Pending of FO"){ 
+                //     approvalStatus = "Pending of FO";
+                // } else if (data.approvalStatus == "Pending of CPPO"){ 
+                //     approvalStatus = "Pending of CPPO";
+                // } else if (data.approvalStatus == "Pending of CPPO for Approval"){ 
+                //     approvalStatus = "Pending of CPPO for Approval";
+                // }
                 var postData = {
                     "type": data.type,
                     "transactionNumber": data.transactionNumber,
@@ -165,16 +171,17 @@
                     "approvalStatus": approvalStatus,
                     "lastStatusUpdateDate": "",
                 };
-                if (approvalStatus == "Pending of FO"){
-                    approvalStatus == "Pending of FO";
-                    storeData(postUrl,postData)
-                } else if (approvalStatus == "Pending of CPPO"){
-                    approvalStatus == "Pending of CPPO";
-                    storeData(postUrl,postData)
-                } else if (approvalStatus == "Pending of CPPO for Approval"){
-                    approvalStatus == "ending of CPPO for Approval";
-                    storeData(postUrl,postData)
-                }
+                storeData(postUrl,postData)
+                // if (approvalStatus == "Pending of FO"){
+                //     approvalStatus == "Pending of FO";
+                //     storeData(postUrl,postData)
+                // } else if (approvalStatus == "Pending of CPPO"){
+                //     approvalStatus == "Pending of CPPO";
+                //     storeData(postUrl,postData)
+                // } else if (approvalStatus == "Pending of CPPO for Approval"){
+                //     approvalStatus == "ending of CPPO for Approval";
+                //     storeData(postUrl,postData)
+                // }
                 $(".btn-confirm_return").unbind("click").on("click", function(){
                     var apiUrl = api+'8000/workflow/'+id
                     $.ajax({
@@ -200,42 +207,62 @@
                                     "lastStatusUpdateDate"  : "",
                                 };
                             }
-                            if (data.approvalStatus == "Pending of CPPO"){
-                                approvalStatus = "New - (Forwarded to FO)"
+                            // if (data.approvalStatus == "Pending of CPPO"){
+                            //     approvalStatus = "New - (Forwarded to FO)"
+                            //     var postData = postDatas()
+                            //     storeData(postUrl,postData)
+                            //     $("#success_forwarding").show()
+                            //     setTimeout(function () {
+                            //         $("#success_forwarding").hide()
+                            //         window.location.href = api+"/pis/sent_pardonee";
+                            //     }, 2000);
+                            // } else if (data.approvalStatus == "Pending of FO"){
+                            //     approvalStatus = "New - (Forward to CPPO for Approval)"
+                            //     var postData = postDatas()
+                            //     storeData(postUrl,postData)
+                            //     $("#success_forwarding").show()
+                            //     setTimeout(function () {
+                            //         $("#success_forwarding").hide()
+                            //         window.location.href = api+"/pis/sent_pardonee";
+                            //     }, 2000);
+                            // } else if (data.approvalStatus == "Pending of CPPO for Approval"){
+                            //     approvalStatus = "New - (Forwarded to FO)"
+                            //     var postData = postDatas()
+                            //     storeData(postUrl,postData)
+                            //     $("#success_forwarding").show()
+                            //     setTimeout(function () {
+                            //         $("#success_forwarding").hide()
+                            //         window.location.href = api+"/pis/sent_pardonee";
+                            //     }, 2000);
+                            // } else {
+                            //     approvalStatus = ""
+                            //     var postData = postDatas()
+                            //     storeData(postUrl,postData)
+                            //     $("#success_forwarding").show()
+                            //     setTimeout(function () {
+                            //         $("#success_forwarding").hide()
+                            //         window.location.href = api+"/pis/sent_pardonee";
+                            //     }, 2000);
+                            // }
+                            if (data.approvalStatus == "COMPLETED") {
+                                approvalStatus = "COMPLETED"
                                 var postData = postDatas()
                                 storeData(postUrl,postData)
                                 $("#success_forwarding").show()
                                 setTimeout(function () {
                                     $("#success_forwarding").hide()
-                                    window.location.href = api+"/pis/sent_pardonee";
-                                }, 2000);
-                            } else if (data.approvalStatus == "Pending of FO"){
-                                approvalStatus = "New - (Forward to CPPO for Approval)"
-                                var postData = postDatas()
-                                storeData(postUrl,postData)
-                                $("#success_forwarding").show()
-                                setTimeout(function () {
-                                    $("#success_forwarding").hide()
-                                    window.location.href = api+"/pis/sent_pardonee";
-                                }, 2000);
-                            } else if (data.approvalStatus == "Pending of CPPO for Approval"){
-                                approvalStatus = "New - (Forwarded to FO)"
-                                var postData = postDatas()
-                                storeData(postUrl,postData)
-                                $("#success_forwarding").show()
-                                setTimeout(function () {
-                                    $("#success_forwarding").hide()
-                                    window.location.href = api+"/pis/sent_pardonee";
+                                    window.location.href = api+"/pis/received_pardonee";
                                 }, 2000);
                             } else {
-                                approvalStatus = ""
+                                approvalStatus = "NEW"
                                 var postData = postDatas()
                                 storeData(postUrl,postData)
                                 $("#success_forwarding").show()
                                 setTimeout(function () {
                                     $("#success_forwarding").hide()
-                                    window.location.href = api+"/pis/sent_pardonee";
+                                    window.location.href = api+"/pis/received_pardonee";
                                 }, 2000);
+
                             }
                         },
                         error: function(xhr, status, error) {
