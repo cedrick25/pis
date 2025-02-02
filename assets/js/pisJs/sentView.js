@@ -1,15 +1,17 @@
     ( function ( $ ) {
-        var ___ctx = '';
-
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+        var api = localStorage.getItem('api');
+        var ___ctx = api;
 
         var __getContext = function() {
             return ___ctx;
         };
 
+        var __setContext = function(newctx) {
+            ___ctx = newctx;
+        };
+
         var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
             // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
@@ -109,19 +111,33 @@
         var docket_number = GetURLParameter('docket_number');
         var id = GetURLParameter('id');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/workflow/'+id).done(function (result2) {
+            __executeExternalGet('8000/workflow/'+id).done(function (result2) {
                 var result2 = result2.response
-                __executeExternalGet('http://localhost:8088/department/'+result2.fieldOfficeId).done(function (result3) {
+                __executeExternalGet('8088/department/'+result2.fieldOfficeId).done(function (result3) {
                     var fo = result3.name;
-                    __executeExternalGet('http://localhost:8088/user/'+result2.receiverId).done(function (result4) {
+                    __executeExternalGet('8088/user/'+result2.receiverId).done(function (result4) {
                         console.log(result4);
                         var receiver = result4.firstName+" "+result4.middleName+" "+result4.lastName+" "+result4.suffix;
                         if (result4.status != "ERROR") {
                             $(".docket_number").html(result2.docketNumber);
-                            $(".type").html(result2.type);
+                            // $(".type").html(result2.type);
                             $(".field_office").html(fo);
                             $(".sent_to").html(receiver);
                             $(".details").html(result2.details);
+
+                            // Check the type and set href accordingly
+                            if (result2.type === "PDL") {
+                                $(".type").html("PDL");
+                                $(".sent_href").attr("href", "pdl-sent");  // Replace with actual URL for "PDL"
+                            } else if (result2.type === "SC_PR_CINV" || result2.type === "SC_PR_CSUP" || result2.type === "SC_PR_INV" || result2.type === "SC_PR_SUP") {
+                                $(".type").html("PAROLE");
+                                $(".sent_href").attr("href", "sent_parolee");  // Replace with URL for the other type
+                            } else if (result2.type === "SC_PD_CINV" || result2.type === "SC_PD_CSUP" || result2.type === "SC_PD_INV" || result2.type === "SC_PD_SUP") {
+                                $(".type").html("PARDONE");
+                                $(".sent_href").attr("href", "sent_pardonee");  // Replace with URL for the other type
+                            } else {
+                                $(".sent_href").attr("href", "sent");  // Default URL if none of the types match
+                            }
                         }else{
                             alert("failed")
                         }

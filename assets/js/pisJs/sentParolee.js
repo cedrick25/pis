@@ -1,10 +1,13 @@
     ( function ( $ ) {
         var api = localStorage.getItem('api');
         var ___ctx = api;
-        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;
+        };
+
+        var __setContext = function(newctx) {
+            ___ctx = newctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
@@ -147,7 +150,7 @@
             $(".btn_view").unbind("click").on("click", function(){
                 var id = $(this).data("id");
                 var docket_number = $(this).data("docket");
-                window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
+                window.location.href = api+'/pis/sent_view?docket_number='+docket_number+'&id='+id;
             })
         }
 
