@@ -88,6 +88,7 @@
             return d.promise();
         };
 
+
         function buttonVisibility (){
             var data = JSON.parse(localStorage.getItem('permission'));
             if (data != null) {
