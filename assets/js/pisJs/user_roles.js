@@ -237,12 +237,22 @@
                     if (result.status != "ERROR") {
                         result.forEach(function(data){
 
+                            // $('.permission_list').append(`
+                            //     <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">${data.name}</label></div>
+                            //     <div class="col col-md-2">
+                            //         <div class="form-check form-check-inline">
+                            //         <label class="switch">
+                            //             <input type="checkbox" name="type" class="form-check-input primary" checked data-name="${data.name}" value="${data.id}">
+                            //             <span class="slider round"></span>
+                            //         </label>
+                            //         </div>
+                            //     </div>`);
                             $('.permission_list').append(`
                                 <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">${data.name}</label></div>
                                 <div class="col col-md-2">
                                     <div class="form-check form-check-inline">
                                     <label class="switch">
-                                        <input type="checkbox" name="type" class="form-check-input primary" checked data-name="${data.name}" value="${data.id}">
+                                        <input type="checkbox" name="type" class="form-check-input primary" data-name="${data.name}" value="${data.id}">
                                         <span class="slider round"></span>
                                     </label>
                                     </div>

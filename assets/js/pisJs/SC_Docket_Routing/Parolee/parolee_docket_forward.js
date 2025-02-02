@@ -104,45 +104,48 @@
         }
     }
 
-    var __userDropdownForForwarding = function (dep_id, userId, roleId, secRoleId) {
-        __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
-            if (result.status != "ERROR") {
-                $(".user_display").show()
-                $('.user_account').append("<option selected disabled>Select User Account</option>");
-                if (userId == $.cookie('role_id')) {
-                    result.forEach(function(data){
-                        var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
-                        if (userId == "32") {
-                            if (data.roleId == roleId || data.roleId == secRoleId){
-                                $('.user_account').append(
-                                    '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
-                                );   
-                            }
-                        } else if (userId == "14" || userId == "4"){
-                            if (data.roleId == roleId){
-                                $('.user_account').append(
-                                    '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
-                                );   
-                            }
-                        } else {
-                            $('.user_account').append(
-                                '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
-                            );
-                        }
-                    });
-                }
-            } else {
-                console.log("failed fetching user list")
-                $(".user_display").hide()
-            }
-        });
-    }
+    // var __userDropdownForForwarding = function (dep_id, userId, roleId, secRoleId) {
+    // var __userDropdownForForwarding = function () {
+    //     __executeExternalGet(___ctx+'8088/user/list/').done(function (result) {
+    //         if (result.status != "ERROR") {
+    //             $(".user_display").show()
+    //             $('.user_account').append("<option selected disabled>Select User Account</option>");
+    //                 result.forEach(function(data){
+    //                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+    //                         $(".user_account").empty();
+    //                         $('.user_account').append(
+    //                             '<option value="'+data.uuid+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffix+'">'+fullname+'</option>'
+    //                         );
+    //                 });
+    //         } else {
+    //             console.log("failed fetching user list")
+    //             $(".user_display").hide()
+    //         }
+    //     });
+    // }
+
 
     var __select = function(){
         $('.field_office').empty();
 
+        // __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
+        //     // console.log(result)
+        //     if (result.status != "ERROR") {
+        //         $('.field_office').append("<option selected disabled>Select Field Office</option>");
+        //         result.forEach(function(data){
+        //             $('.field_office').append(
+        //                 "<option value="+data.id+">"+data.name+"</option>");
+        //         });
+        //         $('.field_office').on('change', function() {
+        //             const dep_id = this.value
+        //             __userDropdownForForwarding();
+        //         });
+        //     } else {
+        //         console.log("failed fetching department list")
+        //     }
+        // })
+
         __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
-            // console.log(result)
             if (result.status != "ERROR") {
                 $('.field_office').append("<option selected disabled>Select Field Office</option>");
                 result.forEach(function(data){
@@ -150,23 +153,22 @@
                         "<option value="+data.id+">"+data.name+"</option>");
                 });
                 $('.field_office').on('change', function() {
+                    $('.user_account').empty();
                     const dep_id = this.value
-                    var userId = $.cookie('role_id');
-                    var roleId;
-                    var secRoleId;
-                    if (userId == "14") {
-                        roleId = "32"
-                        __userDropdownForForwarding(dep_id, userId, roleId)
-                    } else if (userId == "32") {
-                        roleId = "4"
-                        secRoleId = "14"
-                        __userDropdownForForwarding(dep_id, userId, roleId, secRoleId)
-                    } else if (userId == "4") {
-                        roleId = "32"
-                        __userDropdownForForwarding(dep_id, userId, roleId)
-                    } else {
-                        __userDropdownForForwarding(dep_id, userId, roleId)
-                    }
+                    __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
+                        if (result.status != "ERROR") {
+                            $(".user_display").show()
+                            $('.user_account').append("<option selected disabled>Select User Account</option>");
+                            result.forEach(function(data){
+                                var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+                                $('.user_account').append(
+                                    "<option value="+data.uuid+">"+fullname+"</option>");
+                            });
+                        } else {
+                            console.log("failed fetching user list")
+                            $(".user_display").hide()
+                        }
+                    });
                 });
             } else {
                 console.log("failed fetching department list")
@@ -209,21 +211,26 @@
                 var data = result.response;
                 console.log(data)
                 var postUrl = api+'8000/workflow/update/'+id;
-                let approvalStatus;
+                let approvalStatus = "PENDING";
                 
-                if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
-                    approvalStatus = "Pending of CPPO";
-                } else if (data.approvalStatus == "New - (Forwarded to FO)" ){
-                    approvalStatus = "Pending of FO";
-                } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
-                    approvalStatus = "Pending of CPPO for Approval";
-                } else if (data.approvalStatus == "Pending of FO"){ 
-                    approvalStatus = "Pending of FO";
-                } else if (data.approvalStatus == "Pending of CPPO"){ 
-                    approvalStatus = "Pending of CPPO";
-                } else if (data.approvalStatus == "Pending of CPPO for Approval"){ 
-                    approvalStatus = "Pending of CPPO for Approval";
+                if (data.approvalStatus == "COMPLETED") {
+                    approvalStatus == "COMPLETED"
+                } else {
+                    approvalStatus == "PENDING"
                 }
+                // if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
+                //     approvalStatus = "Pending of CPPO";
+                // } else if (data.approvalStatus == "New - (Forwarded to FO)" ){
+                //     approvalStatus = "Pending of FO";
+                // } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                //     approvalStatus = "Pending of CPPO for Approval";
+                // } else if (data.approvalStatus == "Pending of FO"){ 
+                //     approvalStatus = "Pending of FO";
+                // } else if (data.approvalStatus == "Pending of CPPO"){ 
+                //     approvalStatus = "Pending of CPPO";
+                // } else if (data.approvalStatus == "Pending of CPPO for Approval"){ 
+                //     approvalStatus = "Pending of CPPO for Approval";
+                // }
                 var postData = {
                     "type": data.type,
                     "transactionNumber": data.transactionNumber,
@@ -240,16 +247,17 @@
                     "approvalStatus": approvalStatus,
                     "lastStatusUpdateDate": "",
                 };
-                if (approvalStatus == "Pending of FO"){
-                    approvalStatus == "Pending of FO";
-                    storeData(postUrl,postData)
-                } else if (approvalStatus == "Pending of CPPO"){
-                    approvalStatus == "Pending of CPPO";
-                    storeData(postUrl,postData)
-                } else if (approvalStatus == "Pending of CPPO for Approval"){
-                    approvalStatus == "ending of CPPO for Approval";
-                    storeData(postUrl,postData)
-                }
+                storeData(postUrl,postData)
+                // if (approvalStatus == "Pending of FO"){
+                //     approvalStatus == "Pending of FO";
+                //     storeData(postUrl,postData)
+                // } else if (approvalStatus == "Pending of CPPO"){
+                //     approvalStatus == "Pending of CPPO";
+                //     storeData(postUrl,postData)
+                // } else if (approvalStatus == "Pending of CPPO for Approval"){
+                //     approvalStatus == "ending of CPPO for Approval";
+                //     storeData(postUrl,postData)
+                // }
                 $(".btn-confirm_forward").unbind("click").on("click", function(){
                     console.log("click")
                     function postDatas() {
@@ -270,43 +278,63 @@
                             "lastStatusUpdateDate"  : "",
                         };
                     }
-                    if (data.approvalStatus == "Pending of CPPO"){
-                        approvalStatus = "New - (Forwarded to FO)"
+                    if (data.approvalStatus == "COMPLETED") {
+                        approvalStatus = "COMPLETED"
                         var postData = postDatas()
                         storeData(postUrl,postData)
                         $("#success_forwarding").show()
                         setTimeout(function () {
                             $("#success_forwarding").hide()
-                            window.location.href = api+"/pis/sent";
-                        }, 2000);
-                    } else if (data.approvalStatus == "Pending of FO"){
-                        approvalStatus = "New - (Forward to CPPO for Approval)"
-                        var postData = postDatas()
-                        storeData(postUrl,postData)
-                        $("#success_forwarding").show()
-                        setTimeout(function () {
-                            $("#success_forwarding").hide()
-                            window.location.href = api+"/pis/sent";
-                        }, 2000);
-                    } else if (data.approvalStatus == "Pending of CPPO for Approval"){
-                        approvalStatus = "New - (Forwarded to clerk for completion)"
-                        var postData = postDatas()
-                        storeData(postUrl,postData)
-                        $("#success_forwarding").show()
-                        setTimeout(function () {
-                            $("#success_forwarding").hide()
-                            window.location.href = api+"/pis/sent";
+                            window.location.href = api+"/pis/received_parolee";
                         }, 2000);
                     } else {
-                        approvalStatus = ""
+                        approvalStatus = "NEW"
                         var postData = postDatas()
                         storeData(postUrl,postData)
                         $("#success_forwarding").show()
                         setTimeout(function () {
                             $("#success_forwarding").hide()
-                            window.location.href = api+"/pis/sent";
+                            window.location.href = api+"/pis/received_parolee";
                         }, 2000);
+
                     }
+                    // if (data.approvalStatus == "Pending of CPPO"){
+                    //     approvalStatus = "New - (Forwarded to FO)"
+                    //     var postData = postDatas()
+                    //     storeData(postUrl,postData)
+                    //     $("#success_forwarding").show()
+                        // setTimeout(function () {
+                        //     $("#success_forwarding").hide()
+                        //     window.location.href = api+"/pis/sent";
+                        // }, 2000);
+                    // } else if (data.approvalStatus == "Pending of FO"){
+                    //     approvalStatus = "New - (Forward to CPPO for Approval)"
+                    //     var postData = postDatas()
+                    //     storeData(postUrl,postData)
+                    //     $("#success_forwarding").show()
+                    //     setTimeout(function () {
+                    //         $("#success_forwarding").hide()
+                    //         window.location.href = api+"/pis/sent";
+                    //     }, 2000);
+                    // } else if (data.approvalStatus == "Pending of CPPO for Approval"){
+                    //     approvalStatus = "New - (Forwarded to clerk for completion)"
+                    //     var postData = postDatas()
+                    //     storeData(postUrl,postData)
+                    //     $("#success_forwarding").show()
+                    //     setTimeout(function () {
+                    //         $("#success_forwarding").hide()
+                    //         window.location.href = api+"/pis/sent";
+                    //     }, 2000);
+                    // } else {
+                    //     approvalStatus = ""
+                    //     var postData = postDatas()
+                    //     storeData(postUrl,postData)
+                    //     $("#success_forwarding").show()
+                    //     setTimeout(function () {
+                    //         $("#success_forwarding").hide()
+                    //         window.location.href = api+"/pis/sent";
+                    //     }, 2000);
+                    // }
                 })
             },
             error: function(xhr, status, error) {

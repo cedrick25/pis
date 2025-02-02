@@ -18,7 +18,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pardonee_received">Received</a></li>
+                            <li><a href="received_pardonee">Received</a></li>
                             <li class="active">Return</li>
                         </ol>
                     </div>

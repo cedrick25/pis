@@ -596,4 +596,85 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('Fact_Sheet/Single Carpeta/client_upload_single_carpeta');
 	}
+	// for pre-parole investigation
+	public function pre_parole_investigation_list()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Investigation/list');
+	}
+	public function pre_parole_investigation_create()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Investigation/create');
+	}
+	public function pre_parole_investigation_update()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Investigation/update');
+	}
+	public function pre_parole_investigation_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Investigation/view');
+	}
+	// for pre-parole supervision
+	public function pre_parole_supervision_list()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Supervision/list');
+	}
+	public function pre_parole_supervision_create()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Supervision/create');
+	}
+	public function pre_parole_supervision_update()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Supervision/update');
+	}
+	public function pre_parole_supervision_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Supervision/view');
+	}
+	// for pre-parole courtesy investigation
+	public function pre_parole_cs_investigation_list()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Investigation/list');
+	}
+	public function pre_parole_cs_investigation_create()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Investigation/create');
+	}
+	public function pre_parole_cs_investigation_update()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Investigation/update');
+	}
+	public function pre_parole_cs_investigation_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Investigation/view');
+	}
+	// for pre-parole courtesy supervision
+	public function pre_parole_cs_supervision_list()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Supervision/list');
+	}
+	public function pre_parole_cs_supervision_create()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Supervision/create');
+	}
+	public function pre_parole_cs_supervision_update()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Supervision/update');
+	}
+	public function pre_parole_cs_supervision_view()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Supervision/view');
+	}
+	// pre-parole docketing
+	public function pre_parole_docketing_start()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Pre-Parole/docket_routing_pre_parole');
+	}
+	public function pre_parole_docketing_inbox()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Pre-Parole/inbox');
+	}
+	public function pre_parole_docketing_sent()
+	{
+		$this->load->view('SINGLE_CARPETA/Docketing/Pre-Parole/docket_routing_pre_parole');
+	}
 }

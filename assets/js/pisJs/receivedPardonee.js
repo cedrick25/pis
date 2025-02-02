@@ -202,45 +202,9 @@
                 {
                     "data": 'senderName'
                 },
-                // {
-                //     "data": 'approvalStatus',
-                //     render: function (data, type, row){
-                //         if (data == "New - (Forwarded to CPPO)")
-                //         {
-                //             var statusText = "New"
-                //             return statusText;
-                //         } else if (data == "New - (Forwarded to FO)")
-                //         {
-                //             var statusText = "New"
-                //             return statusText;
-                //         } else if (data == "New - (Returned to FO)")
-                //         {
-                //             var statusText = "New"
-                //             return statusText;
-                //         } else if (data == "New - (Returned to CPPO)")
-                //         {
-                //             var statusText = "New"
-                //             return statusText;
-                //         } else if (data == "New - (Forward to CPPO for Approval)")
-                //         {
-                //             var statusText = "New"
-                //             return statusText;
-                //         }
-                //         else if (data == "New - (Forwarded to clerk for completion)")
-                //         {
-                //             var statusText = "New"
-                //             return statusText;
-                //         } 
-
-                //         if (data == null){
-                //             var statusText = ""
-                //             return statusText
-                //         } else {
-                //             var statusText = "Pending"
-                //             return statusText
-                //         }
-                //     }
-                // },
+                {
+                    "data": 'approvalStatus'
+                },
                 {
                     "data": null,
                     render: function(data, type, row) {
@@ -335,11 +299,12 @@
                     "pageLength": 10,
                     "columnDefs": [
                         { "width": "5%", "targets": [0] },
-                        { "width": "15%", "targets": [1] },
+                        { "width": "12%", "targets": [1] },
                         { "width": "15%", "targets": [2] },
                         { "width": "15%", "targets": [3] },
-                        { "width": "15%", "targets": [4] },
-                        { "width": "35%", "targets": [5] }
+                        { "width": "13%", "targets": [4] },
+                        { "width": "10%", "targets": [5] },
+                        { "width": "30%", "targets": [6] }
                         // { "width": "35%", "targets": [6] }
                     ],
                     ajax: {

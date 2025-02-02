@@ -167,20 +167,21 @@
                     // console.log('Data received:', result);
                     var data = result.response;
                     var postUrl = api+'8000/workflow/update/'+id;
-                    let approvalStatus;
-                    if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
-                        approvalStatus = "Pending of CPPO";
-                    } else if (data.approvalStatus == "New - (Forwarded to FO)"){
-                        approvalStatus = "Pending of FO";
-                    } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
-                        approvalStatus = "Pending of CPPO for Approval";
-                    } else if (data.approvalStatus == "Pending of FO"){ 
-                        approvalStatus = "Pending of FO";
-                    } else if (data.approvalStatus == "Pending of CPPO"){ 
-                        approvalStatus = "Pending of CPPO";
-                    } else if (data.approvalStatus == "Pending of CPPO for Approval"){ 
-                        approvalStatus = "Pending of CPPO for Approval";
-                    }
+                    var approvalStatus = "PENDING"
+                    // let approvalStatus;
+                    // if (data.approvalStatus == "New - (Forwarded to CPPO)" ){
+                    //     approvalStatus = "Pending of CPPO";
+                    // } else if (data.approvalStatus == "New - (Forwarded to FO)"){
+                    //     approvalStatus = "Pending of FO";
+                    // } else if (data.approvalStatus == "New - (Forward to CPPO for Approval)"){
+                    //     approvalStatus = "Pending of CPPO for Approval";
+                    // } else if (data.approvalStatus == "Pending of FO"){ 
+                    //     approvalStatus = "Pending of FO";
+                    // } else if (data.approvalStatus == "Pending of CPPO"){ 
+                    //     approvalStatus = "Pending of CPPO";
+                    // } else if (data.approvalStatus == "Pending of CPPO for Approval"){ 
+                    //     approvalStatus = "Pending of CPPO for Approval";
+                    // }
                     var postData = {
                         "type": data.type,
                         "transactionNumber": data.transactionNumber,
@@ -393,24 +394,24 @@
                 $(".name").val(result.fullName);
                 $(".docket_num").val(result.docketNumber)
 
-                load_table('investigation', result.docketNumber, officeId)
+                load_table('investigation', `ppis_${result.clientId}`, officeId)
 
                 // event handler when a tab is clicked
                 $("#inv_tab").unbind("click").on("click", function(){
                     console.log("clicked inv")
-                    load_table('investigation', result.docketNumber, officeId)
+                    load_table('investigation', `ppis_${result.clientId}`, officeId)
                 })
                 $("#sup_tab").unbind("click").on("click", function(){
                     console.log("clicked sup")
-                    load_table('supervision', result.docketNumber, officeId)
+                    load_table('supervision', `ppis_${result.clientId}`, officeId)
                 })
                 $("#rehab_tab").unbind("click").on("click", function(){
                     console.log("clicked rehab")
-                    load_table('rehabilitation', result.docketNumber, officeId)
+                    load_table('rehabilitation', `ppis_${result.clientId}`, officeId)
                 })
                 $("#oth_tab").unbind("click").on("click", function(){
                     console.log("clicked oth")
-                    load_table('others', result.docketNumber, officeId)
+                    load_table('others', `ppis_${result.clientId}`, officeId)
                 })
 
                 // event handler to toggle visibility
@@ -460,7 +461,7 @@
                         form.append("file", fileToUpload, fileToUpload.name);
                         // console.log(fileToUpload.name)
                         var settings = {
-                            "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".remarks").val(),
+                            "url": api+"8080/file/upload?uuid="+"ppis_"+result.clientId+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".remarks").val(),
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,

@@ -123,7 +123,7 @@
                                 result.forEach(function(data){
                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                     $('.user_account').append(
-                                        "<option value="+data.uuid+">"+fullname+"</option>");
+                                        "<option value="+data.uuid+" data-fullname="+fullname+">"+fullname+"</option>");
                                 });
                             } else {
                                 console.log("failed fetching user list")
@@ -277,15 +277,13 @@
                         var resultPetitioner = resultPetitioner.response;
                         console.log(resultPetitioner)
                         $(".name").text(resultPetitioner.firstName + " " + resultPetitioner.lastName)
+                        var user_name = localStorage.getItem("userName")
 
                         $(".btn-confirm_forward").unbind("click").on("click", function(){
                             
-                            var fname = $('.user_account option:selected').data('fname');
-                            var mname = $('.user_account option:selected').data('mname');
-                            var lname = $('.user_account option:selected').data('lname');
-                            var sname = $('.user_account option:selected').data('sname');
+                            var fullname = $('.user_account option:selected').data('fullname');
 
-                            var receivername = fname + " " + mname + " " + lname + " " + sname;
+                            // var receivername = fname + " " + mname + " " + lname + " " + sname;
 
                             var payload = {
                                 "type"                  : "PDL",
@@ -293,13 +291,13 @@
                                 "petitionerId"          : resultPetitioner.id,
                                 "caseloadType"          : "",
                                 "senderId"              : $.cookie("uuid"),
-                                "senderName"            : "",
+                                "senderName"            : user_name,
                                 "senderFieldOfficeId"   : $.cookie('field_office_id'),
                                 "senderFieldOfficeName" : "",
                                 "originFieldOfficeId"   : result.originFieldOfficeId,
                                 "originFieldOfficeName" : "",
                                 "receiverId"            : $(".user_account").val(),
-                                "receiverName"          : "",
+                                "receiverName"          : fullname,
                                 "fieldOfficeId"         : $(".field_office").val(),
                                 "fieldOfficeName"       : "",
                                 "docketNumber"          : "",

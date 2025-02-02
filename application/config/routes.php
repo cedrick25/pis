@@ -183,6 +183,30 @@ $route['pdl-docket'] = "routes/pdl_docket";
 $route['pdl-view-history'] = "routes/pdl_view_history";
 $route['pdl-file-upload'] = "routes/pdl_factsheet_upload";
 
+// for pre parole modules
+$route['pre-parole-investigation-list'] = "routes/pre_parole_investigation_list";
+$route['pre-parole-investigation-create'] = "routes/pre_parole_investigation_create";
+$route['pre-parole-investigation-update'] = "routes/pre_parole_investigation_update";
+$route['pre-parole-investigation-view'] = "routes/pre_parole_investigation_view";
+// supervision
+$route['pre-parole-supervision-list'] = "routes/pre_parole_supervision_list";
+$route['pre-parole-supervision-create'] = "routes/pre_parole_supervision_create";
+$route['pre-parole-supervision-update'] = "routes/pre_parole_supervision_update";
+$route['pre-parole-supervision-view'] = "routes/pre_parole_supervision_view";
+// courtesy investigation
+$route['pre-parole-courtesy-investigation-list'] = "routes/pre_parole_cs_investigation_list";
+$route['pre-parole-courtesy-investigation-create'] = "routes/pre_parole_cs_investigation_create";
+$route['pre-parole-courtesy-investigation-update'] = "routes/pre_parole_cs_investigation_update";
+$route['pre-parole-courtesy-investigation-view'] = "routes/pre_parole_cs_investigation_view";
+// courtesy supervision
+$route['pre-parole-courtesy-supervision-list'] = "routes/pre_parole_cs_supervision_list";
+$route['pre-parole-courtesy-supervision-create'] = "routes/pre_parole_cs_supervision_create";
+$route['pre-parole-courtesy-supervision-update'] = "routes/pre_parole_cs_supervision_update";
+$route['pre-parole-courtesy-supervision-view'] = "routes/pre_parole_cs_supervision_view";
+// pre-parole docketing
+$route['pre-parole-docketing-start'] = "routes/pre_parole_docketing_start";
+$route['pre-parole-docketing-inbox'] = "routes/pre_parole_docketing_inbox";
+$route['pre-parole-docketing-sent'] = "routes/pre_parole_docketing_sent";
 
 // AMS end
 
