@@ -214,133 +214,158 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Charged With</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control charged" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Place of Commision</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control p_commision" disabled></div>
-                                    <!-- <div class="col-12 col-md-9"><input type="date" class="form-control date_cic"></div> -->
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Convicted Of</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control convicted" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Charged</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_charged" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Commited</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_commited" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Convicted</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control date_convicted" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                    <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Year" class="form-control s_yr" disabled></div>
-                                    <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Month" class="form-control s_mo" disabled></div>
-                                    <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Day" class="form-control s_day" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Judge</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control judge" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control court" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Arresting Officer</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control arresting" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_1" disabled></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Defense Counsel</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control defense" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_2" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prosecutor</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control prosecutor" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_3" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offended Party</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control offended" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_4" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Co-Accused</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control ca" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Aggravating Circumstances</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control ac" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Mitigating Circumstances</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control mc" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Extent of Participation</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control ep select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="ON_BAIL">On Bail</option>
-                                            <option value="ON_DETENTION">On Detention</option>
-                                            <option value="ROR">ROR</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Charged With</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control charged" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Place of Commision</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control p_commision" disabled></div>
+                                        <!-- <div class="col-12 col-md-9"><input type="date" class="form-control date_cic"></div> -->
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Custody</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control custody select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="ACCESSORY">Accessory</option>
-                                            <option value="ACCOMPLICE">Accomplice</option>
-                                            <option value="PRINCIPAL">Principal</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Convicted Of</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control convicted" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Charged</label></div>
+                                        <div class="col-12 col-md-9"><input type="date" class="form-control date_charged" disabled></div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manner of Commision</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control commision" disabled></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Motives</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control motives select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="CIRCUMSTANTIAL">Circumstantial</option>
-                                            <option value="HIGH_TIMES">High Times</option>
-                                            <option value="IMPRUDENCE">Imprudence</option>
-                                            <option value="OTHERS">Others</option>
-                                            <option value="TEMPER">Temper</option>
-                                            <option value="UNINTENTIONAL">Unintentional</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Commited</label></div>
+                                        <div class="col-12 col-md-9"><input type="date" class="form-control date_commited" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Convicted</label></div>
+                                        <div class="col-12 col-md-9"><input type="date" class="form-control date_convicted" disabled></div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control explain" disabled></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                                        <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Year" class="form-control s_yr" disabled></div>
+                                        <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Month" class="form-control s_mo" disabled></div>
+                                        <div class="col-12 col-md-3"><input type="text" name="text-input" placeholder="Day" class="form-control s_day" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Judge</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control judge" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control court" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Arresting Officer</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control arresting" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_1" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Defense Counsel</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control defense" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_2" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prosecutor</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control prosecutor" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_3" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offended Party</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control offended" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control address_4" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Co-Accused</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control ca" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Aggravating Circumstances</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control ac" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Mitigating Circumstances</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control mc" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Extent of Participation</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control ep select2" disabled>
+                                                <option value="" selected disabled>-- select one --</option>
+                                                <option value="ON_BAIL">On Bail</option>
+                                                <option value="ON_DETENTION">On Detention</option>
+                                                <option value="ROR">ROR</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Custody</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control custody select2" disabled>
+                                                <option value="" selected disabled>-- select one --</option>
+                                                <option value="ACCESSORY">Accessory</option>
+                                                <option value="ACCOMPLICE">Accomplice</option>
+                                                <option value="PRINCIPAL">Principal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manner of Commision</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control commision" disabled></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Motives</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control motives select2" disabled>
+                                                <option value="" selected disabled>-- select one --</option>
+                                                <option value="CIRCUMSTANTIAL">Circumstantial</option>
+                                                <option value="HIGH_TIMES">High Times</option>
+                                                <option value="IMPRUDENCE">Imprudence</option>
+                                                <option value="OTHERS">Others</option>
+                                                <option value="TEMPER">Temper</option>
+                                                <option value="UNINTENTIONAL">Unintentional</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Sample" class="form-control explain" disabled></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">

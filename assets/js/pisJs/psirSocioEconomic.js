@@ -193,6 +193,7 @@
                 }
             })
 
+        $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
         $(".btn-update").unbind("click").on("click", function(){
             var dataPayload = gatheredData();
             __executeExternalPost('8000/worksheet/updatePetitioner/psirSocioEconomic/'+client_id,JSON.stringify(dataPayload)).done(function (result) {

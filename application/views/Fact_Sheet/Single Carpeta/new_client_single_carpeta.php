@@ -80,10 +80,6 @@
                                         </div>
                                     </div>
                                 </div>
-<!--                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 fieldMiddleName" >
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                                    
-                                </div> -->
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
@@ -393,51 +389,80 @@
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">TSD PO</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter PO" class="form-control tsd_po"></div>
                                     </div>
-                                </div>
+                                </div>                     
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Request Type</label></div>
-                                        <!-- <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Request Type" class="form-control request_type"></div> -->
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control request_type select2">
-                                                <option value="" selected disabled>Select</option>
-                                                <option value="Request to conduct PPIR/PECIR">Request to conduct PPIR/PECIR</option>
-                                                <option value="Request for transmittal">Request for transmittal</option>
-                                                <option value="Request for transfer">Request for transfer</option>
-                                            </select>
+                                    <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <div class="card" id="sentence_card" style="border-radius: 10px;">
+                                                    <div class="card-header" style="background: transparent;">
+                                                        <!-- <strong>Sentence</strong> -->
+                                                        <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+                                                    </div>
+                                                    <div class="card-body request_card">
+                                                        <div id="request_body_0">
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Request Type</label></div>
+                                                                    <div class="col-12 col-md-9">
+                                                                        <select class="form-control request_type select2">
+                                                                            <option value="" selected disabled>Select</option>
+                                                                            <option value="Request to conduct PPIR">Request to conduct PPIR</option>
+                                                                            <option value="Request to conduct PECIR">Request to conduct PECIR</option>
+                                                                            <option value="Request for transmittal">Request for transmittal</option>
+                                                                            <option value="Request for transfer">Request for transfer</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Report</label></div>
+                                                                    <div class="col-12 col-md-9">
+                                                                        <select class="form-control type_report select2">
+                                                                            <option value="" selected disabled>Select</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" style="padding-bottom: 40px;">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
+                                                                    <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control indorsement_date"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Forwarded to BPP</label></div>
+                                                                    <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_forwarded_bpp"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Remarks" class="form-control pdl_remarks"></div>
-                                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control indorsement_date"></div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 transmittal_body">
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Forwarded by BPP</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_forwarded_bpp"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Emailed to Field Office</label></div>
                                         <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control date_emailed_to_fo"></div>
                                     </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_received"></div>
-                                    </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 date_received_body">
+                                    </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Result from Field Office</label></div>
                                         <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control date_result_from_fo"></div>
                                     </div>
                                 </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Remarks" class="form-control pdl_remarks"></div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>

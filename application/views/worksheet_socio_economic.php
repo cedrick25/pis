@@ -319,8 +319,8 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-success btn-next btn-sm float-right" style="display: none">Next</button>
-                                <button type="button" class="btn btn-success btn-update btn-sm float-right" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
+                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>

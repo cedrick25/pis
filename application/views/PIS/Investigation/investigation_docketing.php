@@ -1,5 +1,11 @@
 <?php $this->load->view('templates/header.php'); ?> 
-
+<style type="">
+.table_head {
+    width: 100% !important;
+/*    table-layout: fixed;*/
+    word-wrap: break-word;
+}
+</style>
 <body>
     <!-- Left Panel -->
 
@@ -79,7 +85,8 @@
                         </div>
                     </div>
                 </div>
-            </div><!-- .animated -->
+            </div>
+            <!-- .animated -->
         </div><!-- .content -->
 
 

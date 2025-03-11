@@ -249,15 +249,6 @@
                                     <li class="nav-item">
                                         <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
                                     </li>
-                                    <!-- <li class="nav-item">
-                                        <a class="nav-link medHistory" href="#" data-toggle="modal" data-target="#warningModal">Medical History</a>
-                                    </li> -->
-                                    <li class="nav-item">
-                                        <a class="nav-link evaluation" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link recommendation" href="#" data-toggle="modal" data-target="#warningModal">Recommendation</a>
-                                    </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
                                 </div>
@@ -266,36 +257,34 @@
                                         Successfully Added  
                                 </div>
                                 <div style="margin-bottom: 30px; margin-right: 90px; text-align: right;">
-                                    <img class="align-content" id="client_photo" src="images/logoo.jpg" alt="" style="max-width: 20%;">
+                                    <img class="align-content" id="client_photo" src="" alt="" style="max-width: 20%;">
                                 </div>
-<!--                                 <div style="margin-bottom: 30px; margin-right: 70px; text-align: right;">
+                                <div style="margin-bottom: 30px; margin-right: 70px; text-align: right;">
                                     <input type="file" id="file-input" style="display: none">
-                                    <button type="button" class="btn btn-primary btn-sm btn-upload">Upload Photo</button>
-                                    <button type="button" type="submit" data-toggle="modal" data-target="#cameraModal" class="btn btn-success btn-sm btn-take">Take Photo</button>
-                                </div> -->
-                                <div class="row form-group col-md-6">
+                                </div>
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control data_name" disabled></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Name" class="form-control data_name"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Initital Interview</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control data_interview" disabled></div>
+                                    <div class="col-12 col-md-9"><input type="date" class="form-control data_interview"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias(es)</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control alias" disabled></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Alias(es)" class="form-control alias"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">True Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John Doe" class="form-control true_name" disabled></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="True Name" class="form-control true_name"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Present Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control present_add" disabled></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address" class="form-control present_add"></div>
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permanent Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Marikina" class="form-control permanent_add" disabled></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Permanent Address" class="form-control permanent_add"></div>
                                 </div>
                             </div>
                             <div class="card-footer">

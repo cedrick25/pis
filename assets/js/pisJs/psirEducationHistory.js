@@ -203,6 +203,7 @@
                         $(".unschool").val(JSON.parse(result.jsonData).unschool).trigger("change");
                         $(".educExplain").val(JSON.parse(result.jsonData).educExplain);  
                         $(".conduct").val(JSON.parse(result.jsonData).conduct).trigger("change");
+                        $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
 
                     }else{
                         $(".btn-update").hide();

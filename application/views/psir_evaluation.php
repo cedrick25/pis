@@ -235,45 +235,55 @@
                                 </div> -->
                                 <fieldset class="row col col-md-12">
                                     <legend>Petitioners Traits</legend>
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Positive</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control positiveTraits"></textarea></div>
+                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                        <div class="row form-group col-md-9">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Positive</label></div>
+                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control positiveTraits"></textarea></div>
+                                        </div>
                                     </div>
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Negative</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control negativeTraits"></textarea></div>
+                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                        <div class="row form-group col-md-9">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Negative</label></div>
+                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control negativeTraits"></textarea></div>
+                                        </div>
                                     </div>
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Overall Impression of the Client</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control overallTraits"></textarea></div>
+                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                        <div class="row form-group col-md-9">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Overall Impression of the Client</label></div>
+                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control overallTraits"></textarea></div>
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <fieldset class="row col col-md-12">
                                     <legend>Petitioner's Background in the Community & Collateral Information</legend>
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">PETITIONER'S BACKGROUND IN THE COMMUNITY & COLLATERAL INFORMATION</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="4" cols="50" class="form-control communityBackground"></textarea></div>
-                                    </div>
-                                    <div class="collateralInfo">
-                                    </div>
                                     <div class="col-12">
                                         <button type="button" class="addMoreCollInfo btn btn-primary btn-sm float-right">Add more</button>
+                                    </div>
+                                    <br><br><br>
+                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                        <div class="row form-group col-md-9">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">PETITIONER'S BACKGROUND IN THE COMMUNITY & COLLATERAL INFORMATION</label></div>
+                                            <div class="col-12 col-md-9"><textarea rows="4" cols="50" class="form-control communityBackground"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                        <div class="collateralInfo">
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <fieldset class="row col col-md-12">
                                     <legend>Analysis and Evaluation</legend>
-<!--                                     <legend>Petitioner's Background in the Community & Collateral Information</legend>
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">PETITIONER'S BACKGROUND IN THE COMMUNITY & COLLATERAL INFORMATION</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="4" cols="50" class="form-control communityBackground"></textarea></div>
-                                    </div> -->
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Analysis and Evaluation</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control analysisAndEvaluation"></textarea></div>
+                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                        <div class="row form-group col-md-9">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Analysis and Evaluation</label></div>
+                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control analysisAndEvaluation"></textarea></div>
+                                        </div>
                                     </div>
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Projected Thrust of Rehabilitation</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control projectedThrust"></textarea></div>
+                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                        <div class="row form-group col-md-9">
+                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Projected Thrust of Rehabilitation</label></div>
+                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control projectedThrust"></textarea></div>
+                                        </div>
                                     </div>
                                 </fieldset>                               
                             </div>

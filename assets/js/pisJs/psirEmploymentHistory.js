@@ -210,37 +210,41 @@
                     $(".emp_dateHos").val(JSON.parse(result.jsonData).empDateHos);
                     $(".emp_useDrug").val(JSON.parse(result.jsonData).empUseDrug).trigger("change");
                     $(".emp_explainDrug").val(JSON.parse(result.jsonData).empExplainDrug);
-                empHis.empHistory.forEach(function(data){
-                    $(".emp_history").append(`
-                        <div class="emp_his">
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held" value="${data.job_held}" disabled></div>
-                            </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add" value="${data.emp_add}" disabled></div>
-                            </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
-                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom" value="${data.emp_dateFrom}" disabled></div>
-                            </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
-                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo" value="${data.emp_dateTo}" disabled></div>
-                            </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income" value="${data.emp_Income}" disabled></div>
-                            </div>
-                        </div>`
+                    empHis.empHistory.forEach(function(data){
+                        $(".emp_history").append(`
+                            <div class="emp_his">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
+                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held" value="${data.job_held}"></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
+                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add" value="${data.emp_add}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
+                                        <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom" value="${data.emp_dateFrom}"></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
+                                        <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo" value="${data.emp_dateTo}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
+                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income" value="${data.emp_Income}"></div>
+                                    </div>
+                                    <br><br><br>
+                                </div>
+                            </div>`
                         )
                     });
 
+                    $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
                 }else{
                     $(".btn-update").hide();
                     $(".btn-next").show();

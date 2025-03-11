@@ -214,9 +214,9 @@
 
             var dataPayload = gathereDataEducHis();
 
-            var required = ["elem_lvl", "elem_where", "elem_high", "elem_award", "elem_date", "sec_lvl", "sec_where", "sec_high", "sec_award", "sec_date", "college_lvl",
-                "college_where", "college_high", "college_award", "college_date", "pcollege_lvl", "pcollege_where", "pcollege_high", "pcollege_award", "pcollege_date",
-                "voc_lvl", "voc_where", "voc_high", "voc_award", "voc_date", "unschool", "educExplain", "conduct"];
+            var required = ["elem_lvl", "elem_where", "elem_high", "elem_award", "sec_lvl", "sec_where", "sec_high", "sec_award", "college_lvl",
+                "college_where", "college_high", "college_award", "pcollege_lvl", "pcollege_where", "pcollege_high", "pcollege_award",
+                "voc_lvl", "voc_where", "voc_high", "voc_award", "unschool", "educExplain", "conduct"];
 
             required.forEach(function(data) {
                 // First, remove the existing error message and error class if present

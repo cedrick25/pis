@@ -188,7 +188,7 @@
                 // Process results as needed
                 var result = resultPetitioner;
 
-                // console.log(resultPetitioner)
+                console.log(result13)
 
                 // Create a new jsPDF instance
                 var doc = new jsPDF();

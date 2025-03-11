@@ -213,11 +213,11 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
+                                <div class="form-row col-sm-12 col-md-6 col-lg-6 col-xl-6 custom-col">
                                     <div class="col col-md-2"><label for="text-input" class=" form-control-label">Civil Status</label></div>
                                     <div class="col-12 col-md-10">
-                                        <select class="form-control civilStatus select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
+                                        <select class="form-control civilStatus select2">
+                                            <option value="" selected disabled>Select Civil Status</option>
                                             <option value="ANNULLED">Annulled</option>
                                             <option value="DIVORCED">Divorced</option>
                                             <option value="LEGALLY SEPERATED">Legally Seperated</option>
@@ -230,109 +230,124 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <fieldset class="row col col-md-12">
+                                <div class="spouseFieldSet" style="display:none;">
+                                    <fieldset class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <legend>SPOUSE</legend>
                                         <div class="spouse">
                                         </div>
-                                        <div class="col-12">
-                                            <div class="row form-group col-md-12 spouseModule" style="display:none;">
-                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
-                                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control spouse_fname" disabled></div>
-                                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control spouse_mname" disabled></div>
-                                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control spouse_lname" disabled></div>
-                                                <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Extended Name" class="form-control spouse_ename" disabled></div>
-                                            </div>
-                                            <div class="row form-group col-md-12 spouseModule" style="display:none;">
-                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Present Address</label></div>
-                                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control pAddress" disabled></textarea></div>
-                                            </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Region</label></div>
-                                                <div class="col-12 col-md-10">
-                                                    <select class="form-control spouse_region select2" disabled>
-                                                        <option value="" selected disabled>-- select one --</option>
-                                                        <option value="CAR">CAR</option>
-                                                        <option value="NCR">NCR</option>
-                                                        <option value="REGION I">REGION I</option>
-                                                        <option value="REGION II">REGION II</option>
-                                                        <option value="REGION III">REGION III</option>
-                                                        <option value="REGION IV-A">REGION IV-A</option>
-                                                        <option value="REGION IV-B">REGION IV-B</option>
-                                                        <option value="REGION V">REGION V</option>
-                                                        <option value="REGION VI">REGION VI</option>
-                                                        <option value="REGION VII">REGION VII</option>
-                                                        <option value="REGION VIII">REGION VIII</option>
-                                                        <option value="REGION IX">REGION IX</option>
-                                                        <option value="REGION X">REGION X</option>
-                                                        <option value="REGION XI">REGION XI</option>
-                                                        <option value="REGION XII">REGION XII</option>
-                                                        <option value="REGION XIII">REGION XIII</option>
-                                                    </select>
+                                        <div class="col-12 spouseModule" style="display:none;">
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-12">
+                                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
+                                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control spouse_fname"></div>
+                                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control spouse_mname"></div>
+                                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control spouse_lname"></div>
+                                                    <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Extended Name" class="form-control spouse_ename"></div>
                                                 </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Date</label></div>
-                                                <div class="col-12 col-md-10"><input type="date" class="form-control spouse_bday" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-12">
+                                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Present Address</label></div>
+                                                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control pAddress"></textarea></div>
+                                                </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Province</label></div>
-                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Address" class="form-control spouseProvince" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Region</label></div>
+                                                    <div class="col-12 col-md-10">
+                                                        <select class="form-control spouse_region select2">
+                                                            <option value="" selected disabled>Select Birth Region</option>
+                                                            <option value="CAR">CAR</option>
+                                                            <option value="NCR">NCR</option>
+                                                            <option value="REGION I">REGION I</option>
+                                                            <option value="REGION II">REGION II</option>
+                                                            <option value="REGION III">REGION III</option>
+                                                            <option value="REGION IV-A">REGION IV-A</option>
+                                                            <option value="REGION IV-B">REGION IV-B</option>
+                                                            <option value="REGION V">REGION V</option>
+                                                            <option value="REGION VI">REGION VI</option>
+                                                            <option value="REGION VII">REGION VII</option>
+                                                            <option value="REGION VIII">REGION VIII</option>
+                                                            <option value="REGION IX">REGION IX</option>
+                                                            <option value="REGION X">REGION X</option>
+                                                            <option value="REGION XI">REGION XI</option>
+                                                            <option value="REGION XII">REGION XII</option>
+                                                            <option value="REGION XIII">REGION XIII</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Date</label></div>
+                                                    <div class="col-12 col-md-10"><input type="date" class="form-control spouse_bday"></div>
+                                                </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Work Address</label></div>
-                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Address" class="form-control spouse_work_add" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Province</label></div>
+                                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Birth Province" class="form-control spouseProvince"></div>
+                                                </div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Work Address</label></div>
+                                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Work Address" class="form-control spouse_work_add"></div>
+                                                </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Municipality</label></div>
-                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Address" class="form-control spouseMunicipality" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Municipality</label></div>
+                                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Birth Municipality" class="form-control spouseMunicipality"></div>
+                                                </div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Nature of Ceremony</label></div>
+                                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Nature of Ceremony" class="form-control spouse_ceremony"></div>
+                                                </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Nature of Ceremony</label></div>
-                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Ceremony" class="form-control spouse_ceremony" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
+                                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Birth Place (Others)" class="form-control spouse_bplace_others"></div>
+                                                </div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Occupation</label></div>
+                                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Occupation" class="form-control spouse_occupation"></div>
+                                                </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
-                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Birth Place" class="form-control spouse_bplace_others" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Marriage Date</label></div>
+                                                    <div class="col-12 col-md-10"><input type="date" class="form-control date_marriage"></div>
+                                                </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Occupation</label></div>
-                                                <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="Occupation" class="form-control spouse_occupation" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-12">
+                                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Remarks</label></div>
+                                                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control spouse_remarks"></textarea></div>
+                                                </div>
                                             </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Marriage Date</label></div>
-                                                <div class="col-12 col-md-10"><input type="date" class="form-control date_marriage" disabled></div>
-                                            </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                
-                                            </div>
-                                            <div class="row form-group col-md-12 spouseModule" style="display:none;">
-                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control spouse_remarks" disabled></textarea></div>
-                                            </div>
-                                            <div class="row form-group col-md-6 spouseModule" style="display:none;">
-                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Spouse Relationship</label></div>
-                                                <div class="col-12 col-md-10">
-                                                    <select class="form-control spouse_relationship select2" disabled>
-                                                        <option value="" selected disabled>-- select one --</option>
-                                                        <option value="FAIR">Fair</option>
-                                                        <option value="POOR">Poor</option>
-                                                        <option value="SATISFACTORY">Satisfactory</option>
-                                                        <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                                    </select>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Spouse Relationship</label></div>
+                                                    <div class="col-12 col-md-10">
+                                                        <select class="form-control spouse_relationship select2">
+                                                            <option value="" selected disabled>Select Spouse Relationship</option>
+                                                            <option value="FAIR">Fair</option>
+                                                            <option value="POOR">Poor</option>
+                                                            <option value="SATISFACTORY">Satisfactory</option>
+                                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                </fieldset>
+                                    </fieldset>
+                                </div>
 
-                                <fieldset class="row col col-md-12">
-                                        <legend>Children</legend>
-                                        <div class="spousechild">
-                                        </div>
-                                        <div class="col-12">
-                                            <!-- <button type="button" class="add_more_child btn btn-success btn-sm float-right" style="display:none;">Add more</button> -->
-                                        </div>
-                                </fieldset>
+                                <div class="childFieldSet" style="display:none;">
+                                    <fieldset class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <legend>Children</legend>
+                                            <div class="spousechild">
+                                            </div>
+                                    </fieldset>
+                                </div>
 
                             </div>
                             <div class="card-footer">

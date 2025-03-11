@@ -121,12 +121,12 @@
             }
 
             var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(envFactor),
-            "type"                      : "environmentalFactor",
-            "worksheetStatus"           : "COMPLETED",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
+                "petitionerId"              : client_id,
+                "jsonData"                  : JSON.stringify(envFactor),
+                "type"                      : "environmentalFactor",
+                "worksheetStatus"           : "COMPLETED",
+                "createdBy"                 : $.cookie("uuid"),
+                "fieldOfficeId"             : $.cookie("field_office_id")
             }
 
             return payload;

@@ -291,7 +291,7 @@
                                 "petitionerId"          : resultPetitioner.id,
                                 "caseloadType"          : "",
                                 "senderId"              : $.cookie("uuid"),
-                                "senderName"            : user_name,
+                                "senderName"            : "",
                                 "senderFieldOfficeId"   : $.cookie('field_office_id'),
                                 "senderFieldOfficeName" : "",
                                 "originFieldOfficeId"   : result.originFieldOfficeId,

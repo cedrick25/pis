@@ -490,17 +490,17 @@
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Province</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Birth Place" class="form-control bprovince"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Birth Place" class="form-control bprovince"></div>
                                     </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth City/Municipality</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Birth City" class="form-control bcity"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Birth City" class="form-control bcity"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place (Others)</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Birth Place" class="form-control bplace_others"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Birth Place" class="form-control bplace_others"></div>
                                     </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Identifying Marks</label></div>
@@ -518,11 +518,11 @@
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Handicap</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Handicap" class="form-control handicap"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Handicap" class="form-control handicap"></div>
                                     </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Description</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Description" class="form-control desc"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Description" class="form-control desc"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -545,7 +545,7 @@
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Name" class="form-control father_name"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Name" class="form-control father_name"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Date</label></div>
@@ -555,16 +555,16 @@
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" class="form-control father_bplace" placeholder="Enter Birth Place"></div>
+                                                <div class="col-12 col-md-9"><input type="text" class="form-control father_bplace" placeholder="Birth Place"></div>
                                             </div>
                                             <!-- <div class="row form-group col-md-12">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Address</label></div>
-                                                <div class="col-12 col-md-12"><input type="text" name="text-input" placeholder="Enter Address" class="form-control father_add"></div>
+                                                <div class="col-12 col-md-12"><input type="text" name="text-input" placeholder="Address" class="form-control father_add"></div>
                                             </div> -->
                                             <div class="row form-group col-md-12">
                                                 <div class="col col-md-2" style="max-width: 12.2%"><label for="text-input" class=" form-control-label">Address</label></div>
                                                 <div class="col-12 col-md-10">
-                                                    <!-- <input type="text" name="text-input" placeholder="Enter Address" class="form-control mother_add"> -->
+                                                    <!-- <input type="text" name="text-input" placeholder="Address" class="form-control mother_add"> -->
                                                     <!-- <div class="col-12 col-md-11"> -->
                                                         <textarea rows="2" cols="50" class="form-control father_add"></textarea>
                                                     <!-- </div> -->
@@ -813,23 +813,23 @@
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Occupation" class="form-control father_occupation"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Occupation" class="form-control father_occupation"></div>
                                             </div>
                                         </div>
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Work Address</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address " class="form-control father_work_add"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address " class="form-control father_work_add"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tel. No.</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Number " class="form-control father_tel_no"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Number " class="form-control father_tel_no"></div>
                                             </div>
                                         </div>
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Monthly Income</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Income" class="form-control father_income"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Income" class="form-control father_income"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deceased</label></div>
@@ -845,7 +845,7 @@
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6 fatherDeceasedCause" style="display: none;">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Cause</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Cause" class="form-control father_deceased_cause"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Cause" class="form-control father_deceased_cause"></div>
                                             </div>
                                             <div class="row form-group col-md-6 fatherDateDeceased" style="display: none;">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Deceased</label></div>
@@ -859,7 +859,7 @@
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Name" class="form-control mother_name"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Name" class="form-control mother_name"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Date</label></div>
@@ -869,12 +869,12 @@
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" class="form-control mother_bplace" placeholder="Enter Birth Place"></div>
+                                                <div class="col-12 col-md-9"><input type="text" class="form-control mother_bplace" placeholder="Birth Place"></div>
                                             </div>
                                             <div class="row form-group col-md-12">
                                                 <div class="col col-md-2" style="max-width: 12.2%"><label for="text-input" class=" form-control-label">Address</label></div>
                                                 <div class="col-12 col-md-10">
-                                                    <!-- <input type="text" name="text-input" placeholder="Enter Address" class="form-control mother_add"> -->
+                                                    <!-- <input type="text" name="text-input" placeholder="Address" class="form-control mother_add"> -->
                                                     <!-- <div class="col-12 col-md-11"> -->
                                                         <textarea rows="2" cols="50" class="form-control mother_add"></textarea>
                                                     <!-- </div> -->
@@ -1123,23 +1123,23 @@
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Occupation " class="form-control mother_occupation"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Occupation " class="form-control mother_occupation"></div>
                                             </div>
                                         </div>
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Work Address</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address " class="form-control mother_work_add"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address " class="form-control mother_work_add"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tel. No.</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Number " class="form-control mother_tel_no"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Number " class="form-control mother_tel_no"></div>
                                             </div>
                                         </div>
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Monthly Income</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Income " class="form-control mother_income"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Income " class="form-control mother_income"></div>
                                             </div>
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deceased</label></div>
@@ -1155,7 +1155,7 @@
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6 motherDeceasedCause" style="display: none;">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Cause</label></div>
-                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Cause " class="form-control mother_deceased_cause"></div>
+                                                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Cause " class="form-control mother_deceased_cause"></div>
                                             </div>
                                             <div class="row form-group col-md-6 motherDateDeceased" style="display: none;">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Deceased</label></div>
@@ -1166,16 +1166,17 @@
                                 
                                 <fieldset class="row col col-md-12">
                                         <legend>Siblings</legend>
-                                        <div class="list_siblings">
-                                        </div>
                                         <div class="col-12">
-                                            <button type="button" class="add_more_siblings btn btn-success btn-sm float-right">Add more</button>
+                                            <button type="button" class="add_more_siblings btn btn-primary btn-sm float-right">Add more</button>
+                                        </div>
+                                        <br><br><br>
+                                        <div class="list_siblings">
                                         </div>
                                 </fieldset>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-success btn-next btn-sm float-right" style="display: none">Next</button>
-                                <button type="button" class="btn btn-success btn-update btn-sm float-right" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
+                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>

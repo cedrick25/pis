@@ -1,5 +1,9 @@
 <?php $this->load->view('templates/header.php'); ?> 
-
+<style type="">
+    .aside #left-panel: {
+        width: 280px; !important
+    } 
+</style>
 <body>
     <!-- Left Panel -->
 

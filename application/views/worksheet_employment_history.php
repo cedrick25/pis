@@ -150,7 +150,7 @@
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list">Client</a></li>
                             <li><a href="">Worksheet Create</a></li>
-                            <li class="active">Educational History</li>
+                            <li class="active">Employment History</li>
                         </ol>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Petitioner's Educational History</strong>
+                                <strong class="card-title">Petitioner's Employment History</strong>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -207,114 +207,115 @@
                                         
                                 <fieldset class="row form-group col col-md-12">
                                         <legend>Employment History</legend>
-                                        <div class="emp_history">
-                                        </div>
                                         <div class="col-12">
                                             <div class="col-12">
                                                 <button type="button" class="add_more_emp btn btn-primary btn-sm float-right">Add more</button>
                                             </div>
                                         </div>
+                                        <br><br><br>
+                                        <div class="emp_history">
+                                        </div>
                                 </fieldset>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Status of Employment</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control emp_status select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="REGULAR">Regular</option>
-                                            <option value="IRREGULAR">Irregular</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Status of Employment</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control emp_status select2">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="REGULAR">Regular</option>
+                                                <option value="IRREGULAR">Irregular</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specStatus"></textarea></div>
                                     </div>
                                 </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specStatus"></textarea></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Means of Support</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control emp_support select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="CHILDREN SUPPORT">Children Support</option>
-                                            <option value="OTHERS">Others</option>
-                                            <option value="PENSION">Pension</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Means of Support</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control emp_support select2">
+                                                <option value="" selected disabled>Select Means of Support</option>
+                                                <option value="CHILDREN SUPPORT">Children Support</option>
+                                                <option value="OTHERS">Others</option>
+                                                <option value="PENSION">Pension</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specSupp"></textarea></div>
                                     </div>
                                 </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specSupp"></textarea></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employable Skills</label></div>
-                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_skills"></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Other Source of income</label></div>
-                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_otherSource"></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Health</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control emp_health select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employable Skills</label></div>
+                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_skills"></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Other Source of income</label></div>
+                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_otherSource"></div>
                                     </div>
                                 </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainHealth"></textarea></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Previous Treatment</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control emp_treatment select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="NONE">None</option>
-                                            <option value="YES">Yes</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Health</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control emp_health select2">
+                                                <option value="" selected disabled>Select Physical Health</option>
+                                                <option value="FAIR">Fair</option>
+                                                <option value="POOR">Poor</option>
+                                                <option value="SATISFACTORY">Satisfactory</option>
+                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainHealth"></textarea></div>
                                     </div>
                                 </div>
-
-                                <div class="row form-group col-md-6 hosp_name" style="display:none;">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Hospital Name/s</label></div>
-                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_hosName"></div>
-                                </div>
-
-                                <div class="row form-group col-md-6 date_hosp" style="display:none;">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date/s Hospitalized</label></div>
-                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_dateHos"></div>
-                                </div>
-
-                                <div class="row form-group col-md-6 use_drug" style="display:none;">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Use of Alcohol/Drugs</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control emp_useDrug select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="NO">No</option>
-                                            <option value="OCCASIONALLY">Occasionally</option>
-                                            <option value="YES">Yes</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Previous Treatment</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control emp_treatment select2">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="NONE">None</option>
+                                                <option value="YES">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6 hosp_name" style="display:none;">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Hospital Name/s</label></div>
+                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_hosName"></div>
                                     </div>
                                 </div>
-
-                                <div class="row form-group col-md-6 drug_explain" style="display:none;">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainDrug"></textarea></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6 date_hosp" style="display:none;">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date/s Hospitalized</label></div>
+                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_dateHos"></div>
+                                    </div>
+                                    <div class="row form-group col-md-6 use_drug" style="display:none;">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Use of Alcohol/Drugs</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control emp_useDrug select2">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="NO">No</option>
+                                                <option value="OCCASIONALLY">Occasionally</option>
+                                                <option value="YES">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6 drug_explain" style="display:none;">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainDrug"></textarea></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->

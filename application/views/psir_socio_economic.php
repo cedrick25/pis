@@ -213,109 +213,119 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Relationship</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control family_rel select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Relationship</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control family_rel select2">
+                                                <option value="" selected disabled>Select Relationship</option>
+                                                <option value="FAIR">Fair</option>
+                                                <option value="POOR">Poor</option>
+                                                <option value="SATISFACTORY">Satisfactory</option>
+                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Reputation in Community</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control family_rep select2">
+                                                <option value="" selected disabled>Select Reputation Status</option>
+                                                <option value="FAIR">Fair</option>
+                                                <option value="POOR">Poor</option>
+                                                <option value="SATISFACTORY">Satisfactory</option>
+                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Reputation in Community</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control family_rep select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Home Condition</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control home_cond select2">
+                                                <option value="" selected disabled>Select Condition</option>
+                                                <option value="FAIR">Fair</option>
+                                                <option value="POOR">Poor</option>
+                                                <option value="SATISFACTORY">Satisfactory</option>
+                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control fam_prob"></div>
+                                    </div> -->
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control fam_prob select2">
+                                                <option value="" selected disabled>Select Problem</option>
+                                                <option value="ECONOMIC">Economic</option>
+                                                <option value="HUSBAND-WIFE_CONFLICT">Husband-wife conflict</option>
+                                                <option value="MARITAL_PROBLEM">Marital problem</option>
+                                                <option value="MENTAL_ILLNESS">Mental illness</option>
+                                                <option value="ONE-PARENT FAMILY">One-parent family</option>
+                                                <option value="PARENT-CHILD CONFLICT">Parent-child conflict</option>
+                                                <option value="PHYSICAL_ILLNESS">Physical illness</option>
+                                                <option value="SIBLING_CONFLICT">Sibling conflict</option>
+                                                <option value="OTHERS">Others</option>
+                                                <option value="NO_APPARENT_PROBLEM">No apparent problem</option>
+                                                <option value="SATISFACTORY">Satisfactory</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Home Condition</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control home_cond select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Economic Status</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control eco_status select2">
+                                                <option value="" selected disabled>Select Status</option>
+                                                <option value="POOR">Poor (Less than 7,890/mo)</option>
+                                                <option value="LOW INCOME">Low Income (Php 7,890-15,780/mo)</option>
+                                                <option value="LOWER MIDDLE INCOME">Lower Middle Income (Php 15,780-31,560/mo)</option>
+                                                <option value="MIDDLE CLASS">Middle Class (Php 31,560-78,900/mo)</option>
+                                                <option value="UPPER MIDDLE CLASS">Upper Middle Class (Php 78,900-118,350/mo)</option>
+                                                <option value="UPPER INCOME">Upper Income (Php 118,350-157,800/mo)</option>
+                                                <option value="RICH">Rich (at least Php 157,800/mo)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stability of Residence</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control stability select2">
+                                                <option value="" selected disabled>Select Stability</option>
+                                                <option value="FREQUENT CHANGE">Frequent Change</option>
+                                                <option value="NO STABILITY">No Stability</option>
+                                                <option value="OCCASIONAL CHANGE">Occasional Change</option>
+                                                <option value="STABLE">Stable</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control fam_prob"></div>
-                                </div> -->
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control fam_prob select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="ECONOMIC">Economic</option>
-                                            <option value="HUSBAND-WIFE_CONFLICT">Husband-wife conflict</option>
-                                            <option value="MARITAL_PROBLEM">Marital problem</option>
-                                            <option value="MENTAL_ILLNESS">Mental illness</option>
-                                            <option value="ONE-PARENT FAMILY">One-parent family</option>
-                                            <option value="PARENT-CHILD CONFLICT">Parent-child conflict</option>
-                                            <option value="PHYSICAL_ILLNESS">Physical illness</option>
-                                            <option value="SIBLING_CONFLICT">Sibling conflict</option>
-                                            <option value="OTHERS">Others</option>
-                                            <option value="NO_APPARENT_PROBLEM">No apparent problem</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Comments</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control comments"></textarea></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Childhood Circumstances</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control circumstances select2">
+                                                <option value="" selected disabled>Select Circumstances</option>
+                                                <option value="SAD">Sad</option>
+                                                <option value="HAPPY">Happy</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Economic Status</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control eco_status select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="POOR">Poor (Less than 7,890/mo)</option>
-                                            <option value="LOW INCOME">Low Income (Php 7,890-15,780/mo)</option>
-                                            <option value="LOWER MIDDLE INCOME">Lower Middle Income (Php 15,780-31,560/mo)</option>
-                                            <option value="MIDDLE CLASS">Middle Class (Php 31,560-78,900/mo)</option>
-                                            <option value="UPPER MIDDLE CLASS">Upper Middle Class (Php 78,900-118,350/mo)</option>
-                                            <option value="UPPER INCOME">Upper Income (Php 118,350-157,800/mo)</option>
-                                            <option value="RICH">Rich (at least Php 157,800/mo)</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control explain"></textarea></div>
                                     </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stability of Residence</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control stability select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FREQUENT CHANGE">Frequent Change</option>
-                                            <option value="NO STABILITY">No Stability</option>
-                                            <option value="OCCASIONAL CHANGE">Occasional Change</option>
-                                            <option value="STABLE">Stable</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Comments</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control comments" disabled></textarea></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Childhood Circumstances</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control circumstances select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="SAD">Sad</option>
-                                            <option value="HAPPY">Happy</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control explain" disabled></textarea></div>
                                 </div>
                             </div>
                             <div class="card-footer">

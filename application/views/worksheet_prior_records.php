@@ -219,10 +219,11 @@
                                 </div>
                                 <fieldset class="row col col-md-12">
                                         <legend>Records</legend>
-                                        <div class="list">
-                                        </div>
                                         <div class="col-12">
-                                            <button type="button" class="add_more btn btn-success btn-sm float-right">Add more</button>
+                                            <button type="button" class="add_more btn btn-primary btn-sm float-right">Add more</button>
+                                            <br><br><br>
+                                        </div>
+                                        <div class="list">
                                         </div>
                                 </fieldset>
                                 <div class="row form-group col-md-6">
@@ -242,10 +243,11 @@
                                 </div>
                                 <fieldset class="row col col-md-12">
                                         <legend>Information</legend>
-                                        <div class="list_info">
-                                        </div>
                                         <div class="col-12">
-                                            <button type="button" class="add_more_info btn btn-success btn-sm float-right">Add more</button>
+                                            <button type="button" class="add_more_info btn btn-primary btn-sm float-right">Add more</button>
+                                            <br><br><br>
+                                        </div>
+                                        <div class="list_info">
                                         </div>
                                 </fieldset>
                             </div>

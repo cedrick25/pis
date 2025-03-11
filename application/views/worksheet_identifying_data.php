@@ -256,7 +256,7 @@
                                 </div>
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Name" class="form-control data_name"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Name" class="form-control data_name"></div>
                                 </div>
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Initital Interview</label></div>
@@ -264,24 +264,24 @@
                                 </div>
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias(es)</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Alias(es)" class="form-control alias"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Alias(es)" class="form-control alias"></div>
                                 </div>
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">True Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter True Name" class="form-control true_name"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="True Name" class="form-control true_name"></div>
                                 </div>
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Present Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control present_add"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address" class="form-control present_add"></div>
                                 </div>
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permanent Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control permanent_add"></div>
+                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Permanent Address" class="form-control permanent_add"></div>
                                 </div>
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
-                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Save</button>
+                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
                                 <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>

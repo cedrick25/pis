@@ -251,7 +251,6 @@
 
         })
         
-
         __executeExternalGet('8000/worksheet/getPetitioner/familyBackground/'+client_id).done(function (result) {
             var result = result.response;
             if (result.status != "ERROR") {
@@ -315,46 +314,42 @@
 
 
                     familybg.siblings.forEach(function(data){
-                        $(".list_siblings").append(`
-                        <div class="list_sibling">
+                        $(".list_siblings").append(`<div class="list_sibling">
                             <div class="row form-group col-md-12">
-                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name" value="${data.sibling_name}" disabled></div>
-                                <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship" value="${data.relationship}" disabled></div>
-                                <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age" value="${data.age}" disabled></div>
+                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name" value="${data.sibling_name}"></div>
+                                <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship" value="${data.relationship}"></div>
+                                <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age" value="${data.age}"></div>
                                 <div class="col-3 col-md-2">
-                                    <select class="form-control sibling_sex select2" disabled>
-                                        <option value="${data.sibling_sex}">${data.sibling_sex}</option>
-                                        <option value="FEMALE">Female</option>
-                                        <option value="MALE">Male</option>
-                                        <option value="LGBT">LGBT</option>
+                                    <select class="form-control sibling_sex select2">
+                                        <option value="n/a" ${data.sibling_sex === "n/a" ? "selected" : ""} disabled>Sex</option>
+                                        <option value="FEMALE" ${data.sibling_sex === "FEMALE" ? "selected" : ""}>Female</option>
+                                        <option value="MALE" ${data.sibling_sex === "MALE" ? "selected" : ""}>Male</option>
+                                        <option value="LGBT" ${data.sibling_sex === "LGBT" ? "selected" : ""}>LGBT</option>
                                     </select>
                                 </div>
                                 <div class="col-3 col-md-2">
-                                    <select class="form-control sibling_education select2" disabled>
-                                        <option value="${data.sibling_education}">${data.sibling_education}</option>
-                                        <option value="COLLEGE GRADUATE">College Graduate</option>
-                                        <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
-                                        <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
-                                        <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
-                                        <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
-                                        <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
-                                        <option value="ILLITERATE">No Education/Illiterate</option>
-                                        <option value="POST-GRADUATE">Post-Graduate Studies</option>
-                                        <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
-                                        <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
-                                        <option value="VOCATIONAL">Vocational</option>
+                                    <select class="form-control sibling_education select2">
+                                        <option value="n/a" ${data.sibling_education === "n/a" ? "selected" : ""} disabled>Education</option>
+                                        <option value="COLLEGE GRADUATE" ${data.sibling_education === "COLLEGE GRADUATE" ? "selected" : ""}>College Graduate</option>
+                                        <option value="COLLEGE UNDERGRADUATE" ${data.sibling_education === "COLLEGE UNDERGRADUATE" ? "selected" : ""}>College Undergraduate</option>
+                                        <option value="ELEMENTARY GRADUATE" ${data.sibling_education === "ELEMENTARY GRADUATE" ? "selected" : ""}>Elementary Graduate</option>
+                                        <option value="ELEMENTARY UNDERGRADUATE" ${data.sibling_education === "ELEMENTARY UNDERGRADUATE" ? "selected" : ""}>Elementary Undergraduate</option>
+                                        <option value="JUNIOR HS GRADUATE" ${data.sibling_education === "JUNIOR HS GRADUATE" ? "selected" : ""}>Junior High School Graduate</option>
+                                        <option value="JUNIOR HS UNDERGRADUATE" ${data.sibling_education === "JUNIOR HS UNDERGRADUATE" ? "selected" : ""}>Junior High School Undergraduate</option>
+                                        <option value="ILLITERATE" ${data.sibling_education === "ILLITERATE" ? "selected" : ""}>No Education/Illiterate</option>
+                                        <option value="POST-GRADUATE" ${data.sibling_education === "POST-GRADUATE" ? "selected" : ""}>Post-Graduate Studies</option>
+                                        <option value="SENIOR HS GRADUATE" ${data.sibling_education === "SENIOR HS GRADUATE" ? "selected" : ""}>Senior High School Graduate</option>
+                                        <option value="SENIOR HS UNDERGRADUATE" ${data.sibling_education === "SENIOR HS UNDERGRADUATE" ? "selected" : ""}>Senior High School Undergraduate</option>
+                                        <option value="VOCATIONAL" ${data.sibling_education === "VOCATIONAL" ? "selected" : ""}>Vocational</option>
                                     </select>
                                 </div>
-                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation" value="${data.sibling_occupation}" disabled></div>
+                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation" value="${data.sibling_occupation}"></div>
                             </div>
-                            
                         </div>`
                         )
                     });
-                }else{
-
-                } 
-
+                    $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
+                }
             }
         })
 

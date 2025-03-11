@@ -112,33 +112,35 @@
 
         $(".add_more_emp").unbind("click").on("click", function(){
             $(".emp_history").append(`
-            <div class="emp_his">
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
-                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held"></div>
-                </div>
-
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
-                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add"></div>
-                </div>
-
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
-                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom"></div>
-                </div>
-
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
-                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo"></div>
-                </div>
-
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
-                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income"></div>
-                </div>
-                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-            </div>`
+                <div class="emp_his">
+                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                        <div class="row form-group col-md-6">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
+                            <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held"></div>
+                        </div>
+                        <div class="row form-group col-md-6">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
+                            <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add"></div>
+                        </div>
+                    </div>
+                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                        <div class="row form-group col-md-6">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
+                            <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom"></div>
+                        </div>
+                        <div class="row form-group col-md-6">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
+                            <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo"></div>
+                        </div>
+                    </div>
+                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                        <div class="row form-group col-md-6">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
+                            <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
+                </div>`
             )
         });
 
@@ -302,29 +304,31 @@
                 empHis.empHistory.forEach(function(data){
                     $(".emp_history").append(`
                         <div class="emp_his">
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held" value="${data.job_held}"></div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
+                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held" value="${data.job_held}"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
+                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add" value="${data.emp_add}"></div>
+                                </div>
                             </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add" value="${data.emp_add}"></div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
+                                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom" value="${data.emp_dateFrom}"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
+                                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo" value="${data.emp_dateTo}"></div>
+                                </div>
                             </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
-                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom" value="${data.emp_dateFrom}"></div>
-                            </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
-                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo" value="${data.emp_dateTo}"></div>
-                            </div>
-
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income" value="${data.emp_Income}"></div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
+                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income" value="${data.emp_Income}"></div>
+                                </div>
                             </div>
                             <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                         </div>`
@@ -339,7 +343,37 @@
 
 
                 }else{
+                    $(".emp_history").append(`
+                        <div class="emp_his">
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Job Held</label></div>
+                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control job_held"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employer Address</label></div>
+                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_add"></div>
+                                </div>
+                            </div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
+                                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateFrom"></div>
+                                </div>
 
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
+                                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control emp_dateTo"></div>
+                                </div>
+                            </div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Income</label></div>
+                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_Income"></div>
+                                </div>
+                            </div>
+                        </div>`
+                    )
                     $(".btn-next").show();
                     $(".btn-update").hide();
                 } 
