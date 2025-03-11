@@ -138,7 +138,6 @@
                     imgavat.attr('src', reader.result);
                 };
             }
-
         });
 
         $('.btn-upload').on('click', function() {
@@ -173,6 +172,7 @@
                         $('#capture').css('z-index','30');
 
                         $('.btn_confirm').unbind("click").on("click", function(){
+                            // console.log("opne cam confirm")
                             var dataURL = canvas.toDataURL();
                             var blob = dataURItoBlob(dataURL);
                             handleBlob(blob);
@@ -192,7 +192,7 @@
                             var formData = new FormData();
                             formData.append('file', blob, 'image.jpg');
                             $.ajax({
-                                url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'),
+                                url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id')+"&remarks=petitioner_profile_remarks",
                                 type: 'POST',
                                     data: formData,
                                     contentType: false,
@@ -328,12 +328,9 @@
             var result = result.response;
 
             if (result.status != "ERROR") {
-
                 if (result.worksheetStatus == "INCOMPLETE"){
                     $(".btn-update").show();
                     $(".btn-next").hide();
-
-                    // console.log(JSON.parse(result.jsonData))
 
                     $(".data_name").val(JSON.parse(result.jsonData).name);
                     $(".data_interview").val(JSON.parse(result.jsonData).interview);
@@ -341,13 +338,10 @@
                     $(".true_name").val(JSON.parse(result.jsonData).trueName);
                     $(".present_add").val(JSON.parse(result.jsonData).presentAddress);
                     $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
-
-                }else{
-
+                } else {
                     $(".btn-next").show();
                     $(".btn-update").hide();
                 } 
-
             }
         })
 

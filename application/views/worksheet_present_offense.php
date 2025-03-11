@@ -211,7 +211,7 @@
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Place of Commision</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter palce of Commision" class="form-control p_commision"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter place of Commision" class="form-control p_commision"></div>
                                         <!-- <div class="col-12 col-md-9"><input type="date" class="form-control date_cic"></div> -->
                                     </div>
                                 </div>
@@ -252,67 +252,67 @@
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Judge</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Judge" class="form-control judge"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Judge" class="form-control judge"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Court" class="form-control court"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Court" class="form-control court"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Arresting Officer</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Arresting Officer" class="form-control arresting"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Arresting Officer" class="form-control arresting"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control address_1"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address" class="form-control address_1"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Defense Counsel</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Defense Counsel" class="form-control defense"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Defense Counsel" class="form-control defense"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control address_2"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address" class="form-control address_2"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prosecutor</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Prosecutor" class="form-control prosecutor"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Prosecutor" class="form-control prosecutor"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control address_3"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address" class="form-control address_3"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offended Party</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Offended Party" class="form-control offended"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Offended Party" class="form-control offended"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control address_4"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address" class="form-control address_4"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Co-Accused</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Co-Accused" class="form-control ca"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Co-Accused" class="form-control ca"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Aggravating Circumstances</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Aggrevating Circumstances" class="form-control ac"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Aggrevating Circumstances" class="form-control ac"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Mitigating Circumstances</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Mitigating Circumstances" class="form-control mc"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Mitigating Circumstances" class="form-control mc"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Extent of Participation</label></div>
@@ -340,7 +340,7 @@
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Manner of Commision</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Manner of Commision" class="form-control commision"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Manner of Commision" class="form-control commision"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -360,7 +360,7 @@
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Explaination" class="form-control explain"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Explaination" class="form-control explain"></div>
                                     </div>
                                 </div>
                             </div>

@@ -137,6 +137,7 @@
                         $(".acceptanceSpecify").val(JSON.parse(result.jsonData).acceptanceSpecify);
                         $(".peerRel").val(JSON.parse(result.jsonData).peerRel).trigger("change");
                         $(".peerSpecify").val(JSON.parse(result.jsonData).peerSpecify);
+                        $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
                     }else{
                         $(".btn-update").hide();
                         $(".btn-next").show();

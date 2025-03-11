@@ -4,16 +4,13 @@
         var ___ctx = api;
         console.log(___ctx)
 
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
-
         var __getContext = function() {
             return ___ctx;
         };
 
         var __executeExternalGet = function(path, customLoader) {
             path = __getContext() + path;
+            // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -112,10 +109,8 @@
 
         __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
             if (result.status != "ERROR") {
-                console.log(result.files.length)
                 if (result.files.length != 0) {
-                    console.log(result.files[0].id)
-                    $('#client_photo').attr('src', 'file/view/'+result.files[0].id);
+                    $('#client_photo').attr('src', api+'8080/file/view/'+result.files[0].id);
                 }
             }
         })
@@ -166,38 +161,40 @@
             })
         })
 
+        
+        $('.card-body').find('input, select, button').prop('disabled', true);
+        
+        __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
+            var result = result.response;
+            if (result.status != "ERROR") {
+                if (result.worksheetStatus == "INCOMPLETE"){
+                    __executeExternalGet('8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
+                        var result = result.response;
+                        if (result.status != "ERROR") {
+                            if (result.worksheetStatus == "INCOMPLETE"){
+                                $(".btn-next").hide();
+                                $(".btn-update").show();
 
-            __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
-                var result = result.response;
-                if (result.status != "ERROR") {
-                    if (result.worksheetStatus == "INCOMPLETE"){
-                        __executeExternalGet('8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
-                            var result = result.response;
-                            if (result.status != "ERROR") {
-                                if (result.worksheetStatus == "INCOMPLETE"){
-                                    $(".btn-next").hide();
-                                    $(".btn-update").show();
+                            }else{
+                                $(".btn-update").hide();
+                                $(".btn-next").show();
+                            } 
+                        }
+                    })
+                    console.log(JSON.parse(result.jsonData))
+                    $(".data_name").val(JSON.parse(result.jsonData).name);
+                    $(".data_interview").val(JSON.parse(result.jsonData).interview);
+                    $(".alias").val(JSON.parse(result.jsonData).alias);
+                    $(".true_name").val(JSON.parse(result.jsonData).trueName);
+                    $(".present_add").val(JSON.parse(result.jsonData).presentAddress);
+                    $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
 
-                                }else{
-                                    $(".btn-update").hide();
-                                    $(".btn-next").show();
-                                } 
-                            }
-                        })
-                        console.log(JSON.parse(result.jsonData))
-                        $(".data_name").val(JSON.parse(result.jsonData).name);
-                        $(".data_interview").val(JSON.parse(result.jsonData).interview);
-                        $(".alias").val(JSON.parse(result.jsonData).alias);
-                        $(".true_name").val(JSON.parse(result.jsonData).trueName);
-                        $(".present_add").val(JSON.parse(result.jsonData).presentAddress);
-                        $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
-
-                    }else{
-                        $(".btn-update").hide();
-                        $(".btn-next").show();
-                    } 
-                }
-            })
+                }else{
+                    $(".btn-update").hide();
+                    $(".btn-next").show();
+                } 
+            }
+        })
 
 
         $(".btn-update").unbind("click").on("click", function(){

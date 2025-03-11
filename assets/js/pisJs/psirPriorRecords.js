@@ -259,6 +259,28 @@
                             `)
                         });
                     }else{
+                        $(".list").append(`
+                            <div class="list_records">
+                                <div class="row form-group col-md-12">
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency" disabled></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No." disabled></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense"disabled></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When"disabled></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where"disabled></div>
+                                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition"disabled></div>
+                                </div>
+                            </div>`
+                        )
+                        $(".list_info").append(`
+                            <div class="list_information">
+                                <div class="row form-group col-md-12">
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source"disabled></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date" disabled></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position"disabled></div>
+                                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars"disabled></div>
+                                </div>
+                            </div>
+                        `)
                         $(".btn-update").hide();
                         $(".btn-next").show();
                     } 

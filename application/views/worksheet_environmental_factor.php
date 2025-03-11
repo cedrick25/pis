@@ -168,7 +168,7 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link identifying_datan" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
+                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
@@ -204,79 +204,94 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <select class="form-control neighborhood select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="RURAL">Rural</option>
-                                            <option value="URBAN">Urban</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
+                                        <div class="col-12 col-md-6">
+                                            <select class="form-control neighborhood select2">
+                                                <option value="" selected disabled>Select Neighborhood</option>
+                                                <option value="RURAL">Rural</option>
+                                                <option value="URBAN">Urban</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <select class="form-control area select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="NON-SLUM AREA">Non-Slum Area</option>
-                                            <option value="SLUM-AREA">Slum Area</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
+                                        <div class="col-12 col-md-6">
+                                            <select class="form-control area select2">
+                                                <option value="" selected disabled>Select Area</option>
+                                                <option value="NON-SLUM AREA">Non-Slum Area</option>
+                                                <option value="SLUM-AREA">Slum Area</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Describe</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control neighborhoodDescribe"></textarea></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Neighborhood Criminality</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control neighCrim select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="HIGH">High</option>
-                                            <option value="LOW">Low</option>
-                                            <option value="MINIMAL">Minimal</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Describe</label></div>
+                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control neighborhoodDescribe"></textarea></div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control criminalityExplain"></textarea></div>
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Community Acceptance</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control comAcceptance select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Neighborhood Criminality</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control neighCrim select2">
+                                                <option value="" selected disabled>Select Neighborhood Criminality</option>
+                                                <option value="HIGH">High</option>
+                                                <option value="LOW">Low</option>
+                                                <option value="MINIMAL">Minimal</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control acceptanceSpecify"></textarea></div>
-                                </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Peer Group Relationship</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control peerRel select2">
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="DESIRABLE">Desirable</option>
-                                            <option value="UNDESIRABLE WITH POTENTIAL">Undesirable with Potential for Improvement</option>
-                                            <option value="UNDESIRABLE WITH NO POTENTIAL">Undesirable with no Potential for Improvement</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Explain</label></div>
+                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control criminalityExplain"></textarea></div>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                    <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control peerSpecify"></textarea></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Community Acceptance</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control comAcceptance select2">
+                                                <option value="" selected disabled>Select Community Acceptance</option>
+                                                <option value="FAIR">Fair</option>
+                                                <option value="POOR">Poor</option>
+                                                <option value="SATISFACTORY">Satisfactory</option>
+                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
+                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control acceptanceSpecify"></textarea></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Peer Group Relationship</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control peerRel select2">
+                                                <option value="" selected disabled>Select Peer Group Relationship</option>
+                                                <option value="DESIRABLE">Desirable</option>
+                                                <option value="UNDESIRABLE WITH POTENTIAL">Undesirable with Potential for Improvement</option>
+                                                <option value="UNDESIRABLE WITH NO POTENTIAL">Undesirable with no Potential for Improvement</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
+                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control peerSpecify"></textarea></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->

@@ -112,21 +112,25 @@
 
         $(".add_more_residence").unbind("click").on("click", function(){
             $(".residence").append(`
-            <div class="res">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
-                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control resAdd"></textarea></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
-                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control dateFrom"></div>
-                </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
-                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control dateTo"></div>
-                </div>
-                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-            </div>`
+                <div class="res">
+                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                        <div class="row form-group col-md-12">
+                            <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
+                            <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control resAdd"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                        <div class="row form-group col-md-6">
+                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Date From</label></div>
+                            <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="" class="form-control dateFrom"></div>
+                        </div>
+                        <div class="row form-group col-md-6">
+                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Date To</label></div>
+                            <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="" class="form-control dateTo"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
+                </div>`
             )
         });
 
@@ -256,17 +260,21 @@
                     residenceList.residence.forEach(function(data){
                         $(".residence").append(`
                         <div class="res">
-                            <div class="row form-group col-md-12">
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
-                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control resAdd">${data.resAdd}</textarea></div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
+                                    <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control resAdd">${data.resAdd}</textarea></div>
+                                </div>
                             </div>
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control dateFrom" value="${data.dateFrom}"></div>
-                            </div>
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control dateTo" value="${data.dateTo}"></div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Date From</label></div>
+                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="" class="form-control dateFrom" value="${data.dateFrom}"></div>
+                                </div>
+                                <div class="row form-group col-md-6">
+                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Date To</label></div>
+                                    <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="" class="form-control dateTo" value="${data.dateTo}"></div>
+                                </div>
                             </div>
                             <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                         </div>`
@@ -296,7 +304,7 @@
 
             var dataPayload = gatheredDataResEco();
 
-            __executeExternalPost('8000/worksheet/updatePetitioner/residenceEconomic/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/updatePetitioner/residenceEconomic/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
                     if (result.status != "ERROR") {
                         $(".form-control").val('');
                         $('#success').show();
@@ -316,6 +324,7 @@
                 })
 
             })
+
 
         function setupWorksheetClickHandler(worksheetType) {
             $(`.${worksheetType}`).unbind("click").on("click", function () {

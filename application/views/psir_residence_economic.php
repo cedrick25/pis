@@ -216,51 +216,48 @@
 
                                 <fieldset class="row col col-md-12">
                                         <legend>Residence</legend>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                            <div class="row form-group col-md-6">
+                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Stability of Residence</label></div>
+                                                <div class="col-12 col-md-10">
+                                                    <select class="form-control res_stability select2">
+                                                        <option value="" selected disabled>Select Stability of Residence</option>
+                                                        <option value="FREQUENT CHANGE">Frequent Change</option>
+                                                        <option value="NO STABILITY">No Stability</option>
+                                                        <option value="OCCASIONAL CHANGE">Occasional Change</option>
+                                                        <option value="STABLE">Stable</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group col-md-6">
+                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Type of Residence</label></div>
+                                                <div class="col-12 col-md-10">
+                                                    <select class="form-control residence_type select2">
+                                                        <option value="" selected disabled>Select Type of Residence</option>
+                                                        <option value="INFORMAL SETTLER">Informal Settler</option>
+                                                        <option value="OWNED">Owned</option>
+                                                        <option value="OWNED BY PARENTS">Owned by Parents</option>
+                                                        <option value="RENTED">Rented</option>
+                                                        <option value="USED FREE">Used Free</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                            <div class="row form-group col-md-6">
+                                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Physical Home Condition</label></div>
+                                                <div class="col-12 col-md-10">
+                                                    <select class="form-control res_home_cond select2">
+                                                        <option value="" selected disabled>Select Physical Home Condition</option>
+                                                        <option value="FAIR">Fair</option>
+                                                        <option value="POOR">Poor</option>
+                                                        <option value="SATISFACTORY">Satisfactory</option>
+                                                        <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="residence">
-                                        </div>
-
-                                        <div class="row form-group col-md-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stability of Residence</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control res_stability select2" disabled>
-                                                    <option value="" selected disabled>-- select one --</option>
-                                                    <option value="FREQUENT CHANGE">Frequent Change</option>
-                                                    <option value="NO STABILITY">No Stability</option>
-                                                    <option value="OCCASIONAL CHANGE">Occasional Change</option>
-                                                    <option value="STABLE">Stable</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row form-group col-md-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Residence</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control residence_type select2" disabled>
-                                                    <option value="" selected disabled>-- select one --</option>
-                                                    <option value="INFORMAL SETTLER">Informal Settler</option>
-                                                    <option value="OWNED">Owned</option>
-                                                    <option value="OWNED BY PARENTS">Owned by Parents</option>
-                                                    <option value="RENTED">Rented</option>
-                                                    <option value="USED FREE">Used Free</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row form-group col-md-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Home Condition</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control res_home_cond select2" disabled>
-                                                    <option value="" selected disabled>-- select one --</option>
-                                                    <option value="FAIR">Fair</option>
-                                                    <option value="POOR">Poor</option>
-                                                    <option value="SATISFACTORY">Satisfactory</option>
-                                                    <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <!-- <button type="button" class="add_more_residence btn btn-success btn-sm float-right">Add more</button> -->
                                         </div>
 
                                 </fieldset>
@@ -274,8 +271,8 @@
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Family Status</label></div>
                                                 <div class="col-12 col-md-9">
-                                                    <select class="form-control fam_status select2" disabled>
-                                                        <option value="" selected disabled>-- select one --</option>
+                                                    <select class="form-control fam_status select2">
+                                                        <option value="" selected disabled>Select Family Status</option>
                                                         <option value="ADEQUATE">Adequate</option>
                                                         <option value="BELOW POVERTY">Below Poverty Lines</option>
                                                         <option value="INADEQUATE">Inadequate</option>
@@ -287,8 +284,8 @@
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Breadwinner</label></div>
                                                 <div class="col-12 col-md-9">
-                                                    <select class="form-control fam_breadwinner select2" disabled>
-                                                        <option value="" selected disabled>-- select one --</option>
+                                                    <select class="form-control fam_breadwinner select2">
+                                                        <option value="" selected disabled>Select Breadwinner</option>
                                                         <option value="CLIENT">Client</option>
                                                         <option value="CLIENT & SPOUSE">Client and Spouse</option>
                                                         <option value="CLIENT & SPOUSE & CHILD">Client,Spouse and Children</option>
@@ -299,13 +296,13 @@
                                             </div>
 
                                             <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Dependants</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Ceremony" class="form-control no_dependants" disabled></div>
+                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Number of Dependants</label></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Number of Dependents" class="form-control no_dependants"></div>
                                             </div>
 
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Dependants</label></div>
-                                                <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control dependants" disabled></textarea></div>
+                                                <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control dependants"></textarea></div>
                                             </div>
 
                                         </div>
@@ -324,8 +321,8 @@
                                             <div class="row form-group col-md-12">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Major Family Problems</label></div>
                                                 <div class="col-12 col-md-5">
-                                                    <select class="form-control maj_fam_prob select2" disabled>
-                                                        <option value="" selected disabled>-- select one --</option>
+                                                    <select class="form-control maj_fam_prob select2">
+                                                        <option value="" selected disabled>Select Major Family Problems</option>
                                                         <option value="ECONOMIC">Economic</option>
                                                         <option value="HUSBAND-WIFE_CONFLICT">Husband-wife conflict</option>
                                                         <option value="MARITAL_PROBLEM">Marital problem</option>
@@ -343,7 +340,7 @@
                                             
                                             <div class="row form-group col-md-12">
                                                 <div class="col col-md-2"><label for="text-input" class=" form-control-label">Comments</label></div>
-                                                <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control fam_comments" disabled></textarea></div>
+                                                <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control fam_comments"></textarea></div>
                                             </div>
 
                                         </div>

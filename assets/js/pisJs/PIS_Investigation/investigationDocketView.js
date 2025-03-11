@@ -261,7 +261,6 @@
                                         <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 justify-content-end" style="padding-top: 20px">
-                                        <button type="button" class="remove btn btn-danger btn-sm" data-id="${sentence_counter}">Remove</button>
                                     </div>
                                 </div>
                             </div>

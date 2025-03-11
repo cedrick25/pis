@@ -1007,9 +1007,13 @@ aside.left-panel {
   min-height: 100%;
   padding: 0 25px;
   vertical-align: top;
-  width: 280px;
-  -webkit-transition:width 0.3s ease;
-  transition: width 0.3s ease; }
+  width: 280px !important;
+/*  min-width: 280px !important;*/
+/*  max-width: 100%;*/
+  transition: none !important;
+/*  -webkit-transition:width 0.3s ease;
+  transition: width 0.3s ease;*/ 
+}
 
 .navbar {
   background: #272c33;
@@ -1268,8 +1272,9 @@ body.open .navbar .navbar-brand.hidden {
 .right-panel {
   display: table-cell;
   padding-left: 0 !important;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease; }
+/*  -webkit-transition: all 0.35s ease;*/
+/*  transition: all 0.35s ease;*/
+  transition: none !important; }
   .right-panel .breadcrumbs {
     background-color: #fff;
     display: inline-block;
@@ -2350,7 +2355,8 @@ header .form-inline {
 @media (max-width: 1024px) {
   aside.left-panel {
     padding: 0 20px;
-    width: 200px; }
+    width: 200px;
+	max-width: 100%; }
   .navbar .navbar-nav li > a .menu-icon {
     width: 30px; }
   .navbar .navbar-nav li.menu-item-has-children .sub-menu {
@@ -2464,6 +2470,7 @@ header .form-inline {
         .right-panel .content #bootstrap-data-table_wrapper .table td,
         .right-panel .content #bootstrap-data-table_wrapper .table th {
           padding: 5px; } }
+
 .card-announcement{
     border: 1px solid #d9d9d9; 
     border-radius: 9px; 

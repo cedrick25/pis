@@ -162,6 +162,7 @@
             $(".caseload").prop('disabled',true)
             $(".pb_client_sup").val(result.clientId).trigger("change");
             $(".field_office").val(result.fieldOfficeId).trigger("change");
+            $(".docketNum_update").val(result.docketNumber);
             $(".cc_no").val(result.criminalCaseNumber);
             $(".offense").val(result.offense);
             $(".caseload").val(result.caseloadType).trigger("change");
@@ -223,7 +224,6 @@
                             <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
                         </div>
                         <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 justify-content-end" style="padding-top: 20px">
-                            <button type="button" class="remove btn btn-danger btn-sm" data-id="${currentCounter}">Remove</button>
                         </div>
                     </div>
                 </div>`

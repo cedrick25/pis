@@ -179,35 +179,29 @@
             var result = result.response;
             if (result.status != "ERROR") {
                 if (result.worksheetStatus == "INCOMPLETE"){
-                    __executeExternalGet('8000/worksheet/getPetitioner/psirResidenceEconomic/'+client_id).done(function (result) {
-                            var result = result.response;
-                            if (result.status != "ERROR") {
-                                if (result.worksheetStatus == "INCOMPLETE"){
-                                    $(".btn-next").hide();
-                                    $(".btn-update").show();
-                                }else{
-                                    $(".btn-update").hide();
-                                    $(".btn-next").show();
-                                } 
-                            }
-                        })
+                    $(".btn-next").hide();
+                    $(".btn-update").show();
                     const residenceList = JSON.parse(result.jsonData)
                     residenceList.residence.forEach(function(data){
                         $(".residence").append(`
-                        <div class="res">
-                            <div class="row form-group col-md-12">
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
-                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control resAdd" disabled>${data.resAdd}</textarea></div>
-                            </div>
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date From</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control dateFrom" value="${data.dateFrom}" disabled></div>
-                            </div>
-                            <div class="row form-group col-md-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date To</label></div>
-                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="" class="form-control dateTo" value="${data.dateTo}" disabled></div>
-                            </div>
-                        </div>`
+                            <div class="res">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-12">
+                                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
+                                        <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control resAdd">${data.resAdd}</textarea></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Date From</label></div>
+                                        <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="" class="form-control dateFrom" value="${data.dateFrom}"></div>
+                                    </div>
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Date To</label></div>
+                                        <div class="col-3 col-md-10"><input type="text" name="text-input" placeholder="" class="form-control dateTo" value="${data.dateTo}"></div>
+                                    </div>
+                                </div>
+                            </div>`
                         )
                     });
                         $(".res_stability").val(JSON.parse(result.jsonData).residenceStability).trigger("change");
@@ -219,6 +213,7 @@
                         $(".no_dependants").val(JSON.parse(result.jsonData).no_dependants);
                         $(".fam_comments").val(JSON.parse(result.jsonData).fam_comments);
                         $(".maj_fam_prob").val(JSON.parse(result.jsonData).maj_fam_prob).trigger("change");
+                        $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
                 }else{
                     $(".btn-update").hide();
                     $(".btn-next").show();

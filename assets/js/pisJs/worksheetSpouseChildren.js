@@ -115,57 +115,57 @@
 
             $(".spousechild").append(`
             <div class="child">
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
-                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control child_fname"></div>
-                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control child_mname"></div>
-                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control child_lname"></div>
-                    <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Suffix Name" class="form-control child_sname"></div>
-                </div>
-                <div class="row form-group col-md-12">
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Date of Birth</label></div>
-                    <div class="col-3 col-md-3"><input type="date" class="form-control child_bdate"></div>
-
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Age</label></div>
-
-                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Age" class="form-control child_age"></div>
-
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sex</label></div>
-
-                    <div class="col-3 col-md-3">
-                        <select class="form-control child_sex select2">
-                            <option value="" selected disabled>Sex</option>
-                            <option value="FEMALE">Female</option>
-                            <option value="MALE">Male</option>
-                            <option value="LGBT">LGBT</option>
-                        </select>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
+                        <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control child_fname"></div>
+                        <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control child_mname"></div>
+                        <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control child_lname"></div>
+                        <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Suffix Name" class="form-control child_sname"></div>
                     </div>
                 </div>
-                <div class="row form-group col-md-12">
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Date of Birth</label></div>
+                        <div class="col-3 col-md-3"><input type="date" class="form-control child_bdate"></div>
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Age</label></div>
 
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Education</label></div>
-
-                    <div class="col-3 col-md-3">
-                        <select class="form-control child_education select2">
-                            <option value="" selected disabled>Education</option>
-                            <option value="COLLEGE GRADUATE">College Graduate</option>
-                            <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
-                            <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
-                            <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
-                            <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
-                            <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
-                            <option value="ILLITERATE">No Education/Illiterate</option>
-                            <option value="POST-GRADUATE">Post-Graduate Studies</option>
-                            <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
-                            <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
-                            <option value="VOCATIONAL">Vocational</option>
-                        </select>
+                        <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Age" class="form-control child_age"></div>
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sex</label></div>
+                        <div class="col-3 col-md-3">
+                            <select class="form-control child_sex select2">
+                                <option value="" selected disabled>Sex</option>
+                                <option value="FEMALE">Female</option>
+                                <option value="MALE">Male</option>
+                                <option value="LGBT">LGBT</option>
+                            </select>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Occupation</label></div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-md-12">
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Education</label></div>
+                        <div class="col-3 col-md-3">
+                            <select class="form-control child_education select2">
+                                <option value="" selected disabled>Education</option>
+                                <option value="COLLEGE GRADUATE">College Graduate</option>
+                                <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
+                                <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
+                                <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
+                                <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
+                                <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
+                                <option value="ILLITERATE">No Education/Illiterate</option>
+                                <option value="POST-GRADUATE">Post-Graduate Studies</option>
+                                <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
+                                <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
+                                <option value="VOCATIONAL">Vocational</option>
+                            </select>
+                        </div>
 
-                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Occupation" class="form-control child_occupation"></div>
-
+                        <div class="col col-md-1"><label for="text-input" class=" form-control-label">Occupation</label></div>
+                        <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Occupation" class="form-control child_occupation"></div>
+                    </div>
                 </div>
                 <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
             </div>`
@@ -343,56 +343,114 @@
                 spouseChild.children.forEach(function(data){
                     $(".spousechild").append(`
                         <div class="child">
-                            <div class="row form-group col-md-12">
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
-                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control child_fname" value="${data.child_fname}"></div>
-                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control child_mname" value="${data.child_mname}"></div>
-                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control child_lname" value="${data.child_lname}"></div>
-                                <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Suffix Name" class="form-control child_sname" value="${data.child_sname}"></div>
-                            </div>
-                            <div class="row form-group col-md-12">
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Date of Birth</label></div>
-                                <div class="col-3 col-md-3"><input type="date" class="form-control child_bdate" value="${data.child_bdate}"></div>
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Age</label></div>
-                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Age" class="form-control child_age" value="${data.child_age}"></div>
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label" >Sex</label></div>
-                                <div class="col-3 col-md-3">
-                                    <select class="form-control child_sex select2">
-                                        <option value="${data.childSex}">${data.childSex}</option>
-                                        <option value="FEMALE">Female</option>
-                                        <option value="MALE">Male</option>
-                                        <option value="LGBT">LGBT</option>
-                                    </select>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control child_fname" value="${data.child_fname}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control child_mname" value="${data.child_mname}"></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control child_lname" value="${data.child_lname}"></div>
+                                    <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Suffix Name" class="form-control child_sname" value="${data.child_sname}"></div>
                                 </div>
                             </div>
-                            <div class="row form-group col-md-12">
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Education</label></div>
-                                <div class="col-3 col-md-3">
-                                    <select class="form-control child_education select2">
-                                        <option value="${data.child_education}">${data.child_education}</option>
-                                        <option value="COLLEGE GRADUATE">College Graduate</option>
-                                        <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
-                                        <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
-                                        <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
-                                        <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
-                                        <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
-                                        <option value="ILLITERATE">No Education/Illiterate</option>
-                                        <option value="POST-GRADUATE">Post-Graduate Studies</option>
-                                        <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
-                                        <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
-                                        <option value="VOCATIONAL">Vocational</option>
-                                    </select>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Date of Birth</label></div>
+                                    <div class="col-3 col-md-3"><input type="date" class="form-control child_bdate" value="${data.child_bdate}"></div>
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Age</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Age" class="form-control child_age" value="${data.child_age}"></div>
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label" >Sex</label></div>
+                                    <div class="col-3 col-md-3">
+                                        <select class="form-control child_sex select2">
+                                            <option value="n/a" ${data.childSex === "n/a" ? "selected" : ""} disabled>Select Sex</option>
+                                            <option value="FEMALE" ${data.childSex === "FEMALE" ? "selected" : ""}>Female</option>
+                                            <option value="MALE" ${data.childSex === "MALE" ? "selected" : ""}>Male</option>
+                                            <option value="LGBT" ${data.childSex === "LGBT" ? "selected" : ""}>LGBT</option>
+                                        </select>
+                                    </div>
                                 </div>
-
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Occupation</label></div>
-                                <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Occupation" class="form-control child_occupation" value="${data.child_occupation}"></div>
+                            </div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Education</label></div>
+                                    <div class="col-3 col-md-3">
+                                        <select class="form-control child_education select2">
+                                            <option value="n/a" ${data.child_education === "n/a" ? "selected" : ""} disabled>Select Education</option>
+                                            <option value="COLLEGE GRADUATE" ${data.child_education === "COLLEGE GRADUATE" ? "selected" : ""}>College Graduate</option>
+                                            <option value="COLLEGE UNDERGRADUATE" ${data.child_education === "COLLEGE UNDERGRADUATE" ? "selected" : ""}>College Undergraduate</option>
+                                            <option value="ELEMENTARY GRADUATE" ${data.child_education === "ELEMENTARY GRADUATE" ? "selected" : ""}>Elementary Graduate</option>
+                                            <option value="ELEMENTARY UNDERGRADUATE" ${data.child_education === "ELEMENTARY UNDERGRADUATE" ? "selected" : ""}>Elementary Undergraduate</option>
+                                            <option value="JUNIOR HS GRADUATE" ${data.child_education === "JUNIOR HS GRADUATE" ? "selected" : ""}>Junior High School Graduate</option>
+                                            <option value="JUNIOR HS UNDERGRADUATE" ${data.child_education === "JUNIOR HS UNDERGRADUATE" ? "selected" : ""}>Junior High School Undergraduate</option>
+                                            <option value="ILLITERATE" ${data.child_education === "ILLITERATE" ? "selected" : ""}>No Education/Illiterate</option>
+                                            <option value="POST-GRADUATE" ${data.child_education === "POST-GRADUATE" ? "selected" : ""}>Post-Graduate Studies</option>
+                                            <option value="SENIOR HS GRADUATE" ${data.child_education === "SENIOR HS GRADUATE" ? "selected" : ""}>Senior High School Graduate</option>
+                                            <option value="SENIOR HS UNDERGRADUATE" ${data.child_education === "SENIOR HS UNDERGRADUATE" ? "selected" : ""}>Senior High School Undergraduate</option>
+                                            <option value="VOCATIONAL" ${data.child_education === "VOCATIONAL" ? "selected" : ""}>Vocational</option>
+                                        </select>
+                                    </div>
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Occupation</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Occupation" class="form-control child_occupation" value="${data.child_occupation}"></div>
+                                </div>
                             </div>
                             <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                         </div>`
                     )
                 });
-
                 }else{
+                    $(".spousechild").html(`
+                        <div class="child">
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Name</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="First Name" class="form-control child_fname"></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Middle Name" class="form-control child_mname"></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Last Name" class="form-control child_lname"></div>
+                                    <div class="col-3 col-md-2"><input type="text" name="text-input" placeholder="Suffix Name" class="form-control child_sname"></div>
+                                </div>
+                            </div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Date of Birth</label></div>
+                                    <div class="col-3 col-md-3"><input type="date" class="form-control child_bdate"></div>
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Age</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Age" class="form-control child_age"></div>
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label" >Sex</label></div>
+                                    <div class="col-3 col-md-3">
+                                        <select class="form-control child_sex select2">
+                                            <option value="n/a">Select Sex</option>
+                                            <option value="FEMALE">Female</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="LGBT">LGBT</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Education</label></div>
+                                    <div class="col-3 col-md-3">
+                                        <select class="form-control child_education select2">
+                                            <option value="n/a">Select Education</option>
+                                            <option value="COLLEGE GRADUATE">College Graduate</option>
+                                            <option value="COLLEGE UNDERGRADUATE">College Undergraduate</option>
+                                            <option value="ELEMENTARY GRADUATE">Elementary Graduate</option>
+                                            <option value="ELEMENTARY UNDERGRADUATE">Elementary Undergraduate</option>
+                                            <option value="JUNIOR HS GRADUATE">Junior High School Graduate</option>
+                                            <option value="JUNIOR HS UNDERGRADUATE">Junior High School Undergraduate</option>
+                                            <option value="ILLITERATE">No Education/Illiterate</option>
+                                            <option value="POST-GRADUATE">Post-Graduate Studies</option>
+                                            <option value="SENIOR HS GRADUATE">Senior High School Graduate</option>
+                                            <option value="SENIOR HS UNDERGRADUATE">Senior High School Undergraduate</option>
+                                            <option value="VOCATIONAL">Vocational</option>
+                                        </select>
+                                    </div>
+                                    <div class="col col-md-1"><label for="text-input" class=" form-control-label">Occupation</label></div>
+                                    <div class="col-3 col-md-3"><input type="text" name="text-input" placeholder="Occupation" class="form-control child_occupation"></div>
+                                </div>
+                                <br><br><br>
+                            </div>
+                        </div>`
+                    )
                     $(".btn-next").show();
                     $(".btn-update").hide();
                 } 
@@ -402,10 +460,14 @@
 
         var civilStatus = $('.civilStatus').val()
         if (civilStatus == "SINGLE"){
+            $(".spouseFieldSet").hide();
+            $(".childFieldSet").hide();
             $(".spouseModule").hide();
             $(".add_more_child").hide();
             $(".spousechild").hide();
         } else {
+            $(".spouseFieldSet").show();
+            $(".childFieldSet").show();
             $(".spouseModule").show();
             $(".add_more_child").show();
             $(".spousechild").show();
@@ -413,11 +475,15 @@
         $('.civilStatus').change(function(){
             if ($('.civilStatus').val() == "SINGLE") {
                 $(".spouseModule").hide();
+                $(".spouseFieldSet").hide();
+                $(".childFieldSet").hide();
                 $(".add_more_child").hide();
                 $(".spousechild").hide();
                 $(".spouseModule, .form-control").val('');
                 $(".civilStatus").val("SINGLE")
             } else {
+                $(".spouseFieldSet").show();
+                $(".childFieldSet").show();
                 $(".spouseModule").show();
                 $(".add_more_child").show();
                 $(".spousechild").show();

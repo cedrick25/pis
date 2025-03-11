@@ -228,6 +228,7 @@
                 priorRecord: records,
                 recordsInfo: recordInfo
             }
+            // console.log(priorRecords)
 
             var payload = {
                 "petitionerId": client_id,
@@ -241,21 +242,28 @@
         }
 
         function radioButtonsListener(radioButtonName) {
-            var radioButtonName = document.getElementsByName(radioButtonName);
-                radioButtonName.forEach(function(radioButtonName) {
-                    radioButtonName.addEventListener('change', function() {
+            var radioButtons = document.getElementsByName(radioButtonName);
+            
+            radioButtons.forEach(function(radioButton) {
+                radioButton.addEventListener('change', function() {
+                    if (this.value.trim() !== "") {  // Check if value is not empty
                         var radioName = this.name;
-                        if (radioName == "allegedby"){
+                        
+                        if (radioName === "allegedby") {
                             allegedByVal = this.value;
-                        } else if (radioName == "derogatoryRecord"){
+                        } else if (radioName === "derogatoryRecord") {
                             derogatoryRecordVal = this.value;
-                        } else if (radioName == "probation"){
+                        } else if (radioName === "probation") {
                             probationVal = this.value;
                         } else {
-                            console.log("Error")
+                            console.log("Error");
                         }
-                    });
+
+                        // Manually trigger change event if value is not empty
+                        $(this).trigger("change");
+                    }
                 });
+            });
         }
 
         radioButtonsListener('allegedby')
@@ -332,7 +340,7 @@
             }
         })
 
-            __executeExternalGet('8000/worksheet/getPetitioner/priorRecords/'+client_id).done(function (result) {
+        __executeExternalGet('8000/worksheet/getPetitioner/priorRecords/'+client_id).done(function (result) {
 
             var result = result.response;
 
@@ -350,19 +358,27 @@
                     var derogatoryRecordValue = JSON.parse(result.jsonData).derogatoryRecord;
                     var probationValue = JSON.parse(result.jsonData).probation;
 
+                    console.log(allegedByValue)
+                    console.log(derogatoryRecordValue)
+                    console.log(probationValue)
+
                     $('input[name="allegedby"]').each(function() {
                         if ($(this).val() == allegedByValue) {
                             $(this).prop("checked", true);
+                            // $(this).trigger("change")
+                            allegedByVal = $(this).val();
                         }
                     });
                     $('input[name="derogatoryRecord"]').each(function() {
                         if ($(this).val() == derogatoryRecordValue) {
                             $(this).prop("checked", true);
+                            derogatoryRecordVal = derogatoryRecordValue;
                         }
                     });
                     $('input[name="probation"]').each(function() {
                         if ($(this).val() == probationValue) {
                             $(this).prop("checked", true);
+                            probationVal = probationValue;
                         }
                     });
 
@@ -382,6 +398,10 @@
                                 <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                             </div>`
                         )
+                        $(`.list .remove`).first().hide();
+
+                        // Show all other close buttons
+                        $(`.list .remove`).not(":first").show();
                     });
 
                     recordList.recordsInfo.forEach(function(data){
@@ -396,10 +416,11 @@
                                 <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                             </div>
                         `)
+                        $(`.list_info .remove`).first().hide();
+
+                        // Show all other close buttons
+                        $(`.list_info .remove`).not(":first").show();
                     });
-
-
-
 
                 }else{
 
@@ -413,12 +434,13 @@
         $(".btn-update").unbind("click").on("click", function(){
 
 
-            if (allegedByVal && derogatoryRecordVal && probationVal){
-                var dataPayload = gatherRecordsData(allegedByVal,derogatoryRecordVal,probationVal);
-            } else {
-                console.log("Radio Button not completed")
-            }
-
+            var dataPayload = gatherRecordsData(allegedByVal,derogatoryRecordVal,probationVal);
+            // if (allegedByVal && derogatoryRecordVal && probationVal){
+            //     console.log(allegedby, derogatoryRecord, probationVal)
+            // } else {
+            //     console.log("Radio Button not completed")
+            // }
+            // console.log(dataPayload)
             __executeExternalPost('8000/worksheet/updatePetitioner/priorRecords/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -436,8 +458,8 @@
                 }else{
                     alert("failed")
                 }
-                })
             })
+        })
 
         function setupWorksheetClickHandler(worksheetType) {
             $(`.${worksheetType}`).unbind("click").on("click", function () {

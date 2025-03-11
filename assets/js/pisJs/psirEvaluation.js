@@ -112,18 +112,24 @@
        
         $(".addMoreCollInfo").unbind("click").on("click", function(){
             $(".collateralInfo").append(`
-            <div class="collateralInformation">
-                <div class="row form-group col-md-9">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
-                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo"></textarea></div>
+            <div class="collateralInformation" style="margin-top: 30px;">
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-md-9">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
+                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo"></textarea></div>
+                    </div>
                 </div>
-                <div class="row form-group col-md-9">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
-                    <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient"></div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-md-9">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
+                        <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient"></div>
+                    </div>
                 </div>
-                <div class="row form-group col-md-9">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
-                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered"></textarea></div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-md-9">
+                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
+                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered"></textarea></div>
+                    </div>
                 </div>
                 <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
             </div>`
@@ -256,18 +262,24 @@
 
                     evaluation.collateralInfo.forEach(function(data){
                         $(".collateralInfo").append(`
-                            <div class="collateralInfo">
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo" value="${data.collInfo}">${data.collInfo}</textarea></div>
+                            <div class="collateralInfo" style="margin-top: 30px;">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo" value="${data.collInfo}">${data.collInfo}</textarea></div>
+                                    </div>
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
-                                    <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient" value="${data.relClient}"></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
+                                        <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient" value="${data.relClient}"></div>
+                                    </div>
                                 </div>
-                                <div class="row form-group col-md-9">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered" value="${data.collGathered}">${data.collGathered}</textarea></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-9">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered" value="${data.collGathered}">${data.collGathered}</textarea></div>
+                                    </div>
                                 </div>
                                 <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
                             </div>

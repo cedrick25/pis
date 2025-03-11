@@ -190,7 +190,6 @@
                                                 <div class="card" id="sentence_card" style="border-radius: 10px;">
                                                     <div class="card-header" style="background: transparent;">
                                                         <strong>Sentence</strong>
-                                                        <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
                                                     </div>
                                                     <div class="card-body">
                                                         <div id="sentenceForm">

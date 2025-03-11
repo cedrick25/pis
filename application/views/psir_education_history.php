@@ -213,203 +213,198 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>   
-                                <fieldset class="row form-group col col-md-12">
-                                        <legend>Elementary</legend>
-                                        <div class="elementary_education">
-                                        </div>
-                                        <div class="col-12">
-
+                                <fieldset class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <legend>Elementary</legend>
+                                    <div class="elementary_education">
+                                    </div>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_lvl" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Education Level" class="form-control elem_lvl"></div>
                                             </div>
-
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_high" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Highest Level Attained" class="form-control elem_high"></div>
                                             </div>
-
+                                        </div>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_where" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Where" class="form-control elem_where"></div>
                                             </div>
-
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
-                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control elem_date" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control elem_date"></div>
                                             </div>
-
+                                        </div>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control elem_award" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Award Level" class="form-control elem_award"></div>
                                             </div>
-
                                         </div>
                                 </fieldset>
-
-                                <fieldset class="row form-group col col-md-12">
-                                        <legend>Secondary</legend>
-                                        <div class="secondary_education">
-                                        </div>
-                                        <div class="col-12">
-
+                                <fieldset class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <legend>Secondary</legend>
+                                    <div class="secondary_education">
+                                    </div>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_lvl" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Education Level" class="form-control sec_lvl"></div>
                                             </div>
-
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_high" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Highest Level Attained" class="form-control sec_high"></div>
                                             </div>
-
+                                        </div>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_where" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Where" class="form-control sec_where"></div>
                                             </div>
-
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
-                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control sec_date" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control sec_date"></div>
                                             </div>
-
+                                        </div>
+                                        <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-md-6">
                                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control sec_award" disabled></div>
+                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Award Level" class="form-control sec_award"></div>
                                             </div>
-
-                                        </div>
                                 </fieldset>
-
-                                <fieldset class="row form-group col col-md-12">
+                                <fieldset class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <legend>College</legend>
                                         <div class="college_education">
                                         </div>
-                                        <div class="col-12">
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Education Level" class="form-control college_lvl"></div>
+                                                </div>
 
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_lvl" disabled></div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Highest Level Attained" class="form-control college_high"></div>
+                                                </div>
                                             </div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Where" class="form-control college_where"></div>
+                                                </div>
 
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_high" disabled></div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+                                                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control college_date"></div>
+                                                </div>
                                             </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_where" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Award Level" class="form-control college_award"></div>
+                                                </div>
                                             </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
-                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control college_date" disabled></div>
-                                            </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control college_award" disabled></div>
-                                            </div>
-
-                                        </div>
                                 </fieldset>
-
-                                <fieldset class="row form-group col col-md-12">
+                                <fieldset class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <legend>Post College</legend>
                                         <div class="pcollege_education">
                                         </div>
-                                        <div class="col-12">
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Education Level" class="form-control pcollege_lvl"></div>
+                                                </div>
 
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_lvl" disabled></div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Highest Level Attained" class="form-control pcollege_high"></div>
+                                                </div>
                                             </div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Where" class="form-control pcollege_where"></div>
+                                                </div>
 
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_high" disabled></div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+                                                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control pcollege_date"></div>
+                                                </div>
                                             </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_where" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Award Level" class="form-control pcollege_award"></div>
+                                                </div>
                                             </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
-                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control pcollege_date" disabled></div>
-                                            </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control pcollege_award" disabled></div>
-                                            </div>
-
-                                        </div>
                                 </fieldset>
-
-                                <fieldset class="row col form-group col-md-12">
+                                <fieldset class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <legend>Vocational</legend>
                                         <div class="vocational_education">
                                         </div>
-                                        <div class="col-12">
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Education Level" class="form-control voc_lvl"></div>
+                                                </div>
 
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Education Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_lvl" disabled></div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Highest Level Attained" class="form-control voc_high"></div>
+                                                </div>
                                             </div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Where" class="form-control voc_where"></div>
+                                                </div>
 
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Highest Level Attained</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_high" disabled></div>
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
+                                                    <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control voc_date"></div>
+                                                </div>
                                             </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Where</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_where" disabled></div>
+                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                <div class="row form-group col-md-6">
+                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
+                                                    <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder="Award Level" class="form-control voc_award"></div>
+                                                </div>
                                             </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date</label></div>
-                                                <div class="col-3 col-md-9"><input type="date" name="text-input" class="form-control voc_date" disabled></div>
-                                            </div>
-
-                                            <div class="row form-group col-md-6">
-                                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Award Level</label></div>
-                                                <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control voc_award" disabled></div>
-                                            </div>
-
-                                        </div>
                                 </fieldset>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Unschooled</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control unschool select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="LITERATE">Unschooled but Literate</option>
-                                            <option value="ILLITERATE">Illiterate</option>
-                                        </select>
+                                <br><br>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Unschooled</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control unschool select2">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="LITERATE">Unschooled but Literate</option>
+                                                <option value="ILLITERATE">Illiterate</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Conduct in School</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control conduct select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="FAIR">Fair</option>
-                                            <option value="POOR">Poor</option>
-                                            <option value="SATISFACTORY">Satisfactory</option>
-                                            <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                        </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Conduct in School</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control conduct select2">
+                                                <option value="" selected disabled>Select Conduct in School</option>
+                                                <option value="FAIR">Fair</option>
+                                                <option value="POOR">Poor</option>
+                                                <option value="SATISFACTORY">Satisfactory</option>
+                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label" disabled>Explain</label></div>
-                                    <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control educExplain" disabled></textarea></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
+                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control educExplain"></textarea></div>
+                                    </div>
                                 </div>
 
                             </div>

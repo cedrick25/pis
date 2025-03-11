@@ -235,7 +235,7 @@
                     $(".plea_bargain").val(plea).trigger("change");
                     $(".classification").val(result.caseClassification).trigger("change");
 
-                    JSON.parse(result.sentence).forEach(function(data){
+                    JSON.parse(result.sentence).forEach(function(data, index){
                         sentence_counter++;
                         $(`#sentence_card .card-body`).append(`
                             <div id="sentence_list_${sentence_counter}" style="padding-top: 10px; padding-bottom: 10px">
@@ -267,7 +267,10 @@
                             </div>
                             `
                         )
-
+                        console.log(index)
+                        if (index === 0) {
+                            $(`#sentence_list_${sentence_counter} .remove`).hide();
+                        }
                     });
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         var fname = $('.pb_client option:selected').data('fname');
