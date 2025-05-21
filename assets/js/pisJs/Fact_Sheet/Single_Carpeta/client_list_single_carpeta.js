@@ -275,5 +275,11 @@
             buttonFunctionality();
         });
     });
+    $(".client_add").unbind("click").on("click", function() {
+        let activeType = $('.nav-link.active').data('type');
+        console.log("Current active data-type:", activeType);
+        window.location.href = api+'/pis/new_client_single_carpeta?client_type='+activeType;
+
+    })
 
 } )( jQuery );

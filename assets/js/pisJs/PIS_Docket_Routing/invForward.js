@@ -154,7 +154,7 @@
                     });
                 } else {
                     console.log("failed fetching user list")
-                    $(".user_display").hide()
+                    // $(".user_display").hide()
                 }
             });
         }

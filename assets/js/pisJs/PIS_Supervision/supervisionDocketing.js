@@ -149,6 +149,16 @@
                     })
                 })
             })
+
+            $(".btn_attachments").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var id = $(this).data("id");
+                var type = $(this).data("type");
+                var fi = $(this).data("oi");
+                // var senderId = $(this).data("sender");
+                // window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderId='+senderId;
+                window.location.href = api+'/pis/pis-supervision-file-upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+            })
         }
 
         function drawTable() {
@@ -163,10 +173,10 @@
                     { "width": "5%", "targets": [0] },
                     { "width": "15%", "targets": [1] },
                     { "width": "10%", "targets": [2] },
-                    { "width": "20%", "targets": [3] },
-                    { "width": "15%", "targets": [4] },
+                    { "width": "17%", "targets": [3] },
+                    { "width": "13%", "targets": [4] },
                     { "width": "15%", "targets": [5] },
-                    { "width": "20%", "targets": [6] }
+                    { "width": "25%", "targets": [6] }
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -233,7 +243,8 @@
                 {
                     "data": null,
                     render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                        return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments pb_sup_attachments' type='submit' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                        // return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments pb_sup_attachments' type='submit' style='display: none;' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
                     }
                 }
             ]
