@@ -124,7 +124,7 @@
         // }
 
         var filterUserByRoleId = function (roleId, depId) {
-            __executeExternalGet(___ctx+'8088/user/list/'+depId).done(function (result) {
+            __executeExternalGet('8088/user/list/'+depId).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".user_display").show()
                     $('.user_account').append("<option selected disabled>Select User Account</option>");
@@ -139,7 +139,7 @@
                     });
                 } else {
                     console.log("failed fetching user list")
-                    $(".user_display").hide()
+                    // $(".user_display").hide()
                 }
             });
         }

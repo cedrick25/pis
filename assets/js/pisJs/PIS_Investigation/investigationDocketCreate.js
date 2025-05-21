@@ -173,9 +173,10 @@
                     // console.log(result)
                     $('.pb_client').append("<option selected disabled>Select Client</option>");
                     result.forEach(function(data){
-                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        // var name = (data.firstName === null ? "" : data.firstName) + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                        var name = `${data.firstName || ""} ${data.middleName || ""} ${data.lastName || ""} ${data.suffixName || ""}`
                         $('.pb_client').append(
-                            '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                            `<option value="${data.id}" data-fname="${data.firstName}" data-lname="${data.lastName}" data-mname="${data.middleName}" data-sname="${data.suffixName}">${name}</option>`); 
                     });
                 } else {
                     console.log("failed fetching docket list")

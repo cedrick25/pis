@@ -152,6 +152,15 @@
                 // window.location.href = 'http://ppis.probation.gov.ph/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
                 window.location.href = api+'/pis/investigation_docket_view?docket_number='+docket_number+'&officeId='+officeId;
             })
+            $(".btn_attachments").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                var id = $(this).data("id");
+                var type = $(this).data("type");
+                var fi = $(this).data("oi");
+                // var senderId = $(this).data("sender");
+                // window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderId='+senderId;
+                window.location.href = api+'/pis/pis-investigation-file-upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+            })
         }
 
         function drawTable() {
@@ -166,10 +175,10 @@
                     { "width": "5%", "targets": [0] },
                     { "width": "15%", "targets": [1] },
                     { "width": "10%", "targets": [2] },
-                    { "width": "20%", "targets": [3] },
-                    { "width": "15%", "targets": [4] },
+                    { "width": "17%", "targets": [3] },
+                    { "width": "13%", "targets": [4] },
                     { "width": "15%", "targets": [5] },
-                    { "width": "20%", "targets": [6] }
+                    { "width": "25%", "targets": [6] }
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -200,50 +209,6 @@
                 buttonVisibility();
             });
         }
-
-        // function drawTable() {
-        //     $(document).ready(function(){
-        //         $('.table_head').DataTable({
-        //             "processing": true,
-        //             "serverSide": true,
-        //             "scrollX": true,
-        //             "lengthMenu": [10, 25, 50, 100],
-        //             "pageLength": 10,
-        //             "searching": true,
-        //             "columnDefs": [
-        //                 { "width": "5%", "targets": [0] },
-        //                 { "width": "17%", "targets": [1,2,3,4,5] },
-        //                 { "width": "10%", "targets": [6] }
-        //             ],
-        //             "ajax": function(data, callback, settings) {
-        //                 console.log(data)
-        //                 const size = data.length;
-        //                 const page = data.start / size;
-        //                 const apiUrl = api+"8000/docketbook?page="+page+"&size="+size+"&type=PIS_INV&officeId="+$.cookie('field_office_id');
-        //                 $.ajax({
-        //                     url: apiUrl,
-        //                     method: 'GET',
-        //                     dataType: 'json',
-        //                     success: function(res) {
-        //                         callback({
-        //                             recordsTotal: res.totalElements,
-        //                             recordsFiltered: res.totalElements,
-        //                             data: res.content
-        //                         });
-        //                     },
-        //                     error: function(err) {
-        //                         console.error("Failed to fetch data:", err);
-        //                     }
-        //                 });
-        //             },
-        //             "columns": tableColumns()
-        //         });
-        //         $('.table_head').on('draw.dt', function() {
-        //             buttonFunctionality();
-        //             buttonVisibility();
-        //         });
-        //     })
-        // }
 
         function tableColumns() {
             return [
@@ -280,7 +245,8 @@
                 {
                     "data": null,
                     render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_view pb_inv_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_inv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pb_inv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                        return "<button class='btn btn-sm btn-primary btn_view pb_inv_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_inv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button>  <button class='btn btn-sm btn-primary btn_attachments pb_inv_attachments' type='submit' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_inv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                        // return "<button class='btn btn-sm btn-primary btn_view pb_inv_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_inv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove pb_inv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button> <button class='btn btn-sm btn-primary btn_attachments pb_inv_attachments' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Attachments</button>";
                     }
                 }
             ]

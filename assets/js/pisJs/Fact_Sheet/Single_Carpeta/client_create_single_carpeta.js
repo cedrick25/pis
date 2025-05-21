@@ -4,6 +4,10 @@
     var ___ctx = api;
     console.log(___ctx)
 
+    var __setContext = function(newctx) {
+        ___ctx = newctx;
+    };
+
     var __getContext = function() {
         return ___ctx;
     };
@@ -87,65 +91,90 @@
         
         return d.promise();
     };
+    function GetURLParameter(sParam){
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return decodeURIComponent(sParameterName[1]);
+            }
+        }
+    }
     var transmittal_counter = 0;
     var date_received_counter = 0;
     var request_counter = 0;
-    $(".transmittal_body").append(`
-        <div class="row col-12 transmittal_field_0">
-            <div class="col col-md-3" style="margin-right: 10px;"><label for="text-input" class=" form-control-label" id="transmittal_label_0">Transmittal Date</label></div>
-            <div class="col col-md-8"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control transmittal_date" id="transmittal_input_0"></div>
-            <div class="col-12 col-md-1 align-items-center" style="margin-bottom: 15px; max-width: 40px;"><button type="button" class="add_more_transmittal_date btn btn-primary btn-sm" id="transmittal_add_0"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></div>
-        </div>
-    `)
-    $(".add_more_transmittal_date").unbind("click").on("click", function(){
-        transmittal_counter++;
-        $(".transmittal_body").append(`
-            <div class="row col-12 transmittal_field_${transmittal_counter}">
-                <div class="col col-md-3" style="margin-right: 10px;"><label for="text-input" class=" form-control-label" id="transmittal_label_${transmittal_counter}"></label></div>
-                <div class="col col-md-8"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control transmittal_date" id="transmittal_input_${transmittal_counter}"></div>
-                <div class="col-12 col-md-1 align-items-center" style="margin-bottom: 15px; max-width: 40px;"><button type="button" class="delete_transmittal_date btn btn-danger btn-sm" id="transmittal_delete_${transmittal_counter}" data-id="${transmittal_counter}"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div>
+    var cc_counter = 0;
+    var investigation_counter = 0;
+    var supervision_counter = 0;
+    var client_type = GetURLParameter('client_type');
+    console.log(client_type)
+
+    if (client_type === "investigation") {
+        $("#investigation_card").show();
+        $("#supervision_card").hide();
+    } else if (client_type === "supervision") {
+        $("#investigation_card").hide();
+        $("#supervision_card").show();
+    } else {
+        alert("Error in client type")
+        $("#investigation_card").hide();
+        $("#supervision_card").hide();
+    }
+    // for appending additional criminal cases
+    $("#add_cc_num").unbind("click").on("click", function(){
+        cc_counter++;
+        $("#criminal_case_body").append(`
+            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case Number</label></div>
+                <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Criminal Case Number" class="form-control criminal_case_number" id="cc_no_${cc_counter}"></div>
+            </div>
+            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <button type="button" class="btn btn-danger btn-sm" id="add_cc_num" style="max-height: 37px;"><i class="fa fa-trash" aria-hidden="true"></i> Criminal Case Number</button>
             </div>
         `)
     })
-
-    $(document).on("click", ".delete_transmittal_date", function () {
-        var id = $(this).data("id");
-        console.log(id)
-        $(`.transmittal_field_${id}`).remove();
-    });
-
-    $(".date_received_body").append(`
-        <div class="row col-12 date_received_field_0">
-            <div class="col col-md-3" style="margin-right: 10px;"><label for="text-input" class=" form-control-label">Date Received by TSD</label></div>
-            <div class="col-12 col-md-8"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_received"></div>
-            <div class="col-12 col-md-1 align-items-center" style="margin-bottom: 15px; max-width: 40px;"><button type="button" class="add_more_date_received btn btn-primary btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></div>
-        </div>
-    `)
-    $(".add_more_date_received").unbind("click").on("click", function(){
-        date_received_counter++;
-        $(".date_received_body").append(`
-            <div class="row col-12 date_received_field_${date_received_counter}">
-                <div class="col col-md-3" style="margin-right: 10px;"><label for="text-input" class=" form-control-label"></label></div>
-                <div class="col-12 col-md-8"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_received"></div>
-                <div class="col-12 col-md-1 align-items-center" style="margin-bottom: 15px; max-width: 40px;"><button type="button" class="delete_date_received btn btn-danger btn-sm" id="date_received_delete_${date_received_counter}" data-id="${date_received_counter}"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div>
-            </div>
-        `)
-    })
-
-    $(document).on("click", ".delete_date_received", function () {
-        var id = $(this).data("id");
-        console.log(id)
-        $(`.date_received_field_${id}`).remove();
-    });
-
+    // for appending investigation
     $(".add_more").unbind("click").on("click", function(){
-        request_counter++;
-        $(`.request_card`).append(`
-            <div id="request_body_${request_counter}">
+        investigation_counter++;
+        $(".investigation_body").append(`
+            <div id="investigation_body_${investigation_counter}" style="margin-top: 150px; padding-top: 150px">
                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Request Type</label></div>
-                        <div class="col-12 col-md-9">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date of Transmittal from BPP</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_bpp_date"></div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Transmital Date from Field Office</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_date_from_fo"></div>
+                    </div>
+                </div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Received by TSD</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control received_date_by_tsd"></div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to Field Office</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control forwarded_date_to_fo"></div>
+                    </div>
+                </div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control indorsement_date"></div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to BPP</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control forwarded_to_bpp"></div>
+                    </div>
+                </div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Request Type</label></div>
+                        <div class="col-12 col-md-8">
                             <select class="form-control request_type select2">
                                 <option value="" selected disabled>Select</option>
                                 <option value="Request to conduct PPIR">Request to conduct PPIR</option>
@@ -156,32 +185,110 @@
                         </div>
                     </div>
                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Report</label></div>
-                        <div class="col-12 col-md-9">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
+                        <div class="col-12 col-md-8">
                             <select class="form-control type_report select2">
                                 <option value="" selected disabled>Select</option>
                             </select>
                         </div>
                     </div>
                 </div>
+            </div>
+        `)
+    })
+    // for appending supervision
+    $(".add_more_supervision").unbind("click").on("click", function(){
+        supervision_counter++;
+        $(".supervision_body").append(`
+            <div id="supervision_body_${supervision_counter}" style="margin-top: 150px; padding-top: 150px">
                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
-                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control indorsement_date"></div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_transmittal_bpp_field">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date of Transmittal from BPP</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_bpp_date"></div>
                     </div>
-                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Forwarded to BPP</label></div>
-                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_forwarded_bpp"></div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_transmittal_fo_field" style="display:none;">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date of Transmittal from the Field Office</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_bpp_date"></div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="regional_date_field">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to Regional</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_date_from_fo"></div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="fo_date_field" style="display:none;">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to Field Office</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_date_from_fo"></div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_forwarded_bpp_field" style="display:none;">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to BPP</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control forwarded_to_bpp"></div>
                     </div>
                 </div>
                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                    <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end">
-                        <button type="button" class="delete btn btn-danger btn-sm float-right" data-id="${request_counter}">Delete</button>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_received_tsd_field">
+                        <div class="col col-md-4"><label for="text-input" class="form-control-label">Date Received by TSD</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control received_date_by_tsd"></div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_returned_fo_field" style="display: none;">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Returned to the Field Office</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control returned_date_to_fo"></div>
+                    </div>
+                </div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
+                        <div class="col-12 col-md-8"><input type="date" class="form-control indorsement_date"></div>
+                    </div>
+                </div>
+                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">BPP Resolutions</label></div>
+                        <div class="col-12 col-md-8">
+                            <select class="form-control bpp_resolutions select2">
+                                <option value="" selected disabled>Select</option>
+                                <option value="Discharge on Parole">Discharge on Parole</option>
+                                <option value="Other BPP Resolutions">Other BPP Resolutions</option>
+                                <option value="Originated Reports From The Field">Originated Reports From The Field</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display:none;">
+                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
+                        <div class="col-12 col-md-8">
+                            <select class="form-control type_report select2">
+                                <option value="" selected disabled>Select</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
         `)
     })
+    // for bpp resolution dropdown
+    $('.bpp_resolutions').change(function() {
+        let value = $(this).val();
+        if (value === "Discharge on Parole") {
+            $("#regional_date_field").show();
+            $("#fo_date_field").hide();
+            $("#date_forwarded_bpp_field").hide();
+            $("#date_transmittal_fo_field").hide();
+            $("#date_transmittal_bpp_field").show();
+            $("#date_returned_fo_field").hide()
+        } else if (value === "Other BPP Resolutions") {
+            $("#regional_date_field").hide();
+            $("#fo_date_field").show();
+            $("#date_forwarded_bpp_field").hide();
+            $("#date_transmittal_fo_field").hide();
+            $("#date_transmittal_bpp_field").show();
+            $("#date_returned_fo_field").hide()
+        } else if (value === "Originated Reports From The Field") {
+            $("#date_transmittal_fo_field").show();
+            $("#date_transmittal_bpp_field").hide();
+            $("#date_forwarded_bpp_field").show();
+            $("#regional_date_field").hide();
+            $("#fo_date_field").hide();
+            $("#date_returned_fo_field").show()
+        }
+    });
 
     $(document).on("click", ".delete", function () {
         var id = $(this).data("id");
@@ -228,7 +335,6 @@
             "location"              : $(".location").val(),
             "religion"              : $(".religion").val()
         }
-        // console.log(payload)
         __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             if (result.status != "ERROR") {

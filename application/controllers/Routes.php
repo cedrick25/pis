@@ -677,4 +677,16 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('SINGLE_CARPETA/Docketing/Pre-Parole/docket_routing_pre_parole');
 	}
+	public function pis_investigation_file_upload()
+	{
+		$this->load->view('PIS/Investigation/investigation_docket_view_uploads');
+	}
+	public function pis_supervision_file_upload()
+	{
+		$this->load->view('PIS/Supervision/supervision_docket_view_uploads');
+	}
+	public function parolee_investigation_file_upload()
+	{
+		$this->load->view('SINGLE_CARPETA/Parolee/Investigation/parolee_investigation_view_uploads');
+	}
 }

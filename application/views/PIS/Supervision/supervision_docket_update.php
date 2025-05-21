@@ -87,7 +87,7 @@
                                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
                                             <div class="col-12 col-md-9">
                                                 <select class="form-control caseload select2">
-                                                    <option value="" selected disabled>- - Please Select Caseload - -</option>
+                                                    <option value="" selected disabled>Please Select Caseload</option>
                                                     <option value="PROBATION_SUP_CSS">Community Service Supervision</option>
                                                     <option value="PROBATION_SUP_CCSS">Courtesy Community Service Supervision</option>
                                                     <option value="PROBATION_SUP_CPS">Courtesy Probation Supervision</option>

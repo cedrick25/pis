@@ -54,7 +54,7 @@
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list_single_carpeta">Fact Sheet</a></li>
-                            <li><a href="client_list_single_carpeta">PDL</a></li>
+                            <li><a href="client_list_single_carpeta">Person Deprived Liberty</a></li>
                             <li class="active">List</li>
                         </ol>
                     </div>
@@ -78,13 +78,20 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header d-flex alig-items-center" id="pager">
-                                <strong class="card-title">Persons Deprived of Liberty</strong>
-                                <a href="new_client_single_carpeta" class="ml-auto"> <button class="btn btn-sm btn-success client_add"
-                                style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
+                                <!-- <strong class="card-title">Persons Deprived of Liberty</strong> -->
+                                <ul class="nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="inv_tab" href="#" data-toggle="tab" style="cursor: pointer;" data-type="investigation">Investigation</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="sup_tab" href="#" data-toggle="tab" style="cursor: pointer;" data-type="supervision">Supervision</a>
+                                    </li>
+                                </ul>
+                                <button class="btn btn-sm btn-success client_add ml-auto" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active " id="pr" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-pane fade show active " id="homeTab" role="tabpanel" aria-labelledby="home-tab">
                                         <table id="" class="table table_head" width="100%">
                                             <thead>
                                                 <th>#</th>

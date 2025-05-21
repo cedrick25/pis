@@ -45,22 +45,6 @@
                                         <div class="col-12 col-md-9" style="padding-right: 0px; padding-left: 20px;"><input type="text" name="text-input" placeholder="Enter Crimnal Case Number" class="form-control cc_no"></div>
                                     </div>
                                 </div>
-                                <!-- <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control client_type select2">
-                                            <option selected value="none" disabled>Select</option>
-                                            <option value="PROBATIONER">Probationer</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <select class="form-control field_office select2">
-                                        </select>
-                                    </div>
-                                </div> -->
 			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter First Name" class="form-control firstName"></div>
@@ -68,19 +52,11 @@
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3">
                                         <label class="form-check-label" for="mNameCheck">Middle Name</label>
-                                        <!-- <div class="form-check">
-                                            <input type="checkbox" class="form-check-input middleNameCheck" id="mNameCheck" style="width: 12px; height: 12px;">
-                                            <label class="form-check-label italic-font small-font" for="mNameCheck">No Middle Name</label>
-                                        </div> -->
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" name="text-input" placeholder="Enter Middle Name" class="form-control middleName form_capitalized">
                                     </div>
                                 </div>
-<!-- 			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 fieldMiddleName" >
-			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-			                        
-			                    </div> -->
 			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Last Name" class="form-control lastName"></div>

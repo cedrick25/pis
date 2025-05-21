@@ -195,41 +195,51 @@
             $(".client_type").val(la).trigger("change");
 
             var sentenceData = JSON.parse(result.sentence)
-            sentenceData.forEach(function (data) {
-                let currentCounter = sentenceFormCounter++;
+            if (sentenceData === null) {
                 let noContainer = currentContainer++;
                 var container = document.createElement('div');
-                container.id = 'SentenceContainer'+noContainer;
-                container.innerHTML += `
-                <div id="sentenceForm${currentCounter}">
-                    <div class="form-row">
-                        <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                            <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence">${data.sentence}</textarea></div>
-                        </div>
-                        <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                            <div class="col-3 col-md-3"><input type="number" class="form-control min_y" placeholder="Year" value="${data.min_y}"></div>
-                            <div class="col-3 col-md-3"><input type="number" class="form-control min_m" placeholder="Month" value="${data.min_m}"></div>
-                            <div class="col-3 col-md-3"><input type="number" class="form-control min_d" placeholder="Day" value="${data.min_d}"></div>
-                        </div>
-                        <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                            <div class="col-3 col-md-3"><input type="number" class="form-control max_y" placeholder="Year" value="${data.max_y}"></div>
-                            <div class="col-3 col-md-3"><input type="number" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
-                            <div class="col-3 col-md-3"><input type="number" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
-                        </div>
-                        <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                            <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
-                        </div>
-                        <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 justify-content-end" style="padding-top: 20px">
-                        </div>
-                    </div>
-                </div>`
+                container.className = 'SentenceContainer'+noContainer;
+                container.innerHTML += sentenceForms();
                 sentenceFields.appendChild(container)
                 $(`.card-body #sentenceForm`).find('input, select, button, textarea').prop('disabled', true);
-            })
+            } else {
+                sentenceData.forEach(function (data) {
+                    let currentCounter = sentenceFormCounter++;
+                    let noContainer = currentContainer++;
+                    var container = document.createElement('div');
+                    container.id = 'SentenceContainer'+noContainer;
+                    container.innerHTML += `
+                    <div id="sentenceForm${currentCounter}">
+                        <div class="form-row">
+                            <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
+                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence">${data.sentence}</textarea></div>
+                            </div>
+                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
+                                <div class="col-3 col-md-3"><input type="number" class="form-control min_y" placeholder="Year" value="${data.min_y}"></div>
+                                <div class="col-3 col-md-3"><input type="number" class="form-control min_m" placeholder="Month" value="${data.min_m}"></div>
+                                <div class="col-3 col-md-3"><input type="number" class="form-control min_d" placeholder="Day" value="${data.min_d}"></div>
+                            </div>
+                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
+                                <div class="col-3 col-md-3"><input type="number" class="form-control max_y" placeholder="Year" value="${data.max_y}"></div>
+                                <div class="col-3 col-md-3"><input type="number" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
+                                <div class="col-3 col-md-3"><input type="number" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
+                            </div>
+                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
+                                <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
+                            </div>
+                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 justify-content-end" style="padding-top: 20px">
+                                <button type="button" class="remove btn btn-danger btn-sm" data-id="${currentCounter}">Remove</button>
+                            </div>
+                        </div>
+                    </div>`
+                    sentenceFields.appendChild(container)
+                    $(`.card-body #sentenceForm`).find('input, select, button, textarea').prop('disabled', true);
+                })
+            }
         }
         
         function sentenceForms() {

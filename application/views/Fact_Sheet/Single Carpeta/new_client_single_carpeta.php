@@ -52,14 +52,13 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" id="criminal_case_body">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Criminal Case Number" class="form-control criminal_case_number"></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Criminal Case Number" class="form-control criminal_case_number" id="cc_no_0"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Prison Number" class="form-control prison_number"></div>
+                                        <button type="button" class="btn btn-primary btn-sm" id="add_cc_num" style="max-height: 37px;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Criminal Case Number</button>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -70,10 +69,6 @@
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3">
                                             <label class="form-check-label" for="mNameCheck">Middle Name</label>
-                                            <!-- <div class="form-check">
-                                                <input type="checkbox" class="form-check-input middleNameCheck" id="mNameCheck" style="width: 12px; height: 12px;">
-                                                <label class="form-check-label italic-font small-font" for="mNameCheck">No Middle Name</label>
-                                            </div> -->
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" name="text-input" placeholder="Enter Middle Name" class="form-control middleName form_capitalized">
@@ -94,39 +89,6 @@
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Alias" class="form-control alias"></div>
-                                    </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Prison Name" class="form-control prison_name"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">File Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter File Number" class="form-control file_number"></div>
-                                    </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Location" class="form-control location"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Civil Status</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control civil_status select2">
-                                                <option value="" selected disabled>Select</option>
-                                                <option value="ANNULLED">Annulled</option>
-                                                <option value="DIVORCED">Divorced</option>
-                                                <option value="LEGALLY SEPERATED">Legally Seperated</option>
-                                                <option value="MARRIED">Married</option>
-                                                <option value="SAME SEX RELATIONSHIP">Same Sex Relationship</option>
-                                                <option value="SINGLE">Single</option>
-                                                <option value="SOLO PARENT">Solo Parent</option>
-                                                <option value="WIDOW/WIDOWER">Widow/Widower</option>
-                                                <option value="WITH COMMON LAW SPOUSE">With Common Law Spouse</option>
-                                            </select>
-                                        </div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sex</label></div>
@@ -150,6 +112,23 @@
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-md-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Civil Status</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <select class="form-control civil_status select2">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="ANNULLED">Annulled</option>
+                                                <option value="DIVORCED">Divorced</option>
+                                                <option value="LEGALLY SEPERATED">Legally Seperated</option>
+                                                <option value="MARRIED">Married</option>
+                                                <option value="SAME SEX RELATIONSHIP">Same Sex Relationship</option>
+                                                <option value="SINGLE">Single</option>
+                                                <option value="SOLO PARENT">Solo Parent</option>
+                                                <option value="WIDOW/WIDOWER">Widow/Widower</option>
+                                                <option value="WITH COMMON LAW SPOUSE">With Common Law Spouse</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nationality</label></div>
                                         <div class="col-12 col-md-9">
@@ -350,6 +329,18 @@
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Educational Attainment</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Educational Attainment" class="form-control educational_attainment"></div>
+                                    </div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Occupation" class="form-control occupation"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-md-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Religion</label></div>
                                         <div class="col-12 col-md-9">
@@ -372,12 +363,12 @@
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Educational Attainment</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Educational Attainment" class="form-control educational_attainment"></div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Number</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Prison Number" class="form-control prison_number"></div>
                                     </div>
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Occupation</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Occupation" class="form-control occupation"></div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Prison Name" class="form-control prison_name"></div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -389,22 +380,62 @@
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">TSD PO</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter PO" class="form-control tsd_po"></div>
                                     </div>
-                                </div>                     
+                                </div>    
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">File Number</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter File Number" class="form-control file_number"></div>
+                                    </div>
+                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Location</label></div>
+                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Location" class="form-control location"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" id="investigation_card" style="display: none;">
                                     <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <div class="card" id="sentence_card" style="border-radius: 10px;">
                                                     <div class="card-header" style="background: transparent;">
-                                                        <!-- <strong>Sentence</strong> -->
+                                                        <strong class="card-title">Investigation</strong>
                                                         <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
                                                     </div>
-                                                    <div class="card-body request_card">
-                                                        <div id="request_body_0">
+                                                    <div class="card-body investigation_body">
+                                                        <div id="investigation_body_0">
                                                             <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Request Type</label></div>
-                                                                    <div class="col-12 col-md-9">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date of Transmittal from BPP</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_bpp_date"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Transmital Date from Field Office</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_date_from_fo"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Received by TSD</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control received_date_by_tsd"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to Field Office</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control forwarded_date_to_fo"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control indorsement_date"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to BPP</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control forwarded_to_bpp"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Request Type</label></div>
+                                                                    <div class="col-12 col-md-8">
                                                                         <select class="form-control request_type select2">
                                                                             <option value="" selected disabled>Select</option>
                                                                             <option value="Request to conduct PPIR">Request to conduct PPIR</option>
@@ -415,22 +446,90 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type of Report</label></div>
-                                                                    <div class="col-12 col-md-9">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
+                                                                    <div class="col-12 col-md-8">
                                                                         <select class="form-control type_report select2">
                                                                             <option value="" selected disabled>Select</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" style="padding-bottom: 40px;">
-                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
-                                                                    <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control indorsement_date"></div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col"  id="supervision_card" style="display: none;">
+                                    <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <div class="card" id="sentence_card" style="border-radius: 10px;">
+                                                    <div class="card-header" style="background: transparent;">
+                                                        <strong class="card-title">Supervision</strong>
+                                                        <button type="button" class="add_more_supervision btn btn-primary btn-success btn-sm float-right">Add more</button>
+                                                    </div>
+                                                    <div class="card-body supervision_body">
+                                                        <div id="supervision_body_0">
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_transmittal_bpp_field">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date of Transmittal from BPP</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_bpp_date"></div>
                                                                 </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_transmittal_fo_field" style="display:none;">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date of Transmittal from the Field Office</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_bpp_date"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="regional_date_field">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to Regional</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_date_from_fo"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="fo_date_field" style="display:none;">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to Field Office</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control transmittal_date_from_fo"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_forwarded_bpp_field" style="display:none;">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to BPP</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control forwarded_to_bpp"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_received_tsd_field">
+                                                                    <div class="col col-md-4"><label for="text-input" class="form-control-label">Date Received by TSD</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control received_date_by_tsd"></div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="date_returned_fo_field" style="display: none;">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Returned to the Field Office</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control returned_date_to_fo"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Forwarded to BPP</label></div>
-                                                                    <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Address" class="form-control date_forwarded_bpp"></div>
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
+                                                                    <div class="col-12 col-md-8"><input type="date" class="form-control indorsement_date"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">BPP Resolutions</label></div>
+                                                                    <div class="col-12 col-md-8">
+                                                                        <select class="form-control bpp_resolutions select2">
+                                                                            <option value="" selected disabled>Select</option>
+                                                                            <option value="Discharge on Parole">Discharge on Parole</option>
+                                                                            <option value="Other BPP Resolutions">Other BPP Resolutions</option>
+                                                                            <option value="Originated Reports From The Field">Originated Reports From The Field</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display:none;">
+                                                                    <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
+                                                                    <div class="col-12 col-md-8">
+                                                                        <select class="form-control type_report select2">
+                                                                            <option value="" selected disabled>Select</option>
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -441,28 +540,11 @@
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 transmittal_body">
-                                    </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Emailed to Field Office</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control date_emailed_to_fo"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 date_received_body">
-                                    </div>
-                                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Result from Field Office</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="Enter Occupation" class="form-control date_result_from_fo"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Remarks" class="form-control pdl_remarks"></div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
