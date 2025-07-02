@@ -94,8 +94,10 @@
 
     function buttonFunctionality(){
     $(".btn_update").unbind("click").on("click", function(){
+        console.log("button update click")
         var client_id = $(this).data("id");
-        window.location.href = api+'/pis/client_update_single_carpeta?client_id='+client_id;
+        var client_type = $(this).data("type")
+        window.location.href = api+'/pis/client_update_single_carpeta?client_id='+client_id+'&client_type='+client_type;
         // window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
 
     })
@@ -132,52 +134,59 @@
     }) 
     }
 
+    var dataTable;
+    var currentType = "PDL - Investigation"; // Store current type
 
-    function drawTable() {
-        $('.table_head').DataTable({
-            "processing": false,
-            "serverSide": true,
-            "scrollX": true,
-            "searching": false,
-            "lengthMenu": [10, 25, 50, 100],
-            "pageLength": 10,
-            "columnDefs": [
-                { "width": "5%", "targets": [0] },
-                { "width": "12%", "targets": [1] },
-                { "width": "13%", "targets": [2] },
-                { "width": "15%", "targets": [3] },
-                { "width": "15%", "targets": [4] },
-                { "width": "15%", "targets": [5] },
-                { "width": "25%", "targets": [6] },
-        ],
-        ajax: {
-            url: api+"8000/petitioner",
-            type: 'GET',
-            cache: true,
-            data: function (d) {
-            return {
-                page: d.start / d.length,  // Pagination
-                size: d.length,            // Page size
-                // name: d.search.value    // Pass search term as 'keyword'
-                type: "PDL",
-                officeId: $.cookie('field_office_id')
+    function drawTable(type) {
+        currentType = type; // Update current type
 
-            };
-            },
-            dataFilter: function(data) {
-                var json = jQuery.parseJSON(data);
-                json.recordsTotal = json.totalElements;
-                json.recordsFiltered = json.totalElements;
-                json.data = json.content;
-                return JSON.stringify(json);
-            }
-        },
-        columns: tableColumns()
-        });
-        $('.table_head').on('draw.dt', function() {
-            buttonFunctionality();
-            // buttonVisibility();
-        });
+        if (!dataTable) {
+            dataTable = $('.table_head').DataTable({
+                "processing": false,
+                "serverSide": true,
+                "scrollX": false,
+                "searching": false,
+                "lengthMenu": [10, 25, 50, 100],
+                "pageLength": 10,
+                "columnDefs": [
+                    { "width": "5%", "targets": [0] },
+                    { "width": "12%", "targets": [1] },
+                    { "width": "13%", "targets": [2] },
+                    { "width": "15%", "targets": [3] },
+                    { "width": "15%", "targets": [4] },
+                    { "width": "15%", "targets": [5] },
+                    { "width": "25%", "targets": [6] },
+                ],
+                ajax: {
+                    url: api + "8000/petitioner",
+                    type: 'GET',
+                    cache: true,
+                    data: function (d) {
+                        return {
+                            page: d.start / d.length,
+                            size: d.length,
+                            type: currentType, // Use dynamic type here
+                            officeId: $.cookie('field_office_id')
+                        };
+                    },
+                    dataFilter: function(data) {
+                        var json = jQuery.parseJSON(data);
+                        json.recordsTotal = json.totalElements;
+                        json.recordsFiltered = json.totalElements;
+                        json.data = json.content;
+                        return JSON.stringify(json);
+                    }
+                },
+                columns: tableColumns()
+            });
+
+            $('.table_head').on('draw.dt', function() {
+                buttonFunctionality();
+            });
+        } else {
+            // Just reload with updated type
+            dataTable.ajax.reload();
+        }
     }
 
     let clientType;
@@ -196,7 +205,14 @@
                 "data": 'lastName',
             },
             {
-                "data": 'criminalCaseNo'
+                data: 'criminalCaseNo',
+                render: function (data, type, row) {
+                    var criminalCases = JSON.parse(data);
+                    if (Array.isArray(criminalCases)) {
+                        return criminalCases.map(item => item.criminal_cases_number).join('<br>');
+                    }
+                    return ''; // fallback if data is not an array
+                }
             },
             {
                 "data": 'prisonNumber',
@@ -208,13 +224,23 @@
                 "data": null,
                 "render": function (data, type, row) {
                     // <button class='btn btn-sm btn-danger btn_remove client_remove' type='submit' data-id='" + data.id + "'><i class='fa fa-trash'></i> Remove</button>
-                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
+                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
                 }
             }
         ]
     }
 
-    drawTable();
+    drawTable("PDL-Investigation");
+
+    // event handler when a tab is clicked
+    $("#inv_tab").unbind("click").on("click", function(){
+        console.log("clicked inv")
+        drawTable("PDL-Investigation");
+    })
+    $("#sup_tab").unbind("click").on("click", function(){
+        console.log("clicked sup")
+        drawTable("PDL-Supervision");
+    })
 
     $(".client_search").unbind("click").on("click", function() {
         console.log("btn click search");
@@ -278,8 +304,13 @@
     $(".client_add").unbind("click").on("click", function() {
         let activeType = $('.nav-link.active').data('type');
         console.log("Current active data-type:", activeType);
-        window.location.href = api+'/pis/new_client_single_carpeta?client_type='+activeType;
-
+        let client_type;
+        if (activeType === "investigation") {
+            client_type = "PDL-Investigation"
+        } else {
+            client_type = "PDL-Supervision"
+        }
+        window.location.href = api+'/pis/new_client_single_carpeta?client_type='+client_type;
     })
 
 } )( jQuery );
