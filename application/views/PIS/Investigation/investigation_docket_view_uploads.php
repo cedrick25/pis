@@ -46,7 +46,7 @@
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
-                        <div class="card upload_file" style="display: none;">
+                        <div class="card upload_file">
                             <div class="card-header">
                                 <strong class="card-title">Upload File</strong>
                             </div>

@@ -215,11 +215,6 @@
                 {
                     "data": null,
                     "render": function (data, type, row, meta) {
-                        // if (data.id == null){
-                        //     return "";
-                        // } else {
-                        //     return data.id;
-                        // }
                         return meta.settings._iDisplayStart + meta.row + 1;
                     }
                 },

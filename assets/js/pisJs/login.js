@@ -275,6 +275,7 @@
                                 console.log("not lock")
                                 $('.prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> Login Successfully </div>');
                                 var uuid = result.uuid
+                                var roleName = result.role.roleName;
                                 // var roleid = result.role.roleId
                                 // $.cookie("roleid", roleid);
                                 $.cookie("uuid", uuid);
@@ -285,6 +286,7 @@
 
                                 var permission_role = result.rolePermission
                                 localStorage.setItem('permission', JSON.stringify(permission_role));
+                                localStorage.setItem('userRole', roleName);
 
                                 var data = JSON.parse(localStorage.getItem('permission'));
                                 console.log(data)

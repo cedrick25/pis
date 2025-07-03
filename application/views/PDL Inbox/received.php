@@ -65,13 +65,13 @@
             <div class="animated fadeIn">
                 <div class="row">
 
-                    <!-- <div class="col-md-12">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Received List</strong>
+                                <strong class="card-title">PDL Inbox</strong>
                             </div>
                             <div class="card-body">
-                                <ul class="nav nav-tabs">
+                                <ul class="nav nav-tabs" style="margin-bottom: 50px;">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="inv_tab" data-toggle="tab" style="cursor: pointer;">Investigation</a>
                                     </li>
@@ -82,18 +82,15 @@
                                 <div class="tab-content pl-3 p-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="inv" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="col col-md-12">
-                                            <h3>Investigation</h3>
-                                        </div><br><br>
-                                        <div class="col col-md-12">
                                             <table class="table table_head" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Docket No.</th>
-                                                        <th>Field Office</th>
-                                                        <th>Details</th>
-                                                        <th>Sender</th>
                                                         <th>Status</th>
+                                                        <th>Field Office</th>
+                                                        <th>Sender</th>
+                                                        <th>Sender Field Office</th>
+                                                        <th>Subject</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
@@ -103,48 +100,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="card">
-                            <div class="card-header" id="pager">
-                                <strong class="card-title">PDL Inbox</strong>
-                            </div>
-                            <div class="card-body">
-                                <table id="" class="table table_head" width="100%">
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Transaction Number</th>
-                                        <th>Field Office</th>
-                                        <th>Sender</th>
-                                        <th>Subject</th>
-                                        <th>Actions</th>
-                                    </thead>
-                                    <tbody class="table_body">
-<!--                                         <tr>
-                                            <td style="width: 5%">1</td>
-                                            <td style="width: 20%">James Santos</td>
-                                            <td style="width: 15%">Central Office HQ</td>
-                                            <td style="width: 15%">PPA Sys Admin</td>
-                                            <td style="width: 25%">Sample Subject</td>
-                                            <td style="width: 20%">
-                                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-create btn-view"><i class="fa fa-eye"></i>&nbsp;&nbsp;View</button>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 5%">2</td>
-                                            <td style="width: 20%">John Doe</td>
-                                            <td style="width: 15%">Central Office HQ</td>
-                                            <td style="width: 15%">PPA Sys Admin</td>
-                                            <td style="width: 25%">Sample Subject</td>
-                                            <td style="width: 20%">
-                                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-create btn-view"><i class="fa fa-eye"></i>&nbsp;&nbsp;View</button>
-                                            </td>
-                                        </tr> -->
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>

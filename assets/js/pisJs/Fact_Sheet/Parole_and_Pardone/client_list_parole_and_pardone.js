@@ -685,6 +685,35 @@
         });       
     }
 
+    function buttonVisibility (){
+        var data = JSON.parse(localStorage.getItem('permission'));
+        if (data != null) {
+            data.forEach(function(data){
+                if (data.type == "ACTION") {
+                    // console.log(data.value)
+                    setTimeout(function() {
+                        if (!data.value) {
+                            var element = $('.' + data.detail);
+                            element.hide();
+                        }else{
+                            var element = $('.' + data.detail);
+                            element.show();
+                        }
+                    }, 10);
+                }else if (data.type == "VIEW") {
+                    if (!data.value) {
+                        var element = $('.' + data.detail);
+                        element.hide();
+                    }else{
+                        var element = $('.' + data.detail);
+                        element.show();
+                    }
+                }else{
+                }
+            });
+        }
+    }
+
     function drawTable(clientType) {
         // Check if DataTable has already been initialized
         if (!$.fn.DataTable.isDataTable('.table_head')) {
@@ -731,6 +760,7 @@
             // Event listener for when the DataTable is drawn
             $('.table_head').on('draw.dt', function () {
                 buttonFunctionality();
+                buttonVisibility();
             });
         } else {
             // If DataTable is already initialized, update the ajax.data with new clientType

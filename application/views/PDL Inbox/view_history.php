@@ -61,6 +61,36 @@
     <?php $this->load->view('templates/left-panel.php'); ?> 
     
     <!-- /#left-panel -->
+
+    <div class="modal fade" id="createModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="deactivate">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Create</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="complete_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Complete Successfully  
+                </div>
+                <div class="modal-body">
+                    <div class="col-12 form-row d-flex justify-content-center align-items-center">
+                        <p class="text-center">
+                            Select where fact sheet do you want to proceed ?<br><br>
+                            <button type="button" class="btn btn-primary btn-sm mx-2 text-center" style="width: 140px;" id="createProbation">Probation</button>
+                            <button type="button" class="btn btn-primary btn-sm text-center" style="width: 140px;" id="createParole">Parole and Pardone</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -133,9 +163,10 @@
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-sm btn-primary waves-effect btn-complete float-right mx-2"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Complete</button> -->
-                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-upload float-right"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</button>
-                                <button type="button" class="btn btn-sm btn-danger waves-effect btn-return float-right mx-2"><i class="fa fa-undo"></i>&nbsp;&nbsp;Return</button>
-                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-forward float-right"><i class="fa fa-forward"></i>&nbsp;&nbsp;Forward</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-create float-right" style="display: none;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-upload float-right" style="display: none;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</button>
+                                <button type="button" class="btn btn-sm btn-danger waves-effect btn-return float-right mx-2" style="display: none;"><i class="fa fa-undo"></i>&nbsp;&nbsp;Return</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect btn-forward float-right" style="display: none;"><i class="fa fa-forward"></i>&nbsp;&nbsp;Forward</button>
                             </div>
                         </div>
                     </div>
@@ -159,9 +190,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="sup_tab" href="#supervision_tab" data-toggle="tab" style="cursor: pointer;">Supervision</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a class="nav-link" id="rehab_tab" href="#rehabilitation_tab" data-toggle="tab" style="cursor: pointer;">Rehabilitation</a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a class="nav-link" id="oth_tab" href="#others_tab" data-toggle="tab" style="cursor: pointer;">Others</a>
                                     </li>
@@ -195,7 +226,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="tab-pane fade" id="rehabilitation_tab" role="tabpanel" aria-labelledby="home-tab">
+                                    <!-- <div class="tab-pane fade" id="rehabilitation_tab" role="tabpanel" aria-labelledby="home-tab">
                                         <table id="rehab_table" class="table table_head" width="100%">
                                             <thead>
                                                 <th>#</th>
@@ -207,7 +238,7 @@
                                             <tbody class="table_body">
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </div> -->
                                     <div class="tab-pane fade" id="others_tab" role="tabpanel" aria-labelledby="home-tab">
                                         <table id="oth_table" class="table table_head" width="100%">
                                             <thead>

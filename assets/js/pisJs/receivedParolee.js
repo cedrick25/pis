@@ -123,7 +123,7 @@
         }
 
         function buttonFunctionality(){
-            $("#btn_complete").unbind("click").on("click", function(){
+            $(".btn_complete").unbind("click").on("click", function(){
                 $(".completeModal").modal('show');
                 var id = $(this).data("id");
                 var docket_number = $(this).data("docket");
@@ -150,7 +150,7 @@
                         __executeExternalPost('8000/workflow/complete/'+id,JSON.stringify(payload)).done(function (result) {
                             if (result.status != "ERROR") {
                                     $(".form-control").val('');
-                                    $('#complete_success').show();
+                                    $('#`complete_success').show();
                                         setTimeout(function () {
                                             $('#completeModal_csup').modal('hide');
                                             $('#complete_success_csup').hide();
@@ -163,26 +163,27 @@
                     })
                 })
             })
-            $("#btn_return").unbind("click").on("click", function(){
+            $(".btn_return").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var fi = $(this).data("fi");
                 var senderId = $(this).data("sender");
                 window.location.href = api+'/pis/parolee_docket_return?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
             })
-            $("#btn_forward").unbind("click").on("click", function(){
+            $(".btn_forward").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var fi = $(this).data("fi");
                 var senderId = $(this).data("sender");
                 window.location.href = api+'/pis/parolee_docket_forward?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
             })
-            $("#btn_upload").unbind("click").on("click", function(){
+            $(".btn_upload").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var type = $(this).data("type");
                 var fi = $(this).data("fi");
-                window.location.href = api+'/pis/parolee_docket_uploads?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+                var sender = $(this).data("sender");
+                window.location.href = api+'/pis/parolee_docket_uploads?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderfo='+sender;
             })
         }
 
@@ -249,6 +250,7 @@
         //         });
         //     })
         // }
+        var roleName = localStorage.getItem("userRole")
         function drawTable(type, uuid) {
             // Check if DataTable has already been initialized
             if (!$.fn.DataTable.isDataTable('.table_head')) {
@@ -296,11 +298,15 @@
                 $('.table_head').on('draw.dt', function () {
                     buttonFunctionality();
                     buttonVisibility();
-                    // show buttons for testing purposes only
-                    $("#btn_upload").show();
-                    $("#btn_return").show();
-                    $("#btn_forward").show();
-                    $("#btn_complete").show();
+                    if (roleName === "TSD") {
+                        $(".btn_complete").hide();
+                        $(".btn_return").hide();
+                        $(".btn_forward").hide();
+                    } else {
+                        $(".btn_complete").show();
+                        $(".btn_return").show();
+                        $(".btn_forward").show();
+                    }
                 });
             } else {
                 // If DataTable is already initialized, reload it with new data
@@ -347,7 +353,8 @@
                                 return actions;
                                 break;
                             default:
-                                var actions = "<button class='btn btn-sm btn-primary pr_inbox_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger pr_inbox_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pr_inbox_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pr_inbox_complete' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                var actions = "<button class='btn btn-sm btn-primary pr_inbox_upload btn_upload' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger pr_inbox_return btn_return' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pr_inbox_forward btn_forward' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pr_inbox_complete btn_complete' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-check-circle'></i> Complete</button>";
+                                // var actions = "<button class='btn btn-sm btn-primary pr_inbox_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger pr_inbox_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pr_inbox_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pr_inbox_complete' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-check-circle'></i> Complete</button>";
                                 return actions;
                                 break;
                         };
