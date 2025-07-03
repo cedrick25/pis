@@ -132,11 +132,11 @@
                                         if (result.status != "ERROR") {
                                             $('.user_account').empty().append("<option selected disabled>Select User Account</option>");
                                             result.forEach(function(data) {
-                                                if (data.roleName === "CLERK ACCOUNT") {
+                                                // if (data.roleName === "CLERK ACCOUNT") {
                                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                                     $('.user_account').append(
                                                         "<option value="+data.uuid+">"+fullname+"</option>");
-                                                }
+                                                // }
                                             });
                                         } else {
                                             console.log("failed fetching user list")
