@@ -183,10 +183,19 @@
                 $(".pdl_routing_breadcrumbs").unbind("click").on("click", function(){
                     window.location.href=api+"/pis/pdl-sent";
                 })
-            }else{
-                $(".btn-forward").show();
-                $(".btn-return").show();
-                $(".btn-upload").show();
+            } else {
+                var roleName = localStorage.getItem("userRole")
+                if (roleName === "CLERK ACCOUNT") {
+                    $(".btn-forward").hide();
+                    $(".btn-return").show();
+                    $(".btn-upload").hide();
+                    $(".btn-create").show();
+                } else {
+                    $(".btn-forward").show();
+                    $(".btn-return").show();
+                    $(".btn-upload").show();
+                    $(".btn-create").hide();
+                }
                 $(".pdl_routing_breadcrumbs").unbind("click").on("click", function(){
                     window.location.href=api+"/pis/pdl-receive";
                 })
@@ -199,10 +208,15 @@
                         var resultPetitioner = resultPetitioner.response;
                         console.log(resultPetitioner)
                         $(".firstName").text(resultPetitioner.firstName)
-                        $(".middleName").text(resultPetitioner.middleName)
+                        $(".middleName").text(resultPetitioner.middleName === "" ? "N/A" : resultPetitioner.middleName)
                         $(".lastName").text(resultPetitioner.lastName)
-                        $(".aliasName").text(resultPetitioner.alias)
-                        $(".criminalCaseNumber").text(resultPetitioner.criminalCaseNo)
+                        $(".aliasName").text(resultPetitioner.alias === "" ? "N/A" : resultPetitioner.alias)
+                        var criminalCases = JSON.parse(resultPetitioner.criminalCaseNo);
+                        if (Array.isArray(criminalCases)) {
+                            // Join the criminal case numbers with <br> and display them
+                            var caseNumbers = criminalCases.map(item => item.criminal_cases_number).join('<br>');
+                            $(".criminalCaseNumber").html(caseNumbers);
+                        }
                         $(".prisonNumber").text(resultPetitioner.prisonNumber)
                         $(".sender").text(result.senderName)
                         $(".details").text(result.details)
@@ -219,6 +233,16 @@
                     })
                     $(".btn-upload").unbind("click").on("click", function(){
                         window.location.href=api+"/pis/pdl-upload?transaction_number="+transaction_number+"&id="+result.id+"&petitionerId="+result.petitionerId;
+                    })
+                    $(".btn-create").unbind("click").on("click", function(){
+                        // window.location.href=api+"/pis/pdl-upload?transaction_number="+transaction_number+"&id="+result.id+"&petitionerId="+result.petitionerId;
+                        $("#createModal").modal("show")
+                    })
+                    $("#createProbation").unbind("click").on("click", function(){
+                        window.location.href=api+"/pis/new_client?petitionerId=" + result.petitionerId + "&transaction_number=" + transaction_number;
+                    })
+                    $("#createParole").unbind("click").on("click", function(){
+                        window.location.href=api+"/pis/client_list_parole_and_pardone";
                     })
 
                     var api_table = `8080/file/list/investigation/${result.petitionerId}/0`
@@ -303,11 +327,6 @@
                         </div>
 
                     `)
-                        //                         </div>
-                        //     <div class="card-footer bg-transparent">
-                        //         <span>Created at ${formattedDateTime}</span>
-                        //     </div>
-                        // </div>
 
                     var remarksText = document.getElementById(`remarksText_${data.id}`);
                     

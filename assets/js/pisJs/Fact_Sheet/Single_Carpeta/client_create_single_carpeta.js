@@ -156,12 +156,12 @@
     }
 
     var client_type = GetURLParameter('client_type');
+    let cc_counter;
 
     if (client_type === "PDL-Investigation") {
         var transmittal_counter = 0;
         var date_received_counter = 0;
         var request_counter = 0;
-        let cc_counter;
         var supervision_counter = 0;
         var client_type = GetURLParameter('client_type');
 
@@ -251,7 +251,7 @@
                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Request Type</label></div>
                                 <div class="col-12 col-md-8">
-                                    <select class="form-control request_type select2">
+                                    <select class="form-control request_type select2" id=request_type_${investigation_counter}>
                                         <option value="" selected disabled>Select</option>
                                         <option value="REQUEST PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)">REQUEST PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)</option>
                                         <option value="REQUEST PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)">REQUEST PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)</option>
@@ -275,7 +275,7 @@
                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
                                 <div class="col-12 col-md-8">
-                                    <select class="form-control type_report select2">
+                                    <select class="form-control type_report select2" id=type_report_${investigation_counter}>
                                         <option value="" selected disabled>Select</option>
                                         <option value="RESULT PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)">RESULT PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)</option>
                                         <option value="RESULT PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)">RESULT PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)</option>
@@ -379,7 +379,7 @@
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-4"><label for="text-input" class=" form-control-label">Request Type</label></div>
                                     <div class="col-12 col-md-8">
-                                        <select class="form-control request_type select2">
+                                        <select class="form-control request_type select2" id="request_type_${investigation_counter}">
                                             <option value="" selected disabled>Select</option>
                                             <option value="REQUEST PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)">REQUEST PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)</option>
                                             <option value="REQUEST PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)">REQUEST PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)</option>
@@ -403,7 +403,7 @@
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
                                     <div class="col-12 col-md-8">
-                                        <select class="form-control type_report select2">
+                                        <select class="form-control type_report select2" id="type_report_${investigation_counter}">
                                             <option value="" selected disabled>Select</option>
                                             <option value="RESULT PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)">RESULT PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)</option>
                                             <option value="RESULT PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)">RESULT PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)</option>
@@ -427,10 +427,7 @@
                     </div>
                 </div>
             `)
-            $(`#forwarded_to_fo_${investigation_counter}`).select2({
-                width: '100%'
-            });
-            $(`#forwarded_to_ro_${investigation_counter}`).select2({
+            $(`#forwarded_to_fo_${investigation_counter}, #forwarded_to_ro_${investigation_counter}, #request_type_${investigation_counter}, #type_report_${investigation_counter}`).select2({
                 width: '100%'
             });
             fieldOffices(`#forwarded_to_fo_${investigation_counter}`)

@@ -124,7 +124,6 @@
                 var office_id = $(this).data("oi");
                 $(".docket").html(docket_number)
                 $(".btn_remove_confirm").unbind("click").on("click", function(){
-
                     __executeExternalPost('8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
                         if (result.status != "ERROR") {
                                 $(".form-control").val('');
@@ -197,7 +196,7 @@
                 "processing": false,
                 "serverSide": true,
                 "scrollX": true,
-                "searching": true,
+                "searching": false,
                 "lengthMenu": [10, 25, 50, 100],
                 "pageLength": 10,
                 "columnDefs": [
@@ -230,7 +229,7 @@
                     return JSON.stringify(json);
                 }
             },
-            columns: tableColumns()
+                columns: tableColumns()
             });
             $('.table_head').on('draw.dt', function() {
                 buttonFunctionality();
@@ -279,7 +278,7 @@
                 {
                     "data": null,
                     render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_update pr_inv_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_view pr_inv_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-danger btn_remove pr_inv_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                        return "<button class='btn btn-sm btn-primary btn_update pr_inv_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_view pr_inv_view' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-danger btn_remove pr_inv_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
                     }
                 }
             ]

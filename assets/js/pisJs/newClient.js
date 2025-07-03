@@ -86,7 +86,23 @@
             });
             
             return d.promise();
-        };
+        };        
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    return decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
+
+        var transaction_number = GetURLParameter('transaction_number');
+        var petitionerId = GetURLParameter('petitionerId');
+
         console.log($.cookie("field_office_id"));
 
         $(".btn-confirm").unbind("click").on("click", function(){
@@ -107,6 +123,7 @@
                     "createdBy"         : $.cookie('uuid'),
                     "updatedBy"         : "",
                     "id"                : "",
+                    "requestType"       : petitionerId,
                     "clientType"        : "PROBATIONER",
                     "status"            : 1
             }

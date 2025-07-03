@@ -202,6 +202,9 @@
                 "data": 'firstName',
             },
             {
+                "data": 'middleName',
+            },
+            {
                 "data": 'lastName',
             },
             {
@@ -216,9 +219,6 @@
             },
             {
                 "data": 'prisonNumber',
-            },
-            {
-                "data": 'fileNumber',
             },
             {
                 "data": null,

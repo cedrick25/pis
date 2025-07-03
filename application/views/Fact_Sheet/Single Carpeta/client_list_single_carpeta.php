@@ -96,10 +96,10 @@
                                             <thead>
                                                 <th>#</th>
                                                 <th>First Name</th>
+                                                <th>Middle Name</th>
                                                 <th>Last Name</th>
                                                 <th>Criminal Case Number</th>
                                                 <th>Prison Number</th>
-                                                <th>File Number</th>
                                                 <th>Actions</th>
                                             </thead>
                                             <tbody class="table_body">

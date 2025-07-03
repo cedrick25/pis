@@ -138,6 +138,7 @@
     var type = GetURLParameter('type');
     var id = GetURLParameter('id');
     var fi = $.cookie("field_office_id");
+    var sender = GetURLParameter('senderfo');
     var dataTable = null; // Initialize the variable globally to store the DataTable instance
 
     function storeData(postUrl, postData) {
@@ -287,19 +288,10 @@
                                 <i class='fa fa-download'></i> Download
                             </button>
                         </a>
+                        <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                            <i class='fa fa-trash'></i> Delete
+                        </button>
                     `;
-
-                    // Add "Show All Versions" button only for the latest version
-                    if (rows.length > 1) {
-                        if (data.version === latestVersion) {
-                            actions += `
-                                <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-angle-down'></i> Show All Versions
-                                </button>
-                            `;
-                        }
-                    }
-
                     return actions;
                 }
             }
@@ -387,67 +379,32 @@
         if (result.status != "ERROR") {
             var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
             var officeId = result.departmentId;
-            __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number+'/'+sender).done(function (result) {
                 var result = result.response;
                 console.log(result)
 
                 $(".name").val(result.fullName);
                 $(".docket_num").val(result.docketNumber)
 
-                load_table('investigation', `ppis_${result.clientId}`, officeId)
+                load_table('investigation', `ppis_${result.clientId}`, sender)
 
                 // event handler when a tab is clicked
                 $("#inv_tab").unbind("click").on("click", function(){
                     console.log("clicked inv")
-                    load_table('investigation', `ppis_${result.clientId}`, officeId)
+                    load_table('investigation', `ppis_${result.clientId}`, sender)
                 })
                 $("#sup_tab").unbind("click").on("click", function(){
                     console.log("clicked sup")
-                    load_table('supervision', `ppis_${result.clientId}`, officeId)
+                    load_table('supervision', `ppis_${result.clientId}`, sender)
                 })
                 $("#rehab_tab").unbind("click").on("click", function(){
                     console.log("clicked rehab")
-                    load_table('rehabilitation', `ppis_${result.clientId}`, officeId)
+                    load_table('rehabilitation', `ppis_${result.clientId}`, sender)
                 })
                 $("#oth_tab").unbind("click").on("click", function(){
                     console.log("clicked oth")
-                    load_table('others', `ppis_${result.clientId}`, officeId)
+                    load_table('others', `ppis_${result.clientId}`, sender)
                 })
-
-                // event handler to toggle visibility
-                $('.table_head').on('click', '.btn-showVersions', function () {
-                    const fileName = $(this).data('file_name');
-
-                    // Identify rows with the same file name and sort them by version
-                    let rows = [];
-                    $('.table_head tbody tr').each(function () {
-                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
-                            rows.push($(this));
-                        }
-                    });
-
-                    // Sort rows by version in descending order
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA; // Descending
-                    });
-
-                    // Keep the first (latest) version visible and toggle visibility of others
-                    rows.forEach((row, index) => {
-                        if (index === 0) {
-                            row.removeClass('hidden'); // Ensure the latest version is always visible
-                        } else {
-                            row.toggleClass('hidden'); // Toggle visibility for other versions
-                        }
-                    });
-
-                    // Optional: Update button text/icon based on visibility
-                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden')); // Check if any non-latest rows are hidden
-                    $(this).html(isHidden 
-                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
-                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
-                });
 
                 // for uploading file
                 $(".btn-confirm").unbind("click").on("click", function(){
@@ -461,7 +418,7 @@
                         form.append("file", fileToUpload, fileToUpload.name);
                         // console.log(fileToUpload.name)
                         var settings = {
-                            "url": api+"8080/file/upload?uuid="+"ppis_"+result.clientId+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".remarks").val(),
+                            "url": api+"8080/file/upload?uuid="+"ppis_"+result.clientId+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+sender+"&remarks="+$(".remarks").val(),
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,
