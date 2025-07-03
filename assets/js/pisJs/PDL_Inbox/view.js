@@ -175,6 +175,7 @@
             })
         }
 
+        var roleName = localStorage.getItem("userRole")
         var __fields = function(){
             if(sent){
                 $(".btn-forward").hide();
@@ -196,7 +197,7 @@
                     $(".btn-return").show();
                     $(".btn-upload").show();
                     $(".btn-create").hide();
-                    if ($.cookie("uuid") === "02f6a97a-c195-4517-bbf5-382e0811f374"){
+                    if (roleName === "TSD - Division Chief"){
                         $(".btn-complete").show();
                     } else {
                         $(".btn-complete").hide();
@@ -210,7 +211,7 @@
                 var result = result.response;
                 console.log(result)
                 if (result.status != "ERROR") {
-                    var payload = {
+                    var payloadUpdate = {
                         "type"                  : result.type,
                         "transactionNumber"     : result.transactionNumber,
                         "petitionerId"          : result.petitionerId,
@@ -226,7 +227,7 @@
                         "fieldOfficeId"         : $.cookie('field_office_id'),
                         "fieldOfficeName"       : "",
                         "docketNumber"          : "",
-                        "details"               : "",
+                        "details"               : result.details,
                         "remarks"               : result.remarks,
                         "approvalStatus"        : "Pending",
                         "lastStatusUpdateDate"  : "",
@@ -236,9 +237,9 @@
                         "updatedDate"           : "",
                         "status"                : true
                     }
-                    console.log(payload)
-                    if (!result.approvalStatus === "New") {
-                        __executeExternalPost('8000/workflow/update/'+result.id,JSON.stringify(payload)).done(function (result) {
+                    console.log(payloadUpdate)
+                    if (result.approvalStatus === "New") {
+                        __executeExternalPost('8000/workflow/update/'+result.id,JSON.stringify(payloadUpdate)).done(function (result) {
                             if (result.status != "ERROR") {
                                 console.log("Updated to Pending")
                             }else{
@@ -306,7 +307,7 @@
                             "fieldOfficeId"         : $.cookie('field_office_id'),
                             "fieldOfficeName"       : "",
                             "docketNumber"          : "",
-                            "details"               : "",
+                            "details"               : result.details,
                             "remarks"               : result.remarks,
                             "approvalStatus"        : "Approved",
                             "lastStatusUpdateDate"  : "",
