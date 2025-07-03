@@ -105,6 +105,7 @@
 
         var transaction_number = GetURLParameter('transaction_number');
         var id = GetURLParameter('id');
+        var client_type = GetURLParameter('client_type');
         // var fieldOffice = GetURLParameter('fo');
 
         // function storeData(postUrl, postData) {
@@ -259,7 +260,7 @@
 
                         $(".btn-confirm_return").unbind("click").on("click", function(){
                             var payload = {
-                                "type"                  : "PDL",
+                                "type"                  : client_type,
                                 "transactionNumber"     : transaction_number,
                                 "petitionerId"          : resultPetitioner.id,
                                 "caseloadType"          : "",

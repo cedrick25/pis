@@ -105,7 +105,9 @@
         }
         var __select = function(){
             $('.field_office').empty();
+            $('.field_office_display').show();
             $('.user_account').prop('disabled', true)
+            $('.field_office').empty().append("<option selected disabled>Loading ...</option>");
             __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled>Select Field Office</option>");
@@ -136,12 +138,40 @@
                 }
             })
         }
-        __select();
+        // __select();
+
+        var chiefDropdown = function () {
+            $('.field_office_display').hide();
+            $('.user_account').empty().append("<option selected disabled>Loading ...</option>");
+            __executeExternalGet(___ctx+'8088/user/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    $('.user_account').empty().append("<option selected disabled>Select User Account</option>");
+                    result.forEach(function(data){
+                        // console.log(data)
+                        var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+                        // if (data.roleName === "TSD") {
+                            $('.user_account').append(
+                            "<option value="+data.uuid+" data-fullname="+fullname+">"+fullname+"</option>");
+                        // }
+                    });
+                } else {
+                    console.log("failed fetching user list")
+                    $(".user_display").hide()
+                }
+            });
+        }
+
+        if ($.cookie("uuid") === "02f6a97a-c195-4517-bbf5-382e0811f374") {
+            chiefDropdown()
+        } else {
+            __select();
+        }
 
         // var approval_status = "Pending of CPPO"
 
         var transaction_number = GetURLParameter('transaction_number');
         var id = GetURLParameter('id');
+        var type = GetURLParameter('client_type');
         // var id = GetURLParameter('id');
         // var senderId = GetURLParameter('senderId');
 
@@ -283,10 +313,8 @@
                             
                             var fullname = $('.user_account option:selected').data('fullname');
 
-                            // var receivername = fname + " " + mname + " " + lname + " " + sname;
-
                             var payload = {
-                                "type"                  : "PDL",
+                                "type"                  : type,
                                 "transactionNumber"     : transaction_number,
                                 "petitionerId"          : resultPetitioner.id,
                                 "caseloadType"          : "",
@@ -298,7 +326,7 @@
                                 "originFieldOfficeName" : "",
                                 "receiverId"            : $(".user_account").val(),
                                 "receiverName"          : fullname,
-                                "fieldOfficeId"         : $(".field_office").val(),
+                                "fieldOfficeId"         : result.senderFieldOfficeId,
                                 "fieldOfficeName"       : "",
                                 "docketNumber"          : "",
                                 "details"               : $(".details").val(),

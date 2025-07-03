@@ -190,11 +190,17 @@
                     $(".btn-return").show();
                     $(".btn-upload").hide();
                     $(".btn-create").show();
+                    $(".btn-complete").hide();
                 } else {
                     $(".btn-forward").show();
                     $(".btn-return").show();
                     $(".btn-upload").show();
                     $(".btn-create").hide();
+                    if ($.cookie("uuid") === "02f6a97a-c195-4517-bbf5-382e0811f374"){
+                        $(".btn-complete").show();
+                    } else {
+                        $(".btn-complete").hide();
+                    }
                 }
                 $(".pdl_routing_breadcrumbs").unbind("click").on("click", function(){
                     window.location.href=api+"/pis/pdl-receive";
@@ -204,6 +210,42 @@
                 var result = result.response;
                 console.log(result)
                 if (result.status != "ERROR") {
+                    var payload = {
+                        "type"                  : result.type,
+                        "transactionNumber"     : result.transactionNumber,
+                        "petitionerId"          : result.petitionerId,
+                        "caseloadType"          : "",
+                        "senderId"              : result.senderId,
+                        "senderName"            : result.senderName,
+                        "senderFieldOfficeId"   : result.senderFieldOfficeId,
+                        "senderFieldOfficeName" : result.senderFieldOfficeName,
+                        "originFieldOfficeId"   : result.originFieldOfficeId,
+                        "originFieldOfficeName" : result.originFieldOfficeName,
+                        "receiverId"            : $.cookie("uuid"),
+                        "receiverName"          : "",
+                        "fieldOfficeId"         : $.cookie('field_office_id'),
+                        "fieldOfficeName"       : "",
+                        "docketNumber"          : "",
+                        "details"               : "",
+                        "remarks"               : result.remarks,
+                        "approvalStatus"        : "Pending",
+                        "lastStatusUpdateDate"  : "",
+                        "createdBy"             : "",
+                        "createdDate"           : "",
+                        "updatedBy"             : "",
+                        "updatedDate"           : "",
+                        "status"                : true
+                    }
+                    console.log(payload)
+                    if (!result.approvalStatus === "New") {
+                        __executeExternalPost('8000/workflow/update/'+result.id,JSON.stringify(payload)).done(function (result) {
+                            if (result.status != "ERROR") {
+                                console.log("Updated to Pending")
+                            }else{
+                                alert("failed")
+                            }
+                        })
+                    }
                     __executeExternalGet('8000/petitioner/'+result.petitionerId).done(function (resultPetitioner) {
                         var resultPetitioner = resultPetitioner.response;
                         console.log(resultPetitioner)
@@ -226,10 +268,10 @@
                         // $(".return_by").text(result.receiverName)
                     })
                     $(".btn-forward").unbind("click").on("click", function(){
-                        window.location.href=api+"/pis/pdl-forward?transaction_number="+transaction_number+"&id="+result.id;
+                        window.location.href=api+"/pis/pdl-forward?transaction_number="+transaction_number+"&id="+result.id+"&client_type="+result.type;
                     })
                     $(".btn-return").unbind("click").on("click", function(){
-                        window.location.href=api+"/pis/pdl-return?transaction_number="+transaction_number+"&id="+result.id;
+                        window.location.href=api+"/pis/pdl-return?transaction_number="+transaction_number+"&id="+result.id+"&client_type="+result.type;
                     })
                     $(".btn-upload").unbind("click").on("click", function(){
                         window.location.href=api+"/pis/pdl-upload?transaction_number="+transaction_number+"&id="+result.id+"&petitionerId="+result.petitionerId;
@@ -243,6 +285,50 @@
                     })
                     $("#createParole").unbind("click").on("click", function(){
                         window.location.href=api+"/pis/client_list_parole_and_pardone";
+                    })
+                    $(".btn-complete").unbind("click").on("click", function() {
+                        $("#approveModal").modal("show")
+                    })
+                    $("#approveBtn").unbind("click").on("click", function() {
+                        var payload = {
+                            "type"                  : result.type,
+                            "transactionNumber"     : result.transactionNumber,
+                            "petitionerId"          : result.petitionerId,
+                            "caseloadType"          : "",
+                            "senderId"              : result.senderId,
+                            "senderName"            : result.senderName,
+                            "senderFieldOfficeId"   : result.senderFieldOfficeId,
+                            "senderFieldOfficeName" : result.senderFieldOfficeName,
+                            "originFieldOfficeId"   : result.originFieldOfficeId,
+                            "originFieldOfficeName" : result.originFieldOfficeName,
+                            "receiverId"            : $.cookie("uuid"),
+                            "receiverName"          : "",
+                            "fieldOfficeId"         : $.cookie('field_office_id'),
+                            "fieldOfficeName"       : "",
+                            "docketNumber"          : "",
+                            "details"               : "",
+                            "remarks"               : result.remarks,
+                            "approvalStatus"        : "Approved",
+                            "lastStatusUpdateDate"  : "",
+                            "createdBy"             : "",
+                            "createdDate"           : "",
+                            "updatedBy"             : "",
+                            "updatedDate"           : "",
+                            "status"                : true
+                        }
+                        console.log(payload)
+                        __executeExternalPost('8000/workflow/update/'+result.id,JSON.stringify(payload)).done(function (result) {
+                            if (result.status != "ERROR") {
+                            // $(".form-control").val('');
+                            $('#approveModal #complete_success').show();
+                                setTimeout(function () {
+                                $('#approveModal #complete_success').hide();
+                                    window.location.reload(true);
+                                }, 2000);
+                            }else{
+                                alert("failed")
+                            }
+                        })
                     })
 
                     var api_table = `8080/file/list/investigation/${result.petitionerId}/0`

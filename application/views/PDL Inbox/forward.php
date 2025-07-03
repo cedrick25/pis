@@ -42,7 +42,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
                                     <div class="col-12 col-md-9"><label for="text-input" class=" form-control-label name"></label></div>
                                 </div>
-                                <div class="row form-group col-md-12">         
+                                <div class="row form-group col-md-12 field_office_display" style="display: none;">         
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
                                     <div class="col-12 col-md-9">
                                         <select name="select" id="" class="form-control field_office select2">

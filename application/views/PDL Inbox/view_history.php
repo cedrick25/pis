@@ -90,6 +90,34 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Approval Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Alert message -->
+                <div class="alert alert-success" role="alert" id="complete_success" style="display:none;">
+                    <i class="fa fa-check"></i> Approved Successfully!
+                </div>
+
+                <div class="modal-body">
+                    <p class="text-center">
+                        Once approved, changes can't be undone. Do you want to continue?
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success btn-sm" id="approveBtn">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="right-panel" class="right-panel">
 
@@ -162,7 +190,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <!-- <button type="button" class="btn btn-sm btn-primary waves-effect btn-complete float-right mx-2"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Complete</button> -->
+                                <button type="button" class="btn btn-sm btn-success waves-effect btn-complete float-right mx-2"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve</button>
                                 <button type="button" class="btn btn-sm btn-primary waves-effect btn-create float-right" style="display: none;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create</button>
                                 <button type="button" class="btn btn-sm btn-primary waves-effect btn-upload float-right" style="display: none;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</button>
                                 <button type="button" class="btn btn-sm btn-danger waves-effect btn-return float-right mx-2" style="display: none;"><i class="fa fa-undo"></i>&nbsp;&nbsp;Return</button>
