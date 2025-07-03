@@ -120,7 +120,7 @@
         }
 
         function buttonFunctionality(){
-            $("#btn_complete").unbind("click").on("click", function(){
+            $(".btn_complete").unbind("click").on("click", function(){
                 $(".completeModal").modal('show');
                 var id = $(this).data("id");
                 var docket_number = $(this).data("docket");
@@ -159,21 +159,21 @@
                     })
                 })
             })
-            $("#btn_return").unbind("click").on("click", function(){
+            $(".btn_return").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var fi = $(this).data("fi");
                 var senderId = $(this).data("sender");
                 window.location.href = api+'/pis/pardonee_docket_return?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
             })
-            $("#btn_forward").unbind("click").on("click", function(){
+            $(".btn_forward").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var fi = $(this).data("fi");
                 var senderId = $(this).data("sender");
                 window.location.href = api+'/pis/pardonee_docket_forward?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
             })
-            $("#btn_upload").unbind("click").on("click", function(){
+            $(".btn_upload").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
                 var type = $(this).data("type");
@@ -214,7 +214,7 @@
                                 return actions;
                                 break;
                             default:
-                                var actions = "<button class='btn btn-sm btn-primary pd_upload' id='btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger pd_return' id='btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.originFieldOfficeId+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pd_forward' id='btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pd_complete' id='btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet' style='display:none;' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"'><i class='fa fa-plus-circle'></i> Worksheet</button>";
+                                var actions = "<button class='btn btn-sm btn-primary pd_upload btn_upload' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger pd_return btn_return' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-sender='"+data.originFieldOfficeId+"' data-fi='"+data.fieldOfficeId+"'><i class='fa fa-undo'></i> Return</button> <button class='btn btn-sm btn-info pd_forward btn_forward' style='display:none;' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-sender='"+data.originFieldOfficeId+"'><i class='fa fa-forward'></i> Forward</button> <button class='btn btn-sm btn-success pd_complete btn_complete' style='display:none;' type='submit' data-toggle='modal' data-target='#completeModal' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"'><i class='fa fa-check-circle'></i> Complete</button> <button class='btn btn-sm btn-info pb_inv_worksheet pb_sup_worksheet' id='btn_worksheet' style='display:none;' data-id='"+data.id+"' data-fi='"+data.fieldOfficeId+"' data-docket='"+data.docketNumber+"'><i class='fa fa-plus-circle'></i> Worksheet</button>";
                                 return actions;
                                 break;
                         };
@@ -334,10 +334,20 @@
                     buttonFunctionality();
                     buttonVisibility();
                     // show buttons for testing purposes only
-                    $("#btn_upload").show();
-                    $("#btn_return").show();
-                    $("#btn_forward").show();
-                    $("#btn_complete").show();
+                    // $("#btn_upload").show();
+                    // $("#btn_return").show();
+                    // $("#btn_forward").show();
+                    // $("#btn_complete").show();
+
+                    if (roleName === "TSD - Section Chief" || roleName === "TSD - Division Chied" || roleName === "TSD - Staff" || roleName === "TSD - Assistant Division Chief") {
+                        $(".btn_complete").hide();
+                        $(".btn_return").hide();
+                        $(".btn_forward").hide();
+                    } else {
+                        $(".btn_complete").show();
+                        $(".btn_return").show();
+                        $(".btn_forward").show();
+                    }
                 });
             } else {
                 // If DataTable is already initialized, reload it with new data
