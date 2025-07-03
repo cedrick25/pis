@@ -267,11 +267,11 @@
                                 "senderId"              : $.cookie("uuid"),
                                 "senderName"            : "",
                                 "senderFieldOfficeId"   : $.cookie("field_office_id"),
-                                "senderFieldOfficeName" : "",
+                                "senderFieldOfficeName" : result.receiverNames,
                                 "originFieldOfficeId"   : result.originFieldOfficeId,
                                 "originFieldOfficeName" : "",
                                 "receiverId"            : result.senderId,
-                                "receiverName"          : "",
+                                "receiverName"          : result.senderName,
                                 "fieldOfficeId"         : result.senderFieldOfficeId,
                                 "fieldOfficeName"       : "",
                                 "docketNumber"          : "",
@@ -292,7 +292,7 @@
                                 $('#success_forwarding').show();
                                     setTimeout(function () {
                                         $('#success_forwarding').hide();
-                                        window.location.href=api+"/pis/pdl-receive";
+                                        // window.location.href=api+"/pis/pdl-receive";
                                     }, 2000);
                                 }else{
                                     alert("failed")

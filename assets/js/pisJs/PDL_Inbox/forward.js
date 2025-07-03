@@ -90,7 +90,7 @@
             
             return d.promise();
         };
-
+        var roleName = localStorage.getItem("userRole")
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -104,24 +104,23 @@
             }
         }
         var __select = function(){
-            $('.field_office').empty();
             $('.field_office_display').show();
             $('.user_account').prop('disabled', true)
             $('.field_office').empty().append("<option selected disabled>Loading ...</option>");
             __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
                 if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled>Select Field Office</option>");
+                    $('.field_office').empty().append("<option selected disabled>Select Field Office</option>");
                     result.forEach(function(data){
                         $('.field_office').append(
                             "<option value="+data.id+">"+data.name+"</option>");
                     });
                     $('.field_office').on('change', function() {
-                        $('.user_account').empty();
+                        $('.user_account').empty().append(`<option selected disabled>Loading ...</option>`);
                         $('.user_account').prop('disabled', false)
                         const dep_id = this.value
                         __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
                             if (result.status != "ERROR") {
-                                $('.user_account').append("<option selected disabled>Select User Account</option>");
+                                $('.user_account').empty().append("<option selected disabled>Select User Account</option>");
                                 result.forEach(function(data){
                                     var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
                                     $('.user_account').append(
@@ -161,7 +160,7 @@
             });
         }
 
-        if ($.cookie("uuid") === "02f6a97a-c195-4517-bbf5-382e0811f374") {
+        if (roleName === "TSD - Division Chief") {
             chiefDropdown()
         } else {
             __select();
