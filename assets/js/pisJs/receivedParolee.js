@@ -298,7 +298,7 @@
                 $('.table_head').on('draw.dt', function () {
                     buttonFunctionality();
                     buttonVisibility();
-                    if (roleName === "TSD") {
+                    if (roleName === "TSD - Section Chief" || roleName === "TSD - Division Chied" || roleName === "TSD - Staff" || roleName === "TSD - Assistant Division Chief") {
                         $(".btn_complete").hide();
                         $(".btn_return").hide();
                         $(".btn_forward").hide();
