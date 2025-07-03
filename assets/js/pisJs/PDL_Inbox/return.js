@@ -292,7 +292,7 @@
                                 $('#success_forwarding').show();
                                     setTimeout(function () {
                                         $('#success_forwarding').hide();
-                                        // window.location.href=api+"/pis/pdl-receive";
+                                        window.location.href=api+"/pis/pdl-receive";
                                     }, 2000);
                                 }else{
                                     alert("failed")
