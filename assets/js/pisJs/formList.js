@@ -101,7 +101,20 @@
                 console.log("==========")
                 if (result.status != "ERROR") {
                     result.files.forEach(function(data){
-                        let actions = "<a href="+api+'8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-download form_download' style='display:none;' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                        let actions = `
+                            <a href="${api}8080/file/view/${data.id}">
+                                <button class="btn btn-success btn-sm btn-download form_download" style="" 
+                                    data-id="${data.id}" 
+                                    data-file_path="${data.filePath}" 
+                                    data-file_name="${data.fileName}">
+                                    <i class="fa fa-download"></i> Download
+                                </button>
+                            </a>
+                            <button class="btn btn-danger btn-sm btn-delete" 
+                                data-id="${data.id}">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                        `;
                         $('.table_body').append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.fileName+"</td>"+
@@ -118,7 +131,22 @@
                             ]
                         });
                         $('.dataTables_length').addClass('bs-select');
-                    });               
+                    });      
+                    // Delete button event
+                    $(document).on("click", ".btn-delete", function(){
+                        let fileId = $(this).data("id");
+
+                        if(confirm("Are you sure you want to delete this file?")) {
+                            __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
+                                if(res.status !== "ERROR") {
+                                    alert("File deleted successfully!");
+                                    __table(); // Reload table
+                                } else {
+                                    alert("Error deleting file!");
+                                }
+                            });
+                        }
+                    });         
                 }
             })
         }
@@ -127,7 +155,7 @@
         $(".btn_add").unbind("click").on("click", function(){
             // var client_id   = $(this).data("id");
             // var foid        = $(this).data("foid");
-            window.location.href = 'http://ppis.probation.gov.ph/pis/form_upload';
+            window.location.href = api+'/pis/form_upload';
         })
 
     } )( jQuery );

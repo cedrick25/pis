@@ -23,70 +23,95 @@
                     <i class="fa fa-check"></i>
                         Successfully Updated  
                 </div>
-                <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John" class="form-control firstName_update form_capitalized"></div>
-                    </div>
-                <div class="row form-group col-md-6">
-                    <div class="col col-md-3">
-                        <label class="form-check-label" for="mNameCheck">Middle Name</label>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input middleNameCheckUpdate" id="mNameCheck" style="width: 12px; height: 12px;">
-                            <label class="form-check-label italic-font small-font" for="mNameCheck">No Middle Name</label>
+                <div class="modal-body">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">First Name <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="" class="form-control firstName_update form_capitalized"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <label class="form-check-label" for="mNameCheck">Middle Name <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <input type="text" name="text-input" placeholder="" class="form-control middleName_update form_capitalized">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input middleNameCheckUpdate" id="mNameCheck" style="width: 12px; height: 12px;">
+                                    <label class="form-check-label italic-font small-font" for="mNameCheck">No Middle Name</label>
+                                </div>
+                            </div>
+                            <div class="errorMessage"></div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-9">
-                        <input type="text" name="text-input" placeholder="e.g A." class="form-control middleName_update form_capitalized">
-                    </div>
-                </div>
-                    <!-- <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="A."class="form-control middleName_update form_capitalized"></div>
-                    </div> -->
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Doe"class="form-control lastName_update form_capitalized"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Jr."class="form-control suffix_update form_capitalized"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Username</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe"class="form-control userName_update"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="john_doe@gmail.com"class="form-control email_update"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control field_office_update select2">
-                                
-                            </select>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Last Name <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="" class="form-control lastName_update form_capitalized"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Suffix</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="" class="form-control suffix_update form_capitalized"></div>
+                            <div class="errorMessage"></div>
                         </div>
                     </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Roles</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control user_roles_update select2">
-                                
-                            </select>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Birthday</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="date" class="form-control birthday_update"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Contact No.</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="number" name="text-input" placeholder="" class="form-control num_update"></div>
+                            <div class="errorMessage"></div>
                         </div>
                     </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact No.</label></div>
-                        <div class="col-12 col-md-9"><input type="number" name="text-input" placeholder="09123456789"class="form-control num_update"></div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Email Address <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="" class="form-control email_update"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Field Office <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <select class="form-control field_office_update select2">
+                                    
+                                </select>
+                            </div>
+                            <div class="errorMessage"></div>
+                        </div>
                     </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthday</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control birthday_update"></div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Username <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="" class="form-control userName_update"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Password</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="password" name="" placeholder="*********" class="form-control password_update"></div>
+                            <div class="errorMessage"></div>
+                        </div>
                     </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control password_update"></div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">User Roles <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <select class="form-control user_roles_update select2">
+                                </select>
+                            </div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 managerFieldUpdate" style="display:none;">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Manager</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <select class="form-control manager_update select2" multiple>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>                            
                 <div class="modal-footer">
@@ -103,7 +128,7 @@
         <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">New User Accounts</h5>
+                    <h5 class="modal-title" id="mediumModalLabel">New User Account</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
@@ -112,74 +137,95 @@
                     <i class="fa fa-check"></i>
                         Successfully Created  
                 </div>
-                <div class="modal-body col-md-12">
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">First Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g John" class="form-control firstName form_capitalized"></div>
+                <div class="modal-body">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">First Name <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="First Name" class="form-control firstName form_capitalized"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                <label class="form-check-label" for="mNameCheck">Middle Name <span class="text-danger middleNameAsterisk">*</span></label>
+                            </div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <input type="text" name="text-input" placeholder="Middle Name" class="form-control middleName form_capitalized">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input middleNameCheck" id="mNameCheck" style="width: 12px; height: 12px;">
+                                    <label class="form-check-label italic-font small-font" for="mNameCheck">No Middle Name</label>
+                                </div>
+                            </div>
+                            <div class="errorMessage"></div>
+                        </div>
                     </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3">
-                            <label class="form-check-label" for="mNameCheck">Middle Name</label>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input middleNameCheck" id="mNameCheck" style="width: 12px; height: 12px;">
-                                <label class="form-check-label italic-font small-font" for="mNameCheck">No Middle Name</label>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Last Name <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="Last Name"class="form-control lastName form_capitalized"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Suffix</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="Suffix"class="form-control suffix form_capitalized"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Birthday</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="date" class="form-control birthday"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Contact No.</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="number" name="text-input" placeholder="e.g 09123456789"class="form-control num"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Email Address <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="email@probation.gov.ph"class="form-control email"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Field Office <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <select class="form-control field_office select2">
+                                </select>
+                            </div>
+                            <div class="errorMessage"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Username <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" name="text-input" placeholder="username@probation.gov.ph" class="form-control username"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Password <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="password" name="" placeholder="*********" class="form-control password password2"></div>
+                            <div class="errorMessage"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">User Roles <span class="text-danger">*</span></label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <select class="form-control user_roles select2">
+                                </select>
+                            </div>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 managerFieldCreate" style="display: none;">
+                            <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Manager</label></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                <select class="form-control manager select2" multiple>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" name="text-input" placeholder="e.g A." class="form-control middleName form_capitalized">
-                        </div>
                     </div>
-                    <!-- <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Middle Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g A."class="form-control middleName form_capitalized"></div>
-                    </div> -->
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Last Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Doe"class="form-control lastName form_capitalized"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Suffix Name</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Jr."class="form-control suffix form_capitalized"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Username</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g john_doe"class="form-control username"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email Address</label></div>
-                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g john_doe@gmail.com"class="form-control email"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control field_office select2">
-                                
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">User Roles</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control user_roles select2">
-                                
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact No.</label></div>
-                        <div class="col-12 col-md-9"><input type="number" name="text-input" placeholder="e.g 09123456789"class="form-control num"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthday</label></div>
-                        <div class="col-12 col-md-9"><input type="date" class="form-control birthday"></div>
-                    </div>
-                    <div class="row form-group col-md-6">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Password</label></div>
-                        <div class="col-12 col-md-9"><input type="password" name="" placeholder="*********" class="form-control password password2"></div>
-                    </div>
-                </div>                            
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary btn-cancel btn-sm" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
                 </div>
             </div>
@@ -345,7 +391,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">User Account List</strong>
-                                <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newUserModal"><i class="fa fa-plus-circle"></i> Add User Account</button>
+                                <button class="btn btn-sm btn-success float-right btn-newUser"><i class="fa fa-plus-circle"></i> Add User Account</button>
                             </div>
 <!--                             <div class="dataTables_filter">
                                 <label style=" display: inline-flex; margin-left: 5px; margin-right: 20px; margin-top: 25px" class="float-right" >Search:<input type="search" class="form-control form-control-sm searchBar" id= "searchBar" placeholder="Search Name" style="margin-left: 7px"></label>

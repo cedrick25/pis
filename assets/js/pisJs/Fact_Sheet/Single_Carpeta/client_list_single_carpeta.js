@@ -136,6 +136,8 @@
 
     var dataTable;
     var currentType = "PDL - Investigation"; // Store current type
+    var userRole = localStorage.getItem("userRole")
+    const managerIds = JSON.parse(localStorage.getItem("managerId") || "[]");
 
     function drawTable(type) {
         currentType = type; // Update current type
@@ -189,6 +191,61 @@
         }
     }
 
+    function sectionChiefTable(type) {
+        currentType = type;
+
+        $('.table_head').DataTable({
+            destroy: true, // Ensure previous table is destroyed before re-initializing
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            searching: false,
+            lengthMenu: [10, 25, 50, 100],
+            pageLength: 10,
+            columnDefs: [
+                { width: "5%", targets: [0] },
+                { width: "12%", targets: [1] },
+                { width: "13%", targets: [2] },
+                { width: "15%", targets: [3] },
+                { width: "15%", targets: [4] },
+                { width: "15%", targets: [5] },
+                { width: "25%", targets: [6] }
+            ],
+            ajax: {
+                url: ___ctx + '8000/petitioner/section-chief',
+                type: 'POST',
+                contentType: 'application/json',
+                data: function(d) {
+                    // DataTables pagination (start and length) to backend page and size
+                    const page = d.start / d.length;
+
+                    return JSON.stringify({
+                        userList: managerIds, // example, make dynamic if needed
+                    });
+                },
+                dataType: 'json',
+                beforeSend: function(xhr, settings) {
+                    // Append query string params manually
+                    const params = $.param({
+                        page: $('.table_head').DataTable().page.info().page || 0,
+                        size: $('.table_head').DataTable().page.info().length || 10,
+                        type: currentType,
+                        officeId: $.cookie('field_office_id')
+                    });
+                    settings.url += '?' + params;
+                },
+                dataFilter: function(data) {
+                    var json = jQuery.parseJSON(data);
+                    json.recordsTotal = json.totalElements || 0;
+                    json.recordsFiltered = json.totalElements || 0;
+                    json.data = json.content || [];
+                    return JSON.stringify(json);
+                }
+            },
+            columns: tableColumns() // Make sure this returns the correct column mapping
+        });
+    }
+
     let clientType;
     function tableColumns() {
         return [
@@ -230,7 +287,13 @@
         ]
     }
 
-    drawTable("PDL-Investigation");
+
+    if (userRole === "TSD - Section Chief" || userRole === "TSD - Staff") {
+        sectionChiefTable("PDL-Investigation")
+    } else {
+        drawTable("PDL-Investigation");
+    }
+
 
     // event handler when a tab is clicked
     $("#inv_tab").unbind("click").on("click", function(){

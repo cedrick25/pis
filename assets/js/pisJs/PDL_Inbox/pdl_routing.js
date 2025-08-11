@@ -115,43 +115,31 @@
                         }
                     })
                     $(".pdl_client").on('change', function() {
-                        $(".field_office").prop("disabled", false)
-                        $('.field_office').empty().append("<option selected disabled>Loading ...</option>");
-                        __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
+                        $(".user_account").prop("disabled", false)
+                        $('.user_account').empty().append("<option selected disabled>Loading ...</option>");
+                        __executeExternalGet(___ctx+'8088/user/list/206').done(function (result) {
                             if (result.status != "ERROR") {
-                                $('.field_office').empty().append("<option selected disabled>Select Field Office</option>");
-                                result.forEach(function(data){
-                                    $('.field_office').append(
-                                        "<option value="+data.id+">"+data.name+"</option>");
-                                });
-                                $('.field_office').on('change', function() {
-                                    $('.user_account').empty().append("<option selected disabled>Loading ...</option>");
-                                    $('.user_account').prop('disabled', false)
-                                    const dep_id = this.value
-                                    __executeExternalGet(___ctx+'8088/user/list/'+dep_id).done(function (result) {
-                                        if (result.status != "ERROR") {
-                                            $('.user_account').empty().append("<option selected disabled>Select User Account</option>");
-                                            result.forEach(function(data) {
-                                                // if (data.roleName === "CLERK ACCOUNT") {
-                                                    var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
-                                                    $('.user_account').append(
-                                                        "<option value="+data.uuid+">"+fullname+"</option>");
-                                                // }
-                                            });
-                                        } else {
-                                            console.log("failed fetching user list")
-                                            $(".user_display").hide()
-                                        }
-                                    });
-                                    $('.user_account').on('change', function() {
-                                        $(".subject").prop("disabled", false)
-                                        $(".details").prop("disabled", false)
-                                    })
+                                $('.user_account').empty().append("<option selected disabled>Select User Account</option>");
+                                result.forEach(function(data) {
+                                    var includeName = "TSD"
+                                    if (data.roleName.includes(includeName)) {
+                                        var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+                                        $('.user_account').append(
+                                            "<option value="+data.uuid+">"+fullname+"</option>");
+                                    }
                                 });
                             } else {
-                                console.log("failed fetching department list")
+                                console.log("failed fetching user list")
+                                $(".user_display").hide()
                             }
-                        })   
+                        });
+
+
+                    })
+                    
+                    $('.user_account').on('change', function() {
+                        $(".subject").prop("disabled", false)
+                        $(".details").prop("disabled", false)
                     })
                 })
             }

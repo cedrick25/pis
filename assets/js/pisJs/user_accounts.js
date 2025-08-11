@@ -147,7 +147,7 @@
                                 };
                                 break;
                             case "INACTIVE":
-                                return "<button class='btn btn-primary btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-success btn_activate btn-sm userActivate' type='submit' data-toggle='modal' data-target='#activateModal' data-id='"+data+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-danger btn-sm btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>";
+                                return "<button class='btn btn-primary btn-sm btn_update viewUser' type='submit' data-toggle='modal' data-target='#updateUserModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-success btn_activate btn-sm userActivate' type='submit' data-toggle='modal' data-target='#activateModal' data-id='"+data+"'><i class='fa fa-check'></i> Activate</button> <button class='btn btn-danger btn-sm btn_remove removeUser' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>";
                                 break;
                             case "REMOVED":
                                 var status = "REMOVED";
@@ -162,66 +162,213 @@
             ]
         }
 
+        let middleNameCheckBoxValue = "false";
+
+        function toggleCheckbox() {
+            if (checkbox.checked) {
+                inputBoxMiddleName.disabled = true;
+                inputBoxMiddleName.placeholder = "N/A";
+                middleNameCheckBoxValue = "true"
+            } else {
+                inputBoxMiddleName.disabled = false;
+                inputBoxMiddleName.placeholder = "";
+                middleNameCheckBoxValue = "false"
+            }
+        }
+
+        function toggleCheckboxUpdate() {
+            if (checkboxUpdate.checked) {
+                inputBoxMiddleNameUpdate.disabled = true;
+                inputBoxMiddleNameUpdate.placeholder = "N/A";
+            } else {
+                inputBoxMiddleNameUpdate.disabled = false;
+                inputBoxMiddleNameUpdate.placeholder = "e.g A.";
+            }
+        }
+
+        var checkbox = document.getElementsByClassName("middleNameCheck")[0];
+        checkbox.addEventListener("change", toggleCheckbox);
+        var inputBoxMiddleName = document.getElementsByClassName("middleName")[0];
+
+        var checkboxUpdate = document.getElementsByClassName("middleNameCheckUpdate")[0];
+        checkboxUpdate.addEventListener("change", toggleCheckboxUpdate);
+        var inputBoxMiddleNameUpdate = document.getElementsByClassName("middleName_update")[0];
+
+        var __select = function(dropdown, office) {
+            $(`.${dropdown}`).empty().append("<option selected disabled>Loading ...</option>");
+            __executeExternalGet('8088/department/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    $(`.${dropdown}`).empty().append("<option selected disabled>Select Field Office</option>");
+                    result.forEach(function(data){
+                        var selected = office === data.id ? "selected" : "";
+                        $(`.${dropdown}`).append(
+                            `<option value="${data.id}" ${selected}>${data.name}</option>`);
+                    });
+                } else {
+                    $(`.${dropdown}`).empty().append("<option selected disabled>Failed Loading Field Offices</option>");
+                }
+            })
+        }
+        var selectManager = function(dropdown, managerIds) {
+            // If managerIds is a JSON string, parse it
+            if (typeof managerIds === "string") {
+                try {
+                    managerIds = JSON.parse(managerIds);
+                } catch (e) {
+                    managerIds = [managerIds]; // fallback if it's just a single value
+                }
+            }
+
+            // Ensure it's always an array
+            if (!Array.isArray(managerIds)) {
+                managerIds = [managerIds];
+            }
+
+            $(`.${dropdown}`).empty().append("<option selected disabled value=''>Loading ...</option>");
+
+            __executeExternalGet('8088/user/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    $(`.${dropdown}`).empty();
+
+                    result.forEach(function(data) {
+                        var name = `${data.firstName} ${data.middleName || ""} ${data.lastName} ${data.suffix || ""}`.trim();
+                        var selected = managerIds.includes(data.uuid) ? "selected" : "";
+                        $(`.${dropdown}`).append(
+                            `<option value="${data.uuid}" ${selected}>${name}</option>`
+                        );
+                    });
+
+                    // If using Select2, refresh the selection
+                    if ($(`.${dropdown}`).data('select2')) {
+                        $(`.${dropdown}`).trigger('change');
+                    }
+                } else {
+                    console.log("failed fetching user list");
+                }
+            });
+        };
+        var __select_user_roles = function(dropdown, role){
+            // console.log(role)
+            $(`.${dropdown}`).empty().append("<option selected disabled>Loading ...</option>");
+            __executeExternalGet('8088/role/list').done(function (result) {
+                if (result.status != "ERROR") {
+                    $(`.${dropdown}`).empty().append("<option value='' selected disabled>Select User Roles</option>");
+                    result.forEach(function(data){
+                        var selected = role == data.id ? "selected" : "";
+                        $(`.${dropdown}`).append(
+                            `<option value="${data.id}" ${selected} data-name="${data.name}">${data.name}</option>`);
+                    });
+
+                    $(`.${dropdown}`).on('change', function() {
+                        var userRoleName = $(`.${dropdown} option:selected`).data('name');
+                        var userRoleId = this.value;
+                        if (dropdown === "user_roles" && userRoleName === "TSD - Staff" && userRoleId === "72") {
+                            $(".managerFieldCreate").show();
+                        } else if (dropdown === "user_roles_update" && userRoleName === "TSD - Staff" && userRoleId === "72") {
+                            $(".managerFieldUpdate").show();
+                        } else {
+                            $(".managerFieldUpdate").hide();
+                            $(".managerFieldCreate").hide();
+                        }
+                    })
+                } else {
+                    console.log("failed fetching department list")
+                }
+            })
+        }
+
 
         function buttonFunctionality(){
             $(".btn_update").unbind("click").on("click", function(){
                 var data_id = $(this).data("id");
-                console.log(data_id)
                 __executeExternalGet('8088/user/'+data_id).done(function (result) {
-                    console.log(result);
                     if (result.status != "ERROR") {
+                        __select("field_office_update", result.departmentId)
+                        __select_user_roles("user_roles_update", result.roleId)
                         $(".firstName_update").val(result.firstName);
-                        $(".middleName_update").val(result.middleName);
+                        $(".middleName_update").val(result.middleName === "" ? "N/A" : result.middleName);
+                        if ($(".middleName_update").val() === "" || $(".middleName_update").val() === "N/A") {
+                            $(".middleNameCheckUpdate").first().prop("checked", true); // works
+                            inputBoxMiddleNameUpdate.disabled = true;
+                            inputBoxMiddleNameUpdate.placeholder = "N/A";
+                        }
                         $(".lastName_update").val(result.lastName);
-                        $(".suffix_update").val(result.suffix);
+                        $(".suffix_update").val(result.suffix === "" ? "N/A" : result.suffix);
                         $(".userName_update").val(result.username);
                         $(".email_update").val(result.email);
-                        $(".num_update").val(result.phoneNumber);
+                        $(".num_update").val(result.phoneNumber === "" ? "N/A" : result.phoneNumber);
                         $(".birthday_update").val(result.birthday);
                         $(".password_update").val(result.password);
-                        setTimeout(function() {
-                            $(".field_office_update").val(result.departmentId).trigger('change');
-                            $(".user_roles_update").val(result.roleId).trigger('change');
-                        },1500);
-                        console.log(result.departmentId);
+
+                        setTimeout (function () {
+                            var userRoleNameUpdate = $(`.user_roles_update option:selected`).data('name');
+                            var userRoleIdUpdate = $(`.user_roles_update`).val();
+                            if (userRoleNameUpdate === "TSD - Staff" && userRoleIdUpdate === "72") {
+                                $(".managerFieldUpdate").show();
+                            } else {
+                                $(".managerFieldUpdate").hide();
+                            }
+                        }, 100)
+
+                        setTimeout (function () {selectManager("manager_update", result.managerId)},1000)
 
                         $(".btn_confirm_update").unbind("click").on("click", function(){
-                            console.log('clicked')
-                            var payload = {
-                                "firstName"     : $(".firstName_update").val(),
-                                "middleName"    : $(".middleName_update").val(),
-                                "lastName"      : $(".lastName_update").val(),
-                                "suffix"        : $(".suffix_update").val(),
-                                "corpKey"       : "",
-                                "username"      : $(".userName_update").val(),
-                                "email"         : $(".email_update").val(),
-                                "phoneNumber"   : $(".num_update").val(),
-                                "birthday"      : $(".birthday_update").val(),
-                                "password"      : $(".password_update").val(),
-                                "departmentId"  : $(".field_office_update").val(),
-                                "roleId"        : $(".user_roles_update").val(),
+                            let required;
+                            $(".errorRequired").remove();
+
+                            if (middleNameCheckBoxValue === "false") {
+                                required = ["firstName_update", "middleName_update", "lastName_update", "userName_update", "email_update", "field_office_update", "user_roles_update"]
+                            } else {
+                                required = ["firstName_update", "lastName_update", "userName_update", "email_update", "field_office_update", "user_roles_update"]
                             }
 
-                            __executeExternalPost('8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
-                                console.log(result);
-                                if (result.status != "ERROR") {
-                                $(".form-control").val('');
-                                $('#success_update').show();
-                                    setTimeout(function () {
-                                        $('#updateUserModal').modal('hide');
-                                        $('#success_update').hide();
-                                        // __table();
-
-                                        setTimeout(function () {
-                                            window.location.reload(true);
-                                        }, 500);
-                                    }, 1000);
-                                }else{
-                                    alert("failed")
+                            required.forEach(function (data) {
+                                if ($("." + data).val() == "" || $("." + data).val() == null) {
+                                    $("." + data).addClass("error_field");
+                                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter("." + data);
+                                } else {
+                                    $("." + data).removeClass("error_field");
                                 }
-                            })
-                        })
+                            });
 
+                            var requiredFields = $(".errorRequired:visible").length;
+                            console.log("Number of required fields: " + requiredFields);
+
+                            if (requiredFields === 0) {
+                                var payload = {
+                                    "firstName"     : $(".firstName_update").val(),
+                                    "middleName"    : $(".middleName_update").val(),
+                                    "lastName"      : $(".lastName_update").val(),
+                                    "suffix"        : $(".suffix_update").val(),
+                                    "corpKey"       : "",
+                                    "username"      : $(".userName_update").val(),
+                                    "email"         : $(".email_update").val(),
+                                    "phoneNumber"   : $(".num_update").val(),
+                                    "birthday"      : $(".birthday_update").val(),
+                                    "password"      : $(".password_update").val(),
+                                    "departmentId"  : $(".field_office_update").val(),
+                                    "roleId"        : $(".user_roles_update").val(),
+                                    "managerId"     : JSON.stringify($(".manager_update").val()),
+                                }
+                                __executeExternalPost('8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                    if (result.status != "ERROR") {
+                                    $(".form-control").val('');
+                                    $('#success_update').show();
+                                        setTimeout(function () {
+                                            $('#updateUserModal').modal('hide');
+                                            $('#success_update').hide();
+                                            // __table();
+
+                                            setTimeout(function () {
+                                                $('.table_head').DataTable().ajax.reload(null, false);
+                                            }, 500);
+                                        }, 1000);
+                                    }else{
+                                        alert("failed")
+                                    }
+                                })
+                            }
+                        })
                     }else{
                         alert("failed")
                     }
@@ -242,7 +389,7 @@
                                         // __table();
                                         
                                         setTimeout(function () {
-                                            window.location.reload(true);
+                                                $('.table_head').DataTable().ajax.reload(null, false);
                                         }, 500);
                                     }, 1000);
                                 
@@ -271,7 +418,7 @@
                                         // __table();
                                         
                                         setTimeout(function () {
-                                            window.location.reload(true);
+                                            $('.table_head').DataTable().ajax.reload(null, false);
                                         }, 500);
                                     }, 1000);
                             // $(".form-control").val('');
@@ -299,7 +446,7 @@
                                         // __table();
 
                                         setTimeout(function () {
-                                            window.location.reload(true);
+                                            $('.table_head').DataTable().ajax.reload(null, false);
                                         }, 500);
                                     }, 1000);
                                 
@@ -328,7 +475,7 @@
                                         // __table();
                                         
                                         setTimeout(function () {
-                                            window.location.reload(true);
+                                            $('.table_head').DataTable().ajax.reload(null, false);
                                         }, 500);
                                     }, 1000);
                                 
@@ -356,7 +503,7 @@
                                         // __table();
                                         
                                         setTimeout(function () {
-                                            window.location.reload(true);
+                                            $('.table_head').DataTable().ajax.reload(null, false);
                                         }, 500);
                                     }, 1000);
                                 
@@ -415,138 +562,79 @@
                 });
             })
         }
-
-        // const searchBarValue = document.getElementById('searchBar');
-        // let searchBarContent;
-
-        // searchBarValue.addEventListener('keyup', function() {
-        //     searchBarContent = searchBarValue.value;
-        //     $('.table_head').DataTable().destroy();
-        //     $('.table_body').empty();
-        //     drawTable(searchBarContent);
-        // });
-
         drawTable();
 
-        var checkbox = document.getElementsByClassName("middleNameCheck")[0];
-        checkbox.addEventListener("change", toggleCheckbox);
-        var inputBoxMiddleName = document.getElementsByClassName("middleName")[0];
-
-        function toggleCheckbox() {
-            if (checkbox.checked) {
-                console.log("The checkbox is checked.");
-                inputBoxMiddleName.disabled = true;
-                inputBoxMiddleName.placeholder = "N/A";
-            } else {
-                console.log("The checkbox is not checked.");
-                inputBoxMiddleName.disabled = false;
-                inputBoxMiddleName.placeholder = "e.g A.";
-            }
-        }
-
-
-        var checkboxUpdate = document.getElementsByClassName("middleNameCheckUpdate")[0];
-        checkboxUpdate.addEventListener("change", toggleCheckboxUpdate);
-        var inputBoxMiddleNameUpdate = document.getElementsByClassName("middleName_update")[0];
-
-        function toggleCheckboxUpdate() {
-            if (checkboxUpdate.checked) {
-                console.log("The checkbox is checked.");
-                inputBoxMiddleNameUpdate.disabled = true;
-                inputBoxMiddleNameUpdate.placeholder = "N/A";
-            } else {
-                console.log("The checkbox is not checked.");
-                inputBoxMiddleNameUpdate.disabled = false;
-                inputBoxMiddleNameUpdate.placeholder = "e.g A.";
-            }
-        }
-
-
-
-        var __select = function(){
-            $('.field_office').empty();
-            $('.field_office_update').empty();
-
-            __executeExternalGet('8088/department/list').done(function (result) {
-                // console.log(result)
-                if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.field_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-
-                    });
-                } else {
-                    console.log("failed fetching department list")
-                }
-            })
-        }
-        __select();
-
-        var __select_user_roles = function(){
-            $('.user_roles').empty();
-            $('.user_roles_update').empty();
-
-            __executeExternalGet('8088/role/list').done(function (result) {
-                // console.log(result)
-                if (result.status != "ERROR") {
-                    $('.user_roles').append("<option selected disabled> - - Select User Roles - - </option>");
-                    $('.user_roles_update').append("<option selected disabled> - - Select User Roles - - </option>");
-                    result.forEach(function(data){
-                        $('.user_roles').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.user_roles_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-
-                    });
-                } else {
-                    console.log("failed fetching department list")
-                }
-            })
-        }
-        __select_user_roles();
+        $(".btn-newUser").unbind("click").on("click", function(){
+            $(".errorRequired").remove();
+            const resetFields = ["firstName", "middleName", "lastName", "username", "email", "field_office", "user_roles", "password", "suffix", "num", "birthday"];
+            resetFields.forEach(function (data) {
+                $("." + data).val("");
+            });
+            $("#newUserModal").modal("show")
+            selectManager("manager")
+            __select("field_office")
+            __select_user_roles("user_roles")
+        })
 
         $(".btn-confirm").unbind("click").on("click", function(){
-            console.log('clicked')
-            var payload = {
-                    "updatedBy"     : "",
-                    "updatedDate"   : "",
-                    "firstName"     : $(".firstName").val(),
-                    "middleName"    : $(".middleName").val(),
-                    "lastName"      : $(".lastName").val(),
-                    "suffix"        : $(".suffix").val(),
-                    "corpKey"       : "",
-                    "username"      : $(".username").val(),
-                    "email"         : $(".email").val(),
-                    "phoneNumber"   : $(".num").val(),
-                    "birthday"      : $(".birthday").val(),
-                    "password"      : $(".password").val(),
-                    "departmentId"  : $(".field_office").val(),
-                    "roleId"        : $(".user_roles").val(),
+            let required;
+            $(".errorRequired").remove();
+
+            if (middleNameCheckBoxValue === "false") {
+                required = ["firstName", "middleName", "lastName", "username", "email", "field_office", "user_roles", "password"]
+            } else {
+                required = ["firstName", "lastName", "username", "email", "field_office", "user_roles", "password"]
+            }
+
+            required.forEach(function (data) {
+                if ($("." + data).val() == "" || $("." + data).val() == null) {
+                    $("." + data).addClass("error_field");
+                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter("." + data);
+                } else {
+                    $("." + data).removeClass("error_field");
                 }
-            console.log(payload);
-            __executeExternalPost('8088/user/create',JSON.stringify(payload)).done(function (result) {
-                console.log(result);
-                if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#newUserModal').modal('hide');
-                        $('#success').hide();
-                            // __table();
-                                                
-                            setTimeout(function () {
-                                window.location.reload(true);
-                            }, 500);
-                    }, 1000);
-                }else{
-                //     console.log(result.status);
-                //     alert(result.message)
-                }
-            })
+            });
+
+            var requiredFields = $(".errorRequired:visible").length;
+            console.log("Number of required fields: " + requiredFields);
+
+            if (requiredFields === 0) {
+                var payload = {
+                        "updatedBy"     : "",
+                        "updatedDate"   : "",
+                        "firstName"     : $(".firstName").val(),
+                        "middleName"    : $(".middleName").val() || "N/A",
+                        "lastName"      : $(".lastName").val(),
+                        "suffix"        : $(".suffix").val() || "N/A",
+                        "corpKey"       : "",
+                        "username"      : $(".username").val(),
+                        "email"         : $(".email").val(),
+                        "phoneNumber"   : $(".num").val() || "N/A",
+                        "birthday"      : $(".birthday").val(),
+                        "password"      : $(".password").val(),
+                        "departmentId"  : $(".field_office").val(),
+                        "roleId"        : $(".user_roles").val(),
+                        "managerId"     : JSON.stringify($(".manager").val())
+                    }
+                __executeExternalPost('8088/user/create',JSON.stringify(payload)).done(function (result) {
+                    if (result.status != "ERROR") {
+                        $(".form-control").val('');
+                        $('#success').show();
+                        setTimeout(function () {
+                            $('#newUserModal').modal('hide');
+                            $('#success').hide();
+                                setTimeout(function () {
+                                    window.location.reload(true);
+                                }, 500);
+                        }, 1000);
+                    }else{
+                        alert("Please Try Again! Refreshing the page")
+                        setTimeout(function () {
+                            window.location.reload(true);
+                        }, 500);
+                    }
+                })   
+            }
         })
 
 } )( jQuery );
