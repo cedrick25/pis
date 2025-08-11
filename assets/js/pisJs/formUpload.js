@@ -164,9 +164,10 @@
                         else {
                             var form = new FormData();
                             form.append("file", fileToUpload, fileToUpload.name);
+                            var uuid = fileToUpload.name + "_FORM_" + $.cookie('uuid') 
 
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+"00000"+"&type="+"FORM"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId,
+                                "url": api+"8080/file/upload?uuid="+uuid+"&type="+"FORM"+"&createdby="+$.cookie('uuid')+"&version=0&kind="+$('.kind').val()+"&officeId="+officeId+"&remarks=",
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

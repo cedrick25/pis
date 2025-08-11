@@ -173,8 +173,10 @@
                     var field_office_id = result.departmentId
                     var role_id = result.roleId
                     var departmentName = result.departmentName
+                    var managerId = JSON.parse(result.managerId);
                     var name = result.firstName + " " + result.middleName + " " + result.lastName + " " + result.suffix;
                     localStorage.setItem("userName", name);
+                    localStorage.setItem('managerId', JSON.stringify(managerId));
                     $.cookie("field_office_id", field_office_id);
                     $.cookie("role_id", role_id)
                     $.cookie("departmentName", departmentName)
