@@ -89,7 +89,8 @@
             
             return d.promise();
         };
-
+        var userRole = localStorage.getItem("userRole");
+        var managerIds = JSON.parse(localStorage.getItem("managerId"));
         var selectPdl = function () {
             $(".pdl_client").prop("disabled", true)
             $(".field_office").prop("disabled", true)
@@ -98,7 +99,6 @@
             $(".details").prop("disabled", true)
             $('.pdl_client_type').on('change', function() {
                 var pdlType = $(this).val();
-                // var fieldOfficeid = $.cookie('field_office_id')
                 var fieldOfficeid = "206";
                 $('.pdl_client').empty().append(`<option value="" selected disabled>Loading ...</option>`)
                 __executeExternalGet(`${___ctx}8000/petitioner/list?type=${pdlType}&officeId=${fieldOfficeid}`).done(function (result) {
@@ -106,9 +106,24 @@
                         $(".pdl_client").prop("disabled", false)
                         $('.pdl_client').empty().append(`<option value="" selected disabled>Select Client</option>`)
                         result.forEach(function(data){
+                            console.log(data)
                             var fullname = data.firstName+" "+ data.middleName + " " + data.lastName+ " " + data.suffixName ;
-                            $('.pdl_client').append(
-                            `<option value="${data.id}" data-fname="${data.firstName}" data-mname="${data.middleName}" data-lname="${data.lastName}" data-sname="${data.suffixName}"> ${fullname} </option>`);
+                            if (userRole === "TSD - Staff" || userRole === "72" || userRole === 72) {
+                                if (data.createdBy === $.cookie("uuid")) {
+                                    $('.pdl_client').append(
+                                    `<option value="${data.id}" data-fname="${data.firstName}" data-mname="${data.middleName}" data-lname="${data.lastName}" data-sname="${data.suffixName}"> ${fullname} </option>`);
+                                } 
+                            } else if (userRole === "TSD - Section Chief" || userRole === "75" || userRole === 75) {
+                                for (var i = 0; i < managerIds.length; i++) {
+                                    if (data.createdBy === managerIds[i]) {
+                                        $('.pdl_client').append(
+                                        `<option value="${data.id}" data-fname="${data.firstName}" data-mname="${data.middleName}" data-lname="${data.lastName}" data-sname="${data.suffixName}"> ${fullname} </option>`);
+                                    }
+                                }
+                            } else {
+                                $('.pdl_client').append(
+                                `<option value="${data.id}" data-fname="${data.firstName}" data-mname="${data.middleName}" data-lname="${data.lastName}" data-sname="${data.suffixName}"> ${fullname} </option>`);
+                            }
                         });
                     } else {
                         $('.pdl_client').empty().append(`<option value="" selected disabled>Error Fetching Data</option>`)
@@ -133,8 +148,6 @@
                             $(".user_display").hide()
                         }
                     });
-
-
                 })
                 
                 $('.user_account').on('change', function() {

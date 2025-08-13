@@ -159,8 +159,8 @@
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
-                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName); // Group by fileName
-                            const latestVersion = Math.max(...rows.map(r => r.version)); // Find the latest version
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
 
                             // Render the action buttons
                             let actions = `
@@ -174,48 +174,14 @@
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
+                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                    <i class='fa fa-trash'></i> Delete
+                                </button>
                             `;
-
-                            // Add "Show All Versions" button only for the latest version
-                            if (rows.length > 1) {
-                                if (data.version === latestVersion) {
-                                    actions += `
-                                        <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-angle-down'></i> Show All Versions
-                                        </button>
-                                    `;
-                                }
-                            }
-
                             return actions;
                         }
                     }
                 ]
-            }
-            function hideDuplicateRows() {
-                let fileGroups = {};
-                
-                // Group rows by file name
-                $('.table_head tbody tr').each(function () {
-                    const fileName = $(this).find('td:eq(1)').text().trim();
-                    if (!fileGroups[fileName]) {
-                        fileGroups[fileName] = [];
-                    }
-                    fileGroups[fileName].push($(this));
-                });
-
-                // Hide all but the latest version for each group
-                for (let fileName in fileGroups) {
-                    const rows = fileGroups[fileName];
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA; // Descending order
-                    });
-
-                    // Keep only the first row visible, hide the rest
-                    rows.slice(1).forEach(row => row.addClass('hidden'));
-                }
             }
             var load_table = function (type, uuid, officeId) {
                 if (!dataTable) {
@@ -263,7 +229,21 @@
                     });
 
                     $('.table_head').on('draw.dt', function () {
-                        hideDuplicateRows();
+                        // Delete button event
+                        $(document).on("click", ".btn-delete", function(){
+                            let fileId = $(this).data("id");
+
+                            if(confirm("Are you sure you want to delete this file?")) {
+                                __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
+                                    if(res.status !== "ERROR") {
+                                        alert("File deleted successfully!");
+                                        window.location.reload(true);
+                                    } else {
+                                        alert("Error deleting file!");
+                                    }
+                                });
+                            }
+                        });  
                     });
                 } else {
                     // Update the AJAX URL and reload the DataTable
@@ -286,7 +266,6 @@
                     __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                         var result = result.response;
                         console.log(result)
-                        // console.log(client_id)
                         var name = result.firstName + " " + result.lastName;
                         load_table('investigation', client_id, 0)
 
@@ -309,40 +288,6 @@
                             console.log("clicked oth")
                             load_table('others', client_id, 0)
                         })
-                        // event handler to toggle visibility
-                        $('.table_head').on('click', '.btn-showVersions', function () {
-                            const fileName = $(this).data('file_name');
-
-                            // Identify rows with the same file name and sort them by version
-                            let rows = [];
-                            $('.table_head tbody tr').each(function () {
-                                if ($(this).find('td:eq(1)').text().trim() === fileName) {
-                                    rows.push($(this));
-                                }
-                            });
-
-                            // Sort rows by version in descending order
-                            rows.sort((a, b) => {
-                                const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
-                                const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                                return versionB - versionA; // Descending
-                            });
-
-                            // Keep the first (latest) version visible and toggle visibility of others
-                            rows.forEach((row, index) => {
-                                if (index === 0) {
-                                    row.removeClass('hidden'); // Ensure the latest version is always visible
-                                } else {
-                                    row.toggleClass('hidden'); // Toggle visibility for other versions
-                                }
-                            });
-
-                            // Optional: Update button text/icon based on visibility
-                            const isHidden = rows.slice(1).some(row => row.hasClass('hidden')); // Check if any non-latest rows are hidden
-                            $(this).html(isHidden 
-                                ? `<i class='fa fa-angle-down'></i> Show All Versions` 
-                                : `<i class='fa fa-angle-up'></i> Hide Versions`);
-                        });
 
                         // for uploading file
                         $(".btn-confirm").unbind("click").on("click", function(){
@@ -356,7 +301,7 @@
                                 form.append("file", fileToUpload, fileToUpload.name);
                                 // console.log(fileToUpload.name)
                                 var settings = {
-                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId=0&remarks="+$(".remarks").val(),
+                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+$.cookie("uuid")+"&version=0&kind="+fileToUpload.name+"&officeId=0&remarks="+$(".remarks").val(),
                                     "method": "POST",
                                     "timeout": 0,
                                     "processData": false,

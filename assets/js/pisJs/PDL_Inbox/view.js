@@ -146,7 +146,16 @@
             __executeExternalGet(api).done(function (result) {
                 if (result.status != "ERROR") {
                     result.files.forEach(function(data){
-                        let actions = "<a href="+api+'8080/file/view/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button></a> <a href="+api+'8080/file/download/'+data.id+" target='_blank'><button class=' btn btn-primary btn-sm btn-download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a>";
+                        let actions = `<a href="+api+'8080/file/view/'+data.id+" target='_blank'>
+                                            <button class=' btn btn-primary btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-eye'></i> View</button>
+                                        </a> 
+                                        <a href="+api+'8080/file/download/'+data.id+" target='_blank'>
+                                            <button class=' btn btn-primary btn-sm btn-download' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button>
+                                        </a>
+                                        <button class="btn btn-danger btn-sm btn-delete" 
+                                            data-id="${data.id}">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button> `;
                         $(`#${table_id}`).append("<tr>"+
                             "<td>"+data.id+"</td>"+
                             "<td>"+data.fileName+"</td>"+
@@ -170,7 +179,23 @@
                             table.columns.adjust();
                         });
                         // $('.dataTables_length').addClass('bs-select');
-                    });               
+                    });   
+                    // Delete button event
+                    $(document).on("click", ".btn-delete", function(){
+                        let fileId = $(this).data("id");
+
+                        if(confirm("Are you sure you want to delete this file?")) {
+                            __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
+                                if(res.status !== "ERROR") {
+                                    alert("File deleted successfully!");
+                                    window.location.reload(true);
+                                    // __table(); // Reload table
+                                } else {
+                                    alert("Error deleting file!");
+                                }
+                            });
+                        }
+                    });              
                 }
             })
         }
@@ -317,7 +342,6 @@
                             "updatedDate"           : "",
                             "status"                : true
                         }
-                        console.log(payload)
                         __executeExternalPost('8000/workflow/update/'+result.id,JSON.stringify(payload)).done(function (result) {
                             if (result.status != "ERROR") {
                             // $(".form-control").val('');
@@ -332,27 +356,27 @@
                         })
                     })
 
-                    var api_table = `8080/file/list/investigation/${result.petitionerId}/0`
+                    var api_table = `8080/file/list/investigation/${result.petitionerId}_${transaction_number}/0`
                     load_table('inv_table', api_table)
 
                     $("#inv_tab").unbind("click").on("click", function(){
                         console.log("clicked inv")
-                        var api_table = `8080/file/list/investigation/${result.petitionerId}/0`
+                        var api_table = `8080/file/list/investigation/${result.petitionerId}_${transaction_number}/0`
                         load_table('inv_table', api_table)
                     })
                     $("#sup_tab").unbind("click").on("click", function(){
                         console.log("clicked sup")
-                        var api_table = `8080/file/list/supervision/${result.petitionerId}/0`
+                        var api_table = `8080/file/list/supervision/${result.petitionerId}_${transaction_number}/0`
                         load_table('sup_table', api_table)
                     })
                     $("#rehab_tab").unbind("click").on("click", function(){
                         console.log("clicked rehab")
-                        var api_table = `8080/file/list/rehabilitation/${result.petitionerId}/0`
+                        var api_table = `8080/file/list/rehabilitation/${result.petitionerId}_${transaction_number}/0`
                         load_table('rehab_table', api_table)
                     })
                     $("#oth_tab").unbind("click").on("click", function(){
                         console.log("clicked oth")
-                        var api_table = `8080/file/list/others/${result.petitionerId}/0`
+                        var api_table = `8080/file/list/others/${result.petitionerId}_${transaction_number}/0`
                         load_table('oth_table', api_table)
                     })
                 }else{

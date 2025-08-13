@@ -40,8 +40,8 @@
             });
         });
         // localStorage.removeItem('api');
-        localStorage.setItem('api', 'http://192.168.1.147:');
-        // localStorage.setItem('api', 'http://localhost:');
+        // localStorage.setItem('api', 'http://192.168.1.147:');
+        localStorage.setItem('api', 'http://localhost:');
         var api = localStorage.getItem('api');
 
         var ___ctx = api;

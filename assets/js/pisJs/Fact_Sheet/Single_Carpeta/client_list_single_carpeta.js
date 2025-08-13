@@ -190,18 +190,28 @@
             dataTable.ajax.reload();
         }
     }
+    
+    let sectionChiefTableInitialized = false;
+    let sectionChiefPage = 0;
+    let sectionChiefSize = 10;
 
     function sectionChiefTable(type) {
         currentType = type;
 
+        // Prevent multiple re-inits
+        if (sectionChiefTableInitialized && $.fn.DataTable.isDataTable('.table_head')) {
+            $('.table_head').DataTable().ajax.reload(null, false); // reload without resetting paging
+            return;
+        }
+
         $('.table_head').DataTable({
-            destroy: true, // Ensure previous table is destroyed before re-initializing
+            destroy: true,
             processing: true,
             serverSide: true,
             scrollX: true,
             searching: false,
             lengthMenu: [10, 25, 50, 100],
-            pageLength: 10,
+            pageLength: sectionChiefSize,
             columnDefs: [
                 { width: "5%", targets: [0] },
                 { width: "12%", targets: [1] },
@@ -215,26 +225,26 @@
                 url: ___ctx + '8000/petitioner/section-chief',
                 type: 'POST',
                 contentType: 'application/json',
-                data: function(d) {
-                    // DataTables pagination (start and length) to backend page and size
-                    const page = d.start / d.length;
+                data: function (d) {
+                    // Store current paging info for next reload
+                    sectionChiefPage = d.start / d.length;
+                    sectionChiefSize = d.length;
 
                     return JSON.stringify({
-                        userList: managerIds, // example, make dynamic if needed
+                        userList: managerIds
                     });
                 },
                 dataType: 'json',
-                beforeSend: function(xhr, settings) {
-                    // Append query string params manually
+                beforeSend: function (xhr, settings) {
                     const params = $.param({
-                        page: $('.table_head').DataTable().page.info().page || 0,
-                        size: $('.table_head').DataTable().page.info().length || 10,
+                        page: sectionChiefPage,
+                        size: sectionChiefSize,
                         type: currentType,
                         officeId: $.cookie('field_office_id')
                     });
                     settings.url += '?' + params;
                 },
-                dataFilter: function(data) {
+                dataFilter: function (data) {
                     var json = jQuery.parseJSON(data);
                     json.recordsTotal = json.totalElements || 0;
                     json.recordsFiltered = json.totalElements || 0;
@@ -242,8 +252,12 @@
                     return JSON.stringify(json);
                 }
             },
-            columns: tableColumns() // Make sure this returns the correct column mapping
+            columns: tableColumns()
+        }).on('draw.dt', function () {
+            buttonFunctionality();
         });
+
+        sectionChiefTableInitialized = true;
     }
 
     let clientType;
@@ -294,19 +308,7 @@
         drawTable("PDL-Investigation");
     }
 
-
-    // event handler when a tab is clicked
-    $("#inv_tab").unbind("click").on("click", function(){
-        console.log("clicked inv")
-        drawTable("PDL-Investigation");
-    })
-    $("#sup_tab").unbind("click").on("click", function(){
-        console.log("clicked sup")
-        drawTable("PDL-Supervision");
-    })
-
     $(".client_search").unbind("click").on("click", function() {
-        console.log("btn click search");
         $('.table_head').DataTable().destroy();
         $('.table_body').empty();
 
@@ -366,7 +368,6 @@
     });
     $(".client_add").unbind("click").on("click", function() {
         let activeType = $('.nav-link.active').data('type');
-        console.log("Current active data-type:", activeType);
         let client_type;
         if (activeType === "investigation") {
             client_type = "PDL-Investigation"
@@ -374,6 +375,24 @@
             client_type = "PDL-Supervision"
         }
         window.location.href = api+'/pis/new_client_single_carpeta?client_type='+client_type;
+    })
+
+    // event handler when a tab is clicked
+    $("#inv_tab").unbind("click").on("click", function(){
+        console.log("clicked inv")
+        if (userRole === "TSD - Section Chief" || userRole === "TSD - Staff") {
+            sectionChiefTable("PDL-Investigation")
+        } else {
+            drawTable("PDL-Investigation");
+        }
+    })
+    $("#sup_tab").unbind("click").on("click", function(){
+        console.log("clicked sup")
+        if (userRole === "TSD - Section Chief" || userRole === "TSD - Staff") {
+            sectionChiefTable("PDL-Supervision")
+        } else {
+            drawTable("PDL-Supervision");
+        }
     })
 
 } )( jQuery );

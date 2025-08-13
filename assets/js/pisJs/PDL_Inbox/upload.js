@@ -137,6 +137,7 @@
             var client_id = GetURLParameter('petitionerId');
             var officeid = GetURLParameter('departmentId');
             var client_type = GetURLParameter('client_type');
+            var transaction_number = GetURLParameter('transaction_number');
             var dataTable = null; // Initialize the variable globally to store the DataTable instance
 
             function tableColumns() {
@@ -182,31 +183,6 @@
                         }
                     }
                 ]
-            }
-            function hideDuplicateRows() {
-                let fileGroups = {};
-                
-                // Group rows by file name
-                $('.table_head tbody tr').each(function () {
-                    const fileName = $(this).find('td:eq(1)').text().trim();
-                    if (!fileGroups[fileName]) {
-                        fileGroups[fileName] = [];
-                    }
-                    fileGroups[fileName].push($(this));
-                });
-
-                // Hide all but the latest version for each group
-                for (let fileName in fileGroups) {
-                    const rows = fileGroups[fileName];
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim()); // Assuming column 2 is 'version'
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA; // Descending order
-                    });
-
-                    // Keep only the first row visible, hide the rest
-                    rows.slice(1).forEach(row => row.addClass('hidden'));
-                }
             }
             var load_table = function (type, uuid, officeId) {
                 if (!dataTable) {
@@ -254,7 +230,23 @@
                     });
 
                     $('.table_head').on('draw.dt', function () {
-                        hideDuplicateRows();
+                        // hideDuplicateRows();
+                        // Delete button event
+                        $(document).on("click", ".btn-delete", function(){
+                            let fileId = $(this).data("id");
+
+                            if(confirm("Are you sure you want to delete this file?")) {
+                                __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
+                                    if(res.status !== "ERROR") {
+                                        alert("File deleted successfully!");
+                                        window.location.reload(true);
+                                        // __table(); // Reload table
+                                    } else {
+                                        alert("Error deleting file!");
+                                    }
+                                });
+                            }
+                        });     
                     });
                 } else {
                     // Update the AJAX URL and reload the DataTable
@@ -265,36 +257,32 @@
             __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
                 if (result.status != "ERROR") {
                     var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
-                    // console.log(fullname)
                     var officeId = result.departmentId;
-                    // console.log(officeId);
                     $(".uploader").val(fullname);
                     $(".uploader").prop('disabled', true);
                     __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                         var result = result.response;
-                        console.log(result)
-                        // console.log(client_id)
                         var name = result.firstName + " " + result.lastName;
-                        load_table('investigation', client_id, 0)
+                        var file_uuid = `${client_id}_${transaction_number}`; // initialize the value of the uuid
 
-                        var file_uuid = `${client_id}`; // initialize the value of the uuid
+                        load_table('investigation', file_uuid, 0)
 
                         // event handler when a tab is clicked
                         $("#inv_tab").unbind("click").on("click", function(){
                             console.log("clicked inv")
-                            load_table('investigation', client_id, 0)
+                            load_table('investigation', file_uuid, 0)
                         })
                         $("#sup_tab").unbind("click").on("click", function(){
                             console.log("clicked sup")
-                            load_table('supervision', client_id, 0)
+                            load_table('supervision', file_uuid, 0)
                         })
                         $("#rehab_tab").unbind("click").on("click", function(){
                             console.log("clicked rehab")
-                            load_table('rehabilitation', client_id, 0)
+                            load_table('rehabilitation', file_uuid, 0)
                         })
                         $("#oth_tab").unbind("click").on("click", function(){
                             console.log("clicked oth")
-                            load_table('others', client_id, 0)
+                            load_table('others', file_uuid, 0)
                         })
 
                         // for uploading file
