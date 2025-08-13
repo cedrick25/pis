@@ -90,113 +90,114 @@
             return d.promise();
         };
 
-            var selectPdl = function () {
-                $(".pdl_client").prop("disabled", true)
-                $(".field_office").prop("disabled", true)
-                $(".user_account").prop("disabled", true)
-                $(".subject").prop("disabled", true)
-                $(".details").prop("disabled", true)
-                $('.pdl_client_type').on('change', function() {
-                    var pdlType = $(this).val();
-                    var fieldOfficeid = $.cookie('field_office_id')
-                    $('.pdl_client').empty().append(`<option value="" selected disabled>Loading ...</option>`)
-                    __executeExternalGet(`${___ctx}8000/petitioner/list?type=${pdlType}&officeId=${fieldOfficeid}`).done(function (result) {
-                        if (result.status != "ERROR") {
-                            console.log(result)
-                            $(".pdl_client").prop("disabled", false)
-                            $('.pdl_client').empty().append(`<option value="" selected disabled>Select Client</option>`)
-                            result.forEach(function(data){
-                                var fullname = data.firstName+" "+ data.middleName + " " + data.lastName+ " " + data.suffixName ;
-                                $('.pdl_client').append(
-                                `<option value="${data.id}" data-fname="${data.firstName}" data-mname="${data.middleName}" data-lname="${data.lastName}" data-sname="${data.suffixName}"> ${fullname} </option>`);
-                            });
-                        } else {
-                            $('.pdl_client').empty().append(`<option value="" selected disabled>Error Fetching Data</option>`)
-                        }
-                    })
-                    $(".pdl_client").on('change', function() {
-                        $(".user_account").prop("disabled", false)
-                        $('.user_account').empty().append("<option selected disabled>Loading ...</option>");
-                        __executeExternalGet(___ctx+'8088/user/list/206').done(function (result) {
-                            if (result.status != "ERROR") {
-                                $('.user_account').empty().append("<option selected disabled>Select User Account</option>");
-                                result.forEach(function(data) {
-                                    var includeName = "TSD"
-                                    if (data.roleName.includes(includeName)) {
-                                        var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
-                                        $('.user_account').append(
-                                            "<option value="+data.uuid+">"+fullname+"</option>");
-                                    }
-                                });
-                            } else {
-                                console.log("failed fetching user list")
-                                $(".user_display").hide()
-                            }
-                        });
-
-
-                    })
-                    
-                    $('.user_account').on('change', function() {
-                        $(".subject").prop("disabled", false)
-                        $(".details").prop("disabled", false)
-                    })
-                })
-            }
-
-            selectPdl();
-            var originFieldOfficeId = $.cookie('field_office_id');
-            var user_name = localStorage.getItem("userName");
-
-            $(".btn-confirm_forward").unbind("click").on("click", function(){
-                
-                var fname = $('.user_account option:selected').data('fname');
-                var mname = $('.user_account option:selected').data('mname');
-                var lname = $('.user_account option:selected').data('lname');
-                var sname = $('.user_account option:selected').data('sname');
-
-                var receivername = fname + " " + mname + " " + lname + " " + sname;
-
-                var payload = {
-                    "type"                  : $(".pdl_client_type").val(),
-                    "transactionNumber"     : "",
-                    "petitionerId"          : $(".pdl_client").val(),
-                    "caseloadType"          : "",
-                    "senderId"              : $.cookie("uuid"),
-                    "senderName"            : user_name,
-                    "senderFieldOfficeId"   : $.cookie('field_office_id'),
-                    "senderFieldOfficeName" : "",
-                    "originFieldOfficeId"   : originFieldOfficeId,
-                    "originFieldOfficeName" : "",
-                    "receiverId"            : $(".user_account").val(),
-                    "receiverName"          : receivername,
-                    "fieldOfficeId"         : $(".field_office").val(),
-                    "fieldOfficeName"       : "",
-                    "docketNumber"          : "",
-                    "details"               : $(".details").val(),
-                    "remarks"               : $(".subject").val(),
-                    "approvalStatus"        : "New",
-                    "lastStatusUpdateDate"  : "",
-                    "id"                    : "",
-                    "createdBy"             : "",
-                    "createdDate"           : "",
-                    "updatedBy"             : "",
-                    "updatedDate"           : "",
-                    "status"                : true
-                }
-                __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+        var selectPdl = function () {
+            $(".pdl_client").prop("disabled", true)
+            $(".field_office").prop("disabled", true)
+            $(".user_account").prop("disabled", true)
+            $(".subject").prop("disabled", true)
+            $(".details").prop("disabled", true)
+            $('.pdl_client_type').on('change', function() {
+                var pdlType = $(this).val();
+                // var fieldOfficeid = $.cookie('field_office_id')
+                var fieldOfficeid = "206";
+                $('.pdl_client').empty().append(`<option value="" selected disabled>Loading ...</option>`)
+                __executeExternalGet(`${___ctx}8000/petitioner/list?type=${pdlType}&officeId=${fieldOfficeid}`).done(function (result) {
                     if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success_forwarding').show();
-                        setTimeout(function () {
-                            $('#success_forwarding').hide();
-                            window.location.reload(true);
-                        }, 2000);
-                    }else{
-                        alert("failed")
+                        $(".pdl_client").prop("disabled", false)
+                        $('.pdl_client').empty().append(`<option value="" selected disabled>Select Client</option>`)
+                        result.forEach(function(data){
+                            var fullname = data.firstName+" "+ data.middleName + " " + data.lastName+ " " + data.suffixName ;
+                            $('.pdl_client').append(
+                            `<option value="${data.id}" data-fname="${data.firstName}" data-mname="${data.middleName}" data-lname="${data.lastName}" data-sname="${data.suffixName}"> ${fullname} </option>`);
+                        });
+                    } else {
+                        $('.pdl_client').empty().append(`<option value="" selected disabled>Error Fetching Data</option>`)
                     }
                 })
+                $(".pdl_client").on('change', function() {
+                    $(".user_account").prop("disabled", false)
+                    $('.user_account').empty().append("<option selected disabled>Loading ...</option>");
+                    __executeExternalGet(___ctx+'8088/user/list/206').done(function (result) {
+                        if (result.status != "ERROR") {
+                            $('.user_account').empty().append("<option selected disabled>Select User Account</option>");
+                            result.forEach(function(data) {
+                                var includeName = "TSD"
+                                if (data.roleName.includes(includeName)) {
+                                    var fullname = data.firstName+" "+data.middleName+" "+data.lastName+" "+data.suffix;
+                                    $('.user_account').append(
+                                        "<option value="+data.uuid+" data-oid="+data.departmentId+">"+fullname+"</option>");
+                                }
+                            });
+                        } else {
+                            console.log("failed fetching user list")
+                            $(".user_display").hide()
+                        }
+                    });
+
+
+                })
+                
+                $('.user_account').on('change', function() {
+                    $(".subject").prop("disabled", false)
+                    $(".details").prop("disabled", false)
+                })
             })
+        }
+
+        selectPdl();
+        var originFieldOfficeId = $.cookie('field_office_id');
+        var user_name = localStorage.getItem("userName");
+
+        $(".btn-confirm_forward").unbind("click").on("click", function(){
+            
+            var fname = $('.user_account option:selected').data('fname');
+            var mname = $('.user_account option:selected').data('mname');
+            var lname = $('.user_account option:selected').data('lname');
+            var sname = $('.user_account option:selected').data('sname');
+            var receiverFieldOfficeId = $('.user_account option:selected').data('oid');
+
+            var receivername = fname + " " + mname + " " + lname + " " + sname;
+
+            var payload = {
+                "type"                  : $(".pdl_client_type").val(),
+                "transactionNumber"     : "",
+                "petitionerId"          : $(".pdl_client").val(),
+                "caseloadType"          : "",
+                "senderId"              : $.cookie("uuid"),
+                "senderName"            : user_name,
+                "senderFieldOfficeId"   : $.cookie('field_office_id'),
+                "senderFieldOfficeName" : "",
+                "originFieldOfficeId"   : originFieldOfficeId,
+                "originFieldOfficeName" : "",
+                "receiverId"            : $(".user_account").val(),
+                "receiverName"          : receivername,
+                "fieldOfficeId"         : receiverFieldOfficeId,
+                "fieldOfficeName"       : "",
+                "docketNumber"          : "",
+                "details"               : $(".details").val(),
+                "remarks"               : $(".subject").val(),
+                "approvalStatus"        : "New",
+                "lastStatusUpdateDate"  : "",
+                "id"                    : "",
+                "createdBy"             : "",
+                "createdDate"           : "",
+                "updatedBy"             : "",
+                "updatedDate"           : "",
+                "status"                : true
+            }
+            __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                if (result.status != "ERROR") {
+                $(".form-control").val('');
+                $('#success_forwarding').show();
+                    setTimeout(function () {
+                        $('#success_forwarding').hide();
+                        window.location.reload(true);
+                    }, 2000);
+                }else{
+                    alert("failed")
+                }
+            })
+        })
         // }
         // __select();
 

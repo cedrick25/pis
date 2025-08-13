@@ -262,9 +262,9 @@
                     $(`.${dropdown}`).on('change', function() {
                         var userRoleName = $(`.${dropdown} option:selected`).data('name');
                         var userRoleId = this.value;
-                        if (dropdown === "user_roles" && userRoleName === "TSD - Staff" && userRoleId === "72") {
+                        if (dropdown === "user_roles" && userRoleName === "TSD - Section Chief" & userRoleId === "75") {
                             $(".managerFieldCreate").show();
-                        } else if (dropdown === "user_roles_update" && userRoleName === "TSD - Staff" && userRoleId === "72") {
+                        } else if (dropdown === "user_roles_update" && userRoleName === "TSD - Section Chief" && userRoleId === "75") {
                             $(".managerFieldUpdate").show();
                         } else {
                             $(".managerFieldUpdate").hide();
@@ -286,24 +286,25 @@
                         __select("field_office_update", result.departmentId)
                         __select_user_roles("user_roles_update", result.roleId)
                         $(".firstName_update").val(result.firstName);
-                        $(".middleName_update").val(result.middleName === "" ? "N/A" : result.middleName);
+                        $(".middleName_update").val(result.middleName === "N/A" ? "" : result.middleName);
                         if ($(".middleName_update").val() === "" || $(".middleName_update").val() === "N/A") {
                             $(".middleNameCheckUpdate").first().prop("checked", true); // works
                             inputBoxMiddleNameUpdate.disabled = true;
                             inputBoxMiddleNameUpdate.placeholder = "N/A";
+                            middleNameCheckBoxValue = "true"
                         }
                         $(".lastName_update").val(result.lastName);
-                        $(".suffix_update").val(result.suffix === "" ? "N/A" : result.suffix);
+                        $(".suffix_update").val(result.suffix === "N/A" ? "" : result.suffix);
                         $(".userName_update").val(result.username);
                         $(".email_update").val(result.email);
-                        $(".num_update").val(result.phoneNumber === "" ? "N/A" : result.phoneNumber);
+                        $(".num_update").val(result.phoneNumber === "N/A" ? "" : result.phoneNumber);
                         $(".birthday_update").val(result.birthday);
                         $(".password_update").val(result.password);
 
                         setTimeout (function () {
                             var userRoleNameUpdate = $(`.user_roles_update option:selected`).data('name');
                             var userRoleIdUpdate = $(`.user_roles_update`).val();
-                            if (userRoleNameUpdate === "TSD - Staff" && userRoleIdUpdate === "72") {
+                            if (userRoleNameUpdate === "TSD - Section Chief" && userRoleIdUpdate === "75") {
                                 $(".managerFieldUpdate").show();
                             } else {
                                 $(".managerFieldUpdate").hide();
@@ -335,6 +336,14 @@
                             console.log("Number of required fields: " + requiredFields);
 
                             if (requiredFields === 0) {
+                                let managerIdPayload = "";
+
+                                if ($(".user_roles_update").val() === "72") {
+                                    // var userUuid = $.cookie("uuid");
+                                    managerIdPayload = JSON.stringify([`${data_id}`])
+                                } else {
+                                    managerIdPayload = JSON.stringify($(".manager_update").val())
+                                }
                                 var payload = {
                                     "firstName"     : $(".firstName_update").val(),
                                     "middleName"    : $(".middleName_update").val(),
@@ -348,7 +357,7 @@
                                     "password"      : $(".password_update").val(),
                                     "departmentId"  : $(".field_office_update").val(),
                                     "roleId"        : $(".user_roles_update").val(),
-                                    "managerId"     : JSON.stringify($(".manager_update").val()),
+                                    "managerId"     : managerIdPayload,
                                 }
                                 __executeExternalPost('8088/user/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     if (result.status != "ERROR") {
@@ -599,22 +608,29 @@
             console.log("Number of required fields: " + requiredFields);
 
             if (requiredFields === 0) {
+                let managerIdPayload = "";
+
+                if ($(".user_roles").val() === "TSD - Staff") {
+                    managerIdPayload = JSON.stringify([$.cookie("uuid")])
+                } else {
+                    managerIdPayload = JSON.stringify($(".manager").val())
+                }
                 var payload = {
                         "updatedBy"     : "",
                         "updatedDate"   : "",
                         "firstName"     : $(".firstName").val(),
-                        "middleName"    : $(".middleName").val() || "N/A",
+                        "middleName"    : $(".middleName").val() || "",
                         "lastName"      : $(".lastName").val(),
-                        "suffix"        : $(".suffix").val() || "N/A",
+                        "suffix"        : $(".suffix").val() || "",
                         "corpKey"       : "",
                         "username"      : $(".username").val(),
                         "email"         : $(".email").val(),
-                        "phoneNumber"   : $(".num").val() || "N/A",
+                        "phoneNumber"   : $(".num").val() || "",
                         "birthday"      : $(".birthday").val(),
                         "password"      : $(".password").val(),
                         "departmentId"  : $(".field_office").val(),
                         "roleId"        : $(".user_roles").val(),
-                        "managerId"     : JSON.stringify($(".manager").val())
+                        "managerId"     : managerIdPayload
                     }
                 __executeExternalPost('8088/user/create',JSON.stringify(payload)).done(function (result) {
                     if (result.status != "ERROR") {
