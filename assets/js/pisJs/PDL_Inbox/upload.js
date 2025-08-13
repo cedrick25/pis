@@ -297,7 +297,7 @@
                                 form.append("file", fileToUpload, fileToUpload.name);
                                 // console.log(fileToUpload.name)
                                 var settings = {
-                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId=0&remarks="+$(".remarks").val(),
+                                    "url": api+"8080/file/upload?uuid="+file_uuid+"&type="+$(".type").val()+"&createdby="+$.cookie("uuid")+"&version=0&kind="+fileToUpload.name+"&officeId=0&remarks="+$(".remarks").val(),
                                     "method": "POST",
                                     "timeout": 0,
                                     "processData": false,
