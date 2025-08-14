@@ -222,7 +222,7 @@
                     $(".btn-return").show();
                     $(".btn-upload").show();
                     $(".btn-create").hide();
-                    if (roleName === "TSD - Division Chief"){
+                    if (roleName === "TSD - Division Chief" || roleName === "TSD - Assistant Division Chief"){
                         $(".btn-complete").show();
                     } else {
                         $(".btn-complete").hide();
