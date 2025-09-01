@@ -173,7 +173,7 @@
 
         var __selectclient = function(){
             $('.pb_client').empty();
-            __executeExternalGet('8000/petitioner/list?type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
                 if (result.status != "ERROR") {
                     $('.pb_client').append("<option selected disabled>Select Client</option>");
                     result.content.forEach(function(data){
@@ -202,10 +202,9 @@
                 // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
                     $(".docketNum_update").val(result.docketNumber);
+                    console.log(result.fieldOfficeId)
                     $(".field_office").val(result.fieldOfficeId).trigger("change");
-                    setTimeout (function () {
-                        $(".pb_client").val(result.clientId).trigger("change");
-                    },2000)
+                    $(".pb_client").val(result.clientId).trigger("change");
                     if (result.legalAge == true) {
                         var la = "true"
                     } else {
@@ -235,7 +234,6 @@
                     }
                     $(".plea_bargain").val(plea).trigger("change");
                     $(".classification").val(result.caseClassification).trigger("change");
-                    console.log(result.sentence)
 
                     if (result.sentence) {
                         JSON.parse(result.sentence).forEach(function(data, index){
@@ -264,16 +262,12 @@
                                             <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
                                         </div>
                                         <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 justify-content-end" style="padding-top: 20px">
-                                            <button type="button" class="remove btn btn-danger btn-sm" data-id="${sentence_counter}">Remove</button>
                                         </div>
                                     </div>
                                 </div>
                                 `
                             )
-                            console.log(index)
-                            if (index === 0) {
-                                $(`#sentence_list_${sentence_counter} .remove`).hide();
-                            }
+                            $('#sentence_card .card-body').find('input, select, button, textarea').prop('disabled', true);
                         });
                     } else {
                         sentence_counter++;
@@ -308,93 +302,8 @@
                             </div>
                             `
                         )
+                        $('#sentence_card .card-body').find('input, select, button, textarea').prop('disabled', true);
                     }
-
-
-                    $(".btn-confirm_update").unbind("click").on("click", function(){
-                        var fname = $('.pb_client option:selected').data('fname');
-                        var mname = $('.pb_client option:selected').data('mname');
-                        var lname = $('.pb_client option:selected').data('lname');
-                        var sname = $('.pb_client option:selected').data('sname');
-                        var fullName = fname + " " + mname + " " + lname + " " + sname;
-
-
-                        var clientId = result.clientId;
-                        const sentence = [];
-                        const sentence_inputs = $(".sentence");
-                        const min_y = $(".min_y");
-                        const min_m = $(".min_m");
-                        const min_d = $(".min_d");
-                        const max_y = $(".max_y");
-                        const max_m = $(".max_m");
-                        const max_d = $(".max_d");
-                        const civil_liability = $(".civil_liability");
-
-                        for(var i = 0; i < sentence_inputs.length; i++){
-                            const list = {};
-                            list.sentence = $(sentence_inputs[i]).val()
-                            list.min_y = $(min_y[i]).val();
-                            list.min_m = $(min_m[i]).val();
-                            list.min_d = $(min_d[i]).val();
-                            list.max_y = $(max_y[i]).val();
-                            list.max_m = $(max_m[i]).val();
-                            list.max_d = $(max_d[i]).val();
-                            list.civil_liability = $(civil_liability[i]).val();
-                            sentence.push(list);
-                        }
-                        // console.log(list)
-                        console.log(sentence)
-
-                        var payload = {
-                            "type"                  : "PIS_INV",
-                            "docketNumber"          : docket_number,
-                            "docketSeries"          : "NONE",
-                            "caseloadType"          : $(".caseload").val(),
-                            "fieldOfficeId"         : $(".field_office").val(),
-                            "clientType"            : "PROBATIONER",
-                            "firstName"             : fname,
-                            "middleName"            : mname,
-                            "lastName"              : lname,
-                            "suffixName"            : sname,
-                            "fullName"              : fullName,
-                            "pleaBargain"           : $(".plea_bargain").val(),
-                            "criminalCaseNumber"    : $(".cc_no").val(),
-                            "caseClassification"    : $(".classification").val(),
-                            "offense"               : $(".offense").val(),
-                            "investigatingOfficer"  : $(".inv_off").val(),
-                            "courtOfOrigin"         : $(".court_origin").val(),
-                            "militaryCourt"         : $(".military_court").val(),
-                            "sentence"              : JSON.stringify(sentence),
-                            "courtOrderDate"        : $(".cod").val(),
-                            "receivedDateByPPO"     : $(".rd").val(),
-                            "manualDocket"          : false,
-                            "referral"              : false,
-                            "referralData"          : "",
-                            "remarks"               : $(".remarks").val(),
-                            "probationStartDate"    : "",
-                            "probationYear"         : "",
-                            "probationMonth"        : "",
-                            "probationDay"          :"",
-                            "status"                : 1,
-                            "legalAge"              : $(".client_type").val(),
-                            "clientId"              : clientId
-                        }
-
-                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+officeId,JSON.stringify(payload)).done(function (result) {
-                            console.log(result);
-                            if (result.status != "ERROR") {
-                            $('#success').show();
-                                setTimeout(function () {
-                                    $(".form-control").val('');
-                                    $('#success').hide();
-                                    window.location.href=api+"/pis/investigation_docketing";
-                                }, 2000);
-                            }else{
-                                alert("failed")
-                            }
-                        })
-                    })
-
                 }else{
                     alert("failed")
                 }
@@ -403,10 +312,6 @@
 
         setTimeout(function () {
             $("#spinner_update").hide();
-            $('.card-body').find('input, select, button').prop('disabled', false);
-            $('.btn-confirm_update').prop('disabled', false);
-            $('.docketNum_update').prop('disabled', true)
-            $('.pb_client').prop('disabled', true)
             updateProbationInvestigation();
         }, 3000);
 

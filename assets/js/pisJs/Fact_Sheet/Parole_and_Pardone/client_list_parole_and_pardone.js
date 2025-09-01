@@ -827,7 +827,7 @@
                     // // Return an empty string if the condition is not met
                     // return "";
                     // <button class='btn btn-sm btn-primary btn_pecir' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-plus-circle'></i> PECIR</button>
-                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
+                    return "<button class='btn btn-sm btn-primary btn_update client_update_pd_and_pr' type='submit' data-id='" + data.id + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload_pd_and_pr' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
                 }
             }
         ]

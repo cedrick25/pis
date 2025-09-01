@@ -1,5 +1,62 @@
 <?php $this->load->view('templates/header.php'); ?>
 
+<style>
+  .permission-item {
+    margin-bottom: 10px;
+  }
+  .permission-row {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* spacing between switch and label */
+  }
+  .permission-label {
+    /*font-weight: bold;*/
+    margin-left: 5px;
+    /*margin-bottom: 30px;*/
+  }
+  .sub-permission {
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+  /* switch style */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+</style>
+
 <body>
     <!-- Left Panel -->
 
@@ -75,7 +132,7 @@
 
     <!-- grant modal -->
     <div class="modal fade" id="grantPermissionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" style="">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Grant Permission</h5>
@@ -84,11 +141,7 @@
                   </button>
                 </div>
                 <div class="modal-body col-md-12">
-                    <div class="col col-md-12 row">
-                        <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">Permissions:</label></div>
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" style="display:block">Grant</label></div>
-                    </div>
-                    <div class="col col-md-12 row permission_list">
+                    <div id="permissionContainer" class="col col-md-12 row permission_list" style="margin-left: 5px; height: 700px; overflow: auto;">
                     </div>
                 </div>
                 <div class="alert alert-success" role="alert" id="success_grant" style="display:none">

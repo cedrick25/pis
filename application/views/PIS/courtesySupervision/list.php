@@ -1,5 +1,11 @@
 <?php $this->load->view('templates/header.php'); ?> 
-
+<style type="">
+.table_head {
+    width: 100% !important;
+/*    table-layout: fixed;*/
+    word-wrap: break-word;
+}
+</style>
 <body>
     <!-- Left Panel -->
 
@@ -44,7 +50,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="parolee_courtesy_investigation_docketing">Pre-Parole</a></li>
+                            <li><a href="investigation_docketing">Docketing</a></li>
                             <li class="active">Courtesy Investigation Docket list</li>
                         </ol>
                     </div>
@@ -55,24 +61,23 @@
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Pre-Parolee Courtesy Investigation Docket List</strong>
-                                <a href="pre-parole-courtesy-investigation-create"> <button class="btn btn-sm btn-success float-right ppr_cinv_create" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <strong class="card-title">Courtesy Investigation Docket List</strong>
+                                <!-- <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right pb_cinv_add" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
+                                <a href=""> <button class="btn btn-sm btn-success float-right pb_cinv_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">
                                     <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Full Name</th>
-                                            <th>Docket Number</th>
-                                            <th>Docket Series</th>
-                                            <th>Field Office</th>
-                                            <th>Actions</th>
-                                        </tr>
+                                        <th>#</th>
+                                        <th>Docket Number</th>
+                                        <th>Received Date</th>
+                                        <th>Name</th>
+                                        <th>Criminal Case No.</th>
+                                        <th>Field Office</th>
+                                        <th>Actions</th>
                                     </thead>
                                     <tbody class="table_body">
                                     </tbody>
@@ -81,7 +86,8 @@
                         </div>
                     </div>
                 </div>
-            </div><!-- .animated -->
+            </div>
+            <!-- .animated -->
         </div><!-- .content -->
 
 
@@ -91,7 +97,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/SC_Pre_Parole_Courtesy_Investigation/list.js">
+    <script src="assets/js/pisJs/PIS_Courtesy_Supervision/list.js">
 
     </script>
 

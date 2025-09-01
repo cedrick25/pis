@@ -787,7 +787,8 @@ function tableColumns() {
         {
             "data": null,
             "render": function (data, type, row, meta) {
-                let name = data.firstName + " " + data.middleName + " " + data.lastName+ " "+data.suffixName;
+                // let name = data.firstName + " " + data.middleName + " " + data.lastName+ " "+data.suffixName;
+                var name = `${data.firstName === null ? "" : data.firstName} ${data.middleName === null ? "" : data.middleName} ${data.lastName === null ? "" : data.lastName} ${data.suffixName === null ? "" : data.suffixName}`
                 return name;
             }
         },

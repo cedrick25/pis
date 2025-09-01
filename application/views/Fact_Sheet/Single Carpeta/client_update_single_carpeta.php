@@ -109,7 +109,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">Create PDL Details</strong>
+                                <strong class="card-title">Update PDL Details</strong>
                                 <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
                             <div class="card-body">
@@ -163,7 +163,7 @@
                                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Sex</label></div>
                                             <div class="col-12 col-md-9">
                                                 <select class="form-control gender select2">
-                                                    <option selected value="none" disabled>Select</option>
+                                                    <option selected value="" disabled>Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                 </select>

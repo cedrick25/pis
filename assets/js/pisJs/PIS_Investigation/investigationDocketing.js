@@ -227,7 +227,8 @@
                 {
                     "data": null,
                     render: function (data, type, row) {
-                        var fullName = data.firstName + " " + data.middleName + " " + data.lastName + " " + data.suffixName;
+                        var fullName = `${data.firstName === null ? "" : data.firstName} ${data.middleName === null ? "" : data.middleName} ${data.lastName === null ? "" : data.lastName} ${data.suffixName === null ? "" : data.suffixName} `
+                        // var fullName = data.firstName  + " " + data.middleName + " " + data.lastName + " " + data.suffixName;
                         return fullName;
                     }
                 },

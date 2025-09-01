@@ -60,8 +60,9 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Probation Fact Sheet</strong>
-                                <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add"
-                                style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
+                                <!-- <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add"
+                                style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a> -->
+                                <a href="new_client"> <button class="btn btn-sm btn-success float-right client_add fact_sheet_pb_create" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
                             </div>
                             <!-- <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">

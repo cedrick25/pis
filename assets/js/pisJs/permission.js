@@ -128,7 +128,7 @@
                     setTimeout(function () {
                         $('#newPermission').modal('hide');
                         $('#permission_success').hide();
-                        window.location.reload(true)
+                        $('.table_head').DataTable().ajax.reload(null, false);
                         __select();
                     }, 1000);
 
@@ -162,7 +162,7 @@
                 {
                     "data": 'id',
                     render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updatePermissionModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>"
+                        return "<button class='btn btn-sm btn-primary btn_update' type='submit' data-toggle='modal' data-target='#updatePermissionModal' data-id='"+data+"'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-danger btn_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-id='"+data+"'><i class='fa fa-remove'></i> Remove</button>"
                     }
                 }
             ]
@@ -246,7 +246,7 @@
                                             $('#updatePermissionModal').modal('hide');
                                             $('#permission_update').hide();
                                             __select();
-                                            window.location.reload(true);
+                                            $('.table_head').DataTable().ajax.reload(null, false);
                                         }, 1000);
                                 }else{
                                     alert("failed")

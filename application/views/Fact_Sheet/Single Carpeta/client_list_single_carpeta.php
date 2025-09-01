@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-<!--             <div class="col-sm-6">
+            <div class="col-sm-6">
                 <div class="search-container" style="padding-top: 5px; display: flex; align-items: center; justify-content: flex-end;">
                     <label for="text-input" class="form-control-label" style="margin-right: 10px; padding-top: 7px">Search :</label>
                     <input type="text" name="first-name-input" placeholder="First Name" class="form-control firstName" style="margin-right: 10px; width: 160px;">
@@ -69,7 +69,7 @@
                         <i class="fa fa-search" style="padding: 3px"></i>
                     </button>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="content mt-3">
             <div class="animated fadeIn">
@@ -87,7 +87,7 @@
                                         <a class="nav-link" id="sup_tab" href="#" data-toggle="tab" style="cursor: pointer;" data-type="supervision">Supervision</a>
                                     </li>
                                 </ul>
-                                <button class="btn btn-sm btn-success client_add ml-auto" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button>
+                                <button class="btn btn-sm btn-success client_add client_add_pdl ml-auto" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="myTabContent">

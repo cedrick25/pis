@@ -596,6 +596,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('Fact_Sheet/Single Carpeta/client_upload_single_carpeta');
 	}
+	public function pdl_view()
+	{
+		$this->load->view('Fact_Sheet/Single Carpeta/client_view');
+	}
 	// for pre-parole investigation
 	public function pre_parole_investigation_list()
 	{
@@ -688,5 +692,23 @@ class routes extends CI_Controller {
 	public function parolee_investigation_file_upload()
 	{
 		$this->load->view('SINGLE_CARPETA/Parolee/Investigation/parolee_investigation_view_uploads');
+	}
+	// probation courtesy investigation
+	public function probation_courtesy_investigation_list()
+	{
+		$this->load->view('PIS/courtesyInvestigation/list');
+	}
+	public function probation_courtesy_investigation_uploads()
+	{
+		$this->load->view('PIS/courtesyInvestigation/upload');
+	}
+	// probation courtesy supervision
+	public function probation_courtesy_supervision_list()
+	{
+		$this->load->view('PIS/courtesySupervision/list');
+	}
+	public function probation_courtesy_supervision_uploads()
+	{
+		$this->load->view('PIS/courtesySupervision/upload');
 	}
 }

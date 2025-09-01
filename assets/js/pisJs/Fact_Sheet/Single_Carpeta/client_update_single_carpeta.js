@@ -149,6 +149,11 @@
     $('.card-body').find('input, select, button').prop('disabled', true);
     $('.btn-confirm_update').prop('disabled', true);
     
+    var itemToBeRemove = localStorage.getItem('investigationData')
+    if (itemToBeRemove) {
+        localStorage.removeItem('investigationData')
+    }
+    
     var __fields = function() {
         __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
             var result = result.response;
@@ -255,8 +260,8 @@
                         if (rawData.type === "PDL-Investigation") {
                             var investigationData = JSON.parse(rawData.jsonData)
                             console.log("Parse Data: ", investigationData)
-                            for (var j = 0; j < investigationData.length; j++) {
-                                var data = investigationData[j];
+                            for (var j = 0; j < investigationData.investigation.length; j++) {
+                                var data = investigationData.investigation[j];
                                 investigation_counter++;
                                 item++;
                                 $("#investigation_card_body_accordion").append(`
@@ -385,8 +390,11 @@
                             }
                         } else if (rawData.type === "PDL-Supervision") {
                             var supervisionData = JSON.parse(rawData.jsonData)
-                            for (var j = 0; j < supervisionData.length; j++) {
-                                var data = supervisionData[i];
+                            // console.log(supervisionData.supervision)
+                            var investigationData = localStorage.setItem('investigationData', JSON.stringify(supervisionData.investigation))
+                            // for (var j = 0; j < supervisionData.supervision.length; j++) {
+                                var data = supervisionData.supervision;
+                                // console.log(data)
                                 for (var supBpp = 0; supBpp < data.supervision_bpp.length; supBpp++) {
                                     var supervision_bpp_data = data.supervision_bpp[supBpp];
                                     supervision_counter++;
@@ -609,7 +617,7 @@
                                     })
                                     fieldOffices(`#forwarded_to_fo_walk_in_${walkInCounter}`, supervision_walkIn_data.forwarded_to_fo_walk_in)
                                 }
-                            }
+                            // }
                         }
                     }
                 })
@@ -676,7 +684,11 @@
                     if (client_type === "PDL-Investigation") {
                         pdlClientType = "PDL-Investigation"
                         var payload = petitionerPayload(pdlClientType)
-                        data = [];
+                        data =  {   
+                            investigation : [], 
+                            supervision: []
+                        };
+                        const investigationData = [];
                         // construct the JSON Data for investigation start
                         const date_forwarded_to_fo = $(".forwarded_date_to_fo");
                         const forwarded_to_fo = $(".forwarded_to_fo");
@@ -703,15 +715,23 @@
                             list.indorsement_date = $(indorsement_date[i]).val();
                             list.request_type = $(request_type[i]).val();
                             list.type_report = $(type_report[i]).val();
-                            data.push(list);
+                            investigationData.push(list);
                         }
+
+                        data.investigation = investigationData;
                         // construct the JSON Data for investigation end
                     } else {
                         pdlClientType = "PDL-Supervision"
                         var payload = petitionerPayload(pdlClientType)
+                        var investigationData = localStorage.getItem('investigationData')
 
                         // Initialize the array for JSON Data of supervision
-                        data = [];
+                        data =  {   
+                            investigation : [], 
+                            supervision: []
+                        };
+
+                        data.investigation = JSON.parse(investigationData);
 
                         // construct the JSON Data for supervision_bpp start
                         const transmittal_bpp_date = $(".transmittal_bpp_date");
@@ -781,11 +801,11 @@
                             supervision_data.supervision_walkIn.push(supervision_walkIn_list);
                         }
 
-                        data.push(supervision_data)
-
+                        data.supervision = supervision_data
                     }
+                    // console.log(data)
                     __executeExternalPost('8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
-                        console.log(result);
+                        // console.log(result);
                         var petitionerId = client_id
                         var dataPayload = {
                           "id": idData,

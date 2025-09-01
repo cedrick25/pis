@@ -101,18 +101,26 @@
         // window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
 
     })
+    $(".btn_view").unbind("click").on("click", function(){
+        console.log("button view click")
+        var client_id = $(this).data("id");
+        var client_type = $(this).data("type")
+        window.location.href = api+'/pis/pdl-view?client_id='+client_id+'&client_type='+client_type;
+        // window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
+
+    })
     $(".btn_upload").unbind("click").on("click", function(){
         var client_id = $(this).data("id");
         var client_type = $(this).data("type");
         console.log(client_type, client_id)
         window.location.href = api+'/pis/client_single_carpeta_upload?client_id='+client_id+'&client_type='+client_type;
     })
-    $(".btn_view").unbind("click").on("click", function(){
-        var client_id = $(this).data("id");
-        var client_type = $(this).data("type");
-        // console.log(client_type)
-        window.location.href = api+'/pis/client_view_upload_single_carpeta?client_id='+client_id+'&client_type='+client_type;
-    })
+    // $(".btn_view").unbind("click").on("click", function(){
+    //     var client_id = $(this).data("id");
+    //     var client_type = $(this).data("type");
+    //     // console.log(client_type)
+    //     window.location.href = api+'/pis/client_view_upload_single_carpeta?client_id='+client_id+'&client_type='+client_type;
+    // })
     $(".btn_remove").unbind("click").on("click", function(){
         var data_id = $(this).data("id");
         console.log(data_id)
@@ -281,11 +289,22 @@
             {
                 data: 'criminalCaseNo',
                 render: function (data, type, row) {
-                    var criminalCases = JSON.parse(data);
-                    if (Array.isArray(criminalCases)) {
-                        return criminalCases.map(item => item.criminal_cases_number).join('<br>');
+                    try {
+                        // Attempt to parse if it's a JSON string
+                        var criminalCases = (typeof data === "string") ? JSON.parse(data) : data;
+
+                        if (Array.isArray(criminalCases)) {
+                            return criminalCases.map(item => item.criminal_cases_number).join('<br>');
+                        } else if (typeof criminalCases === "string") {
+                            return criminalCases; // display raw string
+                        } else if (criminalCases && criminalCases.criminal_cases_number) {
+                            return criminalCases.criminal_cases_number; // single object case
+                        }
+                    } catch (e) {
+                        // If JSON.parse fails, just display the original value
+                        return data;
                     }
-                    return ''; // fallback if data is not an array
+                    return '';
                 }
             },
             {
@@ -295,7 +314,57 @@
                 "data": null,
                 "render": function (data, type, row) {
                     // <button class='btn btn-sm btn-danger btn_remove client_remove' type='submit' data-id='" + data.id + "'><i class='fa fa-trash'></i> Remove</button>
-                    return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
+                    return "<button class='btn btn-sm btn-primary btn_update client_update client_update_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_view client_view client_view_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_upload client_upload client_upload_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
+                }
+            }
+        ]
+    }
+    function tableColumnsSearch() {
+        return [
+            {
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return meta.settings._iDisplayStart + meta.row + 1;
+                }
+            },
+            {
+                "data": 'firstName',
+            },
+            {
+                "data": 'middleName',
+            },
+            {
+                "data": 'lastName',
+            },
+            {
+                data: 'criminalCaseNo',
+                render: function (data, type, row) {
+                    try {
+                        // Attempt to parse if it's a JSON string
+                        var criminalCases = (typeof data === "string") ? JSON.parse(data) : data;
+
+                        if (Array.isArray(criminalCases)) {
+                            return criminalCases.map(item => item.criminal_cases_number).join('<br>');
+                        } else if (typeof criminalCases === "string") {
+                            return criminalCases; // display raw string
+                        } else if (criminalCases && criminalCases.criminal_cases_number) {
+                            return criminalCases.criminal_cases_number; // single object case
+                        }
+                    } catch (e) {
+                        // If JSON.parse fails, just display the original value
+                        return data;
+                    }
+                    return '';
+                }
+            },
+            {
+                "data": 'prisonNumber',
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    // <button class='btn btn-sm btn-danger btn_remove client_remove' type='submit' data-id='" + data.id + "'><i class='fa fa-trash'></i> Remove</button>
+                    return "<button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button>";
                 }
             }
         ]
@@ -314,7 +383,7 @@
 
         const firstName = document.querySelector('.firstName').value;
         const lastName = document.querySelector('.lastName').value;
-        const fieldOfficeId = $.cookie('field_office_id');
+        const fieldOfficeId = "206";
         const canSeeOtherOffices = true;
 
         $('.table_head').DataTable({
@@ -325,13 +394,13 @@
             "lengthMenu": [10, 25, 50, 100],
             "pageLength": 10,
             "columnDefs": [
-                { "width": "5%", "targets": [0] },
-                { "width": "12%", "targets": [1] },
-                { "width": "13%", "targets": [2] },
-                { "width": "15%", "targets": [3] },
-                { "width": "15%", "targets": [4] },
-                { "width": "15%", "targets": [5] },
-                { "width": "25%", "targets": [6] }
+                { width: "5%", targets: [0] },
+                { width: "12%", targets: [1] },
+                { width: "13%", targets: [2] },
+                { width: "15%", targets: [3] },
+                { width: "15%", targets: [4] },
+                { width: "15%", targets: [5] },
+                { width: "25%", targets: [6] }
             ],
             "ajax": {
                 url: ___ctx+'8000/petitioner/search?page=0&size=10',
@@ -350,16 +419,14 @@
                         canSeeOtherOffices: canSeeOtherOffices
                     });
                 },
-                dataFilter: function(d) {
-                    var json = jQuery.parseJSON(d);
-                    // Prepare response in DataTables format
+                dataSrc: function(json) {
+                    console.log(json)
                     json.recordsTotal = json.totalElements;
-                    json.recordsFiltered = json.totalElements; // Adjust if filtering
-                    json.data = json.content;
-                    return JSON.stringify(json);
+                    json.recordsFiltered = json.totalElements;
+                    return json.content || [];
                 }
             },
-            columns: tableColumns()
+            columns: tableColumnsSearch()
         });
 
         $('.table_head').on('draw.dt', function() {

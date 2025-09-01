@@ -34,7 +34,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="supervision_docketing">Supervision Docket</a></li>
+                            <li><a href="probation-courtesy-investigation-list">Courtesy Investigation Docket</a></li>
                             <li class="active">View Attachments</li>
                         </ol>
                     </div>
@@ -120,7 +120,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Supervision/supervisionViewAttachments.js">
+    <script src="assets/js/pisJs/PIS_Courtesy_Investigation/viewUploadAttachments.js">
 
     </script>
 

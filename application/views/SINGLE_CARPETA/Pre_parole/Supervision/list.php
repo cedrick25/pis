@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Pre-Parole Supervision Docket List</strong>
-                                <a href="pre-parole-supervision-create"> <button class="btn btn-sm btn-success float-right ppr_sup_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <a href="pre-parole-supervision-create"> <button class="btn btn-sm btn-success float-right ppr_sup_create" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">

@@ -173,7 +173,7 @@
 
         var __selectclient = function(){
             $('.pb_client').empty();
-            __executeExternalGet('8000/petitioner/list?type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
                 if (result.status != "ERROR") {
                     $('.pb_client').append("<option selected disabled>Select Client</option>");
                     result.content.forEach(function(data){
@@ -203,9 +203,7 @@
                 if (result.status != "ERROR") {
                     $(".docketNum_update").val(result.docketNumber);
                     $(".field_office").val(result.fieldOfficeId).trigger("change");
-                    setTimeout (function () {
-                        $(".pb_client").val(result.clientId).trigger("change");
-                    },2000)
+                    $(".pb_client").val(result.clientId).trigger("change");
                     if (result.legalAge == true) {
                         var la = "true"
                     } else {

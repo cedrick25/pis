@@ -104,7 +104,10 @@
         }
     }
 
-
+    var pdlData = localStorage.getItem('pdlDataId');
+    if (pdlData) {
+        localStorage.removeItem('pdlDataId')
+    }
     var __selectclient = function(){
         console.log("fetching client")
         __executeExternalGet('8000/petitioner/list?type=PDL-Investigation&officeId='+$.cookie('field_office_id')).done(function (result) {
@@ -157,6 +160,7 @@
 
     var client_type = GetURLParameter('client_type');
     let cc_counter;
+    let supervision_trigger = false;
 
     if (client_type === "PDL-Investigation") {
         var transmittal_counter = 0;
@@ -469,6 +473,7 @@
     // fetch the data in client and display it
         $('.client_name').change(function() {
             var client_id = $(this).val();
+            supervision_trigger = true;
             $(".spinner").show();
             $('.pdl_details').find('input, select, button').prop('disabled', true);
             $('.card-body').find('input, select, button').prop('disabled', true);
@@ -1031,6 +1036,7 @@
 
     $(".btn-confirm").unbind("click").on("click", function(){
         let pdlClientType;
+        var clientId = $('.client_name option:selected').data('id');
         
         let data;
 
@@ -1089,7 +1095,11 @@
         if (client_type === "PDL-Investigation") {
             pdlClientType = "PDL-Investigation"
             var payload = petitionerPayload(pdlClientType)
-            data = [];
+            data =  { 
+                investigation : [], 
+                supervision : []
+            };
+            const investigationData = [];
             // construct the JSON Data for investigation start
             const date_forwarded_to_fo = $(".forwarded_date_to_fo");
             const forwarded_to_fo = $(".forwarded_to_fo");
@@ -1116,15 +1126,52 @@
                 list.indorsement_date = $(indorsement_date[i]).val();
                 list.request_type = $(request_type[i]).val();
                 list.type_report = $(type_report[i]).val();
-                data.push(list);
+                investigationData.push(list);
             }
+
+            data.investigation = investigationData;
             // construct the JSON Data for investigation end
+
+            __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
+                // console.log(result);
+                var petitionerId = result.response.id
+                var dataPayload = {
+                  "petitionerId": petitionerId,
+                  "type": pdlClientType,
+                  "jsonData": JSON.stringify(data),
+                  "createdBy": $.cookie("uuid"),
+                  "createdByName": "",
+                  "status": true
+                }
+                if (result.status != "ERROR") {
+                    __executeExternalPost('8000/data/create',JSON.stringify(dataPayload)).done(function (result) {
+                        console.log(result);
+                        if (result.status != "ERROR") {                        
+                            $(".form-control").val('');
+                            $('#success').show();
+                            setTimeout(function () {
+                                $('#success').hide();
+                                setTimeout(function () {
+                                    window.location.href = api+'/pis/client_list_single_carpeta';
+                                }, 500);
+                            }, 2000);
+                        }else{
+                            alert("failed")
+                        }
+                    })
+                }else{
+                    alert("failed")
+                }
+            })
         } else {
             pdlClientType = "PDL-Supervision"
             var payload = petitionerPayload(pdlClientType)
 
             // Initialize the array for JSON Data of supervision
-            data = [];
+            data = { 
+                investigation : [],
+                supervision : [] 
+            };
 
             // construct the JSON Data for supervision_bpp start
             const transmittal_bpp_date = $(".transmittal_bpp_date");
@@ -1141,6 +1188,7 @@
                 supervision_orff: [],
                 supervision_walkIn: []
             };
+
             for(var i = 0; i < transmittal_bpp_date.length; i++){
                 const supervision_bpp_list = {};
                 supervision_bpp_list.transmittal_bpp_date = $(transmittal_bpp_date[i]).val();
@@ -1153,6 +1201,7 @@
                 supervision_bpp_list.bpp_resolutions = $(bpp_resolutions[i]).val();
                 supervision_data.supervision_bpp.push(supervision_bpp_list);
             }
+            
             // construct the JSON Data for supervision_orff start
             const transmittal_bpp_date_ortftf = $(".transmittal_bpp_date_ortftf");
             const date_received_by_tsd_orftf = $(".date_received_by_tsd_orftf");
@@ -1178,7 +1227,6 @@
                 supervision_data.supervision_orff.push(supervision_orff_list);
             }
 
-
             // construct the JSON Data for supervision_walk_in start
             const date_received_by_tsd_walk_in = $(".date_received_by_tsd_walk_in");
             const indorsement_date_walk_in = $(".indorsement_date_walk_in");
@@ -1194,38 +1242,84 @@
                 supervision_data.supervision_walkIn.push(supervision_walkIn_list);
             }
 
-            data.push(supervision_data)
-        }
-        __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
-            console.log(result);
-            var petitionerId = result.response.id
-            var dataPayload = {
-              "petitionerId": petitionerId,
-              "type": pdlClientType,
-              "jsonData": JSON.stringify(data),
-              "createdBy": $.cookie("uuid"),
-              "createdByName": "",
-              "status": true
-            }
-            if (result.status != "ERROR") {
-                __executeExternalPost('8000/data/create',JSON.stringify(dataPayload)).done(function (result) {
-                    console.log(result);
-                    if (result.status != "ERROR") {                        
-                        $(".form-control").val('');
-                        $('#success').show();
-                        setTimeout(function () {
-                            $('#success').hide();
-                            setTimeout(function () {
-                                window.location.href = api+'/pis/client_list_single_carpeta';
-                            }, 500);
-                        }, 2000);
+            data.supervision = supervision_data;
+
+            if (supervision_trigger == true) {
+                __executeExternalGet(`8000/data/PDL-Investigation/${clientId}`).done(function (result) {
+                    var pdlDataId = localStorage.setItem('pdlDataId', result.response[0].id)
+                    var parsedData = JSON.parse(result.response[0].jsonData)
+                    data.investigation = parsedData.investigation
+                })
+                __executeExternalPost('8000/petitioner/update/'+clientId,JSON.stringify(payload)).done(function (result) {
+                    // console.log(result);
+                    var petitionerId = clientId
+                    var pdlDataId = localStorage.getItem('pdlDataId');
+                    var dataPayload = {
+                      "id": pdlDataId,
+                      "petitionerId": petitionerId,
+                      "type": pdlClientType,
+                      "jsonData": JSON.stringify(data),
+                      "createdBy": $.cookie("uuid"),
+                      "createdByName": "",
+                      "updatedBy": $.cookie("uuid"),
+                      "status": true
+                    }
+                    if (result.status != "ERROR") {
+                        __executeExternalPost('8000/data/update/'+pdlDataId,JSON.stringify(dataPayload)).done(function (result) {
+                            // console.log(result);
+                            if (result.status != "ERROR") {                        
+                                $(".form-control").val('');
+                                $('#success').show();
+                                setTimeout(function () {
+                                    $('#success').hide();
+                                    setTimeout(function () {
+                                        // window.location.href = api+'/pis/client_list_single_carpeta';
+                                        window.location.reload(true)
+                                    }, 500);
+                                }, 2000);
+                            }else{
+                                alert("failed")
+                            }
+                        })
                     }else{
                         alert("failed")
                     }
                 })
-            }else{
-                alert("failed")
+            } else if (supervision_trigger == false) {
+                __executeExternalPost('8000/petitioner/create',JSON.stringify(payload)).done(function (result) {
+                    // console.log(result);
+                    var petitionerId = result.response.id
+                    var dataPayload = {
+                      "petitionerId": petitionerId,
+                      "type": pdlClientType,
+                      "jsonData": JSON.stringify(data),
+                      "createdBy": $.cookie("uuid"),
+                      "createdByName": "",
+                      "status": true
+                    }
+                    if (result.status != "ERROR") {
+                        __executeExternalPost('8000/data/create',JSON.stringify(dataPayload)).done(function (result) {
+                            console.log(result);
+                            if (result.status != "ERROR") {                        
+                                $(".form-control").val('');
+                                $('#success').show();
+                                setTimeout(function () {
+                                    $('#success').hide();
+                                    setTimeout(function () {
+                                        window.location.href = api+'/pis/client_list_single_carpeta';
+                                    }, 500);
+                                }, 2000);
+                            }else{
+                                alert("Error")
+                            }
+                        })
+                    }else{
+                        alert("Error")
+                    }
+                })
+            } else {
+                alert("Error")
             }
-        })
+        }
     })
 } )( jQuery );

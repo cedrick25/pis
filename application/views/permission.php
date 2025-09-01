@@ -163,6 +163,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Permission List</strong>
+                                <!-- <button class="btn btn-sm btn-success float-right" style="display: none;" type="submit" data-toggle="modal" data-target="#newPermission"><i class="fa fa-plus-circle"></i> Add Permission </button> -->
                                 <button class="btn btn-sm btn-success float-right" type="submit" data-toggle="modal" data-target="#newPermission"><i class="fa fa-plus-circle"></i> Add Permission </button>
                             </div>
                             <div class="dataTables_filter">
