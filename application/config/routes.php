@@ -214,9 +214,9 @@ $route['pre-parole-docketing-sent'] = "routes/pre_parole_docketing_sent";
 // for probation courtesy investigation
 $route['probation-courtesy-investigation-list'] = "routes/probation_courtesy_investigation_list";
 $route['probation-courtesy-investigation-uploads'] = "routes/probation_courtesy_investigation_uploads";
-// $route['pre-parole-courtesy-investigation-create'] = "routes/pre_parole_cs_investigation_create";
-// $route['pre-parole-courtesy-investigation-update'] = "routes/pre_parole_cs_investigation_update";
-// $route['pre-parole-courtesy-investigation-view'] = "routes/pre_parole_cs_investigation_view";
+$route['probation-courtesy-investigation-create'] = "routes/probation_courtesy_investigation_create";
+$route['probation-courtesy-investigation-update'] = "routes/probation_courtesy_investigation_update";
+$route['probation-courtesy-investigation-view'] = "routes/probation_courtesy_investigation_view";
 // for probation courtesy supervision
 $route['probation-courtesy-supervision-list'] = "routes/probation_courtesy_supervision_list";
 $route['probation-courtesy-supervision-uploads'] = "routes/probation_courtesy_supervision_uploads";

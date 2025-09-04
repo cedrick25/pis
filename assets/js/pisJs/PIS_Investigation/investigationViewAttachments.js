@@ -138,7 +138,50 @@
         var type = GetURLParameter('type');
         var id = GetURLParameter('id');
         var fi = $.cookie("field_office_id");
-        var dataTable = null; // Initialize the variable globally to store the DataTable instance
+        var dataTable = null;
+
+        $('.cmisTable').on('change', function() {
+            $(".type").empty();
+            var value = $(this).val();
+
+            // console.log(value)
+            if (value === "F5T2RR") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Order to Conduct PSI">Order to Conduct PSI</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else if (value === "F5T2_RAU") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Post-Sentence Investigation Report">Post-Sentence Investigation Report</option>
+                    <option value="Manifestation">Manifestation</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else if (value === "F5T2_warant" || value === "F5T2_recall") {
+                $(".type").append(`
+                    <option value="" selected="">Select</option>
+                    <option value="Recall">Recall</option>
+                    <option value="Warrant of Arrest">Warrant of Arrest</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else if (value === "F5T4RR") {
+                $(".type").append(`
+                    <option value="" selected="">Select</option>
+                    <option value="Order of Grant Probation">Order of Grant Probation</option>
+                    <option value="Order of Denial of Probation">Order of Denial of Probation</option>
+                    <option value="Order of Dismissal">Order of Dismissal</option>
+                    <option value="Order to Withdrawal of Application for Probation">Order to Withdrawal of Application for Probation</option>
+                    <option value="Order to Reinvestigate">Order to Reinvestigate</option>
+                    <option value="Warrant of Arrest">Warrant of Arrest</option>
+                    <option value="Recall Order">Recall Order</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else {
+                alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
+                window.location.reload(true)
+            }
+        })
 
         function tableColumns() {
             return [
@@ -150,9 +193,6 @@
                 },
                 {
                     "data": 'fileName',
-                },
-                {
-                    "data": 'version'
                 },
                 {
                     "data": 'remarks',
@@ -173,6 +213,9 @@
                                     <i class='fa fa-download'></i> Download
                                 </button>
                             </a>
+                            <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <i class='fa fa-trash'></i> Delete
+                            </button>
                         `;
 
                         // // Add "Show All Versions" button only for the latest version
@@ -202,10 +245,9 @@
                     "pageLength": 10,
                     "columnDefs": [
                         { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] },
-                        { "width": "15%", "targets": [2] },
+                        { "width": "30%", "targets": [1] },
+                        { "width": "40%", "targets": [2] },
                         { "width": "25%", "targets": [3] },
-                        { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
                         url: `${api}8080/file/page/${type}/${uuid}/${officeId}`, // Base URL remains the same
@@ -220,13 +262,6 @@
                         },
                         dataFilter: function (data) {
                             var json = jQuery.parseJSON(data);
-                            // Sort the data by fileName and then by version
-                            json.content.sort((a, b) => {
-                                if (a.fileName === b.fileName) {
-                                    return b.version - a.version; // Sort versions in descending order within the same file name
-                                }
-                                return a.fileName.localeCompare(b.fileName); // Sort file names alphabetically
-                            });
                             json.recordsTotal = json.totalElements;
                             json.recordsFiltered = json.totalElements;
                             json.data = json.content;
@@ -234,6 +269,23 @@
                         }
                     },
                     columns: tableColumns() // Call your function to get table columns
+                });
+                $('.table_head').on('draw.dt', function () {
+                    // Delete button event
+                    $(document).on("click", ".btn-delete", function(){
+                        let fileId = $(this).data("id");
+
+                        if(confirm("Are you sure you want to delete this file?")) {
+                            __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
+                                if(res.status !== "ERROR") {
+                                    alert("File deleted successfully!");
+                                    window.location.reload(true);
+                                } else {
+                                    alert("Error deleting file!");
+                                }
+                            });
+                        }
+                    });  
                 });
             } else {
                 // Update the AJAX URL and reload the DataTable
@@ -265,7 +317,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
                             // console.log(fileToUpload.name)
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".remarks").val(),
+                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type=investigation"+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,
@@ -293,9 +345,5 @@
                 alert("failed")
             }
         })
-
-        // $(document).ready(function(){
-        //     fetchWorkflow();
-        // })
 
     } )( jQuery );

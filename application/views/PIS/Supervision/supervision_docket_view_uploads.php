@@ -68,14 +68,21 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Table</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <select class="form-control cmisTable select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="F5T8">Referals Received</option>
+                                            <option value="F5T9">Cases Acted Upon</option>
+                                            <option value="F5T11">Cases Disposed Of By The Court</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
                                     <div class="col-12 col-md-6">
                                         <select class="form-control type select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="investigation">Investigation</option>
-                                            <option value="supervision">Supervision</option>
-                                            <option value="rehabilitation">Rehabilitation</option>
-                                            <option value="others">Others</option>
                                         </select>
                                     </div>
                                 </div>

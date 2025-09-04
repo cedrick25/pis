@@ -140,6 +140,44 @@
         var fi = $.cookie("field_office_id");
         var dataTable = null; // Initialize the variable globally to store the DataTable instance
 
+        $('.cmisTable').on('change', function() {
+            $(".type").empty();
+            var value = $(this).val();
+
+            // console.log(value)
+            if (value === "F5T8") {
+                $(".type").append(`
+                    <option value="" selected="">Select</option>
+                    <option value="Order of Grant of Probation">Order of Grant of Probation</option>
+                    <option value="Transfer Order">Transfer Order</option>
+                    <option value="Fingerprint Record">Fingerprint Record</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else if (value === "F5T9") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Motion to Terminate">Motion to Terminate</option>
+                    <option value="Violation Report">Violation Report</option>
+                    <option value="Motion for Extension">Motion for Extension</option>
+                    <option value="Motion for Transfer">Motion for Transfer</option>
+                    <option value="Other Document/s">Other Document/s</option>>
+                `)
+            } else if (value === "F5T11") {
+                $(".type").append(`
+                    <option value="" selected="">Select</option>
+                    <option value="Terminate Order">Terminate Order</option>
+                    <option value="Revocation Order">Revocation Order</option>
+                    <option value="Violation Order">Violation Order</option>
+                    <option value="Order for Extension">Order for Extension</option>
+                    <option value="Order for Transfer">Order for Transfer</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else {
+                alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
+                window.location.reload(true)
+            }
+        })
+
         function tableColumns() {
             return [
                 {
@@ -173,18 +211,10 @@
                                     <i class='fa fa-download'></i> Download
                                 </button>
                             </a>
+                            <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <i class='fa fa-trash'></i> Delete
+                            </button>
                         `;
-
-                        // // Add "Show All Versions" button only for the latest version
-                        // if (rows.length > 1) {
-                        //     if (data.version === latestVersion) {
-                        //         actions += `
-                        //             <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
-                        //                 <i class='fa fa-angle-down'></i> Show All Versions
-                        //             </button>
-                        //         `;
-                        //     }
-                        // }
 
                         return actions;
                     }
@@ -265,7 +295,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
                             // console.log(fileToUpload.name)
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".remarks").val(),
+                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type=supervision"+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

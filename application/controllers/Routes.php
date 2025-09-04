@@ -702,6 +702,18 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('PIS/courtesyInvestigation/upload');
 	}
+	public function probation_courtesy_investigation_create()
+	{
+		$this->load->view('PIS/courtesyInvestigation/create');
+	}
+	public function probation_courtesy_investigation_update()
+	{
+		$this->load->view('PIS/courtesyInvestigation/update');
+	}
+	public function probation_courtesy_investigation_view()
+	{
+		$this->load->view('PIS/courtesyInvestigation/view');
+	}
 	// probation courtesy supervision
 	public function probation_courtesy_supervision_list()
 	{
