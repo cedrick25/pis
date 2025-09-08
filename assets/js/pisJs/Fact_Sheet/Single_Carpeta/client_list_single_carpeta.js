@@ -384,7 +384,7 @@
         const firstName = document.querySelector('.firstName').value;
         const lastName = document.querySelector('.lastName').value;
         const fieldOfficeId = "206";
-        const canSeeOtherOffices = true;
+        const canSeeOtherOffices = false;
 
         $('.table_head').DataTable({
             "processing": false,
