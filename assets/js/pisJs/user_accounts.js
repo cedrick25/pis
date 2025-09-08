@@ -337,8 +337,8 @@
 
                             if (requiredFields === 0) {
                                 let managerIdPayload = "";
-
-                                if ($(".user_roles_update").val() === "72") {
+                                var userRoleName = $(`.user_roles_update option:selected`).data('name');
+                                if ($(".user_roles_update").val() === "72" || userRoleName === "TSD - Staff") {
                                     // var userUuid = $.cookie("uuid");
                                     managerIdPayload = JSON.stringify([`${data_id}`])
                                 } else {
@@ -609,8 +609,8 @@
 
             if (requiredFields === 0) {
                 let managerIdPayload = "";
-
-                if ($(".user_roles").val() === "TSD - Staff") {
+                var userRoleName = $(`.user_roles option:selected`).data('name');
+                if ($(".user_roles").val() === "72" || userRoleName === "TSD - Staff") {
                     managerIdPayload = JSON.stringify([$.cookie("uuid")])
                 } else {
                     managerIdPayload = JSON.stringify($(".manager").val())
