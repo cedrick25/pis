@@ -340,9 +340,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('client_update');
 	}
-	public function client_view_upload()
+	public function client_view_factsheet()
 	{
-		$this->load->view('client_view_upload');
+		$this->load->view('client_view_factsheet');
 	}
 	public function client_view_upload_single_carpeta()
 	{

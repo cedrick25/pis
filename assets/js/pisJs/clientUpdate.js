@@ -105,17 +105,34 @@
         }
 
         var client_id = GetURLParameter('client_id');
+        var client_fo = GetURLParameter('client_fo');
         $('.card-body').find('input, select, button').prop('disabled', true);
         $('.btn-confirm_update').prop('disabled', true);
+                
+        function getLatestProfile () {
+            __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+client_fo).done(function (result) {
+                if (result.status != "ERROR") {
+                    if (result.files.length != 0) {
+                        $('#client_photo').attr('src', api+'8080/file/view/'+result.files[0].id);
+                    }
+                }
+            })
+        }
+        $("#factSheet").unbind("click").on("click", function(){
+            window.location.href = api+'/pis/client_view_factsheet?client_id='+client_id+'&field_office_id='+client_fo;
+        })
+        $(".btn-cance-update").unbind("click").on("click", function(){
+            window.location.href = api+'/pis/client_view_factsheet?client_id='+client_id+'&field_office_id='+client_fo;
+        })
         
         var __fields = function(){
+            getLatestProfile();
             __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                 var result = result.response;
 
                 if (result.status != "ERROR") {
-                    console.log()
-                    // $(".field_office_update").val(result.fieldOfficeId).trigger("change");
-                    // $(".client_type_update").val(result.clientType).trigger("change");
+                    var name = `${result.firstName} ${result.middleName ?? ""} ${result.lastName} ${result.suffixName ?? ""}`
+                    $("#petitionerName").text(name)
                     $(".gender_update").val(result.sex).trigger("change");
                     $(".firstName_update").val(result.firstName);
                     $(".middleName_update").val(result.middleName);
@@ -130,23 +147,22 @@
 
                     $(".btn-confirm_update").unbind("click").on("click", function(){
                         var payload = {
-                        "firstName"         : $(".firstName_update").val(),
-                        "middleName"        : $(".middleName_update").val(),
-                        "lastName"          : $(".lastName_update").val(),
-                        "suffixName"        : $(".suffix_update").val(),
-                        "clientType"        : result.clientType,
-                        "sex"               : $(".gender_update").val(),
-                        "education"         : $(".education_update").val(),
-                        "occupation"        : $(".occupation_update").val(),
-                        "criminalCaseNo"    : $(".cc_no_update").val(),
-                        "fieldOfficeId"     : result.fieldOfficeId,
-                        "birthDate"         : $(".birthdate_update").val(),
-                        "birthCity"         : $(".b_place_update").val(),
-                        "permanentAddress"  : $(".address_update").val(),
-                        "createdBy"         : "",
-                        "updatedBy"         : "",
-                        "status"            : 1
-
+                            "firstName"         : $(".firstName_update").val(),
+                            "middleName"        : $(".middleName_update").val(),
+                            "lastName"          : $(".lastName_update").val(),
+                            "suffixName"        : $(".suffix_update").val(),
+                            "clientType"        : result.clientType,
+                            "sex"               : $(".gender_update").val(),
+                            "education"         : $(".education_update").val(),
+                            "occupation"        : $(".occupation_update").val(),
+                            "criminalCaseNo"    : $(".cc_no_update").val(),
+                            "fieldOfficeId"     : result.fieldOfficeId,
+                            "birthDate"         : $(".birthdate_update").val(),
+                            "birthCity"         : $(".b_place_update").val(),
+                            "permanentAddress"  : $(".address_update").val(),
+                            "createdBy"         : "",
+                            "updatedBy"         : "",
+                            "status"            : 1
                         }
                         __executeExternalPost('8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
                             console.log(result);
@@ -169,48 +185,12 @@
             })
         }
 
-
-        // var __select = function(){
-        //     $('.field_office_update').empty();
-
-        //     __executeExternalGet('8088/department/list').done(function (result) {
-        //         console.log(result)
-        //         if (result.status != "ERROR") {
-        //             $('.field_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-        //             result.forEach(function(data){
-        //                 $('.field_office_update').append(
-        //                     "<option value="+data.id+">"+data.name+"</option>");
-        //             });
-
-        //         } else {
-        //             console.log("failed fetching docket list")
-        //         }
-        //     })
-        // }
-        // __select();
-
         setTimeout(function () {
             __fields();
             $("#spinner_update").hide();
             $('.card-body').find('input, select, button').prop('disabled', false);
             $('.btn-confirm_update').prop('disabled', false);
-        }, 1000);
+        }, 0);
 
-        // var checkbox = document.getElementsByClassName("middleNameCheck")[0];
-        // checkbox.addEventListener("change", toggleCheckbox);
-        // var inputBoxMiddleName = document.getElementsByClassName("middleName_update")[0];
-
-        // function toggleCheckbox() {
-        //     if (checkbox.checked) {
-        //         console.log("The checkbox is checked.");
-        //         inputBoxMiddleName.disabled = true;
-        //         inputBoxMiddleName.placeholder = "N/A";
-        //         inputBoxMiddleName.value = "";
-        //     } else {
-        //         console.log("The checkbox is not checked.");
-        //         inputBoxMiddleName.disabled = false;
-        //         inputBoxMiddleName.placeholder = "e.g A.";
-        //     }
-        // }
 
     } )( jQuery );

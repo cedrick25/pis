@@ -611,7 +611,7 @@
                 let managerIdPayload = "";
                 var userRoleName = $(`.user_roles option:selected`).data('name');
                 if ($(".user_roles").val() === "72" || userRoleName === "TSD - Staff") {
-                    managerIdPayload = JSON.stringify([$.cookie("uuid")])
+                    managerIdPayload = JSON.stringify([])
                 } else {
                     managerIdPayload = JSON.stringify($(".manager").val())
                 }
@@ -632,6 +632,7 @@
                         "roleId"        : $(".user_roles").val(),
                         "managerId"     : managerIdPayload
                     }
+                    console.log(payload)
                 __executeExternalPost('8088/user/create',JSON.stringify(payload)).done(function (result) {
                     if (result.status != "ERROR") {
                         $(".form-control").val('');

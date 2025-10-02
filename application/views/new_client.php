@@ -87,10 +87,10 @@
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birthdate</label></div>
 			                        <div class="col-12 col-md-9"><input type="date" class="form-control birthdate"></div>
 			                    </div>
-			                    <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+			                    <!-- <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Birth Place</label></div>
 			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Birthplace" class="form-control b_place"></div>
-			                    </div>
+			                    </div> -->
                                 <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
                                     <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Enter Address" class="form-control address"></div>
