@@ -29,6 +29,7 @@
     <script src="assets/js/webcam.min.js"></script>
     <script src="assets/js/webcam.js"></script>
     <script src="assets/js/jspdf.min.js"></script>
+    <script src="assets/js/jspdf.plugin.autotable.js"></script>
     
 
     <script type="text/javascript">

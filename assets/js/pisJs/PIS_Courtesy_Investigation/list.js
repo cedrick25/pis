@@ -143,13 +143,11 @@
             $(".btn_update").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var officeId = $.cookie("field_office_id");
-                // window.location.href = 'http://ppis.probation.gov.ph/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
                 window.location.href = api+'/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
             })
             $(".btn_view").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var officeId = $.cookie("field_office_id");
-                // window.location.href = 'http://ppis.probation.gov.ph/pis/investigation_docket_update?docket_number='+docket_number+'&officeId='+officeId;
                 window.location.href = api+'/pis/investigation_docket_view?docket_number='+docket_number+'&officeId='+officeId;
             })
             $(".btn_attachments").unbind("click").on("click", function(){
@@ -157,8 +155,6 @@
                 var id = $(this).data("id");
                 var type = $(this).data("type");
                 var fi = $(this).data("oi");
-                // var senderId = $(this).data("sender");
-                // window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderId='+senderId;
                 window.location.href = api+'/pis/probation-courtesy-investigation-uploads?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
             })
         }
@@ -174,11 +170,10 @@
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
                     { "width": "15%", "targets": [1] },
-                    { "width": "10%", "targets": [2] },
-                    { "width": "17%", "targets": [3] },
-                    { "width": "13%", "targets": [4] },
-                    { "width": "15%", "targets": [5] },
-                    { "width": "25%", "targets": [6] }
+                    { "width": "20%", "targets": [2] },
+                    { "width": "15%", "targets": [3] },
+                    { "width": "15%", "targets": [4] },
+                    { "width": "30%", "targets": [5] }
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -222,18 +217,31 @@
                     "data": 'docketNumber'
                 },
                 {
-                    "data": 'receivedDateByPPO'
-                },
-                {
                     "data": null,
-                    render: function (data, type, row) {
-                        var fullName = `${data.firstName === null ? "" : data.firstName} ${data.middleName === null ? "" : data.middleName} ${data.lastName === null ? "" : data.lastName} ${data.suffixName === null ? "" : data.suffixName} `
-                        // var fullName = data.firstName  + " " + data.middleName + " " + data.lastName + " " + data.suffixName;
-                        return fullName;
+                    "render": function (data, type, row, meta) {
+                        return `${data.receivedDateByPPO === null ? "N/A" : data.receivedDateByPPO}`
                     }
                 },
                 {
-                    "data": 'criminalCaseNumber'
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        var client_fo = data.fieldOfficeId;
+                        var client_id = data.id;
+                        // Check if all parts are null
+                        if (
+                            data.firstName === null &&
+                            data.middleName === null &&
+                            data.lastName === null &&
+                            data.suffixName === null
+                        ) {
+                            var name = data.fullName || "N/A";
+                        } else {
+                            var name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`;
+                        }
+
+                        var nameLink = `${name.trim()}`;
+                        return nameLink;
+                    }
                 },
                 {
                     "data": 'fieldOfficeName'

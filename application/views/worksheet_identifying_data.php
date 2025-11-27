@@ -7,6 +7,17 @@
       -webkit-tap-highlight-color: rgba(255,255,255,0);
     }
 
+    .custom-col {
+      margin-right: 0;
+      margin-left: 0;
+
+      > .col,
+      > [class*="col-"] {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+    }
+
     /* Full screen semi-transparent overlay */
     .overlay {
       position: fixed;
@@ -98,81 +109,67 @@
     </div>
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <h6 class="modal-title warningModalTitle" id="mediumModalLabel"></h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                <div class="alert alert-success" role="alert" id="tabSuccess" style="display:none">
                     <i class="fa fa-check"></i>
-                        Proceeded Successfully  
+                        Success!
                 </div>
                 <div class="modal-body">
-                    <p>
-                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    <p style="color: black;">
+                        Are you sure you want to proceed to <span id="tabName" class="text-primary"></span> tab ?
+                        <br><span>All the unsaved changes you've made will be lost.</span>
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Proceed</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="cameraModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document" style="max-width: 703px;">
+    <div class="modal fade" id="saveModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="false">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Capture Camera</h5>
+                    <h6 class="modal-title saveModalTitle" id="mediumModalLabel">Save Changes</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="false">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body col-md-12">
-                     <div class="container-fluid" id='camcam'>
-                      <a class='btn btn-block btn-primary text-white col-sm-12 col-md-12' id='open'> Open cam</a>
-                      <br><br>
-                      <div class="row">
-                        <div class="col" style="text-align: center;">
-                          <div id="wrap">
-                          <div id='cont'>
-                            <div id="vid" class='son' >
-                          <video id='video'></video>
-                            </div>
-                            <div id="capture" class='son'>
-                          <canvas id='canvas'></canvas>
-                          <canvas id='blank' style='display:none;'></canvas>
-                            </div>
-                            <div id="control">
-                              <div class="container">
-                                  <div class="row">
-                                    <div class="col-md-6"><a id='retake' class='btn btn-block m-1 hov'><i class="fa fa-refresh"></i></a></div>
-                                    <div class="col-md-6"><a id='snap' class='btn btn-block m-1 hov'><i class="fa fa-camera"></i></a></div>
-                                    <!-- <div class="col-md-4"><a id='close' class='btn btn-block m-1 hov'><i class="fa fa-times"></i></a></div> -->
-                                  </div>
-                                </div>
-                            </div>
-                          </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div class="alert alert-success" role="alert" id="success_photo_capture" style="display:none">
+                <div class="alert alert-success" role="alert" id="create_success" style="display:none">
                     <i class="fa fa-check"></i>
-                        Photo Capture Successfully Uploaded
+                        Saved Successfully!
+                </div>
+                <div class="alert alert-success" role="alert" id="update_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Updated Successfully!
+                </div>
+                <div class="modal-body">
+                    <p id="saveMessage" style="display:none; color: black;">
+                        Before saving, please ensure all required fields are completed and accurate.
+                    </p>
+                    <p id="updateMessage" style="display:none; color: black;">
+                        <span class="text-danger">Warning: Updating this record will permanently overwrite existing data. This action cannot be undone.</span><br>
+                        <span>Do you wish to continue?</span>
+                    </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="cancel_modal" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-save" style="display:none;">Save Changes</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-update" style="display:none;">Update Changes</button>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
@@ -210,34 +207,31 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active idenData" href="#">Identifying Data</a>
+                                        <a class="nav-link active identifying_data" href="#" data-name="Identifying Data">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
+                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Offense">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link prior_records" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
+                                        <a class="nav-link prior_records" href="#" data-toggle="modal" data-target="#warningModal" data-name="Prior Records">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link identification_data" href="#" data-toggle="modal" data-target="#warningModal" data-name="Identification Data">Identification Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socio_economic" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
+                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Family Background">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link residence_economic" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
+                                        <a class="nav-link present_situation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Situation">Present Situation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouse_children" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Residence/Economic Conditions">Educational History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
+                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Employment History">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal" data-name="Community background/Environmental Factor">Community Background/Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -246,43 +240,39 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div style="margin-bottom: 30px; margin-right: 90px; text-align: right;">
-                                    <img class="align-content" id="client_photo" src="images/logoo.jpg" alt="" style="max-width: 20%;">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label class="form-label">Petitioner's Name</label>
+                                        <input type="text" class="form-control data_name" placeholder="Name">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label class="form-label">Alias/es</label>
+                                        <input type="text" class="form-control alias" placeholder="Alias/es">
+                                    </div>
                                 </div>
-                                <div style="margin-bottom: 30px; margin-right: 70px; text-align: right;">
-                                    <input type="file" id="file-input" style="display: none">
-                                    <button type="button" class="btn btn-primary btn-sm btn-upload">Upload Photo</button>
-                                    <button type="button" type="submit" data-toggle="modal" data-target="#cameraModal" class="btn btn-success btn-sm btn-take">Take Photo</button>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label class="form-label">Date of Initital Interview</label>
+                                        <input type="date" class="form-control date_interviewed">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label class="form-label">Interviewed By</label>
+                                        <input type="text" class="form-control alias" placeholder="Interviewed By">
+                                    </div>
                                 </div>
-                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Name" class="form-control data_name"></div>
-                                </div>
-                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Initital Interview</label></div>
-                                    <div class="col-12 col-md-9"><input type="date" class="form-control data_interview"></div>
-                                </div>
-                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alias(es)</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Alias(es)" class="form-control alias"></div>
-                                </div>
-                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">True Name</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="True Name" class="form-control true_name"></div>
-                                </div>
-                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Present Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Address" class="form-control present_add"></div>
-                                </div>
-                                <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Permanent Address</label></div>
-                                    <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Permanent Address" class="form-control permanent_add"></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Present Address</label>
+                                        <input type="text" name="text-input" placeholder="Address" class="form-control present_add">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Permanent Address</label>
+                                        <input type="text" name="text-input" placeholder="Permanent Address" class="form-control permanent_add">
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
-                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
-                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-saveData btn-sm float-right">Save</button>
                             </div>
                         </div>
                     </div>

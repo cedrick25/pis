@@ -51,7 +51,7 @@
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="investigation_docketing">Docketing</a></li>
-                            <li class="active">Courtesy Supervision Docket list</li>
+                            <li class="active">Courtesy Investigation Docket list</li>
                         </ol>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Courtesy Supervision Docket List</strong>
+                                <strong class="card-title">Courtesy Investigation Docket List</strong>
                                 <!-- <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right pb_cinv_add" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                                 <a href="probation-courtesy-investigation-create"> <button class="btn btn-sm btn-success float-right pb_csup_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>
@@ -73,9 +73,8 @@
                                     <thead>
                                         <th>#</th>
                                         <th>Docket Number</th>
-                                        <th>Received Date</th>
+                                        <th>Date Completed and Returned</th>
                                         <th>Name</th>
-                                        <th>Criminal Case No.</th>
                                         <th>Field Office</th>
                                         <th>Actions</th>
                                     </thead>
@@ -97,7 +96,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Courtesy_Supervision/list.js">
+    <script src="assets/js/pisJs/PIS_Courtesy_Investigation/list.js">
 
     </script>
 

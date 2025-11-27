@@ -108,26 +108,62 @@
     <!-- Left Panel -->
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <h6 class="modal-title warningModalTitle" id="mediumModalLabel"></h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                <div class="alert alert-success" role="alert" id="tabSuccess" style="display:none">
                     <i class="fa fa-check"></i>
-                        Proceeded Successfully  
+                        Success!
                 </div>
                 <div class="modal-body">
-                    <p>
-                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    <p style="color: black;">
+                        Are you sure you want to proceed to <span id="tabName" class="text-primary"></span> tab ?
+                        <br><span>All the unsaved changes you've made will be lost.</span> 
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="false">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title saveModalTitle" id="mediumModalLabel">Save Changes</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="create_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Saved Successfully!
+                </div>
+                <div class="alert alert-success" role="alert" id="update_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Updated Successfully!
+                </div>
+                <div class="modal-body">
+                    <p id="saveMessage" style="display:none; color: black;">
+                        Before saving, please ensure all required fields are completed and accurate.
+                    </p>
+                    <p id="updateMessage" style="display:none; color: black;">
+                        <span class="text-danger">Warning: Updating this record will permanently overwrite existing data. This action cannot be undone.</span><br>
+                        <span>Do you wish to continue?</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-save" style="display:none;">Save Changes</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-update" style="display:none;">Update Changes</button>
                 </div>
             </div>
         </div>
@@ -163,164 +199,221 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Petitioner's Employment History</strong>
+                                <strong class="card-title">EMPLOYMENT HISTORY</strong>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link identifying_datan" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
+                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal" data-name="Identifying Data">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
+                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Offense">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link prior_record" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
+                                        <a class="nav-link prior_records" href="#" data-toggle="modal" data-target="#warningModal" data-name="Prior Records">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link identification_data" href="#" data-toggle="modal" data-target="#warningModal" data-name="Identification Data">Identification Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socio_economic" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
+                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Family Background">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link residence_economic" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
+                                        <a class="nav-link present_situation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Situation">Present Situation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouse_children" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Educational History">Educational History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
+                                        <a class="nav-link active employment_history" href="#" data-name="Employment History">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active empHis" href="#">Employment History</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal" data-name="Community background/Environmental Factor">Community Background/Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
                                 </div>
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Added  
-                                </div>
-                                        
-                                <fieldset class="row form-group col col-md-12">
-                                        <legend>Employment History</legend>
-                                        <div class="col-12">
-                                            <div class="col-12">
-                                                <button type="button" class="add_more_emp btn btn-primary btn-sm float-right">Add more</button>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                Petitioner's Previous Job List
+                                                <div>
+                                                    <a data-toggle="collapse" href="#previousJobCard" role="button" aria-expanded="true" aria-controls="previousJobCard">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <br><br><br>
-                                        <div class="emp_history">
-                                        </div>
-                                </fieldset>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Status of Employment</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control emp_status select2">
-                                                <option value="" selected disabled>Select</option>
-                                                <option value="REGULAR">Regular</option>
-                                                <option value="IRREGULAR">Irregular</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specStatus"></textarea></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Means of Support</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control emp_support select2">
-                                                <option value="" selected disabled>Select Means of Support</option>
-                                                <option value="CHILDREN SUPPORT">Children Support</option>
-                                                <option value="OTHERS">Others</option>
-                                                <option value="PENSION">Pension</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_specSupp"></textarea></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Employable Skills</label></div>
-                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_skills"></div>
-                                    </div>
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Other Source of income</label></div>
-                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_otherSource"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Physical Health</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control emp_health select2">
-                                                <option value="" selected disabled>Select Physical Health</option>
-                                                <option value="FAIR">Fair</option>
-                                                <option value="POOR">Poor</option>
-                                                <option value="SATISFACTORY">Satisfactory</option>
-                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainHealth"></textarea></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Previous Treatment</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control emp_treatment select2">
-                                                <option value="" selected disabled>Select</option>
-                                                <option value="NONE">None</option>
-                                                <option value="YES">Yes</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group col-md-6 hosp_name" style="display:none;">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Hospital Name/s</label></div>
-                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_hosName"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6 date_hosp" style="display:none;">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date/s Hospitalized</label></div>
-                                        <div class="col-3 col-md-9"><input type="text" name="text-input" placeholder=" " class="form-control emp_dateHos"></div>
-                                    </div>
-                                    <div class="row form-group col-md-6 use_drug" style="display:none;">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Use of Alcohol/Drugs</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control emp_useDrug select2">
-                                                <option value="" selected disabled>Select</option>
-                                                <option value="NO">No</option>
-                                                <option value="OCCASIONALLY">Occasionally</option>
-                                                <option value="YES">Yes</option>
-                                            </select>
+                                        <div id="previousJobCard" class="collapse show">
+                                            <div class="card-body">
+                                                <ul class="list-group list-group-flush" id="previous_job_list" style="padding-bottom: 5px;">
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6 drug_explain" style="display:none;">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control emp_explainDrug"></textarea></div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Status of Employment/Self Employment</label>
+                                        <select class="form-control employment_status select2">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="regular">Regular</option>
+                                            <option value="irregular">Irregular</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Specify</label>
+                                        <input type="text" name="text-input" placeholder="Specify" class="form-control specify_employment_status">
                                     </div>
                                 </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">If Unemployed, State Means of Support</label>
+                                        <select class="form-control means_of_support select2">
+                                            <option value="" selected disabled>Select Means of Support</option>
+                                            <option value="children_support">Children Support</option>
+                                            <option value="pension">Pension</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Specify</label>
+                                        <input type="text" name="text-input" placeholder="Specify" class="form-control specify_means_of_support">
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Employable Skills</label>
+                                        <select class="form-control employable_skills select2">
+                                            <option value="" selected disabled>Select Skills</option>
+                                            <option value="auto_mechanic">Auto Mechanic</option>
+                                            <option value="driver">Driver</option>
+                                            <option value="welder">Welder</option>
+                                            <option value="electrician">Electrician</option>
+                                            <option value="plumber">Plumber</option>
+                                            <option value="mason">Mason</option>
+                                            <option value="carpenter">Carpenter</option>
+                                            <option value="baker">Baker</option>
+                                            <option value="hollow_block_maker">Hollow Block Maker</option>
+                                            <option value="house_painter">House Painter</option>
+                                            <option value="portrait_artist">Portrait Artist</option>
+                                            <option value="billboard_artist">Billboard Artist</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="other_employable_skills_field" style="display:none;">
+                                        <label for="text-input" class=" form-control-label">Other Skills</label>
+                                        <input type="text" name="text-input" placeholder="Other Skills" class="form-control other_skills">
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Other Source of Income</label>
+                                        <select class="form-control other_source_income select2">
+                                            <option value="" selected disabled>Select Source of Income</option>
+                                            <option value="sari_sari_store">Sari-Sari Store</option>
+                                            <option value="ambulant_vendor">Ambulant Vendor</option>
+                                            <option value="balut_vendor">Balut Vendor</option>
+                                            <option value="fish_vendor">Fish Vendor</option>
+                                            <option value="bote_garapa">Bote-Garapa</option>
+                                            <option value="junk_collector">Junk Collector</option>
+                                            <option value="piggery">Piggery</option>
+                                            <option value="poultry_raising">Poultry Raising</option>
+                                            <option value="flower_gardening">Flower Gardening</option>
+                                            <option value="vegetable_gardening">Vegetable Gardening</option>
+                                            <option value="cattle_raising">Cattle Raising</option>
+                                            <option value="farming">Farming</option>
+                                            <option value="machine_aide">Machine Aide</option>
+                                            <option value="metro_aide">Metro Aide</option>
+                                            <option value="janitor">Janitor</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="other_source_income_field" style="display:none;">
+                                        <label for="text-input" class=" form-control-label">Other Source of Income</label>
+                                        <input type="text" name="text-input" placeholder="Other Source of Income" class="form-control other_income">
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Physical Health</label>
+                                        <select class="form-control physical_health select2">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="poor">Poor</option>
+                                            <option value="fair">Fair</option>
+                                            <option value="satisfactory">Satisfactory</option>
+                                            <option value="very_satisfactory">Very Satisfactory</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Explain</label>
+                                        <textarea placeholder="Other Source of Income" class="form-control explainHealthCondition"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Previous Treatment/Hospitalization</label>
+                                        <select class="form-control previous_treatment select2">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="none">None</option>
+                                            <option value="yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="specify_treatment_field" style="display: none;">
+                                        <label for="text-input" class=" form-control-label">Specify</label>
+                                        <input type="text" name="text-input" placeholder="Specify" class="form-control specify_treatment">
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" id="previousHospitalizationsList" style="display: none;">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                Previous Hospitalizations
+                                                <div>
+                                                    <a data-toggle="collapse" href="#previousHospitalizationCard" role="button" aria-expanded="true" aria-controls="previousHospitalizationCard">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="previousHospitalizationCard" class="collapse show">
+                                            <div class="card-body">
+                                                <ul class="list-group list-group-flush" id="previous_hospitalization_list" style="padding-bottom: 5px;">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Use of Alcohol/Drugs</label>
+                                        <select class="form-control drug_usage select2">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="occasionally">Occasionally</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Explain</label>
+                                        <textarea placeholder="Explain" class="form-control explain_use_of_drugs"></textarea>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Number of Dependents (Children)</label>
+                                        <input type="text" name="text-input" placeholder="Number of Dependents" class="form-control no_of_dependents_children">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Number of Dependents (Others)</label>
+                                        <input type="text" name="text-input" placeholder="Number of Dependents" class="form-control no_of_dependents_others">
+                                    </div>
+                                </div> -->
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
-                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
-                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-saveData btn-sm float-right">Save</button>
                             </div>
                         </div>
                     </div>

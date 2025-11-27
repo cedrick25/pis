@@ -400,6 +400,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('worksheet_identifying_data');
 	}
+	public function worksheet_identification_data()
+	{
+		$this->load->view('worksheet_identification_data');
+	}
 	public function worksheet_present_offense()
 	{
 		$this->load->view('worksheet_present_offense');
@@ -412,9 +416,9 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('worksheet_family_background');
 	}
-	public function worksheet_socio_economic()
+	public function worksheet_present_situation()
 	{
-		$this->load->view('worksheet_socio_economic');
+		$this->load->view('worksheet_present_situation');
 	}
 	public function worksheet_spouse_children()
 	{

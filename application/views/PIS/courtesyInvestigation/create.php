@@ -44,8 +44,6 @@
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Docket Number" class="form-control docket_number"></div>
                                     </div>
-                                </div>
-                                <div class="form-row col-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
                                         <div class="col-12 col-md-9">
@@ -53,20 +51,25 @@
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-row col-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
                                         <div class="col-12 col-md-9">
                                             <select class="form-control caseload select2">
-                                                <option value="" selected disabled>Select Caseload</option>
-                                                <option value="ACCOMPLISHED_GENERAL_INTER_OFFICE_REFERRAL">Accomplished General Inter-Office Referral</option>
-                                                <option value="COURTESY_PROBATION_INVESTIGATION_REPORT">Courtesy Probation Investigation Report</option>
-                                                <option value="FULL BLOWN COURTESY INVESTIGATION REPORT">Full Blown Courtesy Investigation Report</option>
-                                                <option value="OTHER_DOCUMENT/S">Other Document/s</option>
+                                                <option value="" selected disabled>Select Type</option>
+                                                <option value="Courtesy Probation Investigation Report">Courtesy Probation Investigation Report</option>
+                                                <option value="Full Blown Courtesy Investigation Report">Full Blown Courtesy Investigation Report</option>
+                                                <option value="Other Document/s">Other Document/s</option>
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Completed and Returned</label></div>
+                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="" class="form-control date_completed_and_returned"></div>
+                                    </div>
                                 </div>
-                                <div class="form-row col-12">
+<!--                                 <div class="form-row col-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
                                         <div class="col-12 col-md-9">
@@ -88,13 +91,7 @@
                                         <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reasons</label></div>
                                         <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Court of Origin" class="form-control reasons"></div>
                                     </div>
-                                </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Completed and Returned</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="" class="form-control date_completed_and_returned"></div>
-                                    </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="card-footer">
 			                    <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>

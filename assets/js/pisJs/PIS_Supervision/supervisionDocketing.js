@@ -225,17 +225,37 @@
                     "data": 'docketNumber'
                 },
                 {
-                    "data": 'receivedDateByPPO'
-                },
-                {
                     "data": null,
-                    render: function (data, type, row) {
-                        var fullName = data.firstName + " " + data.middleName + " " + data.lastName + " " + data.suffixName;
-                        return fullName;
+                    "render": function (data, type, row, meta) {
+                        return `${data.receivedDateByPPO === null ? "N/A" : data.receivedDateByPPO}`
                     }
                 },
                 {
-                    "data": 'criminalCaseNumber'
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        var client_fo = data.fieldOfficeId;
+                        var client_id = data.id;
+                        // Check if all parts are null
+                        if (
+                            data.firstName === null &&
+                            data.middleName === null &&
+                            data.lastName === null &&
+                            data.suffixName === null
+                        ) {
+                            var name = data.fullName || "N/A";
+                        } else {
+                            var name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`;
+                        }
+
+                        var nameLink = `${name.trim()}`;
+                        return nameLink;
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        return `${data.criminalCaseNumber === null ? "N/A" : data.criminalCaseNumber}`
+                    }
                 },
                 {
                     "data": 'fieldOfficeName'
@@ -243,7 +263,7 @@
                 {
                     "data": null,
                     render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments pb_sup_attachments' type='submit' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                        return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments pb_sup_attachments' type='submit' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_delete' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
                         // return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments pb_sup_attachments' type='submit' style='display: none;' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
                     }
                 }

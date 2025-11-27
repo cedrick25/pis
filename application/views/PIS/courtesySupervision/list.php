@@ -51,7 +51,7 @@
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="investigation_docketing">Docketing</a></li>
-                            <li class="active">Courtesy Investigation Docket list</li>
+                            <li class="active">Courtesy Supervision Docket list</li>
                         </ol>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Courtesy Investigation Docket List</strong>
+                                <strong class="card-title">Courtesy Supervision Docket List</strong>
                                 <!-- <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right pb_cinv_add" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                                 <a href=""> <button class="btn btn-sm btn-success float-right pb_cinv_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
                             </div>

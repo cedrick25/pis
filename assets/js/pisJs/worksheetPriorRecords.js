@@ -109,84 +109,11 @@
         var client_id = GetURLParameter('client_id');
         var foid = GetURLParameter('field_office_id');
         var field_office_id = $.cookie('field_office_id');
+        var status = GetURLParameter('status');
 
-        $(".list").html(`
-            <div class="list_records">
-                <div class="row form-group col-md-12">
-                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No."></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition"></div>
-                </div>
-            </div>`
-        );
 
-        $(".list_info").html(`
-            <div class="list_information">
-                <div class="row form-group col-md-12">
-                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars"></div>
-                </div>
-            </div>`
-        );
+        function collectPriorRecordsData() {
 
-        $(".add_more").unbind("click").on("click", function(){
-            // console.log("clicked");
-
-            $(".list").append(`
-            <div class="list_records">
-                <div class="row form-group col-md-12">
-                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No."></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where"></div>
-                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition"></div>
-                </div>
-                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-            </div>
-                `
-            )
-        });
-
-        $(".add_more_info").unbind("click").on("click", function(){
-            // console.log("clicked");
-
-            $(".list_info").append(`
-            <div class="list_information">
-                <div class="row form-group col-md-12">
-                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position"></div>
-                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars"></div>
-                </div>
-                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-            </div>
-                `
-            )
-        });
-
-        $('.list').on('click', '.remove', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
-
-        $('.list_info').on('click', '.remove', function(e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-        });
-
-        let allegedByVal;
-        let derogatoryRecordVal;
-        let probationVal;
-
-        function gatherRecordsData(allegedByVal,derogatoryRecordVal,probationVal) {
             const records = [];
             const agency = $(".agency");
             const cc_no = $(".cc_no");
@@ -197,8 +124,7 @@
 
             const recordInfo = [];
             const source = $(".source");
-            const date = $(".date");
-            const pos = $(".pos");
+            const pos = $(".position");
             const particulars = $(".particulars");
 
             for (var i = 0; i < agency.length; i++) {
@@ -215,275 +141,470 @@
             for (var i = 0; i < source.length; i++) {
                 const list_info = {};
                 list_info.source = $(source[i]).val();
-                list_info.date = $(date[i]).val();
-                list_info.pos = $(pos[i]).val();
+                list_info.position = $(pos[i]).val();
                 list_info.particulars = $(particulars[i]).val();
                 recordInfo.push(list_info);
             }
 
-            var priorRecords = {
-                derogatoryRecord: derogatoryRecordVal,
-                allegedBy: allegedByVal,
-                probation: probationVal,
-                priorRecord: records,
-                recordsInfo: recordInfo
-            }
-            // console.log(priorRecords)
-
-            var payload = {
-                "petitionerId": client_id,
-                "jsonData": JSON.stringify(priorRecords),
-                "type": "priorRecords",
-                "worksheetStatus": "INCOMPLETE",
-                "createdBy": $.cookie("uuid"),
-                "fieldOfficeId": $.cookie("field_office_id")
-            }
-            return payload;
+            return {
+                record      : $(".withRecord").val(),
+                allegedBy   : $(".allegedBy").val(),
+                probation   : $(".hasProbation").val(),
+                priorRecord : records,
+                recordsInfo : recordInfo
+            };
         }
 
-        function radioButtonsListener(radioButtonName) {
-            var radioButtons = document.getElementsByName(radioButtonName);
-            
-            radioButtons.forEach(function(radioButton) {
-                radioButton.addEventListener('change', function() {
-                    if (this.value.trim() !== "") {  // Check if value is not empty
-                        var radioName = this.name;
-                        
-                        if (radioName === "allegedby") {
-                            allegedByVal = this.value;
-                        } else if (radioName === "derogatoryRecord") {
-                            derogatoryRecordVal = this.value;
-                        } else if (radioName === "probation") {
-                            probationVal = this.value;
-                        } else {
-                            console.log("Error");
-                        }
-
-                        // Manually trigger change event if value is not empty
-                        $(this).trigger("change");
-                    }
-                });
-            });
-        }
-
-        radioButtonsListener('allegedby')
-        radioButtonsListener('derogatoryRecord')
-        radioButtonsListener('probation')
-
-
-        $(".btn-next").unbind("click").on("click", function(){
-
-            if (allegedByVal && derogatoryRecordVal && probationVal){
-                var dataPayload = gatherRecordsData(allegedByVal,derogatoryRecordVal,probationVal);
-            } else {
-                console.log("Radio Button not completed")
-            }
-
-            var required = ["agency", "cc_no", "offense", "when", "where", "disposition", "source", "date", "pos", "particulars"];
-
-            required.forEach(function(data) {
-                // First, remove the existing error message and error class if present
-                $("." + data).removeClass("error_field");
-                $("." + data).next('.errorRequired').remove();
         
-                // Now check if the field is empty or null
-                if ($("." + data).val() === "" || $("." + data).val() === null) {
-                    $("." + data).addClass("error_field");
-                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
-                } 
-            });
+        function worksheetChecker(data) {
 
-            var requiredRadio = ["allegedby", "derogatoryRecord", "probation"];
+            if (!data) data = {};
 
-            requiredRadio.forEach(function(name) {
-                var radioGroup = $("input[name='" + name + "']").closest('.radio-group');
-                $("input[name='" + name + "']").removeClass("error_field");
-                radioGroup.find('.errorRequired').remove();
+            const REQUIRED_SECTIONS = [
+                "identifyingData",
+                "presentOffense",
+                "priorRecords",
+                "identificationData",
+                "familyBackground",
+                "presentSituation",
+                "educationalHistory",
+                "employmentHistory",
+                "communityBackground"
+            ];
 
-                if ($("input[name='" + name + "']:checked").length === 0) {
-                    $("input[name='" + name + "']").addClass("error_field");
-                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px; padding-left: 30px">* required field</span>')
-                        .appendTo(radioGroup);
+            let result = {
+                missingSections: [],
+                completedSections: [],
+                // statusIsNull: !data.worksheetStatus || data.worksheetStatus === "null"
+            };
+
+            REQUIRED_SECTIONS.forEach(section => {
+                if (data[section] && Object.keys(data[section]).length > 0) {
+                    result.completedSections.push(section);
+                } else {
+                    result.missingSections.push(section);
                 }
-
-                // Add change event listener to clear error on selection
-                $("input[name='" + name + "']").on('change', function() {
-                    $("input[name='" + name + "']").removeClass("error_field");
-                    radioGroup.find('.errorRequired').remove();
-                });
             });
 
+            result.isComplete = (result.missingSections.length === 0);
 
-            var requiredFields = $('.errorRequired:visible').length;
-            console.log('Number of required fields: ' + requiredFields);
+            return result;
+        }
 
-            if (requiredFields === 0) {
-                __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
-                    console.log(result);
-                    if (result.status != "ERROR") {
-                        $(".form-control").val('');
-                        $('#success').show();
-                        $(".btn-next").prop('disabled', true);
-                        setTimeout(function () {
-                            $('#success').hide();
-                            $(".overlay").show();
-                            setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".btn-next").prop('disabled', false);
-                                window.location.href = api+'/pis/worksheet_family_background?client_id='+client_id+'&field_office_id='+foid;
-                            }, 500);
-                        }, 2000);
-                    }else{
-                        alert("failed")
-                    }
-                })
+        function saveWorksheet(existing, newPriorRecord) {
+
+            // update identifyingData
+            existing.priorRecords = newPriorRecord;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
             }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "worksheet",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, 
+            newPriorRecord, newIdentificationData, newFamilyBackground, 
+            newPresentSituation, newEducationalHistory, newEmploymentHistory, 
+            newCommunityBackground) {
+
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+            existing.presentOffense = newPresentOffense;
+            existing.priorRecords = newPriorRecord;
+            existing.identificationData = newIdentificationData;
+            existing.familyBackground = newFamilyBackground;
+            existing.presentSituation = newPresentSituation;
+            existing.educationalHistory = newEducationalHistory;
+            existing.employmentHistory = newEmploymentHistory;
+            existing.communityBackground = newCommunityBackground;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "worksheet",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+        
+        // event handler for showing modal upon saving and updating data
+        $(".btn-saveData").unbind("click").on("click", function(){
+            $("#saveModal").modal("show")
         })
 
-        __executeExternalGet('8000/worksheet/getPetitioner/priorRecords/'+client_id).done(function (result) {
+        let recordCounter = 0;
+        let infoCounter = 0;
 
-            var result = result.response;
+        // display buttons and data
+        if (status === "null" || !status || status === "Not Available") {
+            $("#saveModal .saveModalTitle").text("Save Changes")
+            $("#saveModal #saveMessage").show();
+            $("#saveModal .btn-save").show();
+        } else {
+            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
 
-            if (result.status != "ERROR") {
-
-                if (result.worksheetStatus == "INCOMPLETE"){
-
-                    $('.list').empty();
-                    $('.list_info').empty();
-
-                    $(".btn-update").show();
-                    $(".btn-next").hide();
-
-                    var allegedByValue = JSON.parse(result.jsonData).allegedBy;
-                    var derogatoryRecordValue = JSON.parse(result.jsonData).derogatoryRecord;
-                    var probationValue = JSON.parse(result.jsonData).probation;
-
-                    console.log(allegedByValue)
-                    console.log(derogatoryRecordValue)
-                    console.log(probationValue)
-
-                    $('input[name="allegedby"]').each(function() {
-                        if ($(this).val() == allegedByValue) {
-                            $(this).prop("checked", true);
-                            // $(this).trigger("change")
-                            allegedByVal = $(this).val();
-                        }
-                    });
-                    $('input[name="derogatoryRecord"]').each(function() {
-                        if ($(this).val() == derogatoryRecordValue) {
-                            $(this).prop("checked", true);
-                            derogatoryRecordVal = derogatoryRecordValue;
-                        }
-                    });
-                    $('input[name="probation"]').each(function() {
-                        if ($(this).val() == probationValue) {
-                            $(this).prop("checked", true);
-                            probationVal = probationValue;
-                        }
-                    });
-
-                    const recordList = JSON.parse(result.jsonData)
-
-                    recordList.priorRecord.forEach(function(data){
-                        $(".list").append(`
-                            <div class="list_records">
-                                <div class="row form-group col-md-12">
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control agency" placeholder="Agency" value="${data.agency}"></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control cc_no" placeholder="CC No." value="${data.cc_no}"></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control offense" placeholder="Offense" value="${data.offense}"></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control when" placeholder="When" value="${data.when}"></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control where" placeholder="Where" value="${data.where}"></div>
-                                    <div class="col-3 col-md-2"><input type="text" class="form-control disposition" placeholder="Disposition" value="${data.disposition}"></div>
-                                </div>
-                                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-                            </div>`
-                        )
-                        $(`.list .remove`).first().hide();
-
-                        // Show all other close buttons
-                        $(`.list .remove`).not(":first").show();
-                    });
-
-                    recordList.recordsInfo.forEach(function(data){
-                        $(".list_info").append(`
-                            <div class="list_information">
-                                <div class="row form-group col-md-12">
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control source" placeholder="Source" value="${data.source}"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control date" placeholder="Date" value="${data.date}"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control pos" placeholder="Position" value="${data.pos}"></div>
-                                    <div class="col-3 col-md-3"><input type="text" class="form-control particulars" placeholder="Particulars" value="${data.particulars}"></div>
-                                </div>
-                                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-                            </div>
-                        `)
-                        $(`.list_info .remove`).first().hide();
-
-                        // Show all other close buttons
-                        $(`.list_info .remove`).not(":first").show();
-                    });
-
-                }else{
-
-                    $(".btn-next").show();
-                    $(".btn-update").hide();
-                } 
-
-            }
-        })
-
-        $(".btn-update").unbind("click").on("click", function(){
-
-
-            var dataPayload = gatherRecordsData(allegedByVal,derogatoryRecordVal,probationVal);
-            // if (allegedByVal && derogatoryRecordVal && probationVal){
-            //     console.log(allegedby, derogatoryRecord, probationVal)
-            // } else {
-            //     console.log("Radio Button not completed")
-            // }
-            // console.log(dataPayload)
-            __executeExternalPost('8000/worksheet/updatePetitioner/priorRecords/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
+                var result = result.response;
                 if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $(".overlay").show();
-                        $('#success').hide();
-                        $(".btn-update").prop("disabled", true)
-                        setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".btn-update").prop("disabled", false)
-                            window.location.href = api+'/pis/worksheet_family_background?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
+                    let workSheetData = JSON.parse(result.jsonData);
+                    let priorRecords = workSheetData.priorRecords;
+                    if (priorRecords) {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+                        $(".allegedBy").val(priorRecords.allegedBy).trigger("change")
+                        $(".withRecord").val(priorRecords.record).trigger("change")
+                        $(".hasProbation").val(priorRecords.probation).trigger("change")
+                        priorRecords.priorRecord.forEach(function(data, index){
+                            $("#records_list").append(`
+                                    <li class="list-group-item d-flex align-items-center" id="record_list_${index}">
+                                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                            <label class="form-control-label">Agency</label>
+                                            <input type="text" placeholder="Agency" class="form-control agency" value="${data.agency}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                            <label class="form-control-label">CC No.</label>
+                                            <input type="text" placeholder="CC No." class="form-control cc_no" value="${data.cc_no}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                            <label class="form-control-label">Offense</label>
+                                            <input type="text" placeholder="Offense" class="form-control offense" value="${data.offense}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                            <label class="form-control-label">When</label>
+                                            <input type="date" placeholder="When" class="form-control when" value="${data.when}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                            <label class="form-control-label">Where</label>
+                                            <input type="text" placeholder="Where" class="form-control where" value="${data.where}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1">
+                                            <label class="form-control-label">Disposition</label>
+                                            <input type="text" placeholder="Disposition" class="form-control disposition" value="${data.disposition}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="prior_records_button_group_${index}">
+                                        </div>
+                                    </li>
+                                `
+                            )
+                            recordCounter += 1;
+
+                            if (index === 0) {
+                                $(`#prior_records_button_group_${index}`).append(`
+                                    <button type="button" class="btn btn-primary btn-addRecord btn-sm" style="border-radius:2px;" data-id=${index}>
+                                        <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                                    </button>
+                                `)
+                            } else {
+                                $(`#prior_records_button_group_${index}`).append(`
+                                    <button type="button" class="btn btn-danger btn-delRecord btn-sm" style="border-radius:2px;" data-id="${index}">
+                                        <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
+                                    </button>
+                                `)
+
+                            }
+                        })
+
+                        priorRecords.recordsInfo.forEach(function(data, index){
+                            $("#info_list").append(`
+                                    <li class="list-group-item d-flex align-items-center" id="info_list_${index}">
+                                        <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                                            <label class="form-control-label">Source/Date</label>
+                                            <input type="text" placeholder="Source/Date" class="form-control source" value="${data.source}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                                            <label class="form-control-label">Position</label>
+                                            <input type="text" placeholder="Position" class="form-control position" value="${data.position}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                                            <label class="form-control-label">Particulars</label>
+                                            <input type="date" placeholder="Particulars" class="form-control particulars" value="${data.particulars}">
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="info_records_button_group_${index}">
+                                        </div>
+                                    </li>
+                                `
+                            )
+
+                            if (index === 0) {
+                                $(`#info_records_button_group_${index}`).append(`
+                                    <button type="button" class="btn btn-primary btn-addInfo btn-sm" style="border-radius:2px" data-id=${index}>
+                                        <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                                    </button>
+                                `)
+                            } else {
+                                $(`#info_records_button_group_${index}`).append(`
+                                    <button type="button" class="btn btn-danger btn-delInfo btn-sm" style="border-radius:2px" data-id="${index}">
+                                        <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
+                                    </button>
+                                `)
+
+                            }
+                        })
+
+                    } else {
+                        
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+
+                        // append the record list
+                        $("#records_list").append(`
+                            <li class="list-group-item d-flex align-items-center" id="record_list_${recordCounter}">
+                                <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                    <label class="form-control-label">Agency</label>
+                                    <input type="text" placeholder="Agency" class="form-control agency">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                    <label class="form-control-label">CC No.</label>
+                                    <input type="text" placeholder="CC No." class="form-control cc_no">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                    <label class="form-control-label">Offense</label>
+                                    <input type="text" placeholder="Offense" class="form-control offense">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                    <label class="form-control-label">When</label>
+                                    <input type="date" placeholder="When" class="form-control when">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                    <label class="form-control-label">Where</label>
+                                    <input type="text" placeholder="Where" class="form-control where">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1">
+                                    <label class="form-control-label">Disposition</label>
+                                    <input type="text" placeholder="Disposition" class="form-control disposition">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
+                                    <button type="button" class="btn btn-primary btn-addRecord btn-sm" style="border-radius:2px" data-id="${recordCounter}">
+                                        <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                                    </button>
+                                </div>
+                            </li>
+                        `)
+                        // append info list
+                        $("#info_list").append(`
+                            <li class="list-group-item d-flex align-items-center" id="info_list_${infoCounter}">
+                                <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-control-label">Source/Date</label>
+                                    <input type="text" placeholder="Agency" class="form-control source">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-control-label">Position</label>
+                                    <input type="text" placeholder="CC No." class="form-control position">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                                    <label class="form-control-label">Particulars</label>
+                                    <input type="date" placeholder="When" class="form-control particulars">
+                                </div>
+                                <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
+                                    <button type="button" class="btn btn-primary btn-addInfo btn-sm" style="border-radius:2px" data-id="${infoCounter}">
+                                        <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                                    </button>
+                                </div>
+                            </li>
+                        `)
+                    }
                 }
             })
-        })
+        }
+
+        $(document).on("click", ".btn-delRecord", function(){
+            var id = $(this).data("id")
+            console.log(id)
+            $(`#record_list_${id}`).remove()
+        });
+
+        $(document).on("click", ".btn-delInfo", function(){
+            var id = $(this).data("id")
+            $(`#info_list_${id}`).remove()
+        });
+
+        // event handler for adding records
+        $(document).on("click", ".btn-addRecord", function(){
+            recordCounter += 1;
+        // $("#records_list .btn-addRecord").unbind("click").on("click", function(){
+            $("#records_list").append(`
+                    <li class="list-group-item d-flex align-items-center" id="record_list_${recordCounter}">
+                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                            <label class="form-control-label">Agency</label>
+                            <input type="text" placeholder="Agency" class="form-control agency">
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                            <label class="form-control-label">CC No.</label>
+                            <input type="text" placeholder="CC No." class="form-control cc_no">
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                            <label class="form-control-label">Offense</label>
+                            <input type="text" placeholder="Offense" class="form-control offense">
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                            <label class="form-control-label">When</label>
+                            <input type="date" placeholder="When" class="form-control when">
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                            <label class="form-control-label">Where</label>
+                            <input type="text" placeholder="Where" class="form-control where">
+                        </div>
+                        <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1">
+                            <label class="form-control-label">Disposition</label>
+                            <input type="text" placeholder="Disposition" class="form-control disposition">
+                        </div>
+                        <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
+                            <button type="button" class="btn btn-danger btn-delRecord btn-sm" style="border-radius:2px" data-id="${recordCounter}">
+                                <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
+                            </button>
+                        </div>
+                    </li>
+                `
+            )
+        });
+
+        // event handler for adding information
+        $(document).on("click", ".btn-addInfo", function(){
+            infoCounter += 1;
+            $("#info_list").append(`
+                <li class="list-group-item d-flex align-items-center" id="info_list_${infoCounter}">
+                    <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-control-label">Source/Date</label>
+                        <input type="text" placeholder="Source/Date" class="form-control source">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-control-label">Position</label>
+                        <input type="text" placeholder="Position" class="form-control position">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-control-label">Particulars</label>
+                        <input type="date" placeholder="Prticulars" class="form-control particulars">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
+                        <button type="button" class="btn btn-danger btn-delInfo btn-sm" style="border-radius:2px" data-id="${infoCounter}">
+                            <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
+                        </button>
+                    </div>
+                </li> `
+            )
+        });
+        
+        // event handler for saving data
+        $("#saveModal .btn-save").unbind("click").on("click", function () {
+
+            let data = collectPriorRecordsData();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = saveWorksheet(existing, data);
+
+                    __executeExternalPost("8000/worksheet/create", JSON.stringify(payload))
+                        .done(function (res) {
+
+                            if (res.status === "ERROR") return;
+
+                            $(".form-control").val('');
+                            $('#create_success').show();
+
+                            setTimeout(() => {
+                                $('#create_success').hide();
+                                $('#saveModal').modal("hide");
+                                window.location.href =
+                                    `${api}/pis/worksheet_identification_data?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                            }, 2000);
+                        });
+                });
+        });
+
+        // event handler for updating data
+        $("#saveModal .btn-update").unbind("click").on("click", function () {
+
+            let data = collectPriorRecordsData();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+                    let identifyingData = workSheetData.identifyingData;
+                    let presentOffense = workSheetData.presentOffense;
+                    let identificationData = workSheetData.identificationData;
+                    let familyBackground = workSheetData.familyBackground;
+                    let presentSituation = workSheetData.presentSituation;
+                    let educationalHistory = workSheetData.educationalHistory;
+                    let employmentHistory = workSheetData.employmentHistory;
+                    let communityBackground = workSheetData.communityBackground;
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = updateWorksheet(existing, identifyingData, presentOffense, data, identificationData, familyBackground, presentSituation, educationalHistory, employmentHistory, communityBackground);
+                    // console.log(JSON.parse(payload.jsonData))
+                    __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
+                        .done(function (res) {
+                            if (res.status === "ERROR") return;
+                            $(".form-control").val('');
+                            $('#update_success').show();
+                            $("#saveModal .btn-update").prop("disabled", true)
+
+                            setTimeout(() => {
+                                $('#update_success').hide();
+                                $('#saveModal').modal("hide");
+                                $("#saveModal .btn-update").prop("disabled", false)
+                                window.location.href =
+                                    `${api}/pis/worksheet_identification_data?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                            }, 2000);
+                        });
+                });
+        });
 
         function setupWorksheetClickHandler(worksheetType) {
             $(`.${worksheetType}`).unbind("click").on("click", function () {
+                var tabName = $(this).data("name")
+                $(".warningModalTitle").text(`${tabName} Tab`)
+                $("#tabName").text(tabName)
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
                     $("#warningModal").modal("hide");
-                    $(".overlay").show();
                     setTimeout(function () {
-                        $(".overlay").hide();
-                        window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
+                        // $(".overlay").hide();
+                        window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`;
                     }, 500);
                 });
             });
         }
-        
-        setupWorksheetClickHandler("prior_records");
-        setupWorksheetClickHandler("present_offense");
+
         setupWorksheetClickHandler("identifying_data");
+        setupWorksheetClickHandler("present_offense");
+        setupWorksheetClickHandler("identification_data");
         setupWorksheetClickHandler("family_background");
-        setupWorksheetClickHandler("socio_economic");
-        setupWorksheetClickHandler("residence_economic");
-        setupWorksheetClickHandler("spouse_children");
+        setupWorksheetClickHandler("present_situation");
         setupWorksheetClickHandler("education_history");
         setupWorksheetClickHandler("employment_history");
-        setupWorksheetClickHandler("environmental_factor")
+        setupWorksheetClickHandler("environmental_factor");
 
     } )( jQuery );

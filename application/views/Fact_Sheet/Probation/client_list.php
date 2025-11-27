@@ -39,7 +39,7 @@
         <!-- /header -->
   
         <div class="breadcrumbs">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <div class="page-header float-left">
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
@@ -48,6 +48,16 @@
                             <li class="active">Fact Sheet Dashboard</li>
                         </ol>
                     </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="search-container" style="padding-top: 5px; display: flex; align-items: center; justify-content: flex-end;">
+                    <label for="text-input" class="form-control-label" style="margin-right: 10px; padding-top: 7px">Search :</label>
+                    <input type="text" name="first-name-input" placeholder="First Name" class="form-control firstName" style="margin-right: 10px; width: 160px;">
+                    <input type="text" name="last-name-input" placeholder="Last Name" class="form-control lastName" style="margin-right: 10px; width: 160px;">
+                    <button class="btn btn-primary client_search" style="display: flex; align-items: center; gap: 5px;">
+                        <i class="fa fa-search" style="padding: 3px"></i>
+                    </button>
                 </div>
             </div>
         </div>

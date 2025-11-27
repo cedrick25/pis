@@ -143,7 +143,7 @@
     }
 
     var dataTable;
-    var currentType = "PDL - Investigation"; // Store current type
+    var currentType = "PDL-Investigation"; // Store current type
     var userRole = localStorage.getItem("userRole")
     const managerIds = JSON.parse(localStorage.getItem("managerId") || "[]");
 
@@ -384,7 +384,8 @@
         const firstName = document.querySelector('.firstName').value;
         const lastName = document.querySelector('.lastName').value;
         const fieldOfficeId = "206";
-        const canSeeOtherOffices = false;
+        const canSeeOtherOffices = true;
+        const clientType = currentType;
 
         $('.table_head').DataTable({
             "processing": false,
@@ -403,7 +404,7 @@
                 { width: "25%", targets: [6] }
             ],
             "ajax": {
-                url: ___ctx+'8000/petitioner/search?page=0&size=10',
+                url: `${___ctx}8000/petitioner/search/${clientType}?page=0&size=10`,
                 type: 'POST',
                 headers: {
                     "Content-Type": "application/json"

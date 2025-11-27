@@ -692,13 +692,13 @@ function drawTable() {
         "searching": true,
         "lengthMenu": [10, 25, 50, 100],
         "pageLength": 10,
+        "searching": false,
         "columnDefs": [
             { "width": "5%", "targets": [0] },
             { "width": "25%", "targets": [1] },
             { "width": "25%", "targets": [2] },
             { "width": "25%", "targets": [3] },
             { "width": "20%", "targets": [4] },
-            // { "width": "35%", "targets": [5] },
     ],
     ajax: {
         url: api+"8000/petitioner",
@@ -708,7 +708,6 @@ function drawTable() {
         return {
             page: d.start / d.length,  // Pagination
             size: d.length,            // Page size
-            // name: d.search.value    // Pass search term as 'keyword'
             type: "PROBATIONER",
             officeId: $.cookie('field_office_id')
 
@@ -805,5 +804,60 @@ function tableColumns() {
 }
 
 drawTable();
+
+$(".client_search").unbind("click").on("click", function() {
+    $('.table_head').DataTable().destroy();
+    $('.table_body').empty();
+
+    const firstName = document.querySelector('.firstName').value;
+    const lastName = document.querySelector('.lastName').value;
+    const fieldOfficeId = $.cookie('field_office_id');
+    const canSeeOtherOffices = false;
+    const clientType = "PROBATIONER";
+
+    $('.table_head').DataTable({
+        "processing": false,
+        "serverSide": true,
+        "scrollX": true,
+        "searching": false,
+        "lengthMenu": [10, 25, 50, 100],
+        "pageLength": 10,
+        "columnDefs": [
+            { "width": "5%", "targets": [0] },
+            { "width": "25%", "targets": [1] },
+            { "width": "25%", "targets": [2] },
+            { "width": "25%", "targets": [3] },
+            { "width": "20%", "targets": [4] },
+        ],
+        "ajax": {
+            url: `${___ctx}8000/petitioner/search/${clientType}?page=0&size=10`,
+            type: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: function(d) {
+                // Set page and size as part of the payload, along with other data
+                return JSON.stringify({
+                    page: d.start / d.length,  // Page number
+                    size: d.length,            // Page size
+                    firstName: firstName,
+                    lastName: lastName,
+                    fieldOfficeId: fieldOfficeId,
+                    canSeeOtherOffices: canSeeOtherOffices
+                });
+            },
+            dataSrc: function(json) {
+                json.recordsTotal = json.totalElements;
+                json.recordsFiltered = json.totalElements;
+                return json.content || [];
+            }
+        },
+        columns: tableColumns()
+    });
+
+    $('.table_head').on('draw.dt', function() {
+        buttonFunctionality();
+    });
+});
 
 } )( jQuery );

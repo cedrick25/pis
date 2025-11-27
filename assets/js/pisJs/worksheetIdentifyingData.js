@@ -104,293 +104,252 @@
         var client_id = GetURLParameter('client_id');
         var field_office_id = $.cookie("field_office_id");
         var foid = GetURLParameter('field_office_id');
+        var status = GetURLParameter('status');
 
-        __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
-            if (result.status != "ERROR") {
-                if (result.files.length != 0) {
-                    $('#client_photo').attr('src', api+'8080/file/view/'+result.files[0].id);
-                }
-            }
-        })
-
-        $('#file-input').on('change', function() {
-            var imgavat = $('#client_photo');
-            var file = this.files[0];
-            var formData = new FormData();
-            formData.append('file', file);
-            $.ajax({
-              url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id'), // Replace with the path to your server-side script
-              type: 'POST',
-              data: formData,
-              contentType: false,
-              processData: false,
-              success: function(response) {
-              },
-              error: function(xhr, status, error) {
-                console.log(error);
-              }
-            });
-
-            if (this.files[0]) {   
-                var reader  = new FileReader();
-                reader.readAsDataURL(this.files[0]);
-                reader.onloadend = function () {
-                    imgavat.attr('src', reader.result);
-                };
-            }
-        });
-
-        $('.btn-upload').on('click', function() {
-            $('#file-input').click();
-        });
-
-        $(document).ready(function() {
-            $('#control').hide();
-            $('#video').resize(function(){
-                $('#cont').height($('#video').height());
-                  $('#cont').width($('#video').width());
-                  $('#control').height($('#video').height()*0.1);
-                  $('#control').css('top',$('#video').height()*0.9 );
-                    $('#control').width($('#video').width());
-                    $('#control').show();
-            });
-            function opencam(){
-                $("#wrap").show()
-                navigator.getUserMedia= navigator.getUserMedia ||   navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia ;
-                if(navigator.getUserMedia)
-                {
-                    navigator.getUserMedia({video:true },  streamWebCam ,throwError) ;
-                }
-                    $('#vid').css('z-index','30');
-                    $('#capture').css('z-index','20');
-                    $('#snap').unbind("click").on("click", function(){
-                        var canvas = document.getElementById('canvas');
-                        var context = canvas.getContext('2d');
-                        var video = document.getElementById('video');
-                        context.drawImage(video, 0, 0, canvas.width=video.clientWidth, canvas.height=video.clientHeight);
-                        $('#vid').css('z-index','20');
-                        $('#capture').css('z-index','30');
-
-                        $('.btn_confirm').unbind("click").on("click", function(){
-                            // console.log("opne cam confirm")
-                            var dataURL = canvas.toDataURL();
-                            var blob = dataURItoBlob(dataURL);
-                            handleBlob(blob);
-                        });
-                        function dataURItoBlob(dataURI) {
-                          var byteString = atob(dataURI.split(',')[1]);
-                          var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-                          var ab = new ArrayBuffer(byteString.length);
-                          var ia = new Uint8Array(ab);
-                          for (var i = 0; i < byteString.length; i++) {
-                            ia[i] = byteString.charCodeAt(i);
-                          }
-                          return new Blob([ab], { type: mimeString });
-                        }
-
-                        function handleBlob(blob) {
-                            var formData = new FormData();
-                            formData.append('file', blob, 'image.jpg');
-                            $.ajax({
-                                url: api+"8080/file/upload?uuid="+client_id+"&type=petitioner_profile&createdby="+$.cookie('uuid')+"&version=0&kind=petitioner_profile&officeId="+$.cookie('field_office_id')+"&remarks=petitioner_profile_remarks",
-                                type: 'POST',
-                                    data: formData,
-                                    contentType: false,
-                                    processData: false,
-                                    success: function(response) {
-                                        $("#success_photo_capture").show()
-                                        setTimeout(function () {
-                                            window.location.reload(true);
-                                        }, 1000);
-                                    },
-                                    error: function(xhr, status, error) {
-                                        console.log(error);
-                                    }
-                            });
-                        }
-                    });
-
-                    $('#retake').unbind("click").on("click", function(){
-                        $('#vid').css('z-index','30');
-                        $('#capture').css('z-index','20');
-                    });
-            }
-            function closecam(){
-                $("#wrap").hide()
-                video.pause();
-                try {
-                    video.srcObject = null;
-                } catch (error) {
-                    video.src =null;
-                }
-              var track = strr.getTracks()[0];  // if only one media track
-              // ...
-              track.stop();
-            }
-              var video= document.getElementById('video');
-              var canvas= document.getElementById('canvas');
-              var context= canvas.getContext('2d');
-              var strr;
-              function streamWebCam(stream){
-              const  mediaSource = new MediaSource(stream);
-              try {
-                  video.srcObject = stream;
-                } catch (error) {
-                  video.src = URL.createObjectURL(mediaSource);
-                }
-                video.play();
-                strr=stream;
-              }
-              function throwError(e){
-                alert(e.name);
-              }
-            $('#open').unbind("click").on("click", function(){
-              opencam();
-               $('#control').show();
-            });
-            $('#cancel_modal').unbind("click").on("click", function(){
-              closecam();
-            });
-        });
-
-        function functionIdentifyingData () {
+        // utility for checking the worksheet if complete
+        function collectIdentifyingData() {
             return {
-                name                : $(".data_name").val(),
-                interview           : $(".data_interview").val(),
-                alias               : $(".alias").val(),
-                trueName            : $(".true_name").val(),
-                presentAddress      : $(".present_add").val(),
-                permanentAdress     : $(".permanent_add").val()
-            }
+                name: $(".data_name").val(),
+                interview: $(".date_interviewed").val(),
+                alias: $(".alias").val(),
+                interviewedBy: $(".interviewed_by").val(),
+                presentAddress: $(".present_add").val(),
+                permanentAdress: $(".permanent_add").val()
+            };
         }
 
-        function functionPayload (identifyingData) {
-            return {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(identifyingData),
-            "type"                      : "identifyingData",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-        }
-        
-        $(".btn-next").unbind("click").on("click", function(){
+        function worksheetChecker(data) {
 
-            var identifyingData = functionIdentifyingData();
-            var payload = functionPayload(identifyingData);
+            if (!data) data = {};
 
-            console.log(payload)
+            const REQUIRED_SECTIONS = [
+                "identifyingData",
+                "presentOffense",
+                "priorRecords",
+                "identificationData",
+                "familyBackground",
+                "presentSituation",
+                "educationalHistory",
+                "employmentHistory",
+                "communityBackground"
+            ];
 
-            var required = ["data_name", "data_interview", "alias", "true_name", "present_add", "permanent_add"];
+            let result = {
+                missingSections: [],
+                completedSections: [],
+                // statusIsNull: !data.worksheetStatus || data.worksheetStatus === "null"
+            };
 
-            required.forEach(function(data) {
-                // First, remove the existing error message and error class if present
-                $("." + data).removeClass("error_field");
-                $("." + data).next('.errorRequired').remove();
-        
-                // Now check if the field is empty or null
-                if ($("." + data).val() === "" || $("." + data).val() === null) {
-                    $("." + data).addClass("error_field");
-                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
-                } 
-            });
-
-            var requiredFields = $('.errorRequired:visible').length;
-            console.log('Number of required fields: ' + requiredFields);
-
-            if (requiredFields === 0) {
-                __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                    if (result.status != "ERROR") {
-                        $(".form-control").val('');
-                        $('#success').show();
-                        setTimeout(function () {
-                            $('#success').hide();
-                            $(".overlay").show();
-                            $(".btn-next").prop('disabled', true);
-                            setTimeout(function () {
-                                $(".overlay").hide();
-                                $(".overlay").hide();
-                                $(".btn-next").prop('disabled', false);
-                                window.location.href = api+'/pis/worksheet_present_offense?client_id='+client_id+'&field_office_id='+foid;
-                            }, 500); 
-                        }, 2000);
-                    }else{
-                        alert("failed")
-                    }
-                })
-            }
-        })
-
-
-        __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
-
-            var result = result.response;
-
-            if (result.status != "ERROR") {
-                if (result.worksheetStatus == "INCOMPLETE"){
-                    $(".btn-update").show();
-                    $(".btn-next").hide();
-
-                    $(".data_name").val(JSON.parse(result.jsonData).name);
-                    $(".data_interview").val(JSON.parse(result.jsonData).interview);
-                    $(".alias").val(JSON.parse(result.jsonData).alias);
-                    $(".true_name").val(JSON.parse(result.jsonData).trueName);
-                    $(".present_add").val(JSON.parse(result.jsonData).presentAddress);
-                    $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
+            REQUIRED_SECTIONS.forEach(section => {
+                if (data[section] && Object.keys(data[section]).length > 0) {
+                    result.completedSections.push(section);
                 } else {
-                    $(".btn-next").show();
-                    $(".btn-update").hide();
-                } 
+                    result.missingSections.push(section);
+                }
+            });
+
+            result.isComplete = (result.missingSections.length === 0);
+
+            return result;
+        }
+
+        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, 
+            newPriorRecord, newIdentificationData, newFamilyBackground, 
+            newPresentSituation, newEducationalHistory, newEmploymentHistory, 
+            newCommunityBackground) {
+
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+            existing.presentOffense = newPresentOffense;
+            existing.priorRecords = newPriorRecord;
+            existing.identificationData = newIdentificationData;
+            existing.familyBackground = newFamilyBackground;
+            existing.presentSituation = newPresentSituation;
+            existing.educationalHistory = newEducationalHistory;
+            existing.employmentHistory = newEmploymentHistory;
+            existing.communityBackground = newCommunityBackground;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
             }
-        })
 
-        $(".btn-update").unbind("click").on("click", function(){
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "worksheet",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
 
-            var identifyingData = functionIdentifyingData();
-            var payload = functionPayload(identifyingData);
+        function saveWorksheet(existing, newIdentifyingData) {
 
-            __executeExternalPost('8000/worksheet/updatePetitioner/identifyingData/'+client_id,JSON.stringify(payload)).done(function (result) {
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "worksheet",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        // display buttons and data
+        if (status === "null" || !status || status === "Not Available") {
+            $("#saveModal .saveModalTitle").text("Save Changes")
+            $("#saveModal #saveMessage").show();
+            $("#saveModal .btn-save").show();
+        } else {
+            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
+
+                var result = result.response;
                 if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    $(".btn-update").prop('disabled', true);
-                    setTimeout(function () {
-                        $(".overlay").show();
-                        $('#success').hide();
-                        setTimeout(function () {
-                        $(".overlay").hide();
-                        $(".btn-update").prop('disabled', false);
-                        window.location.href = api+'/pis/worksheet_present_offense?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
+                    var worksheetData = JSON.parse(result.jsonData);
+                    var identifyingData = worksheetData.identifyingData;
+
+                    if (identifyingData) {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+
+                        $(".data_name").val(identifyingData.name);
+                        $(".date_interviewed").val(identifyingData.interview);
+                        $(".alias").val(identifyingData.alias);
+                        $(".interviewed_by").val(identifyingData.interviewedBy);
+                        $(".present_add").val(identifyingData.presentAddress);
+                        $(".permanent_add").val(identifyingData.permanentAdress);
+                    } else {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+                    }
+
                 }
             })
+        }
+
+        // event handler for showing modal upon saving and updating data
+        $(".btn-saveData").unbind("click").on("click", function(){
+            $("#saveModal").modal("show")
         })
+        
+        // event handler for saving data
+        $("#saveModal .btn-save").unbind("click").on("click", function () {
+
+            let data = collectIdentifyingData();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = saveWorksheet(existing, data);
+
+                    __executeExternalPost("8000/worksheet/create", JSON.stringify(payload))
+                        .done(function (res) {
+
+                            if (res.status === "ERROR") return;
+
+                            $(".form-control").val('');
+                            $('#create_success').show();
+
+                            setTimeout(() => {
+                                $('#create_success').hide();
+                                $('#saveModal').modal("hide");
+                                window.location.href =
+                                    `${api}/pis/worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                            }, 2000);
+                        });
+                });
+        });
+
+
+        // evend handler for updating data
+        $(".btn-update").unbind("click").on("click", function () {
+
+            let data = collectIdentifyingData();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+                    let presentOffense = workSheetData.presentOffense;
+                    let priorRecords = workSheetData.priorRecords;
+                    let identificationData = workSheetData.identificationData;
+                    let familyBackground = workSheetData.familyBackground;
+                    let presentSituation = workSheetData.presentSituation;
+                    let educationalHistory = workSheetData.educationalHistory;
+                    let employmentHistory = workSheetData.employmentHistory;
+                    let communityBackground = workSheetData.communityBackground;
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = updateWorksheet(existing, data, presentOffense, priorRecords, identificationData, familyBackground, presentSituation, educationalHistory, employmentHistory, communityBackground);
+
+                    __executeExternalPost(
+                        `8000/worksheet/updatePetitioner/worksheet/${client_id}`,
+                        JSON.stringify(payload)
+                    ).done(function (res) {
+
+                        if (res.status === "ERROR") return;
+
+                        $('#update_success').show();
+
+                        setTimeout(() => {
+                            $('#update_success').hide();
+                            $('#saveModal').modal("hide");
+
+                            window.location.href =
+                                `${api}/pis/worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                        }, 2000);
+                    });
+                });
+        });
+
 
         function setupWorksheetClickHandler(worksheetType) {
             $(`.${worksheetType}`).unbind("click").on("click", function () {
+                var tabName = $(this).data("name")
+                $(".warningModalTitle").text(`${tabName} Tab`)
+                $("#tabName").text(tabName)
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
                     $("#warningModal").modal("hide");
-                    $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
                         // window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}`;
-                        window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
+                        window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
                     }, 500);
                 });
             });
         }
-        
-        setupWorksheetClickHandler("prior_records");
         setupWorksheetClickHandler("present_offense");
+        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("identification_data");
         setupWorksheetClickHandler("family_background");
-        setupWorksheetClickHandler("socio_economic");
-        setupWorksheetClickHandler("residence_economic");
-        setupWorksheetClickHandler("spouse_children");
+        setupWorksheetClickHandler("present_situation");
         setupWorksheetClickHandler("education_history");
         setupWorksheetClickHandler("employment_history");
         setupWorksheetClickHandler("environmental_factor");

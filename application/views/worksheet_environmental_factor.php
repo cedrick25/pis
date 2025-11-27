@@ -108,26 +108,62 @@
     <!-- Left Panel -->
 
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <h6 class="modal-title warningModalTitle" id="mediumModalLabel"></h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                <div class="alert alert-success" role="alert" id="tabSuccess" style="display:none">
                     <i class="fa fa-check"></i>
-                        Proceeded Successfully  
+                        Success!
                 </div>
                 <div class="modal-body">
-                    <p>
-                        Are you sure you want to proceed to next tab all the changes you've made will lost ? 
+                    <p style="color: black;">
+                        Are you sure you want to proceed to <span id="tabName" class="text-primary"></span> tab ?
+                        <br><span>All the unsaved changes you've made will be lost.</span> 
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="false">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title saveModalTitle" id="mediumModalLabel">Save Changes</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="create_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Saved Successfully!
+                </div>
+                <div class="alert alert-success" role="alert" id="update_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Updated Successfully!
+                </div>
+                <div class="modal-body">
+                    <p id="saveMessage" style="display:none; color: black;">
+                        Before saving, please ensure all required fields are completed and accurate.
+                    </p>
+                    <p id="updateMessage" style="display:none; color: black;">
+                        <span class="text-danger">Warning: Updating this record will permanently overwrite existing data. This action cannot be undone.</span><br>
+                        <span>Do you wish to continue?</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-save" style="display:none;">Save Changes</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-update" style="display:none;">Update Changes</button>
                 </div>
             </div>
         </div>
@@ -168,34 +204,31 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
+                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal" data-name="Identifying Data">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
+                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Offense">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link prior_record" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
+                                        <a class="nav-link prior_records" href="#" data-toggle="modal" data-target="#warningModal" data-name="Prior Records">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link identification_data" href="#" data-toggle="modal" data-target="#warningModal" data-name="Identification Data">Identification Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socio_economic" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
+                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Family Background">Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link residence_economic" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
+                                        <a class="nav-link present_situation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Situation">Present Situation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouse_children" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Educational History">Educational History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
+                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Employment History">Employment History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active envFac" href="#">Environmental Factor</a>
+                                        <a class="nav-link active environmental_factor" href="#" data-name="Community background/Environmental Factor">Community Background/Environmental Factor</a>
                                     </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
@@ -205,98 +238,95 @@
                                         Successfully Added  
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
-                                        <div class="col-12 col-md-6">
-                                            <select class="form-control neighborhood select2">
-                                                <option value="" selected disabled>Select Neighborhood</option>
-                                                <option value="RURAL">Rural</option>
-                                                <option value="URBAN">Urban</option>
-                                            </select>
-                                        </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Neighborhood</label>
+                                        <select class="form-control neighborhood select2">
+                                            <option value="" selected disabled>Select Neighborhood</option>
+                                            <option value="rural">Rural</option>
+                                            <option value="urban">Urban</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Area</label>
+                                        <select class="form-control area select2">
+                                            <option value="" selected disabled>Select Area</option>
+                                            <option value="non_slum_area">Non-Slum Area</option>
+                                            <option value="slum_area">Slum Area</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
-                                        <div class="col-12 col-md-6">
-                                            <select class="form-control area select2">
-                                                <option value="" selected disabled>Select Area</option>
-                                                <option value="NON-SLUM AREA">Non-Slum Area</option>
-                                                <option value="SLUM-AREA">Slum Area</option>
-                                            </select>
-                                        </div>
+                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <label for="text-input" class=" form-control-label">Describe</label>
+                                        <textarea placeholder="Describe" class="form-control neighborhoodDescribe"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Describe</label></div>
-                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control neighborhoodDescribe"></textarea></div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Neighborhood Criminality</label>
+                                        <select class="form-control neighCrim select2">
+                                            <option value="" selected disabled>Select Neighborhood Criminality</option>
+                                            <option value="high">High</option>
+                                            <option value="low">Low</option>
+                                            <option value="minimal">Minimal</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Explain</label>
+                                        <textarea placeholder="Explain" class="form-control criminalityExplain"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Neighborhood Criminality</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control neighCrim select2">
-                                                <option value="" selected disabled>Select Neighborhood Criminality</option>
-                                                <option value="HIGH">High</option>
-                                                <option value="LOW">Low</option>
-                                                <option value="MINIMAL">Minimal</option>
-                                            </select>
-                                        </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Community Acceptance</label>
+                                        <select class="form-control comAcceptance select2">
+                                            <option value="" selected disabled>Select Community Acceptance</option>
+                                            <option value="poor">Poor</option>
+                                            <option value="fair">Fair</option>
+                                            <option value="satisfactory">Satisfactory</option>
+                                            <option value="very_satisfactory">Very Satisfactory</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Specify</label>
+                                        <textarea placeholder="Specify" class="form-control acceptanceSpecify"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Explain</label></div>
-                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control criminalityExplain"></textarea></div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Availability of Resources for Rehabilitation</label>
+                                        <select class="form-control resourcesForRehabilition select2">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="poor">Poor</option>
+                                            <option value="fair">Fair</option>
+                                            <option value="satisfactory">Satisfactory</option>
+                                            <option value="very_satisfactory">Very Satisfactory</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Specify</label>
+                                        <textarea placeholder="Specify" class="form-control resourcesForRehabilitionSpecify"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Community Acceptance</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control comAcceptance select2">
-                                                <option value="" selected disabled>Select Community Acceptance</option>
-                                                <option value="FAIR">Fair</option>
-                                                <option value="POOR">Poor</option>
-                                                <option value="SATISFACTORY">Satisfactory</option>
-                                                <option value="VERY SATISFACTORY">Very Satisfactory</option>
-                                            </select>
-                                        </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Peer Group Relationship</label>
+                                        <select class="form-control peerRel select2">
+                                            <option value="" selected disabled>Select Peer Group Relationship</option>
+                                            <option value="desirable">Desirable</option>
+                                            <option value="undesirable_with_potential_for_improvement">Undesirable with Potential for Improvement</option>
+                                            <option value="undesirable_with_no_potential_for_improvement">Undesirable with no Potential for Improvement</option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control acceptanceSpecify"></textarea></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Peer Group Relationship</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control peerRel select2">
-                                                <option value="" selected disabled>Select Peer Group Relationship</option>
-                                                <option value="DESIRABLE">Desirable</option>
-                                                <option value="UNDESIRABLE WITH POTENTIAL">Undesirable with Potential for Improvement</option>
-                                                <option value="UNDESIRABLE WITH NO POTENTIAL">Undesirable with no Potential for Improvement</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Specify</label></div>
-                                        <div class="col-12 col-md-10"><textarea rows="2" cols="50" class="form-control peerSpecify"></textarea></div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Specify</label>
+                                        <textarea placeholder="Specify" class="form-control peerSpecify"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
                                 <!-- <button type="button" class="btn btn-secondary btn-sm btn-reset">Reset</button> -->
-                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
-                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-saveData btn-sm float-right">Save</button>
                             </div>
                         </div>
                     </div>

@@ -553,7 +553,7 @@
                             return {
                                 page: d.start / d.length,
                                 size: d.length,
-                                name: name,
+                                name: d.search.value,
                             };
                         },
                         dataFilter: function(data){

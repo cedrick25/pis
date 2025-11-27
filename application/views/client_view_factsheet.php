@@ -619,9 +619,6 @@
                                             <a class="nav-link" href="#" data-toggle="tab" id="taskListTab">Task List</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#" data-toggle="tab" id="scannedDocumentsTab">Scanned Documents</a>
-                                        </li>
-                                        <li class="nav-item">
                                             <a class="nav-link" href="#" data-toggle="tab" id="docketListTab">Docket List</a>
                                         </li>
                                     </ul>
