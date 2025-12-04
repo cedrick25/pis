@@ -107,6 +107,7 @@
         var client_id = GetURLParameter('client_id');
         var client_fo = GetURLParameter('field_office_id');
         var userName = localStorage.getItem("userName")
+        localStorage.removeItem("psirStatus");
 
         $('#file-input').on('change', function() {
             var imgavat = $('#client_photo');
@@ -142,38 +143,45 @@
             __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                 var result = result.response;
                 var workSheetStatus = result.worksheetStatus;
-                $(".table_body_tc").append(`
-                    <tr>
-                        <th> </th>
-                        <th> ${result.docketNumber === null ? "N/A" : result.docketNumber} </th>
-                        <th> N/A </th>
-                        <th> N/A </th>
-                        <th> N/A </th>
-                        <th> N/A </th>
-                        <th>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                              <span>${result.worksheetStatus}</span>
-                              <a href="${api}/pis/worksheet_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${workSheetStatus}" class="text-primary">
-                                <i class="fa fa-edit" aria-hidden="true"></i>
-                              </a>
-                            </div>
-                        </th>
-                        <th>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                              <span>${result.worksheetStatus}</span>
-
-                              <div style="display: flex; gap: 8px;">
-                                <a href="${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${client_fo}" class="text-primary">
+                __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (res) {
+                    console.log(res)
+                    localStorage.setItem("psirStatus", res.response.worksheetStatus)
+                })
+                setTimeout (function () {
+                    var psirStatus = localStorage.getItem("psirStatus")
+                    $(".table_body_tc").append(`
+                        <tr>
+                            <th> </th>
+                            <th> ${result.docketNumber === null ? "N/A" : result.docketNumber} </th>
+                            <th> N/A </th>
+                            <th> N/A </th>
+                            <th> N/A </th>
+                            <th> N/A </th>
+                            <th>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span>${result.worksheetStatus}</span>
+                                  <a href="${api}/pis/worksheet_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${workSheetStatus}" class="text-primary">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
-                                </a>
-                                <a href="#" class="text-info btn_pdfPSIR">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                </a>
-                              </div>
-                            </div>
-                        </th>
-                    </tr>
-                `)
+                                  </a>
+                                </div>
+                            </th>
+                            <th>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span>${psirStatus === "null" ? "Not Available" : psirStatus}</span>
+
+                                  <div style="display: flex; gap: 8px;">
+                                    <a href="${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${psirStatus === "null" ? "Not Available" : psirStatus}" class="text-primary">
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="text-info btn_pdfPSIR">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </a>
+                                  </div>
+                                </div>
+                            </th>
+                        </tr>
+                    `)
+                },500)
             })
             // ready if docket number is working again
             // __executeExternalGet('8000/docketbook/'+docket_number+'/'+officeId).done(function (result) {
@@ -198,7 +206,6 @@
                 xhr.send();
             });
         }
-
 
         function getClientDetails () {
             __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
@@ -2917,9 +2924,5 @@
             }
             fetchAllData(client_id);
         });     
-
-
-
-
 
     } )( jQuery );

@@ -105,132 +105,262 @@
         var client_id = GetURLParameter('client_id');
         var foid = GetURLParameter('field_office_id');
         var field_office_id = $.cookie('field_office_id');
+        // var status = "Not Available"
+        var status = GetURLParameter('status');
 
 
-        __executeExternalGet('8080/file/getLatest/petitioner_profile/'+client_id+"/"+field_office_id).done(function (result) {
-            if (result.status != "ERROR") {
-                if (result.files.length != 0) {
-                    $('#client_photo').attr('src', api+'8080/file/view/'+result.files[0].id);
-                }
-            }
-        })
-
-        function gatheredData () {
-
-            var identifyingData = {
-                name                : $(".data_name").val(),
-                interview           : $(".data_interview").val(),
-                alias               : $(".alias").val(),
+        // utility for checking the worksheet if complete
+        function collectIdentifyingData() {
+            return {
+                petitionersName           : $(".data_name").val(),
                 trueName            : $(".true_name").val(),
+                sourceOfInfo        : $(".source_info").val(),
+                alias               : $(".alias").val(),
+                height              : $(".height").val(),
+                weight              : $(".weight").val(),
+                age                 : $(".age").val(),
+                sex                 : $(".sex").val(),
+                citizenship         : $(".citizenship").val(),
+                religion            : $(".religion").val(),
+                identifyingMarks    : $(".identifying_marks").val(),
                 presentAddress      : $(".present_add").val(),
-                permanentAdress     : $(".permanent_add").val()
-            }
-            
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(identifyingData),
-            "type"                      : "psirIdentifyingData",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            return payload;
+                permanentAdress     : $(".permanent_add").val(),
+            };
         }
 
-        $(".btn-next").unbind("click").on("click", function(){
+        function worksheetChecker(data) {
 
-            var datapayload = gatheredData();
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(datapayload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        $(".overlay").show();
-                        $(".btn-next").prop('disabled', true);
-                        setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".overlay").hide();
-                            $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_present_offense?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500); 
-                    }, 2000);
-                }else{
-                    alert("failed")
+            if (!data) data = {};
+
+            const REQUIRED_SECTIONS = [
+                "identifyingData",
+                "presentOffense",
+                "priorRecordsAndDerogatoryRecord",
+                "familyBackgroundAndBirthData",
+                "presentSituation",
+                "educationAndJobHistory",
+                "medicalHistory",
+                "traitsAndCommunityBackground",
+                "analysisAndProjectedThrust",
+                // "recommendation",
+            ];
+
+            let result = {
+                missingSections: [],
+                completedSections: [],
+            };
+
+            REQUIRED_SECTIONS.forEach(section => {
+                if (data[section] && Object.keys(data[section]).length > 0) {
+                    result.completedSections.push(section);
+                } else {
+                    result.missingSections.push(section);
                 }
-            })
-        })
+            });
 
-        
-        $('.card-body').find('input, select, button').prop('disabled', true);
-        
-        __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+client_id).done(function (result) {
-            var result = result.response;
-            if (result.status != "ERROR") {
-                if (result.worksheetStatus == "INCOMPLETE"){
-                    __executeExternalGet('8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
-                        var result = result.response;
-                        if (result.status != "ERROR") {
-                            if (result.worksheetStatus == "INCOMPLETE"){
-                                $(".btn-next").hide();
-                                $(".btn-update").show();
+            result.isComplete = (result.missingSections.length === 0);
 
-                            }else{
-                                $(".btn-update").hide();
-                                $(".btn-next").show();
-                            } 
-                        }
-                    })
-                    console.log(JSON.parse(result.jsonData))
-                    $(".data_name").val(JSON.parse(result.jsonData).name);
-                    $(".data_interview").val(JSON.parse(result.jsonData).interview);
-                    $(".alias").val(JSON.parse(result.jsonData).alias);
-                    $(".true_name").val(JSON.parse(result.jsonData).trueName);
-                    $(".present_add").val(JSON.parse(result.jsonData).presentAddress);
-                    $(".permanent_add").val(JSON.parse(result.jsonData).permanentAdress);
+            return result;
+        }
 
-                }else{
-                    $(".btn-update").hide();
-                    $(".btn-next").show();
-                } 
+        function saveWorksheet(existing, newIdentifyingData) {
+
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
             }
-        })
 
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
 
-        $(".btn-update").unbind("click").on("click", function(){
+        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, newPriorRecordsAndDerogatoryRecord, 
+            newFamilyBackgroundAndBirthData, newPresentSituation, newEducationAndJobHistory, 
+            newMedicalHistory, newTraitsAndCommunityBackground, newAnalysisAndProjectedThrust) {
 
-            var datapayload = gatheredData()
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirIdentifyingData/'+client_id,JSON.stringify(datapayload)).done(function (result) {
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+            existing.presentOffense = newPresentOffense;
+            existing.priorRecordsAndDerogatoryRecord = newPriorRecordsAndDerogatoryRecord;
+            existing.familyBackgroundAndBirthData = newFamilyBackgroundAndBirthData;
+            existing.presentSituation = newPresentSituation;
+            existing.educationAndJobHistory = newEducationAndJobHistory;
+            existing.medicalHistory = newMedicalHistory;
+            existing.traitsAndCommunityBackground = newTraitsAndCommunityBackground;
+            existing.analysisAndProjectedThrust = newAnalysisAndProjectedThrust;
+            // existing.recommendation = newRecommendation;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        // display buttons and data
+        if (status === "null" || !status || status === "Not Available") {
+        // if (status === "null" || status === "Not Available") {
+            $("#saveModal .saveModalTitle").text("Save Changes")
+            $("#saveModal #saveMessage").show();
+            $("#saveModal .btn-save").show();
+        } else {
+            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+
+                var result = result.response;
                 if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        $(".overlay").show();
-                        $(".btn-next").prop('disabled', true);
-                        setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".overlay").hide();
-                            $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_present_offense?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500); 
-                    }, 2000);
-                }else{
-                    alert("failed")
+                    var worksheetData = JSON.parse(result.jsonData);
+                    var identifyingData = worksheetData.identifyingData;
+                    console.log(worksheetData)
+                    if (identifyingData) {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+
+                        $(".data_name").val(identifyingData.petitionersName);
+                        // $(".petitioner_middle_name").val(identifyingData.middleName);
+                        // $(".petitioner_last_name").val(identifyingData.lastName);
+                        $(".true_name").val(identifyingData.trueName);
+                        $(".source_info").val(identifyingData.sourceOfInfo);
+                        $(".alias").val(identifyingData.alias);
+                        $(".height").val(identifyingData.height);
+                        $(".weight").val(identifyingData.weight);
+                        $(".age").val(identifyingData.age);
+                        $(".sex").val(identifyingData.sex).trigger("change");
+                        $(".citizenship").val(identifyingData.citizenship).trigger("change");
+                        $(".religion").val(identifyingData.religion).trigger("change");
+                        $(".identifying_marks").val(identifyingData.identifyingMarks);
+                        $(".present_add").val(identifyingData.presentAddress);
+                        $(".permanent_add").val(identifyingData.permanentAdress);
+                    } else {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+                    }
+
                 }
             })
+        }
+
+        // event handler for showing modal upon saving and updating data
+        $(".btn-saveData").unbind("click").on("click", function(){
+            $("#saveModal").modal("show")
         })
+
+        // event handler for saving data
+        $("#saveModal .btn-save").unbind("click").on("click", function () {
+
+            let data = collectIdentifyingData();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = saveWorksheet(existing, data);
+
+                    __executeExternalPost("8000/worksheet/create", JSON.stringify(payload))
+                        .done(function (res) {
+
+                            if (res.status === "ERROR") return;
+
+                            $(".form-control").val('');
+                            $('#create_success').show();
+
+                            setTimeout(() => {
+                                $('#create_success').hide();
+                                $('#saveModal').modal("hide");
+                                window.location.href =
+                                    `${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                            }, 2000);
+                        });
+                });
+        });
+
+        // evend handler for updating data
+        $(".btn-update").unbind("click").on("click", function () {
+
+            let data = collectIdentifyingData();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+                    let presentOffense = workSheetData.presentOffense;
+                    let priorRecordsAndDerogatoryRecord = workSheetData.priorRecordsAndDerogatoryRecord;
+                    let familyBackgroundAndBirthData = workSheetData.familyBackgroundAndBirthData;
+                    let presentSituation = workSheetData.presentSituation;
+                    let educationAndJobHistory = workSheetData.educationAndJobHistory;
+                    let medicalHistory = workSheetData.medicalHistory;
+                    let traitsAndCommunityBackground = workSheetData.traitsAndCommunityBackground;
+                    let analysisAndProjectedThrust = workSheetData.analysisAndProjectedThrust;
+                    // let recommendation = workSheetData.recommendation;
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = updateWorksheet(existing, data, presentOffense, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, presentSituation, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, analysisAndProjectedThrust);
+
+                    __executeExternalPost(
+                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        JSON.stringify(payload)
+                    ).done(function (res) {
+
+                        if (res.status === "ERROR") return;
+
+                        $('#update_success').show();
+
+                        setTimeout(() => {
+                            $('#update_success').hide();
+                            $('#saveModal').modal("hide");
+
+                            window.location.href =
+                                `${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                        }, 2000);
+                    });
+                });
+        });
 
 
         function setupWorksheetClickHandler(psirType) {
             $(`.${psirType}`).unbind("click").on("click", function () {
+                var tabName = $(this).data("name")
+                $(".warningModalTitle").text(`${tabName} Tab`)
+                $("#tabName").text(tabName)
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
                     $("#warningModal").modal("hide");
-                    $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
+                        // window.location.href = `${api}/pis/worksheet_${psirType}?client_id=${client_id}`;
+                        window.location.href = `${api}/pis/psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
                     }, 500);
                 });
             });
@@ -238,15 +368,12 @@
 
         setupWorksheetClickHandler("prior_records");
         setupWorksheetClickHandler("present_offense");
-        setupWorksheetClickHandler("identifying_data");
         setupWorksheetClickHandler("family_background");
-        setupWorksheetClickHandler("socio_economic");
-        setupWorksheetClickHandler("residence_economic");
-        setupWorksheetClickHandler("spouse_children");
+        setupWorksheetClickHandler("present_situation");
         setupWorksheetClickHandler("education_history");
-        setupWorksheetClickHandler("employment_history");
-        setupWorksheetClickHandler("environmental_factor")
+        setupWorksheetClickHandler("medical_history");
+        setupWorksheetClickHandler("traits_and_community_background");
         setupWorksheetClickHandler("evaluation");
-        setupWorksheetClickHandler("recommendation")
+        setupWorksheetClickHandler("recommendation");
 
     } )( jQuery );

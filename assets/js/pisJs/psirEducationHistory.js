@@ -109,179 +109,267 @@
         var client_id = GetURLParameter('client_id');
         var foid = GetURLParameter('field_office_id');
         var field_office_id = $.cookie('field_office_id');
+        var status = GetURLParameter('status');
 
-        function gatheredData () { 
-            var educHistory = {
+        function collectEducationalAndJobHistory() {
+            return {
 
-                elemLevel               : $(".elem_lvl").val(),
-                elemWhere               : $(".elem_where").val(),
-                elemHigh                : $(".elem_high").val(),
-                elemAward              : $(".elem_award").val(),
-                elemDate               : $(".elem_date").val(),
-                secLevel               : $(".sec_lvl").val(),
-                secWhere               : $(".sec_where").val(),
-                secHigh                : $(".sec_high").val(),
-                secAward              : $(".sec_award").val(),
-                secDate               : $(".sec_date").val(),
-                collegeLevel               : $(".college_lvl").val(),
-                collegeWhere               : $(".college_where").val(),
-                collegeHigh                : $(".college_high").val(),
-                collegeAward              : $(".college_award").val(),
-                collegeDate               : $(".college_date").val(),
-                pcollegeLevel               : $(".pcollege_lvl").val(),
-                pcollegeWhere               : $(".pcollege_where").val(),
-                pcollegeHigh                : $(".pcollege_high").val(),
-                pcollegeAward              : $(".pcollege_award").val(),
-                pcollegeDate               : $(".pcollege_date").val(),
-                vocLevel               : $(".voc_lvl").val(),
-                vocWhere               : $(".voc_where").val(),
-                vocHigh                : $(".voc_high").val(),
-                vocAward              : $(".voc_award").val(),
-                vocDate               : $(".voc_date").val(),
-                unschool                : $(".unschool").val(),
-                educExplain              : $(".educExplain").val(),
-                conduct               : $(".conduct").val()
-            }
+                educationAttainment         : $(".educational_attainment").val(),
+                overAllConductInSchool      : $(".over_all_conduct_in_school").val(),
+                educationalRemarks          : $(".remarks_education").val(),
 
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(educHistory),
-            "type"                      : "psirEducationHistory",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
+                previousOccupation      : $(".previous_occupation").val(),
+                workStatus              : $(".work_status").val(),
+                presentOccupation       : $(".present_occupation").val(),
+                employerAddress         : $(".employer_address").val(),
+                specialSkills           : $(".special_skills").val(),
+                jobRemarks              : $(".remarks_job").val(),
 
-            return payload;
+            };
         }
 
-        __executeExternalGet('8000/worksheet/getPetitioner/educationHistory/'+client_id).done(function (result) {
-                __executeExternalGet('8000/worksheet/getPetitioner/psirEducationHistory/'+client_id).done(function (result) {
-                    var result = result.response;
-                    if (result.status != "ERROR") {
-                        if (result.worksheetStatus == "INCOMPLETE"){
-                            $(".btn-next").hide();
-                            $(".btn-update").show();
-                        }else{
-                            $(".btn-update").hide();
-                            $(".btn-next").show();
-                        } 
-                    }
-                })
+        function worksheetChecker(data) {
+
+            if (!data) data = {};
+
+            const REQUIRED_SECTIONS = [
+                "identifyingData",
+                "presentOffense",
+                "priorRecordsAndDerogatoryRecord",
+                "familyBackgroundAndBirthData",
+                "presentSituation",
+                "educationAndJobHistory",
+                "medicalHistory",
+                "traitsAndCommunityBackground",
+                "analysisAndProjectedThrust",
+                // "recommendation",
+            ];
+
+            let result = {
+                missingSections: [],
+                completedSections: [],
+            };
+
+            REQUIRED_SECTIONS.forEach(section => {
+                if (data[section] && Object.keys(data[section]).length > 0) {
+                    result.completedSections.push(section);
+                } else {
+                    result.missingSections.push(section);
+                }
+            });
+
+            result.isComplete = (result.missingSections.length === 0);
+
+            return result;
+        }
+
+        function saveWorksheet(existing, newEducationAndJobHistory) {
+
+            // update identifyingData
+            existing.educationAndJobHistory = newEducationAndJobHistory;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, newPriorRecordsAndDerogatoryRecord, 
+            newFamilyBackgroundAndBirthData, newPresentSituation, newEducationAndJobHistory, 
+            newMedicalHistory, newTraitsAndCommunityBackground, newAnalysisAndProjectedThrust) {
+
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+            existing.presentOffense = newPresentOffense;
+            existing.priorRecordsAndDerogatoryRecord = newPriorRecordsAndDerogatoryRecord;
+            existing.familyBackgroundAndBirthData = newFamilyBackgroundAndBirthData;
+            existing.presentSituation = newPresentSituation;
+            existing.educationAndJobHistory = newEducationAndJobHistory;
+            existing.medicalHistory = newMedicalHistory;
+            existing.traitsAndCommunityBackground = newTraitsAndCommunityBackground;
+            existing.analysisAndProjectedThrust = newAnalysisAndProjectedThrust;
+            // existing.recommendation = newRecommendation;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        // display buttons and data
+        if (status === "null" || !status || status === "Not Available") {
+        // if (status === "null" || status === "Not Available") {
+            $("#saveModal .saveModalTitle").text("Save Changes")
+            $("#saveModal #saveMessage").show();
+            $("#saveModal .btn-save").show();
+        } else {
+            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
-                    if (result.worksheetStatus == "INCOMPLETE"){
+                    var worksheetData = JSON.parse(result.jsonData);
+                    var educationAndJobHistory = worksheetData.educationAndJobHistory;
+                    console.log(worksheetData)
+                    if (educationAndJobHistory) {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
 
-                        JSON.parse(result.jsonData)
+                        $(".educational_attainment").val(educationAndJobHistory.educationAttainment)
+                        $(".over_all_conduct_in_school").val(educationAndJobHistory.overAllConductInSchool).trigger("change")
+                        $(".remarks_education").val(educationAndJobHistory.educationalRemarks)
+                        $(".previous_occupation").val(educationAndJobHistory.previousOccupation)
+                        $(".work_status").val(educationAndJobHistory.workStatus).trigger("change")
+                        $(".present_occupation").val(educationAndJobHistory.presentOccupation)
+                        $(".employer_address").val(educationAndJobHistory.employerAddress)
+                        $(".special_skills").val(educationAndJobHistory.specialSkills)
+                        $(".remarks_job").val(educationAndJobHistory.jobRemarks)
 
-                        $(".elem_lvl").val(JSON.parse(result.jsonData).elemLevel);
-                        $(".elem_where").val(JSON.parse(result.jsonData).elemWhere);
-                        $(".elem_high").val(JSON.parse(result.jsonData).elemHigh);
-                        $(".elem_award").val(JSON.parse(result.jsonData).elemAward);
-                        $(".elem_date").val(JSON.parse(result.jsonData).elemDate);
-                        $(".sec_lvl").val(JSON.parse(result.jsonData).secLevel);
-                        $(".sec_where").val(JSON.parse(result.jsonData).secWhere);
-                        $(".sec_high").val(JSON.parse(result.jsonData).secHigh);
-                        $(".sec_award").val(JSON.parse(result.jsonData).secAward);
-                        $(".sec_date").val(JSON.parse(result.jsonData).secDate);
-                        $(".college_lvl").val(JSON.parse(result.jsonData).collegeLevel);
-                        $(".college_where").val(JSON.parse(result.jsonData).collegeWhere);
-                        $(".college_high").val(JSON.parse(result.jsonData).collegeHigh);
-                        $(".college_award").val(JSON.parse(result.jsonData).collegeAward);
-                        $(".college_date").val(JSON.parse(result.jsonData).collegeDate);
-                        $(".pcollege_lvl").val(JSON.parse(result.jsonData).pcollegeLevel);
-                        $(".pcollege_where").val(JSON.parse(result.jsonData).pcollegeWhere);
-                        $(".pcollege_high").val(JSON.parse(result.jsonData).pcollegeHigh);
-                        $(".pcollege_award").val(JSON.parse(result.jsonData).pcollegeAward);
-                        $(".pcollege_date").val(JSON.parse(result.jsonData).pcollegeDate);
-                        $(".voc_lvl").val(JSON.parse(result.jsonData).vocLevel);
-                        $(".voc_where").val(JSON.parse(result.jsonData).vocWhere);
-                        $(".voc_high").val(JSON.parse(result.jsonData).vocHigh);
-                        $(".voc_award").val(JSON.parse(result.jsonData).vocAward);
-                        $(".voc_date").val(JSON.parse(result.jsonData).vocDate);
-                        $(".unschool").val(JSON.parse(result.jsonData).unschool).trigger("change");
-                        $(".educExplain").val(JSON.parse(result.jsonData).educExplain);  
-                        $(".conduct").val(JSON.parse(result.jsonData).conduct).trigger("change");
-                        $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
+                    } else {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
 
-                    }else{
-                        $(".btn-update").hide();
-                        $(".btn-next").show();
-                    } 
+                    }
 
                 }
             })
+        }
 
-        $(".btn-next").unbind("click").on("click", function(){
-            var payload = gatheredData();
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result){
-                if (result.status != "ERROR") {
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        $(".overlay").show();
-                        $(".btn-next").prop('disabled', true);
-                        setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".overlay").hide();
-                            $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_employment_history?client_id='+client_id;
-                        }, 500); 
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
+        // event handler for showing modal upon saving and updating data
+        $(".btn-saveData").unbind("click").on("click", function(){
+            $("#saveModal").modal("show")
         })
 
-        $(".btn-update").unbind("click").on("click", function(){
-            var payload = gatheredData();
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirEducationHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        $(".overlay").show();
-                        $(".btn-next").prop('disabled', true);
-                        setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".overlay").hide();
-                            $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_employment_history?client_id='+client_id;
-                        }, 500); 
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
-        })
+
+        // event handler for saving data
+        $("#saveModal .btn-save").unbind("click").on("click", function () {
+
+            let data = collectEducationalAndJobHistory();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = saveWorksheet(existing, data);
+
+                    __executeExternalPost("8000/worksheet/create", JSON.stringify(payload))
+                        .done(function (res) {
+
+                            if (res.status === "ERROR") return;
+
+                            $(".form-control").val('');
+                            $('#create_success').show();
+
+                            setTimeout(() => {
+                                $('#create_success').hide();
+                                $('#saveModal').modal("hide");
+                                window.location.href =
+                                    `${api}/pis/psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                            }, 2000);
+                        });
+                });
+        });
+
+        // evend handler for updating data
+        $("#saveModal .btn-update").unbind("click").on("click", function () {
+
+            let data = collectEducationalAndJobHistory();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+                    let identifyingData = workSheetData.identifyingData;
+                    let presentOffense = workSheetData.presentOffense;
+                    let priorRecordsAndDerogatoryRecord = workSheetData.priorRecordsAndDerogatoryRecord;
+                    let familyBackgroundAndBirthData = workSheetData.familyBackgroundAndBirthData;
+                    let presentSituation = workSheetData.presentSituation;
+                    let medicalHistory = workSheetData.medicalHistory;
+                    let traitsAndCommunityBackground = workSheetData.traitsAndCommunityBackground;
+                    let analysisAndProjectedThrust = workSheetData.analysisAndProjectedThrust;
+                    // let recommendation = workSheetData.recommendation;
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, presentSituation, data, medicalHistory, traitsAndCommunityBackground, analysisAndProjectedThrust);
+
+                    __executeExternalPost(
+                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        JSON.stringify(payload)
+                    ).done(function (res) {
+
+                        if (res.status === "ERROR") return;
+
+                        $('#update_success').show();
+
+                        setTimeout(() => {
+                            $('#update_success').hide();
+                            $('#saveModal').modal("hide");
+
+                            window.location.href =
+                                `${api}/pis/psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                        }, 2000);
+                    });
+                });
+        });
 
         function setupWorksheetClickHandler(psirType) {
             $(`.${psirType}`).unbind("click").on("click", function () {
+                var tabName = $(this).data("name")
+                $(".warningModalTitle").text(`${tabName} Tab`)
+                $("#tabName").text(tabName)
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
                     $("#warningModal").modal("hide");
-                    $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
+                        // window.location.href = `${api}/pis/worksheet_${psirType}?client_id=${client_id}`;
+                        window.location.href = `${api}/pis/psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
                     }, 500);
                 });
             });
         }
         
-        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("identifying_data")
         setupWorksheetClickHandler("present_offense");
-        setupWorksheetClickHandler("identifying_data");
         setupWorksheetClickHandler("family_background");
-        setupWorksheetClickHandler("socio_economic");
-        setupWorksheetClickHandler("residence_economic");
-        setupWorksheetClickHandler("spouse_children");
-        setupWorksheetClickHandler("education_history");
-        setupWorksheetClickHandler("employment_history");
-        setupWorksheetClickHandler("environmental_factor")
+        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("family_background");
+        setupWorksheetClickHandler("medical_history");
+        setupWorksheetClickHandler("traits_and_community_background");
         setupWorksheetClickHandler("evaluation");
-        setupWorksheetClickHandler("recommendation")
+        setupWorksheetClickHandler("recommendation");
 
     } )( jQuery );

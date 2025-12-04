@@ -100,32 +100,63 @@
     }
 </style>
 <body>
-    <div class="overlay" style="display: none;">
-        <div class="loader">
-        <span></span>
-        </div>
-    </div>
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <h6 class="modal-title warningModalTitle" id="mediumModalLabel"></h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                <div class="alert alert-success" role="alert" id="tabSuccess" style="display:none">
                     <i class="fa fa-check"></i>
-                        Proceeded Successfully  
+                        Success!
                 </div>
                 <div class="modal-body">
-                    <p>
-                        Proceed to the select tab ? 
+                    <p style="color: black;">
+                        Are you sure you want to proceed to <span id="tabName" class="text-primary"></span> tab ?
+                        <br><span>All the unsaved changes you've made will be lost.</span>
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="false">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title saveModalTitle" id="mediumModalLabel">Save Changes</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="create_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Saved Successfully!
+                </div>
+                <div class="alert alert-success" role="alert" id="update_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Updated Successfully!
+                </div>
+                <div class="modal-body">
+                    <p id="saveMessage" style="display:none; color: black;">
+                        Before saving, please ensure all required fields are completed and accurate.
+                    </p>
+                    <p id="updateMessage" style="display:none; color: black;">
+                        <span class="text-danger">Warning: Updating this record will permanently overwrite existing data. This action cannot be undone.</span><br>
+                        <span>Do you wish to continue?</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-save" style="display:none;">Save Changes</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-update" style="display:none;">Update Changes</button>
                 </div>
             </div>
         </div>
@@ -149,8 +180,8 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list">Client</a></li>
-                            <li><a href="">Worksheet</a></li>
-                            <li class="active">Petitioner's Criminal History</li>
+                            <li><a href="">PSIR</a></li>
+                            <li class="active">Prior Records</li>
                         </ol>
                     </div>
                 </div>
@@ -163,49 +194,40 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Present Offense</strong>
+                                <strong class="card-title">Prior Records</strong>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
+                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal" data-name="Identifying Data">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
+                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Offense">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active priorRec" href="#">Prior Records</a>
+                                        <a class="nav-link active prior_records" href="#" data-name="Prior Records">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Birth Data and Family Background">Birth Data and Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socio_economic" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
+                                        <a class="nav-link present_situation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Situation">Present Situation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link residence_economic" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Education and Job History">Education and Job History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouse_children" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
+                                        <a class="nav-link medical_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Medical History">Medical History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
+                                        <a class="nav-link traits_and_community_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Traits/Characteristics and Background in the Community">Traits/Characteristics and Background in the Community</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                        <a class="nav-link evaluation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Analysis/Evaluation and Projected Thrust of Rehabilitation">Analysis/Evaluation and Projected Thrust of Rehabilitation</a>
                                     </li>
                                     <!-- <li class="nav-item">
-                                        <a class="nav-link medHistory" href="#" data-toggle="modal" data-target="#warningModal">Medical History</a>
+                                        <a class="nav-link recommendation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Community background/Environmental Factor">Recommendation</a>
                                     </li> -->
-                                    <li class="nav-item">
-                                        <a class="nav-link evaluation" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link recommendation" href="#" data-toggle="modal" data-target="#warningModal">Recommendation</a>
-                                    </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
                                 </div>
@@ -213,63 +235,27 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Alleged By</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="allegedby" value="PETITIONER" disabled>Petitioner<br>
-                                                <input type="radio" class="form-check-input" name="allegedby" value="OTHER SOURCES" disabled>Other Sources
-                                            </label>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            RECORDS
                                         </div>
+                                        <ul class="list-group list-group-flush" id="records_list">
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Records</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="derogatoryRecord" value="NO RECORD" disabled>No Record<br>
-                                            <input type="radio" class="form-check-input" name="derogatoryRecord" value="WITH DEROGATORY RECORD" disabled>With Derogatory Record
-                                        </label>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            OTHER DEREGATORY RECORDS
                                         </div>
+                                        <ul class="list-group list-group-flush" id="info_list">
+                                        </ul>
                                     </div>
                                 </div>
-                                <fieldset class="row col col-md-12">
-                                        <legend>Records</legend>
-                                        <div class="list">
-                                        </div>
-                                        <div class="col-12">
-                                            <!-- <button type="button" class="add_more btn btn-success btn-sm float-right">Add more</button> -->
-                                        </div>
-                                </fieldset>
-                                <div class="row form-group col-md-6">
-                                </div>
-                                <div class="row form-group col-md-6">
-                                </div>
-                                <div class="row form-group col-md-6">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Has Been of Probation:</label></div>
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="probation" value="YES" disabled> Yes <br>
-                                            <input type="radio" class="form-check-input" name="probation" value="NO" disabled> No
-                                        </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <fieldset class="row col col-md-12">
-                                        <legend>Information</legend>
-                                        <div class="list_info">
-                                        </div>
-                                        <div class="col-12">
-                                            <!-- <button type="button" class="add_more_info btn btn-success btn-sm float-right">Add more</button> -->
-                                        </div>
-                                </fieldset>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
-                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
+                                <button type="button" class="btn btn-primary btn-saveData btn-sm float-right">Save</button>
                             </div>
                         </div>
                     </div>

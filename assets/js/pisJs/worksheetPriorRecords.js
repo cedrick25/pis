@@ -411,15 +411,15 @@
                             <li class="list-group-item d-flex align-items-center" id="info_list_${infoCounter}">
                                 <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
                                     <label class="form-control-label">Source/Date</label>
-                                    <input type="text" placeholder="Agency" class="form-control source">
+                                    <input type="text" placeholder="Source/Date" class="form-control source">
                                 </div>
                                 <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
                                     <label class="form-control-label">Position</label>
-                                    <input type="text" placeholder="CC No." class="form-control position">
+                                    <input type="text" placeholder="Position" class="form-control position">
                                 </div>
                                 <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
                                     <label class="form-control-label">Particulars</label>
-                                    <input type="date" placeholder="When" class="form-control particulars">
+                                    <input type="text" placeholder="Particulars" class="form-control particulars">
                                 </div>
                                 <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
                                     <button type="button" class="btn btn-primary btn-addInfo btn-sm" style="border-radius:2px" data-id="${infoCounter}">

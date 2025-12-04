@@ -935,7 +935,7 @@
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Physical Home Conditions</label>
                                                         <select class="form-control home_condition select2">
-                                                            <option value="" selected disabled>Select Reputation</option>
+                                                            <option value="" selected disabled>Select Condition</option>
                                                             <option value="very_satisfactory">Very Satisfactory</option>
                                                             <option value="satisfactory">Satisfactory</option>
                                                             <option value="fair">Fair</option>

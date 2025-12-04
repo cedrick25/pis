@@ -100,34 +100,63 @@
     }
 </style>
 <body>
-    <div class="overlay" style="display: none;">
-        <div class="loader">
-        <span></span>
-        </div>
-    </div>
-    <!-- Left Panel -->
-
     <div class="modal fade" id="warningModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="deactivate">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Proceed ?</h5>
+                    <h6 class="modal-title warningModalTitle" id="mediumModalLabel"></h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="complete_success_inv" style="display:none">
+                <div class="alert alert-success" role="alert" id="tabSuccess" style="display:none">
                     <i class="fa fa-check"></i>
-                        Proceeded Successfully  
+                        Success!
                 </div>
                 <div class="modal-body">
-                    <p>
-                        Proceed to the select tab ? 
+                    <p style="color: black;">
+                        Are you sure you want to proceed to <span id="tabName" class="text-primary"></span> tab ?
+                        <br><span>All the unsaved changes you've made will be lost.</span>
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_warning btn-sm">Confirm</button>
+                    <button type="button" class="btn btn-primary btn_warning btn-sm">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="false">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title saveModalTitle" id="mediumModalLabel">Save Changes</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert" id="create_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Saved Successfully!
+                </div>
+                <div class="alert alert-success" role="alert" id="update_success" style="display:none">
+                    <i class="fa fa-check"></i>
+                        Updated Successfully!
+                </div>
+                <div class="modal-body">
+                    <p id="saveMessage" style="display:none; color: black;">
+                        Before saving, please ensure all required fields are completed and accurate.
+                    </p>
+                    <p id="updateMessage" style="display:none; color: black;">
+                        <span class="text-danger">Warning: Updating this record will permanently overwrite existing data. This action cannot be undone.</span><br>
+                        <span>Do you wish to continue?</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-save" style="display:none;">Save Changes</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-update" style="display:none;">Update Changes</button>
                 </div>
             </div>
         </div>
@@ -168,127 +197,89 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal">Identifying Data</a>
+                                        <a class="nav-link identifying_data" href="#" data-toggle="modal" data-target="#warningModal" data-name="Identifying Data">Identifying Data</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal">Present Offense</a>
+                                        <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Offense">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link prior_record" href="#" data-toggle="modal" data-target="#warningModal">Prior Records</a>
+                                        <a class="nav-link prior_records" href="#" data-toggle="modal" data-target="#warningModal" data-name="Prior Records">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal">Family Background</a>
+                                        <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Birth Data and Family Background">Birth Data and Family Background</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link socio_economic" href="#" data-toggle="modal" data-target="#warningModal">Socio-Economic Background</a>
+                                        <a class="nav-link present_situation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Situation">Present Situation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link residence_economic" href="#" data-toggle="modal" data-target="#warningModal">Residence/Economic Conditions</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Education and Job History">Education and Job History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link spouse_children" href="#" data-toggle="modal" data-target="#warningModal">Spouse/Children</a>
+                                        <a class="nav-link medical_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Medical History">Medical History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal">Education History</a>
+                                        <a class="nav-link traits_and_community_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Traits/Characteristics and Background in the Community">Traits/Characteristics and Background in the Community</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link employment_history" href="#" data-toggle="modal" data-target="#warningModal">Employment History</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link environmental_factor" href="#" data-toggle="modal" data-target="#warningModal">Environmental Factor</a>
+                                        <a class="nav-link active evaluation" href="#" data-name="Analysis/Evaluation and Projected Thrust of Rehabilitation">Analysis/Evaluation and Projected Thrust of Rehabilitation</a>
                                     </li>
                                     <!-- <li class="nav-item">
-                                        <a class="nav-link medHistory" href="#" data-toggle="modal" data-target="#warningModal">Medical History</a>
+                                        <a class="nav-link recommendation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Community background/Environmental Factor">Recommendation</a>
                                     </li> -->
-                                    <li class="nav-item">
-                                        <a class="nav-link eval active" href="#" data-toggle="modal" data-target="#warningModal">Evaluation</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link recommendation" href="#" data-toggle="modal" data-target="#warningModal">Recommendation</a>
-                                    </li>
                                 </ul>
                                 <div style="margin-top: 30px;">
                                 </div>
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Added  
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                ANALYSIS AND EVALUATION
+                                                <div>
+                                                    <a data-toggle="collapse" href="#traitsCard" role="button" aria-expanded="true" aria-controls="traitsCard">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="traitsCard" class="collapse show">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Analysis and Evaluation</label>
+                                                        <textarea placeholder="Analysis and Evaluation" class="form-control analysis" rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-<!--                                 <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Neighborhood</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <select class="form-control neighborhood select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="RURAL">Rural</option>
-                                            <option value="URBAN">Urban</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-<!--                                 <div class="row form-group col-md-9">
-                                    <div class="col col-md-2"><label for="text-input" class=" form-control-label">Area</label></div>
-                                    <div class="col-12 col-md-6">
-                                        <select class="form-control area select2" disabled>
-                                            <option value="" selected disabled>-- select one --</option>
-                                            <option value="NON-SLUM AREA">Non-Slum Area</option>
-                                            <option value="SLUM-AREA">Slum Area</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-                                <fieldset class="row col col-md-12">
-                                    <legend>Petitioners Traits</legend>
-                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                        <div class="row form-group col-md-9">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Positive</label></div>
-                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control positiveTraits"></textarea></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                PROJECTED THRUSTS OF REHABILITATION
+                                                <div>
+                                                    <a data-toggle="collapse" href="#communityBackgroundCard" role="button" aria-expanded="true" aria-controls="communityBackgroundCard">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="communityBackgroundCard" class="collapse show">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Projected Thrusts of Rehabilitation</label>
+                                                        <textarea placeholder="Projected Thrusts of Rehabilitation" class="form-control rehabilitation" rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                        <div class="row form-group col-md-9">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Negative</label></div>
-                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control negativeTraits"></textarea></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                        <div class="row form-group col-md-9">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Overall Impression of the Client</label></div>
-                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control overallTraits"></textarea></div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset class="row col col-md-12">
-                                    <legend>Petitioner's Background in the Community & Collateral Information</legend>
-                                    <div class="col-12">
-                                        <button type="button" class="addMoreCollInfo btn btn-primary btn-sm float-right">Add more</button>
-                                    </div>
-                                    <br><br><br>
-                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                        <div class="row form-group col-md-9">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">PETITIONER'S BACKGROUND IN THE COMMUNITY & COLLATERAL INFORMATION</label></div>
-                                            <div class="col-12 col-md-9"><textarea rows="4" cols="50" class="form-control communityBackground"></textarea></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                        <div class="collateralInfo">
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset class="row col col-md-12">
-                                    <legend>Analysis and Evaluation</legend>
-                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                        <div class="row form-group col-md-9">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Analysis and Evaluation</label></div>
-                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control analysisAndEvaluation"></textarea></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                        <div class="row form-group col-md-9">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Projected Thrust of Rehabilitation</label></div>
-                                            <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control projectedThrust"></textarea></div>
-                                        </div>
-                                    </div>
-                                </fieldset>                               
+                                </div>                              
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-next btn-sm float-right" style="display: none">Next</button>
+                                <button type="button" class="btn btn-primary btn-saveData btn-sm float-right" >Save</button>
                                 <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>

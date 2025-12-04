@@ -180,7 +180,7 @@
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="client_list">Client</a></li>
                             <li><a href="">PSIR</a></li>
-                            <li class="active">Education and Job History</li>
+                            <li class="active">Traits/Characteristics and Background in the Community</li>
                         </ol>
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Petitioner's Educational and Job History</strong>
+                                <strong class="card-title">Traits/Characteristics and Background in the Community</strong>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -204,7 +204,7 @@
                                         <a class="nav-link present_offense" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Offense">Present Offense</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link prior_records" href="#" data-name="Prior Records">Prior Records</a>
+                                        <a class="nav-link prior_records" href="#" data-toggle="modal" data-target="#warningModal" data-name="Prior Records">Prior Records</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link family_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Birth Data and Family Background">Birth Data and Family Background</a>
@@ -213,13 +213,13 @@
                                         <a class="nav-link present_situation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Present Situation">Present Situation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active education_history" href="#" data-name="Education and Job History">Education and Job History</a>
+                                        <a class="nav-link education_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Residence/Economic Conditions">Education and Job History</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link medical_history" href="#" data-toggle="modal" data-target="#warningModal" data-name="Medical History">Medical History</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link traits_and_community_background" href="#" data-toggle="modal" data-target="#warningModal" data-name="Traits/Characteristics and Background in the Community">Traits/Characteristics and Background in the Community</a>
+                                        <a class="nav-link active traits_and_community_background" href="#" data-name="Traits/Characteristics and Background in the Community">Traits/Characteristics and Background in the Community</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link evaluation" href="#" data-toggle="modal" data-target="#warningModal" data-name="Analysis/Evaluation and Projected Thrust of Rehabilitation">Analysis/Evaluation and Projected Thrust of Rehabilitation</a>
@@ -234,36 +234,32 @@
                                     <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                EDUCATIONAL HISTORY
+                                                PETITIONER'S TRAITS/CHARACTERISTICS
                                                 <div>
-                                                    <a data-toggle="collapse" href="#educationCard" role="button" aria-expanded="true" aria-controls="educationCard">
+                                                    <a data-toggle="collapse" href="#traitsCard" role="button" aria-expanded="true" aria-controls="traitsCard">
                                                         <i class="fa fa-window-minimize" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="educationCard" class="collapse show">
+                                        <div id="traitsCard" class="collapse show">
                                             <div class="card-body">
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Educational Attainment</label>
-                                                        <input type="text" name="text-input" placeholder="Educational Attainment" class="form-control educational_attainment">
-                                                    </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Over-all Conduct in School</label>
-                                                        <select class="form-control over_all_conduct_in_school select2">
-                                                            <option value="" selected disabled>Select Relationship</option>
-                                                            <option value="very_satisfactory">Very Satisfactory</option>
-                                                            <option value="satisfactory">Satisfactory</option>
-                                                            <option value="fair">Fair</option>
-                                                            <option value="poor">Poor</option>
-                                                        </select>
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Positive</label>
+                                                        <textarea placeholder="Positive" class="form-control positive_traits"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                        <label for="text-input" class=" form-control-label">Remarks/Additional Information</label>
-                                                        <textarea placeholder="Remarks" class="form-control remarks_education"></textarea>
+                                                        <label for="text-input" class=" form-control-label">Negative</label>
+                                                        <textarea placeholder="Negative" class="form-control negative_traits"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Overall Impression of the Client</label>
+                                                        <textarea placeholder="Overall Impression of the Client" class="form-control overall_impression"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,64 +270,49 @@
                                     <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                JOB HISTORY
+                                                PETITIONER'S BACKGROUND IN THE COMMUNITY AND COLLATERAL INFORMATION
                                                 <div>
-                                                    <a data-toggle="collapse" href="#jobHistory" role="button" aria-expanded="true" aria-controls="jobHistory">
+                                                    <a data-toggle="collapse" href="#communityBackgroundCard" role="button" aria-expanded="true" aria-controls="communityBackgroundCard">
                                                         <i class="fa fa-window-minimize" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="jobHistory" class="collapse show">
+                                        <div id="communityBackgroundCard" class="collapse show">
                                             <div class="card-body">
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Petitioner's Previous Occupation</label>
-                                                        <input type="text" name="text-input" placeholder="Petitioner's Previous Occupation" class="form-control previous_occupation">
-                                                    </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Present Work Status</label>
-                                                        <select class="form-control work_status select2">
-                                                            <option value="" selected disabled>Select Status</option>
-                                                            <option value="self_employed">Self-Employed</option>
-                                                            <option value="regular_permanent">Regular/Permanent</option>
-                                                            <option value="temporary">Temporary</option>
-                                                            <option value="contractual">Contractual</option>
-                                                            <option value="casual">Casual</option>
-                                                            <option value="intermittent">Intermittent</option>
-                                                            <option value="seasonal">Seasonal</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Petitioner's Present Occupation</label>
-                                                        <input type="text" name="text-input" placeholder="Petitioner's Present Occupation" class="form-control present_occupation">
-                                                    </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Employer and Work Address</label>
-                                                        <input type="text" name="text-input" placeholder="Employer and Work Address" class="form-control employer_address">
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Collateral Source of Information</label>
+                                                        <textarea placeholder="Collateral Source of Information" class="form-control collateral_source_info"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                        <label for="text-input" class=" form-control-label">Special Skills</label>
-                                                        <textarea type="text" name="" placeholder="Special Skills" class="form-control special_skills"></textarea>
+                                                        <label for="text-input" class=" form-control-label">Relationship to Client</label>
+                                                        <textarea placeholder="Relationship to Client" class="form-control relationship_client"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Collateral Information Gathered</label>
+                                                        <textarea placeholder="Collateral Information Gathered" class="form-control collateral_info_gathered"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                         <label for="text-input" class=" form-control-label">Remarks/Additional Information</label>
-                                                        <textarea type="text" name="" placeholder="Remarks/Additional Information" class="form-control remarks_job"></textarea>
+                                                        <textarea placeholder="Remarks" class="form-control remarks_community_background"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-saveData btn-sm float-right" style="">Save</button>
+                                <button type="button" class="btn btn-primary btn-saveData btn-sm float-right">Save</button>
+                                <button type="button" class="btn btn-primary btn-update btn-sm float-right" style="display: none">Update</button>
                             </div>
                         </div>
                     </div>
@@ -345,7 +326,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
-    <script src="assets/js/pisJs/psirEducationHistory.js"></script>
+    <script src="assets/js/pisJs/psirTraitsAndCommunityBackground.js"></script>
 
 
 </body>

@@ -1,7 +1,12 @@
     ( function ( $ ) {
+        
         var api = localStorage.getItem('api');
         var ___ctx = api;
         console.log(___ctx)
+        
+        var __setContext = function(newctx) {
+            ___ctx = newctx;
+        };
 
         var __getContext = function() {
             return ___ctx;
@@ -9,7 +14,6 @@
 
         var __executeExternalGet = function(path, customLoader) {
             path = __getContext() + path;
-            // path = $.wms.getContextPath() + path;
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -87,6 +91,7 @@
             
             return d.promise();
         };
+
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -104,22 +109,18 @@
         var client_id = GetURLParameter('client_id');
         var foid = GetURLParameter('field_office_id');
         var field_office_id = $.cookie('field_office_id');
-        var status = GetURLParameter("status")
+        var status = GetURLParameter('status');
 
-        function collectCommunityBackground() {
-
+        function collectTraitsAndComBackground() {
             return {
-                neighborhood            : $(".neighborhood").val(),
-                describeNeighborhood    : $(".neighborhoodDescribe").val(),
-                criminalityInNeighborhood               : $(".neighCrim").val(),
-                criminalityExplain      : $(".criminalityExplain").val(),
-                communityAcceptance           : $(".comAcceptance").val(),
-                communityAcceptanceSpecify       : $(".acceptanceSpecify").val(),
-                peerRelationship                 : $(".peerRel").val(),
-                peerRelationshipSpecify             : $(".peerSpecify").val(),
-                neighborhoodArea                    : $(".area").val(),
-                resourcesForRehabilitation                    : $(".resourcesForRehabilition").val(),
-                resourcesForRehabilitationSpecify                    : $(".resourcesForRehabilitionSpecify").val()
+
+                positiveTraits         : $(".positive_traits").val(),
+                negativeTraits      : $(".negative_traits").val(),
+                overAllImpression          : $(".overall_impression").val(),
+                collateralSourceOfInformation      : $(".collateral_source_info").val(),
+                relationshipToClient              : $(".relationship_client").val(),
+                collateralInforamtionGathered       : $(".collateral_info_gathered").val(),
+                remarks       : $(".remarks_community_background").val(),
             };
         }
 
@@ -130,22 +131,20 @@
             const REQUIRED_SECTIONS = [
                 "identifyingData",
                 "presentOffense",
-                "priorRecords",
-                "identificationData",
-                "familyBackground",
+                "priorRecordsAndDerogatoryRecord",
+                "familyBackgroundAndBirthData",
                 "presentSituation",
-                "educationalHistory",
-                "employmentHistory",
-                "communityBackground"
+                "educationAndJobHistory",
+                "medicalHistory",
+                "traitsAndCommunityBackground",
+                "analysisAndProjectedThrust",
+                // "recommendation",
             ];
 
             let result = {
                 missingSections: [],
                 completedSections: [],
-                // statusIsNull: !data.worksheetStatus || data.worksheetStatus === "null"
             };
-
-            console.log(result)
 
             REQUIRED_SECTIONS.forEach(section => {
                 if (data[section] && Object.keys(data[section]).length > 0) {
@@ -160,10 +159,10 @@
             return result;
         }
 
-        function saveWorksheet(existing, newCommunityBackground) {
+        function saveWorksheet(existing, newTraitsAndCommunityBackground) {
 
             // update identifyingData
-            existing.communityBackground = newCommunityBackground;
+            existing.traitsAndCommunityBackground = newTraitsAndCommunityBackground;
 
             let check = worksheetChecker(existing);
 
@@ -178,28 +177,28 @@
             return {
                 petitionerId: client_id,
                 jsonData: JSON.stringify(existing),
-                type: "worksheet",
+                type: "psir",
                 worksheetStatus: status,
                 createdBy: $.cookie("uuid"),
                 fieldOfficeId: $.cookie("field_office_id")
             };
         }
 
-        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, 
-            newPriorRecord, newIdentificationData, newFamilyBackground, 
-            newPresentSituation, newEducationalHistory, newEmploymentHistory, 
-            newCommunityBackground) {
+        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, newPriorRecordsAndDerogatoryRecord, 
+            newFamilyBackgroundAndBirthData, newPresentSituation, newEducationAndJobHistory, 
+            newMedicalHistory, newTraitsAndCommunityBackground, newAnalysisAndProjectedThrust) {
 
             // update identifyingData
             existing.identifyingData = newIdentifyingData;
             existing.presentOffense = newPresentOffense;
-            existing.priorRecords = newPriorRecord;
-            existing.identificationData = newIdentificationData;
-            existing.familyBackground = newFamilyBackground;
+            existing.priorRecordsAndDerogatoryRecord = newPriorRecordsAndDerogatoryRecord;
+            existing.familyBackgroundAndBirthData = newFamilyBackgroundAndBirthData;
             existing.presentSituation = newPresentSituation;
-            existing.educationalHistory = newEducationalHistory;
-            existing.employmentHistory = newEmploymentHistory;
-            existing.communityBackground = newCommunityBackground;
+            existing.educationAndJobHistory = newEducationAndJobHistory;
+            existing.medicalHistory = newMedicalHistory;
+            existing.traitsAndCommunityBackground = newTraitsAndCommunityBackground;
+            existing.analysisAndProjectedThrust = newAnalysisAndProjectedThrust;
+            // existing.recommendation = newRecommendation;
 
             let check = worksheetChecker(existing);
 
@@ -214,66 +213,62 @@
             return {
                 petitionerId: client_id,
                 jsonData: JSON.stringify(existing),
-                type: "worksheet",
+                type: "psir",
                 worksheetStatus: status,
                 createdBy: $.cookie("uuid"),
                 fieldOfficeId: $.cookie("field_office_id")
             };
         }
 
-        // event handler for showing modal upon saving and updating data
-        // $(document).on("click", ".btn-saveData", function(){
-        $(".btn-saveData").unbind("click").on("click", function(){
-            $("#saveModal").modal("show")
-        })
-
         // display buttons and data
         if (status === "null" || !status || status === "Not Available") {
+        // if (status === "null" || status === "Not Available") {
             $("#saveModal .saveModalTitle").text("Save Changes")
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
-
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
+            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
-                    let workSheetData = JSON.parse(result.jsonData);
-                    let communityBackground = workSheetData.communityBackground;
-                    if (communityBackground) {
+                    var worksheetData = JSON.parse(result.jsonData);
+                    var traitsAndCommunityBackground = worksheetData.traitsAndCommunityBackground;
+                    console.log(worksheetData)
+                    if (traitsAndCommunityBackground) {
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
 
-                        $(".neighborhood").val(communityBackground.neighborhood).trigger("change")
-                        $(".neighborhoodDescribe").val(communityBackground.describeNeighborhood)
-                        $(".neighCrim").val(communityBackground.criminalityInNeighborhood).trigger("change")
-                        $(".criminalityExplain").val(communityBackground.criminalityExplain)
-                        $(".comAcceptance").val(communityBackground.communityAcceptance).trigger("change")
-                        $(".acceptanceSpecify").val(communityBackground.communityAcceptanceSpecify)
-                        $(".peerRel").val(communityBackground.peerRelationship).trigger("change")
-                        $(".peerSpecify").val(communityBackground.peerRelationshipSpecify)
-                        $(".area").val(communityBackground.neighborhoodArea)
-                        $(".resourcesForRehabilition").val(communityBackground.resourcesForRehabilitation).trigger("change")
-                        $(".resourcesForRehabilitionSpecify").val(communityBackground.resourcesForRehabilitationSpecify)
-
+                        $(".positive_traits").val(traitsAndCommunityBackground.positiveTraits)
+                        $(".negative_traits").val(traitsAndCommunityBackground.negativeTraits)
+                        $(".overall_impression").val(traitsAndCommunityBackground.overAllImpression)
+                        $(".collateral_source_info").val(traitsAndCommunityBackground.collateralSourceOfInformation)
+                        $(".relationship_client").val(traitsAndCommunityBackground.relationshipToClient)
+                        $(".collateral_info_gathered").val(traitsAndCommunityBackground.collateralInforamtionGathered)
+                        $(".remarks_community_background").val(traitsAndCommunityBackground.remarks)
 
                     } else {
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
+
                     }
+
                 }
             })
         }
 
+        // event handler for showing modal upon saving and updating data
+        $(".btn-saveData").unbind("click").on("click", function(){
+            $("#saveModal").modal("show")
+        })
 
         // event handler for saving data
         $("#saveModal .btn-save").unbind("click").on("click", function () {
 
-            let data = collectCommunityBackground();
+            let data = collectTraitsAndComBackground();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -288,61 +283,63 @@
                             if (res.status === "ERROR") return;
 
                             $(".form-control").val('');
-                            $('#save_success').show();
+                            $('#create_success').show();
 
                             setTimeout(() => {
-                                $('#save_success').hide();
+                                $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    `${api}/pis/worksheet_environmental_factor?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
                         });
                 });
         });
 
-        // event handler for updating data
+        // evend handler for updating data
         $("#saveModal .btn-update").unbind("click").on("click", function () {
 
-            let data = collectCommunityBackground();
+            let data = collectTraitsAndComBackground();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
                     let identifyingData = workSheetData.identifyingData;
                     let presentOffense = workSheetData.presentOffense;
-                    let priorRecords = workSheetData.priorRecords;
-                    let familyBackground = workSheetData.familyBackground;
-                    let identificationData = workSheetData.identificationData;
+                    let priorRecordsAndDerogatoryRecord = workSheetData.priorRecordsAndDerogatoryRecord;
+                    let familyBackgroundAndBirthData = workSheetData.familyBackgroundAndBirthData;
                     let presentSituation = workSheetData.presentSituation;
-                    let employmentHistory = workSheetData.employmentHistory;
-                    let educationalHistory = workSheetData.educationalHistory;
+                    let educationAndJobHistory = workSheetData.educationAndJobHistory;
+                    let medicalHistory = workSheetData.medicalHistory;
+                    let analysisAndProjectedThrust = workSheetData.analysisAndProjectedThrust;
+                    // let recommendation = workSheetData.recommendation;
 
                     let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
 
-                    let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecords, identificationData, familyBackground, presentSituation, educationalHistory, employmentHistory, data);
-                    // console.log(payload)
+                    let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, presentSituation, educationAndJobHistory, medicalHistory, data, analysisAndProjectedThrust);
 
-                    __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
-                        .done(function (res) {
-                            if (res.status === "ERROR") return;
-                            $(".form-control").val('');
-                            $('#create_success').show();
-                            $("#saveModal .btn-save").prop("disabled", true)
+                    __executeExternalPost(
+                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        JSON.stringify(payload)
+                    ).done(function (res) {
 
-                            setTimeout(() => {
-                                $('#create_success').hide();
-                                $('#saveModal').modal("hide");
-                                $("#saveModal .btn-save").prop("disabled", false)
-                                window.location.href =`${api}/pis/worksheet_environmental_factor?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
-                            }, 2000);
-                        });
+                        if (res.status === "ERROR") return;
+
+                        $('#update_success').show();
+
+                        setTimeout(() => {
+                            $('#update_success').hide();
+                            $('#saveModal').modal("hide");
+
+                            window.location.href =
+                                `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                        }, 2000);
+                    });
                 });
         });
-
-
-        function setupWorksheetClickHandler(worksheetType) {
-            $(`.${worksheetType}`).unbind("click").on("click", function () {
+        
+        function setupWorksheetClickHandler(psirType) {
+            $(`.${psirType}`).unbind("click").on("click", function () {
                 var tabName = $(this).data("name")
                 $(".warningModalTitle").text(`${tabName} Tab`)
                 $("#tabName").text(tabName)
@@ -350,19 +347,21 @@
                     $(".form-control").val('');
                     $("#warningModal").modal("hide");
                     setTimeout(function () {
-                        window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`;
+                        $(".overlay").hide();
+                        // window.location.href = `${api}/pis/worksheet_${psirType}?client_id=${client_id}`;
+                        window.location.href = `${api}/pis/psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
                     }, 500);
                 });
             });
         }
-            
-        setupWorksheetClickHandler("prior_records");
+        
+        setupWorksheetClickHandler("identifying_data")
         setupWorksheetClickHandler("present_offense");
-        setupWorksheetClickHandler("identifying_data");
         setupWorksheetClickHandler("family_background");
-        setupWorksheetClickHandler("identification_data");
-        setupWorksheetClickHandler("present_situation");
-        setupWorksheetClickHandler("employment_history");
+        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("family_background");
         setupWorksheetClickHandler("education_history");
-
+        setupWorksheetClickHandler("traits_and_community_background");
+        setupWorksheetClickHandler("evaluation");
+        setupWorksheetClickHandler("recommendation");
     } )( jQuery );

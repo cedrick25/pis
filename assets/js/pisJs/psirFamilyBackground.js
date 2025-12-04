@@ -109,302 +109,305 @@
         var client_id = GetURLParameter('client_id');
         var foid = GetURLParameter('field_office_id');
         var field_office_id = $.cookie('field_office_id');
+        var status = GetURLParameter('status')
 
-        var fatherDeceased = $('.father_deceased').val()
-        if (fatherDeceased == "FALSE"){
-            $(".fatherDateDeceased").hide();
-            $(".fatherDeceasedCause").hide();
+        function collectFamilybackground() {
+            return {
+
+                // parentsRelationship : $(".relationship_with_parents").val(),
+
+                birthDate          : $(".date_of_birth").val(),
+                birthPlace          : $(".place_of_birth").val(),
+                birthOrder        : $(".birth_order").val(),
+
+                fathersName          : $(".father_name").val(),
+                fathersAge          : $(".father_age").val(),
+                fathersOccupation        : $(".father_occupation").val(),
+
+                mothersName          : $(".mother_name").val(),
+                mothersAge          : $(".mother_age").val(),
+                mothersOccupation        : $(".mother_occupation").val(),
+
+                civilStatus         : $(".civil_status").val(),
+                seperationStatus         : $(".seperation_status").val(),
+                otherStatus         : $(".other_status_of_marriage").val(),
+
+                familyRelationship          : $(".fam_relationship").val(),
+                majorFamilyProblem          : $(".family_problems").val(),
+                familyReputationInCommunity            : $(".family_reputation").val(),
+                familyEconomicStatus              : $(".family_economic").val(),
+                homeCondition               : $(".home_condition").val(),
+                stabilityOfResidence        : $(".residence_stability").val(),
+                remarks          : $(".remarks_socio_economic").val(),
+
+            };
+        }
+
+        function worksheetChecker(data) {
+
+            if (!data) data = {};
+
+            const REQUIRED_SECTIONS = [
+                "identifyingData",
+                "presentOffense",
+                "priorRecordsAndDerogatoryRecord",
+                "familyBackgroundAndBirthData",
+                "presentSituation",
+                "educationAndJobHistory",
+                "medicalHistory",
+                "traitsAndCommunityBackground",
+                "analysisAndProjectedThrust",
+                // "recommendation",
+            ];
+
+            let result = {
+                missingSections: [],
+                completedSections: [],
+            };
+
+            REQUIRED_SECTIONS.forEach(section => {
+                if (data[section] && Object.keys(data[section]).length > 0) {
+                    result.completedSections.push(section);
+                } else {
+                    result.missingSections.push(section);
+                }
+            });
+
+            result.isComplete = (result.missingSections.length === 0);
+
+            return result;
+        }
+
+        function saveWorksheet(existing, newFamilyBackgroundAndBirthData) {
+
+            // update identifyingData
+            existing.familyBackgroundAndBirthData = newFamilyBackgroundAndBirthData;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, newPriorRecordsAndDerogatoryRecord, 
+            newFamilyBackgroundAndBirthData, newPresentSituation, newEducationAndJobHistory, 
+            newMedicalHistory, newTraitsAndCommunityBackground, newAnalysisAndProjectedThrust) {
+
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+            existing.presentOffense = newPresentOffense;
+            existing.priorRecordsAndDerogatoryRecord = newPriorRecordsAndDerogatoryRecord;
+            existing.familyBackgroundAndBirthData = newFamilyBackgroundAndBirthData;
+            existing.presentSituation = newPresentSituation;
+            existing.educationAndJobHistory = newEducationAndJobHistory;
+            existing.medicalHistory = newMedicalHistory;
+            existing.traitsAndCommunityBackground = newTraitsAndCommunityBackground;
+            existing.analysisAndProjectedThrust = newAnalysisAndProjectedThrust;
+            // existing.recommendation = newRecommendation;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+
+        // display buttons and data
+        if (status === "null" || !status || status === "Not Available") {
+        // if (status === "null" || status === "Not Available") {
+            $("#saveModal .saveModalTitle").text("Save Changes")
+            $("#saveModal #saveMessage").show();
+            $("#saveModal .btn-save").show();
         } else {
-            $(".fatherDateDeceased").hide();
-            $(".fatherDeceasedCause").hide();
-        }
-        $('.father_deceased').change(function(){
-            if ($('.father_deceased').val() == "TRUE") {
-                $(".fatherDateDeceased").show();
-                $(".fatherDeceasedCause").show();
-            } else {
-                $(".fatherDateDeceased").hide();
-                $(".fatherDeceasedCause").hide();
-            }
-        });
+            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
-        var motherDeceased = $('.mother_deceased').val()
-        if (motherDeceased == "FALSE"){
-            $(".motherDateDeceased").hide();
-            $(".motherDeceasedCause").hide();
-        } else {
-            $(".motherDateDeceased").hide();
-            $(".motherDeceasedCause").hide();
-        }
-        $('.mother_deceased').change(function(){
-            if ($('.mother_deceased').val() == "TRUE") {
-                $(".motherDateDeceased").show();
-                $(".motherDeceasedCause").show();
-            } else {
-                $(".motherDateDeceased").hide();
-                $(".motherDeceasedCause").hide();
-            }
-        });
-
-        function gatheredData () {
-            const siblings = [];
-            const sibling_name = $(".sibling_name");
-            const relationship = $(".relationship");
-            const age = $(".age");
-            const sibling_sex = $(".sibling_sex");
-            const sibling_education = $(".sibling_education");
-            const sibling_occupation = $(".sibling_occupation");
-
-            for(var i = 0; i < sibling_name.length; i++){
-                
-                const list = {};
-                list.sibling_name = $(sibling_name[i]).val();
-                list.relationship = $(relationship[i]).val();
-                list.age = $(age[i]).val();
-                list.sibling_sex = $(sibling_sex[i]).val();
-                list.sibling_education = $(sibling_education[i]).val();
-                list.sibling_occupation = $(sibling_occupation[i]).val();
-                siblings.push(list);
-            }
-
-
-            var familyBG = {
-
-                siblings            : siblings,
-                sex                 : $(".sex").val(),
-                civilStatus         : $(".civilStatus").val(),
-                citizenship         : $(".citizenship").val(),
-                religion            : $(".religion").val(),
-                bday                : $(".bday").val(),
-                bplace              : $(".bplace").val(),
-                bprovince           : $(".bprovince").val(),
-                bcity               : $(".bcity").val(),
-                bplaceOthers        : $(".bplace_others").val(),
-                identifyingMarks    : $(".identifyingMarks").val(),
-                handicap            : $(".handicap").val(),
-                desc                : $(".desc").val(),
-                parentsRelationship : $(".parentsRelation").val(),
-                fatherName          : $(".father_name").val(),
-                fatherBday          : $(".father_bday").val(),
-                fatherBplace        : $(".father_bplace").val(),
-                fatherAdd           : $(".father_add").val(),
-                fatherCitizenship   : $(".father_citizenship").val(),
-                fatherReligion      : $(".father_religion").val(),
-                fatherEducation     : $(".father_education").val(),
-                fatherOccupation    : $(".father_occupation").val(),
-                fatherWork_add      : $(".father_work_add").val(),
-                fatherTelNo         : $(".father_tel_no").val(),
-                fatherIncome        : $(".father_income").val(),
-                fatherDeceased      : $(".father_deceased").val(),
-                fatherDeceasedCause : $(".father_deceased_cause").val(),
-                fatherDateDeceased  : $(".father_date_deceased").val(),
-
-                motherName          : $(".mother_name").val(),
-                motherBday          : $(".mother_bday").val(),
-                motherBplace        : $(".mother_bplace").val(),
-                motherAdd           : $(".mother_add").val(),
-                motherCitizenship   : $(".mother_citizenship").val(),
-                motherReligion      : $(".mother_religion").val(),
-                motherEducation     : $(".mother_education").val(),
-                motherOccupation    : $(".mother_occupation").val(),
-                motherWork_add      : $(".mother_work_add").val(),
-                motherTelNo         : $(".mother_tel_no").val(),
-                motherIncome        : $(".mother_income").val(),
-                motherDeceased      : $(".mother_deceased").val(),
-                motherDeceasedCause : $(".mother_deceased_cause").val(),
-                motherDateDeceased  : $(".mother_date_deceased").val(),
-
-            }
-
-            var payload = {
-            "petitionerId"              : client_id,
-            "jsonData"                  : JSON.stringify(familyBG),
-            "type"                      : "psirFamilyBackground",
-            "worksheetStatus"           : "INCOMPLETE",
-            "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-
-            return payload;
-        }
-
-        $(".btn-next").unbind("click").on("click", function(){
-            var dataPayload = gatheredData()
-            __executeExternalPost('8000/worksheet/create',JSON.stringify(dataPayload)).done(function (result) {
+                var result = result.response;
                 if (result.status != "ERROR") {
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        $(".overlay").show();
-                        $(".btn-next").prop('disabled', true);
-                        setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".overlay").hide();
-                            $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_socio_economic?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500); 
-                    }, 2000);
-                }else{
-                    alert("failed")
+                    var worksheetData = JSON.parse(result.jsonData);
+                    var familyBackgroundAndBirthData = worksheetData.familyBackgroundAndBirthData;
+                    console.log(worksheetData)
+                    if (familyBackgroundAndBirthData) {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+
+                        $(".date_of_birth").val(familyBackgroundAndBirthData.birthDate);
+                        $(".place_of_birth").val(familyBackgroundAndBirthData.birthPlace);
+                        $(".birth_order").val(familyBackgroundAndBirthData.birthOrder);
+                        $(".father_name").val(familyBackgroundAndBirthData.fathersName);
+                        $(".father_age").val(familyBackgroundAndBirthData.fathersAge);
+                        $(".father_occupation").val(familyBackgroundAndBirthData.fathersOccupation);
+                        $(".mother_name").val(familyBackgroundAndBirthData.mothersName);
+                        $(".mother_age").val(familyBackgroundAndBirthData.mothersAge);
+                        $(".mother_occupation").val(familyBackgroundAndBirthData.mothersOccupation);
+                        $(".other_status_of_marriage").val(familyBackgroundAndBirthData.otherStatus);
+                        $(".remarks_socio_economic").val(familyBackgroundAndBirthData.remarks);
+                        $(".civil_status").val(familyBackgroundAndBirthData.civilStatus).trigger("change");
+                        $(".seperation_status").val(familyBackgroundAndBirthData.seperationStatus).trigger("change");
+                        $(".fam_relationship").val(familyBackgroundAndBirthData.familyRelationship).trigger("change");
+                        $(".family_problems").val(familyBackgroundAndBirthData.majorFamilyProblem).trigger("change");
+                        $(".family_reputation").val(familyBackgroundAndBirthData.familyReputationInCommunity).trigger("change");
+                        $(".family_economic").val(familyBackgroundAndBirthData.familyEconomicStatus).trigger("change");
+                        $(".home_condition").val(familyBackgroundAndBirthData.homeCondition).trigger("change");
+                        $(".residence_stability").val(familyBackgroundAndBirthData.stabilityOfResidence).trigger("change");
+                    } else {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+                    }
+
                 }
             })
+        }
 
+        // event handler for showing modal upon saving and updating data
+        $(".btn-saveData").unbind("click").on("click", function(){
+            $("#saveModal").modal("show")
         })
-        
-        __executeExternalGet('8000/worksheet/getPetitioner/familyBackground/'+client_id).done(function (result) {
-            var result = result.response;
-            if (result.status != "ERROR") {
-                if (result.worksheetStatus == "INCOMPLETE"){
-                    __executeExternalGet('8000/worksheet/getPetitioner/psirFamilyBackground/'+client_id).done(function (result) {
-                        var result = result.response;
-                        if (result.status != "ERROR") {
-                            if (result.worksheetStatus == "INCOMPLETE"){
-                                $(".btn-next").hide();
-                                $(".btn-update").show();
-                            }else{
-                                $(".btn-update").hide();
-                                $(".btn-next").show();
-                            } 
-                        }
-                    })
 
-                    const familybg = JSON.parse(result.jsonData)
+        $('.civil_status').change(function(){
+            var value = $(this).val();
+            if (value === "seperated") {
+                $("#legal_status_field").show();
+                $("#other_status_field").hide();
+            } else if (value === "others") {
+                $("#legal_status_field").hide();
+                $("#other_status_field").show();
+            } else {
+                $("#legal_status_field").hide();
+                $("#other_status_field").hide();
+            }
+        });
 
-                    $(".sex").val(JSON.parse(result.jsonData).sex).trigger("change");
-                    $(".civilStatus").val(JSON.parse(result.jsonData).civilStatus).trigger("change");
-                    $(".citizenship").val(JSON.parse(result.jsonData).citizenship).trigger("change");
-                    $(".religion").val(JSON.parse(result.jsonData).religion).trigger("change");
-                    $(".bday").val(JSON.parse(result.jsonData).bday);
-                    $(".bplace").val(JSON.parse(result.jsonData).bplace).trigger("change");
-                    $(".bprovince").val(JSON.parse(result.jsonData).bprovince);
-                    $(".bcity").val(JSON.parse(result.jsonData).bcity);
-                    $(".bplace_others").val(JSON.parse(result.jsonData).bplace);
-                    $(".identifyingMarks").val(JSON.parse(result.jsonData).identifyingMarks).trigger("change");
-                    $(".handicap").val(JSON.parse(result.jsonData).handicap);
-                    $(".desc").val(JSON.parse(result.jsonData).desc);
-                    $(".parentsRelation").val(JSON.parse(result.jsonData).parentsRelationship).trigger("change");
-                    $(".father_name").val(JSON.parse(result.jsonData).fatherName);
-                    $(".father_bday").val(JSON.parse(result.jsonData).fatherBday);
-                    $(".father_bplace").val(JSON.parse(result.jsonData).fatherBplace).trigger("change");
-                    $(".father_add").val(JSON.parse(result.jsonData).fatherAdd);
-                    $(".father_citizenship").val(JSON.parse(result.jsonData).fatherCitizenship).trigger("change");
-                    $(".father_religion").val(JSON.parse(result.jsonData).fatherReligion).trigger("change");
-                    $(".father_education").val(JSON.parse(result.jsonData).fatherEducation).trigger("change");
-                    $(".father_occupation").val(JSON.parse(result.jsonData).fatherOccupation);
-                    $(".father_work_add").val(JSON.parse(result.jsonData).fatherWork_add);
-                    $(".father_tel_no").val(JSON.parse(result.jsonData).fatherTelNo);
-                    $(".father_income").val(JSON.parse(result.jsonData).fatherIncome);
-                    $(".father_deceased").val(JSON.parse(result.jsonData).fatherDeceased).trigger("change");
-                    $(".father_deceased_cause").val(JSON.parse(result.jsonData).fatherDeceasedCause);
-                    $(".father_date_deceased").val(JSON.parse(result.jsonData).fatherDateDeceased);
-                    $(".mother_name").val(JSON.parse(result.jsonData).motherName);
-                    $(".mother_bday").val(JSON.parse(result.jsonData).motherBday);
-                    $(".mother_bplace").val(JSON.parse(result.jsonData).motherBplace).trigger("change");
-                    $(".mother_add").val(JSON.parse(result.jsonData).motherAdd);
-                    $(".mother_citizenship").val(JSON.parse(result.jsonData).motherCitizenship).trigger("change");
-                    $(".mother_religion").val(JSON.parse(result.jsonData).motherReligion).trigger("change");
-                    $(".mother_education").val(JSON.parse(result.jsonData).motherEducation).trigger("change");
-                    $(".mother_occupation").val(JSON.parse(result.jsonData).motherOccupation);
-                    $(".mother_work_add").val(JSON.parse(result.jsonData).motherWork_add);
-                    $(".mother_tel_no").val(JSON.parse(result.jsonData).motherTelNo);
-                    $(".mother_income").val(JSON.parse(result.jsonData).motherIncome);
-                    $(".mother_deceased").val(JSON.parse(result.jsonData).motherDeceased).trigger("change");
-                    $(".mother_deceased_cause").val(JSON.parse(result.jsonData).motherDeceasedCause);
-                    $(".mother_date_deceased").val(JSON.parse(result.jsonData).motherDateDeceased);
+        // event handler for saving data
+        $("#saveModal .btn-save").unbind("click").on("click", function () {
 
+            let data = collectFamilybackground();
 
-                    familybg.siblings.forEach(function(data){
-                        $(".list_siblings").append(`<div class="list_sibling">
-                            <div class="row form-group col-md-12">
-                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_name" placeholder="Sibling's Name" value="${data.sibling_name}"></div>
-                                <div class="col-3 col-md-2"><input type="text" class="form-control relationship" placeholder="Relationship" value="${data.relationship}"></div>
-                                <div class="col-3 col-md-2"><input type="text" class="form-control age" placeholder="Age" value="${data.age}"></div>
-                                <div class="col-3 col-md-2">
-                                    <select class="form-control sibling_sex select2">
-                                        <option value="n/a" ${data.sibling_sex === "n/a" ? "selected" : ""} disabled>Sex</option>
-                                        <option value="FEMALE" ${data.sibling_sex === "FEMALE" ? "selected" : ""}>Female</option>
-                                        <option value="MALE" ${data.sibling_sex === "MALE" ? "selected" : ""}>Male</option>
-                                        <option value="LGBT" ${data.sibling_sex === "LGBT" ? "selected" : ""}>LGBT</option>
-                                    </select>
-                                </div>
-                                <div class="col-3 col-md-2">
-                                    <select class="form-control sibling_education select2">
-                                        <option value="n/a" ${data.sibling_education === "n/a" ? "selected" : ""} disabled>Education</option>
-                                        <option value="COLLEGE GRADUATE" ${data.sibling_education === "COLLEGE GRADUATE" ? "selected" : ""}>College Graduate</option>
-                                        <option value="COLLEGE UNDERGRADUATE" ${data.sibling_education === "COLLEGE UNDERGRADUATE" ? "selected" : ""}>College Undergraduate</option>
-                                        <option value="ELEMENTARY GRADUATE" ${data.sibling_education === "ELEMENTARY GRADUATE" ? "selected" : ""}>Elementary Graduate</option>
-                                        <option value="ELEMENTARY UNDERGRADUATE" ${data.sibling_education === "ELEMENTARY UNDERGRADUATE" ? "selected" : ""}>Elementary Undergraduate</option>
-                                        <option value="JUNIOR HS GRADUATE" ${data.sibling_education === "JUNIOR HS GRADUATE" ? "selected" : ""}>Junior High School Graduate</option>
-                                        <option value="JUNIOR HS UNDERGRADUATE" ${data.sibling_education === "JUNIOR HS UNDERGRADUATE" ? "selected" : ""}>Junior High School Undergraduate</option>
-                                        <option value="ILLITERATE" ${data.sibling_education === "ILLITERATE" ? "selected" : ""}>No Education/Illiterate</option>
-                                        <option value="POST-GRADUATE" ${data.sibling_education === "POST-GRADUATE" ? "selected" : ""}>Post-Graduate Studies</option>
-                                        <option value="SENIOR HS GRADUATE" ${data.sibling_education === "SENIOR HS GRADUATE" ? "selected" : ""}>Senior High School Graduate</option>
-                                        <option value="SENIOR HS UNDERGRADUATE" ${data.sibling_education === "SENIOR HS UNDERGRADUATE" ? "selected" : ""}>Senior High School Undergraduate</option>
-                                        <option value="VOCATIONAL" ${data.sibling_education === "VOCATIONAL" ? "selected" : ""}>Vocational</option>
-                                    </select>
-                                </div>
-                                <div class="col-3 col-md-2"><input type="text" class="form-control sibling_occupation" placeholder="Occupation" value="${data.sibling_occupation}"></div>
-                            </div>
-                        </div>`
-                        )
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = saveWorksheet(existing, data);
+
+                    __executeExternalPost("8000/worksheet/create", JSON.stringify(payload))
+                        .done(function (res) {
+
+                            if (res.status === "ERROR") return;
+
+                            $(".form-control").val('');
+                            $('#create_success').show();
+
+                            setTimeout(() => {
+                                $('#create_success').hide();
+                                $('#saveModal').modal("hide");
+                                window.location.href =
+                                    `${api}/pis/psir_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                            }, 2000);
+                        });
+                });
+        });
+
+        // evend handler for updating data
+        $("#saveModal .btn-update").unbind("click").on("click", function () {
+
+            let data = collectFamilybackground();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+                    let identifyingData = workSheetData.identifyingData;
+                    let presentOffense = workSheetData.presentOffense;
+                    let priorRecordsAndDerogatoryRecord = workSheetData.priorRecordsAndDerogatoryRecord;
+                    let presentSituation = workSheetData.presentSituation;
+                    let educationAndJobHistory = workSheetData.educationAndJobHistory;
+                    let medicalHistory = workSheetData.medicalHistory;
+                    let traitsAndCommunityBackground = workSheetData.traitsAndCommunityBackground;
+                    let analysisAndProjectedThrust = workSheetData.analysisAndProjectedThrust;
+                    // let recommendation = workSheetData.recommendation;
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecordsAndDerogatoryRecord, data, presentSituation, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, analysisAndProjectedThrust);
+
+                    __executeExternalPost(
+                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        JSON.stringify(payload)
+                    ).done(function (res) {
+
+                        if (res.status === "ERROR") return;
+
+                        $('#update_success').show();
+
+                        setTimeout(() => {
+                            $('#update_success').hide();
+                            $('#saveModal').modal("hide");
+
+                            window.location.href =
+                                `${api}/pis/psir_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                        }, 2000);
                     });
-                    $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
-                }
-            }
-        })
-
-        $(".btn-update").unbind("click").on("click", function(){
-
-            var dataPayload = gatheredData();
-
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirFamilyBackground/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
-                if (result.status != "ERROR") {
-                    $('#success').show();
-                    setTimeout(function () {
-                        $('#success').hide();
-                        $(".overlay").show();
-                        $(".btn-update").prop('disabled', true);
-                        setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".overlay").hide();
-                            $(".btn-update").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_socio_economic?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500); 
-                    }, 2000);
-                }else{
-                    alert("failed")
-                }
-            })
-
-        })
+                });
+        });
 
         function setupWorksheetClickHandler(psirType) {
             $(`.${psirType}`).unbind("click").on("click", function () {
+                var tabName = $(this).data("name")
+                $(".warningModalTitle").text(`${tabName} Tab`)
+                $("#tabName").text(tabName)
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
                     $("#warningModal").modal("hide");
-                    $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
+                        // window.location.href = `${api}/pis/worksheet_${psirType}?client_id=${client_id}`;
+                        window.location.href = `${api}/pis/psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
                     }, 500);
                 });
             });
         }
         
-        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("identifying_data")
         setupWorksheetClickHandler("present_offense");
-        setupWorksheetClickHandler("identifying_data");
-        setupWorksheetClickHandler("family_background");
-        setupWorksheetClickHandler("socio_economic");
-        setupWorksheetClickHandler("residence_economic");
-        setupWorksheetClickHandler("spouse_children");
+        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("present_situation");
         setupWorksheetClickHandler("education_history");
-        setupWorksheetClickHandler("employment_history");
-        setupWorksheetClickHandler("environmental_factor")
+        setupWorksheetClickHandler("medical_history");
+        setupWorksheetClickHandler("traits_and_community_background");
         setupWorksheetClickHandler("evaluation");
-        setupWorksheetClickHandler("recommendation")
-
+        setupWorksheetClickHandler("recommendation");
 
 
 

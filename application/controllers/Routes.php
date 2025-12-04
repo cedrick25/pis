@@ -460,13 +460,13 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('psir_socio_economic');
 	}
-	public function psir_residence_economic()
+	public function psir_traits_and_community_background()
 	{
-		$this->load->view('psir_residence_economic');
+		$this->load->view('psir_traits_and_community_background');
 	}
-	public function psir_spouse_children()
+	public function psir_present_situation()
 	{
-		$this->load->view('psir_spouse_children');
+		$this->load->view('psir_present_situation');
 	}
 	public function psir_education_history()
 	{
@@ -492,7 +492,7 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('psir_recommendation');
 	}
-	public function psir_med_history()
+	public function psir_medical_history()
 	{
 		$this->load->view('psir_med_history');
 	}

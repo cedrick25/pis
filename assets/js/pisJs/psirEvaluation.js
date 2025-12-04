@@ -105,219 +105,258 @@
             }
         }
 
-
         var client_id = GetURLParameter('client_id');
         var foid = GetURLParameter('field_office_id');
         var field_office_id = $.cookie('field_office_id');
-       
-        $(".addMoreCollInfo").unbind("click").on("click", function(){
-            $(".collateralInfo").append(`
-            <div class="collateralInformation" style="margin-top: 30px;">
-                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                    <div class="row form-group col-md-9">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
-                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo"></textarea></div>
-                    </div>
-                </div>
-                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                    <div class="row form-group col-md-9">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
-                        <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient"></div>
-                    </div>
-                </div>
-                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                    <div class="row form-group col-md-9">
-                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
-                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered"></textarea></div>
-                    </div>
-                </div>
-                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-            </div>`
-            )
-        });
+        var status = GetURLParameter('status');
 
-        $('.collateralInfo').on('click', '.remove', function(e) {
-            e.preventDefault();
-            $(this).parent().remove();
-        });
+        function collectAnalysisAndThrusts() {
+            return {
 
-        function gatheredData () {
-
-            const collateralInfo = [];
-            const collInfo = $(".collInfo");
-            const relClient = $(".relClient");
-            const collGathered = $(".collGathered");
-
-            for(var i = 0; i < collInfo.length; i++){
-                const list = {};
-                list.collInfo = $(collInfo[i]).val();
-                list.relClient = $(relClient[i]).val();
-                list.collGathered = $(collGathered[i]).val();
-                collateralInfo.push(list);
-            }
-
-
-            var evaluation = {
-
-                collateralInfo          : collateralInfo,
-                positiveTraits          : $(".positiveTraits").val(),
-                negativeTraits          : $(".negativeTraits").val(),
-                overallTraits           : $(".overallTraits").val(),
-                analysisAndEvaluation   : $(".analysisAndEvaluation").val(),
-                projectedThrust         : $(".projectedThrust").val(),
-                communityBackground     : $(".communityBackground").val(),
-            }
-
-            var payload = {
-                "petitionerId"              : client_id,
-                "jsonData"                  : JSON.stringify(evaluation),
-                "type"                      : "psirEvaluation",
-                "worksheetStatus"           : "INCOMPLETE",
-                "createdBy"                 : $.cookie("uuid"),
-                "fieldOfficeId"             : $.cookie("field_office_id")
-            }
-            return payload;
+                analysisAndEvaluation         : $(".analysis").val(),
+                projectedThrustsOfRehabilitation      : $(".rehabilitation").val(),
+            };
         }
 
+        function worksheetChecker(data) {
 
-        $(".btn-next").unbind("click").on("click", function(){
-            var payload = gatheredData();
+            if (!data) data = {};
 
-            var required = ["positiveTraits", "negativeTraits", "overallTraits", "analysisAndEvaluation", "projectedThrust", "communityBackground"];
+            const REQUIRED_SECTIONS = [
+                "identifyingData",
+                "presentOffense",
+                "priorRecordsAndDerogatoryRecord",
+                "familyBackgroundAndBirthData",
+                "presentSituation",
+                "educationAndJobHistory",
+                "medicalHistory",
+                "traitsAndCommunityBackground",
+                "analysisAndProjectedThrust",
+                // "recommendation",
+            ];
 
-            required.forEach(function(data) {
-                // First, remove the existing error message and error class if present
-                $("." + data).removeClass("error_field");
-                $("." + data).next('.errorRequired').remove();
-        
-                // Now check if the field is empty or null
-                if ($("." + data).val() === "" || $("." + data).val() === null) {
-                    $("." + data).addClass("error_field");
-                    $('<span class="errorRequired" style="font-style: italic; color: red; font-weight: bold; font-size: 11px;">* required field</span>').insertAfter($("." + data));
-                } 
+            let result = {
+                missingSections: [],
+                completedSections: [],
+            };
+
+            REQUIRED_SECTIONS.forEach(section => {
+                if (data[section] && Object.keys(data[section]).length > 0) {
+                    result.completedSections.push(section);
+                } else {
+                    result.missingSections.push(section);
+                }
             });
 
-            var requiredFields = $('.errorRequired:visible').length;
-            console.log('Number of required fields: ' + requiredFields);
+            result.isComplete = (result.missingSections.length === 0);
 
-            if (requiredFields === 0) {
-                __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
-                    if (result.status != "ERROR") {
-                        $(".form-control").val('');
-                        $('#success').show();
-                        $(".btn-next").prop('disabled', true);
-                        setTimeout(function () {
-                            $(".overlay").show();
-                            $('#success').hide();
-                            setTimeout(function () {
-                            $(".overlay").hide();
-                            $(".btn-next").prop('disabled', false);
-                                window.location.href = api+'/pis/psir_recommendation?client_id='+client_id+'&field_office_id='+foid;
-                            }, 500);
-                        }, 2000);
-                    }else{
-                        alert("failed")
-                    }
-                })
+            return result;
+        }
+
+        function saveWorksheet(existing, newAnalysisAndProjectedThrust) {
+
+            // update identifyingData
+            existing.analysisAndProjectedThrust = newAnalysisAndProjectedThrust;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
             }
-        })
 
-        $(".btn-update").unbind("click").on("click", function(){
-            var payload = gatheredData();
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirEvaluation/'+client_id,JSON.stringify(payload)).done(function (result) {
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        function updateWorksheet(existing, newIdentifyingData, newPresentOffense, newPriorRecordsAndDerogatoryRecord, 
+            newFamilyBackgroundAndBirthData, newPresentSituation, newEducationAndJobHistory, 
+            newMedicalHistory, newTraitsAndCommunityBackground, newAnalysisAndProjectedThrust) {
+
+            // update identifyingData
+            existing.identifyingData = newIdentifyingData;
+            existing.presentOffense = newPresentOffense;
+            existing.priorRecordsAndDerogatoryRecord = newPriorRecordsAndDerogatoryRecord;
+            existing.familyBackgroundAndBirthData = newFamilyBackgroundAndBirthData;
+            existing.presentSituation = newPresentSituation;
+            existing.educationAndJobHistory = newEducationAndJobHistory;
+            existing.medicalHistory = newMedicalHistory;
+            existing.traitsAndCommunityBackground = newTraitsAndCommunityBackground;
+            existing.analysisAndProjectedThrust = newAnalysisAndProjectedThrust;
+            // existing.recommendation = newRecommendation;
+
+            let check = worksheetChecker(existing);
+
+            // Decide worksheet status dynamically
+            let status = check.isComplete ? "complete" : "incomplete";
+
+            // If worksheetStatus is missing/null -> assign INCOMPLETE by default
+            if (check.statusIsNull) {
+                status = "INCOMPLETE";
+            }
+
+            return {
+                petitionerId: client_id,
+                jsonData: JSON.stringify(existing),
+                type: "psir",
+                worksheetStatus: status,
+                createdBy: $.cookie("uuid"),
+                fieldOfficeId: $.cookie("field_office_id")
+            };
+        }
+
+        // display buttons and data
+        if (status === "null" || !status || status === "Not Available") {
+        // if (status === "null" || status === "Not Available") {
+            $("#saveModal .saveModalTitle").text("Save Changes")
+            $("#saveModal #saveMessage").show();
+            $("#saveModal .btn-save").show();
+        } else {
+            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+
+                var result = result.response;
                 if (result.status != "ERROR") {
-                    $(".form-control").val('');
-                    $('#success').show();
-                    $(".btn-update").prop('disabled', true);
-                    setTimeout(function () {
-                        $(".overlay").show();
-                        $('#success').hide();
-                        setTimeout(function () {
-                        $(".overlay").hide();
-                        $(".btn-update").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_recommendation?client_id='+client_id+'&field_office_id='+foid;
-                        }, 500);
-                    }, 2000);
-                }else{
-                    alert("failed")
+                    var worksheetData = JSON.parse(result.jsonData);
+                    var analysisAndProjectedThrust = worksheetData.analysisAndProjectedThrust;
+                    console.log(worksheetData)
+                    if (analysisAndProjectedThrust) {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+
+                        $(".analysis").val(analysisAndProjectedThrust.analysisAndEvaluation)
+                        $(".rehabilitation").val(analysisAndProjectedThrust.projectedThrustsOfRehabilitation)
+
+                    } else {
+                        $("#saveModal .saveModalTitle").text("Update Changes")
+                        $("#saveModal #updateMessage").show();
+                        $("#saveModal .btn-update").show();
+
+                    }
+
                 }
             })
+        }
 
+        // event handler for showing modal upon saving and updating data
+        $(".btn-saveData").unbind("click").on("click", function(){
+            $("#saveModal").modal("show")
         })
 
-        __executeExternalGet('8000/worksheet/getPetitioner/psirEvaluation/'+client_id).done(function (result) {
-            var result = result.response;
-            if (result.status != "ERROR") {
-                if (result.worksheetStatus == "INCOMPLETE"){
-                    $(".btn-update").show();
-                    $(".btn-next").hide();
+        // event handler for saving data
+        $("#saveModal .btn-save").unbind("click").on("click", function () {
 
-                    var evaluation = JSON.parse(result.jsonData);
-                    $(".positiveTraits").val(JSON.parse(result.jsonData).positiveTraits);
-                    $(".negativeTraits").val(JSON.parse(result.jsonData).negativeTraits);
-                    $(".overallTraits").val(JSON.parse(result.jsonData).overallTraits);
-                    $(".analysisAndEvaluation").val(JSON.parse(result.jsonData).analysisAndEvaluation);
-                    $(".projectedThrust").val(JSON.parse(result.jsonData).projectedThrust);
-                    $(".communityBackground").val(JSON.parse(result.jsonData).communityBackground);
+            let data = collectAnalysisAndThrusts();
 
-                    evaluation.collateralInfo.forEach(function(data){
-                        $(".collateralInfo").append(`
-                            <div class="collateralInfo" style="margin-top: 30px;">
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Source Of Information</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collInfo" value="${data.collInfo}">${data.collInfo}</textarea></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Relationship to Client</label></div>
-                                        <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder=" " class="form-control relClient" value="${data.relClient}"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="row form-group col-md-9">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Collateral Information Gathered</label></div>
-                                        <div class="col-12 col-md-9"><textarea rows="2" cols="50" class="form-control collGathered" value="${data.collGathered}">${data.collGathered}</textarea></div>
-                                    </div>
-                                </div>
-                                <button type="button" class="remove btn btn-danger btn-sm float-right">Remove</button>
-                            </div>
-                        `
-                        )
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = saveWorksheet(existing, data);
+
+                    __executeExternalPost("8000/worksheet/create", JSON.stringify(payload))
+                        .done(function (res) {
+
+                            if (res.status === "ERROR") return;
+
+                            $(".form-control").val('');
+                            $('#create_success').show();
+
+                            setTimeout(() => {
+                                $('#create_success').hide();
+                                $('#saveModal').modal("hide");
+                                window.location.href =
+                                    `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                            }, 2000);
+                        });
+                });
+        });
+
+        // evend handler for updating data
+        $("#saveModal .btn-update").unbind("click").on("click", function () {
+
+            let data = collectAnalysisAndThrusts();
+
+            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+                .done(function (result) {
+
+                    let workSheetData = JSON.parse(result.response.jsonData);
+                    let identifyingData = workSheetData.identifyingData;
+                    let presentOffense = workSheetData.presentOffense;
+                    let priorRecordsAndDerogatoryRecord = workSheetData.priorRecordsAndDerogatoryRecord;
+                    let familyBackgroundAndBirthData = workSheetData.familyBackgroundAndBirthData;
+                    let presentSituation = workSheetData.presentSituation;
+                    let educationAndJobHistory = workSheetData.educationAndJobHistory;
+                    let medicalHistory = workSheetData.medicalHistory;
+                    let traitsAndCommunityBackground = workSheetData.traitsAndCommunityBackground;
+                    // let recommendation = workSheetData.recommendation;
+
+                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+
+                    let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, presentSituation, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, data);
+
+                    __executeExternalPost(
+                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        JSON.stringify(payload)
+                    ).done(function (res) {
+
+                        if (res.status === "ERROR") return;
+
+                        $('#update_success').show();
+
+                        setTimeout(() => {
+                            $('#update_success').hide();
+                            $('#saveModal').modal("hide");
+
+                            if (res.response.worksheetStatus.toLowerCase() === "complete") {
+                            window.location.href =
+                                `${api}/pis/client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`;
+
+                            } else {
+                            window.location.href =
+                                `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;    
+                            }
+                        }, 2000);
                     });
-                }else{
-                    $(".btn-next").show();
-                    $(".btn-update").hide();
-                } 
-
-            }
-        })
-
+                });
+        });
+        
         function setupWorksheetClickHandler(psirType) {
             $(`.${psirType}`).unbind("click").on("click", function () {
+                var tabName = $(this).data("name")
+                $(".warningModalTitle").text(`${tabName} Tab`)
+                $("#tabName").text(tabName)
                 $(".btn_warning").unbind("click").on("click", function () {
                     $(".form-control").val('');
                     $("#warningModal").modal("hide");
-                    $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
+                        // window.location.href = `${api}/pis/worksheet_${psirType}?client_id=${client_id}`;
+                        window.location.href = `${api}/pis/psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
                     }, 500);
                 });
             });
         }
-        setupWorksheetClickHandler("prior_records");
+        
+        setupWorksheetClickHandler("identifying_data")
         setupWorksheetClickHandler("present_offense");
-        setupWorksheetClickHandler("identifying_data");
         setupWorksheetClickHandler("family_background");
-        setupWorksheetClickHandler("socio_economic");
-        setupWorksheetClickHandler("residence_economic");
-        setupWorksheetClickHandler("spouse_children");
+        setupWorksheetClickHandler("prior_records");
+        setupWorksheetClickHandler("family_background");
         setupWorksheetClickHandler("education_history");
-        setupWorksheetClickHandler("employment_history");
-        setupWorksheetClickHandler("environmental_factor")
+        setupWorksheetClickHandler("traits_and_community_background");
         setupWorksheetClickHandler("evaluation");
-        setupWorksheetClickHandler("recommendation")
-
+        setupWorksheetClickHandler("recommendation");
     } )( jQuery );
