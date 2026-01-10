@@ -44,7 +44,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="parolee_courtesy_supervision_docketing">Parole</a></li>
+                            <li><a href="parolee_courtesy_supervision_docketing">Parole and Pardon</a></li>
                             <li class="active">Courtesy Supervision Docket list</li>
                         </ol>
                     </div>
@@ -59,9 +59,9 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Parolee Courtesy Supervision Docket List</strong>
+                                <strong class="card-title">Parole and Pardon Courtesy Supervision Docket List</strong>
                                 <!-- <a href="parolee_courtesy_supervision_create"> <button class="btn btn-sm btn-success float-right pr_csuv_add" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
-                                <a href="parolee_courtesy_supervision_create"> <button class="btn btn-sm btn-success float-right pr_csup_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <!-- <a href="parolee_courtesy_supervision_create"> <button class="btn btn-sm btn-success float-right pr_csup_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">
@@ -70,8 +70,7 @@
                                             <th>#</th>
                                             <th>Full Name</th>
                                             <th>Docket Number</th>
-                                            <th>Docket Series</th>
-                                            <th>Field Office</th>
+                                            <th>Client Type</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>

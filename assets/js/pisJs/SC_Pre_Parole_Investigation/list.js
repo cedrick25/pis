@@ -147,6 +147,10 @@
                 var docket_number = $(this).data("docket");
                 window.location.href = api+'/pis/pre-parole-investigation-view?docket_number='+docket_number;
             })
+            $(".btn_attachments").unbind("click").on("click", function(){
+                var docket_number = $(this).data("docket");
+                window.location.href = api+'/pis/pre-parole-investigation-upload?docket_number='+docket_number;
+            })
         }
         function drawTable() {
             $('.table_head').DataTable({
@@ -158,11 +162,10 @@
                 "pageLength": 10,
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
-                    { "width": "15%", "targets": [1] },
-                    { "width": "20%", "targets": [2] },
-                    { "width": "20%", "targets": [3] },
-                    { "width": "20%", "targets": [4] },
-                    { "width": "20%", "targets": [5] }
+                    { "width": "20%", "targets": [1] },
+                    { "width": "25%", "targets": [2] },
+                    { "width": "25%", "targets": [3] },
+                    { "width": "25%", "targets": [4] },
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -210,20 +213,20 @@
                 {
                     "data": 'docketNumber'
                 },
-                {
-                    "data": 'docketSeries',
-                    render: function(data, type, row){
-                        var docketSeries = ['PRE-PAROLE INVESTIGATION','PRE-EXECUTIVE CLEMENCY INVESTIGATION','TRANSFERRED PRE-PAROLE INVESTIGATION','TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION','COURTESY PRE-PAROLE INVESTIGATION','COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION']
-                        var docketSeriesShort = ['PPI','PECI','TPPI','TPECI','CPPI','CPECI'] 
-                        if ( docketSeriesShort.length == docketSeries.length ){
-                            for (var i = 0; i <= docketSeriesShort.length; ++i){
-                                if (docketSeriesShort[i] == data){
-                                    return docketSeries[i]
-                                }
-                            }  
-                        }                    
-                    }
-                },
+                // {
+                //     "data": 'docketSeries',
+                //     render: function(data, type, row){
+                //         var docketSeries = ['PRE-PAROLE INVESTIGATION','PRE-EXECUTIVE CLEMENCY INVESTIGATION','TRANSFERRED PRE-PAROLE INVESTIGATION','TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION','COURTESY PRE-PAROLE INVESTIGATION','COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION']
+                //         var docketSeriesShort = ['PPI','PECI','TPPI','TPECI','CPPI','CPECI'] 
+                //         if ( docketSeriesShort.length == docketSeries.length ){
+                //             for (var i = 0; i <= docketSeriesShort.length; ++i){
+                //                 if (docketSeriesShort[i] == data){
+                //                     return docketSeries[i]
+                //                 }
+                //             }  
+                //         }                    
+                //     }
+                // },
                 {
                     "data": 'fieldOfficeName'
                 },

@@ -65,7 +65,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Investigation Docket List</strong>
-                                <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right pb_inv_add" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <!-- <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right pb_inv_add" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">

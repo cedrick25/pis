@@ -54,180 +54,199 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12 docketing">
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" class="form-control docketNum_update"></div>
-                                        </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label"><span><p>(Fill up only if you want to link supervision into an existing investigation docket number)</p></span>Docket Number</label>
+                                        <select class="form-control link_docket_num select2" disabled>
+                                        </select>
                                     </div>
-<!--                                     <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS ID</label></div>
-                                            <div class="col-12 col-md-4"><input type="text" name="text-input" placeholder="CMIS ID" class="form-control cmis_id"></div>
-                                            <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder="CMIS Name" class="form-control cmis_name" style="background-color: white;" readonly></div>
-                                        </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Field Office</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control cmis_fo select2" >
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control pb_client_sup select2" disabled>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control caseload select2">
-                                                    <option value="" selected disabled>Please Select Caseload</option>
-                                                    <option value="PROBATION_SUP_CSS">Community Service Supervision</option>
-                                                    <option value="PROBATION_SUP_CCSS">Courtesy Community Service Supervision</option>
-                                                    <option value="PROBATION_SUP_CPS">Courtesy Probation Supervision</option>
-                                                    <option value="PROBATION_SUP_CSSS">Courtesy Suspended Sentence Supervision</option>
-                                                    <option value="PROBATION_SUP_DOCKET_CREATION">For Docket Creation</option>
-                                                    <option value="PROBATION_SUP_TRANS">Motion/Manifestation to Transfer Supervision and Control</option>
-                                                    <option value="PROBATION_SUP_TRAVEL_PERMIT">Permit to Travel</option>
-                                                    <option value="PROBATION_SUP_SUPERVISION">Probation Supervision</option>
-                                                    <option value="PROBATION_SUP_RPS">Reinstated Probation Supervision</option>
-                                                    <option value="PROBATION_SUP_RC">Request for Records Check</option>
-                                                    <option value="PROBATION_SUP_RES_RC">Results of Records Check</option>
-                                                    <option value="PROBATION_REVOCATION_ABSCOND">Revocation - Abscond</option>
-                                                    <option value="PROBATION_REVOCATION_COMMISSION">Revocation - Commission of Another Offense</option>
-                                                    <option value="PROBATION_REVOCATION_OTHER">Revocation - Other</option>
-                                                    <option value="PROBATION_REVOCATION_VIOLATION">Revocation - Violation of Probation Conditions</option>
-                                                    <option value="PROBATION_SUP_SSS">Suspended Sentence Supervision</option>
-                                                    <option value="PROBATION_SUP_TERMINATE_PROBATION">Terminate Probation</option>
-                                                    <option value="PROBATION_SUP_CRT_APPR_TRANS">Transfer of Residence</option>
-                                                    <option value="PROBATION_SUP_TCSS">Transferred Community Service Supervision</option>
-                                                    <option value="PROBATION_SUP_TPS">Transferred Probation Supervision</option>
-                                                    <option value="PROBATION_SUP_TSSS">Transferred Suspended Sentence Supervision</option><option value="PROBATION_SUP_TRAVEL_GT30">Travel Exceeding 30 Days</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Docket Number</label>
+                                        <input type="text" name="text-input" class="form-control docketNum_update">
                                     </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control client_type select2">
-                                                    <option selected value="true">Adult</option>
-                                                    <option value="false">Juvenile</option>
-                                                </select>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Client</label>
+                                        <select class="form-control pb_client_sup select2" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Probation Supervision Referrals Received
+                                                <div>
+                                                    <a data-toggle="collapse" href="#received" role="button" aria-expanded="true" aria-controls="received">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control field_office select2">
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case Number</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no" ></div>
-                                        </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court of Origin</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
-                                        </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control inv_off"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control military_court select2" >
-                                                    <option value="true">Yes</option>
-                                                    <option value="false">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control plea_bargain select2">
-                                                    <option selected value="none" disabled>Select</option>
-                                                    <option value="true">Yes</option>
-                                                    <option value="false">No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 class_sel_true" style="display: none;">
-                                            <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
-                                            <div class="col-12 col-md-9">
-                                                <select class="form-control classification select2" >
-                                                    <option selected value="none" disabled>Choose</option>
-                                                    <option value="drug">Drug</option>
-                                                    <option value="non-drug">Non Drug</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-md-12 col-lg-12 col-xl-12">
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <div class="card" id="sentence_card" style="border-radius: 10px;">
-                                                    <div class="card-header" style="background: transparent;">
-                                                        <strong>Sentence</strong>
-                                                        <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+                                        <div id="received" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Alias</label>
+                                                        <input type="text" name="text-input" placeholder="Alias" class="form-control alias">
                                                     </div>
-                                                    <div class="card-body">
-                                                        <div id="sentenceForm">
-                                                        </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Type of Referrals</label>
+                                                        <select class="form-control referral_type select2">
+                                                            <option value="From Local Courts" >From Local Courts</option>
+                                                            <option value="Direct Transfer, Court to Court">Direct Transfer, Court to Court</option>
+                                                            <option value="From Military Courts">From Military Courts</option>
+                                                            <option value="Transfer from other Offices/Courts">Transfer from other Offices/Courts</option>
+                                                            <option value="Reconsidered/Reinstated">Reconsidered/Reinstated</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Criminal Case Number</label>
+                                                        <input type="text" name="text-input" placeholder="Criminal Case No." class="form-control cc_no">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Court of Origin</label>
+                                                        <input type="text" name="text-input" placeholder="Court of Origin" class="form-control court_origin">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Case Classification</label>
+                                                        <select class="form-control case_classification select2">
+                                                            <option value="MINIMUM">MINIMUM</option>
+                                                            <option value="MEDIUM">MEDIUM</option>
+                                                            <option value="MAXIMUM">MAXIMUM</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Date Received by PPO</label>
+                                                        <input type="date" class="form-control date_rcv_ppo">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Supervising Officer</label>
+                                                        <input type="text" name="text-input" placeholder="Supervising Officer" class="form-control supervising_officer">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Probation Start Date</label>
+                                                        <input type="date" class="form-control prob_start_date">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Probation End Date</label>
+                                                        <input type="date" class="form-control prob_end_date">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-                                            <div class="col-12 col-md-9"><input type="date" class="form-control cod" ></div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Probation Supervision Cases Acted Upon
+                                                <div>
+                                                    <a data-toggle="collapse" href="#casesActedUpon" role="button" aria-expanded="true" aria-controls="casesActedUpon">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-                                            <div class="col-12 col-md-9"><input type="date" class="form-control rd" ></div>
+                                        <div id="casesActedUpon" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Office Findings</label>
+                                                        <select class="form-control office_findings select2">
+                                                            <option value="">Please choose</option>
+                                                            <optgroup label="Termination">
+                                                            <option value="Termination - Full Term">Termination - Full Term</option>
+                                                            <option value="Termination - Early Termination">Termination - Early Termination</option>
+                                                            <option value="Termination - Died">Termination - Died</option>
+                                                            </optgroup>
+                                                            <optgroup label="Revocation">
+                                                            <option value="Revocation - Abscond">Revocation - Abscond</option>
+                                                            <option value="Revocation - Commission of Another Offense">Revocation - Commission of Another Offense</option>
+                                                            <option value="Revocation - Violation of Probation Conditions">Revocation - Violation of Probation Conditions</option>
+                                                            <option value="Revocation - Other">Revocation - Other</option>
+                                                            </optgroup>
+                                                            <option value="Extension of Probation Period">Extension of Probation Period</option>
+                                                            <option value="Transfer to Other Courts/PPO">Transfer to Other Courts/PPO</option>
+                                                            <option value="Others">Others</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Specify the Other Reasons of Revocation</label>
+                                                        <input type="text" name="text-input" placeholder="Specify the Other Reasons of Revocation" class="form-control other_reasons_of_revocation">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Specify the Court/PPO where the probationer is transferred</label>
+                                                        <input type="text" name="text-input" placeholder="Specify the Court/PPO where the probationer is transferred" class="form-control court_probationer_transferred">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Date Submitted to the Court</label>
+                                                        <input type="date" class="form-control date_submitted_court">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 manualProbStart">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Start Date</label></div>
-                                            <div class="col-12 col-md-9"><input type="date" class="form-control prob_start" ></div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Carry Over Probation Supervision Cases Pending Disposition in Court
+                                                <div>
+                                                    <a data-toggle="collapse" href="#carryOver" role="button" aria-expanded="true" aria-controls="carryOver">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 manualProbYear">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Year</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Year" class="form-control prob_year" ></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row col-12">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 manualProbMonth">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Month</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Month" class="form-control prob_month" ></div>
-                                        </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 manualProbDay">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Probation Day</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Day" class="form-control prob_day" ></div>
+                                        <div id="carryOver" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Office Findings</label>
+                                                        <select class="form-control office_findings select2">
+                                                            <option value="">Please choose</option>
+                                                            <optgroup label="Termination">
+                                                            <option value="Termination - Full Term">Termination - Full Term</option>
+                                                            <option value="Termination - Early Termination">Termination - Early Termination</option>
+                                                            <option value="Termination - Died">Termination - Died</option>
+                                                            </optgroup>
+                                                            <optgroup label="Revocation">
+                                                            <option value="Revocation - Abscond">Revocation - Abscond</option>
+                                                            <option value="Revocation - Commission of Another Offense">Revocation - Commission of Another Offense</option>
+                                                            <option value="Revocation - Violation of Probation Conditions">Revocation - Violation of Probation Conditions</option>
+                                                            <option value="Revocation - Other">Revocation - Other</option>
+                                                            </optgroup>
+                                                            <option value="Extension of Probation Period">Extension of Probation Period</option>
+                                                            <option value="Transfer to Other Courts/PPO">Transfer to Other Courts/PPO</option>
+                                                            <option value="Others">Others</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Date Submitted to the Court</label>
+                                                        <input type="date" class="form-control date_submitted_court">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Supervising Officer</label>
+                                                        <input type="text" name="text-input" placeholder="Supervising Officer" class="form-control supervising_officer_carry_over">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

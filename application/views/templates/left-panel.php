@@ -19,30 +19,30 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Probation</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li class="probation_probation_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="investigation_docketing">Investigation</a></li>
-                        <li class="probation_probation_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
                         <li class="probation_probation_courtesy_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="probation-courtesy-investigation-list">Courtesy Investigation</a></li>
+                        <li class="probation_probation_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
                         <li class="probation_probation_courtesy_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="probation-courtesy-supervision-list">Courtesy Supervision</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown pre_parole_docketing_module" style="display:none;">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pre-parole</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parole and Pardon</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li class="ppi_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-investigation-list">Investigation</a></li>
-                        <li class="ppi_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-supervision-list">Supervision</a></li>
                         <li class="ppi_cs_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-courtesy-investigation-list">Courtesy Investigation</a></li>
-                        <li class="ppi_cs_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-courtesy-supervision-list">Courtesy Supervision</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown parolee_module" style="display:none;">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parole</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li class="parolee_investigation_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li>
                         <li class="parolee_supervision_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_supervision_docketing">Supervision</a></li>
-                        <li class="parolee_courtesy_investigation_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
                         <li class="parolee_courtesy_supervision_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
+                        <!-- <li class="ppi_cs_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-courtesy-supervision-list">Courtesy Supervision</a></li> -->
+                        <!-- <li class="ppi_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-supervision-list">Supervision</a></li> -->
+                        <!-- <li class="parolee_investigation_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li> -->
+                        <!-- <li class="parolee_courtesy_investigation_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_investigation_docketing">Courtesy Investigation</a></li> -->
                     </ul>
                 </li>
-                <li class="menu-item-has-children dropdown pardonee_module" style="display:none;">
+                <!-- <li class="menu-item-has-children dropdown parolee_module" style="display:none;">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parole and Pardon</a>
+                    <ul class="sub-menu children dropdown-menu">
+                    </ul>
+                </li> -->
+                <!-- <li class="menu-item-has-children dropdown pardonee_module" style="display:none;">
                     <a href="#" class="dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Pardone</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li class="pardonee_investigation_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pardonee_investigation_docketing">Investigation</a></li>
@@ -50,7 +50,7 @@
                         <li class="pardonee_courtesy_investigation_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_investigation_docketing">Courtesy Investigation</a></li>
                         <li class="pardonee_courtesy_supervision_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pardonee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <h3 class="menu-title docket_routing_module" style="display:none;">Docket Routing</h3>
                 <li class="menu-item-has-children dropdown docket_routing_module" style="display:none;">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Docket Routing</a>

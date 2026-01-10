@@ -363,10 +363,11 @@
                                                         <select class="form-control family_problems select2">
                                                             <option value="" selected disabled>Select Problem</option>
                                                             <option value="no_apparent_problem">No Apparent Problem</option>
-                                                            <option value="satisfactory">Satisfactory</option>
-                                                            <option value="mental_illness">Mental Illness</option>
+                                                            <option value="economic">Economic</option>
+                                                            <option value="mental_physical_illness">Mental/Physical Illness</option>
                                                             <option value="marital_problem">Marital Problem</option>
                                                             <option value="one_parent_family">One-Parent Family</option>
+                                                            <option value="parent_child_conflict">Parent-Child Conflict</option>
                                                             <option value="sibling_conflict">Sibling Conflict</option>
                                                             <option value="others">Others</option>
                                                         </select>

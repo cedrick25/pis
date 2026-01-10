@@ -135,6 +135,13 @@
                 statusOfMarriage : $(".status_of_marriage").val(),
                 otherStatusOfMarriage : $(".other_married_status").val(),
                 remarksCivilStatus : $(".remarks_civil_status").val(),
+                spouseName : $(".spouse_name").val(),
+                spouseAge : $(".spouse_age").val(),
+                spouseSex : $(".spouse_sex").val(),
+                spouseOccupation : $(".spouse_occupation").val(),
+                spouseHomeAddress : $(".spouse_home_address").val(),
+                spouseWorkAddress : $(".spouse_work_address").val(),
+                totalNoOfchildren : $(".total_children").val(),
                 childrenRelationship : $(".relationship_with_children").val(),
                 remarksInChildren : $(".remarks_children").val(),
                 dwelling : $(".dwelling").val(),
@@ -319,6 +326,15 @@
                         $(".major_family_problem").val(presentSituation.majorFamilyProblem).trigger("change")
                         $(".other_famiy_problem").val(presentSituation.otherFamilyProblem)
                         $(".remarks_situation").val(presentSituation.remarksInPetitionersSituation)
+                        $(".remarks_civil_status").val(presentSituation.remarksCivilStatus)
+                        $(".total_children").val(presentSituation.totalNoOfchildren)
+
+                        $(".spouse_name").val(presentSituation.spouseName)
+                        $(".spouse_age").val(presentSituation.spouseAge)
+                        $(".spouse_sex").val(presentSituation.spouseSex).trigger("change")
+                        $(".spouse_occupation").val(presentSituation.spouseOccupation)
+                        $(".spouse_home_address").val(presentSituation.spouseHomeAddress)
+                        $(".spouse_work_address").val(presentSituation.spouseWorkAddress)
 
                         if (presentSituation.children) {
                             presentSituation.children.forEach(function(data, index){
@@ -531,7 +547,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    `${api}/pis/psir_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    `${api}/pis/psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
                         });
                 });
@@ -574,7 +590,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                `${api}/pis/psir_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                `${api}/pis/psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                         }, 2000);
                     });
                 });

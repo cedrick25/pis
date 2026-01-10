@@ -18,7 +18,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="investigation_docketing">Courtesy Investigation Docket</a></li>
+                            <li><a href="probation-courtesy-investigation-list">Courtesy Investigation Docket</a></li>
                             <li class="active">Update</li>
                         </ol>
                     </div>
@@ -39,60 +39,45 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="form-row col-12">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Docket Number" class="form-control docket_number"></div>
+                                        <label for="text-input" class=" form-control-label">Docket Number</label>
+                                        <input type="text" name="text-input" placeholder="Docket Number" class="form-control docket_number">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Petitioner's Name</label>
+                                        <select class="form-control client select2">
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-row col-12">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control client select2">
-                                            </select>
-                                        </div>
+                                        <label for="text-input" class=" form-control-label">Referring Office</label>
+                                        <select class="form-control ref_office select2">
+                                        </select>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control caseload select2">
-                                                <option value="" selected disabled>Select Caseload</option>
-                                                <option value="ACCOMPLISHED_GENERAL_INTER_OFFICE_REFERRAL">Accomplished General Inter-Office Referral</option>
-                                                <option value="COURTESY_PROBATION_INVESTIGATION_REPORT">Courtesy Probation Investigation Report</option>
-                                                <option value="FULL BLOWN COURTESY INVESTIGATION REPORT">Full Blown Courtesy Investigation Report</option>
-                                                <option value="OTHER_DOCUMENT/S">Other Document/s</option>
-                                            </select>
-                                        </div>
+                                        <label for="text-input" class=" form-control-label">Date Received from the PPO</label>
+                                        <input type="date" name="text-input" placeholder="Date Received from the PPO" class="form-control date_rcv_from_ppo">
                                     </div>
                                 </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Referring Office</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control ref_office select2">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Received from the PPO</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="" class="form-control date_rcv_from_ppo"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-12">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
     			                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    			                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
-    			                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Offense" class="form-control inv_officer"></div>
+    			                        <label for="text-input" class=" form-control-label">Investigating Officer</label>
+    			                        <input type="text" name="text-input" placeholder="Investigating Officer" class="form-control inv_officer">
     			                    </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Reasons</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Court of Origin" class="form-control reasons"></div>
+                                        <label for="text-input" class=" form-control-label">Reasons</label>
+                                        <input type="text" name="text-input" placeholder="Reasons" class="form-control reasons">
                                     </div>
                                 </div>
-                                <div class="form-row col-12">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <p for="text-input" class=" form-control-label">(For Referrals Completed And Returned)</p>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date Completed and Returned</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" name="text-input" placeholder="" class="form-control date_completed_and_returned"></div>
+                                        <label for="text-input" class=" form-control-label">Date Completed and Returned</label>
+                                        <input type="date" name="text-input" placeholder="Date Completed and Returned" class="form-control date_completed_and_returned">
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +97,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_investigation/investigationDocketCreate.js">
+    <script src="assets/js/pisJs/PIS_Courtesy_Investigation/update.js">
 
     </script>
 

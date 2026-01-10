@@ -193,6 +193,7 @@ $route['pre-parole-investigation-list'] = "routes/pre_parole_investigation_list"
 $route['pre-parole-investigation-create'] = "routes/pre_parole_investigation_create";
 $route['pre-parole-investigation-update'] = "routes/pre_parole_investigation_update";
 $route['pre-parole-investigation-view'] = "routes/pre_parole_investigation_view";
+$route['pre-parole-investigation-upload'] = "routes/pre_parole_investigation_upload";
 // supervision
 $route['pre-parole-supervision-list'] = "routes/pre_parole_supervision_list";
 $route['pre-parole-supervision-create'] = "routes/pre_parole_supervision_create";
@@ -203,6 +204,7 @@ $route['pre-parole-courtesy-investigation-list'] = "routes/pre_parole_cs_investi
 $route['pre-parole-courtesy-investigation-create'] = "routes/pre_parole_cs_investigation_create";
 $route['pre-parole-courtesy-investigation-update'] = "routes/pre_parole_cs_investigation_update";
 $route['pre-parole-courtesy-investigation-view'] = "routes/pre_parole_cs_investigation_view";
+$route['pre-parole-courtesy-investigation-upload'] = "routes/pre_parole_cs_investigation_upload";
 // courtesy supervision
 $route['pre-parole-courtesy-supervision-list'] = "routes/pre_parole_cs_supervision_list";
 $route['pre-parole-courtesy-supervision-create'] = "routes/pre_parole_cs_supervision_create";
@@ -221,8 +223,8 @@ $route['probation-courtesy-investigation-view'] = "routes/probation_courtesy_inv
 // for probation courtesy supervision
 $route['probation-courtesy-supervision-list'] = "routes/probation_courtesy_supervision_list";
 $route['probation-courtesy-supervision-uploads'] = "routes/probation_courtesy_supervision_uploads";
-// $route['pre-parole-courtesy-investigation-create'] = "routes/pre_parole_cs_investigation_create";
-// $route['pre-parole-courtesy-investigation-update'] = "routes/pre_parole_cs_investigation_update";
+$route['probation-courtesy-supervision-view'] = "routes/probation_courtesy_supervision_view";
+$route['probation-courtesy-supervision-update'] = "routes/probation_courtesy_supervision_update";
 // $route['pre-parole-courtesy-investigation-view'] = "routes/pre_parole_cs_investigation_view";
 
 // AMS end

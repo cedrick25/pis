@@ -621,6 +621,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('SINGLE_CARPETA/Pre_parole/Investigation/view');
 	}
+	public function pre_parole_investigation_upload()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Investigation/upload');
+	}
 	// for pre-parole supervision
 	public function pre_parole_supervision_list()
 	{
@@ -654,6 +658,10 @@ class routes extends CI_Controller {
 	public function pre_parole_cs_investigation_view()
 	{
 		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Investigation/view');
+	}
+	public function pre_parole_cs_investigation_upload()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Investigation/upload');
 	}
 	// for pre-parole courtesy supervision
 	public function pre_parole_cs_supervision_list()
@@ -726,5 +734,13 @@ class routes extends CI_Controller {
 	public function probation_courtesy_supervision_uploads()
 	{
 		$this->load->view('PIS/courtesySupervision/upload');
+	}
+	public function probation_courtesy_supervision_view()
+	{
+		$this->load->view('PIS/courtesySupervision/view');
+	}
+	public function probation_courtesy_supervision_update()
+	{
+		$this->load->view('PIS/courtesySupervision/update');
 	}
 }

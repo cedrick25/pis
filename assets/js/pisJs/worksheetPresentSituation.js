@@ -115,7 +115,7 @@
 
             const children = [];
             const name = $(".children_name");
-            const relationship = $(".children_relationship");
+            const dob = $(".children_dob");
             const age = $(".children_age");
             const education = $(".children_education");
             const occupation = $(".children_occupation");
@@ -127,7 +127,7 @@
             for (var i = 0; i < name.length; i++) {
                 const list = {};
                 list.name = $(name[i]).val();
-                list.relationship = $(relationship[i]).val();
+                list.dob = $(dob[i]).val();
                 list.age = $(age[i]).val();
                 list.education = $(education[i]).val();
                 list.occupation = $(occupation[i]).val();
@@ -289,8 +289,8 @@
                         <input type="text" placeholder="Name" class="form-control children_name">
                     </div>
                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
-                        <label class="form-control-label">Degree of Relationship</label>
-                        <input type="text" placeholder="Degree of Relationship" class="form-control children_relationship">
+                        <label class="form-control-label">Date of Birth</label>
+                        <input type="date" placeholder="Degree of Relationship" class="form-control children_dob">
                     </div>
                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
                         <label class="form-control-label">Age</label>
@@ -348,8 +348,8 @@
                                         <input type="text" placeholder="Name" class="form-control children_name" value="${data.name}">
                                     </div>
                                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
-                                        <label class="form-control-label">Degree of Relationship</label>
-                                        <input type="text" placeholder="Degree of Relationship" class="form-control children_relationship" value="${data.relationship}">
+                                        <label class="form-control-label">Date of Birth</label>
+                                        <input type="date" placeholder="Degree of Relationship" class="form-control children_dob" value="${data.relationship}">
                                     </div>
                                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
                                         <label class="form-control-label">Age</label>
@@ -457,8 +457,8 @@
                                     <input type="text" placeholder="Name" class="form-control children_name">
                                 </div>
                                 <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
-                                    <label class="form-control-label">Degree of Relationship</label>
-                                    <input type="text" placeholder="Degree of Relationship" class="form-control children_relationship">
+                                    <label class="form-control-label">Date of Birth</label>
+                                    <input type="date" placeholder="Degree of Relationship" class="form-control children_dob">
                                 </div>
                                 <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
                                     <label class="form-control-label">Age</label>
@@ -510,8 +510,8 @@
                         <input type="text" placeholder="Name" class="form-control children_name">
                     </div>
                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
-                        <label class="form-control-label">Degree of Relationship</label>
-                        <input type="text" placeholder="Degree of Relationship" class="form-control children_relationship">
+                        <label class="form-control-label">Date of Birth</label>
+                        <input type="date" placeholder="Degree of Relationship" class="form-control children_dob">
                     </div>
                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
                         <label class="form-control-label">Age</label>

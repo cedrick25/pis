@@ -285,6 +285,58 @@
                                     <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between align-items-center">
+                                                SPOUSE
+                                                <div>
+                                                    <a data-toggle="collapse" href="#presentCivilStatus" role="button" aria-expanded="true" aria-controls="presentCivilStatus">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="presentCivilStatus" class="collapse show">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Domestic Partner/Spouse</label>
+                                                        <input type="text" name="text-input" placeholder="Full Name" class="form-control spouse_name">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Age</label>
+                                                        <input type="text" name="text-input" placeholder="Age" class="form-control spouse_age">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Sex</label>
+                                                        <select class="form-control spouse_sex select2">
+                                                            <option value="" selected disabled>Select Sex</option>
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Occupation</label>
+                                                        <input type="text" name="text-input" placeholder="Occupation" class="form-control spouse_occupation">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Home Address</label>
+                                                        <input type="text" name="text-input" placeholder="Home Address" class="form-control spouse_home_address">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Work Address</label>
+                                                        <input type="text" name="text-input" placeholder="Work Address" class="form-control spouse_work_address">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
                                                 CHILDREN
                                                 <div>
                                                     <a data-toggle="collapse" href="#childrenCard" role="button" aria-expanded="true" aria-controls="childrenCard">
@@ -298,6 +350,10 @@
                                                 <ul class="list-group list-group-flush" id="children_list">
                                                 </ul>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" style="margin-top: 20px">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Total Number of Children</label>
+                                                        <input type="text" name="text-input" placeholder="Total Number of Children" class="form-control total_children">
+                                                    </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Relationship with Children</label>
                                                         <select class="form-control relationship_with_children select2">

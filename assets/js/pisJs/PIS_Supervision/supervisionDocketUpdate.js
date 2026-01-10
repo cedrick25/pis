@@ -118,13 +118,25 @@
         });
 
         var __selectclient = function(){
-            __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER&officeId='+$.cookie('field_office_id')).done(function (result) {
+            $('.pb_client_sup').empty();
+            __executeExternalGet('8000/petitioner/list?type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
                 if (result.status != "ERROR") {
-                    $('.pb_client_sup').append("<option selected disabled> - - Select Client - - </option>");
-                    result.content.forEach(function(data){
-                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                        $('.pb_client_sup').append(
-                            '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+                    $('.pb_client_sup').append("<option selected disabled>Select Client</option>");
+                    let name = "";
+                    result.forEach(function(data){
+                        if (data.firstName === null &&
+                            data.middleName === null &&
+                            data.lastName === null &&
+                            data.suffixName === null ) {
+                            name = data.fullName;
+                            $('.pb_client_sup').append(
+                                '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'" data-fullname="'+data.fullName+'">'+name+'</option>');
+                        } else {
+                            name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+                            $('.pb_client_sup').append(
+                                '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'" data-fullname="'+data.fullName+'">'+name+'</option>');
+
+                        }
                     });
                 } else {
                     console.log("failed fetching docket list")
@@ -133,14 +145,13 @@
         }
         __selectclient();
         var __select = function(){
-            __executeExternalGet('8088/department/list').done(function (result) {
+            __executeExternalGet(`8000/docketbook/list/PIS_INV/${$.cookie("field_office_id")}`).done(function (result) {
+                console.log(result)
                 if (result.status != "ERROR") {
-                    $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.field_office').append(
-                            "<option value="+data.id+" data-id="+data.id+">"+data.name+"</option>");
-                        $('.cmis_fo').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
+                    $('.link_docket_num').append("<option selected disabled>Select Docket Number</opion>");
+                    result.response.forEach(function(data){
+                        $('.link_docket_num').append(
+                            "<option value="+data.id+" data-id="+data.id+">"+data.docketNumber+"</option>");
                     });
                 } else {
                     console.log("failed fetching docket list")
@@ -196,50 +207,7 @@
             $(".plea_bargain").val(pb).trigger("change");
             $(".client_type").val(la).trigger("change");
 
-            var sentenceData = JSON.parse(result.sentence)
-            if (sentenceData === null) {
-                let noContainer = currentContainer++;
-                var container = document.createElement('div');
-                container.className = 'SentenceContainer'+noContainer;
-                container.innerHTML += sentenceForms();
-                sentenceFields.appendChild(container)
-            } else {
-                sentenceData.forEach(function (data) {
-                    let currentCounter = sentenceFormCounter++;
-                    let noContainer = currentContainer++;
-                    var container = document.createElement('div');
-                    container.id = 'SentenceContainer'+noContainer;
-                    container.innerHTML += `
-                    <div id="sentenceForm${currentCounter}">
-                        <div class="form-row">
-                            <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence">${data.sentence}</textarea></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="col col-md-2"><label for="text-input" class=" form-control-label">Min</label></div>
-                                <div class="col-3 col-md-3"><input type="number" class="form-control min_y" placeholder="Year" value="${data.min_y}"></div>
-                                <div class="col-3 col-md-3"><input type="number" class="form-control min_m" placeholder="Month" value="${data.min_m}"></div>
-                                <div class="col-3 col-md-3"><input type="number" class="form-control min_d" placeholder="Day" value="${data.min_d}"></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Max</label></div>
-                                <div class="col-3 col-md-3"><input type="number" class="form-control max_y" placeholder="Year" value="${data.max_y}"></div>
-                                <div class="col-3 col-md-3"><input type="number" class="form-control max_m" placeholder="Month" value="${data.max_m}"></div>
-                                <div class="col-3 col-md-3"><input type="number" class="form-control max_d" placeholder="Day" value="${data.max_d}"></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="col col-md-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                                <div class="col-3 col-md-9"><input type="text" class="form-control civil_liability" placeholder="Robbery" value="${data.civil_liability}"></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 justify-content-end" style="padding-top: 20px">
-                                <button type="button" class="remove btn btn-danger btn-sm" data-id="${currentCounter}">Remove</button>
-                            </div>
-                        </div>
-                    </div>`
-                    sentenceFields.appendChild(container)
-                })
-            }
+            
         }
         
         function sentenceForms() {

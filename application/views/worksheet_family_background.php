@@ -829,15 +829,9 @@
                                         <label for="text-input" class=" form-control-label">Civil Status</label>
                                         <select class="form-control civil_status select2">
                                             <option value="" selected disabled>Select Civil Status</option>
-                                            <option value="annulled">Annulled</option>
-                                            <option value="divorced">Divorced</option>
-                                            <option value="legally_seperated">Legally Seperated</option>
+                                            <option value="seperated">Seperated</option>
                                             <option value="married">Married</option>
-                                            <option value="same_sex_relationship">Same Sex Relationship</option>
-                                            <option value="single">Single</option>
-                                            <option value="solo_parent">Solo Parent</option>
-                                            <option value="widow_widower">Widow/Widower</option>
-                                            <option value="with_common_law_spouse">With Common Law Spouse</option>
+                                            <option value="common_law">Live-in/Common-Law</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">

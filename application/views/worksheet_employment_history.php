@@ -288,8 +288,10 @@
                                         <select class="form-control employable_skills select2">
                                             <option value="" selected disabled>Select Skills</option>
                                             <option value="auto_mechanic">Auto Mechanic</option>
+                                            <option value="machine_operator">Machine Operator</option>
                                             <option value="driver">Driver</option>
                                             <option value="welder">Welder</option>
+                                            <option value="radio_technician">Radio Technician</option>
                                             <option value="electrician">Electrician</option>
                                             <option value="plumber">Plumber</option>
                                             <option value="mason">Mason</option>

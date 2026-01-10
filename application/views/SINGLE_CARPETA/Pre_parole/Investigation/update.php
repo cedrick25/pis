@@ -32,7 +32,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pre-parole-investigation-list">Parole</a></li>
+                            <li><a href="pre-parole-investigation-list">Pre-Parole</a></li>
                             <li class="active">Investigation List Update</li>
                         </ol>
                     </div>
@@ -54,156 +54,162 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="form-row col-12">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket No.</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="PI-01012023" class="form-control docket_num_update" disabled></div>
+                                        <label for="text-input" class=" form-control-label">Docket No.</label>
+                                        <input type="text" name="text-input" placeholder="Docket No." class="form-control docket_num_update" disabled>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Client</label>
+                                        <select class="form-control client_update select2">
+                                            <option selected value="none" disabled>Select</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Series</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control docket_series_update select2" disabled>
-                                                <option selected value="none" disabled>Select</option>
-                                                <option value="PPI">PRE-PAROLE INVESTIGATION</option>
-                                                <option value="PECI">PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                                <option value="TPPI">TRANSFERRED PRE-PAROLE INVESTIGATION</option>
-                                                <option value="TPECI">TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION</option>
-                                            </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Referrals Received
+                                                <div>
+                                                    <a data-toggle="collapse" href="#received" role="button" aria-expanded="true" aria-controls="received">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Recommendation</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control recommendation_update select2">
-                                                <option selected value="none" disabled>Select</option>
-                                                <option value="parole">For Parole</option>
-                                                <option value="commutation">For Commutation of Sentence</option>
-                                                <option value="conditional">For Conditional Pardon</option>
-                                                <option value="absolute">For Absolute Pardon</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Task</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control task_update select2">
-                                                <option selected value="none" disabled>Select</option>
-                                                <option value="SINGLE_CARPETA_PAPWA">Process Application for Permit to Work Abroad</option>
-                                                <option value="SINGLE_CARPETA_PAR">Process Arrival Report</option>
-                                                <option value="SINGLE_CARPETA_PBR">Process Briefing Report</option>
-                                                <option value="SINGLE_CARPETA_PCV">Process Case Verification</option>
-                                                <option value="SINGLE_CARPETA_PCU">Process Certificate of Undertaking</option>
-                                                <option value="SINGLE_CARPETA_PCS">Process Courtesy Supervision</option>
-                                                <option value="SINGLE_CARPETA_PDR">Process Death Report</option>
-                                                <option value="SINGLE_CARPETA_PGIOR">Process GIOR</option>
-                                                <option value="SINGLE_CARPETA_PIR">Process Infraction Report</option>
-                                                <option value="SINGLE_CARPETA_PORBPP">Process Other Requests by BPP</option>
-                                                <option value="SINGLE_CARPETA_PPP">Process Program of Payment</option>
-                                                <option value="SINGLE_CARPETA_PPR">Process Progress Report</option>
-                                                <option value="SINGLE_CARPETA_PRC">Process Records Check</option>
-                                                <option value="SINGLE_CARPETA_PRCPC">Process Request for Certificate of No Pending Case</option>
-                                                <option value="SINGLE_CARPETA_PRCNA">Process Request for Certificate of Non-Appeal</option>
-                                                <option value="SINGLE_CARPETA_PRCO">Process Request for Commitment Order</option>
-                                                <option value="SINGLE_CARPETA_PRCI">Process Request for Community Interview</option>
-                                                <option value="SINGLE_CARPETA_PRCD">Process Request for Court's Decision</option>
-                                                <option value="SINGLE_CARPETA_PRDGC">Process Request for Decision Guide Chart</option>
-                                                <option value="SINGLE_CARPETA_PREJ">Process Request for Entry of Judgment</option>
-                                                <option value="SINGLE_CARPETA_PRFI">Process Request for Fiscal's Information</option>
-                                                <option value="SINGLE_CARPETA_PRPD">Process Request for Permanent Dismissal</option>
-                                                <option value="SINGLE_CARPETA_PRPDLP">Process Request for Pertinent documents of Local Prisoners</option>
-                                                <option value="SINGLE_CARPETA_PRPSIR">Process Request for Post Sentence IR (Absolute Pardon)</option>
-                                                <option value="SINGLE_CARPETA_PRPECIR">Process Request for Pre-EC Investigation Report</option>
-                                                <option value="SINGLE_CARPETA_PRPPIR">Process Request for Pre-parole Investigation Report</option>
-                                                <option value="SINGLE_CARPETA_PRTR">Process Request for Transfer of Residence(FO)</option>
-                                                <option value="SINGLE_CARPETA_PRTR">Process Request for Transfer of Residence(TSD)</option>
-                                                <option value="SINGLE_CARPETA_PSTR">Process Status Report</option>
-                                                <option value="SINGLE_CARPETA_PSR">Process Summary Report</option>
-                                                <option value="SINGLE_CARPETA_PVT">Process Verify Threats</option>
-                                                <option value="SINGLE_CARPETA_PVR">Process Violation Report</option>
-                                                <option value="SINGLE_CARPETA_PWR">Process Where to Reside</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control client_update select2">
-                                                <option selected value="none" disabled>Select</option>
-                                                <option value="select">Select</option>
-                                                <option value="pending">John Doe</option>
-                                                <option value="approve">Doe John</option>
-                                            </select>
+                                        <div id="received" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Criminal Case No.</label>
+                                                        <input type="text" name="text-input" placeholder="Criminal Case No." class="form-control cc_no_update">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Name of Prison/Jail</label>
+                                                        <input type="text" name="text-input" placeholder="Name of Prison/Jail" class="form-control name_prison">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">From</label>
+                                                        <select class="form-control board_order_update select2">
+                                                            <option selected value="select" disabled>Select</option>
+                                                            <option value="penal_colony">Penal Colony</option>
+                                                            <option value="prison">Prison</option>
+                                                            <option value="jail">Jail</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Offense</label>
+                                                        <input type="text" name="text-input" placeholder="Offense" class="form-control offense">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class="form-control-label">Date Received by the PPO</label>
+                                                        <input type="date" class="form-control date_received_by_ppo">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Investigating Officer</label>
+                                                        <input type="text" name="text-input" placeholder="Investigating Officer" class="form-control inv_officer">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Office Transfered</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control ref_office_update select2">
-                                                <option selected value="select" disabled>Select</option>
-                                            </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Referrals Acted Upon
+                                                <div>
+                                                    <a data-toggle="collapse" href="#actedUpon" role="button" aria-expanded="true" aria-controls="actedUpon">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="actedUpon" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Date Pre-Parole/Executive Clemency Investigation Report Submitted</label>
+                                                        <input type="date" class="form-control date_peci_update">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">PPO's Recommendation</label>
+                                                        <select class="form-control ppo_recommendation select2">
+                                                        <option value="">None</option>
+                                                        <option value="Parole - For Granted">Parole - For Grant</option>
+                                                        <option value="Parole - For Denial">Parole - For Denial</option>
+                                                        <option value="Commutation - For Granted">Commutation - For Grant</option>
+                                                        <option value="Commutation - For Denial">Commutation - For Denial</option>
+                                                        <option value="Conditional Pardon - For Granted">Conditional Pardon - For Grant</option>
+                                                        <option value="Conditional Pardon - For Denial">Conditional Pardon - For Denial</option>
+                                                        <option value="Absolute Pardon - For Granted">Absolute Pardon - For Grant</option>
+                                                        <option value="Absolute Pardon - For Denial">Absolute Pardon - For Denial</option>
+                                                        <option value="Other">Other</option>
+                                                      </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class="form-control-label">Transfer Date</label>
+                                                        <input type="date" class="form-control transfered_date">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Transfer To</label>
+                                                        <input type="text" name="text-input" placeholder="Transfer To" class="form-control transfer_to">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigating Officer</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John Doe" class="form-control inv_off_update"></div>
-                                    </div>
                                 </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case No.</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="CC number" class="form-control cc_no_update"></div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control board_order_update select2">
-                                                <option selected value="select" disabled>Select</option>
-                                                <option value="parole">Parole</option>
-                                                <option value="commutation">Commutation of Sentence</option>
-                                                <option value="conditional_pardon">Conditional Pardon</option>
-                                                <option value="absolute_pardon">Absolute Pardon</option>
-                                            </select>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Pre-Parole/Executive Clemency Investigation Cases Resolved By The Board
+                                                <div>
+                                                    <a data-toggle="collapse" href="#table4" role="button" aria-expanded="true" aria-controls="table4">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Prison Name</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="John A. Doe" class="form-control prison_name_update"></div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense </label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="Murder" class="form-control offense_update"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Border Order Status</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control board_status_update select2">
-                                                <option selected value="select" disabled>Select</option>
-                                                <option value="granted">Granted</option>
-                                                <option value="denied">Denied</option>
-                                                <option value="cancelled">Cancelled</option>
-                                                <option value="died">Died</option>
-                                            </select>
+                                        <div id="table4" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Court Decision</label>
+                                                        <select class="form-control court_decision select2">
+                                                            <option value="">Please choose</option>
+                                                            <option value="PAROLE - Granted">PAROLE - Granted</option>
+                                                            <option value="PAROLE - Denial">PAROLE - Denial</option>
+                                                            <option value="PAROLE - Cancelled">PAROLE - Cancelled</option>
+                                                            <option value="COMMUTATION - Granted">COMMUTATION - Granted</option>
+                                                            <option value="COMMUTATION - Denial">COMMUTATION - Denial</option>
+                                                            <option value="COMMUTATION - Cancelled">COMMUTATION - Cancelled</option>
+                                                            <option value="CONDITIONAL - Granted">CONDITIONAL - Granted</option>
+                                                            <option value="CONDITIONAL - Denial">CONDITIONAL - Denial</option>
+                                                            <option value="CONDITIONAL - Cancelled">CONDITIONAL - Cancelled</option>
+                                                            <option value="ABSOLUTE - Granted">ABSOLUTE - Granted</option>
+                                                            <option value="ABSOLUTE - Denial">ABSOLUTE - Denial</option>
+                                                            <!-- <option value="ABSOLUTE - Cancelled">ABSOLUTE - Cancelled</option> -->
+                                                            <option value="Died">DIED</option>
+                                                            <option value="Others">Others</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class="form-control-label">Date Order Received from the Court</label>
+                                                        <input type="date" class="form-control date_order_rcv_court">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date of Transferred</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" class="form-control date_transferred_update"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row col-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Date of PECI Submitted</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" class="form-control date_peci_update"></div>
                                     </div>
                                 </div>
                             </div>

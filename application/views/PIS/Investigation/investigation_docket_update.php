@@ -40,14 +40,13 @@
                 </div>
             </div>
         </div>
-
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">Update Investigation</strong>
+                                <strong class="card-title">Update</strong>
                                 <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
                             <div class="card-body">
@@ -55,167 +54,208 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="form-row">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" class="form-control docketNum_update" disabled></div>
+                                        <label for="text-input" class=" form-control-label">Docket Number</label>
+                                        <input type="text" name="text-input" class="form-control docketNum_update">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="text-input" class=" form-control-label">Client</label>
+                                        <select class="form-control pb_client select2">
+                                            <option selected value="none">Select</option>
+                                        </select>
                                     </div>
                                 </div>
-<!--                                 <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS ID</label></div>
-                                        <div class="col-12 col-md-4"><input type="text" name="text-input" placeholder="CMIS ID" class="form-control cmis_id"></div>
-                                        <div class="col-12 col-md-5"><input type="text" name="text-input" placeholder="CMIS Name" class="form-control cmis_name" style="background-color: white;" readonly></div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Field Office</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control cmis_fo select2" >
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control pb_client select2" disabled>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Caseload</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control caseload select2">
-                                                <option value="" selected disabled>Select Caseload</option>
-                                                <option value="PROBATION_INV_MOTION_FAILURE">Client&#39;s Failure to Report</option>
-                                                <option value="PROBATION_INV_CSI">Community Service Investigation</option>
-                                                <option value="PROBATION_INV_CCSI">Courtesy Community Service Investigation</option>
-                                                <option value="PROBATION_INV_CPI">Courtesy Probation Investigation</option>
-                                                <option value="PROBATION_INV_CPI_FULL_BLOWN">Courtesy Probation Investigation - Full Blown</option>
-                                                <option value="PROBATION_INV_CPI_PARTIAL">Courtesy Probation Investigation - Partial</option>
-                                                <option value="PROBATION_INV_CSSI">Courtesy Suspended Sentence Investigation</option>
-                                                <option value="PROBATION_INV_MOTION_DISQUALIFY">Disqualified Client</option>
-                                                <option value="PROBATION_INV_GIOR_FOLLOW_UP">Follow-up of GIOR Result</option>
-                                                <option value="PROBATION_INV_INVESTIGATION">Probation Investigation</option>
-                                                <option value="PROBATION_INV_RPI">Reinvestigation for Client under Probation</option>
-                                                <option value="PROBATION_INV_RCS">Reinvestigation for Community Service</option>
-                                                <option value="PROBATION_INV_RSS">Reinvestigation for Suspended Sentence</option>
-                                                <option value="PROBATION_INV_MOTION_EXTENSION">Request for Extension of Time to Submit PSIR</option>
-                                                <option value="PROBATION_INV_RC">Request for Records Check</option>
-                                                <option value="PROBATION_INV_RES_RC">Results of Records Check</option>
-                                                <option value="PROBATION_INV_SSI">Suspended Sentence Investigation</option>
-                                                <option value="PROBATION_INV_TCSI">Transferred Community Service Investigation</option>
-                                                <option value="PROBATION_INV_TPI">Transferred Probation Investigation</option>
-                                                <option value="PROBATION_INV_TSSI">Transferred Suspended Sentence Investigation</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control client_type select2">
-                                                <option value="" selected disabled>Select Client Type</option>
-                                                <option value="true">Adult</option>
-                                                <option value="false">Juvenile</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Criminal Case Number</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Criminal Case No." class="form-control cc_no"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Offense</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Offense" class="form-control offense"></div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court of Origin</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Court of Origin" class="form-control court_origin"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 false_manual">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Field Office</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control field_office select2" >
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Investigation Officer</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Officer Doe" class="form-control inv_off"></div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Military Court</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control military_court select2">
-                                                <option selected disabled>Select</option>
-                                                <option value="true">Yes</option>
-                                                <option value="false">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Plea Bargain</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control plea_bargain select2">
-                                                <option selected value="none" disabled>Select</option>
-                                                <option value="true">Yes</option>
-                                                <option value="false">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 class_sel" style="display: none;">
-                                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Classification</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select class="form-control classification select2" >
-                                                <option selected value="none" disabled>Select</option>
-                                                <option value="drug">Drug</option>
-                                                <option value="non-drug">Non Drug</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <div class="card" id="sentence_card" style="border-radius: 10px;">
-                                            <div class="card-header" style="background: transparent;">
-                                                <strong>Sentence</strong>
-                                                <button type="button" class="add_more btn btn-primary btn-success btn-sm float-right">Add more</button>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Referrals Received
+                                                <div>
+                                                    <a data-toggle="collapse" href="#received" role="button" aria-expanded="true" aria-controls="received">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div id="received" class="collapse hide">
                                             <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Plea Bargain</label>
+                                                        <select class="form-control plea_bargain select2">
+                                                            <option selected value="none">Select</option>
+                                                            <option value="true">Yes</option>
+                                                            <option value="false">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Criminal Case Number</label>
+                                                        <input type="text" name="text-input" placeholder="Criminal Case No." class="form-control cc_no">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Court of Origin</label>
+                                                        <input type="text" name="text-input" placeholder="Court of Origin" class="form-control court_origin">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Offense</label>
+                                                        <input type="text" name="text-input" placeholder="Offense" class="form-control offense">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Sentence</label>
+                                                        <input type="text" name="text-input" placeholder="Sentence" class="form-control sentence">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Date of Court Order</label>
+                                                        <input type="date" class="form-control cod">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Date Received by PPO</label>
+                                                        <input type="date" class="form-control rd">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Investigation Officer</label>
+                                                        <input type="text" name="text-input" placeholder="Officer Doe" class="form-control inv_off">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div> 
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Court Order Date</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" class="form-control cod"></div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Received Date</label></div>
-                                        <div class="col-12 col-md-9"><input type="date" class="form-control rd"></div>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Remarks</label></div>
-                                        <div class="col-12 col-md-9"><input type="text" name="text-input" placeholder="e.g Remarks" class="form-control remarks"></div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Referrals Acted Upon
+                                                <div>
+                                                    <a data-toggle="collapse" href="#actedUpon" role="button" aria-expanded="true" aria-controls="actedUpon">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="actedUpon" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">PSIR Date</label>
+                                                        <input type="date" class="form-control psir_date">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">PPO's Recommendation</label>
+                                                        <select class="form-control ppo_recommendation select2">
+                                                            <option selected value="none">Select</option>
+                                                            <option value="PSIR - For Granted">For Grant</option>
+                                                            <option value="PSIR - For Denial">For Denial</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Manifestation Date</label>
+                                                        <input type="date" class="form-control manifestation_date">
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Transfer Date</label>
+                                                        <input type="date" class="form-control transfer_date">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <label for="text-input" class=" form-control-label">Transfer To</label>
+                                                        <input type="date" name="text-input" placeholder="Transfer To" class="form-control transfer_to">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Confirm</button>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Referrals Not Acted Upon
+                                                <div>
+                                                    <a data-toggle="collapse" href="#notActedUpon" role="button" aria-expanded="true" aria-controls="notActedUpon">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="notActedUpon" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Type</label>
+                                                        <select class="form-control not_acted_decision select2">
+                                                            <option selected value="none">Select</option>
+                                                            <option value="Recall">Recalled</option>
+                                                            <option value="Warrant of Arrest">Warrant of Arrest</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="text-input" class=" form-control-label">Date Order Received</label>
+                                                        <input type="date" class="form-control date_order_received">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                For Cases Disposed Of By The Court And Issuance Of
+                                                <div>
+                                                    <a data-toggle="collapse" href="#tableFour" role="button" aria-expanded="true" aria-controls="tableFour">
+                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tableFour" class="collapse hide">
+                                            <div class="card-body">
+                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                            <label for="text-input" class=" form-control-label">Alias</label>
+                                                            <input type="text" name="text-input" placeholder="Alias" class="form-control alias_t4">
+                                                        </div>
+                                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                            <label for="text-input" class=" form-control-label">Court Decision</label>
+                                                            <select class="form-control court_decision_t4 select2">
+                                                                <option selected value="none">Select</option>
+                                                                <option value="Recall">Recalled</option>
+                                                                <option value="Warrant of Arrest">Warrant of Arrest</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                            <label for="text-input" class=" form-control-label">Reason for Denial/Dismissal</label>
+                                                            <input type="text" name="text-input" placeholder="Reason for Denial/Dismissal" class="form-control reason_for_denial_t4">
+                                                        </div>
+                                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                            <label for="text-input" class=" form-control-label">Specify other type of Court Decision</label>
+                                                            <input type="text" name="text-input" placeholder="Specify other type of Court Decision" class="form-control other_type_of_decision_t4">
+                                                        </div>
+                                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                            <label for="text-input" class=" form-control-label">Date Order Received from the Court</label>
+                                                            <input type="date" class="form-control date_order_received_court_t4">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

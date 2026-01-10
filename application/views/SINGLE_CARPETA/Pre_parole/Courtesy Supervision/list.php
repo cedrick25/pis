@@ -60,7 +60,7 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Parolee Courtesy Supervision Docket List</strong>
-                                <a href="pre-parole-courtesy-supervision-create"> <button class="btn btn-sm btn-success float-right ppr_csup_create" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <!-- <a href="pre-parole-courtesy-supervision-create"> <button class="btn btn-sm btn-success float-right ppr_csup_create" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">
@@ -69,8 +69,7 @@
                                             <th>#</th>
                                             <th>Full Name</th>
                                             <th>Docket Number</th>
-                                            <th>Docket Series</th>
-                                            <th>Field Office</th>
+                                            <th>Client Type</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
