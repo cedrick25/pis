@@ -34,7 +34,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pre-parole-courtesy-investigation-list">Pre-Parole</a></li>
+                            <li><a href="parole-pardon-courtesy-investigation-list">Parole and Pardone</a></li>
                             <li class="active">Courtesy Investigation Uploads</li>
                         </ol>
                     </div>
@@ -72,9 +72,8 @@
                                     <div class="col-12 col-md-6">
                                         <select class="form-control cmisTable select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="F21T2RR">PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS RECEIVED</option>
-                                            <option value="F21T2_RAU">PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS ACTED UPON</option>
-                                            <option value="F21T4">PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION CASES RESOLVED BY THE BOARD</option>
+                                            <option value="F21T6RR">Referrals Received</option>
+                                            <option value="F21T6CAR">Referrals Completed and Returned</option>
                                         </select>
                                     </div>
                                 </div>
@@ -83,8 +82,6 @@
                                     <div class="col-12 col-md-6">
                                         <select class="form-control type select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option selected value="Order to Conduct Pre-Parole/Executive Clemency Investigation">Order to Conduct Pre-Parole/Executive Clemency Investigation</option>
-                                            <option selected value="Other Document/s">Other Document/s</option>
                                         </select>
                                     </div>
                                 </div>

@@ -86,19 +86,15 @@ $route['client_update_single_carpeta'] = "routes/client_update_single_carpeta";
 $route['parolee_courtesy_supervision_create'] = "routes/parolee_courtesy_supervision_create";
 $route['parolee_courtesy_investigation_create'] = "routes/parolee_courtesy_investigation_create";
 $route['parolee_investigation_create'] = "routes/parolee_investigation_create";
-$route['parolee_supervision_create'] = "routes/parolee_supervision_create";
 $route['parolee_investigation_docketing'] = "routes/parolee_investigation_docketing";
 $route['parolee_courtesy_investigation_docketing'] = "routes/parolee_courtesy_investigation_docketing";
 $route['parolee_courtesy_investigation_update'] = "routes/parolee_courtesy_investigation_update";
 $route['parolee_courtesy_investigation_view'] = "routes/parolee_courtesy_investigation_view";
-$route['parolee_supervision_docketing'] = "routes/parolee_supervision_docketing";
 $route['parolee_courtesy_supervision_docketing'] = "routes/parolee_courtesy_supervision_docketing";
 $route['parolee_courtesy_supervision_update'] = "routes/parolee_courtesy_supervision_update";
 $route['parolee_courtesy_supervision_view'] = "routes/parolee_courtesy_supervision_view";
 $route['parolee_investigation_update'] = "routes/parolee_investigation_update";
 $route['parolee_investigation_view'] = "routes/parolee_investigation_view";
-$route['parolee_supervision_update'] = "routes/parolee_supervision_update";
-$route['parolee_supervision_view'] = "routes/parolee_supervision_view";
 $route['pardonee_courtesy_investigation_create'] = "routes/pardonee_courtesy_investigation_create";
 $route['pardonee_courtesy_supervision_create'] = "routes/pardonee_courtesy_supervision_create";
 $route['pardonee_investigation_create'] = "routes/pardonee_investigation_create";
@@ -188,32 +184,42 @@ $route['pis-investigation-file-upload'] = "routes/pis_investigation_file_upload"
 $route['pis-supervision-file-upload'] = "routes/pis_supervision_file_upload";
 $route['parolee-investigation-file-upload'] = "routes/parolee_investigation_file_upload";
 
-// for pre parole modules
-$route['pre-parole-investigation-list'] = "routes/pre_parole_investigation_list";
-$route['pre-parole-investigation-create'] = "routes/pre_parole_investigation_create";
-$route['pre-parole-investigation-update'] = "routes/pre_parole_investigation_update";
-$route['pre-parole-investigation-view'] = "routes/pre_parole_investigation_view";
-$route['pre-parole-investigation-upload'] = "routes/pre_parole_investigation_upload";
+// for parole and pardon modules
+$route['parole-pardon-investigation-list'] = "routes/pre_parole_investigation_list";
+$route['parole-pardon-investigation-create'] = "routes/pre_parole_investigation_create";
+$route['parole-pardon-investigation-update'] = "routes/pre_parole_investigation_update";
+$route['parole-pardon-investigation-view'] = "routes/pre_parole_investigation_view";
+$route['parole-pardon-investigation-upload'] = "routes/pre_parole_investigation_upload";
+
 // supervision
-$route['pre-parole-supervision-list'] = "routes/pre_parole_supervision_list";
-$route['pre-parole-supervision-create'] = "routes/pre_parole_supervision_create";
-$route['pre-parole-supervision-update'] = "routes/pre_parole_supervision_update";
-$route['pre-parole-supervision-view'] = "routes/pre_parole_supervision_view";
+$route['parole-pardon-supervision'] = "routes/pre_parole_supervision_list";
+$route['parole-pardon-supervision-create'] = "routes/pre_parole_supervision_create";
+$route['parole-pardon-supervision-update'] = "routes/pre_parole_supervision_update";
+$route['parole-pardon-supervision-view'] = "routes/pre_parole_supervision_view";
+$route['parole-pardon-supervision-upload'] = "routes/pre_parole_supervision_upload";
+
+// $route['pre-parole-supervision-list'] = "routes/pre_parole_supervision_list";
+// $route['pre-parole-supervision-create'] = "routes/pre_parole_supervision_create";
+// $route['pre-parole-supervision-update'] = "routes/pre_parole_supervision_update";
+// $route['pre-parole-supervision-view'] = "routes/pre_parole_supervision_view";
+
 // courtesy investigation
-$route['pre-parole-courtesy-investigation-list'] = "routes/pre_parole_cs_investigation_list";
+$route['parole-pardon-courtesy-investigation-list'] = "routes/pre_parole_cs_investigation_list";
 $route['pre-parole-courtesy-investigation-create'] = "routes/pre_parole_cs_investigation_create";
-$route['pre-parole-courtesy-investigation-update'] = "routes/pre_parole_cs_investigation_update";
-$route['pre-parole-courtesy-investigation-view'] = "routes/pre_parole_cs_investigation_view";
-$route['pre-parole-courtesy-investigation-upload'] = "routes/pre_parole_cs_investigation_upload";
+$route['parole-pardon-courtesy-investigation-update'] = "routes/pre_parole_cs_investigation_update";
+$route['parole-pardon-courtesy-investigation-view'] = "routes/pre_parole_cs_investigation_view";
+$route['parole-pardon-courtesy-investigation-upload'] = "routes/pre_parole_cs_investigation_upload";
 // courtesy supervision
-$route['pre-parole-courtesy-supervision-list'] = "routes/pre_parole_cs_supervision_list";
-$route['pre-parole-courtesy-supervision-create'] = "routes/pre_parole_cs_supervision_create";
-$route['pre-parole-courtesy-supervision-update'] = "routes/pre_parole_cs_supervision_update";
-$route['pre-parole-courtesy-supervision-view'] = "routes/pre_parole_cs_supervision_view";
+$route['parole-pardon-courtesy-supervision-list'] = "routes/pre_parole_cs_supervision_list";
+$route['parole-pardon-courtesy-supervision-create'] = "routes/pre_parole_cs_supervision_create";
+$route['parole-pardon-courtesy-supervision-update'] = "routes/pre_parole_cs_supervision_update";
+$route['parole-pardon-courtesy-supervision-view'] = "routes/pre_parole_cs_supervision_view";
+$route['parole-pardon-courtesy-supervision-upload'] = "routes/pre_parole_cs_supervision_upload";
 // pre-parole docketing
 $route['pre-parole-docketing-start'] = "routes/pre_parole_docketing_start";
 $route['pre-parole-docketing-inbox'] = "routes/pre_parole_docketing_inbox";
 $route['pre-parole-docketing-sent'] = "routes/pre_parole_docketing_sent";
+
 // for probation courtesy investigation
 $route['probation-courtesy-investigation-list'] = "routes/probation_courtesy_investigation_list";
 $route['probation-courtesy-investigation-uploads'] = "routes/probation_courtesy_investigation_uploads";

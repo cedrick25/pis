@@ -44,7 +44,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pre-parole-investigation-list">Pre-Parole</a></li>
+                            <li><a href="parole-pardon-investigation-list">Parole and Pardon</a></li>
                             <li class="active">Investigation Docket list</li>
                         </ol>
                     </div>
@@ -59,7 +59,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Pre-Parole Investigation Docket List</strong>
+                                <strong class="card-title">Parole and Pardon Investigation Docket List</strong>
                                 <!-- <a href="pre-parole-investigation-create"> <button class="btn btn-sm btn-success float-right ppr_inv_create" type="submit" style="display:none;"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>
                             <div class="card-body">

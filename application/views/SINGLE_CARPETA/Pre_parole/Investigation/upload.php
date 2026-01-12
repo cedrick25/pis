@@ -34,7 +34,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pre-parole-investigation-list">Pre-Parole</a></li>
+                            <li><a href="parole-pardon-investigation-list">Parole and Pardon</a></li>
                             <li class="active">Investigation List Update</li>
                         </ol>
                     </div>
@@ -68,13 +68,13 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Table</label></div>
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Kind</label></div>
                                     <div class="col-12 col-md-6">
                                         <select class="form-control cmisTable select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="F21T2RR">PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS RECEIVED</option>
-                                            <option value="F21T2_RAU">PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS ACTED UPON</option>
-                                            <option value="F21T4">PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION CASES RESOLVED BY THE BOARD</option>
+                                            <option value="F21T2RR">Referrals Received</option>
+                                            <option value="F21T2_RAU">Referrals Acted Upon</option>
+                                            <option value="F21T4">Pre-Parole/Executive Clemency Investigation Cases Resolved By The Board</option>
                                         </select>
                                     </div>
                                 </div>
@@ -83,8 +83,6 @@
                                     <div class="col-12 col-md-6">
                                         <select class="form-control type select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option selected value="Order to Conduct Pre-Parole/Executive Clemency Investigation">Order to Conduct Pre-Parole/Executive Clemency Investigation</option>
-                                            <option selected value="Other Document/s">Other Document/s</option>
                                         </select>
                                     </div>
                                 </div>

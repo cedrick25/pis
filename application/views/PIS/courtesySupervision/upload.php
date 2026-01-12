@@ -34,7 +34,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="probation-courtesy-investigation-list">Courtesy Investigation Docket</a></li>
+                            <li><a href="probation-courtesy-supervision-list">Courtesy Investigation Docket</a></li>
                             <li class="active">View Attachments</li>
                         </ol>
                     </div>
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-	    <div class="content mt-3">
+        <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
@@ -68,14 +68,20 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Kind</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <select class="form-control cmisTable select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="F5T13RR">Referrals Received</option>
+                                            <option value="F5T13Term">Referrals Terminated</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
                                     <div class="col-12 col-md-6">
                                         <select class="form-control type select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="investigation">Investigation</option>
-                                            <option value="supervision">Supervision</option>
-                                            <option value="rehabilitation">Rehabilitation</option>
-                                            <option value="others">Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -99,7 +105,6 @@
                                             <thead>
                                                 <th>#</th>
                                                 <th>File Name</th>
-                                                <th>Version</th>
                                                 <th>Remarks</th>
                                                 <th>Actions</th>
                                             </thead>
@@ -120,7 +125,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Courtesy_Investigation/viewUploadAttachments.js">
+    <script src="assets/js/pisJs/PIS_Courtesy_Supervision/viewUploadAttachments.js">
 
     </script>
 

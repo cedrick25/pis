@@ -135,49 +135,53 @@
         }
 
         var docket_number = GetURLParameter('docket_number');
-        var type = "investigation";
+        var type = "supervision";
         var id = GetURLParameter('id');
         var fi = $.cookie("field_office_id");
         var dataTable = null; // Initialize the variable globally to store the DataTable instance
 
-        
+        $('.client_type').on('change', function() {
+            $(".cmisTable").empty();
+            var value = $(this).val();
+            
+            // console.log(value)
+            if (value === "parolee") {
+                $(".cmisTable").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="F21T15RR_parolee">Referrals Received</option>
+                    <option value="F21T15TERM_parolee">Referrals Terminated</option>
+                `)
+            } else if (value === "pardonee") {
+                $(".cmisTable").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="F21T15_pardonee_rcv">Referrals Received</option>
+                    <option value="F21T15_pardonee_term">Referrals Terminated</option>
+                `)
+            }  else {
+                // alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
+                window.location.reload(true)
+            }
+        })
+
         $('.cmisTable').on('change', function() {
             $(".type").empty();
             var value = $(this).val();
 
             // console.log(value)
-            if (value === "F21T2RR") {
+            if (value === "F21T15RR_parolee" || value === "F21T15_pardonee_rcv") {
                 $(".type").append(`
                     <option value="" disabled="" selected="">Select</option>
-                    <option value="Order to Conduct Pre-Parole/Executive Clemency Investigation">Order to Conduct Pre-Parole/Executive Clemency Investigation</option>
+                    <option value="Request for Courtesy Supervision">Request for Courtesy Supervision</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `)
-            } else if (value === "F21T2_RAU") {
+            } else if (value === "F21T15TERM_parolee" || value === "F21T15_pardonee_term") {
                 $(".type").append(`
                     <option value="" disabled="" selected="">Select</option>
-                    <option value="Pre-Parole Investigation Report">Pre-Parole Investigation Report</option>
-                    <option value="Pre- Executive Clemency Investigation Report">Pre- Executive Clemency Investigation Report</option>
-                    <option value="Other Document/s">Other Document/s</option>
-                `)
-            } else if (value === "F21T4") {
-                $(".type").append(`
-                    <option value="" disabled="" selected="">Select</option>
-                    <option value="Order for the Grant of Parole">Order for the Grant of Parole</option>
-                    <option value="Order for the Grant of Commutation of Sentence">Order for the Grant of Commutation of Sentence</option>
-                    <option value="Order for the Grant of Conditional Pardon">Order for the Grant of Conditional Pardon</option>
-                    <option value="Order for the Grant of Absolute Pardon">Order for the Grant of Absolute Pardon</option>
-                    <option value="Order for the Denial of Parole">Order for the Denial of Parole</option>
-                    <option value="Order for the Denial of Commutation of Sentence">Order for the Denial of Commutation of Sentence</option>
-                    <option value="Order for the Denial of Conditional Pardon">Order for the Denial of Conditional Pardon</option>
-                    <option value="Order for the Denial of Absolute Pardon">Order for the Denial of Absolute Pardon</option>
-                    <option value="Cancellation of Parole">Cancellation of Parole</option>
-                    <option value="Cancellation of Commutation of Sentence">Cancellation of Commutation of Sentence</option>
-                    <option value="Cacellation of Conditional Pardon">Cacellation of Conditional Pardon</option>
-                    <option value="Death">Death</option>
+                    <option value="Courtesy Supervision Terminated">Courtesy Supervision Terminated</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `)
             } else {
-                alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
+                // alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
                 window.location.reload(true)
             }
         })
@@ -283,7 +287,8 @@
                             form.append("file", fileToUpload, fileToUpload.name);
                             // console.log(fileToUpload.name)
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+type+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
+                                // "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+type+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
+                                "url": `${api}8080/file/upload?uuid=${result.docketNumber}&type=${type}&createdby=${fullname}&version=0&kind=${$(".cmisTable").val()}&officeId=${officeId}&remarks=${$(".type").val()}`,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

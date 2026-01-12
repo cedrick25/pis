@@ -135,10 +135,35 @@
         }
 
         var docket_number = GetURLParameter('docket_number');
-        var type = GetURLParameter('type');
+        var type = "investigation";
         var id = GetURLParameter('id');
         var fi = $.cookie("field_office_id");
         var dataTable = null; // Initialize the variable globally to store the DataTable instance
+
+        
+        $('.cmisTable').on('change', function() {
+            $(".type").empty();
+            var value = $(this).val();
+
+            // console.log(value)
+            if (value === "F21T6RR") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Request for Community Interview">Request for Community Interview</option>
+                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else if (value === "F21T6CAR") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Community Interview Report">Community Interview Report</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else {
+                alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
+                window.location.reload(true)
+            }
+        })
 
         function tableColumns() {
             return [
@@ -187,9 +212,9 @@
                     "pageLength": 10,
                     "columnDefs": [
                         { "width": "5%", "targets": [0] },
-                        { "width": "25%", "targets": [1] },
-                        { "width": "30%", "targets": [2] },
-                        { "width": "40%", "targets": [3] },
+                        { "width": "30%", "targets": [1] },
+                        { "width": "40%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
                     ],
                     ajax: {
                         url: `${api}8080/file/page/${type}/${uuid}/${officeId}`, // Base URL remains the same
@@ -227,7 +252,7 @@
                     $(".name").val(result.fullName);
                     $(".docket_num").val(result.docketNumber)
 
-                    load_table('investigation', result.docketNumber, officeId)
+                    load_table(type, result.docketNumber, officeId)
 
                     // for uploading file
                     $(".btn-confirm").unbind("click").on("click", function(){
@@ -241,7 +266,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
                             // console.log(fileToUpload.name)
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type=investigation"+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".type").val(),
+                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+type+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,
@@ -269,9 +294,5 @@
                 alert("failed")
             }
         })
-
-        // $(document).ready(function(){
-        //     fetchWorkflow();
-        // })
 
     } )( jQuery );

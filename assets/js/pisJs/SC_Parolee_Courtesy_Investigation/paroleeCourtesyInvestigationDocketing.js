@@ -151,48 +151,6 @@
             })
         }
 
-        // function drawTable() {
-        //     $(document).ready(function(){
-        //         $('.table_head').DataTable({
-        //             "processing": true,
-        //             "serverSide": true,
-        //             "scrollX": true,
-        //             "lengthChange": false,
-        //             "searching": false,
-        //             "columnDefs": [
-        //                 { "width": "20px", "targets": [0] },
-        //                 { "width": "240px", "targets": [1,2,3,4] },
-        //                 { "width": "300px", "targets": [5] }
-        //             ],
-        //             "ajax": function(data, callback, settings) {
-        //                 const size = 10;
-        //                 const page = data.start / size;
-        //                 const apiUrl = api+"8000/docketbook?page="+page+"&size="+size+"&type=SC_PR_CINV&officeId="+$.cookie('field_office_id');
-        //                 $.ajax({
-        //                     url: apiUrl,
-        //                     method: 'GET',
-        //                     dataType: 'json',
-        //                     success: function(res) {
-        //                         callback({
-        //                             recordsTotal: res.totalElements,
-        //                             recordsFiltered: res.totalElements,
-        //                             data: res.content
-        //                         });
-        //                     },
-        //                     error: function(err) {
-        //                         console.error("Failed to fetch data:", err);
-        //                     }
-        //                 });
-        //             },
-        //             "columns": tableColumns()
-        //         });
-        //         $('.table_head').on('draw.dt', function() {
-        //             buttonFunctionality();
-        //             buttonVisibility();
-        //         });
-        //     })
-        // }
-
         function drawTable() {
             $('.table_head').DataTable({
                 "processing": false,
@@ -203,11 +161,10 @@
                 "pageLength": 10,
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
-                    { "width": "15%", "targets": [1] },
+                    { "width": "25%", "targets": [1] },
                     { "width": "20%", "targets": [2] },
                     { "width": "20%", "targets": [3] },
-                    { "width": "20%", "targets": [4] },
-                    { "width": "20%", "targets": [5] }
+                    { "width": "30%", "targets": [4] },
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -255,21 +212,7 @@
                     "data": 'docketNumber'
                 },
                 {
-                    "data": 'docketSeries',
-                    render: function(data, type, row){
-                        var docketSeries = ['PRE-PAROLE INVESTIGATION','PRE-EXECUTIVE CLEMENCY INVESTIGATION','TRANSFERRED PRE-PAROLE INVESTIGATION','TRANSFERRED PRE-EXECUTIVE CLEMENCY INVESTIGATION','COURTESY PRE-PAROLE INVESTIGATION','COURTESY PRE-EXECUTIVE CLEMENCY INVESTIGATION']
-                        var docketSeriesShort = ['PPI','PECI','TPPI','TPECI','CPPI','CPECI'] 
-                        if ( docketSeriesShort.length == docketSeries.length ){
-                            for (var i = 0; i <= docketSeriesShort.length; ++i){
-                                if (docketSeriesShort[i] == data){
-                                    return docketSeries[i]
-                                }
-                            }  
-                        }                    
-                    }
-                },
-                {
-                    "data": 'fieldOfficeName'
+                    "data": 'referringOfficeId'
                 },
                 {
                     "data": null,

@@ -27,10 +27,10 @@
                 <li class="menu-item-has-children dropdown pre_parole_docketing_module" style="display:none;">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Parole and Pardon</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li class="ppi_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-investigation-list">Investigation</a></li>
-                        <li class="ppi_cs_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-courtesy-investigation-list">Courtesy Investigation</a></li>
-                        <li class="parolee_supervision_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_supervision_docketing">Supervision</a></li>
-                        <li class="parolee_courtesy_supervision_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_courtesy_supervision_docketing">Courtesy Supervision</a></li>
+                        <li class="ppi_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parole-pardon-investigation-list">Investigation</a></li>
+                        <li class="ppi_cs_investigation" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parole-pardon-courtesy-investigation-list">Courtesy Investigation</a></li>
+                        <li class="parolee_supervision_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parole-pardon-supervision">Supervision</a></li>
+                        <li class="parolee_courtesy_supervision_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parole-pardon-courtesy-supervision-list">Courtesy Supervision</a></li>
                         <!-- <li class="ppi_cs_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-courtesy-supervision-list">Courtesy Supervision</a></li> -->
                         <!-- <li class="ppi_supervision" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="pre-parole-supervision-list">Supervision</a></li> -->
                         <!-- <li class="parolee_investigation_docketing" style="display:none;"><i class="menu-icon fa fa-user"></i><a href="parolee_investigation_docketing">Investigation</a></li> -->

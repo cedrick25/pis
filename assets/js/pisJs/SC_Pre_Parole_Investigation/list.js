@@ -141,15 +141,15 @@
 
             $(".btn_update").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
-                window.location.href = api+'/pis/pre-parole-investigation-update?docket_number='+docket_number;
+                window.location.href = api+'/pis/parole-pardon-investigation-update?docket_number='+docket_number;
             })
             $(".btn_view").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
-                window.location.href = api+'/pis/pre-parole-investigation-view?docket_number='+docket_number;
+                window.location.href = api+'/pis/parole-pardon-investigation-view?docket_number='+docket_number;
             })
             $(".btn_attachments").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
-                window.location.href = api+'/pis/pre-parole-investigation-upload?docket_number='+docket_number;
+                window.location.href = api+'/pis/parole-pardon-investigation-upload?docket_number='+docket_number;
             })
         }
         function drawTable() {
@@ -233,7 +233,7 @@
                 {
                     "data": null,
                     render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_update ppr_inv_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments ppr_inv_attachments' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-primary btn_view ppr_inv_view' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-danger btn_remove ppr_inv_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
+                        return "<button class='btn btn-sm btn-primary btn_view ppr_inv_view' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update ppr_inv_update' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments ppr_inv_attachments' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove ppr_inv_remove' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
                     }
                 }
             ]

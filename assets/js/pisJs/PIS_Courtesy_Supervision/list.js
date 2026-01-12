@@ -157,11 +157,11 @@
             $(".btn_attachments").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var id = $(this).data("id");
-                var type = $(this).data("type");
+                // var type = $(this).data("type");
                 var fi = $(this).data("oi");
                 // var senderId = $(this).data("sender");
                 // window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderId='+senderId;
-                window.location.href = api+'/pis/probation-courtesy-supervision-uploads?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+                window.location.href = api+'/pis/probation-courtesy-supervision-uploads?docket_number='+docket_number+'&id='+id+'&type=supervision&fi='+fi;
             })
         }
 

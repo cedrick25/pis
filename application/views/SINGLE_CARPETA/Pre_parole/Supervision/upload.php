@@ -34,8 +34,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="probation-courtesy-investigation-list">Courtesy Investigation Docket</a></li>
-                            <li class="active">View Attachments</li>
+                            <li><a href="parole-pardon-supervision">Parole and Pardone</a></li>
+                            <li class="active">Courtesy Investigation Uploads</li>
                         </ol>
                     </div>
                 </div>
@@ -68,12 +68,24 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Client Type</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <select class="form-control client_type select2">
+                                            <option selected value="none" disabled>Select</option>
+                                            <option value="parolee">Parolee</option>
+                                            <option value="pardonee">Pardonee</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Kind</label></div>
                                     <div class="col-12 col-md-6">
                                         <select class="form-control cmisTable select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="F5T6RR">Referrals Received</option>
-                                            <option value="F5T6RCR">Referrals Completed and Returned</option>
+                                            <option value="F21T8">Referrals Received</option>
+                                            <option value="F21T9">Cases Acted Upon</option>
+                                            <option value="F21T11">Cases Resolved by the Board</option>
+                                            <option value="F21T13">Cases Resolved by the Regional Director</option>
                                         </select>
                                     </div>
                                 </div>
@@ -81,7 +93,7 @@
                                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
                                     <div class="col-12 col-md-6">
                                         <select class="form-control type select2">
-                                            <option selected value="none" disabled>Select</option>
+                                            <option value="" selected="">Select</option>
                                         </select>
                                     </div>
                                 </div>
@@ -125,7 +137,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Courtesy_Investigation/viewUploadAttachments.js">
+    <script src="assets/js/pisJs/SC_Pre_Parole_Supervision/upload.js">
 
     </script>
 

@@ -44,7 +44,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="parolee_supervision_docketing">Pre-Parole</a></li>
+                            <li><a href="parole-pardon-supervision">Parole and Pardon</a></li>
                             <li class="active">Supervision Docket list</li>
                         </ol>
                     </div>
@@ -59,8 +59,8 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Pre-Parole Supervision Docket List</strong>
-                                <a href="pre-parole-supervision-create"> <button class="btn btn-sm btn-success float-right ppr_sup_create" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a>
+                                <strong class="card-title">Parole and Pardon Supervision Docket List</strong>
+                                <!-- <a href="pre-parole-supervision-create"> <button class="btn btn-sm btn-success float-right ppr_sup_create" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">
@@ -69,7 +69,6 @@
                                             <th>#</th>
                                             <th>Client Name</th>
                                             <th>Docket Number</th>
-                                            <th>Field Office</th>
                                             <th>Client Type</th>
                                             <th>Actions</th>
                                         </tr>

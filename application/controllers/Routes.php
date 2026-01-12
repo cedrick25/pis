@@ -642,6 +642,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('SINGLE_CARPETA/Pre_parole/Supervision/view');
 	}
+	public function pre_parole_supervision_upload()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Supervision/upload');
+	}
 	// for pre-parole courtesy investigation
 	public function pre_parole_cs_investigation_list()
 	{
@@ -679,6 +683,10 @@ class routes extends CI_Controller {
 	public function pre_parole_cs_supervision_view()
 	{
 		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Supervision/view');
+	}
+	public function pre_parole_cs_supervision_upload()
+	{
+		$this->load->view('SINGLE_CARPETA/Pre_parole/Courtesy Supervision/upload');
 	}
 	// pre-parole docketing
 	public function pre_parole_docketing_start()

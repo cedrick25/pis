@@ -140,6 +140,31 @@
         var fi = $.cookie("field_office_id");
         var dataTable = null; // Initialize the variable globally to store the DataTable instance
 
+        
+        $('.cmisTable').on('change', function() {
+            $(".type").empty();
+            var value = $(this).val();
+
+            // console.log(value)
+            if (value === "F5T6RR") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else if (value === "F5T6RCR") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Courtesy Probation Investigation Report">Courtesy Probation Investigation Report</option>
+                    <option value="Full Blown Courtesy Investigation">Full Blown Courtesy Investigation</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else {
+                alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
+                window.location.reload(true)
+            }
+        })
+
         function tableColumns() {
             return [
                 {
@@ -150,9 +175,6 @@
                 },
                 {
                     "data": 'fileName',
-                },
-                {
-                    "data": 'version'
                 },
                 {
                     "data": 'remarks',
@@ -190,10 +212,9 @@
                     "pageLength": 10,
                     "columnDefs": [
                         { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] },
-                        { "width": "15%", "targets": [2] },
+                        { "width": "30%", "targets": [1] },
+                        { "width": "40%", "targets": [2] },
                         { "width": "25%", "targets": [3] },
-                        { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
                         url: `${api}8080/file/page/${type}/${uuid}/${officeId}`, // Base URL remains the same
@@ -245,7 +266,7 @@
                             form.append("file", fileToUpload, fileToUpload.name);
                             // console.log(fileToUpload.name)
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+$(".type").val()+"&createdby="+fullname+"&version=0&kind="+fileToUpload.name+"&officeId="+officeId+"&remarks="+$(".remarks").val(),
+                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type=investigation"+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

@@ -33,7 +33,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="pre-parole-courtesy-investigation-list">Pre-Parole</a></li>
+                            <li><a href="parole-pardon-courtesy-investigation-list">Pre-Parole</a></li>
                             <li class="active">Courtesy Investigation Update</li>
                         </ol>
                     </div>

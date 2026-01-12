@@ -135,7 +135,7 @@
         }
 
         var docket_number = GetURLParameter('docket_number');
-        var type = "investigation";
+        var type = "supervision";
         var id = GetURLParameter('id');
         var fi = $.cookie("field_office_id");
         var dataTable = null; // Initialize the variable globally to store the DataTable instance
@@ -146,34 +146,36 @@
             var value = $(this).val();
 
             // console.log(value)
-            if (value === "F21T2RR") {
+            if (value === "F21T8") {
                 $(".type").append(`
                     <option value="" disabled="" selected="">Select</option>
-                    <option value="Order to Conduct Pre-Parole/Executive Clemency Investigation">Order to Conduct Pre-Parole/Executive Clemency Investigation</option>
+                    <option value="Discharge on Parole">Discharge on Parole</option>
+                    <option value="Arrival Report">Arrival Report</option>
+                    <option value="Briefing Report">Briefing Report</option>
+                    <option value="Certificate of Undertaking">Certificate of Undertaking</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `)
-            } else if (value === "F21T2_RAU") {
+            } else if (value === "F21T9") {
                 $(".type").append(`
                     <option value="" disabled="" selected="">Select</option>
-                    <option value="Pre-Parole Investigation Report">Pre-Parole Investigation Report</option>
-                    <option value="Pre- Executive Clemency Investigation Report">Pre- Executive Clemency Investigation Report</option>
-                    <option value="Other Document/s">Other Document/s</option>
+                      <option value="Summary Report">Summary Report</option>
+                      <option value="Infraction Report">Infraction Report</option>
+                      <option value="Death Report">Death Report</option>
+                      <option value="Report for Transfer">Report for Transfer</option>
+                      <option value="Other Document/s">Other Document/s</option>
                 `)
-            } else if (value === "F21T4") {
+            } else if (value === "F21T11") {
                 $(".type").append(`
                     <option value="" disabled="" selected="">Select</option>
-                    <option value="Order for the Grant of Parole">Order for the Grant of Parole</option>
-                    <option value="Order for the Grant of Commutation of Sentence">Order for the Grant of Commutation of Sentence</option>
-                    <option value="Order for the Grant of Conditional Pardon">Order for the Grant of Conditional Pardon</option>
-                    <option value="Order for the Grant of Absolute Pardon">Order for the Grant of Absolute Pardon</option>
-                    <option value="Order for the Denial of Parole">Order for the Denial of Parole</option>
-                    <option value="Order for the Denial of Commutation of Sentence">Order for the Denial of Commutation of Sentence</option>
-                    <option value="Order for the Denial of Conditional Pardon">Order for the Denial of Conditional Pardon</option>
-                    <option value="Order for the Denial of Absolute Pardon">Order for the Denial of Absolute Pardon</option>
-                    <option value="Cancellation of Parole">Cancellation of Parole</option>
-                    <option value="Cancellation of Commutation of Sentence">Cancellation of Commutation of Sentence</option>
-                    <option value="Cacellation of Conditional Pardon">Cacellation of Conditional Pardon</option>
+                    <option value="Final Release and Discharge">Final Release and Discharge</option>
+                    <option value="Arrest/Recommitment">Arrest/Recommitment</option>
                     <option value="Death">Death</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `)
+            } else if (value === "F21T13") {
+                $(".type").append(`
+                    <option value="" disabled="" selected="">Select</option>
+                    <option value="Approved Transfer of Residence">Approved Transfer of Residence</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `)
             } else {
@@ -283,7 +285,8 @@
                             form.append("file", fileToUpload, fileToUpload.name);
                             // console.log(fileToUpload.name)
                             var settings = {
-                                "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+type+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
+                                // "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+type+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
+                                "url": `${api}8080/file/upload?uuid=${result.docketNumber}&type=${type}&createdby=${fullname}&version=0&kind=${$(".cmisTable").val()}_${$(".client_type").val()}&officeId=${officeId}&remarks=${$(".type").val()}`,
                                 "method": "POST",
                                 "timeout": 0,
                                 "processData": false,

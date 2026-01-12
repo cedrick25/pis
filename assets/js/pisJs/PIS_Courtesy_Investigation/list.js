@@ -156,7 +156,7 @@
                 var id = $(this).data("id");
                 var type = $(this).data("type");
                 var fi = $(this).data("oi");
-                window.location.href = api+'/pis/probation-courtesy-investigation-uploads?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+                window.location.href = api+'/pis/probation-courtesy-investigation-uploads?docket_number='+docket_number+'&id='+id+'&type=investigation&fi='+fi;
             })
         }
 
