@@ -46,8 +46,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Petitioner's Name</label>
-                                        <select class="form-control client select2">
-                                        </select>
+                                        <input type="text" name="text-input" placeholder="Petitioner's Name" class="form-control client" disabled>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">

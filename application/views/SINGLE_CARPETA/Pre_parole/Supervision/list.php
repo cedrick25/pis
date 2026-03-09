@@ -67,9 +67,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Client Name</th>
                                             <th>Docket Number</th>
-                                            <th>Client Type</th>
+                                            <th>Client Name</th>
+                                            <!-- <th>Client Type</th> -->
                                             <th>Actions</th>
                                         </tr>
                                     </thead>

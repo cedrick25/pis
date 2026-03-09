@@ -67,9 +67,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Full Name</th>
                                             <th>Docket Number</th>
-                                            <th>Client Type</th>
+                                            <th>Full Name</th>
+                                            <th>Referring Office</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>

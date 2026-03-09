@@ -1,259 +1,222 @@
-    ( function ( $ ) {
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
-        console.log(___ctx)
+(function ($) {
+    var api = localStorage.getItem("api");
+    var contextPath = api;
+    var docketNumber = getUrlParameter("docket_number");
+    var currentRecord = {};
 
-        var __getContext = function() {
-            return ___ctx;
-        };
+    var getContext = function () {
+        return contextPath;
+    };
 
-        var __executeExternalGet = function(path, customLoader) {
-            path = __getContext() + path;
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
+    var safeValue = function (value) {
+        return value === null || value === undefined ? "" : value;
+    };
+
+    var normalizeDate = function (value) {
+        if (!value) {
+            return "";
+        }
+        return String(value).substring(0, 10);
+    };
+
+    var composeNameFromParts = function (record) {
+        var firstName = safeValue(record.firstName);
+        var middleName = safeValue(record.middleName);
+        var lastName = safeValue(record.lastName);
+        var suffixName = safeValue(record.suffixName);
+        return $.trim((firstName + " " + middleName + " " + lastName + " " + suffixName).replace(/\s+/g, " "));
+    };
+
+    var getDisplayFullName = function (record) {
+        var responseFullName = safeValue(record.fullName);
+        if (responseFullName !== "") {
+            return responseFullName;
+        }
+        return composeNameFromParts(record);
+    };
+
+    var setSelectValue = function (selector, value) {
+        var normalized = safeValue(value);
+        var $select = $(selector);
+
+        if ($select.find('option[value="' + normalized + '"]').length === 0 && normalized !== "") {
+            $select.append('<option value="' + normalized + '">' + normalized + "</option>");
+        }
+        $select.val(normalized).trigger("change");
+    };
+
+    var executeExternalGet = function (path, customLoader) {
+        path = getContext() + path;
+        var d = $.Deferred();
+        if (customLoader !== "") {
+            $("#" + customLoader).show().removeClass("hide");
+        }
+
+        $.ajax({
+            method: "GET",
+            url: path,
+            dataType: "json"
+        }).done(function (data) {
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
             }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown, request) {
+            console.log("---FAILED---");
+            console.log(jqXHR, textStatus, errorThrown);
+            console.log("---FAILED---");
+
+            d.resolve({
+                status: "ERROR",
+                message: request
             });
-            
-            return d.promise();
-        };
-        var __executeExternalPost = function(path, jsonObj, customLoader) {
-            path = __getContext() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
+
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
             }
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                headers: {
-                    // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
-                },
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
+        });
+
+        return d.promise();
+    };
+
+    var executeExternalPost = function (path, jsonObj, customLoader) {
+        path = getContext() + path;
+        var d = $.Deferred();
+        if (customLoader !== "") {
+            $("#" + customLoader).show().removeClass("hide");
+        }
+
+        $.ajax({
+            method: "POST",
+            url: path,
+            dataType: "json",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: jsonObj
+        }).done(function (data) {
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
+            }
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown, request) {
+            console.log("---FAILED---");
+            console.log(jqXHR, textStatus, errorThrown);
+            console.log("---FAILED---");
+
+            d.resolve({
+                status: "ERROR",
+                message: request
             });
-            
-            return d.promise();
-        };
 
-        function GetURLParameter(sParam){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++)
-            {
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == sParam)
-                {
-                    return decodeURIComponent(sParameterName[1]);
-                }
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
+            }
+        });
+
+        return d.promise();
+    };
+
+    function getUrlParameter(paramName) {
+        var pageURL = window.location.search.substring(1);
+        var urlVariables = pageURL.split("&");
+        for (var i = 0; i < urlVariables.length; i++) {
+            var parameterName = urlVariables[i].split("=");
+            if (parameterName[0] === paramName) {
+                return decodeURIComponent(parameterName[1]);
             }
         }
+    }
 
-        var __selectclient = function(){
-            $('.client_update').empty();
-            __executeExternalGet('8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
-                if (result.status != "ERROR") {
-                    $('.client_update').append("<option selected disabled> - - Select Client - - </option>");
-                    result.forEach(function(data){
-                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                        $('.client_update').append(
-                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
-                    });
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
+    var setFormDisabled = function (isDisabled) {
+        $(".card-body").find("input, select, button").prop("disabled", isDisabled);
+        $(".btn-confirm_update").prop("disabled", isDisabled);
+        $(".docket_num_update").prop("disabled", true);
+    };
+
+    var populateFields = function (record) {
+        currentRecord = record || {};
+
+        $(".docket_num_update").val(safeValue(currentRecord.docketNumber));
+        $(".client_update").val(getDisplayFullName(currentRecord));
+        $(".cc_no_update").val(safeValue(currentRecord.criminalCaseNumber));
+        $(".name_prison").val(safeValue(currentRecord.prisonName));
+        setSelectValue(".board_order_update", currentRecord.fromPrisonType);
+        $(".offense").val(safeValue(currentRecord.offense));
+        $(".date_received_by_ppo").val(normalizeDate(currentRecord.receivedDateByPPO));
+        $(".inv_officer").val(safeValue(currentRecord.investigatingOfficer));
+        $(".date_peci_update").val(normalizeDate(currentRecord.investigationReportSubmittedDate));
+        setSelectValue(".ppo_recommendation", currentRecord.ppoRecommendation);
+        $(".transfered_date").val(normalizeDate(currentRecord.dateOfTransfer));
+        $(".transfer_to").val(safeValue(currentRecord.specifyCourtPpoTransferred || currentRecord.transferredOfficeId));
+        setSelectValue(".court_decision", currentRecord.courtDecision);
+        $(".date_order_rcv_court").val(normalizeDate(currentRecord.dateOrderReceivedFromTheCourt));
+    };
+
+    var buildPayload = function () {
+        var fallbackFullName = composeNameFromParts(currentRecord);
+        return $.extend({}, currentRecord, {
+            type: safeValue(currentRecord.type) || "SC_PPI_INV",
+            docketNumber: $(".docket_num_update").val(),
+            clientType: safeValue(currentRecord.clientType) || "PAROLEE",
+            fieldOfficeId: safeValue(currentRecord.fieldOfficeId) || $.cookie("field_office_id"),
+            clientId: safeValue(currentRecord.clientId),
+            firstName: safeValue(currentRecord.firstName),
+            middleName: safeValue(currentRecord.middleName),
+            lastName: safeValue(currentRecord.lastName),
+            suffixName: safeValue(currentRecord.suffixName),
+            fullName: safeValue(currentRecord.fullName) || fallbackFullName,
+            criminalCaseNumber: $(".cc_no_update").val(),
+            prisonName: $(".name_prison").val(),
+            fromPrisonType: $(".board_order_update").val(),
+            offense: $(".offense").val(),
+            receivedDateByPPO: $(".date_received_by_ppo").val(),
+            investigatingOfficer: $(".inv_officer").val(),
+            investigationReportSubmittedDate: $(".date_peci_update").val(),
+            ppoRecommendation: $(".ppo_recommendation").val(),
+            dateOfTransfer: $(".transfered_date").val(),
+            specifyCourtPpoTransferred: $(".transfer_to").val(),
+            courtDecision: $(".court_decision").val(),
+            dateOrderReceivedFromTheCourt: $(".date_order_rcv_court").val(),
+            updatedBy: $.cookie("employee_id") || safeValue(currentRecord.updatedBy)
+        });
+    };
+
+    var loadDocketDetails = function () {
+        return executeExternalGet("8000/docketbook/" + docketNumber + "/" + $.cookie("field_office_id"), "spinner_update");
+    };
+
+    $(".btn-confirm_update").off("click").on("click", function () {
+        var payload = buildPayload();
+        var officeId = safeValue(currentRecord.fieldOfficeId) || $.cookie("field_office_id");
+        var $button = $(this);
+
+        $button.prop("disabled", true);
+        executeExternalPost("8000/docketbook/update/" + docketNumber + "/" + officeId, JSON.stringify(payload), "spinner_update").done(function (result) {
+            $button.prop("disabled", false);
+            if (result.status !== "ERROR") {
+                $("#success").html('<i class="fa fa-check"></i> Successfully Updated').show();
+
+                setTimeout(function () {
+                    $("#success").hide();
+                    window.location.href = api + "/pis/parolee_investigation_docketing";
+                }, 1500);
+            } else {
+                alert("Update failed.");
+            }
+        });
+    });
+
+    setFormDisabled(true);
+    loadDocketDetails().done(function (result) {
+        if (result.status === "ERROR" || !result.response) {
+            alert("Failed to load docket details.");
+            $("#spinner_update").hide().addClass("hide");
+            return;
         }
-        __selectclient();
 
-        var __select = function(){
-            $('.ref_office_update').empty();
-
-            __executeExternalGet('8088/department/list').done(function (result) {
-                if (result.status != "ERROR") {
-                    $('.ref_office_update').append("<option selected disabled> - - Select Field Office - - </option>");
-                    result.forEach(function(data){
-                        $('.ref_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.cmis_fo').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-
-        var docket_number = GetURLParameter('docket_number');
-        $('.card-body').find('input, select, button').prop('disabled', true);
-        $('.btn-confirm_update').prop('disabled', true);
-        var __fields = function(){
-            __executeExternalGet('8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
-                var result = result.response;
-                if (result.status != "ERROR") {
-                    $(".docket_num_update").val(result.docketNumber);
-                    $(".docket_series_update").val(result.docketSeries).trigger("change");
-                    $(".client_update").val(result.clientId).trigger("change");
-                    $(".recommendation_update").val(result.recommendationState).trigger("change");
-                    $(".task_update").val(result.caseloadType).trigger("change");
-                    $(".client_type_update").val(result.clientType).trigger("change");
-                    $(".board_status_update").val(result.boardOrderStatus).trigger("change");
-                    $(".board_order_update").val(result.boardOrder).trigger("change");
-                    $(".state_update").val(result.status).trigger("change");
-                    $(".ref_office_update").val(result.transferredOfficeId).trigger("change");
-                    $(".inv_off_update").val(result.investigatingOfficer);
-                    $(".cc_no_update").val(result.criminalCaseNumber);
-                    $(".offense_update").val(result.offense);
-                    $(".prison_name_update").val(result.prisonName);
-                    $(".date_transferred_update").val(result.dateOfTransfer);
-                    $(".date_peci_update").val(result.investigationReportSubmittedDate);
-
-                    
-
-                    $(".btn-confirm_update").unbind("click").on("click", function(){
-
-                        var fname = $('.client_update option:selected').data('fname');
-                        var mname = $('.client_update option:selected').data('mname');
-                        var lname = $('.client_update option:selected').data('lname');
-                        var sname = $('.client_update option:selected').data('sname');
-                        var fullName = fname + " " + mname + " " + lname + " " + sname; 
-                        var clientId = $('.client_update option:selected').data('id');
-
-                        var payload = {
-                        "type"                  : "SC_PR_INV",
-                        "docketNumber"          : $(".docket_num_update").val(),
-                        "docketSeries"          : $(".docket_series_update").val(),
-                        "caseloadType"          : $(".task_update").val(),
-                        "clientType"            : "PAROLEE",
-                        "fieldOfficeId"         : $.cookie('field_office_id'),
-                        "clientId"              : $(".client_update").val(),
-                        "firstName"             : fname,
-                        "middleName"            : mname,
-                        "lastName"              : lname,
-                        "suffixName"            : sname,
-                        "fullName"              : fullName,
-                        "pleaBargain"           : false,
-                        "caseClassification"    : "",
-                        "criminalCaseNumber"    : $(".cc_no_update").val(),
-                        "offense"               : $(".offense_update").val(),
-                        "investigatingOfficer"  : $(".inv_off_update").val(),
-                        "courtOfOrigin"         : "",
-                        "courtOrderDate"        : "",
-                        "receivedDateByPPO"     : "",
-                        "sentence"              : "",
-                        "manualDocket"          : false,
-                        "referral"              : false,
-                        "referralData"          : "",
-                        "remarks"               : "",
-                        "probationStartDate"    : "",
-                        "probationYear"         : "",
-                        "probationMonth"        : "",
-                        "probationDay"          :"",
-                        "prisonName"            : $(".prison_name_update").val(),
-                        "investigationReportSubmittedDate"  : $(".date_peci_update").val(),
-                        "ppoRecommendation"                 : "",
-                        "recommendationState"               : $(".recommendation_update").val(),
-                        "dateOfTransfer"                    : $(".date_transferred_update").val(),
-                        "transferredOfficeId"               : $(".ref_office_update").val(),
-                        "dateOrderReceivedFromTheBoard"     : "",
-                        "boardOrder"            : $(".board_order_update").val(),
-                        "boardOrderStatus"      : $(".board_status_update").val(),
-                        "referrringOfficeId"    : "",
-                        "dateCICAR"             : "",
-                        "supervisingOfficer"    : "",
-                        "probationEndDate"      : "",
-                        "referralType"          : "",
-                        "dateReportSubmittedToTheBoard"                 : "",
-                        "dateReportSubmittedToRDForTransferToOtherPPO"  : "",
-                        "resolutionType"                                : "",
-                        "dateResolutionFromTheBoard"                    : "",
-                        "dateResolutionFromTheRDForTransfer"            : "",
-                        "createdBy"     : "",
-                        "legalAge"      : false,
-                        "militaryCourt" : false,
-
-                        }
-                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
-                            console.log(result);
-                            if (result.status != "ERROR") {
-                            $(".form-control").val('');
-                            $('#success').show();
-                                setTimeout(function () {
-                                    $('#success').hide();
-                                    window.location.href = api+'/pis/parolee_investigation_docketing';
-                                }, 2000);
-                            }else{
-                                alert("failed")
-                            }
-                        })
-                    })
-
-                }else{
-                    alert("failed")
-                }
-            })
-        }
-        __select();
-
-        setTimeout(function () {
-            __fields();
-            $("#spinner_update").hide();
-            $('.card-body').find('input, select, button').prop('disabled', false);
-            $('.btn-confirm_update').prop('disabled', false);
-            $('.docket_num_update').prop('disabled', true)
-            $('.docket_series_update').prop('disabled', true)
-        }, 3000);
-    } )( jQuery );
+        populateFields(result.response);
+        setFormDisabled(false);
+        $("#spinner_update").hide().addClass("hide");
+    });
+})(jQuery);

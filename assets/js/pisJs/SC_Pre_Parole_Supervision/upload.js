@@ -214,6 +214,9 @@
                                     <i class='fa fa-download'></i> Download
                                 </button>
                             </a>
+                            <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <i class='fa fa-trash'></i> Delete
+                            </button>
                         `;
                         return actions;
                     }
@@ -255,6 +258,21 @@
                         }
                     },
                     columns: tableColumns() // Call your function to get table columns
+                });
+                // Delete button event (delegated for DataTable dynamic rows)
+                $(document).off("click", ".btn-delete").on("click", ".btn-delete", function(){
+                    let fileId = $(this).data("id");
+
+                    if(confirm("Are you sure you want to delete this file?")) {
+                        __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
+                            if(res.status !== "ERROR") {
+                                alert("File deleted successfully!");
+                                window.location.reload(true);
+                            } else {
+                                alert("Error deleting file!");
+                            }
+                        });
+                    }
                 });
             } else {
                 // Update the AJAX URL and reload the DataTable

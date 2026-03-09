@@ -61,9 +61,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Client</label>
-                                        <select class="form-control pb_client select2">
-                                            <option selected value="none">Select</option>
-                                        </select>
+                                        <input type="text" name="text-input" class="form-control pb_client">
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -84,7 +82,7 @@
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Plea Bargain</label>
                                                         <select class="form-control plea_bargain select2">
-                                                            <option selected value="none">Select</option>
+                                                            <option selected value="">Select</option>
                                                             <option value="true">Yes</option>
                                                             <option value="false">No</option>
                                                         </select>
@@ -152,7 +150,7 @@
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">PPO's Recommendation</label>
                                                         <select class="form-control ppo_recommendation select2">
-                                                            <option selected value="none">Select</option>
+                                                            <option selected value="">Select</option>
                                                             <option value="PSIR - For Granted">For Grant</option>
                                                             <option value="PSIR - For Denial">For Denial</option>
                                                         </select>
@@ -171,7 +169,9 @@
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                         <label for="text-input" class=" form-control-label">Transfer To</label>
-                                                        <input type="date" name="text-input" placeholder="Transfer To" class="form-control transfer_to">
+                                                        <select class="form-control transfer_to select2">
+                                                            <option selected value="">Select</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -196,7 +196,7 @@
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Type</label>
                                                         <select class="form-control not_acted_decision select2">
-                                                            <option selected value="none">Select</option>
+                                                            <option selected value="">Select</option>
                                                             <option value="Recall">Recalled</option>
                                                             <option value="Warrant of Arrest">Warrant of Arrest</option>
                                                         </select>
@@ -233,7 +233,7 @@
                                                         <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                             <label for="text-input" class=" form-control-label">Court Decision</label>
                                                             <select class="form-control court_decision_t4 select2">
-                                                                <option selected value="none">Select</option>
+                                                                <option selected value="">Select</option>
                                                                 <option value="Recall">Recalled</option>
                                                                 <option value="Warrant of Arrest">Warrant of Arrest</option>
                                                             </select>
@@ -256,6 +256,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer confirmButton">
+                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Confirm</button>
                             </div>
                         </div>
                     </div>

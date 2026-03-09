@@ -53,7 +53,7 @@
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                                     <i class="fa fa-check"></i>
-                                        Successfully Added  
+                                        Successfully Updated  
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -62,9 +62,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Client</label>
-                                        <select class="form-control client_update select2">
-                                            <option selected value="none" disabled>Select</option>
-                                        </select>
+                                        <input type="text" name="text-input" placeholder="Client" class="form-control client_update" disabled>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">

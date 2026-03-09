@@ -1,4 +1,4 @@
-<?php $this->load->view('templates/header.php'); ?> 
+`<?php $this->load->view('templates/header.php'); ?> 
 <style>
     .spinner {
         border: 8px solid #f3f3f3; /* Light gray */
@@ -68,8 +68,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Client</label>
-                                        <select class="form-control pb_client_sup select2" disabled>
-                                        </select>
+                                        <input type="text" name="text-input" class="form-control pb_client_sup" disabled>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -94,6 +93,7 @@
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Type of Referrals</label>
                                                         <select class="form-control referral_type select2">
+                                                            <option value="" selected disabled>Please Choose</option>
                                                             <option value="From Local Courts" >From Local Courts</option>
                                                             <option value="Direct Transfer, Court to Court">Direct Transfer, Court to Court</option>
                                                             <option value="From Military Courts">From Military Courts</option>
@@ -116,6 +116,7 @@
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Case Classification</label>
                                                         <select class="form-control case_classification select2">
+                                                            <option value="" selected disabled>Please choose</option>
                                                             <option value="MINIMUM">MINIMUM</option>
                                                             <option value="MEDIUM">MEDIUM</option>
                                                             <option value="MAXIMUM">MAXIMUM</option>

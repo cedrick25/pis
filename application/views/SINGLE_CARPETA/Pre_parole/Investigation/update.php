@@ -51,8 +51,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Added  
+                                    <i class="fa fa-check"></i> Successfully Updated
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -61,9 +60,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Client</label>
-                                        <select class="form-control client_update select2">
-                                            <option selected value="none" disabled>Select</option>
-                                        </select>
+                                        <input type="text" name="text-input" placeholder="Client Name" class="form-control client_update" readonly>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -214,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Update</button>
                             </div>
                         </div>
                     </div>
@@ -229,7 +226,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/SC_Parolee_Investigation/paroleeInvestigationUpdate.js">
+    <script src="assets/js/pisJs/SC_Parolee_Investigation/paroleeinvestigationUpdate.js">
 
     </script>
 

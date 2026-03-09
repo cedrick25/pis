@@ -155,7 +155,32 @@
             })
         }
 
+        function formatTableValue(value) {
+            if (value === null || value === undefined) {
+                return 'N/A';
+            }
+            if (typeof value === 'string' && value.trim() === '') {
+                return 'N/A';
+            }
+            return value;
+        }
+
+        function fixTableHeader() {
+            var tableHeadRow = $('.table_head thead tr');
+            if (!tableHeadRow.length) {
+                return;
+            }
+
+            tableHeadRow.html(
+                '<th>#</th>' +
+                '<th>Docket Number</th>' +
+                '<th>Client Name</th>' +
+                '<th>Actions</th>'
+            );
+        }
+
         function drawTable() {
+            fixTableHeader();
             $('.table_head').DataTable({
                 "processing": false,
                 "serverSide": true,
@@ -165,10 +190,9 @@
                 "pageLength": 10,
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
-                    { "width": "25%", "targets": [1] },
-                    { "width": "20%", "targets": [2] },
-                    { "width": "15%", "targets": [3] },
-                    { "width": "35%", "targets": [4] },
+                    { "width": "35%", "targets": [1] },
+                    { "width": "25%", "targets": [2] },
+                    { "width": "35%", "targets": [3] },
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -210,13 +234,16 @@
                     }
                 },
                 {
-                    "data": "fullName"
+                    "data": "fullName",
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
-                    "data": 'docketNumber'
-                },
-                {
-                    "data": 'clientType'
+                    "data": 'docketNumber',
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
                     "data": null,

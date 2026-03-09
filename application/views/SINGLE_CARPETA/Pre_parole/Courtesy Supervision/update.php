@@ -59,7 +59,7 @@
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Client Type</label>
-                                        <select class="form-control board_order_update select2">
+                                        <select class="form-control client_type_update select2">
                                             <option selected value="select" disabled>Select</option>
                                             <option value="PAROLEE">Parolee</option>
                                             <option value="PARDONEE">Pardonee</option>
@@ -73,9 +73,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Client</label>
-                                        <select class="form-control client_update select2">
-                                            <option selected value="none" disabled>Select</option>
-                                        </select>
+                                        <input type="text" name="text-input" placeholder="Client" class="form-control client_update" disabled>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -156,6 +154,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Update</button>
                             </div>
                         </div>
                     </div>

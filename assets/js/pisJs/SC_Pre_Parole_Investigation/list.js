@@ -161,11 +161,11 @@
                 "lengthMenu": [10, 25, 50, 100],
                 "pageLength": 10,
                 "columnDefs": [
-                    { "width": "5%", "targets": [0] },
-                    { "width": "20%", "targets": [1] },
+                    { "width": "10%", "targets": [0] },
+                    { "width": "25%", "targets": [1] },
                     { "width": "25%", "targets": [2] },
-                    { "width": "25%", "targets": [3] },
-                    { "width": "25%", "targets": [4] },
+                    { "width": "40%", "targets": [3] },
+                    // { "width": "25%", "targets": [4] },
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -206,12 +206,11 @@
                         return meta.settings._iDisplayStart + meta.row + 1;
                     }
                 },
-
-                {
-                    "data": 'fullName'
-                },
                 {
                     "data": 'docketNumber'
+                },
+                {
+                    "data": 'fullName'
                 },
                 // {
                 //     "data": 'docketSeries',
@@ -227,9 +226,9 @@
                 //         }                    
                 //     }
                 // },
-                {
-                    "data": 'fieldOfficeName'
-                },
+                // {
+                //     "data": 'fieldOfficeName'
+                // },
                 {
                     "data": null,
                     render: function(data, type, row) {

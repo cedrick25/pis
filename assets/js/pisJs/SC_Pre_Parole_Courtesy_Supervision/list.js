@@ -199,6 +199,18 @@
             });
         }
 
+        function formatTableValue(value) {
+            if (value === null || value === undefined) {
+                return "N/A";
+            }
+
+            if (typeof value === "string" && value.trim() === "") {
+                return "N/A";
+            }
+
+            return value;
+        }
+
         function tableColumns() {
             return [
                 {
@@ -208,13 +220,22 @@
                     }
                 },
                 {
-                    "data": "fullName"
+                    "data": 'docketNumber',
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
-                    "data": 'docketNumber'
+                    "data": "fullName",
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
-                    "data": 'clientType'
+                    "data": 'referringOfficeCourtesySup',
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
                     "data": null,

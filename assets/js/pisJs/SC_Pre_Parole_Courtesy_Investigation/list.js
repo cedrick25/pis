@@ -164,11 +164,10 @@
                 "pageLength": 10,
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
-                    { "width": "20%", "targets": [1] },
-                    { "width": "15%", "targets": [2] },
-                    { "width": "20%", "targets": [3] },
-                    { "width": "15%", "targets": [4] },
-                    { "width": "25%", "targets": [5] },
+                    { "width": "25%", "targets": [1] },
+                    { "width": "20%", "targets": [2] },
+                    { "width": "25%", "targets": [3] },
+                    { "width": "25%", "targets": [4] },
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -201,6 +200,18 @@
             });
         }
 
+        function formatTableValue(value) {
+            if (value === null || value === undefined) {
+                return "N/A";
+            }
+
+            if (typeof value === "string" && value.trim() === "") {
+                return "N/A";
+            }
+
+            return value;
+        }
+
         function tableColumns() {
             return [
                 {
@@ -210,16 +221,22 @@
                     }
                 },
                 {
-                    "data": 'fullName'
+                    "data": 'fullName',
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
-                    "data": 'docketNumber'
+                    "data": 'docketNumber',
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
-                    "data": 'referringOfficeId'
-                },
-                {
-                    "data": 'clientType'
+                    "data": 'referringOfficeId',
+                    "render": function(data) {
+                        return formatTableValue(data);
+                    }
                 },
                 {
                     "data": null,

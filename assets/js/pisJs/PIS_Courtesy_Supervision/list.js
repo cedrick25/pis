@@ -169,18 +169,17 @@
             $('.table_head').DataTable({
                 "processing": false,
                 "serverSide": true,
-                "scrollX": true,
+                "scrollX": false,
                 "searching": true,
                 "lengthMenu": [10, 25, 50, 100],
                 "pageLength": 10,
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
                     { "width": "15%", "targets": [1] },
-                    { "width": "10%", "targets": [2] },
-                    { "width": "17%", "targets": [3] },
-                    { "width": "13%", "targets": [4] },
-                    { "width": "15%", "targets": [5] },
-                    { "width": "25%", "targets": [6] }
+                    { "width": "15%", "targets": [2] },
+                    { "width": "20%", "targets": [3] },
+                    { "width": "15%", "targets": [4] },
+                    { "width": "30%", "targets": [5] }
             ],
             ajax: {
                 url: api+"8000/docketbook",
@@ -213,6 +212,13 @@
         }
 
         function tableColumns() {
+            function displayValue(value) {
+                if (value === null || value === undefined || String(value).trim() === "") {
+                    return "N/A";
+                }
+                return String(value).trim();
+            }
+
             return [
                 {
                     "data": null,
@@ -221,24 +227,43 @@
                     }
                 },
                 {
-                    "data": 'docketNumber'
+                    "data": 'docketNumber',
+                    render: function (data) {
+                        return displayValue(data);
+                    }
                 },
                 {
-                    "data": 'receivedDateByPPO'
+                    "data": null,
+                    render: function (data) {
+                        return displayValue(data.dateCICAR || data.dateReturned || data.dateCompletedAndReturned);
+                    }
                 },
                 {
                     "data": null,
                     render: function (data, type, row) {
-                        var fullName = `${data.firstName === null ? "" : data.firstName} ${data.middleName === null ? "" : data.middleName} ${data.lastName === null ? "" : data.lastName} ${data.suffixName === null ? "" : data.suffixName} `
-                        // var fullName = data.firstName  + " " + data.middleName + " " + data.lastName + " " + data.suffixName;
-                        return fullName;
+                        var splitName = [
+                            data.firstName,
+                            data.middleName,
+                            data.lastName,
+                            data.suffixName
+                        ]
+                        .filter(function (value) {
+                            return value !== null && value !== undefined && String(value).trim() !== "";
+                        })
+                        .join(" ");
+
+                        var fullName = (data.fullName || data.full_name || "").trim();
+
+                        if (splitName === "" && fullName !== "") return displayValue(fullName);
+                        if (fullName === "" && splitName !== "") return displayValue(splitName);
+                        return displayValue(splitName || fullName);
                     }
                 },
                 {
-                    "data": 'criminalCaseNumber'
-                },
-                {
-                    "data": 'fieldOfficeName'
+                    "data": 'criminalCaseNumber',
+                    render: function (data) {
+                        return displayValue(data);
+                    }
                 },
                 {
                     "data": null,

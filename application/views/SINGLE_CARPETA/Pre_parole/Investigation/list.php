@@ -67,10 +67,10 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Full Name</th>
                                             <th>Docket Number</th>
+                                            <th>Full Name</th>
                                             <!-- <th>Docket Series</th> -->
-                                            <th>Field Office</th>
+                                            <!-- <th>Field Office</th> -->
                                             <th>Actions</th>
                                         </tr>
                                     </thead>

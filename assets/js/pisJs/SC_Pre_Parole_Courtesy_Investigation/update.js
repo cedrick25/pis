@@ -1,264 +1,261 @@
-    ( function ( $ ) {
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
-        console.log(___ctx)
+(function ($) {
+    var api = localStorage.getItem('api');
+    var ___ctx = api;
 
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+    var __getContext = function () {
+        return ___ctx;
+    };
 
-        var __getContext = function() {
-            return ___ctx;
-        };
+    var __buildUrl = function (path) {
+        if (/^https?:\/\//i.test(path)) return path;
+        return __getContext() + path;
+    };
 
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
+    var __executeExternalGet = function (path, customLoader) {
+        var d = $.Deferred();
+        if (customLoader !== "") {
+            $("#" + customLoader).show().removeClass("hide");
+        }
+        $.ajax({
+            method: "GET",
+            url: __buildUrl(path),
+            dataType: "json"
+        }).done(function (data) {
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
             }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
+            }
+            d.resolve({
+                status: "ERROR",
+                message: errorThrown || textStatus || jqXHR
             });
-            
-            return d.promise();
-        };
-        var __executeExternalPost = function(path, jsonObj, customLoader) {
-            path = __getContext() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
+        });
+        return d.promise();
+    };
+
+    var __executeExternalPost = function (path, jsonObj, customLoader) {
+        var d = $.Deferred();
+        if (customLoader !== "") {
+            $("#" + customLoader).show().removeClass("hide");
+        }
+        $.ajax({
+            method: "POST",
+            url: __buildUrl(path),
+            dataType: "json",
+            headers: { "Content-Type": "application/json" },
+            data: jsonObj
+        }).done(function (data) {
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
             }
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                headers: {
-                    // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
-                },
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            if (customLoader !== "") {
+                $("#" + customLoader).hide().addClass("hide");
+            }
+            d.resolve({
+                status: "ERROR",
+                message: errorThrown || textStatus || jqXHR
             });
-            
-            return d.promise();
-        };
-        function GetURLParameter(sParam){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++)
-            {
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == sParam)
-                {
-                    return decodeURIComponent(sParameterName[1]);
-                }
+        });
+        return d.promise();
+    };
+
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] === sParam) {
+                return decodeURIComponent(sParameterName[1]);
             }
         }
+    }
 
-        var docket_number = GetURLParameter('docket_number');
-        $('.card-body').find('input, select, button').prop('disabled', true);
-        $('.btn-confirm_update').prop('disabled', true);
+    function buildFullName(firstName, middleName, lastName, suffixName) {
+        return [firstName, middleName, lastName, suffixName].filter(function (v) {
+            return !!v;
+        }).join(" ").trim();
+    }
 
-        var __selectclient = function(){
-            $('.client').empty();
-            __executeExternalGet(___ctx+'8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
-                if (result.status != "ERROR") {
-                    $('.client').append("<option selected disabled>Select Client</option>");
-                    result.forEach(function(data){
-                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                        $('.client').append(
-                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
+    var docket_number = GetURLParameter("docket_number");
+    var officeId = $.cookie("field_office_id");
+    var currentRecord = null;
+
+    $(".card-body").find("input, select, button").prop("disabled", true);
+    $(".btn-confirm_update").prop("disabled", true);
+
+    var __selectFieldOffice = function () {
+        $(".ref_office").empty().append("<option selected disabled>Select Field Office</option>");
+        return __executeExternalGet("8088/department/list").done(function (result) {
+            if (result.status !== "ERROR" && Array.isArray(result)) {
+                result.forEach(function (data) {
+                    $(".ref_office").append("<option value=\"" + data.id + "\">" + data.name + "</option>");
+                });
+            }
+        });
+    };
+
+    var __fields = function () {
+        __executeExternalGet("8000/docketbook/" + docket_number + "/" + officeId).done(function (apiResult) {
+            if (apiResult.status === "ERROR" || !apiResult.response) {
+                alert("failed");
+                return;
+            }
+
+            var result = apiResult.response;
+            currentRecord = result;
+
+            var responseFullName = result.fullName || buildFullName(result.firstName, result.middleName, result.lastName, result.suffixName);
+
+            $(".docket_num_update").val(result.docketNumber || "");
+            $(".client_update").val(responseFullName || "");
+            $(".date_received_by_ppo").val(result.receivedDateByPPO || "");
+            $(".inv_officer").val(result.investigatingOfficer || "");
+            $(".reasons").val(result.remarks || result.referralData || "");
+            $(".date_completed_and_returned").val(result.dateCICAR || result.dateCompletedAndReturned || "");
+
+            setTimeout(function () {
+                var refOfficeId = result.referringOfficeCourtesyInvId || result.referringOfficeId;
+                var refOfficeName = result.referringOfficeCourtesyInv || result.referringOfficeId || "";
+
+                if (refOfficeId && $(".ref_office option[value='" + refOfficeId + "']").length) {
+                    $(".ref_office").val(refOfficeId).trigger("change");
+                } else if (refOfficeName) {
+                    var $opt = $(".ref_office option").filter(function () {
+                        return $(this).text().trim() === refOfficeName;
                     });
-                } else {
-                    console.log("failed fetching docket list")
+                    if ($opt.length) {
+                        $opt.prop("selected", true).trigger("change");
+                    } else {
+                        $(".ref_office").append("<option value=\"" + refOfficeName + "\" selected>" + refOfficeName + "</option>").trigger("change");
+                    }
                 }
-            })
+            }, 400);
+        });
+    };
+
+    $(".btn-confirm_update").off("click").on("click", function () {
+        if (!currentRecord) {
+            alert("failed");
+            return;
         }
-        __selectclient();
 
-        var __select = function(){
-            $('.ref_office_update').empty();
+        var firstName = currentRecord.firstName || "";
+        var middleName = currentRecord.middleName || "";
+        var lastName = currentRecord.lastName || "";
+        var suffixName = currentRecord.suffixName || "";
+        var fullName = currentRecord.fullName || buildFullName(firstName, middleName, lastName, suffixName);
 
-            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.ref_office_update').append("<option selected disabled>Select Field Office</option>");
-                    result.forEach(function(data){
-                        $('.ref_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.cmis_fo').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-                    setTimeout(function () {
-                        $(".ref_office_update").val($.cookie("field_office_id")).trigger("change");
-                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
-                    }, 700);
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
+        var referringOfficeSelectedText = $(".ref_office option:selected").text() || currentRecord.referringOfficeCourtesyInv || currentRecord.referringOfficeId || "";
+        var referringOfficeSelectedValue = $(".ref_office").val() || currentRecord.referringOfficeCourtesyInvId || currentRecord.referringOfficeId || "";
 
-        var __fields = function(){
-            __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
-                var result = result.response;
-                if (result.status != "ERROR") {
-                    $(".docket_num_update").val(result.docketNumber);
-                    $(".docket_series_update").val(result.docketSeries).trigger("change");
-                    $(".ref_office_update").val(result.referringOfficeId).trigger("change");
-                    $(".task_update").val(result.caseloadType).trigger("change");
-                    $(".client_type_update").val(result.clientType).trigger("change");
-                    $(".client").val(result.clientId).trigger("change");
-                    $(".inv_off_update").val(result.investigatingOfficer);
-                    $(".reason_update").val(result.referralData);
-                    $(".dr_ppo_update").val(result.receivedDateByPPO);
-                    $(".date_cic_update").val(result.dateCICAR);
+        var payload = {
+            type: currentRecord.type || "SC_PPI_CSINV",
+            docketNumber: $(".docket_num_update").val() || currentRecord.docketNumber || "",
+            docketSeries: currentRecord.docketSeries || "",
+            caseloadType: currentRecord.caseloadType || "",
+            fieldOfficeId: officeId || currentRecord.fieldOfficeId || "",
+            clientType: currentRecord.clientType,
+            clientId: currentRecord.clientId,
+            firstName: currentRecord.firstName,
+            middleName: currentRecord.middleName,
+            lastName: currentRecord.lastName,
+            suffixName: currentRecord.suffixName,
+            fullName: currentRecord.fullName,
+            isLegalAge: !!currentRecord.isLegalAge,
+            pleaBargain: !!currentRecord.pleaBargain,
+            caseClassification: currentRecord.caseClassification || "",
+            criminalCaseNumber: currentRecord.criminalCaseNumber || "",
+            offense: currentRecord.offense || "",
+            courtOfOrigin: currentRecord.courtOfOrigin || "",
+            isMilitaryCourt: !!currentRecord.isMilitaryCourt,
+            courtOrderDate: currentRecord.courtOrderDate || "",
+            investigatingOfficer: $(".inv_officer").val() || "",
+            receivedDateByPPO: $(".date_received_by_ppo").val() || "",
+            sentence: currentRecord.sentence || "",
+            manualDocket: typeof currentRecord.manualDocket === "boolean" ? currentRecord.manualDocket : false,
+            referral: typeof currentRecord.referral === "boolean" ? currentRecord.referral : false,
+            referralData: currentRecord.referralData || "",
+            remarks: $(".reasons").val() || "",
+            probationStartDate: currentRecord.probationStartDate || "",
+            probationYear: currentRecord.probationYear || "",
+            probationMonth: currentRecord.probationMonth || "",
+            probationDay: currentRecord.probationDay || "",
+            prisonName: currentRecord.prisonName || "",
+            investigationReportSubmittedDate: currentRecord.investigationReportSubmittedDate || "",
+            ppoRecommendation: currentRecord.ppoRecommendation || "",
+            recommendationState: currentRecord.recommendationState || "",
+            dateOfTransfer: currentRecord.dateOfTransfer || "",
+            transferredOfficeId: currentRecord.transferredOfficeId || "",
+            dateOrderReceivedFromTheBoard: currentRecord.dateOrderReceivedFromTheBoard || "",
+            boardOrder: currentRecord.boardOrder || "",
+            boardOrderStatus: currentRecord.boardOrderStatus || "",
+            referringOfficeId: referringOfficeSelectedValue,
+            dateCICAR: $(".date_completed_and_returned").val() || "",
+            supervisingOfficer: currentRecord.supervisingOfficer || "",
+            supervisionStartDate: currentRecord.supervisionStartDate || "",
+            supervisionEndDate: currentRecord.supervisionEndDate || "",
+            probationEndDate: currentRecord.probationEndDate || "",
+            reportType: currentRecord.reportType || "",
+            referralType: currentRecord.referralType || "",
+            dateReportSubmittedToTheBoard: currentRecord.dateReportSubmittedToTheBoard || "",
+            dateReportSubmittedToRDForTransferToOtherPPO: currentRecord.dateReportSubmittedToRDForTransferToOtherPPO || "",
+            resolutionType: currentRecord.resolutionType || "",
+            dateResolutionFromTheBoard: currentRecord.dateResolutionFromTheBoard || "",
+            dateResolutionFromTheRDForTransfer: currentRecord.dateResolutionFromTheRDForTransfer || "",
+            createdBy: currentRecord.createdBy || "",
+            updatedBy: currentRecord.updatedBy || "",
+            psirDate: currentRecord.psirDate || "",
+            manifestationDate: currentRecord.manifestationDate || "",
+            typeOfReferrals: currentRecord.typeOfReferrals || "",
+            referralsNotActedUponDateOrderReceived: currentRecord.referralsNotActedUponDateOrderReceived || "",
+            alias: currentRecord.alias || "",
+            courtDecision: currentRecord.courtDecision || "",
+            reasonForDenialDismissal: currentRecord.reasonForDenialDismissal || "",
+            dateOrderReceivedFromTheCourt: currentRecord.dateOrderReceivedFromTheCourt || "",
+            dateCompletedAndReturned: $(".date_completed_and_returned").val() || "",
+            officeFindingsForActedUpon: currentRecord.officeFindingsForActedUpon || "",
+            officeFindingsForPendingDisposition: currentRecord.officeFindingsForPendingDisposition || "",
+            specifyCourtPpoTransferred: currentRecord.specifyCourtPpoTransferred || "",
+            specifyOtherReasonsRevocation: currentRecord.specifyOtherReasonsRevocation || "",
+            periodOfSupervision: currentRecord.periodOfSupervision || "",
+            specifyOtherSubmittedReports: currentRecord.specifyOtherSubmittedReports || "",
+            otherResolutionType: currentRecord.otherResolutionType || "",
+            periodOfCourtesySupervision: currentRecord.periodOfCourtesySupervision || "",
+            dateReturned: currentRecord.dateReturned || "",
+            referringOfficeCourtesyInv: referringOfficeSelectedText,
+            referringOfficeCourtesyInvId: referringOfficeSelectedValue,
+            referringOfficeCourtesySup: currentRecord.referringOfficeCourtesySup || "",
+            referringOfficeCourtesySupId: currentRecord.referringOfficeCourtesySupId || "",
+            specifyOtherTypeOfDecision: currentRecord.specifyOtherTypeOfDecision || "",
+            fromPrisonType: currentRecord.fromPrisonType || ""
+        };
 
+        __executeExternalPost("8000/docketbook/update/" + docket_number + "/" + officeId, JSON.stringify(payload)).done(function (result) {
+            if (result.status !== "ERROR") {
+                $("#success").show();
+                setTimeout(function () {
+                    $("#success").hide();
+                    window.location.href = api + "/pis/parole-pardon-courtesy-investigation-list";
+                }, 2000);
+            } else {
+                alert("failed");
+            }
+        });
+    });
 
-
-                    $(".btn-confirm_update").unbind("click").on("click", function(){
-                        var fname = $('.client option:selected').data('fname');
-                        var mname = $('.client option:selected').data('mname');
-                        var lname = $('.client option:selected').data('lname');
-                        var sname = $('.client option:selected').data('sname');
-                        var fullName = fname + " " + mname + " " + lname + " " + sname;
-
-                        var payload = {
-
-                        "type"                      : "SC_PPI_CSINV",
-                        "docketNumber"              : $(".docket_num_update").val(),
-                        "docketSeries"              : $(".docket_series_update").val(),
-                        "caseloadType"              : $(".task_update").val(),
-                        "fieldOfficeId"             : $.cookie('field_office_id'),
-                        "clientType"                : "PAROLEE",
-                        "clientId"                  : $(".client").val(),
-                        "firstName"                 : fname,
-                        "middleName"                : mname,
-                        "lastName"                  : lname,
-                        "suffixName"                : sname,
-                        "fullName"                  : fullName,
-                        "pleaBargain"               : true,
-                        "caseClassification"        : "",
-                        "criminalCaseNumber"        : "",
-                        "offense"                   : "",
-                        "courtOfOrigin"             : "",
-                        "courtOrderDate"            : "",
-                        "investigatingOfficer"      : $(".inv_off_update").val(),
-                        "receivedDateByPPO"         : $(".dr_ppo_update").val(),
-                        "sentence"                  : "",
-                        "manualDocket"              : true,
-                        "referral"                  : true,
-                        "referralData"              : "",
-                        "remarks"                   : "",
-                        "probationStartDate"        : "",
-                        "probationYear"             : "",
-                        "probationMonth"            : "",
-                        "probationDay"              : "",
-                        "reportType"                : "",
-                        "prisonName"                : "",
-                        "investigationReportSubmittedDate"          :"",
-                        "ppoRecommendation"         : "",
-                        "recommendationState"       : "",
-                        "dateOfTransfer"            : "",
-                        "transferredOfficeId"       : "",
-                        "dateOrderReceivedFromTheBoard"             : "",
-                        "boardOrder"                : "",
-                        "boardOrderStatus"          : "",
-                        "referringOfficeId"         : $(".ref_office_update").val(),
-                        "dateCICAR"                 : $(".date_cic_update").val(),
-                        "supervisingOfficer"        : "",
-                        "probationEndDate"          : "",
-                        "referralType"              : "",
-                        "dateReportSubmittedToTheBoard"             : "",
-                        "dateReportSubmittedToRDForTransferToOtherPPO": "",
-                        "resolutionType"            : "",
-                        "dateResolutionFromTheBoard": "",
-                        "dateResolutionFromTheRDForTransfer"        : "",
-                        "createdBy"                 : "",
-                        "updatedBy"                 : "",
-                        "legalAge"                  : true,
-                        "militaryCourt"             : true,
-                        "supervisionStartDate"      : "",
-                        "supervisionEndDate"        : ""
-
-                        }
-                        __executeExternalPost('8000/docketbook/update/'+docket_number+'/'+$.cookie("field_office_id"),JSON.stringify(payload)).done(function (result) {
-                            if (result.status != "ERROR") {
-                            $(".form-control").val('');
-                            $('#success').show();
-                                setTimeout(function () {
-                                    $('#success').hide();
-                                    window.location.href = api+'/pis/pre-parole-courtesy-investigation-list';
-                                }, 2000);
-                            }else{
-                                alert("failed")
-                            }
-                        })
-                    })
-
-                }else{
-                    alert("failed")
-                }
-            })
-        }
-        setTimeout(function () {
-            __fields();
-            $("#spinner_update").hide();
-            $('.card-body').find('input, select, button').prop('disabled', false);
-            $('.btn-confirm_update').prop('disabled', false);
-            $('.docket_num_update').prop('disabled', true)
-            $('.docket_series_update').prop('disabled', true)
-            $('.client').prop('disabled', true)
-        }, 3000);
-
-
-    } )( jQuery );
+    __selectFieldOffice();
+    setTimeout(function () {
+        __fields();
+        $("#spinner_update").hide();
+        $(".card-body").find("input, select, button").prop("disabled", false);
+        $(".btn-confirm_update").prop("disabled", false);
+        $(".docket_num_update").prop("disabled", true);
+        $(".client_update").prop("disabled", true);
+    }, 1000);
+})(jQuery);

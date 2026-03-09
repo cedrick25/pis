@@ -265,6 +265,22 @@
                     },
                     columns: tableColumns() // Call your function to get table columns
                 });
+
+                // Delete button event (delegated for DataTable dynamic rows)
+                $(document).off("click", ".btn-delete").on("click", ".btn-delete", function(){
+                    let fileId = $(this).data("id");
+
+                    if(confirm("Are you sure you want to delete this file?")) {
+                        __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
+                            if(res.status !== "ERROR") {
+                                alert("File deleted successfully!");
+                                window.location.reload(true);
+                            } else {
+                                alert("Error deleting file!");
+                            }
+                        });
+                    }
+                });
             } else {
                 // Update the AJAX URL and reload the DataTable
                 dataTable.ajax.url(`${api}8080/file/page/${type}/${uuid}/${officeId}`).load();

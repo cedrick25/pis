@@ -32,12 +32,13 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Update Courtesy Supervision Investigation</strong>
+                                <strong class="card-title">Update Courtesy Supervision</strong>
+                                <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
                                     <i class="fa fa-check"></i>
-                                        Successfully Added  
+                                        Successfully Updated  
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -46,8 +47,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Petitioner's Name</label>
-                                        <select class="form-control client select2">
-                                        </select>
+                                        <input type="text" name="text-input" placeholder="Petitioner's Name" class="form-control client">
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -85,6 +85,7 @@
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Case Classification</label>
                                         <select class="form-control case_classification select2">
+                                            <option value="">Please Choose</option>
                                             <option value="MINIMUM">MINIMUM</option>
                                             <option value="MEDIUM">MEDIUM</option>
                                             <option value="MAXIMUM">MAXIMUM</option>
@@ -102,7 +103,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-			                    <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
+			                    <button type="button" class="btn btn-primary btn-confirm btn-sm float-right"><i class="fa fa-save"></i> Save</button>
 			                </div>
                         </div>
                     </div>
@@ -117,9 +118,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Courtesy_Supervision/update.js">
-
-    </script>
+    <script src="assets/js/pisJs/PIS_Courtesy_Supervision/update.js"></script>
 
 </body>
 

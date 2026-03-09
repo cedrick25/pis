@@ -13,6 +13,75 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    .view-page .card {
+        border: 1px solid #e4e7ea;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .view-page .card-title {
+        font-weight: 600;
+        color: #2f3d4a;
+    }
+
+    .view-page .section-card .card-header {
+        background: #f8fafc;
+        border-bottom: 1px solid #e9ecef;
+        padding: 0;
+    }
+
+    .view-page .section-trigger {
+        width: 100%;
+        padding: 14px 18px;
+        color: #2f3d4a;
+        font-weight: 600;
+        text-decoration: none !important;
+    }
+
+    .view-page .section-trigger:hover {
+        background: #f3f6f9;
+    }
+
+    .view-page .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .view-page .section-label i {
+        color: #6c757d;
+    }
+
+    .view-page .field-label {
+        font-weight: 600;
+        color: #4b5563;
+        margin-bottom: 6px;
+    }
+
+    .view-page .form-control:disabled,
+    .view-page .form-control[readonly] {
+        background-color: #f8f9fa;
+        color: #2f3d4a;
+        border-color: #dee2e6;
+        cursor: not-allowed;
+    }
+
+    .view-page .quick-info {
+        background: #f8fafc;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+    }
+
+    .view-page .quick-info .title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: #6c757d;
+        margin-bottom: 4px;
+    }
 </style>
 <body>
     <!-- Left Panel -->
@@ -40,13 +109,13 @@
             </div>
         </div>
 
-        <div class="content mt-3">
+        <div class="content mt-3 view-page">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">Update Supervision</strong>
+                                <strong class="card-title">View</strong>
                                 <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
                             <div class="card-body">
@@ -54,69 +123,62 @@
                                     <i class="fa fa-check"></i>
                                         Successfully Added  
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="text-input" class=" form-control-label">Client Type</label>
-                                        <select class="form-control board_order_update select2">
-                                            <option selected value="select" disabled>Select</option>
-                                            <option value="PAROLEE">Parolee</option>
-                                            <option value="PARDONEE">Pardonee</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="text-input" class=" form-control-label">Docket No.</label>
-                                        <input type="text" name="text-input" placeholder="Docket No." class="form-control docket_num_update" disabled>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="text-input" class=" form-control-label">Client</label>
-                                        <select class="form-control client_update select2">
-                                            <option selected value="none" disabled>Select</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
-                                        <div class="card-header">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                For Parole and Pardon Supervision Cases Referrals Received
-                                                <div>
-                                                    <a data-toggle="collapse" href="#received" role="button" aria-expanded="true" aria-controls="received">
-                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="quick-info">
+                                            <div class="title">Docket No.</div>
+                                            <input type="text" name="text-input" placeholder="Docket No." class="form-control docket_num_update" disabled>
                                         </div>
-                                        <div id="received" class="collapse hide">
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="quick-info">
+                                            <div class="title">Client</div>
+                                            <input type="text" name="text-input" placeholder="Client" class="form-control client_update" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <div class="card section-card">
+                                        <div class="card-header">
+                                            <a class="d-flex justify-content-between align-items-center section-trigger" data-toggle="collapse" href="#received" role="button" aria-expanded="true" aria-controls="received">
+                                                <span class="section-label">
+                                                    <i class="fa fa-inbox" aria-hidden="true"></i>
+                                                    For Parole and Pardon Supervision Cases Referrals Received
+                                                </span>
+                                                <i class="fa fa-chevron-down text-muted" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                        <div id="received" class="collapse show">
                                             <div class="card-body">
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Case Classification</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Case Classification</label>
                                                         <select class="form-control case_classification select2">
                                                             <option value="MINIMUM">MINIMUM</option>
                                                             <option value="MEDIUM">MEDIUM</option>
                                                             <option value="MAXIMUM">MAXIMUM</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class="form-control-label">Date Received by the PPO</label>
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Date Received by the PPO</label>
                                                         <input type="date" class="form-control date_received_by_ppo">
                                                     </div>
                                                 </div>
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Supervising Officer</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Supervising Officer</label>
                                                         <input type="text" name="text-input" placeholder="Supervising Officer" class="form-control sup_officer">
                                                     </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class="form-control-label">Supervision Start Date</label>
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Supervision Start Date</label>
                                                         <input type="date" class="form-control sup_start_date">
                                                     </div>
                                                 </div>
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class="form-control-label">Supervision End Date</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Supervision End Date</label>
                                                         <input type="date" class="form-control sup_end_date">
                                                     </div>
                                                 </div>
@@ -124,23 +186,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+
+                                <div class="col-12 mb-3">
+                                    <div class="card section-card">
                                         <div class="card-header">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                For Parole and Pardon Supervision Cases Acted Upon
-                                                <div>
-                                                    <a data-toggle="collapse" href="#actedUpon" role="button" aria-expanded="true" aria-controls="actedUpon">
-                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <a class="d-flex justify-content-between align-items-center section-trigger" data-toggle="collapse" href="#actedUpon" role="button" aria-expanded="true" aria-controls="actedUpon">
+                                                <span class="section-label">
+                                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                                    For Parole and Pardon Supervision Cases Acted Upon
+                                                </span>
+                                                <i class="fa fa-chevron-down text-muted" aria-hidden="true"></i>
+                                            </a>
                                         </div>
-                                        <div id="actedUpon" class="collapse hide">
+                                        <div id="actedUpon" class="collapse show">
                                             <div class="card-body">
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Office Findings</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Office Findings</label>
                                                         <select class="form-control office_findings">
                                                             <option value="">Please choose</option>
                                                             <option value="SUMMARY">SUMMARY REPORT</option>
@@ -149,18 +211,18 @@
                                                             <option value="OTHERS">OTHERS</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Specify the Other Submitted Reports</label>
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Specify the Other Submitted Reports</label>
                                                         <input type="text" name="text-input" placeholder="Specify the Other Submitted Reports" class="form-control specify_report">
                                                     </div>
                                                 </div>
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class="form-control-label">Date Submitted to the Board</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Date Submitted to the Board</label>
                                                         <input type="date" class="form-control date_submitted_board">
                                                     </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class="form-control-label">Date Report Submitted to the Regional Director for Transfer to Other PPO's</label>
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Date Report Submitted to the Regional Director for Transfer to Other PPO's</label>
                                                         <input type="date" class="form-control date_submitted_regional_dir">
                                                     </div>
                                                 </div>
@@ -168,23 +230,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+
+                                <div class="col-12 mb-3">
+                                    <div class="card section-card">
                                         <div class="card-header">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                For Parole and Pardon Supervision Cases Resolved by the Board
-                                                <div>
-                                                    <a data-toggle="collapse" href="#resolved" role="button" aria-expanded="true" aria-controls="resolved">
-                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <a class="d-flex justify-content-between align-items-center section-trigger" data-toggle="collapse" href="#resolved" role="button" aria-expanded="true" aria-controls="resolved">
+                                                <span class="section-label">
+                                                    <i class="fa fa-gavel" aria-hidden="true"></i>
+                                                    For Parole and Pardon Supervision Cases Resolved by the Board
+                                                </span>
+                                                <i class="fa fa-chevron-down text-muted" aria-hidden="true"></i>
+                                            </a>
                                         </div>
-                                        <div id="resolved" class="collapse hide">
+                                        <div id="resolved" class="collapse show">
                                             <div class="card-body">
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Board Resolution</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Board Resolution</label>
                                                         <select class="form-control board_resolution">
                                                             <option value="">Please choose</option>
                                                             <option value="FINAL">FINAL RELEASE AND DISCHARGE</option>
@@ -194,14 +256,14 @@
                                                             <!-- <option value="OTHERS/WORKABROAD">OTHERS/WORKABROAD</option> -->
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class=" form-control-label">Specify the Other Resolutions reeived from the Board</label>
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Specify the Other Resolutions reeived from the Board</label>
                                                         <input type="text" name="text-input" placeholder="Specify the Other Resolutions reeived from the Board" class="form-control specify_resolution">
                                                     </div>
                                                 </div>
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class="form-control-label">Date Resolution received from the Board</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Date Resolution received from the Board</label>
                                                         <input type="date" class="form-control date_resolution">
                                                     </div>
                                                 </div>
@@ -209,23 +271,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
-                                    <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
+
+                                <div class="col-12">
+                                    <div class="card section-card">
                                         <div class="card-header">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                For Parole and Pardon Supervision Cases Resolved by the Regional Director
-                                                <div>
-                                                    <a data-toggle="collapse" href="#resolvedrd" role="button" aria-expanded="true" aria-controls="resolvedrd">
-                                                        <i class="fa fa-window-minimize" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <a class="d-flex justify-content-between align-items-center section-trigger" data-toggle="collapse" href="#resolvedrd" role="button" aria-expanded="true" aria-controls="resolvedrd">
+                                                <span class="section-label">
+                                                    <i class="fa fa-flag-checkered" aria-hidden="true"></i>
+                                                    For Parole and Pardon Supervision Cases Resolved by the Regional Director
+                                                </span>
+                                                <i class="fa fa-chevron-down text-muted" aria-hidden="true"></i>
+                                            </a>
                                         </div>
-                                        <div id="resolvedrd" class="collapse hide">
+                                        <div id="resolvedrd" class="collapse show">
                                             <div class="card-body">
-                                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                        <label for="text-input" class="form-control-label">Date Resolution Received from the Regional Director</label>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12 col-md-6">
+                                                        <label class="field-label">Date Resolution Received from the Regional Director</label>
                                                         <input type="date" class="form-control date_resolution_rd">
                                                     </div>
                                                 </div>

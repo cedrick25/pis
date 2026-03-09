@@ -71,13 +71,14 @@
                             <div class="card-body">
                                 <table id="" class="table table_head" width="100%">
                                     <thead>
-                                        <th>#</th>
-                                        <th>Docket Number</th>
-                                        <th>Received Date</th>
-                                        <th>Name</th>
-                                        <th>Criminal Case No.</th>
-                                        <th>Field Office</th>
-                                        <th>Actions</th>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Docket Number</th>
+                                            <th>Date Completed and Returned</th>
+                                            <th>Name</th>
+                                            <th>Criminal Case No.</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody class="table_body">
                                     </tbody>

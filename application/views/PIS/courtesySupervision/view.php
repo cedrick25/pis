@@ -1,4 +1,44 @@
 <?php $this->load->view('templates/header.php'); ?> 
+<style>
+    .view-page .card {
+        border: 1px solid #e4e7ea;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .view-page .card-title {
+        font-weight: 600;
+        color: #2f3d4a;
+    }
+
+    .view-page .form-control-label {
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .view-page .form-row {
+        margin-bottom: 2px;
+    }
+
+    .view-page .form-control:disabled,
+    .view-page .form-control[readonly] {
+        background-color: #f8f9fa;
+        color: #2f3d4a;
+        border-color: #dee2e6;
+        cursor: not-allowed;
+    }
+
+    .view-page .section-note {
+        background: #f8fafc;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-top: 10px;
+        margin-bottom: 14px;
+        color: #4b5563;
+        font-weight: 600;
+    }
+</style>
 
 <body>
     <!-- Left Panel -->
@@ -26,7 +66,7 @@
             </div>
         </div>
 
-        <div class="content mt-3">
+        <div class="content mt-3 view-page">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
@@ -92,7 +132,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <p for="text-input" class=" form-control-label">(For Referrals Completed And Returned)</p>
+                                    <p class="section-note">(For Referrals Completed And Returned)</p>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -117,7 +157,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Courtesy_Supervision/update.js">
+    <script src="assets/js/pisJs/PIS_Courtesy_Supervision/view.js">
 
     </script>
 

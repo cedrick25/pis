@@ -177,14 +177,14 @@
                         "docketNumber"          : $(".docket_num_update").val(),
                         "docketSeries"          : $(".docket_series_update").val(),
                         "caseloadType"          : $(".task_update").val(),
-                        "clientType"            : "PAROLEE",
+                        "clientType"            : $(".client_type_update").val() || result.clientType,
                         "fieldOfficeId"         : $.cookie('field_office_id'),
-                        "clientId"              : $(".client_update").val(),
-                        "firstName"             : fname,
-                        "middleName"            : mname,
-                        "lastName"              : lname,
-                        "suffixName"            : sname,
-                        "fullName"              : fullName,
+                        "clientId"              : result.clientId,
+                        "firstName"             : result.firstName ,
+                        "middleName"            : result.middleName,
+                        "lastName"              : result.lastName,
+                        "suffixName"            : result.suffixName,
+                        "fullName"              : result.fullName,
                         "pleaBargain"           : false,
                         "caseClassification"    : "",
                         "criminalCaseNumber"    : $(".cc_no_update").val(),
@@ -233,7 +233,7 @@
                             $('#success').show();
                                 setTimeout(function () {
                                     $('#success').hide();
-                                    window.location.href = api+'/pis/pre-parole-investigation-list';
+                                    window.location.href = api+'/pis/parole-pardon-investigation-list';
                                 }, 2000);
                             }else{
                                 alert("failed")

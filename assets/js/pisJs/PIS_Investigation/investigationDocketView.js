@@ -99,101 +99,10 @@
                 }
             }
         }
-
-        $('.plea_bargain').change(function(){
-            if ($('.plea_bargain').val() == "true") {
-                $(".class_sel").show();
-            } else {
-                $(".class-sel").hide();
-            }
-            if ($('.plea_bargain').val() == "false"){
-            $(".class_sel").hide();
-            } else {
-                $(".class_sel").show();
-            }
-        });
-
-        let sentence_counter = -1;
-
-        $(".add_more").unbind("click").on("click", function(){
-            sentence_counter++;
-            $("#sentence_card .card-body").append(`
-                <div id="sentence_list_${sentence_counter}" style="padding-top: 10px; padding-bottom: 10px">
-                    <div class="form-row">
-                        <div class="list_sentence">
-                            <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sentence</label></div>
-                                <div class="col-12 col-md-11"><textarea rows="2" cols="50" class="form-control sentence"></textarea></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="col col-md-2"><label for="text-input" class="form-control-label">Min</label></div>
-                                <div class="col-3 col-md-3"><input type="text" class="form-control min_y" placeholder="Year"></div>
-                                <div class="col-3 col-md-3"><input type="text" class="form-control min_m" placeholder="Month"></div>
-                                <div class="col-3 col-md-3"><input type="text" class="form-control min_d" placeholder="Day"></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="col col-md-3"><label for="text-input" class="form-control-label">Max</label></div>
-                                <div class="col-3 col-md-3"><input type="text" class="form-control max_y" placeholder="Year"></div>
-                                <div class="col-3 col-md-3"><input type="text" class="form-control max_m" placeholder="Month"></div>
-                                <div class="col-3 col-md-3"><input type="text" class="form-control max_d" placeholder="Day"></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="col col-sm-2 col-md-2 col-lg-2 col-xl-2"><label for="text-input" class="form-control-label">Civil Liability</label></div>
-                                <div class="col-3 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="text" class="form-control civil_liability" placeholder="Robbery"></div>
-                            </div>
-                            <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6 justify-content-end" style="padding-top: 20px">
-                                <button type="button" class="remove btn btn-danger btn-sm" data-id="${sentence_counter}">Remove</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `
-            )
-        });
-        $('#sentence_card .card-body').on('click', '.remove', function(e) {
-            var id = $(this).data("id")
-            $(`#sentence_list_${id}`).remove();
-        });
-
-        var __selectFieldOffice = function(){
-            __executeExternalGet('8088/department/list').done(function (result) {
-                if (result.status != "ERROR") {
-                    result.forEach(function(data){
-                        $('.field_office').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.cmis_fo').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __selectFieldOffice();
-
-        // var __selectclient = function(){
-        //     $('.pb_client').empty();
-        //     __executeExternalGet('8000/petitioner?page=0&size=50&type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
-        //         if (result.status != "ERROR") {
-        //             $('.pb_client').append("<option selected disabled>Select Client</option>");
-        //             result.content.forEach(function(data){
-        //                 var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-        //                 $('.pb_client').append(
-        //                     '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
-        //             });
-        //         } else {
-        //             console.log("failed fetching docket list")
-        //         }
-        //     })
-        // }
-        // __selectclient();
-
         var docket_number = GetURLParameter('docket_number');
         var officeId = $.cookie("field_office_id");
-        // console.log(officeId)
-
         $('.card-body').find('input, select, button').prop('disabled', true);
-        $('.btn-confirm_update').prop('disabled', true);
+        $('.btn-confirm').prop('disabled', true);
 
         var updateProbationInvestigation = function () {
             __executeExternalGet('8000/docketbook/'+docket_number+'/'+officeId).done(function (result) {
@@ -202,8 +111,6 @@
                 // console.log(JSON.parse(result.sentence))
                 if (result.status != "ERROR") {
                     $(".docketNum_update").val(result.docketNumber);
-                    $(".field_office").val(result.fieldOfficeId).trigger("change");
-
                     let name = "";
                     if (!result.fullName) {
                         name = `${result.firstName} ${result.middleName} ${result.lastName} ${result.suffixName}`
@@ -211,35 +118,38 @@
                         name = result.fullName
                     }
                     $(".pb_client").val(name);
-                    if (result.legalAge == true) {
-                        var la = "true"
+
+                    if (result.pleaBargain == true) {
+                        var pb = "true"
                     } else {
-                        var la = "false"
+                        var pb = "false"
                     }
 
-                    $(".caseload").val(result.caseloadType).trigger("change");
-                    $(".client_type").val(la).trigger("change");
+                    $(".plea_bargain").val(pb).trigger("change");
                     $(".cc_no").val(result.criminalCaseNumber);
-                    $(".offense").val(result.offense);
                     $(".court_origin").val(result.courtOfOrigin);
-                    if (result.militaryCourt == true) {
-                        var mc = "true"
-                    } else {
-                        var mc = "false"
-                    }
-                    $(".military_court").val(mc).trigger("change");
+                    $(".offense").val(result.offense);
                     $(".sentence").val(result.sentence);
                     $(".cod").val(result.courtOrderDate);
                     $(".rd").val(result.receivedDateByPPO);
-                    $(".remarks").val(result.remarks);
                     $(".inv_off").val(result.investigatingOfficer);
-                    if (result.pleaBargain == true) {
-                        var plea = "true"
-                    } else {
-                        var plea = "false"
-                    }
-                    $(".plea_bargain").val(plea).trigger("change");
-                    $(".classification").val(result.caseClassification).trigger("change");
+                    // for referrals acted upon
+                    $(".psir_date").val(result.psirDate);
+                    $(".ppo_recommendation").val(result.ppoRecommendation).trigger("change");
+                    $(".manifestation_date").val(result.manifestationDate);
+                    $(".transfer_date").val(result.dateOfTransfer);
+                    $(".transfer_to").val(result.transferredOfficeId).trigger("change");
+                    // for referrals not acted upon
+                    var typeOfReferrals = result.typeOfReferrals ?? "";
+                    $(".not_acted_decision").val(typeOfReferrals).trigger("change");
+                    $(".date_order_received").val(result.referralsNotActedUponDateOrderReceived);
+                    // for cases disposed of by the court and issuance of
+                    $(".alias_t4").val(result.alias);
+                    $(".court_decision_t4").val(result.courtDecision);
+                    $(".reason_for_denial_t4").val(result.reasonForDenialDismissal);
+                    $(".other_type_of_decision_t4").val(result.specifyOtherTypeOfDecision);
+                    $(".date_order_received_court_t4").val(result.dateOrderReceivedFromTheCourt);
+
                 }else{
                     alert("failed")
                 }

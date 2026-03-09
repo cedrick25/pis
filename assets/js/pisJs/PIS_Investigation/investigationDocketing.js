@@ -155,12 +155,11 @@
             })
             $(".btn_attachments").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
-                var id = $(this).data("id");
-                var type = $(this).data("type");
+                // var id = $(this).data("petitionerId");
+                // var type = $(this).data("type");
                 var fi = $(this).data("oi");
-                // var senderId = $(this).data("sender");
-                // window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderId='+senderId;
-                window.location.href = api+'/pis/pis-investigation-file-upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+                // window.location.href = api+'/pis/pis-investigation-file-upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
+                window.location.href = api+'/pis/pis-investigation-file-upload?docket_number='+docket_number+'&officeId='+fi;
             })
         }
 
@@ -223,9 +222,13 @@
                     "data": 'docketNumber'
                 },
                 {
-                    "data": null,
+                    "data": "receivedDateByPPO", // It's better to specify the field here
                     "render": function (data, type, row, meta) {
-                        return `${data.receivedDateByPPO === null ? "N/A" : data.receivedDateByPPO}`
+                        // Checks for null, undefined, or empty/whitespace strings
+                        if (!data || data.toString().trim() === "") {
+                            return "N/A";
+                        }
+                        return data;
                     }
                 },
                 {
@@ -241,6 +244,13 @@
                             data.suffixName === null
                         ) {
                             var name = data.fullName || "N/A";
+                        } else if (
+                            data.firstName === "" &&
+                            data.middleName === "" &&
+                            data.lastName === "" &&
+                            data.suffixName === ""
+                        ) {
+                            var name = data.fullName || "N/A";
                         } else {
                             var name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`;
                         }
@@ -250,9 +260,13 @@
                     }
                 },
                 {
-                    "data": null,
+                    "data": "criminalCaseNumber",
                     "render": function (data, type, row, meta) {
-                        return `${data.criminalCaseNumber === null ? "N/A" : data.criminalCaseNumber}`
+                        // Checks for null, undefined, or empty/whitespace strings
+                        if (!data || data.toString().trim() === "") {
+                            return "N/A";
+                        }
+                        return data;
                     }
                 },
                 {
