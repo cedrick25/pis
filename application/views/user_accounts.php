@@ -393,10 +393,16 @@
                                 <strong class="card-title">User Account List</strong>
                                 <button class="btn btn-sm btn-success float-right btn-newUser"><i class="fa fa-plus-circle"></i> Add User Account</button>
                             </div>
-<!--                             <div class="dataTables_filter">
-                                <label style=" display: inline-flex; margin-left: 5px; margin-right: 20px; margin-top: 25px" class="float-right" >Search:<input type="search" class="form-control form-control-sm searchBar" id= "searchBar" placeholder="Search Name" style="margin-left: 7px"></label>
-                            </div> -->
                             <div class="card-body">
+                                <div class="search-username-wrapper float-right mb-2">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control searchByUsername" placeholder="Enter Username" />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary btn-search-username" type="button"><i class="fa fa-search"></i> Search</button>
+                                            <button class="btn btn-secondary btn-reset-search" type="button" style="display:none;"><i class="fa fa-times"></i> Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table id="" class="table table_head" width="100%">
                                     <thead>
                                         <tr>

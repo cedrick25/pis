@@ -805,15 +805,42 @@ function tableColumns() {
 
 drawTable();
 
-$(".client_search").unbind("click").on("click", function() {
+var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
+    '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
+    '<input type="text" class="form-control form-control-sm searchInput" placeholder="Search Probationer" style="width: 250px;">' +
+    '<button class="btn btn-primary btn-sm client_search"><i class="fa fa-search"></i></button>' +
+    '</div>';
+
+function injectSearch(value) {
+    var $target = $('.dataTables_length').parent().next();
+    if ($target.length) {
+        $target.html(searchHtml);
+        if (value) $target.find('.searchInput').val(value);
+    }
+}
+
+injectSearch();
+
+$(document).on('keypress', '.searchInput', function(e) {
+    if (e.which === 13) {
+        $('.client_search').trigger('click');
+    }
+});
+
+$(document).on("click", ".client_search", function() {
+    var searchVal = $('.searchInput').val().trim();
+
     $('.table_head').DataTable().destroy();
     $('.table_body').empty();
 
-    const firstName = document.querySelector('.firstName').value;
-    const lastName = document.querySelector('.lastName').value;
-    const fieldOfficeId = $.cookie('field_office_id');
-    const canSeeOtherOffices = false;
-    const clientType = "PROBATIONER";
+    if (!searchVal) {
+        drawTable();
+        injectSearch();
+        return;
+    }
+
+    var fieldOfficeId = $.cookie('field_office_id');
+    var clientType = "PROBATIONER";
 
     $('.table_head').DataTable({
         "processing": false,
@@ -829,28 +856,26 @@ $(".client_search").unbind("click").on("click", function() {
             { "width": "25%", "targets": [3] },
             { "width": "20%", "targets": [4] },
         ],
-        "ajax": {
-            url: `${___ctx}8000/petitioner/search/${clientType}?page=0&size=10`,
-            type: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            data: function(d) {
-                // Set page and size as part of the payload, along with other data
-                return JSON.stringify({
-                    page: d.start / d.length,  // Page number
-                    size: d.length,            // Page size
-                    firstName: firstName,
-                    lastName: lastName,
+        "ajax": function(data, callback, settings) {
+            var page = data.start / data.length;
+            var size = data.length;
+            $.ajax({
+                url: `${___ctx}8000/petitioner/search/${clientType}?page=${page}&size=${size}`,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    name: searchVal,
                     fieldOfficeId: fieldOfficeId,
-                    canSeeOtherOffices: canSeeOtherOffices
-                });
-            },
-            dataSrc: function(json) {
-                json.recordsTotal = json.totalElements;
-                json.recordsFiltered = json.totalElements;
-                return json.content || [];
-            }
+                    canSeeOtherOffices: false
+                }),
+                success: function(json) {
+                    callback({
+                        recordsTotal: json.totalElements,
+                        recordsFiltered: json.totalElements,
+                        data: json.content || []
+                    });
+                }
+            });
         },
         columns: tableColumns()
     });
@@ -858,6 +883,8 @@ $(".client_search").unbind("click").on("click", function() {
     $('.table_head').on('draw.dt', function() {
         buttonFunctionality();
     });
+
+    injectSearch(searchVal);
 });
 
 } )( jQuery );

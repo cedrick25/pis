@@ -1,19 +1,37 @@
 <?php $this->load->view('templates/header.php'); ?> 
 <style>
-    .nav-link {
-        border-bottom: 3px solid transparent;
-        transition: border-bottom 0.3s ease;
+    .spinner {
+        border: 8px solid #f3f3f3; /* Light gray */
+        border-top: 8px solid black; /* Black */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+    }
+    /* Spinner animation */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
-    .nav-link.active {
-        border-bottom: 3px solid #0069d9;
+    .update-page .card {
+        border: 1px solid #e4e7ea;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
-    .tab-content {
-        width: 100%;
-        overflow: auto;
+
+    .update-page .card-title {
+        font-weight: 600;
+        color: #2f3d4a;
     }
-    .hidden {
-        display: none;
+
+    .update-page .form-control-label {
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .update-page .form-row {
+        margin-bottom: 2px;
     }
 </style>
 <body>
@@ -42,7 +60,7 @@
             </div>
         </div>
 
-        <div class="content mt-3">
+        <div class="content mt-3 update-page">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">

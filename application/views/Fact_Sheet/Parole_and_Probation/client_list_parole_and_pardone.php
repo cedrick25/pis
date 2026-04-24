@@ -71,15 +71,12 @@
                                 <!-- <strong class="card-title">Probation Fact Sheet</strong> -->
                                 <ul class="nav" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="client_pr" data-toggle="tab" href="#pr" role="tab">Parole</a>
+                                        <a class="nav-link active" id="client_pr" href="#" role="tab" style="cursor: pointer;">Parole</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="client_pd" data-toggle="tab" href="#pd" role="tab">Pardone</a>
+                                        <a class="nav-link" id="client_pd" href="#" role="tab" style="cursor: pointer;">Pardone</a>
                                     </li>
                                 </ul>
-                                <!-- <a href="client_list_parole_and_pardone_create" class="ml-auto"> <button class="btn btn-sm btn-success client_add"
-                                style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a> -->
-                                <a href="client_list_parole_and_pardone_create" class="ml-auto"> <button class="btn btn-sm btn-success client_add fact_sheet_client_create_pd_and_pr" type="submit"><i class="fa fa-plus-circle"></i> Add Client</button> </a>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="myTabContent">
@@ -90,7 +87,7 @@
                                                 <th>Full Name</th>
                                                 <th>Criminal Case Number</th>
                                                 <th>Field Office</th>
-                                                <th>Worksheet Status</th>
+                                                <!-- <th>Worksheet Status</th> -->
                                                 <th>Actions</th>
                                             </thead>
                                             <tbody class="table_body">

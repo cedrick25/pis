@@ -166,7 +166,7 @@
                 "processing": false,
                 "serverSide": true,
                 "scrollX": true,
-                "searching": true,
+                "searching": false,
                 "lengthMenu": [10, 25, 50, 100],
                 "pageLength": 10,
                 "columnDefs": [
@@ -208,6 +208,92 @@
             });
         }
 
+        var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
+            '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
+            '<input type="text" class="form-control form-control-sm docketSearchInput" placeholder="Search Docket Number" style="width: 250px;">' +
+            '<button class="btn btn-primary btn-sm docket_search"><i class="fa fa-search"></i></button>' +
+            '</div>';
+
+        function injectSearch(value) {
+            var $target = $('.dataTables_length').parent().next();
+            if ($target.length) {
+                $target.html(searchHtml);
+                if (value) $target.find('.docketSearchInput').val(value);
+            }
+        }
+
+        function drawSearchTable(searchVal) {
+            var fieldOfficeId = $.cookie('field_office_id');
+            var clientType = "PIS_SUP";
+
+            $('.table_head').DataTable({
+                "processing": false,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": false,
+                "lengthMenu": [10, 25, 50, 100],
+                "pageLength": 10,
+                "columnDefs": [
+                    { "width": "5%", "targets": [0] },
+                    { "width": "15%", "targets": [1] },
+                    { "width": "10%", "targets": [2] },
+                    { "width": "17%", "targets": [3] },
+                    { "width": "13%", "targets": [4] },
+                    { "width": "15%", "targets": [5] },
+                    { "width": "25%", "targets": [6] }
+                ],
+                "ajax": function(data, callback, settings) {
+                    var page = data.start / data.length;
+                    var size = data.length;
+                    $.ajax({
+                        url: `${___ctx}8000/docketbook/search/PROBATIONER?page=${page}&size=${size}`,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            name: searchVal,
+                            fieldOfficeId: fieldOfficeId,
+                            canSeeOtherOffices: false
+                        }),
+                        success: function(json) {
+                            callback({
+                                recordsTotal: json.totalElements,
+                                recordsFiltered: json.totalElements,
+                                data: json.content || []
+                            });
+                        }
+                    });
+                },
+                columns: tableColumns()
+            });
+
+            $('.table_head').on('draw.dt', function() {
+                buttonFunctionality();
+                buttonVisibility();
+            });
+        }
+
+        $(document).on('keypress', '.docketSearchInput', function(e) {
+            if (e.which === 13) {
+                $('.docket_search').trigger('click');
+            }
+        });
+
+        $(document).on('click', '.docket_search', function() {
+            var searchVal = $('.docketSearchInput').val().trim();
+
+            $('.table_head').DataTable().destroy();
+            $('.table_body').empty();
+
+            if (!searchVal) {
+                drawTable();
+                injectSearch();
+                return;
+            }
+
+            drawSearchTable(searchVal);
+            injectSearch(searchVal);
+        });
+
         function tableColumns() {
             return [
                 {
@@ -227,7 +313,7 @@
                 {
                     "data": null,
                     "render": function (data, type, row, meta) {
-                        return `${data.receivedDateByPPO === null ? "N/A" : data.receivedDateByPPO}`
+                        return `${data.receivedDateByPPO === null || data.receivedDateByPPO === "" ? "N/A" : data.receivedDateByPPO}`
                     }
                 },
                 {
@@ -237,10 +323,10 @@
                         var client_id = data.id;
                         // Check if all parts are null
                         if (
-                            data.firstName === null &&
-                            data.middleName === null &&
-                            data.lastName === null &&
-                            data.suffixName === null
+                            data.firstName === null || data.firstName === "" &&
+                            data.middleName === null || data.middleName === "" &&
+                            data.lastName === null || data.lastName === "" &&
+                            data.suffixName === null || data.suffixName === ""
                         ) {
                             var name = data.fullName || "N/A";
                         } else {
@@ -254,7 +340,7 @@
                 {
                     "data": null,
                     "render": function (data, type, row, meta) {
-                        return `${data.criminalCaseNumber === null ? "N/A" : data.criminalCaseNumber}`
+                        return `${data.criminalCaseNumber === null || data.criminalCaseNumber === "" ? "N/A" : data.criminalCaseNumber}`
                     }
                 },
                 {
@@ -269,6 +355,7 @@
                 }
             ]
         }
-        drawTable()
+        drawTable();
+        injectSearch();
 
     })( jQuery );

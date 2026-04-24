@@ -371,21 +371,58 @@
     }
 
 
-    if (userRole === "TSD - Section Chief" || userRole === "TSD - Staff") {
-        sectionChiefTable("PDL-Investigation")
-    } else {
-        drawTable("PDL-Investigation");
+    var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
+        '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
+        '<input type="text" class="form-control form-control-sm searchInput" placeholder="Search Client" style="width: 250px;">' +
+        '<button class="btn btn-primary btn-sm client_search"><i class="fa fa-search"></i></button>' +
+        '</div>';
+
+    function injectSearch(value) {
+        var $target = $('.dataTables_length').parent().next();
+        if ($target.length) {
+            $target.html(searchHtml);
+            if (value) $target.find('.searchInput').val(value);
+        }
     }
 
-    $(".client_search").unbind("click").on("click", function() {
-        $('.table_head').DataTable().destroy();
+    function resetTableState() {
+        if ($.fn.DataTable.isDataTable('.table_head')) {
+            $('.table_head').DataTable().destroy();
+        }
         $('.table_body').empty();
+        dataTable = null;
+        sectionChiefTableInitialized = false;
+    }
 
-        const firstName = document.querySelector('.firstName').value;
-        const lastName = document.querySelector('.lastName').value;
-        const fieldOfficeId = "206";
-        const canSeeOtherOffices = true;
-        const clientType = currentType;
+    function initTable(type) {
+        if (userRole === "TSD - Section Chief" || userRole === "TSD - Staff") {
+            sectionChiefTable(type);
+        } else {
+            drawTable(type);
+        }
+    }
+
+    initTable("PDL-Investigation");
+    injectSearch();
+
+    $(document).on('keypress', '.searchInput', function(e) {
+        if (e.which === 13) {
+            $('.client_search').trigger('click');
+        }
+    });
+
+    $(document).on("click", ".client_search", function() {
+        var searchVal = $('.searchInput').val().trim();
+
+        resetTableState();
+
+        if (!searchVal) {
+            initTable(currentType);
+            injectSearch();
+            return;
+        }
+
+        var fieldOfficeId = "206";
 
         $('.table_head').DataTable({
             "processing": false,
@@ -403,29 +440,26 @@
                 { width: "15%", targets: [5] },
                 { width: "25%", targets: [6] }
             ],
-            "ajax": {
-                url: `${___ctx}8000/petitioner/search/${clientType}?page=0&size=10`,
-                type: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                data: function(d) {
-                    // Set page and size as part of the payload, along with other data
-                    return JSON.stringify({
-                        page: d.start / d.length,  // Page number
-                        size: d.length,            // Page size
-                        firstName: firstName,
-                        lastName: lastName,
+            "ajax": function(data, callback, settings) {
+                var page = data.start / data.length;
+                var size = data.length;
+                $.ajax({
+                    url: `${___ctx}8000/petitioner/search/${currentType}?page=${page}&size=${size}`,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name: searchVal,
                         fieldOfficeId: fieldOfficeId,
-                        canSeeOtherOffices: canSeeOtherOffices
-                    });
-                },
-                dataSrc: function(json) {
-                    console.log(json)
-                    json.recordsTotal = json.totalElements;
-                    json.recordsFiltered = json.totalElements;
-                    return json.content || [];
-                }
+                        canSeeOtherOffices: true
+                    }),
+                    success: function(json) {
+                        callback({
+                            recordsTotal: json.totalElements,
+                            recordsFiltered: json.totalElements,
+                            data: json.content || []
+                        });
+                    }
+                });
             },
             columns: tableColumnsSearch()
         });
@@ -433,7 +467,10 @@
         $('.table_head').on('draw.dt', function() {
             buttonFunctionality();
         });
+
+        injectSearch(searchVal);
     });
+
     $(".client_add").unbind("click").on("click", function() {
         let activeType = $('.nav-link.active').data('type');
         let client_type;
@@ -445,22 +482,15 @@
         window.location.href = api+'/pis/new_client_single_carpeta?client_type='+client_type;
     })
 
-    // event handler when a tab is clicked
     $("#inv_tab").unbind("click").on("click", function(){
-        console.log("clicked inv")
-        if (userRole === "TSD - Section Chief" || userRole === "TSD - Staff") {
-            sectionChiefTable("PDL-Investigation")
-        } else {
-            drawTable("PDL-Investigation");
-        }
+        resetTableState();
+        initTable("PDL-Investigation");
+        injectSearch();
     })
     $("#sup_tab").unbind("click").on("click", function(){
-        console.log("clicked sup")
-        if (userRole === "TSD - Section Chief" || userRole === "TSD - Staff") {
-            sectionChiefTable("PDL-Supervision")
-        } else {
-            drawTable("PDL-Supervision");
-        }
+        resetTableState();
+        initTable("PDL-Supervision");
+        injectSearch();
     })
 
 } )( jQuery );

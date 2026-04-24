@@ -68,7 +68,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Docket Number</th>
-                                            <th>Client Name</th>
+                                            <th>Full Name</th>
                                             <!-- <th>Client Type</th> -->
                                             <th>Actions</th>
                                         </tr>

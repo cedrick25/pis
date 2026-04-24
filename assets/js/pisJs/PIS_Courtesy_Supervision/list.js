@@ -170,7 +170,7 @@
                 "processing": false,
                 "serverSide": true,
                 "scrollX": false,
-                "searching": true,
+                "searching": false,
                 "lengthMenu": [10, 25, 50, 100],
                 "pageLength": 10,
                 "columnDefs": [
@@ -210,6 +210,91 @@
                 buttonVisibility();
             });
         }
+
+        var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
+            '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
+            '<input type="text" class="form-control form-control-sm docketSearchInput" placeholder="Search Docket Number" style="width: 250px;">' +
+            '<button class="btn btn-primary btn-sm docket_search"><i class="fa fa-search"></i></button>' +
+            '</div>';
+
+        function injectSearch(value) {
+            var $target = $('.dataTables_length').parent().next();
+            if ($target.length) {
+                $target.html(searchHtml);
+                if (value) $target.find('.docketSearchInput').val(value);
+            }
+        }
+
+        function drawSearchTable(searchVal) {
+            var fieldOfficeId = $.cookie('field_office_id');
+            var clientType = "PROBATIONER";
+
+            $('.table_head').DataTable({
+                "processing": false,
+                "serverSide": true,
+                "scrollX": false,
+                "searching": false,
+                "lengthMenu": [10, 25, 50, 100],
+                "pageLength": 10,
+                "columnDefs": [
+                    { "width": "5%", "targets": [0] },
+                    { "width": "15%", "targets": [1] },
+                    { "width": "15%", "targets": [2] },
+                    { "width": "20%", "targets": [3] },
+                    { "width": "15%", "targets": [4] },
+                    { "width": "30%", "targets": [5] }
+                ],
+                "ajax": function(data, callback, settings) {
+                    var page = data.start / data.length;
+                    var size = data.length;
+                    $.ajax({
+                        url: `${___ctx}8000/docketbook/search/${clientType}?page=${page}&size=${size}`,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            name: searchVal,
+                            fieldOfficeId: fieldOfficeId,
+                            canSeeOtherOffices: false
+                        }),
+                        success: function(json) {
+                            callback({
+                                recordsTotal: json.totalElements,
+                                recordsFiltered: json.totalElements,
+                                data: json.content || []
+                            });
+                        }
+                    });
+                },
+                columns: tableColumns()
+            });
+
+            $('.table_head').on('draw.dt', function() {
+                buttonFunctionality();
+                buttonVisibility();
+            });
+        }
+
+        $(document).on('keypress', '.docketSearchInput', function(e) {
+            if (e.which === 13) {
+                $('.docket_search').trigger('click');
+            }
+        });
+
+        $(document).on('click', '.docket_search', function() {
+            var searchVal = $('.docketSearchInput').val().trim();
+
+            $('.table_head').DataTable().destroy();
+            $('.table_body').empty();
+
+            if (!searchVal) {
+                drawTable();
+                injectSearch();
+                return;
+            }
+
+            drawSearchTable(searchVal);
+            injectSearch(searchVal);
+        });
 
         function tableColumns() {
             function displayValue(value) {
@@ -274,6 +359,7 @@
                 }
             ]
         }
-        drawTable()
+        drawTable();
+        injectSearch();
 
     } )( jQuery );

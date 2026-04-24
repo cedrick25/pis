@@ -528,6 +528,8 @@
             })
         }
 
+        var searchByUsername = '';
+
         function drawTable() {
             $(document).ready(function(){
                 $('.table_head').DataTable({
@@ -536,7 +538,7 @@
                     "scrollX": true,
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
-                    "searching": true,
+                    "searching": false,
                     "columnDefs": [
                         { "width": "5%", "targets": 0 },
                         { "width": "15%", "targets": 1 },
@@ -546,22 +548,72 @@
                         { "width": "7%", "targets": 6 },
                         { "width": "33%", "targets": 7 }
                     ],
-                    ajax: {
-                        url: api+'8088/user',
-                        cache: true,
-                        data: function (d) {
-                            return {
-                                page: d.start / d.length,
-                                size: d.length,
-                                name: d.search.value,
-                            };
-                        },
-                        dataFilter: function(data){
-                            var json = jQuery.parseJSON(data);
-                            json.recordsTotal = json.totalElements;
-                            json.recordsFiltered = json.totalElements;
-                            json.data = json.content;
-                            return JSON.stringify(json);
+                    ajax: function(data, callback, settings) {
+                        if (searchByUsername) {
+                            $.ajax({
+                                url: api + '8088/user/byUsername',
+                                data: {
+                                    name: searchByUsername,
+                                    page: data.start / data.length,
+                                    size: data.length,
+                                },
+                                dataType: 'json',
+                                success: function(json) {
+                                    if (json && json.status !== 'ERROR' && !$.isEmptyObject(json)) {
+                                        if (json.content) {
+                                            callback({
+                                                recordsTotal: json.totalElements,
+                                                recordsFiltered: json.totalElements,
+                                                data: json.content
+                                            });
+                                        } else {
+                                            var results = Array.isArray(json) ? json : [json];
+                                            callback({
+                                                recordsTotal: results.length,
+                                                recordsFiltered: results.length,
+                                                data: results
+                                            });
+                                        }
+                                    } else {
+                                        callback({
+                                            recordsTotal: 0,
+                                            recordsFiltered: 0,
+                                            data: []
+                                        });
+                                    }
+                                },
+                                error: function() {
+                                    alert('User not found or an error occurred.');
+                                    callback({
+                                        recordsTotal: 0,
+                                        recordsFiltered: 0,
+                                        data: []
+                                    });
+                                }
+                            });
+                        } else {
+                            $.ajax({
+                                url: api + '8088/user',
+                                data: {
+                                    page: data.start / data.length,
+                                    size: data.length,
+                                },
+                                dataType: 'json',
+                                success: function(json) {
+                                    callback({
+                                        recordsTotal: json.totalElements,
+                                        recordsFiltered: json.totalElements,
+                                        data: json.content
+                                    });
+                                },
+                                error: function() {
+                                    callback({
+                                        recordsTotal: 0,
+                                        recordsFiltered: 0,
+                                        data: []
+                                    });
+                                }
+                            });
                         }
                     },
                     "columns": tableColumns()
@@ -572,6 +624,30 @@
             })
         }
         drawTable();
+
+        $(".btn-search-username").on("click", function() {
+            var username = $(".searchByUsername").val().trim();
+            if (!username) {
+                alert("Please enter a username to search.");
+                return;
+            }
+            searchByUsername = username;
+            $(".btn-reset-search").show();
+            $('.table_head').DataTable().ajax.reload();
+        });
+
+        $(".searchByUsername").on("keypress", function(e) {
+            if (e.which === 13) {
+                $(".btn-search-username").trigger("click");
+            }
+        });
+
+        $(".btn-reset-search").on("click", function() {
+            searchByUsername = '';
+            $(".searchByUsername").val('');
+            $(this).hide();
+            $('.table_head').DataTable().ajax.reload();
+        });
 
         $(".btn-newUser").unbind("click").on("click", function(){
             $(".errorRequired").remove();

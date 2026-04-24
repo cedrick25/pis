@@ -174,7 +174,7 @@
             tableHeadRow.html(
                 '<th>#</th>' +
                 '<th>Docket Number</th>' +
-                '<th>Client Name</th>' +
+                '<th>Full Name</th>' +
                 '<th>Actions</th>'
             );
         }
@@ -185,13 +185,13 @@
                 "processing": false,
                 "serverSide": true,
                 "scrollX": true,
-                "searching": true,
+                "searching": false,
                 "lengthMenu": [10, 25, 50, 100],
                 "pageLength": 10,
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
-                    { "width": "35%", "targets": [1] },
-                    { "width": "25%", "targets": [2] },
+                    { "width": "30%", "targets": [1] },
+                    { "width": "30%", "targets": [2] },
                     { "width": "35%", "targets": [3] },
             ],
             ajax: {
@@ -225,6 +225,126 @@
             });
         }
 
+        var searchModalHtml = '' +
+            '<div class="modal fade" id="docketSearchModal" tabindex="-1" role="dialog" aria-labelledby="docketSearchModalLabel" aria-hidden="true">' +
+                '<div class="modal-dialog" role="document">' +
+                    '<div class="modal-content">' +
+                        '<div class="modal-header">' +
+                            '<h5 class="modal-title" id="docketSearchModalLabel">Search Docket</h5>' +
+                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                                '<span aria-hidden="true">&times;</span>' +
+                            '</button>' +
+                        '</div>' +
+                        '<div class="modal-body">' +
+                            '<div class="form-group">' +
+                                '<label for="docketSearchClientType">Client Type</label>' +
+                                '<select class="form-control" id="docketSearchClientType">' +
+                                    '<option value="PAROLEE">Parole</option>' +
+                                    '<option value="PARDONEE">Pardon</option>' +
+                                '</select>' +
+                            '</div>' +
+                            '<div class="form-group">' +
+                                '<label for="docketSearchKeyword">Search</label>' +
+                                '<input type="text" class="form-control" id="docketSearchKeyword" placeholder="Docket Number, CC Number, Name">' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="modal-footer">' +
+                            '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
+                            '<button type="button" class="btn btn-primary docket_search_submit"><i class="fa fa-search"></i> Search</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+
+        var searchButtonHtml = '<div style="display: flex; align-items: center; justify-content: flex-end;">' +
+            '<button type="button" class="btn btn-primary btn-sm docket_search_open" data-toggle="modal" data-target="#docketSearchModal">' +
+                '<i class="fa fa-search"></i> Search' +
+            '</button>' +
+            '</div>';
+
+        function injectSearch() {
+            if (!$('#docketSearchModal').length) {
+                $('body').append(searchModalHtml);
+            }
+            var $target = $('.dataTables_length').parent().next();
+            if ($target.length) {
+                $target.html(searchButtonHtml);
+            }
+        }
+
+        function drawSearchTable(searchVal, clientType) {
+            fixTableHeader();
+            var fieldOfficeId = $.cookie('field_office_id');
+
+            $('.table_head').DataTable({
+                "processing": false,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": false,
+                "lengthMenu": [10, 25, 50, 100],
+                "pageLength": 10,
+                "columnDefs": [
+                    { "width": "5%", "targets": [0] },
+                    { "width": "30%", "targets": [1] },
+                    { "width": "30%", "targets": [2] },
+                    { "width": "35%", "targets": [3] },
+                ],
+                "ajax": function(data, callback, settings) {
+                    var page = data.start / data.length;
+                    var size = data.length;
+                    $.ajax({
+                        url: `${___ctx}8000/docketbook/search/${clientType}?page=${page}&size=${size}`,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            name: searchVal,
+                            fieldOfficeId: fieldOfficeId,
+                            canSeeOtherOffices: false
+                        }),
+                        success: function(json) {
+                            callback({
+                                recordsTotal: json.totalElements,
+                                recordsFiltered: json.totalElements,
+                                data: json.content || []
+                            });
+                        }
+                    });
+                },
+                columns: tableColumns()
+            });
+
+            $('.table_head').on('draw.dt', function() {
+                buttonFunctionality();
+                buttonVisibility();
+                $(".btn_view").show(); // temporarily show the view button for testing
+            });
+        }
+
+        $(document).on('keypress', '#docketSearchKeyword', function(e) {
+            if (e.which === 13) {
+                $('.docket_search_submit').trigger('click');
+            }
+        });
+
+        $(document).on('click', '.docket_search_submit', function() {
+            var searchVal = $('#docketSearchKeyword').val().trim();
+            var clientType = $('#docketSearchClientType').val() || 'PAROLEE';
+
+            $('#docketSearchModal').modal('hide');
+
+            $('.table_head').DataTable().destroy();
+            $('.table_body').empty();
+
+            if (!searchVal) {
+                drawTable();
+                injectSearch();
+                return;
+            }
+
+            drawSearchTable(searchVal, clientType);
+            injectSearch();
+        });
+
         function tableColumns() {
             return [
                 {
@@ -234,13 +354,13 @@
                     }
                 },
                 {
-                    "data": "fullName",
+                    "data": "docketNumber",
                     "render": function(data) {
                         return formatTableValue(data);
                     }
                 },
                 {
-                    "data": 'docketNumber',
+                    "data": 'fullName',
                     "render": function(data) {
                         return formatTableValue(data);
                     }
@@ -253,7 +373,8 @@
                 }
             ]
         }
-        drawTable()
+        drawTable();
+        injectSearch();
 
 
     } )( jQuery );

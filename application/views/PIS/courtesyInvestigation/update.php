@@ -1,4 +1,36 @@
 <?php $this->load->view('templates/header.php'); ?> 
+<style>
+    .update-page .card {
+        border: 1px solid #e4e7ea;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .update-page .card-title {
+        font-weight: 600;
+        color: #2f3d4a;
+    }
+
+    .update-page .form-control-label {
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .update-page .form-row {
+        margin-bottom: 2px;
+    }
+
+    .update-page .section-note {
+        background: #f8fafc;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-top: 10px;
+        margin-bottom: 14px;
+        color: #4b5563;
+        font-weight: 600;
+    }
+</style>
 
 <body>
     <!-- Left Panel -->
@@ -26,7 +58,7 @@
             </div>
         </div>
 
-	    <div class="content mt-3">
+	    <div class="content mt-3 update-page">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
@@ -71,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <p for="text-input" class=" form-control-label">(For Referrals Completed And Returned)</p>
+                                    <p class="section-note">(For Referrals Completed And Returned)</p>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">

@@ -117,50 +117,35 @@
             }
         });
 
-        var __selectclient = function(){
-            $('.pb_client_sup').empty();
-            __executeExternalGet('8000/petitioner/list?type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
-                if (result.status != "ERROR") {
-                    $('.pb_client_sup').append("<option selected disabled>Select Client</option>");
-                    let name = "";
-                    result.forEach(function(data){
-                        if (data.firstName === null &&
-                            data.middleName === null &&
-                            data.lastName === null &&
-                            data.suffixName === null ) {
-                            name = data.fullName;
-                            $('.pb_client_sup').append(
-                                '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'" data-fullname="'+data.fullName+'">'+name+'</option>');
-                        } else {
-                            name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                            $('.pb_client_sup').append(
-                                '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'" data-fullname="'+data.fullName+'">'+name+'</option>');
+        // var __selectclient = function(){
+        //     $('.pb_client_sup').empty();
+        //     __executeExternalGet('8000/petitioner/list?type=PROBATIONER&officeId='+$.cookie("field_office_id")).done(function (result) {
+        //         if (result.status != "ERROR") {
+        //             $('.pb_client_sup').append("<option selected disabled>Select Client</option>");
+        //             let name = "";
+        //             result.forEach(function(data){
+        //                 if (data.firstName === null &&
+        //                     data.middleName === null &&
+        //                     data.lastName === null &&
+        //                     data.suffixName === null ) {
+        //                     name = data.fullName;
+        //                     $('.pb_client_sup').append(
+        //                         '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'" data-fullname="'+data.fullName+'">'+name+'</option>');
+        //                 } else {
+        //                     name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
+        //                     $('.pb_client_sup').append(
+        //                         '<option value="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'" data-fullname="'+data.fullName+'">'+name+'</option>');
 
-                        }
-                    });
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        if ($('.pb_client_sup').is('select')) {
-            __selectclient();
-        }
-        var __select = function(){
-            __executeExternalGet(`8000/docketbook/list/PIS_SUP/${$.cookie("field_office_id")}`).done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.link_docket_num').append("<option selected disabled>Select Docket Number</opion>");
-                    result.response.forEach(function(data){
-                        $('.link_docket_num').append(
-                            "<option value="+data.id+" data-id="+data.id+">"+data.docketNumber+"</option>");
-                    });
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
-        }
-        __select();
+        //                 }
+        //             });
+        //         } else {
+        //             console.log("failed fetching docket list")
+        //         }
+        //     })
+        // }
+        // if ($('.pb_client_sup').is('select')) {
+        //     __selectclient();
+        // }
 
         var docketSwitch = document.getElementById('docketSwitch');
         let md;
@@ -172,11 +157,18 @@
             docketData = result; // Store for payload (preserves fields not in form)
             // Main section
             $(".docketNum_update").val(result.docketNumber || '');
-            if ($('.pb_client_sup').is('select')) {
-                $(".pb_client_sup").val(result.clientId || '').trigger("change");
+            // if ($('.pb_client_sup').is('select')) {
+            //     $(".pb_client_sup").val(result.clientId || '').trigger("change");
+            // } else {
+            //     $(".pb_client_sup").val(result.fullName || '').trigger("change");
+            // }
+            let name = "";
+            if (!result.fullName) {
+                name = `${result.firstName} ${result.middleName} ${result.lastName} ${result.suffixName}`
             } else {
-                $(".pb_client_sup").val(result.fullName || '').trigger("change");
+                name = result.fullName
             }
+            $(".pb_client_sup").val(name);
 
             // For Probation Supervision Referrals Received (#received)
             $(".alias").val(result.alias || '');
@@ -231,6 +223,7 @@
                 $('.card-body').find('input, select, button').prop('disabled', false);
                 $('.btn-confirm').prop('disabled', false);
                 $('.docketNum_update').prop('disabled', true);
+                $('.pb_client_sup').prop('disabled', true);
                 updateForms(result);
             }, 3000);
         })

@@ -138,29 +138,85 @@
                 }
             });
         }
-        // function for fetching the docket number details of the petitioner
+        var docketCurrentPage = 0;
+        var docketPageSize = 10;
+        var docketIsLoading = false;
+        var docketHasMore = true;
+        var docketRowCount = 0;
+        var cachedWsStatus = null;
+        var cachedPsStatus = null;
+
         function getDocketNumberDetails () {
-            __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
-                var result = result.response;
-                var workSheetStatus = result.worksheetStatus;
-                __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (res) {
-                    localStorage.setItem("psirStatus", res.response.worksheetStatus)
-                })
-                setTimeout (function () {
-                    var psirStatus = localStorage.getItem("psirStatus")
+            if (docketIsLoading || !docketHasMore) return;
+            docketIsLoading = true;
+
+            $(".table_body_tc .docket-loader-row").remove();
+            $(".table_body_tc").append(`
+                <tr class="docket-loader-row">
+                    <td colspan="8" class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading...</td>
+                </tr>
+            `);
+
+            var docketPromise = __executeExternalPost(
+                '8000/docketbook/getclient/'+client_id+'?page='+docketCurrentPage+'&size='+docketPageSize, '{}'
+            );
+            var petitionerPromise = cachedWsStatus !== null
+                ? $.Deferred().resolve(null)
+                : __executeExternalGet('8000/petitioner/'+client_id);
+            var psirPromise = cachedPsStatus !== null
+                ? $.Deferred().resolve(null)
+                : __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id);
+
+            $.when(docketPromise, petitionerPromise, psirPromise)
+            .done(function (docketRes, petitionerRes, psirRes) {
+                $(".table_body_tc .docket-loader-row").remove();
+
+                if (cachedWsStatus === null) {
+                    cachedWsStatus = petitionerRes && petitionerRes.response
+                        ? petitionerRes.response.worksheetStatus : "Not Available";
+                }
+                if (cachedPsStatus === null) {
+                    cachedPsStatus = psirRes && psirRes.response
+                        ? psirRes.response.worksheetStatus : null;
+                }
+
+                var dockets = docketRes && docketRes.content ? docketRes.content : [];
+                var totalPages = docketRes && docketRes.totalPages ? docketRes.totalPages : 0;
+
+                if (docketCurrentPage === 0 && dockets.length === 0) {
                     $(".table_body_tc").append(`
                         <tr>
-                            <th> </th>
-                            <th> ${result.docketNumber === null ? "N/A" : result.docketNumber} </th>
-                            <th> N/A </th>
-                            <th> N/A </th>
-                            <th> N/A </th>
-                            <th> N/A </th>
-                            <th>
+                            <td colspan="8" class="text-center">No docket records found.</td>
+                        </tr>
+                    `);
+                    docketHasMore = false;
+                    docketIsLoading = false;
+                    return;
+                }
+
+                var wsStatus = cachedWsStatus || "Not Available";
+                var psStatus = cachedPsStatus === null || cachedPsStatus === "null" ? "Not Available" : cachedPsStatus;
+
+                dockets.forEach(function (docket) {
+                    docketRowCount++;
+                    var docketNumber = docket.docketNumber || "N/A";
+                    var dateReceived = docket.receivedDateByPPO || "N/A";
+                    var officer = docket.investigatingOfficer || docket.supervisingOfficer || "N/A";
+                    var status = docket.status || "N/A";
+
+                    $(".table_body_tc").append(`
+                        <tr>
+                            <td>${docketRowCount}</td>
+                            <td>${docketNumber}</td>
+                            <td>${dateReceived}</td>
+                            <td>N/A</td>
+                            <td>${officer}</td>
+                            <td>${status}</td>
+                            <td>
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span>${result.worksheetStatus}</span>
+                                    <span>${wsStatus}</span>
                                     <div style="display: flex; gap: 8px;">
-                                        <a href="${api}/pis/worksheet_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${workSheetStatus}" class="text-primary">
+                                        <a href="${api}/pis/worksheet_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${wsStatus}" class="text-primary">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </a>
                                         <a href="#" class="text-info btn_pdfWorksheet">
@@ -168,32 +224,35 @@
                                         </a>
                                     </div>
                                 </div>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span>${psirStatus === "null" ? "Not Available" : psirStatus}</span>
-
-                                  <div style="display: flex; gap: 8px;">
-                                    <a href="${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${psirStatus === "null" ? "Not Available" : psirStatus}" class="text-primary">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </a>
-                                    <a href="#" class="text-info btn_pdfPSIR">
-                                        <i class="fa fa-download" aria-hidden="true"></i>
-                                    </a>
-                                    <a href="#" class="text-info btn_pdfPSIRLong">
-                                        <i class="fa fa-download" aria-hidden="true"></i>
-                                    </a>
-                                  </div>
+                                    <span>${psStatus}</span>
+                                    <div style="display: flex; gap: 8px;">
+                                        <a href="${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${psStatus}" class="text-primary">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="#" class="text-info btn_pdfPSIR">
+                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="#" class="text-info btn_pdfPSIRLong">
+                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                            </th>
+                            </td>
                         </tr>
-                    `)
-                },500)
-            })
-            // ready if docket number is working again
-            // __executeExternalGet('8000/docketbook/'+docket_number+'/'+officeId).done(function (result) {
+                    `);
+                });
 
-            // })
+                docketCurrentPage++;
+                docketHasMore = docketCurrentPage < totalPages;
+                docketIsLoading = false;
+            })
+            .fail(function () {
+                $(".table_body_tc .docket-loader-row").remove();
+                docketIsLoading = false;
+            });
         }
 
 
@@ -467,6 +526,168 @@
                 // Update the AJAX URL and reload the DataTable
                 dataTable.ajax.url(`${api}8080/file/page/${type}/${uuid}/${officeId}`).load();
             }
+        }
+
+        var cachedInvFiles = null;
+        var cachedSupFiles = null;
+        var docketFilesLoaded = false;
+
+        function fetchAllDocketNumbers(clientId) {
+            var d = $.Deferred();
+            var allDockets = [];
+
+            function fetchPage(page) {
+                __executeExternalPost('8000/docketbook/getclient/' + clientId + '?page=' + page + '&size=100', '{}')
+                    .done(function (result) {
+                        var content = result && result.content ? result.content : [];
+                        allDockets = allDockets.concat(content);
+                        var totalPages = result && result.totalPages ? result.totalPages : 0;
+                        if (page + 1 < totalPages) {
+                            fetchPage(page + 1);
+                        } else {
+                            d.resolve(allDockets);
+                        }
+                    })
+                    .fail(function () {
+                        d.resolve(allDockets);
+                    });
+            }
+
+            fetchPage(0);
+            return d.promise();
+        }
+
+        function fetchFilesForDockets(dockets, fileType, officeId) {
+            var d = $.Deferred();
+            var allFiles = [];
+
+            if (dockets.length === 0) {
+                d.resolve(allFiles);
+                return d.promise();
+            }
+
+            var completed = 0;
+            dockets.forEach(function (docket) {
+                __executeExternalGet('8080/file/list/' + fileType + '/' + docket.docketNumber + '/' + officeId)
+                    .done(function (result) {
+                        if (result && result.status !== "ERROR" && result.files && result.files.length > 0) {
+                            var officer = docket.investigatingOfficer || docket.supervisingOfficer || "N/A";
+                            result.files.forEach(function (file) {
+                                file.officerName = officer;
+                            });
+                            allFiles = allFiles.concat(result.files);
+                        }
+                        completed++;
+                        if (completed === dockets.length) {
+                            d.resolve(allFiles);
+                        }
+                    })
+                    .fail(function () {
+                        completed++;
+                        if (completed === dockets.length) {
+                            d.resolve(allFiles);
+                        }
+                    });
+            });
+
+            return d.promise();
+        }
+
+        function loadDocketFiles(clientId, officeId) {
+            var d = $.Deferred();
+
+            if (docketFilesLoaded) {
+                d.resolve({ invFiles: cachedInvFiles, supFiles: cachedSupFiles });
+                return d.promise();
+            }
+
+            fetchAllDocketNumbers(clientId).done(function (allDockets) {
+                var invDockets = [];
+                var supDockets = [];
+
+                allDockets.forEach(function (docket) {
+                    if (docket.type === "PIS_INV") {
+                        invDockets.push(docket);
+                    } else if (docket.type === "PIS_SUP") {
+                        supDockets.push(docket);
+                    }
+                });
+
+                var invPromise = fetchFilesForDockets(invDockets, "investigation", officeId);
+                var supPromise = fetchFilesForDockets(supDockets, "supervision", officeId);
+
+                $.when(invPromise, supPromise).done(function (invFiles, supFiles) {
+                    cachedInvFiles = invFiles;
+                    cachedSupFiles = supFiles;
+                    docketFilesLoaded = true;
+                    d.resolve({ invFiles: invFiles, supFiles: supFiles });
+                });
+            });
+
+            return d.promise();
+        }
+
+        function renderDocketFilesTable(tableSelector, files) {
+            if ($.fn.DataTable.isDataTable(tableSelector)) {
+                $(tableSelector).DataTable().destroy();
+            }
+            $(tableSelector + ' tbody').empty();
+
+            $(tableSelector).DataTable({
+                "processing": false,
+                "serverSide": false,
+                "scrollX": false,
+                "searching": false,
+                "lengthMenu": [10, 25, 50, 100],
+                "pageLength": 10,
+                "columnDefs": [
+                    { "width": "5%", "targets": [0] },
+                    { "width": "35%", "targets": [1] },
+                    { "width": "30%", "targets": [2] },
+                    { "width": "30%", "targets": [3] },
+                ],
+                "data": files,
+                "columns": [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": "fileName"
+                    },
+                    {
+                        "data": "officerName",
+                        "defaultContent": "N/A"
+                    },
+                    {
+                        "data": null,
+                        "render": function (data) {
+                            return `
+                                <a href="${___ctx}8080/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View</button>
+                                </a>
+                                <a href="${___ctx}8080/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm"><i class="fa fa-download"></i> Download</button>
+                                </a>
+                            `;
+                        }
+                    }
+                ]
+            });
+        }
+
+        function loadInvestigationFiles() {
+            loadDocketFiles(client_id, client_fo).done(function (result) {
+                renderDocketFilesTable('.table_head', result.invFiles);
+            });
+        }
+
+        function loadSupervisionFiles() {
+            loadDocketFiles(client_id, client_fo).done(function (result) {
+                renderDocketFilesTable('.table_head', result.supFiles);
+            });
         }
 
         function tableColumnsForOtherDocuments() {
@@ -743,7 +964,7 @@
                 }
             })
         })
-        loadUploadedDocuments("Investigation", client_id, client_fo)
+        loadInvestigationFiles();
 
         $("#investigationTab").unbind("click").on("click", function(){
             $(".info-details").html('');
@@ -765,8 +986,7 @@
                     </table>
                 </div>
             `)
-            dataTable = null;
-            loadUploadedDocuments("Investigation", client_id, client_fo)
+            loadInvestigationFiles();
 
             $(".btn-addInvestigation").unbind("click").on("click", function(){
                 $("#investigationUploadModal").modal("show")
@@ -874,8 +1094,7 @@
                     }
                 })
             })
-            dataTable = null;
-            loadUploadedDocuments("Supervision", client_id, client_fo)
+            loadSupervisionFiles();
         })
 
         $("#rehabilitationTab").unbind("click").on("click", function(){
@@ -1149,7 +1368,7 @@
                         </span>
                         <span><button type="button" class="btn btn-primary btn-searchDocket btn-sm mx-4">Confirm</button></span>
                     </div>
-                    <div class="tc-body" style="height: 500px; width: 100%; padding-top: 10px;">
+                    <div class="tc-body" style="height: 500px; width: 100%; padding-top: 10px; overflow-y: auto;">
                         <table id="" class="table table-bordered table_head_tc" style="max-width: 100%;">
                             <thead>
                                 <th>#</th>
@@ -1167,7 +1386,22 @@
                     </div>
                 </div>
             `)
+            docketCurrentPage = 0;
+            docketIsLoading = false;
+            docketHasMore = true;
+            docketRowCount = 0;
+            cachedWsStatus = null;
+            cachedPsStatus = null;
+
             getDocketNumberDetails();
+
+            $(".tc-body").off("scroll").on("scroll", function () {
+                var el = $(this);
+                if (el.scrollTop() + el.innerHeight() >= el[0].scrollHeight - 50) {
+                    getDocketNumberDetails();
+                }
+            });
+
             $(".btn-addNotes").unbind("click").on("click", function(){
                 $("#addOtherDocumentModal").modal("show")
             })
