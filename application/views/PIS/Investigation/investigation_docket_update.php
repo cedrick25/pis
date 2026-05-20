@@ -1,19 +1,5 @@
 <?php $this->load->view('templates/header.php'); ?> 
 <style>
-    .spinner {
-        border: 8px solid #f3f3f3; /* Light gray */
-        border-top: 8px solid black; /* Black */
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-    }
-    /* Spinner animation */
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
     .update-page .card {
         border: 1px solid #e4e7ea;
         border-radius: 8px;
@@ -23,6 +9,40 @@
     .update-page .card-title {
         font-weight: 600;
         color: #2f3d4a;
+    }
+
+    .update-page .form-control-label {
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .update-page .card-body--with-loader {
+        position: relative;
+        min-height: 12rem;
+    }
+
+    .update-page #spinner_update {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 0 0 0.25rem 0.25rem;
+    }
+
+    .update-page #spinner_update.is-hidden {
+        display: none !important;
+    }
+
+    .update-page .form-control:disabled,
+    .update-page .form-control[readonly] {
+        background-color: #f8f9fa;
+        color: #2f3d4a;
+        border-color: #dee2e6;
+        cursor: not-allowed;
     }
 
     .update-page .section-card .card-header {
@@ -41,6 +61,12 @@
 
     .update-page .section-trigger:hover {
         background: #f3f6f9;
+    }
+
+    .update-page .section-trigger:focus {
+        outline: 2px solid #80bdff;
+        outline-offset: 2px;
+        z-index: 1;
     }
 
     .update-page .section-label {
@@ -74,6 +100,46 @@
         color: #6c757d;
         margin-bottom: 4px;
     }
+
+    .pis-toast-stack {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 320px;
+        pointer-events: none;
+    }
+
+    .pis-toast {
+        opacity: 0;
+        transform: translateX(12px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-weight: 600;
+        font-size: 13px;
+        border: 1px solid transparent;
+    }
+
+    .pis-toast.pis-toast--visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .update-page .view-fields-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .update-page .card-footer.confirmButton {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
 </style>
 
 <body>
@@ -92,7 +158,7 @@
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="investigation_docketing">Investigation Docket</a></li>
                             <li class="active">Update</li>
@@ -107,26 +173,30 @@
                 <div class="row">
                   <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">Update</strong>
-                                <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
+                            <div class="card-header">
+                                <strong class="card-title">Update Investigation</strong>
                             </div>
-                            <div class="card-body">
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Added  
+                            <div class="card-body card-body--with-loader">
+                                <div id="spinner_update" class="text-center" role="status" aria-live="polite" aria-busy="true">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted">Loading form…</p>
                                 </div>
-                                <div class="row">
+                                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    Record updated successfully.
+                                </div>
+                                <div class="alert alert-danger" role="alert" id="update_form_error" style="display:none"></div>
+                                <div class="row view-fields-scroll">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
-                                            <div class="title">Docket Number</div>
-                                            <input type="text" name="text-input" class="form-control docketNum_update">
+                                            <label class="title d-block" for="pis_inv_upd_docket">Docket Number</label>
+                                            <input type="text" id="pis_inv_upd_docket" name="docket_number_display" class="form-control docketNum_update" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
-                                            <div class="title">Client</div>
-                                            <input type="text" name="text-input" class="form-control pb_client">
+                                            <label class="title d-block" for="pis_inv_upd_client">Client</label>
+                                            <input type="text" id="pis_inv_upd_client" name="client_name_display" class="form-control pb_client" autocomplete="name">
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +390,7 @@
                                 </div>
                             </div>
                             <div class="card-footer confirmButton">
-                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -329,12 +399,14 @@
         </div>
 
 
+        <div id="pis_toast_stack" class="pis-toast-stack" aria-live="polite" aria-atomic="false"></div>
+
     </div><!-- /#right-panel -->
 
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
-    <script src="assets/js/pisJs/PIS_investigation/investigationDocketUpdate.js"></script>
+    <script src="assets/js/pisJs/PIS_Investigation/investigationDocketUpdate.js"></script>
 
 </body>
 

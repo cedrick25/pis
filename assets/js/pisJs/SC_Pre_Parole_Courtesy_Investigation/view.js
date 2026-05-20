@@ -1,176 +1,152 @@
-    ( function ( $ ) {
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
-        console.log(___ctx)
+(function ($) {
+    function joinApiUrl(base, path) {
+        var b = String(base == null ? '' : base).replace(/\/+$/, '');
+        var p = String(path == null ? '' : path).replace(/^\/+/, '');
+        if (!b) {
+            return p;
+        }
+        if (!p) {
+            return b;
+        }
+        if (b.slice(-1) === ':' && /^\d+\//.test(p)) {
+            return b + p;
+        }
+        return b + '/' + p;
+    }
 
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
-
-        var __getContext = function() {
-            return ___ctx;
-        };
-
-        var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
+    var __executeExternalGet = function (path) {
+        var base = localStorage.getItem('api') || '';
+        path = joinApiUrl(base, path);
+        var d = $.Deferred();
+        $.ajax({
+            method: 'GET',
+            url: path,
+            dataType: 'json',
+            timeout: 90000
+        }).done(function (data) {
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            d.resolve({
+                status: 'ERROR',
+                message: errorThrown || textStatus
             });
-            
-            return d.promise();
-        };
-        var __executeExternalPost = function(path, jsonObj, customLoader) {
-            path = __getContext() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                headers: {
-                    // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
-                },
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
+        });
+        return d.promise();
+    };
+
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var pair = sURLVariables[i].split('=');
+            if (pair[0] === sParam) {
+                if (pair.length < 2 || pair[1] === '') {
+                    return '';
                 }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
-        function GetURLParameter(sParam){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++)
-            {
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == sParam)
-                {
-                    return decodeURIComponent(sParameterName[1]);
+                try {
+                    return decodeURIComponent(pair[1].replace(/\+/g, ' '));
+                } catch (e) {
+                    return '';
                 }
             }
         }
+        return undefined;
+    }
 
+    function isClientNamePartEmpty(v) {
+        return v === null || v === undefined || String(v).trim() === '';
+    }
+
+    function formatClientDisplayName(r) {
+        if (!r) {
+            return '';
+        }
+        if (r.fullName != null && String(r.fullName).trim() !== '') {
+            return String(r.fullName).trim();
+        }
+        var parts = [r.firstName, r.middleName, r.lastName, r.suffixName].filter(function (p) {
+            return !isClientNamePartEmpty(p);
+        });
+        if (parts.length) {
+            return parts.map(function (p) { return String(p).trim(); }).join(' ');
+        }
+        return 'N/A';
+    }
+
+    function formatReferringOffice(row) {
+        if (!row) {
+            return '';
+        }
+        var name = row.referringOfficeCourtesyInv;
+        if (name != null && String(name).trim() !== '') {
+            return String(name).trim();
+        }
+        var id = row.referringOfficeCourtesyInvId || row.referringOfficeId;
+        if (id != null && String(id).trim() !== '') {
+            return String(id).trim();
+        }
+        return 'N/A';
+    }
+
+    function updateForms(row) {
+        $('.docketNum_update').val(row.docketNumber || '');
+        $('.pb_client_sup').val(formatClientDisplayName(row));
+        $('.referring_office_display').val(formatReferringOffice(row));
+        $('.date_received_by_ppo').val(row.receivedDateByPPO || '');
+        $('.inv_officer').val(row.investigatingOfficer || '');
+        $('.reasons').val(row.remarks || row.referralData || '');
+        $('.date_completed_and_returned').val(row.dateCICAR || row.dateCompletedAndReturned || '');
+    }
+
+    function loadCourtesyInvestigationDocket(docket_number, officeId) {
+        var req = __executeExternalGet('8000/docketbook/' + docket_number + '/' + officeId);
+        req.always(function () {
+            $('#spinner_view').addClass('is-hidden').attr('aria-busy', 'false');
+        });
+        req.done(function (apiResult) {
+            if (apiResult.status === 'ERROR') {
+                $('#view_form_error').text('Could not load this docket. Return to the list and try again.').show();
+                return;
+            }
+
+            var row = apiResult.response;
+            if (!row || row.status === 'ERROR') {
+                $('#view_form_error').text('Could not load this docket. Return to the list and try again.').show();
+                return;
+            }
+
+            $('#view_form_error').hide().empty();
+
+            try {
+                updateForms(row);
+            } catch (e) {
+                $('#view_form_error').text('The docket loaded but the form could not be filled. Refresh the page.').show();
+            }
+        });
+    }
+
+    $(function () {
         var docket_number = GetURLParameter('docket_number');
-        $('.card-body').find('input, select, button').prop('disabled', true);
-        $('.btn-confirm_update').prop('disabled', true);
-
-        var __selectclient = function(){
-            $('.client').empty();
-            __executeExternalGet(___ctx+'8000/petitioner/list?type=PAROLEE&officeId='+$.cookie('field_office_id')).done(function (result) {
-                if (result.status != "ERROR") {
-                    $('.client').append("<option selected disabled>Select Client</option>");
-                    result.forEach(function(data){
-                        var name = data.firstName + " " +data.middleName+ " " +data.lastName+ " " +data.suffixName;
-                        $('.client').append(
-                            '<option value="'+data.id+'" data-id="'+data.id+'" data-fname="'+data.firstName+'" data-lname="'+data.lastName+'" data-mname="'+data.middleName+'" data-sname="'+data.suffixName+'">'+name+'</option>'); 
-                    });
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
+        if (docket_number !== undefined && docket_number !== null) {
+            docket_number = String(docket_number).trim();
         }
-        __selectclient();
-        
-        var __select = function(){
-            $('.ref_office_update').empty();
-
-            __executeExternalGet(___ctx+'8088/department/list').done(function (result) {
-                console.log(result)
-                if (result.status != "ERROR") {
-                    $('.ref_office_update').append("<option selected disabled>Select Field Office</option>");
-                    result.forEach(function(data){
-                        $('.ref_office_update').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                        $('.cmis_fo').append(
-                            "<option value="+data.id+">"+data.name+"</option>");
-                    });
-                    setTimeout(function () {
-                        $(".ref_office_update").val($.cookie("field_office_id")).trigger("change");
-                        $(".cmis_fo").val($.cookie("field_office_id")).trigger("change");
-                    }, 700);
-                } else {
-                    console.log("failed fetching docket list")
-                }
-            })
+        var officeId = $.cookie('field_office_id');
+        if (officeId) {
+            officeId = String(officeId).trim();
         }
-        __select();
 
-        var __fields = function(){
-            __executeExternalGet(___ctx+'8000/docketbook/'+docket_number+'/'+$.cookie("field_office_id")).done(function (result) {
-                var result = result.response;
-                if (result.status != "ERROR") {
-                    $(".docket_num_update").val(result.docketNumber);
-                    $(".docket_series_update").val(result.docketSeries).trigger("change");
-                    $(".ref_office_update").val(result.referringOfficeId).trigger("change");
-                    $(".task_update").val(result.caseloadType).trigger("change");
-                    $(".client_type_update").val(result.clientType).trigger("change");
-                    $(".client").val(result.clientId).trigger("change");
-                    $(".inv_off_update").val(result.investigatingOfficer);
-                    $(".reason_update").val(result.referralData);
-                    $(".dr_ppo_update").val(result.receivedDateByPPO);
-                    $(".date_cic_update").val(result.dateCICAR);
-                }else{
-                    alert("failed")
-                }
-            })
+        var linkInvalidMessage = null;
+        if (docket_number === undefined || docket_number === null || docket_number === '') {
+            linkInvalidMessage = 'This page is missing a docket number. Open View from the Courtesy Investigation list.';
+        } else if (!officeId) {
+            linkInvalidMessage = 'Your field office could not be determined. Try signing in again or return to the list.';
         }
-        setTimeout(function () {
-            __fields();
-            $("#spinner_update").hide();
-        }, 3000);
 
-
-    } )( jQuery );
+        if (linkInvalidMessage) {
+            $('#spinner_view').addClass('is-hidden').attr('aria-busy', 'false');
+            $('#view_form_error').text(linkInvalidMessage).show();
+        } else {
+            loadCourtesyInvestigationDocket(docket_number, officeId);
+        }
+    });
+})(jQuery);

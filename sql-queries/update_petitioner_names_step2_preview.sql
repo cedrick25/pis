@@ -1,6 +1,15 @@
 -- =============================================================
--- STEP 2: Preview — which petitioners will get updated and with what values
--- Run this to verify before doing the actual update
+-- STEP 2: Preview (READ-ONLY — no table is modified)
+--
+-- Shows petitioner_profile rows that step 3 would update, using name
+-- values from docket_book where client_id = petitioner_profile.id.
+-- docket_book is never written; only step 3 UPDATEs petitioner_profile.
+--
+-- Includes rows where ANY name field is empty on petitioner_profile
+-- while the chosen docket row has data for that field.
+-- full_name is only considered from docket_book.full_name (not merged
+-- from first/middle/last/suffix — same rule as step 3).
+-- One docket row per client: prefers rows with first name, then newest.
 -- =============================================================
 
 SELECT 
@@ -43,15 +52,22 @@ INNER JOIN (
         FROM docket_book
         WHERE client_id IS NOT NULL
           AND TRIM(client_id) != ''
+          AND client_id REGEXP '^[0-9]+$'
           AND (
               (first_name IS NOT NULL AND TRIM(first_name) != '')
+              OR (middle_name IS NOT NULL AND TRIM(middle_name) != '')
               OR (last_name IS NOT NULL AND TRIM(last_name) != '')
+              OR (suffix_name IS NOT NULL AND TRIM(suffix_name) != '')
               OR (full_name IS NOT NULL AND TRIM(full_name) != '')
           )
     ) sub
     WHERE sub.rn = 1
 ) db ON pp.id = db.client_id
-WHERE (pp.first_name IS NULL OR TRIM(pp.first_name) = '')
-  AND (pp.middle_name IS NULL OR TRIM(pp.middle_name) = '')
-  AND (pp.last_name IS NULL OR TRIM(pp.last_name) = '')
-  AND (pp.full_name IS NULL OR TRIM(pp.full_name) = '');
+WHERE (
+      ((pp.first_name IS NULL OR TRIM(pp.first_name) = '') AND (db.first_name IS NOT NULL AND TRIM(db.first_name) != ''))
+   OR ((pp.middle_name IS NULL OR TRIM(pp.middle_name) = '') AND (db.middle_name IS NOT NULL AND TRIM(db.middle_name) != ''))
+   OR ((pp.last_name IS NULL OR TRIM(pp.last_name) = '') AND (db.last_name IS NOT NULL AND TRIM(db.last_name) != ''))
+   OR ((pp.suffix_name IS NULL OR TRIM(pp.suffix_name) = '') AND (db.suffix_name IS NOT NULL AND TRIM(db.suffix_name) != ''))
+   OR ((pp.full_name IS NULL OR TRIM(pp.full_name) = '')
+       AND (db.full_name IS NOT NULL AND TRIM(db.full_name) != ''))
+);

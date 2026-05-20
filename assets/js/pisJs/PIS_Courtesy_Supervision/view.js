@@ -1,116 +1,146 @@
-    ( function ( $ ) {
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
-        console.log(___ctx)
+(function ($) {
+    var api = localStorage.getItem('api') || '';
 
-        var __getContext = function() {
-            return ___ctx;
-        };
-
-        var get = function (path) {
-            return $.ajax({
-                method: "GET",
-                url: api + path,
-                dataType: "json"
-            }).then(function (data) { return data; }, function () {
-                return $.Deferred().resolve({ status: 'ERROR', message: 'Request failed' }).promise();
-            });
-        };
-
-        var post = function (path, payload) {
-            return $.ajax({
-                method: "POST",
-                url: api + path,
-                dataType: "json",
-                headers: { 'Content-Type': 'application/json' },
-                data: payload
-            }).then(function (data) { return data; }, function () {
-                return $.Deferred().resolve({ status: 'ERROR', message: 'Request failed' }).promise();
-            });
-        };
-
-        function getUrlParam(name) {
-            var params = {};
-            window.location.search.substring(1).split('&').forEach(function (p) {
-                var kv = p.split('=');
-                if (kv[0]) params[kv[0]] = decodeURIComponent(kv[1] || '');
-            });
-            return params[name];
+    function joinApiUrl(base, path) {
+        var b = String(base == null ? '' : base).replace(/\/+$/, '');
+        var p = String(path == null ? '' : path).replace(/^\/+/, '');
+        if (!b) {
+            return p;
         }
+        if (!p) {
+            return b;
+        }
+        if (b.slice(-1) === ':' && /^\d+\//.test(p)) {
+            return b + p;
+        }
+        return b + '/' + p;
+    }
 
-        var docket_number = getUrlParam('docket_number');
-        var petitionerId = getUrlParam('petitionerId');
-        var officeId = getUrlParam('officeId') || $.cookie("field_office_id");
-
-        $('.card-body').find('input, select, button').prop('disabled', true);
-        // $('.btn-confirm').prop('disabled', true);
-
-        // Load referring office dropdown
-        get('8088/department/list').done(function (result) {
-            var list = Array.isArray(result) ? result : (result.content || result.data || []);
-            if (result && result.status != "ERROR" && list.length) {
-                $('.ref_office').append("<option value=''>Select Referring Office</option>");
-                list.forEach(function (d) {
-                    $('.ref_office').append("<option value='" + d.id + "'>" + d.name + "</option>");
-                });
+    function getUrlParam(name) {
+        var params = {};
+        window.location.search.substring(1).split('&').forEach(function (p) {
+            var kv = p.split('=');
+            if (kv[0]) {
+                try {
+                    params[kv[0]] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' '));
+                } catch (e) {
+                    params[kv[0]] = kv[1] || '';
+                }
             }
         });
-        function populateForm(data) {
-            if (!data) return;
-            $(".docket_number").val(data.docketNumber || '');
-            $(".cc_num").val(data.criminalCaseNumber || '');
-            $(".court_origin").val(data.courtOfOrigin || '');
-            $(".date_rcv_from_ppo").val(data.receivedDateByPPO || '');
-            $(".sup_officer").val(data.supervisingOfficer || '');
-            $(".period_supervision").val(data.periodOfSupervision || data.periodOfCourtesySupervision || '');
-            $(".case_classification").val(data.caseClassification || '');
-            $(".date_completed_and_returned").val(data.dateCICAR || data.dateReturned || data.dateCompletedAndReturned || '');
+        return params[name];
+    }
 
-            var refId = data.referringOfficeId || data.referringOfficeCourtesySupId;
-            if (refId) $(".ref_office").val(refId);
+    function formatClientDisplayName(r) {
+        if (!r) {
+            return '';
+        }
+        if (r.fullName != null && String(r.fullName).trim() !== '') {
+            return String(r.fullName).trim();
+        }
+        var parts = [r.firstName, r.middleName, r.lastName, r.suffixName].filter(function (p) {
+            return p != null && String(p).trim() !== '';
+        });
+        if (parts.length) {
+            return parts.map(function (p) { return String(p).trim(); }).join(' ');
+        }
+        return 'N/A';
+    }
 
-            var cid = data.clientId || petitionerId;
-            let name = "";
-            if (!data.fullName) {
-                name = `${data.firstName} ${data.middleName} ${data.lastName} ${data.suffixName}`
-            } else {
-                name = data.fullName
-            }
-            $(".client").val(name)
+    function populateForm(data) {
+        if (!data) {
+            return;
+        }
+        $('.docket_number').val(data.docketNumber || '');
+        $('.cc_num').val(data.criminalCaseNumber || '');
+        $('.court_origin').val(data.courtOfOrigin || '');
+        $('.date_rcv_from_ppo').val(data.receivedDateByPPO || '');
+        $('.sup_officer').val(data.supervisingOfficer || '');
+        $('.period_supervision').val(data.periodOfSupervision || data.periodOfCourtesySupervision || '');
+        $('.case_classification').val(data.caseClassification || '').trigger('change');
+        $('.date_completed_and_returned').val(data.dateCICAR || data.dateReturned || data.dateCompletedAndReturned || '');
+
+        var refId = data.referringOfficeId || data.referringOfficeCourtesySupId;
+        if (refId) {
+            $('.ref_office').val(String(refId)).trigger('change');
         }
 
-        function enableForm(keepReadonly) {
-            $("#spinner_update").length && $("#spinner_update").hide();
-            $('.card-body').find('input, select, button').prop('disabled', false);
-            $('.btn-confirm').prop('disabled', false);
-            if (keepReadonly) {
-                $('.docket_number').prop('disabled', true);
-                $('.client').prop('disabled', true);
-            }
-        }
+        $('.client').val(formatClientDisplayName(data));
+    }
 
-        // Load docket data
-        if (docket_number && officeId) {
-            $("#spinner_update").length && $("#spinner_update").show();
-            get('8000/docketbook/' + docket_number + '/' + officeId).done(function (res) {
-                var data = res.response || res;
-                if (res.status === "ERROR" || !data) {
-                    // enableForm(false);
-                    alert(res.message || "Failed to load data");
+    function loadCourtesySupervisionDocket(docket_number, officeId) {
+        $.ajax({
+            method: 'GET',
+            url: joinApiUrl(api, '8000/docketbook/' + encodeURIComponent(docket_number) + '/' + encodeURIComponent(officeId)),
+            dataType: 'json',
+            timeout: 90000
+        })
+            .always(function () {
+                $('#spinner_view').addClass('is-hidden').attr('aria-busy', 'false');
+            })
+            .done(function (res) {
+                if (res.status === 'ERROR') {
+                    $('#view_form_error').text('Could not load this docket. Return to the list and try again.').show();
                     return;
                 }
-                populateForm(data);
-                // enableForm(false);
-                // Save handler
-                // setTimeout(function () { enableForm(false); }, 300);
+                var data = res.response;
+                if (!data || data.status === 'ERROR') {
+                    $('#view_form_error').text('Could not load this docket. Return to the list and try again.').show();
+                    return;
+                }
+                $('#view_form_error').hide().empty();
+                try {
+                    populateForm(data);
+                } catch (e) {
+                    $('#view_form_error').text('The docket loaded but the form could not be filled. Refresh the page.').show();
+                }
+            })
+            .fail(function () {
+                $('#view_form_error').text('Could not load this docket. Check your connection and try again.').show();
             });
-        } else {
-            // enableForm(false);
+    }
+
+    $(function () {
+        var docket_number = getUrlParam('docket_number');
+        if (docket_number !== undefined && docket_number !== null) {
+            docket_number = String(docket_number).trim();
+        }
+        var officeId = getUrlParam('officeId') || $.cookie('field_office_id');
+        if (officeId) {
+            officeId = String(officeId).trim();
         }
 
-        // setTimeout(function () {
-        //     $("#spinner_update").hide();
-        //     updateProbationInvestigation();
-        // }, 3000);
+        var linkInvalidMessage = null;
+        if (docket_number === undefined || docket_number === null || docket_number === '') {
+            linkInvalidMessage = 'This page is missing a docket number. Open View from the Courtesy Supervision list.';
+        } else if (!officeId) {
+            linkInvalidMessage = 'Your field office could not be determined. Try signing in again or return to the list.';
+        }
 
-    } )( jQuery );
+        if (linkInvalidMessage) {
+            $('#spinner_view').addClass('is-hidden').attr('aria-busy', 'false');
+            $('#view_form_error').text(linkInvalidMessage).show();
+            return;
+        }
+
+        $('.ref_office').empty().append("<option value=''>—</option>");
+        $.ajax({
+            method: 'GET',
+            url: joinApiUrl(api, '8088/department/list'),
+            dataType: 'json',
+            timeout: 90000
+        }).done(function (result) {
+            var list = Array.isArray(result) ? result : (result && (result.content || result.data)) || [];
+            if (result && result.status !== 'ERROR' && list.length) {
+                $('.ref_office').empty().append("<option value=''>Select Referring Office</option>");
+                list.forEach(function (d) {
+                    $('.ref_office').append("<option value='" + d.id + "'>" + d.name + '</option>');
+                });
+            }
+            loadCourtesySupervisionDocket(docket_number, officeId);
+        }).fail(function () {
+            loadCourtesySupervisionDocket(docket_number, officeId);
+        });
+    });
+
+})(jQuery);

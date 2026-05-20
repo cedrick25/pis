@@ -1,19 +1,5 @@
 <?php $this->load->view('templates/header.php'); ?> 
 <style>
-    .spinner {
-        border: 8px solid #f3f3f3; /* Light gray */
-        border-top: 8px solid black; /* Black */
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-    }
-    /* Spinner animation */
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
     .view-page .card {
         border: 1px solid #e4e7ea;
         border-radius: 8px;
@@ -23,6 +9,32 @@
     .view-page .card-title {
         font-weight: 600;
         color: #2f3d4a;
+    }
+
+    .view-page .form-control-label {
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .view-page .card-body--with-loader {
+        position: relative;
+        min-height: 12rem;
+    }
+
+    .view-page #spinner_view {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 0 0 0.25rem 0.25rem;
+    }
+
+    .view-page #spinner_view.is-hidden {
+        display: none !important;
     }
 
     .view-page .section-card .card-header {
@@ -100,7 +112,7 @@
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="investigation_docketing">Investigation Docket</a></li>
                             <li class="active">View</li>
@@ -115,15 +127,15 @@
                 <div class="row">
                   <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">View</strong>
-                                <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
+                            <div class="card-header">
+                                <strong class="card-title">View Investigation</strong>
                             </div>
-                            <div class="card-body">
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Added  
+                            <div class="card-body card-body--with-loader">
+                                <div id="spinner_view" class="text-center" role="status" aria-live="polite" aria-busy="true">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted">Loading…</p>
                                 </div>
+                                <div class="alert alert-danger" role="alert" id="view_form_error" style="display:none"></div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
@@ -156,7 +168,7 @@
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Plea Bargain</label>
                                                         <select class="form-control plea_bargain select2">
-                                                            <option selected value="none">Select</option>
+                                                            <option selected value="">Select</option>
                                                             <option value="true">Yes</option>
                                                             <option value="false">No</option>
                                                         </select>
@@ -223,7 +235,7 @@
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">PPO's Recommendation</label>
                                                         <select class="form-control ppo_recommendation select2">
-                                                            <option selected value="none">Select</option>
+                                                            <option selected value="">Select</option>
                                                             <option value="PSIR - For Granted">For Grant</option>
                                                             <option value="PSIR - For Denial">For Denial</option>
                                                         </select>
@@ -242,7 +254,9 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12">
                                                         <label class="field-label">Transfer To</label>
-                                                        <input type="date" name="text-input" placeholder="Transfer To" class="form-control transfer_to">
+                                                        <select class="form-control transfer_to select2">
+                                                            <option selected value="">Select</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -266,7 +280,7 @@
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Type</label>
                                                         <select class="form-control not_acted_decision select2">
-                                                            <option selected value="none">Select</option>
+                                                            <option selected value="">Select</option>
                                                             <option value="Recall">Recalled</option>
                                                             <option value="Warrant of Arrest">Warrant of Arrest</option>
                                                         </select>
@@ -301,7 +315,7 @@
                                                     <div class="form-group col-sm-12 col-md-6">
                                                             <label class="field-label">Court Decision</label>
                                                             <select class="form-control court_decision_t4 select2">
-                                                                <option selected value="none">Select</option>
+                                                                <option selected value="">Select</option>
                                                                 <option value="Recall">Recalled</option>
                                                                 <option value="Warrant of Arrest">Warrant of Arrest</option>
                                                             </select>
@@ -337,7 +351,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
-    <script src="assets/js/pisJs/PIS_investigation/investigationDocketView.js"></script>
+    <script src="assets/js/pisJs/PIS_Investigation/investigationDocketView.js"></script>
 
 </body>
 

@@ -8,12 +8,71 @@
     .nav-link.active {
         border-bottom: 3px solid #0069d9;
     }
-    .tab-content {
+
+    .pis-inv-att-page .tab-content {
         width: 100%;
         overflow: auto;
     }
-    .hidden {
-        display: none;
+
+    .pis-inv-att-page .card-body--with-loader {
+        position: relative;
+        min-height: 14rem;
+    }
+
+    .pis-inv-att-page #pis_inv_attachments_loader {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 0 0 0.25rem 0.25rem;
+    }
+
+    .pis-inv-att-page #pis_inv_attachments_loader.is-hidden {
+        display: none !important;
+    }
+
+    .pis-inv-att-page .uploads-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .pis-inv-att-page .card-footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .pis-toast-stack {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 320px;
+        pointer-events: none;
+    }
+
+    .pis-toast {
+        opacity: 0;
+        transform: translateX(12px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-weight: 600;
+        font-size: 13px;
+        border: 1px solid transparent;
+    }
+
+    .pis-toast.pis-toast--visible {
+        opacity: 1;
+        transform: translateX(0);
     }
 </style>
 <body>
@@ -32,7 +91,7 @@
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="investigation_docketing">Investigation Docket</a></li>
                             <li class="active">View Attachments</li>
@@ -42,35 +101,40 @@
             </div>
         </div>
 
-	    <div class="content mt-3">
+	    <div class="content mt-3 pis-inv-att-page">
             <div class="animated fadeIn">
                 <div class="row">
                   <div class="col-lg-12">
+                        <div class="alert alert-danger" id="attachments_error" style="display:none;" role="alert"></div>
                         <div class="card upload_file">
                             <div class="card-header">
-                                <strong class="card-title">Upload File</strong>
+                                <strong class="card-title">Investigation — Upload attachment</strong>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body card-body--with-loader">
+                                <div id="pis_inv_attachments_loader" role="status" aria-live="polite" aria-busy="true">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted">Loading…</p>
+                                </div>
                                 <div class="alert alert-success" role="alert" id="success_upload" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Uploaded 
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    Successfully uploaded.
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
+                                    <div class="col col-md-3"><label for="pis_inv_att_client_name" class="form-control-label">Name</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control name"  placeholder="Client Name" disabled />
+                                        <input type="text" id="pis_inv_att_client_name" name="pis_inv_att_client_name" class="form-control name" placeholder="Client Name" disabled autocomplete="off" />
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                    <div class="col col-md-3"><label for="pis_inv_att_docket_num" class="form-control-label">Docket Number</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control docket_num"  placeholder="Docket Number" disabled />
+                                        <input type="text" id="pis_inv_att_docket_num" name="pis_inv_att_docket_num" class="form-control docket_num" placeholder="Docket Number" disabled autocomplete="off" />
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Table</label></div>
+                                    <div class="col col-md-3"><label for="pis_inv_att_cmis_kind" class="form-control-label">Kind</label></div>
                                     <div class="col-12 col-md-6">
-                                        <select class="form-control cmisTable select2">
+                                        <select id="pis_inv_att_cmis_kind" name="pis_inv_att_cmis_kind" class="form-control cmisTable select2">
                                             <option selected value="none" disabled>Select</option>
                                             <option value="F5T2RR">Referrals Received</option>
                                             <option value="F5T2_RAU">Referrals Acted Upon</option>
@@ -81,20 +145,23 @@
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
+                                    <div class="col col-md-3"><label for="pis_inv_att_doc_type" class="form-control-label">Type</label></div>
                                     <div class="col-12 col-md-6">
-                                        <select class="form-control type select2">
+                                        <select id="pis_inv_att_doc_type" name="pis_inv_att_doc_type" class="form-control type select2">
                                             <option selected value="none" disabled>Select</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Upload File</label></div>
-                                    <div class="col col-md-3"><input type="file" name="fileupload" class="form-control-file" id="fileupload"></div>
+                                    <div class="col col-md-3"><label for="fileupload" class="form-control-label">Upload File</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <input type="file" name="pis_inv_att_file" class="form-control-file" id="fileupload" accept=".pdf,.doc,.docx,image/*" aria-describedby="pis_inv_att_file_hint">
+                                        <small id="pis_inv_att_file_hint" class="form-text text-muted">Accepted: PDF, Word documents, or images.</small>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm btn-sm">Confirm</button>
                             </div>
                         </div>
                         <div class="card">
@@ -103,17 +170,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="investigation_tab" role="tabpanel" aria-labelledby="home-tab">
-                                        <table id="" class="table table_head" width="100%">
+                                    <div class="tab-pane fade show active" id="investigation_tab" role="tabpanel" aria-label="Uploaded investigation attachments">
+                                        <div class="uploads-table-wrap">
+                                        <table id="tblPisInvestigationUploads" class="table table_head table-striped table-bordered" width="100%">
+                                            <caption class="sr-only">Files uploaded for this investigation docket</caption>
                                             <thead>
-                                                <th>#</th>
-                                                <th>File Name</th>
-                                                <th>Remarks</th>
-                                                <th>Actions</th>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">File Name</th>
+                                                    <th scope="col">Remarks</th>
+                                                    <th scope="col">Actions</th>
+                                                </tr>
                                             </thead>
                                             <tbody class="table_body">
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -123,14 +195,13 @@
             </div>
         </div>
 
+        <div id="pis_toast_stack" class="pis-toast-stack" aria-live="polite" aria-atomic="false"></div>
 
-    </div>
+    </div><!-- /#right-panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Investigation/investigationViewAttachments.js">
-
-    </script>
+    <script src="assets/js/pisJs/PIS_Investigation/investigationViewAttachments.js"></script>
 
 </body>
 

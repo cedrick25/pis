@@ -1,19 +1,5 @@
 <?php $this->load->view('templates/header.php'); ?>
 <style>
-    .spinner {
-        border: 8px solid #f3f3f3; /* Light gray */
-        border-top: 8px solid black; /* Black */
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-    }
-    /* Spinner animation */
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
     .update-page .card {
         border: 1px solid #e4e7ea;
         border-radius: 8px;
@@ -23,6 +9,27 @@
     .update-page .card-title {
         font-weight: 600;
         color: #2f3d4a;
+    }
+
+    .update-page .card-body--with-loader {
+        position: relative;
+        min-height: 12rem;
+    }
+
+    .update-page #spinner_update {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 0 0 0.25rem 0.25rem;
+    }
+
+    .update-page #spinner_update.is-hidden {
+        display: none !important;
     }
 
     .update-page .section-card .card-header {
@@ -91,7 +98,7 @@
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="supervision_docketing">Supervision Docket</a></li>
                             <li class="active">Update</li>
@@ -106,27 +113,31 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
+                            <div class="card-header">
                                 <strong class="card-title">Update Supervision</strong>
-                                <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
-                            <div class="card-body">
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                    Successfully Added
+                            <div class="card-body card-body--with-loader">
+                                <div id="spinner_update" role="status" aria-live="polite" aria-busy="true">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted">Loading form…</p>
                                 </div>
+                                <div class="alert alert-success" role="alert" id="success" style="display:none">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    Record updated successfully.
+                                </div>
+                                <div class="alert alert-danger" role="alert" id="update_form_error" style="display:none"></div>
 
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
                                             <div class="title">Docket Number</div>
-                                            <input type="text" name="text-input" class="form-control docketNum_update">
+                                            <input type="text" name="sup_docket_number" class="form-control docketNum_update" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
                                             <div class="title">Client</div>
-                                            <input type="text" name="text-input" class="form-control pb_client_sup" disabled>
+                                            <input type="text" name="sup_client_name" class="form-control pb_client_sup" disabled autocomplete="name">
                                         </div>
                                     </div>
                                 </div>
@@ -147,11 +158,11 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Alias</label>
-                                                        <input type="text" name="text-input" placeholder="Alias" class="form-control alias">
+                                                        <input type="text" name="sup_alias" placeholder="Alias" class="form-control alias" autocomplete="off">
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Type of Referrals</label>
-                                                        <select class="form-control referral_type select2">
+                                                        <select class="form-control referral_type select2" name="sup_referral_type">
                                                             <option value="" selected disabled>Please Choose</option>
                                                             <option value="From Local Courts">From Local Courts</option>
                                                             <option value="Direct Transfer, Court to Court">Direct Transfer, Court to Court</option>
@@ -164,17 +175,17 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Criminal Case Number</label>
-                                                        <input type="text" name="text-input" placeholder="Criminal Case No." class="form-control cc_no">
+                                                        <input type="text" name="sup_cc_no" placeholder="Criminal Case No." class="form-control cc_no" autocomplete="off">
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Court of Origin</label>
-                                                        <input type="text" name="text-input" placeholder="Court of Origin" class="form-control court_origin">
+                                                        <input type="text" name="sup_court_origin" placeholder="Court of Origin" class="form-control court_origin" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Case Classification</label>
-                                                        <select class="form-control case_classification select2">
+                                                        <select class="form-control case_classification select2" name="sup_case_class">
                                                             <option value="" selected disabled>Please choose</option>
                                                             <option value="MINIMUM">MINIMUM</option>
                                                             <option value="MEDIUM">MEDIUM</option>
@@ -183,23 +194,23 @@
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Received by PPO</label>
-                                                        <input type="date" class="form-control date_rcv_ppo">
+                                                        <input type="date" class="form-control date_rcv_ppo" name="sup_date_rcv_ppo">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Supervising Officer</label>
-                                                        <input type="text" name="text-input" placeholder="Supervising Officer" class="form-control supervising_officer">
+                                                        <input type="text" name="sup_supervising_officer" placeholder="Supervising Officer" class="form-control supervising_officer" autocomplete="name">
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Probation Start Date</label>
-                                                        <input type="date" class="form-control prob_start_date">
+                                                        <input type="date" class="form-control prob_start_date" name="sup_prob_start">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Probation End Date</label>
-                                                        <input type="date" class="form-control prob_end_date">
+                                                        <input type="date" class="form-control prob_end_date" name="sup_prob_end">
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,7 +234,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Office Findings</label>
-                                                        <select class="form-control office_findings select2">
+                                                        <select class="form-control office_findings select2" name="sup_office_findings_acted">
                                                             <option value="">Please choose</option>
                                                             <optgroup label="Termination">
                                                                 <option value="Termination - Full Term">Termination - Full Term</option>
@@ -243,17 +254,17 @@
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Specify the Other Reasons of Revocation</label>
-                                                        <input type="text" name="text-input" placeholder="Specify the Other Reasons of Revocation" class="form-control other_reasons_of_revocation">
+                                                        <input type="text" name="sup_other_revocation" placeholder="Specify the Other Reasons of Revocation" class="form-control other_reasons_of_revocation" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Specify the Court/PPO where the probationer is transferred</label>
-                                                        <input type="text" name="text-input" placeholder="Specify the Court/PPO where the probationer is transferred" class="form-control court_probationer_transferred">
+                                                        <input type="text" name="sup_court_transferred" placeholder="Specify the Court/PPO where the probationer is transferred" class="form-control court_probationer_transferred" autocomplete="off">
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Submitted to the Court</label>
-                                                        <input type="date" class="form-control date_submitted_court">
+                                                        <input type="date" class="form-control date_submitted_court" name="sup_date_submitted_acted">
                                                     </div>
                                                 </div>
                                             </div>
@@ -277,7 +288,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Office Findings</label>
-                                                        <select class="form-control office_findings select2">
+                                                        <select class="form-control office_findings select2" name="sup_office_findings_pending">
                                                             <option value="">Please choose</option>
                                                             <optgroup label="Termination">
                                                                 <option value="Termination - Full Term">Termination - Full Term</option>
@@ -297,13 +308,13 @@
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Submitted to the Court</label>
-                                                        <input type="date" class="form-control date_submitted_court">
+                                                        <input type="date" class="form-control date_submitted_court" name="sup_date_submitted_pending">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Supervising Officer</label>
-                                                        <input type="text" name="text-input" placeholder="Supervising Officer" class="form-control supervising_officer_carry_over">
+                                                        <input type="text" name="sup_supervising_carry" placeholder="Supervising Officer" class="form-control supervising_officer_carry_over" autocomplete="name">
                                                     </div>
                                                 </div>
                                             </div>

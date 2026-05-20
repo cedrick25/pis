@@ -1,19 +1,100 @@
 ( function ( $ ) {
 
-    var api = localStorage.getItem('api');
+    function resolveApiBase() {
+        var raw = localStorage.getItem('api');
+        if (raw != null && String(raw).trim() !== '') {
+            return String(raw).trim();
+        }
+        if (typeof window.__PIS_API_BASE === 'string' && String(window.__PIS_API_BASE).trim() !== '') {
+            return String(window.__PIS_API_BASE).trim();
+        }
+        return '';
+    }
+
+    function joinApiUrl(base, path) {
+        var b = String(base == null ? '' : base).replace(/\/+$/, '');
+        var p = String(path == null ? '' : path).replace(/^\/+/, '');
+        if (!b) {
+            return p;
+        }
+        if (!p) {
+            return b;
+        }
+        if (b.slice(-1) === ':' && /^\d+\//.test(p)) {
+            return b + p;
+        }
+        return b + '/' + p;
+    }
+
+    function escAttr(str) {
+        return String(str == null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;');
+    }
+
+    var api = resolveApiBase();
     var ___ctx = api;
-    console.log(___ctx)
 
     var __setContext = function(newctx) {
         ___ctx = newctx;
+        api = newctx;
     };
 
     var __getContext = function() {
         return ___ctx;
     };
 
+    function showClientListPageError(msg) {
+        $('#client_list_page_error').text(msg).show();
+    }
+
+    function hideClientListPageError() {
+        $('#client_list_page_error').hide().empty();
+    }
+
+    var PROBATION_CLIENT_TYPE = 'PROBATIONER';
+    var TABLE_SEL = '#tblProbationClientList';
+    var probationClientListDataTable = null;
+
+    function setProbFsClientListLoader(visible) {
+        var $el = $('#probFsClientListLoader');
+        if (!$el.length) {
+            return;
+        }
+        if (visible) {
+            $el.removeClass('is-hidden').attr('aria-busy', 'true');
+        } else {
+            $el.addClass('is-hidden').attr('aria-busy', 'false');
+        }
+    }
+
+    function safeDataTablesCallback(callback, payload) {
+        try {
+            callback(payload);
+        } catch (e) {
+            /* DataTables can throw on malformed rows */
+        }
+    }
+
+    function searchTermForAjax() {
+        return ($('.prob-fs-client-search-input').val() || '').trim();
+    }
+
+    function updateSearchClearState() {
+        var hasTerm = !!searchTermForAjax();
+        $('.prob-fs-client-search-wrap').toggleClass('has-value', hasTerm);
+    }
+
+    function formatListErrorMessage(m, fallback) {
+        if (m != null && typeof m === 'string' && m.trim() !== '') {
+            return m.trim();
+        }
+        return fallback;
+    }
+
     var __executeExternalGet = function(path, customLoader) {
-        path = __getContext() + path;
+        path = joinApiUrl(__getContext(), path);
         var d = $.Deferred();
         if(customLoader != ""){
             $("#"+customLoader).show();
@@ -23,6 +104,7 @@
             method: "GET",
             url: path,
             dataType: "json",
+            cache: false
         }).done(function (data, textStatus, jqXHR) {
             if(customLoader != ""){
                 $("#"+customLoader).hide();
@@ -30,15 +112,12 @@
             }
             d.resolve(data)
         }).fail(function (jqXHR, textStatus, errorThrown,request) {
-            console.log('---FAILED---');
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-            console.log('---FAILED---');
-            
+            var msg = typeof errorThrown === 'string' && errorThrown
+                ? errorThrown
+                : (textStatus || 'Network error');
             d.resolve({
                 status : 'ERROR',
-                message : request
+                message : msg
             });
             
             if(customLoader != ""){
@@ -50,19 +129,18 @@
         return d.promise();
     };
     var __executeExternalPost = function(path, jsonObj, customLoader) {
-        path = __getContext() + path;
+        path = joinApiUrl(__getContext(), path);
         var d = $.Deferred();
         if(customLoader != ""){
             $("#"+customLoader).show();
             $("#"+customLoader).removeClass("hide");
         }
         $.ajax({
-            method: "POST",
+            method: 'POST',
             url: path,
-            dataType: "json",
-            header: {
-                // 'Content-Type': 'multipart/form-data;'
-                'Content-Type':'application/json'
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json'
             },
             data: jsonObj
         }).done(function (data, textStatus, jqXHR) {
@@ -72,15 +150,12 @@
             }
             d.resolve(data)
         }).fail(function (jqXHR, textStatus, errorThrown,request) {
-            console.log('---FAILED---');
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-            console.log('---FAILED---');
-            
+            var msg = typeof errorThrown === 'string' && errorThrown
+                ? errorThrown
+                : (textStatus || 'Network error');
             d.resolve({
                 status : 'ERROR',
-                message : request
+                message : msg
             });
             
             if(customLoader != ""){
@@ -92,7 +167,7 @@
         return d.promise();
     };
 
-    var officeId = $.cookie("field_office_id");
+    var officeId = $.cookie("field_office_id") || '';
     let petitionerData;
     let clientType;
     function buttonFunctionality () {
@@ -149,9 +224,15 @@
             async function fetchData(url) {
                 try {
                     const response = await __executeExternalGet(url);
-                    return response.response;
+                    if (response && response.status === 'ERROR') {
+                        throw new Error(response.message || 'Request failed');
+                    }
+                    if (response && Object.prototype.hasOwnProperty.call(response, 'response')) {
+                        return response.response;
+                    }
+                    return response;
                 } catch (error) {
-                    console.error(`Error fetching data from ${url}`, error);
+                    console.error('Error fetching data from ' + url, error);
                     throw error;
                 }
             }
@@ -184,8 +265,6 @@
 
                     // Process results as needed
                     var result = resultPetitioner;
-
-                    console.log(result13)
 
                     // Create a new jsPDF instance
                     var doc = new jsPDF();
@@ -420,7 +499,7 @@
                                 chapterIIpart2_PSIR ();
                             }
                         } else {
-                                console.log("ERROR")
+                                // Guard: mismatched coordinates; do not advance sections (legacy behavior)
                         }
                         
                     }
@@ -535,7 +614,7 @@
                                         doc.text(lines, currentX, yCoordinateLeft);
                                     }
                                 } else {
-                                    console.log("ERROR")
+                                    // Empty cell; skip
                                 }
                             }
                         }
@@ -641,8 +720,6 @@
                     }
 
                     function footer(){
-                        console.log(resultPetitioner)
-
                         var currentDate = new Date();
                         var currentYear = currentDate.getFullYear();
                         var currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
@@ -662,15 +739,6 @@
                     chapterVI_psir();
                     footer();
 
-                    console.log("This is yCoordinate: ", yCoordinate)
-                    console.log("This is yCoordinateLeft: ", yCoordinateLeft)
-                    console.log("This is yCoordinateRight: ", yCoordinateRight)
-                    console.log("This is the full page width: ", pageWidth)
-                    console.log("This is the full page height: ", pageHeight)
-                    console.log("This is the page height with border: ", pageHeight - y)
-                    console.log("This is the page width with border: ", pageWidth - x)
-
-
                     // drawTextLeft('',yCoordinateLeft)
                     // drawTextLeft()
 
@@ -684,207 +752,335 @@
         });       
     }
 
-function drawTable() {
-    $('.table_head').DataTable({
-        "processing": false,
-        "serverSide": true,
-        "scrollX": true,
-        "searching": true,
-        "lengthMenu": [10, 25, 50, 100],
-        "pageLength": 10,
-        "searching": false,
-        "columnDefs": [
-            { "width": "5%", "targets": [0] },
-            { "width": "25%", "targets": [1] },
-            { "width": "25%", "targets": [2] },
-            { "width": "25%", "targets": [3] },
-            { "width": "20%", "targets": [4] },
-    ],
-    ajax: {
-        url: api+"8000/petitioner",
-        type: 'GET',
-        cache: true,
-        data: function (d) {
-        return {
-            page: d.start / d.length,  // Pagination
-            size: d.length,            // Page size
-            type: "PROBATIONER",
-            officeId: $.cookie('field_office_id')
+    function getProbationClientListTable() {
+        return $(TABLE_SEL);
+    }
 
-        };
-        },
-        dataFilter: function(data) {
-            var json = jQuery.parseJSON(data);
-            json.recordsTotal = json.totalElements;
-            json.recordsFiltered = json.totalElements;
-            json.data = json.content;
-            return JSON.stringify(json);
+    function destroyProbationClientListTable() {
+        var $tbl = getProbationClientListTable();
+        if ($tbl.length && $.fn.DataTable && $.fn.DataTable.isDataTable($tbl[0])) {
+            $tbl.DataTable().destroy();
         }
-    },
-    columns: tableColumns()
-    });
-    $('.table_head').on('draw.dt', function() {
-        buttonFunctionality();
-        // buttonVisibility();
-    });
-}
+        $tbl.find('tbody.table_body').empty();
+    }
 
-function tableColumns() {
-    return [
-        {
-            "data": null,
-            "render": function (data, type, row, meta) {
-                return meta.settings._iDisplayStart + meta.row + 1;
-            }
-        },
-        {
-            "data": null,
-            "render": function (data, type, row, meta) {
-                var client_fo = data.fieldOfficeId;
-                var client_id = data.id;
-                // Check if all parts are null
-                if (
-                    data.firstName === null &&
-                    data.middleName === null &&
-                    data.lastName === null &&
-                    data.suffixName === null
-                ) {
-                    var name = data.fullName || "N/A";
-                } else {
-                    var name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`;
-                }
+    function probationClientListAjax(data, callback /* , settings */) {
+        setProbFsClientListLoader(true);
+        hideClientListPageError();
 
-                var nameLink = `<a href="${api}/pis/client_view_factsheet?client_id=${client_id}&field_office_id=${client_fo}" class="text-primary"> ${name.trim()} </a>`;
-                return nameLink;
-            }
-        },
-        {
-            "data": null,
-            "render": function (data, type, row, meta) {
-                let ccNum = "";
-                if (data.criminalCaseNo === null || data.criminalCaseNo === "") {
-                    ccNum = "N/A";
-                } else {
-                    ccNum = data.criminalCaseNo;
-                }
-                return ccNum;
-            }
-        },
-        {
-            "data": 'fieldOfficeName',
-        },
-        {
-            "data": 'worksheetStatus'
+        var page = data.start / data.length;
+        var size = data.length;
+        var fieldOfficeId = $.cookie('field_office_id');
+        var term = searchTermForAjax();
+
+        function finishFail(message) {
+            showClientListPageError(message);
+            safeDataTablesCallback(callback, {
+                draw: data.draw,
+                recordsTotal: 0,
+                recordsFiltered: 0,
+                data: []
+            });
         }
-        // ,
-        // {
-        //     "data": null,
-        //     "render": function (data, type, row) {
-        //         // setTimeout (function (){
-        //         // },1000)
-        //         // console.log(clientDataStorage.length)
-        //         // if (!loggedValues.has(data)) {
-        //         //     if (clientDataStorage.length > 0 && clientDataStorage[0].petitionerId == data.id) {
-        //         //         if (clientDataStorage[0].worksheetStatus == "COMPLETED") {
-        //         //             console.log("Show")
-        //         //             return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
-        //         //         }
-        //         //     } else {
-        //         //         console.log("Hide")
-        //         //         // return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button>";
-        //         //     }
-        //         //     loggedValues.add(data);
-        //         // }
-        //         // // Return an empty string if the condition is not met
-        //         // return "";
-        //         return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button> <button class='btn btn-sm btn-primary btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-primary btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
-        //     }
-        // }
-    ]
-}
 
-drawTable();
+        function onAjaxComplete() {
+            setProbFsClientListLoader(false);
+        }
 
-var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
-    '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
-    '<input type="text" class="form-control form-control-sm searchInput" placeholder="Search Probationer" style="width: 250px;">' +
-    '<button class="btn btn-primary btn-sm client_search"><i class="fa fa-search"></i></button>' +
-    '</div>';
+        if (fieldOfficeId == null || String(fieldOfficeId).trim() === '') {
+            finishFail('Your field office could not be determined. Please sign in again.');
+            onAjaxComplete();
+            return;
+        }
 
-function injectSearch(value) {
-    var $target = $('.dataTables_length').parent().next();
-    if ($target.length) {
-        $target.html(searchHtml);
-        if (value) $target.find('.searchInput').val(value);
-    }
-}
-
-injectSearch();
-
-$(document).on('keypress', '.searchInput', function(e) {
-    if (e.which === 13) {
-        $('.client_search').trigger('click');
-    }
-});
-
-$(document).on("click", ".client_search", function() {
-    var searchVal = $('.searchInput').val().trim();
-
-    $('.table_head').DataTable().destroy();
-    $('.table_body').empty();
-
-    if (!searchVal) {
-        drawTable();
-        injectSearch();
-        return;
-    }
-
-    var fieldOfficeId = $.cookie('field_office_id');
-    var clientType = "PROBATIONER";
-
-    $('.table_head').DataTable({
-        "processing": false,
-        "serverSide": true,
-        "scrollX": true,
-        "searching": false,
-        "lengthMenu": [10, 25, 50, 100],
-        "pageLength": 10,
-        "columnDefs": [
-            { "width": "5%", "targets": [0] },
-            { "width": "25%", "targets": [1] },
-            { "width": "25%", "targets": [2] },
-            { "width": "25%", "targets": [3] },
-            { "width": "20%", "targets": [4] },
-        ],
-        "ajax": function(data, callback, settings) {
-            var page = data.start / data.length;
-            var size = data.length;
+        if (!term) {
             $.ajax({
-                url: `${___ctx}8000/petitioner/search/${clientType}?page=${page}&size=${size}`,
+                url: joinApiUrl(__getContext(), '8000/petitioner'),
+                type: 'GET',
+                dataType: 'json',
+                cache: false,
+                data: {
+                    page: page,
+                    size: size,
+                    type: PROBATION_CLIENT_TYPE,
+                    officeId: fieldOfficeId
+                }
+            })
+                .done(function (json) {
+                    if (!json || typeof json !== 'object') {
+                        finishFail('Unable to load the client list. Please try again.');
+                        return;
+                    }
+                    var total =
+                        typeof json.totalElements === 'number' ? json.totalElements : 0;
+                    var rows = Array.isArray(json.content) ? json.content : [];
+                    safeDataTablesCallback(callback, {
+                        draw: data.draw,
+                        recordsTotal: total,
+                        recordsFiltered: total,
+                        data: rows
+                    });
+                })
+                .fail(function () {
+                    finishFail('Unable to load the client list. Please check your connection and try again.');
+                })
+                .always(onAjaxComplete);
+        } else {
+            var searchUrl = joinApiUrl(
+                __getContext(),
+                '8000/petitioner/search/' +
+                    encodeURIComponent(PROBATION_CLIENT_TYPE) +
+                    '?page=' +
+                    encodeURIComponent(page) +
+                    '&size=' +
+                    encodeURIComponent(size)
+            );
+            $.ajax({
+                url: searchUrl,
                 type: 'POST',
                 contentType: 'application/json',
+                dataType: 'json',
+                cache: false,
                 data: JSON.stringify({
-                    name: searchVal,
+                    name: term,
                     fieldOfficeId: fieldOfficeId,
                     canSeeOtherOffices: false
-                }),
-                success: function(json) {
-                    callback({
-                        recordsTotal: json.totalElements,
-                        recordsFiltered: json.totalElements,
-                        data: json.content || []
+                })
+            })
+                .done(function (json) {
+                    if (!json || typeof json !== 'object') {
+                        finishFail('Search could not be completed. Please try again.');
+                        return;
+                    }
+                    var total =
+                        typeof json.totalElements === 'number' ? json.totalElements : 0;
+                    var rows = Array.isArray(json.content) ? json.content : [];
+                    safeDataTablesCallback(callback, {
+                        draw: data.draw,
+                        recordsTotal: total,
+                        recordsFiltered: total,
+                        data: rows
                     });
+                })
+                .fail(function (xhr) {
+                    var msg = formatListErrorMessage(
+                        xhr && xhr.responseJSON && xhr.responseJSON.message,
+                        'Search could not be completed. Please try again.'
+                    );
+                    finishFail(msg);
+                })
+                .always(onAjaxComplete);
+        }
+    }
+
+    function getProbationClientListColumnDefs() {
+        return [
+            { "width": "5%", "targets": [0] },
+            { "width": "25%", "targets": [1] },
+            { "width": "25%", "targets": [2] },
+            { "width": "25%", "targets": [3] },
+            { "width": "20%", "targets": [4] }
+        ];
+    }
+
+    function tableColumns() {
+        return [
+            {
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return meta.settings._iDisplayStart + meta.row + 1;
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    var client_fo = data.fieldOfficeId;
+                    var client_id = data.id;
+                    var name;
+                    if (
+                        data.firstName === null &&
+                        data.middleName === null &&
+                        data.lastName === null &&
+                        data.suffixName === null
+                    ) {
+                        name = data.fullName || "N/A";
+                    } else {
+                        name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`;
+                    }
+
+                    var base = String(__getContext() || '').replace(/\/+$/, '');
+                    var href = base + '/pis/client_view_factsheet?client_id=' + encodeURIComponent(String(client_id == null ? '' : client_id)) + '&field_office_id=' + encodeURIComponent(String(client_fo == null ? '' : client_fo));
+                    var nameLink = '<a href="' + escAttr(href) + '" class="text-primary">' + escAttr(String(name).trim()) + '</a>';
+                    return nameLink;
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    if (data.criminalCaseNo === null || data.criminalCaseNo === "") {
+                        return "N/A";
+                    }
+                    return data.criminalCaseNo;
+                }
+            },
+            {
+                "data": 'fieldOfficeName',
+                "render": function (data, type, row, meta) {
+                    if (data == null || String(data).trim() === '') {
+                        return 'N/A';
+                    }
+                    return type === 'display' || type === 'filter' ? String(data) : data;
+                }
+            },
+            {
+                "data": 'worksheetStatus',
+                "render": function (data, type, row, meta) {
+                    if (data == null || String(data).trim() === '') {
+                        return 'N/A';
+                    }
+                    return type === 'display' || type === 'filter' ? String(data) : data;
+                }
+            }
+        ];
+    }
+
+    var searchHtml =
+        '<div class="prob-fs-client-search-toolbar" role="search" style="display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px;">' +
+        '<label for="prob_fs_client_search" style="margin-bottom: 0; white-space: nowrap;">Search</label>' +
+        '<div class="prob-fs-client-search-wrap" style="width: 250px; max-width: 100%;">' +
+        '<input type="search" id="prob_fs_client_search" class="form-control form-control-sm prob-fs-client-search-input" placeholder="Name or case number" autocomplete="off" inputmode="search">' +
+        '<button type="button" class="prob-fs-client-search-clear" title="Clear search" aria-label="Clear search">' +
+        '<i class="fa fa-times" aria-hidden="true"></i></button>' +
+        '</div>' +
+        '<button type="button" class="btn btn-primary btn-sm client_search" aria-label="Run search"><i class="fa fa-search" aria-hidden="true"></i></button>' +
+        '</div>';
+
+    function injectSearch(value) {
+        var $slot = $('#prob_fs_client_search_slot');
+        if ($slot.length) {
+            $slot.html(searchHtml);
+            if (value) {
+                $slot.find('.prob-fs-client-search-input').val(value);
+            }
+            updateSearchClearState();
+            return;
+        }
+        var $target = $('.dataTables_length').parent().next();
+        if ($target.length) {
+            $target.html(searchHtml);
+            if (value) {
+                $target.find('.prob-fs-client-search-input').val(value);
+            }
+            updateSearchClearState();
+        }
+    }
+
+    function initProbationClientListDataTable() {
+        try {
+            destroyProbationClientListTable();
+            getProbationClientListTable()
+                .off('draw.dt.probFs')
+                .on('draw.dt.probFs', function () {
+                    buttonFunctionality();
+                });
+
+            probationClientListDataTable = getProbationClientListTable().DataTable({
+                processing: false,
+                serverSide: true,
+                scrollX: true,
+                searching: false,
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10,
+                language: {
+                    emptyTable: 'No clients found.',
+                    zeroRecords: 'No clients found.'
+                },
+                columnDefs: getProbationClientListColumnDefs(),
+                ajax: probationClientListAjax,
+                columns: tableColumns()
+            });
+        } catch (err) {
+            setProbFsClientListLoader(false);
+            probationClientListDataTable = null;
+            showClientListPageError('The client list could not be loaded. Please refresh the page.');
+            if (typeof console !== 'undefined' && console.error) {
+                console.error(err);
+            }
+        }
+    }
+
+    function wireProbationClientListSearchUi() {
+        $(document)
+            .off('click.probFsSearch', '.client_search')
+            .on('click.probFsSearch', '.client_search', function () {
+                if (!probationClientListDataTable) {
+                    return;
+                }
+                hideClientListPageError();
+                probationClientListDataTable.ajax.reload(null, true);
+            });
+
+        $(document)
+            .off('click.probFsSearchClear', '.prob-fs-client-search-clear')
+            .on('click.probFsSearchClear', '.prob-fs-client-search-clear', function (e) {
+                e.preventDefault();
+                $('.prob-fs-client-search-input').val('');
+                updateSearchClearState();
+                hideClientListPageError();
+                if (probationClientListDataTable) {
+                    probationClientListDataTable.ajax.reload(null, true);
+                }
+                $('.prob-fs-client-search-input').trigger('focus');
+            });
+
+        $(document)
+            .off('input.probFsSearch', '.prob-fs-client-search-input')
+            .on('input.probFsSearch', '.prob-fs-client-search-input', function () {
+                updateSearchClearState();
+            });
+
+        $(document)
+            .off('keydown.probFsSearch', '.prob-fs-client-search-input')
+            .on('keydown.probFsSearch', '.prob-fs-client-search-input', function (e) {
+                if (e.key === 'Enter' || e.which === 13) {
+                    e.preventDefault();
+                    $('.client_search').first().trigger('click');
                 }
             });
-        },
-        columns: tableColumns()
-    });
 
-    $('.table_head').on('draw.dt', function() {
-        buttonFunctionality();
-    });
+    }
 
-    injectSearch(searchVal);
-});
+    if (!api) {
+        setProbFsClientListLoader(false);
+        var configMsg =
+            '<div class="alert alert-warning prob-fs-api-missing mb-3" role="alert">' +
+            'Application configuration is missing (API base URL). ' +
+            'Try refreshing the page. If this continues, ensure browser storage is enabled or contact your administrator.' +
+            '</div>';
+        var $cardBody = $(TABLE_SEL).closest('.card-body');
+        if ($cardBody.length) {
+            $cardBody.prepend(configMsg);
+            var $wrap = $(TABLE_SEL).closest('.prob-fs-client-list-wrap');
+            if ($wrap.length) {
+                $wrap.hide();
+            } else {
+                $(TABLE_SEL).hide();
+            }
+        } else {
+            alert(
+                'Application configuration is missing (API base URL). Try refreshing the page or contact your administrator.'
+            );
+        }
+    } else if (!officeId) {
+        setProbFsClientListLoader(false);
+        showClientListPageError('Your session is missing field office information. Please sign in again.');
+    } else {
+        wireProbationClientListSearchUi();
+        initProbationClientListDataTable();
+        if (probationClientListDataTable) {
+            injectSearch();
+            updateSearchClearState();
+        }
+    }
 
 } )( jQuery );

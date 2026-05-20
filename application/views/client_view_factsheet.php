@@ -144,9 +144,7 @@
         width: 100%;
         height: 30px;
         border-radius: 0;
-        border: 0px;
-        color: #007bff;
-        font-weight: bold;
+        font-weight: 600;
     }
     .name-header {
         background-color: transparent;
@@ -209,8 +207,182 @@
         align-items: center; 
         justify-content: flex-start;
     }
+
+    /* Fact sheet UX (scoped): loaders, toasts, modals, responsive shell */
+    .page-client-factsheet .fs-profile-outer {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .page-client-factsheet .fs-tab-panel-wrap {
+        min-height: 8rem;
+    }
+    .page-client-factsheet .fs-panel-loader {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.88);
+        border-radius: 0.25rem;
+        pointer-events: none;
+    }
+    .page-client-factsheet .fs-panel-loader.is-hidden {
+        display: none !important;
+    }
+    @keyframes fsToastIn {
+        from {
+            opacity: 0;
+            transform: translateY(-0.35rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .page-client-factsheet .fs-toast-host {
+        position: fixed;
+        top: 5.5rem;
+        right: 1rem;
+        left: 1rem;
+        z-index: 10050;
+        max-width: 24rem;
+        margin-left: auto;
+        pointer-events: none;
+    }
+    @media (min-width: 576px) {
+        .page-client-factsheet .fs-toast-host {
+            left: auto;
+        }
+    }
+    .page-client-factsheet .fs-toast-host .alert {
+        pointer-events: auto;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 0.35rem 1.25rem rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: 0.375rem;
+        animation: fsToastIn 0.28s ease-out;
+    }
+    .page-client-factsheet .fs-dynamic-toast.alert {
+        display: none;
+        position: relative;
+    }
+    .page-client-factsheet .modal-content > .alert.fs-modal-alert {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-bottom: 0;
+        border: none;
+        border-radius: 0.375rem;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.06);
+    }
+    .page-client-factsheet .modal.fade .modal-dialog {
+        transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease-out;
+    }
+    .page-client-factsheet .modal-content {
+        border: none;
+        border-radius: 0.35rem;
+        box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+    }
+    .page-client-factsheet .modal-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .page-client-factsheet .modal-footer {
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        gap: 0.35rem;
+    }
+    .page-client-factsheet .modal-body .form-control.is-invalid,
+    .page-client-factsheet .modal-body .custom-file-input.is-invalid ~ .custom-file-label {
+        border-color: #dc3545;
+    }
+    .page-client-factsheet .fs-invalid-hint {
+        display: none;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+    .page-client-factsheet .fs-invalid-hint.is-visible {
+        display: block;
+    }
+    .page-client-factsheet .info-nav-tabs-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 2px;
+    }
+    .page-client-factsheet .info-nav-tabs-scroll .nav-tabs {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+    .page-client-factsheet .info-nav-tabs-scroll .nav-link {
+        white-space: nowrap;
+    }
+
+    .page-client-factsheet .fs-empty-state {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: #6c757d;
+        background: #f8f9fa;
+        border-radius: 0.25rem;
+        border: 1px dashed #dee2e6;
+    }
+    .page-client-factsheet .fs-empty-state i {
+        font-size: 2rem;
+        opacity: 0.35;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Docket List — Worksheet / PSIR action controls (scoped) */
+    .page-client-factsheet .fs-docket-cell-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.45rem;
+    }
+    .page-client-factsheet .fs-docket-status {
+        font-size: 0.8125rem;
+        color: #495057;
+        line-height: 1.3;
+        flex: 1 1 5rem;
+        min-width: 0;
+    }
+    .page-client-factsheet .fs-docket-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.3rem;
+    }
+    .page-client-factsheet .fs-docket-actions .btn {
+        font-weight: 600;
+        font-size: 0.6875rem;
+        line-height: 1.2;
+        padding: 0.2rem 0.45rem;
+        border-radius: 0.2rem;
+        white-space: nowrap;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.15s ease, transform 0.12s ease;
+    }
+    .page-client-factsheet .fs-docket-actions .btn:hover {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    }
+    .page-client-factsheet .fs-docket-actions .btn:active {
+        transform: translateY(1px);
+    }
+    .page-client-factsheet .fs-docket-actions .btn i {
+        margin-right: 0.28rem;
+        font-size: 0.75rem;
+        vertical-align: middle;
+    }
+    .page-client-factsheet .fs-docket-actions a.btn {
+        text-decoration: none;
+    }
 </style>
-<body>
+<body class="page-client-factsheet">
     <!-- Left Panel -->
 
     <?php $this->load->view('templates/left-panel.php'); ?> 
@@ -225,7 +397,7 @@
                 </div>
                 <div class="modal-body col-md-12">
                      <div class="container-fluid" id='camcam'>
-                      <a class='btn btn-block btn-primary text-white col-sm-12 col-md-12' id='open'> Open cam</a>
+                      <a class='btn btn-sm btn-block btn-primary text-white col-sm-12 col-md-12' id='open'><i class="fa fa-video-camera" aria-hidden="true"></i> Open cam</a>
                       <br><br>
                       <div class="row">
                         <div class="col" style="text-align: center;">
@@ -241,8 +413,8 @@
                             <div id="control">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-md-6"><a id='retake' class='btn btn-block m-1 hov'><i class="fa fa-refresh"></i></a></div>
-                                        <div class="col-md-6"><a id='snap' class='btn btn-block m-1 hov'><i class="fa fa-camera"></i></a></div>
+                                        <div class="col-md-6"><a id='retake' href="#" class='btn btn-sm btn-light btn-block border m-1 hov' role="button"><i class="fa fa-refresh" aria-hidden="true"></i><span class="sr-only"> Retake</span></a></div>
+                                        <div class="col-md-6"><a id='snap' href="#" class='btn btn-sm btn-primary btn-block m-1 hov' role="button"><i class="fa fa-camera" aria-hidden="true"></i><span class="sr-only"> Capture</span></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -252,13 +424,13 @@
                       </div>
                     </div>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_photo_capture" style="display:none">
-                    <i class="fa fa-check"></i>
+                <div class="alert alert-success fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="success_photo_capture" style="display:none">
+                    <i class="fa fa-check" aria-hidden="true"></i>
                         Photo Capture Successfully Uploaded
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="cancel_modal" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="cancel_modal" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm btn_confirm">Confirm</button>
                 </div>
             </div>
         </div>
@@ -272,16 +444,18 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_upload" style="display:none">
-                    <i class="fa fa-check"></i>
+                <div class="alert alert-success fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="success_upload" style="display:none">
+                    <i class="fa fa-check" aria-hidden="true"></i>
                         Uploaded Successfully
                 </div>
                 <div class="modal-body col-md-12">
-                    <input type="file" id="file-input">
+                    <label class="form-control-label small text-muted" for="file-input">Choose image file</label>
+                    <input type="file" id="file-input" class="form-control-file" accept="image/*">
+                    <div class="fs-invalid-hint" id="file-input-upload-hint" role="alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="dismissedModalUploadPic">Cancel</button>
-                    <button type="button" class="btn btn-primary uploadPhotoBtn">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="dismissedModalUploadPic">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm uploadPhotoBtn">Confirm</button>
                 </div>
             </div>
         </div>
@@ -295,8 +469,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_upload" style="display:none">
-                    <i class="fa fa-check"></i>
+                <div class="alert alert-success fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="success_upload_reporting" style="display:none">
+                    <i class="fa fa-check" aria-hidden="true"></i>
                         Added Successfully
                 </div>
                 <div class="modal-body col-md-12" style="display: flex; justify-content: space-between;">
@@ -325,19 +499,58 @@
                             <span style="font-weight: bold; color: #007bff;"> Validate Client: </span>
                         </div>
                         <div class="takeFingerPrintContainer" style="width: 100%; height: 150px; padding: 10px; align-items: center; margin: auto;">
-                            <button type="button" class="btn btn-info" style="width: 100%; border-radius: 3px;"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  Take Fingerprint</button>
+                            <button type="button" class="btn btn-info btn-sm btn-viewPetitionerFingerprints" style="width: 100%; border-radius: 3px;"><i class="fa fa-eye" aria-hidden="true"></i>  View Fingerprint</button>
                         </div>
                         <div class="takePhotoContainer" style="width: 100%; height: 150px; padding: 10px; align-items: center; margin: auto;">
-                            <button type="button" class="btn btn-info" style="width: 100%; border-radius: 3px;"><i class="fa fa-picture-o" aria-hidden="true"></i>  Take Photo</button> 
+                            <button type="button" class="btn btn-info btn-sm" style="width: 100%; border-radius: 3px;"><i class="fa fa-picture-o" aria-hidden="true"></i>  Take Photo</button> 
                         </div>
-                        <div class="uploadAttachmentContainer" style="width: 100%; height: 150px; padding: 10px; align-items: center; margin: auto;">
-                            <button type="button" class="btn btn-info" style="width: 100%; border-radius: 3px;"><i class="fa fa-upload" aria-hidden="true"></i>  Take Photo</button>
+                        <div class="uploadAttachmentContainer" style="width: 100%; min-height: 150px; padding: 10px; align-items: center; margin: auto;">
+                            <input type="file" id="file-input-reporting-photo" accept="image/*" style="display: none;" aria-hidden="true">
+                            <button type="button" class="btn btn-info btn-sm btn-uploadReportingPhotoPick" style="width: 100%; border-radius: 3px;"><i class="fa fa-upload" aria-hidden="true"></i>  Upload Photo</button>
+                            <div class="fs-invalid-hint" id="file-input-reporting-photo-hint" role="alert"></div>
+                            <div class="reporting-profile-photo-followup mt-2" style="display: none;">
+                                <img id="reporting_photo_preview" src="" alt="Selected photo preview" style="max-width: 100%; max-height: 90px; border-radius: 4px; display: none; margin: 0 auto 8px;">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
-                    <button type="button" class="btn btn-primary saveReportingDate">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm saveReportingDate">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="viewPetitionerFingerprintsModal" tabindex="-1" role="dialog" aria-labelledby="viewPetitionerFingerprintsTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="max-width: 900px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewPetitionerFingerprintsTitle">View fingerprints — petitioner</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body col-md-12">
+                    <p class="text-muted small mb-2 petition-fp-list-hint">All fingerprint files uploaded for this petitioner (all fingers and versions).</p>
+                    <p class="text-info small petition-fp-list-loading" style="display:none" role="status">Loading fingerprints…</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm table_petitioner_fingerprints mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width:48px;">#</th>
+                                    <th>Finger</th>
+                                    <th>File name</th>
+                                    <th>Remarks</th>
+                                    <th style="width:200px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="petitioner_fingerprints_tbody"></tbody>
+                        </table>
+                    </div>
+                    <p class="text-muted mb-0 mt-3 petition-fp-list-empty" style="display:none">No fingerprint files found for this petitioner in this field office.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -351,12 +564,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_upload_other" style="display:none">
-                    <i class="fa fa-check"></i>
+                <div class="alert alert-success fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="success_upload_other" style="display:none">
+                    <i class="fa fa-check" aria-hidden="true"></i>
                         Added Successfully
                 </div>
-                <div class="alert alert-danger" role="alert" id="failed_upload_other" style="display:none">
-                    <i class="fa fa-times"></i>
+                <div class="alert alert-danger fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="failed_upload_other" style="display:none">
+                    <i class="fa fa-times" aria-hidden="true"></i>
                         Upload Failed! Please Check Your File Before Uploading.
                 </div>
                 <div class="modal-body col-md-12" style="display: flex; justify-content: space-between;">
@@ -382,14 +595,15 @@
                         <div class="row">
                             <div class="row form-group col-sm-12 col-md-9 col-lg-9 col-xl-9">
                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Attachment:</label></div>
-                                <div class="col-12 col-md-8"><input type="file" id="file-input-other"></div>
+                                <div class="col-12 col-md-8"><input type="file" id="file-input-other" class="form-control-file"></div>
+                                <div class="col-12 col-md-8 offset-md-4"><div class="fs-invalid-hint" id="file-input-other-hint" role="alert"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
-                    <button type="button" class="btn btn-primary saveOtherDocument">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm saveOtherDocument">Confirm</button>
                 </div>
             </div>
         </div>
@@ -403,8 +617,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_upload_fingerprint" style="display:none">
-                    <i class="fa fa-check"></i>
+                <div class="alert alert-success fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="success_upload_fingerprint" style="display:none">
+                    <i class="fa fa-check" aria-hidden="true"></i>
                         Added Successfully
                 </div>
                 <div class="modal-body col-md-12" style="display: flex; justify-content: space-between;">
@@ -444,8 +658,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
-                    <button type="button" class="btn btn-primary saveFingerPrints">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm saveFingerPrints">Confirm</button>
                 </div>
             </div>
         </div>
@@ -459,16 +673,29 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_upload_investigation" style="display:none">
-                    <i class="fa fa-check"></i>
+                <div class="alert alert-success fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="success_upload_investigation" style="display:none">
+                    <i class="fa fa-check" aria-hidden="true"></i>
                         Added Successfully
                 </div>
-                <div class="alert alert-danger" role="alert" id="failed_upload_investigation" style="display:none">
-                    <i class="fa fa-times"></i>
+                <div class="alert alert-danger fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="failed_upload_investigation" style="display:none">
+                    <i class="fa fa-times" aria-hidden="true"></i>
                         Upload Failed! Please Check Your File Before Uploading.
+                </div>
+                <div class="alert alert-warning fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="no_dockets_upload_investigation" style="display:none" aria-live="assertive">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    There are no investigation dockets for this client. Create or assign an investigation docket before uploading documents here.
                 </div>
                 <div class="modal-body col-md-12" style="display: flex; justify-content: space-between;">
                     <div class="reportingDetailsContainer" style="width: 100%; padding: 20px;">
+                        <div class="row">
+                            <div class="row form-group col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                                <div class="col col-md-4"><label for="select-docket-investigation" class=" form-control-label">Docket number:</label></div>
+                                <div class="col-12 col-md-8">
+                                    <select id="select-docket-investigation" class="form-control form-control-sm"></select>
+                                    <div class="fs-invalid-hint" id="select-docket-investigation-hint" role="alert"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="row form-group col-sm-12 col-md-9 col-lg-9 col-xl-9">
                                 <div class="col col-md-4"><label class=" form-control-label">Investigating Officer:</label></div>
@@ -478,14 +705,15 @@
                         <div class="row">
                             <div class="row form-group col-sm-12 col-md-9 col-lg-9 col-xl-9">
                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Attachment:</label></div>
-                                <div class="col-12 col-md-8"><input type="file" id="file-input-investigation"></div>
+                                <div class="col-12 col-md-8"><input type="file" id="file-input-investigation" class="form-control-file"></div>
+                                <div class="col-12 col-md-8 offset-md-4"><div class="fs-invalid-hint" id="file-input-investigation-hint" role="alert"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
-                    <button type="button" class="btn btn-primary saveInvestigationDocument">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm saveInvestigationDocument">Confirm</button>
                 </div>
             </div>
         </div>
@@ -499,16 +727,29 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success" role="alert" id="success_upload_supervision" style="display:none">
-                    <i class="fa fa-check"></i>
+                <div class="alert alert-success fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="success_upload_supervision" style="display:none">
+                    <i class="fa fa-check" aria-hidden="true"></i>
                         Added Successfully
                 </div>
-                <div class="alert alert-danger" role="alert" id="failed_upload_supervision" style="display:none">
-                    <i class="fa fa-times"></i>
+                <div class="alert alert-danger fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="failed_upload_supervision" style="display:none">
+                    <i class="fa fa-times" aria-hidden="true"></i>
                         Upload Failed! Please Check Your File Before Uploading.
+                </div>
+                <div class="alert alert-warning fs-modal-alert mx-3 mb-0 mt-2" role="alert" id="no_dockets_upload_supervision" style="display:none" aria-live="assertive">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    There are no supervision dockets for this client. Create or assign a supervision docket before uploading documents here.
                 </div>
                 <div class="modal-body col-md-12" style="display: flex; justify-content: space-between;">
                     <div class="reportingDetailsContainer" style="width: 100%; padding: 20px;">
+                        <div class="row">
+                            <div class="row form-group col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                                <div class="col col-md-4"><label for="select-docket-supervision" class=" form-control-label">Docket number:</label></div>
+                                <div class="col-12 col-md-8">
+                                    <select id="select-docket-supervision" class="form-control form-control-sm"></select>
+                                    <div class="fs-invalid-hint" id="select-docket-supervision-hint" role="alert"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="row form-group col-sm-12 col-md-9 col-lg-9 col-xl-9">
                                 <div class="col col-md-4"><label class=" form-control-label">Investigating Officer:</label></div>
@@ -518,14 +759,15 @@
                         <div class="row">
                             <div class="row form-group col-sm-12 col-md-9 col-lg-9 col-xl-9">
                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Attachment:</label></div>
-                                <div class="col-12 col-md-8"><input type="file" id="file-input-supervision"></div>
+                                <div class="col-12 col-md-8"><input type="file" id="file-input-supervision" class="form-control-file"></div>
+                                <div class="col-12 col-md-8 offset-md-4"><div class="fs-invalid-hint" id="file-input-supervision-hint" role="alert"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
-                    <button type="button" class="btn btn-primary saveSupervisionDocument">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm saveSupervisionDocument">Confirm</button>
                 </div>
             </div>
         </div>
@@ -561,12 +803,14 @@
                                 <strong class="card-title">Fact Sheet</strong>
                                 <!-- <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div> -->
                             </div>
-                            <div class="card-body">
+                            <div class="fs-toast-host" aria-live="polite" aria-atomic="true">
                                 <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
+                                    <i class="fa fa-check" aria-hidden="true"></i>
                                         Successfully Updated  
                                 </div>
+                                <div id="fsDynamicToast" class="alert fs-dynamic-toast alert-info mb-0" role="alert"></div>
                             </div>
+                            <div class="fs-profile-outer">
                             <div class="profile-container">
                                 <div class="left-side">
                                     <div class="name-container">
@@ -583,7 +827,7 @@
                                 <div class="img-body">
                                     <div class="img-cont">
                                         <img class="align-content" id="client_photo" src="images/nopic.jpg">
-                                        <button type="button" data-toggle="modal" data-target="#cameraModal" class="btn btn-sm btn-take">
+                                        <button type="button" data-toggle="modal" data-target="#cameraModal" class="btn btn-sm btn-outline-primary btn-block btn-take rounded-0">
                                             <i class="fa fa-camera" aria-hidden="true"></i> Take Photo
                                         </button>
                                     </div>
@@ -597,9 +841,10 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                             <div class="info-body" style="margin-top: 40px">
-                                <div class="info-nav">
-                                    <ul class="nav nav-tabs">
+                                <div class="info-nav info-nav-tabs-scroll">
+                                    <ul class="nav nav-tabs flex-nowrap">
                                         <li class="nav-item">
                                             <a class="nav-link active" href="#" data-toggle="tab" id="investigationTab">Investigation</a>
                                         </li>
@@ -626,19 +871,28 @@
                                 <div class="info-action">
                                     <button class="btn btn-sm btn-primary btn-addInvestigation" type="submit"><i class="fa fa-plus-circle"></i>  Add Investigation Document/Report</button>
                                 </div>
+                                <div class="fs-tab-panel-wrap position-relative">
+                                <div id="fsTabContentLoader" class="fs-panel-loader is-hidden" aria-live="polite" aria-busy="false">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted fs-panel-loader-text">Loading…</p>
+                                </div>
                                 <div class="info-details">
                                     <div class="tab-pane fade show active" id="investigationContent">
                                         <table id="investigationTableStart" class="table table-bordered table_head" style="max-width: 100%;">
+                                            <caption class="sr-only">Investigation documents for this client</caption>
                                             <thead>
-                                                <th>#</th>
-                                                <th>Reports</th>
-                                                <th>Investigating Officer</th>
-                                                <th>Actions</th>
+                                                <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Reports</th>
+                                                <th scope="col">Investigating Officer</th>
+                                                <th scope="col">Actions</th>
+                                                </tr>
                                             </thead>
                                             <tbody class="table_body">
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -656,6 +910,9 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/html2canvas.min.js"></script>
+    <script src="assets/js/pisJs/ppaWorksheetPrintHtml.js"></script>
+    <script src="assets/js/pisJs/ppaPsirPrintHtml.js"></script>
     <script src="assets/js/pisJs/clientViewFactSheet.js"></script>
 
 

@@ -1,17 +1,24 @@
-<?php $this->load->view('templates/header.php'); ?> 
-<style type="text/css">
-    .spinner {
-        border: 8px solid #f3f3f3; /* Light gray */
-        border-top: 8px solid black; /* Black */
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
+<?php $this->load->view('templates/header.php'); ?>
+<style>
+    .sup-att-page .card-body--with-loader {
+        position: relative;
+        min-height: 14rem;
     }
-    /* Spinner animation */
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+
+    .sup-att-page #sc_ppr_sup_view_loader {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 0 0 0.25rem 0.25rem;
+    }
+
+    .sup-att-page #sc_ppr_sup_view_loader.is-hidden {
+        display: none !important;
     }
 
     .view-page .card {
@@ -86,55 +93,65 @@
 <body>
     <!-- Left Panel -->
 
-    <?php $this->load->view('templates/left-panel.php'); ?> 
-    
+    <?php $this->load->view('templates/left-panel.php'); ?>
+
     <!-- /#left-panel -->
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
-        <?php $this->load->view('templates/avatar.php'); ?> 
+        <?php $this->load->view('templates/avatar.php'); ?>
         <!-- /header -->
 
         <div class="breadcrumbs">
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="parole-pardon-supervision">Parole and Pardon</a></li>
-                            <li class="active">Supervision List View</li>
+                            <li class="active">View</li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="content mt-3 view-page">
+        <div class="content mt-3 view-page sup-att-page">
             <div class="animated fadeIn">
                 <div class="row">
-                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" id="sc_ppr_sup_view_error" style="display:none;" role="alert"></div>
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">View</strong>
-                                <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
+                            <div class="card-header">
+                                <strong class="card-title">View Supervision Docket</strong>
                             </div>
-                            <div class="card-body">
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Added  
+                            <div class="card-body card-body--with-loader">
+                                <div id="sc_ppr_sup_view_loader" role="status" aria-live="polite" aria-busy="true">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted">Loading…</p>
                                 </div>
 
                                 <div class="row">
+                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label class="field-label">Client Type</label>
+                                        <select class="form-control client_type_update select2" name="sc_ppr_view_client_type" disabled>
+                                            <option selected value="select" disabled>Select</option>
+                                            <option value="PAROLEE">Parolee</option>
+                                            <option value="PARDONEE">Pardonee</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
-                                            <div class="title">Docket No.</div>
-                                            <input type="text" name="text-input" placeholder="Docket No." class="form-control docket_num_update" disabled>
+                                            <div class="title">Docket Number</div>
+                                            <input type="text" name="sc_ppr_view_docket" placeholder="Docket Number" class="form-control docket_num_update" readonly autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
                                             <div class="title">Client</div>
-                                            <input type="text" name="text-input" placeholder="Client" class="form-control client_update" disabled>
+                                            <input type="text" name="sc_ppr_view_client" placeholder="Client" class="form-control client_update" readonly autocomplete="name">
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +172,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Case Classification</label>
-                                                        <select class="form-control case_classification select2">
+                                                        <select class="form-control case_classification select2" name="sc_ppr_view_case_class" disabled>
                                                             <option value="MINIMUM">MINIMUM</option>
                                                             <option value="MEDIUM">MEDIUM</option>
                                                             <option value="MAXIMUM">MAXIMUM</option>
@@ -163,23 +180,23 @@
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Received by the PPO</label>
-                                                        <input type="date" class="form-control date_received_by_ppo">
+                                                        <input type="date" class="form-control date_received_by_ppo" name="sc_ppr_view_date_rcv" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Supervising Officer</label>
-                                                        <input type="text" name="text-input" placeholder="Supervising Officer" class="form-control sup_officer">
+                                                        <input type="text" name="sc_ppr_view_sup_officer" placeholder="Supervising Officer" class="form-control sup_officer" readonly autocomplete="name">
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Supervision Start Date</label>
-                                                        <input type="date" class="form-control sup_start_date">
+                                                        <input type="date" class="form-control sup_start_date" name="sc_ppr_view_sup_start" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Supervision End Date</label>
-                                                        <input type="date" class="form-control sup_end_date">
+                                                        <input type="date" class="form-control sup_end_date" name="sc_ppr_view_sup_end" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -203,7 +220,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Office Findings</label>
-                                                        <select class="form-control office_findings">
+                                                        <select class="form-control office_findings" name="sc_ppr_view_office_findings" disabled>
                                                             <option value="">Please choose</option>
                                                             <option value="SUMMARY">SUMMARY REPORT</option>
                                                             <option value="INFRACTION">INFRACTION REPORT</option>
@@ -213,17 +230,17 @@
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Specify the Other Submitted Reports</label>
-                                                        <input type="text" name="text-input" placeholder="Specify the Other Submitted Reports" class="form-control specify_report">
+                                                        <input type="text" name="sc_ppr_view_specify_report" placeholder="Specify the Other Submitted Reports" class="form-control specify_report" readonly autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Submitted to the Board</label>
-                                                        <input type="date" class="form-control date_submitted_board">
+                                                        <input type="date" class="form-control date_submitted_board" name="sc_ppr_view_date_board" readonly>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Report Submitted to the Regional Director for Transfer to Other PPO's</label>
-                                                        <input type="date" class="form-control date_submitted_regional_dir">
+                                                        <input type="date" class="form-control date_submitted_regional_dir" name="sc_ppr_view_date_rd" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -247,24 +264,23 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Board Resolution</label>
-                                                        <select class="form-control board_resolution">
+                                                        <select class="form-control board_resolution" name="sc_ppr_view_board_res" disabled>
                                                             <option value="">Please choose</option>
                                                             <option value="FINAL">FINAL RELEASE AND DISCHARGE</option>
                                                             <option value="ARREST">ARREST/RECOMMITMENT</option>
                                                             <option value="DEATH">DEATH</option>
                                                             <option value="OTHERS">OTHERS</option>
-                                                            <!-- <option value="OTHERS/WORKABROAD">OTHERS/WORKABROAD</option> -->
                                                         </select>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6">
-                                                        <label class="field-label">Specify the Other Resolutions reeived from the Board</label>
-                                                        <input type="text" name="text-input" placeholder="Specify the Other Resolutions reeived from the Board" class="form-control specify_resolution">
+                                                        <label class="field-label">Specify the Other Resolutions received from the Board</label>
+                                                        <input type="text" name="sc_ppr_view_specify_res" placeholder="Specify the Other Resolutions received from the Board" class="form-control specify_resolution" readonly autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Resolution received from the Board</label>
-                                                        <input type="date" class="form-control date_resolution">
+                                                        <input type="date" class="form-control date_resolution" name="sc_ppr_view_date_res_board" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -288,7 +304,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-12 col-md-6">
                                                         <label class="field-label">Date Resolution Received from the Regional Director</label>
-                                                        <input type="date" class="form-control date_resolution_rd">
+                                                        <input type="date" class="form-control date_resolution_rd" name="sc_ppr_view_date_res_rd" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -307,11 +323,9 @@
 
     <!-- Right Panel -->
 
-    <?php $this->load->view('templates/footer.php'); ?> 
+    <?php $this->load->view('templates/footer.php'); ?>
 
-    <script src="assets/js/pisJs/SC_Pre_Parole_Supervision/view.js">
-
-    </script>
+    <script src="assets/js/pisJs/SC_Pre_Parole_Supervision/view.js"></script>
 
 </body>
 

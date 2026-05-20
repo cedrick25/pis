@@ -2,7 +2,6 @@
         
         var api = localStorage.getItem('api');
         var ___ctx = api;
-        console.log(___ctx)
 
         var __getContext = function() {
             return ___ctx;

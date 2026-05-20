@@ -1,4 +1,4 @@
-<?php $this->load->view('templates/header.php'); ?> 
+<?php $this->load->view('templates/header.php'); ?>
 <style>
     .nav-link {
         border-bottom: 3px solid transparent;
@@ -8,31 +8,45 @@
     .nav-link.active {
         border-bottom: 3px solid #0069d9;
     }
-    .tab-content {
+
+    .sup-att-page .tab-content {
         width: 100%;
         overflow: auto;
     }
-    .hidden {
-        display: none;
+
+    .sup-att-page .card-body--with-loader {
+        position: relative;
+        min-height: 14rem;
+    }
+
+    .sup-att-page #sup_attachments_loader {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 0 0 0.25rem 0.25rem;
+    }
+
+    .sup-att-page #sup_attachments_loader.is-hidden {
+        display: none !important;
     }
 </style>
 <body>
-    <!-- Left Panel -->
+    <?php $this->load->view('templates/left-panel.php'); ?>
 
-    <?php $this->load->view('templates/left-panel.php'); ?> 
-    
-    <!-- /#left-panel -->
     <div id="right-panel" class="right-panel">
 
-        <!-- Header-->
-        <?php $this->load->view('templates/avatar.php'); ?> 
-        <!-- /header -->
+        <?php $this->load->view('templates/avatar.php'); ?>
 
         <div class="breadcrumbs">
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="supervision_docketing">Supervision Docket</a></li>
                             <li class="active">View Attachments</li>
@@ -42,57 +56,64 @@
             </div>
         </div>
 
-	    <div class="content mt-3">
+        <div class="content mt-3 sup-att-page">
             <div class="animated fadeIn">
                 <div class="row">
-                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" id="attachments_error" style="display:none;" role="alert"></div>
                         <div class="card upload_file">
                             <div class="card-header">
-                                <strong class="card-title">Upload File</strong>
+                                <strong class="card-title">Supervision — Upload attachment</strong>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body card-body--with-loader">
+                                <div id="sup_attachments_loader" role="status" aria-live="polite" aria-busy="true">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted">Loading…</p>
+                                </div>
                                 <div class="alert alert-success" role="alert" id="success_upload" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Uploaded 
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    Successfully uploaded.
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name</label></div>
+                                    <div class="col col-md-3"><label for="sup_att_client_name" class="form-control-label">Name</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control name"  placeholder="Client Name" disabled />
+                                        <input type="text" id="sup_att_client_name" name="sup_att_client_name" class="form-control name" placeholder="Client Name" disabled autocomplete="off" />
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Docket Number</label></div>
+                                    <div class="col col-md-3"><label for="sup_att_docket_num" class="form-control-label">Docket Number</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="text" name="type" class="form-control docket_num"  placeholder="Docket Number" disabled />
+                                        <input type="text" id="sup_att_docket_num" name="sup_att_docket_num" class="form-control docket_num" placeholder="Docket Number" disabled autocomplete="off" />
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">CMIS Table</label></div>
+                                    <div class="col col-md-3"><label for="sup_att_cmis_kind" class="form-control-label">Kind</label></div>
                                     <div class="col-12 col-md-6">
-                                        <select class="form-control cmisTable select2">
+                                        <select id="sup_att_cmis_kind" name="sup_att_cmis_kind" class="form-control cmisTable select2">
                                             <option selected value="none" disabled>Select</option>
-                                            <option value="F5T8">Referals Received</option>
+                                            <option value="F5T8">Referrals Received</option>
                                             <option value="F5T9">Cases Acted Upon</option>
                                             <option value="F5T11">Cases Disposed Of By The Court</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row form-group col-md-12">
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Type</label></div>
+                                    <div class="col col-md-3"><label for="sup_att_doc_type" class="form-control-label">Type</label></div>
                                     <div class="col-12 col-md-6">
-                                        <select class="form-control type select2">
+                                        <select id="sup_att_doc_type" name="sup_att_doc_type" class="form-control type select2">
                                             <option selected value="none" disabled>Select</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group col-md-12">         
-                                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Upload File</label></div>
-                                    <div class="col col-md-3"><input type="file" name="fileupload" class="form-control-file" id="fileupload"></div>
+                                <div class="row form-group col-md-12">
+                                    <div class="col col-md-3"><label for="fileupload" class="form-control-label">Upload File</label></div>
+                                    <div class="col-12 col-md-6">
+                                        <input type="file" name="sup_att_file" class="form-control-file" id="fileupload" accept=".pdf,.doc,.docx,image/*">
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm btn-sm float-right">Confirm</button>
                             </div>
                         </div>
                         <div class="card">
@@ -102,13 +123,14 @@
                             <div class="card-body">
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="investigation_tab" role="tabpanel" aria-labelledby="home-tab">
-                                        <table id="" class="table table_head" width="100%">
+                                        <table id="supervision_uploads_table" class="table table_head table-striped table-bordered" width="100%">
                                             <thead>
-                                                <th>#</th>
-                                                <th>File Name</th>
-                                                <th>Version</th>
-                                                <th>Remarks</th>
-                                                <th>Actions</th>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>File Name</th>
+                                                    <th>Remarks</th>
+                                                    <th>Actions</th>
+                                                </tr>
                                             </thead>
                                             <tbody class="table_body">
                                             </tbody>
@@ -122,15 +144,11 @@
             </div>
         </div>
 
-
     </div>
 
-    <?php $this->load->view('templates/footer.php'); ?> 
+    <?php $this->load->view('templates/footer.php'); ?>
 
-    <script src="assets/js/pisJs/PIS_Supervision/supervisionViewAttachments.js">
-
-    </script>
+    <script src="assets/js/pisJs/PIS_Supervision/supervisionViewAttachments.js"></script>
 
 </body>
-
 </html>

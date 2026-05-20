@@ -291,7 +291,7 @@
                                 var data = JSON.parse(localStorage.getItem('permission'));
                                 console.log(data)
                                 setTimeout(function () {
-                                    window.location.href="dashboard"
+                                    window.location.href="investigation_docketing"
                                 },1000);
                             } else {
                                 $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')

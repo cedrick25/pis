@@ -1,5 +1,71 @@
 <?php $this->load->view('templates/header.php'); ?> 
-
+<style type="text/css">
+.table_head {
+    width: 100% !important;
+    word-wrap: break-word;
+}
+.prob-fs-client-list-wrap {
+    min-height: 8rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.prob-fs-client-list-loader {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 0.25rem;
+}
+.prob-fs-client-list-loader.is-hidden {
+    display: none !important;
+}
+.prob-fs-client-search-wrap {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+.prob-fs-client-search-wrap .prob-fs-client-search-input {
+    padding-right: 2rem;
+}
+.prob-fs-client-search-clear {
+    position: absolute;
+    right: 0.35rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 0.15rem 0.35rem;
+    line-height: 1;
+    color: #6c757d;
+    cursor: pointer;
+    display: none;
+}
+.prob-fs-client-search-clear:hover,
+.prob-fs-client-search-clear:focus {
+    color: #343a40;
+    outline: none;
+}
+.prob-fs-client-search-wrap.has-value .prob-fs-client-search-clear {
+    display: block;
+}
+@media (min-width: 768px) {
+    .card-body div.dataTables_wrapper > div.row:first-of-type {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .card-body div.dataTables_wrapper > div.row:first-of-type > div[class*="col-"] {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+    }
+}
+</style>
 <body>
     <!-- Left Panel -->
 
@@ -7,31 +73,6 @@
     
     <!-- /#left-panel -->
 
-    <div class="modal fade" id="removeModal" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="deactivate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Remove Docket</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
-                    <i class="fa fa-check"></i>
-                        Removed Successfully  
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure you want to remove this Docket: <b><span class="docket"></span></b>? 
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_remove_confirm btn-sm">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -58,23 +99,34 @@
 
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header" id="pager">
-                                <strong class="card-title">Probation Fact Sheet</strong>
+                            <div class="card-header d-flex flex-wrap align-items-center justify-content-between" id="pager">
+                                <strong class="card-title mb-0">Probation Fact Sheet</strong>
+                                <div id="prob_fs_client_search_slot" class="mt-2 mt-md-0"></div>
                             </div>
                             <div class="card-body">
-                                <table id="" class="table table_head" width="100%">
+                                <div id="client_list_page_error" class="alert alert-danger" style="display:none;" role="alert"></div>
+                                <div class="prob-fs-client-list-wrap position-relative">
+                                    <div id="probFsClientListLoader" class="prob-fs-client-list-loader" aria-live="polite" aria-busy="true">
+                                        <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                        <p class="mb-0 mt-2 text-muted">Loading clients…</p>
+                                    </div>
+                                <div class="table-responsive">
+                                <table id="tblProbationClientList" class="table table_head" width="100%">
+                                    <caption class="sr-only">Probation fact sheet clients for this field office</caption>
                                     <thead>
-                                        <th>#</th>
-                                        <th>Full Name</th>
-                                        <th>Criminal Case Number</th>
-                                        <th>Field Office</th>
-                                        <th>Worksheet Status</th>
-                                        <!-- <th>Actions</th> -->
+                                        <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Criminal Case Number</th>
+                                        <th scope="col">Field Office</th>
+                                        <th scope="col">Worksheet Status</th>
+                                        </tr>
                                     </thead>
                                     <tbody class="table_body">
                                     </tbody>
                                 </table>
-                            </div>
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>

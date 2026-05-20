@@ -1,361 +1,479 @@
-    ( function ( $ ) {
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
-        console.log(___ctx)
+(function ($) {
+    var api = localStorage.getItem('api');
+    var ___ctx = api;
+    var supDocketListDataTable = null;
 
-        var __getContext = function() {
-            return ___ctx;
-        };
-
-        var __executeExternalGet = function(path, customLoader) {
-            path = __getContext() + path;
-            // path = $.wms.getContextPath() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
-        var __executeExternalPost = function(path, jsonObj, customLoader) {
-            path = __getContext() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                headers: {
-                    // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
-                },
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
-
-
-        function buttonVisibility (){
-            var data = JSON.parse(localStorage.getItem('permission'));
-            if (data != null) {
-                data.forEach(function(data){
-                    if (data.type == "ACTION") {
-                        // console.log(data.value)
-                        setTimeout(function() {
-                            if (!data.value) {
-                                var element = $('.' + data.detail);
-                                element.hide();
-                            }else{
-                                var element = $('.' + data.detail);
-                                element.show();
-                            }
-                        }, 10);
-                    }else if (data.type == "VIEW") {
-                        if (!data.value) {
-                            var element = $('.' + data.detail);
-                            element.hide();
-                        }else{
-                            var element = $('.' + data.detail);
-                            element.show();
-                        }
-                    }else{
-                    }
-                });
-            }
+    function joinApiUrl(base, path) {
+        var b = String(base == null ? '' : base).replace(/\/+$/, '');
+        var p = String(path == null ? '' : path).replace(/^\/+/, '');
+        if (!b) {
+            return p;
         }
-
-        function buttonFunctionality(){
-            $(".btn_update").unbind("click").on("click", function(){
-                var docket_number = $(this).data("docket");
-                window.location.href = api+'/pis/supervision_docket_update?docket_number='+docket_number;
-            })
-            $(".btn_view").unbind("click").on("click", function(){
-                var docket_number = $(this).data("docket");
-                window.location.href = api+'/pis/supervision_docket_view?docket_number='+docket_number;
-            })
-
-            $(".btn_remove").unbind("click").on("click", function(){
-                var docket_number = $(this).data("docket");
-                var office_id = $(this).data("oi");
-                $(".docket").html(docket_number)
-                $(".btn_remove_confirm").unbind("click").on("click", function(){
-
-                    __executeExternalPost('8000/docketbook/remove/'+docket_number+'/'+office_id).done(function (result) {
-                        if (result.status != "ERROR") {
-                                $(".form-control").val('');
-                                $('#success_remove').show();
-                                    setTimeout(function () {
-                                        $('#removeModal').modal('hide');
-                                        $('#success_remove').hide();
-                                        $('.table_head').DataTable().ajax.reload();
-                                    }, 1000);
-                        }else{
-                            alert("failed")
-                        }
-                    })
-                })
-            })
-
-            $(".btn_attachments").unbind("click").on("click", function(){
-                var docket_number = $(this).data("docket");
-                var id = $(this).data("id");
-                var type = $(this).data("type");
-                var fi = $(this).data("oi");
-                // var senderId = $(this).data("sender");
-                // window.location.href = api+'/pis/upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi+'&senderId='+senderId;
-                window.location.href = api+'/pis/pis-supervision-file-upload?docket_number='+docket_number+'&id='+id+'&type='+type+'&fi='+fi;
-            })
+        if (!p) {
+            return b;
         }
+        if (b.slice(-1) === ':' && /^\d+\//.test(p)) {
+            return b + p;
+        }
+        return b + '/' + p;
+    }
 
-        function drawTable() {
-            $('.table_head').DataTable({
-                "processing": false,
-                "serverSide": true,
-                "scrollX": true,
-                "searching": false,
-                "lengthMenu": [10, 25, 50, 100],
-                "pageLength": 10,
-                "columnDefs": [
-                    { "width": "5%", "targets": [0] },
-                    { "width": "15%", "targets": [1] },
-                    { "width": "10%", "targets": [2] },
-                    { "width": "17%", "targets": [3] },
-                    { "width": "13%", "targets": [4] },
-                    { "width": "15%", "targets": [5] },
-                    { "width": "25%", "targets": [6] }
-            ],
-            ajax: {
-                url: api+"8000/docketbook",
-                type: 'GET',
-                cache: true,
-                data: function (d) {
-                return {
-                    page: d.start / d.length,  // Pagination
-                    size: d.length,            // Page size
-                    // name: d.search.value    // Pass search term as 'keyword'
-                    type: "PIS_SUP",
-                    officeId: $.cookie('field_office_id')
+    function escAttr(str) {
+        return String(str == null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;');
+    }
 
-                };
-                },
-                dataFilter: function(data) {
-                    var json = jQuery.parseJSON(data);
-                    json.recordsTotal = json.totalElements;
-                    json.recordsFiltered = json.totalElements;
-                    json.data = json.content;
-                    return JSON.stringify(json);
-                }
+    function namePartEmpty(v) {
+        return v === null || v === undefined || String(v).trim() === '';
+    }
+
+    function hidePageError() {
+        $('#sup_docketing_page_error').hide().empty();
+    }
+
+    function showPageError(msg) {
+        $('#sup_docketing_page_error').text(msg).show();
+    }
+
+    var DEFAULT_LOADER_TEXT = 'Loading dockets…';
+
+    function setSupDocketListLoader(visible, statusText) {
+        var $el = $('#supDocketListLoader');
+        if (!$el.length) {
+            return;
+        }
+        var msg = statusText != null && statusText !== '' ? statusText : DEFAULT_LOADER_TEXT;
+        $el.find('.sup-docket-loader-text').text(msg);
+        if (visible) {
+            $el.removeClass('is-hidden');
+            $el.attr('aria-busy', 'true');
+        } else {
+            $el.addClass('is-hidden');
+            $el.attr('aria-busy', 'false');
+            $el.find('.sup-docket-loader-text').text(DEFAULT_LOADER_TEXT);
+        }
+    }
+
+    function safeDataTablesCallback(callback, payload) {
+        try {
+            callback(payload);
+        } catch (e) {
+            /* DataTables can throw on malformed rows; loader still clears via complete/draw */
+        }
+    }
+
+    var __getContext = function () {
+        return ___ctx;
+    };
+
+    var __executeExternalGet = function (path, customLoader) {
+        path = joinApiUrl(__getContext(), path);
+        var d = $.Deferred();
+        if (customLoader) {
+            $('#' + customLoader).show();
+            $('#' + customLoader).removeClass('hide');
+        }
+        $.ajax({
+            method: 'GET',
+            url: path,
+            dataType: 'json'
+        }).done(function (data) {
+            if (customLoader) {
+                $('#' + customLoader).hide();
+                $('#' + customLoader).addClass('hide');
+            }
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            if (customLoader) {
+                $('#' + customLoader).hide();
+                $('#' + customLoader).addClass('hide');
+            }
+            d.resolve({
+                status: 'ERROR',
+                message: errorThrown || textStatus
+            });
+        });
+        return d.promise();
+    };
+
+    var __executeExternalPost = function (path, jsonObj, customLoader) {
+        path = joinApiUrl(__getContext(), path);
+        var d = $.Deferred();
+        var body = jsonObj === undefined || jsonObj === null
+            ? '{}'
+            : (typeof jsonObj === 'string' ? jsonObj : JSON.stringify(jsonObj));
+        if (customLoader) {
+            $('#' + customLoader).show();
+            $('#' + customLoader).removeClass('hide');
+        }
+        $.ajax({
+            method: 'POST',
+            url: path,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            columns: tableColumns()
+            data: body
+        }).done(function (data) {
+            if (customLoader) {
+                $('#' + customLoader).hide();
+                $('#' + customLoader).addClass('hide');
+            }
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            if (customLoader) {
+                $('#' + customLoader).hide();
+                $('#' + customLoader).addClass('hide');
+            }
+            d.resolve({
+                status: 'ERROR',
+                message: errorThrown || textStatus
             });
-            $('.table_head').on('draw.dt', function() {
-                buttonFunctionality();
-                buttonVisibility();
-            });
-        }
+        });
+        return d.promise();
+    };
 
-        var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
-            '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
-            '<input type="text" class="form-control form-control-sm docketSearchInput" placeholder="Search Docket Number" style="width: 250px;">' +
-            '<button class="btn btn-primary btn-sm docket_search"><i class="fa fa-search"></i></button>' +
-            '</div>';
-
-        function injectSearch(value) {
-            var $target = $('.dataTables_length').parent().next();
-            if ($target.length) {
-                $target.html(searchHtml);
-                if (value) $target.find('.docketSearchInput').val(value);
+    function buttonVisibility() {
+        var raw = localStorage.getItem('permission');
+        var data = null;
+        if (raw) {
+            try {
+                data = JSON.parse(raw);
+            } catch (e) {
+                data = null;
             }
         }
-
-        function drawSearchTable(searchVal) {
-            var fieldOfficeId = $.cookie('field_office_id');
-            var clientType = "PIS_SUP";
-
-            $('.table_head').DataTable({
-                "processing": false,
-                "serverSide": true,
-                "scrollX": true,
-                "searching": false,
-                "lengthMenu": [10, 25, 50, 100],
-                "pageLength": 10,
-                "columnDefs": [
-                    { "width": "5%", "targets": [0] },
-                    { "width": "15%", "targets": [1] },
-                    { "width": "10%", "targets": [2] },
-                    { "width": "17%", "targets": [3] },
-                    { "width": "13%", "targets": [4] },
-                    { "width": "15%", "targets": [5] },
-                    { "width": "25%", "targets": [6] }
-                ],
-                "ajax": function(data, callback, settings) {
-                    var page = data.start / data.length;
-                    var size = data.length;
-                    $.ajax({
-                        url: `${___ctx}8000/docketbook/search/PROBATIONER?page=${page}&size=${size}`,
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({
-                            name: searchVal,
-                            fieldOfficeId: fieldOfficeId,
-                            canSeeOtherOffices: false
-                        }),
-                        success: function(json) {
-                            callback({
-                                recordsTotal: json.totalElements,
-                                recordsFiltered: json.totalElements,
-                                data: json.content || []
-                            });
-                        }
-                    });
-                },
-                columns: tableColumns()
-            });
-
-            $('.table_head').on('draw.dt', function() {
-                buttonFunctionality();
-                buttonVisibility();
-            });
+        if (data == null) {
+            return;
         }
-
-        $(document).on('keypress', '.docketSearchInput', function(e) {
-            if (e.which === 13) {
-                $('.docket_search').trigger('click');
+        data.forEach(function (row) {
+            if (row.type === 'ACTION') {
+                var el = $('.' + row.detail);
+                if (!row.value) {
+                    el.hide();
+                } else {
+                    el.show();
+                }
+            } else if (row.type === 'VIEW') {
+                var elv = $('.' + row.detail);
+                if (!row.value) {
+                    elv.hide();
+                } else {
+                    elv.show();
+                }
             }
         });
+    }
 
-        $(document).on('click', '.docket_search', function() {
-            var searchVal = $('.docketSearchInput').val().trim();
+    function bindTableDrawOnce() {
+        $('#tblSupervisionDocketing').off('draw.dt.supDocket').on('draw.dt.supDocket', function () {
+            buttonVisibility();
+            setSupDocketListLoader(false);
+        });
+    }
 
-            $('.table_head').DataTable().destroy();
-            $('.table_body').empty();
+    function bindRowActionsOnce() {
+        $(document).off('click.supDocket', '.btn_update').on('click.supDocket', '.btn_update', function () {
+            var docket_number = $(this).data('docket');
+            window.location.href = joinApiUrl(api, 'pis/supervision_docket_update?docket_number=' + encodeURIComponent(docket_number));
+        });
+        $(document).off('click.supDocket', '.btn_view').on('click.supDocket', '.btn_view', function () {
+            var docket_number = $(this).data('docket');
+            window.location.href = joinApiUrl(api, 'pis/supervision_docket_view?docket_number=' + encodeURIComponent(docket_number));
+        });
 
-            if (!searchVal) {
-                drawTable();
-                injectSearch();
+        $(document).off('click.supDocket', '.btn_remove').on('click.supDocket', '.btn_remove', function () {
+            var docket_number = $(this).data('docket');
+            var office_id = $(this).data('oi');
+            $('#removeModal').data('removeDocket', docket_number).data('removeOffice', office_id);
+            $('.docket').text(docket_number);
+            $('#success_remove, #error_remove').hide();
+            $('#error_remove').empty();
+        });
+
+        $(document).off('click.supDocket', '.btn_remove_confirm').on('click.supDocket', '.btn_remove_confirm', function () {
+            var docket_number = $('#removeModal').data('removeDocket');
+            var office_id = $('#removeModal').data('removeOffice');
+            if (docket_number === undefined || docket_number === null || office_id === undefined || office_id === null) {
+                $('#error_remove').text('Missing docket or office. Close this dialog and try again.').show();
                 return;
             }
-
-            drawSearchTable(searchVal);
-            injectSearch(searchVal);
+            var $btn = $('.btn_remove_confirm').prop('disabled', true);
+            $('#error_remove').hide().empty();
+            __executeExternalPost('8000/docketbook/remove/' + docket_number + '/' + office_id, {}).done(function (result) {
+                $btn.prop('disabled', false);
+                if (result.status !== 'ERROR') {
+                    $('#error_remove').hide().empty();
+                    $('#success_remove').show();
+                    setTimeout(function () {
+                        $('#removeModal').modal('hide');
+                        $('#success_remove').hide();
+                        if (supDocketListDataTable) {
+                            supDocketListDataTable.ajax.reload(null, false);
+                        }
+                    }, 1000);
+                } else {
+                    $('#error_remove').text('Could not remove this docket. Please try again.').show();
+                }
+            });
         });
 
-        function tableColumns() {
-            return [
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        // if (data.id == null){
-                        //     return "No id";
-                        // } else {
-                        //     return data.id;
-                        // }
-                        return meta.settings._iDisplayStart + meta.row + 1;
-                    }
-                },
-                {
-                    "data": 'docketNumber'
-                },
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        return `${data.receivedDateByPPO === null || data.receivedDateByPPO === "" ? "N/A" : data.receivedDateByPPO}`
-                    }
-                },
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        var client_fo = data.fieldOfficeId;
-                        var client_id = data.id;
-                        // Check if all parts are null
-                        if (
-                            data.firstName === null || data.firstName === "" &&
-                            data.middleName === null || data.middleName === "" &&
-                            data.lastName === null || data.lastName === "" &&
-                            data.suffixName === null || data.suffixName === ""
-                        ) {
-                            var name = data.fullName || "N/A";
-                        } else {
-                            var name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`;
-                        }
+        $(document).off('click.supDocket', '.btn_attachments').on('click.supDocket', '.btn_attachments', function () {
+            var docket_number = $(this).data('docket');
+            var id = $(this).data('id');
+            var type = $(this).data('type');
+            var fi = $(this).data('oi');
+            var q = $.param({
+                docket_number: docket_number,
+                id: id,
+                type: type,
+                fi: fi
+            });
+            window.location.href = joinApiUrl(api, 'pis/pis-supervision-file-upload?' + q);
+        });
+    }
 
-                        var nameLink = `${name.trim()}`;
-                        return nameLink;
-                    }
-                },
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        return `${data.criminalCaseNumber === null || data.criminalCaseNumber === "" ? "N/A" : data.criminalCaseNumber}`
-                    }
-                },
-                {
-                    "data": 'fieldOfficeName'
-                },
-                {
-                    "data": null,
-                    render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments pb_sup_attachments' type='submit' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_delete' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
-                        // return "<button class='btn btn-sm btn-primary btn_view pb_sup_view' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_update pb_sup_update' style='display:none;' type='submit' data-docket='"+data.docketNumber+"'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_attachments pb_sup_attachments' type='submit' style='display: none;' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-download'></i> Attachments</button> <button class='btn btn-sm btn-danger btn_remove pb_sup_remove' style='display:none;' type='submit' data-toggle='modal' data-target='#removeModal' data-docket='"+data.docketNumber+"' data-oi='"+data.fieldOfficeId+"'><i class='fa fa-remove'></i> Remove</button>";
-                    }
+    function tableColumns() {
+        return [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.settings._iDisplayStart + meta.row + 1;
                 }
-            ]
-        }
-        drawTable();
-        injectSearch();
+            },
+            { data: 'docketNumber' },
+            {
+                data: null,
+                render: function (data) {
+                    return (data.receivedDateByPPO === null || data.receivedDateByPPO === '') ? 'N/A' : data.receivedDateByPPO;
+                }
+            },
+            {
+                data: null,
+                render: function (data) {
+                    var allEmpty = namePartEmpty(data.firstName) && namePartEmpty(data.middleName) &&
+                        namePartEmpty(data.lastName) && namePartEmpty(data.suffixName);
+                    var name;
+                    if (allEmpty) {
+                        name = (data.fullName != null && String(data.fullName).trim() !== '') ? String(data.fullName).trim() : 'N/A';
+                    } else {
+                        name = [data.firstName, data.middleName, data.lastName, data.suffixName]
+                            .filter(function (p) { return p != null && String(p).trim() !== ''; })
+                            .map(function (p) { return String(p).trim(); })
+                            .join(' ');
+                    }
+                    return name;
+                }
+            },
+            {
+                data: null,
+                render: function (data) {
+                    return (data.criminalCaseNumber === null || data.criminalCaseNumber === '') ? 'N/A' : data.criminalCaseNumber;
+                }
+            },
+            { data: 'fieldOfficeName' },
+            {
+                data: null,
+                render: function (data) {
+                    var dn = escAttr(data.docketNumber);
+                    var oi = escAttr(data.fieldOfficeId);
+                    return (
+                        '<button class="btn btn-sm btn-primary btn_view pb_sup_view" style="display:none;" type="button" data-docket="' + dn + '"><i class="fa fa-eye"></i> View</button> ' +
+                        '<button class="btn btn-sm btn-primary btn_update pb_sup_update" style="display:none;" type="button" data-docket="' + dn + '"><i class="fa fa-edit"></i> Update</button> ' +
+                        '<button class="btn btn-sm btn-primary btn_attachments pb_sup_attachments" style="display:none;" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-paperclip"></i> Attachments</button> ' +
+                        '<button type="button" class="btn btn-sm btn-danger btn_remove pb_sup_delete" style="display:none;" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>'
+                    );
+                }
+            }
+        ];
+    }
 
-    })( jQuery );
+    function supervisionListAjax(data, callback /* , settings */) {
+        setSupDocketListLoader(true, searchTermForAjax() ? 'Searching…' : 'Loading dockets…');
+        hidePageError();
+
+        var page = data.start / data.length;
+        var size = data.length;
+        var fieldOfficeId = $.cookie('field_office_id');
+        var term = searchTermForAjax();
+
+        function finishFail(message) {
+            showPageError(message);
+            safeDataTablesCallback(callback, {
+                draw: data.draw,
+                recordsTotal: 0,
+                recordsFiltered: 0,
+                data: []
+            });
+        }
+
+        if (!term) {
+            $.ajax({
+                url: joinApiUrl(api, '8000/docketbook'),
+                type: 'GET',
+                dataType: 'json',
+                cache: true,
+                data: {
+                    page: page,
+                    size: size,
+                    type: 'PIS_SUP',
+                    officeId: fieldOfficeId
+                },
+                success: function (json) {
+                    try {
+                        if (!json || json.totalElements == null) {
+                            throw new Error('invalid');
+                        }
+                        safeDataTablesCallback(callback, {
+                            draw: data.draw,
+                            recordsTotal: json.totalElements,
+                            recordsFiltered: json.totalElements,
+                            data: json.content || []
+                        });
+                    } catch (e) {
+                        showPageError('Could not read docket data. Please refresh the page.');
+                        safeDataTablesCallback(callback, {
+                            draw: data.draw,
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
+                    }
+                },
+                error: function () {
+                    finishFail('Could not load dockets. Check your connection and try again.');
+                },
+                complete: function () {
+                    setSupDocketListLoader(false);
+                }
+            });
+        } else {
+            var searchUrl = joinApiUrl(___ctx, '8000/docketbook/search/PROBATIONER?page=' + page + '&size=' + size);
+            $.ajax({
+                url: searchUrl,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    name: term,
+                    fieldOfficeId: fieldOfficeId,
+                    canSeeOtherOffices: false
+                }),
+                success: function (json) {
+                    safeDataTablesCallback(callback, {
+                        draw: data.draw,
+                        recordsTotal: json && json.totalElements != null ? json.totalElements : 0,
+                        recordsFiltered: json && json.totalElements != null ? json.totalElements : 0,
+                        data: (json && json.content) ? json.content : []
+                    });
+                },
+                error: function () {
+                    finishFail('Search could not be completed. Check your connection and try again.');
+                },
+                complete: function () {
+                    setSupDocketListLoader(false);
+                }
+            });
+        }
+    }
+
+    function searchTermForAjax() {
+        return ($('.docketSearchInput').val() || '').trim();
+    }
+
+    function initSupDocketListDataTable() {
+        supDocketListDataTable = $('#tblSupervisionDocketing').DataTable({
+            processing: false,
+            serverSide: true,
+            scrollX: true,
+            searching: false,
+            lengthMenu: [10, 25, 50, 100],
+            pageLength: 10,
+            language: {
+                emptyTable: 'No dockets found.',
+                zeroRecords: 'No dockets found.'
+            },
+            columnDefs: [
+                { width: '5%', targets: [0] },
+                { width: '15%', targets: [1] },
+                { width: '10%', targets: [2] },
+                { width: '17%', targets: [3] },
+                { width: '13%', targets: [4] },
+                { width: '15%', targets: [5] },
+                { width: '25%', targets: [6] }
+            ],
+            ajax: supervisionListAjax,
+            columns: tableColumns()
+        });
+    }
+
+    function updateSupDocketSearchClearState() {
+        var hasTerm = !!($('.docketSearchInput').val() || '').trim();
+        $('.sup-docket-search-wrap').toggleClass('has-value', hasTerm);
+    }
+
+    var searchHtml = '<div class="sup-docket-search-toolbar" style="display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px;">' +
+        '<label for="sup_docket_search" style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
+        '<div class="sup-docket-search-wrap" style="width: 250px; max-width: 100%;">' +
+        '<input type="text" id="sup_docket_search" class="form-control form-control-sm docketSearchInput sup-docket-search-input" placeholder="Search docket / name" autocomplete="off">' +
+        '<button type="button" class="sup-docket-search-clear" title="Clear search" aria-label="Clear search">' +
+        '<i class="fa fa-times" aria-hidden="true"></i></button>' +
+        '</div>' +
+        '<button type="button" class="btn btn-primary btn-sm docket_search" aria-label="Run search"><i class="fa fa-search" aria-hidden="true"></i></button>' +
+        '</div>';
+
+    function injectSearch(value) {
+        var $target = $('.dataTables_length').parent().next();
+        if ($target.length) {
+            $target.html(searchHtml);
+            if (value) {
+                $target.find('.docketSearchInput').val(value);
+            }
+            updateSupDocketSearchClearState();
+        }
+    }
+
+    $(document).on('input', '.docketSearchInput', function () {
+        updateSupDocketSearchClearState();
+    });
+
+    $(document).on('keypress', '.docketSearchInput', function (e) {
+        if (e.which === 13) {
+            $('.docket_search').trigger('click');
+        }
+    });
+
+    $(document).on('click', '.sup-docket-search-clear', function (e) {
+        e.preventDefault();
+        $('.docketSearchInput').val('');
+        updateSupDocketSearchClearState();
+        hidePageError();
+        if (supDocketListDataTable) {
+            supDocketListDataTable.ajax.reload(null, true);
+        }
+        $('.docketSearchInput').trigger('focus');
+    });
+
+    $(document).on('click', '.docket_search', function () {
+        if (!supDocketListDataTable) {
+            return;
+        }
+        hidePageError();
+        supDocketListDataTable.ajax.reload(null, true);
+    });
+
+    $('#removeModal').on('hidden.bs.modal', function () {
+        $('#success_remove, #error_remove').hide();
+        $('#error_remove').empty();
+        $('.btn_remove_confirm').prop('disabled', false);
+    });
+
+    bindRowActionsOnce();
+    bindTableDrawOnce();
+    initSupDocketListDataTable();
+    injectSearch();
+    updateSupDocketSearchClearState();
+
+})(jQuery);

@@ -1,19 +1,5 @@
 <?php $this->load->view('templates/header.php'); ?> 
 <style>
-    .spinner {
-        border: 8px solid #f3f3f3; /* Light gray */
-        border-top: 8px solid black; /* Black */
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-    }
-    /* Spinner animation */
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
     .view-page .card {
         border: 1px solid #e4e7ea;
         border-radius: 8px;
@@ -23,6 +9,27 @@
     .view-page .card-title {
         font-weight: 600;
         color: #2f3d4a;
+    }
+
+    .view-page .card-body--with-loader {
+        position: relative;
+        min-height: 12rem;
+    }
+
+    .view-page #spinner_view {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 0 0 0.25rem 0.25rem;
+    }
+
+    .view-page #spinner_view.is-hidden {
+        display: none !important;
     }
 
     .view-page .section-card .card-header {
@@ -41,6 +48,12 @@
 
     .view-page .section-trigger:hover {
         background: #f3f6f9;
+    }
+
+    .view-page .section-trigger:focus {
+        outline: 2px solid #80bdff;
+        outline-offset: 2px;
+        z-index: 1;
     }
 
     .view-page .section-label {
@@ -88,6 +101,40 @@
         color: #2f3d4a;
         font-weight: 600;
     }
+
+    .view-page .view-fields-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .pis-toast-stack {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 320px;
+        pointer-events: none;
+    }
+
+    .pis-toast {
+        opacity: 0;
+        transform: translateX(12px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-weight: 600;
+        font-size: 13px;
+        border: 1px solid transparent;
+    }
+
+    .pis-toast.pis-toast--visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
 </style>
 <body>
     <!-- Left Panel -->
@@ -105,7 +152,7 @@
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <ol class="breadcrumb text-right">
+                        <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
                             <li><a href="parole-pardon-investigation-list">Parole and Pardon</a></li>
                             <li class="active">Investigation List View</li>
@@ -120,34 +167,32 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
+                            <div class="card-header">
                                 <strong class="card-title">View Investigation List</strong>
-                                <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div>
                             </div>
-                            <div class="card-body">
-                                <div class="alert alert-success" role="alert" id="success" style="display:none">
-                                    <i class="fa fa-check"></i>
-                                        Successfully Added  
+                            <div class="card-body card-body--with-loader">
+                                <div id="spinner_view" class="text-center" role="status" aria-live="polite" aria-busy="true">
+                                    <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
+                                    <p class="mb-0 mt-2 text-muted">Loading…</p>
                                 </div>
+                                <div class="alert alert-danger" role="alert" id="view_form_error" style="display:none"></div>
 
-                                <div class="row">
+                                <div class="row view-fields-wrap">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
-                                            <div class="title">Docket Number</div>
-                                            <input type="text" name="text-input" placeholder="Docket No." class="form-control docket_num_update" disabled>
+                                            <label class="title d-block" for="sc_ppinv_view_docket">Docket Number</label>
+                                            <input type="text" id="sc_ppinv_view_docket" name="sc_ppin_view_docket" placeholder="Docket No." class="form-control docket_num_update" readonly autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="quick-info">
-                                            <div class="title">Client</div>
-                                            <select class="form-control client_update select2">
-                                                <option selected value="none" disabled>Select</option>
-                                            </select>
+                                            <label class="title d-block" for="sc_ppinv_view_client">Client</label>
+                                            <input type="text" id="sc_ppinv_view_client" name="sc_ppin_view_client" placeholder="Client Name" class="form-control client_update" readonly autocomplete="name">
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row view-fields-wrap">
                                     <div class="col-12 mb-3">
                                         <div class="card section-card">
                                             <div class="card-header">
@@ -163,18 +208,18 @@
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Criminal Case No.</label>
-                                                            <input type="text" name="text-input" placeholder="Criminal Case No." class="form-control cc_no_update">
+                                                            <label class="field-label" for="sc_ppinv_cc_no">Criminal Case No.</label>
+                                                            <input type="text" id="sc_ppinv_cc_no" name="criminal_case_no" placeholder="Criminal Case No." class="form-control cc_no_update" readonly>
                                                         </div>
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Name of Prison/Jail</label>
-                                                            <input type="text" name="text-input" placeholder="Name of Prison/Jail" class="form-control name_prison">
+                                                            <label class="field-label" for="sc_ppinv_prison">Name of Prison/Jail</label>
+                                                            <input type="text" id="sc_ppinv_prison" name="prison_name" placeholder="Name of Prison/Jail" class="form-control name_prison" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">From</label>
-                                                            <select class="form-control board_order_update select2">
+                                                            <label class="field-label" for="sc_ppinv_view_from">From</label>
+                                                            <select id="sc_ppinv_view_from" class="form-control board_order_update" disabled>
                                                                 <option selected value="select" disabled>Select</option>
                                                                 <option value="penal_colony">Penal Colony</option>
                                                                 <option value="prison">Prison</option>
@@ -182,18 +227,18 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Offense</label>
-                                                            <input type="text" name="text-input" placeholder="Offense" class="form-control offense">
+                                                            <label class="field-label" for="sc_ppinv_offense">Offense</label>
+                                                            <input type="text" id="sc_ppinv_offense" name="offense" placeholder="Offense" class="form-control offense" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Date Received by the PPO</label>
-                                                            <input type="date" class="form-control date_received_by_ppo">
+                                                            <label class="field-label" for="sc_ppinv_date_rcv_ppo">Date Received by the PPO</label>
+                                                            <input type="date" id="sc_ppinv_date_rcv_ppo" name="date_received_by_ppo" class="form-control date_received_by_ppo" readonly>
                                                         </div>
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Investigating Officer</label>
-                                                            <input type="text" name="text-input" placeholder="Investigating Officer" class="form-control inv_officer">
+                                                            <label class="field-label" for="sc_ppinv_inv_officer">Investigating Officer</label>
+                                                            <input type="text" id="sc_ppinv_inv_officer" name="investigating_officer" placeholder="Investigating Officer" class="form-control inv_officer" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -216,12 +261,12 @@
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Date Pre-Parole/Executive Clemency Investigation Report Submitted</label>
-                                                            <input type="date" class="form-control date_peci_update">
+                                                            <label class="field-label" for="sc_ppinv_date_peci">Date Pre-Parole/Executive Clemency Investigation Report Submitted</label>
+                                                            <input type="date" id="sc_ppinv_date_peci" name="date_peci_report" class="form-control date_peci_update" readonly>
                                                         </div>
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">PPO's Recommendation</label>
-                                                            <select class="form-control ppo_recommendation select2">
+                                                            <label class="field-label" for="sc_ppinv_ppo_rec">PPO's Recommendation</label>
+                                                            <select id="sc_ppinv_ppo_rec" name="ppo_recommendation" class="form-control ppo_recommendation" disabled>
                                                                 <option value="">None</option>
                                                                 <option value="Parole - For Granted">Parole - For Grant</option>
                                                                 <option value="Parole - For Denial">Parole - For Denial</option>
@@ -237,12 +282,12 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Transfer Date</label>
-                                                            <input type="date" class="form-control transfered_date">
+                                                            <label class="field-label" for="sc_ppinv_transfer_dt">Transfer Date</label>
+                                                            <input type="date" id="sc_ppinv_transfer_dt" name="transfer_date" class="form-control transfered_date" readonly>
                                                         </div>
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Transfer To</label>
-                                                            <input type="text" name="text-input" placeholder="Transfer To" class="form-control transfer_to">
+                                                            <label class="field-label" for="sc_ppinv_transfer_to">Transfer To</label>
+                                                            <input type="text" id="sc_ppinv_transfer_to" name="transfer_to" placeholder="Transfer To" class="form-control transfer_to" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -265,8 +310,8 @@
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Court Decision</label>
-                                                            <select class="form-control court_decision select2">
+                                                            <label class="field-label" for="sc_ppinv_court_dec">Court Decision</label>
+                                                            <select id="sc_ppinv_court_dec" name="court_decision" class="form-control court_decision" disabled>
                                                                 <option value="">Please choose</option>
                                                                 <option value="PAROLE - Granted">PAROLE - Granted</option>
                                                                 <option value="PAROLE - Denial">PAROLE - Denial</option>
@@ -284,8 +329,8 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-sm-12 col-md-6">
-                                                            <label class="field-label">Date Order Received from the Court</label>
-                                                            <input type="date" class="form-control date_order_rcv_court">
+                                                            <label class="field-label" for="sc_ppinv_date_order">Date Order Received from the Court</label>
+                                                            <input type="date" id="sc_ppinv_date_order" name="date_order_rcv_court" class="form-control date_order_rcv_court" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -302,15 +347,15 @@
         </div>
 
 
+        <div id="pis_toast_stack" class="pis-toast-stack" aria-live="polite" aria-atomic="false"></div>
+
     </div><!-- /#right-panel -->
 
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/SC_Pre_Parole_Investigation/view.js">
-
-    </script>
+    <script src="assets/js/pisJs/SC_Pre_Parole_Investigation/view.js"></script>
 
 </body>
 

@@ -1,338 +1,521 @@
-    ( function ( $ ) {
-        var api = localStorage.getItem('api');
-        var ___ctx = api;
-        console.log(___ctx)
+(function ($) {
+    var FILE_TYPE = 'supervision';
+    var LOADER_ID = 'csup_attachments_loader';
 
-        var __setContext = function(newctx) {
-            ___ctx = newctx;
-        };
+    function getApiBase() {
+        return localStorage.getItem('api') || '';
+    }
 
-        var __getContext = function() {
-            return ___ctx;
-        };
+    function joinApiUrl(base, path) {
+        var b = String(base == null ? '' : base).replace(/\/+$/, '');
+        var p = String(path == null ? '' : path).replace(/^\/+/, '');
+        if (!b) {
+            return p;
+        }
+        if (!p) {
+            return b;
+        }
+        if (b.slice(-1) === ':' && /^\d+\//.test(p)) {
+            return b + p;
+        }
+        return b + '/' + p;
+    }
 
-        var __executeExternalGet = function(path, customLoader) {
-            path = __getContext() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
+    function escAttr(str) {
+        return String(str == null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;');
+    }
+
+    function fileServiceHref(pathAfterPort) {
+        var tail = String(pathAfterPort || '').replace(/^\/+/, '');
+        return escAttr(joinApiUrl(getApiBase(), tail));
+    }
+
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var pair = sURLVariables[i].split('=');
+            if (pair[0] === sParam) {
+                if (pair.length < 2 || pair[1] === '') {
+                    return '';
+                }
+                try {
+                    return decodeURIComponent(pair[1].replace(/\+/g, ' '));
+                } catch (e) {
+                    return '';
+                }
             }
-            $.ajax({
-                method: "GET",
-                url: path,
-                dataType: "json",
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
+        }
+        return undefined;
+    }
+
+    function formatUserFullName(r) {
+        if (!r) {
+            return '';
+        }
+        var parts = [r.firstName, r.middleName, r.lastName, r.suffix || r.suffixName].filter(function (p) {
+            return p != null && String(p).trim() !== '';
+        });
+        return parts.join(' ');
+    }
+
+    function formatDocketClientName(r) {
+        if (!r) {
+            return '';
+        }
+        if (r.fullName != null && String(r.fullName).trim() !== '') {
+            return String(r.fullName).trim();
+        }
+        var parts = [r.firstName, r.middleName, r.lastName, r.suffixName].filter(function (p) {
+            return p != null && String(p).trim() !== '';
+        });
+        if (parts.length) {
+            return parts.map(function (p) {
+                return String(p).trim();
+            }).join(' ');
+        }
+        return '';
+    }
+
+    function showPisToast(message, variant) {
+        variant = variant || 'success';
+        var $stack = $('#pis_toast_stack');
+        if (!$stack.length || !message) {
+            return;
+        }
+        var alertClass =
+            variant === 'danger'
+                ? 'alert-danger'
+                : variant === 'warning'
+                  ? 'alert-warning'
+                  : 'alert-success';
+        var $t = $('<div role="status" class="pis-toast alert ' + alertClass + ' shadow-sm mb-0"></div>').text(
+            String(message)
+        );
+        $stack.append($t);
+        requestAnimationFrame(function () {
+            $t.addClass('pis-toast--visible');
+        });
+        var ms = variant === 'danger' ? 5200 : 3200;
+        setTimeout(function () {
+            $t.removeClass('pis-toast--visible');
+            setTimeout(function () {
+                $t.remove();
+            }, 280);
+        }, ms);
+    }
+
+    function showAttachmentsError(msg) {
+        $('#attachments_error').text(msg).show();
+        $('#success_upload').hide();
+    }
+
+    function hideAttachmentsError() {
+        $('#attachments_error').hide().empty();
+    }
+
+    function setPageLoader(busy) {
+        var $el = $('#' + LOADER_ID);
+        if (!$el.length) {
+            return;
+        }
+        if (busy) {
+            $el.removeClass('is-hidden').attr('aria-busy', 'true');
+        } else {
+            $el.addClass('is-hidden').attr('aria-busy', 'false');
+        }
+    }
+
+    function __executeExternalGet(path) {
+        path = joinApiUrl(getApiBase(), path);
+        var d = $.Deferred();
+        $.ajax({
+            method: 'GET',
+            url: path,
+            dataType: 'json',
+            timeout: 90000
+        }).done(function (data) {
+            d.resolve(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            d.resolve({
+                status: 'ERROR',
+                message: errorThrown || textStatus
             });
-            
-            return d.promise();
-        };
-        var __executeExternalPost = function(path, jsonObj, customLoader) {
-            path = __getContext() + path;
-            var d = $.Deferred();
-            if(customLoader != ""){
-                $("#"+customLoader).show();
-                $("#"+customLoader).removeClass("hide");
-            }
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                headers: {
-                    // 'Content-Type': 'multipart/form-data;'
-                    'Content-Type':'application/json'
-                },
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-                d.resolve(data)
-            }).fail(function (jqXHR, textStatus, errorThrown,request) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : request
-                });
-                
-                if(customLoader != ""){
-                    $("#"+customLoader).hide();
-                    $("#"+customLoader).addClass("hide");
-                }
-            });
-            
-            return d.promise();
-        };
-        var __executeFile = function(path, jsonObj) {
-            var d = $.Deferred();
-            $.ajax({
-                method: "POST",
-                url: path,
-                dataType: "json",
-                cache: false,
-                "mimeType": "multipart/form-data",
-                processData: false,
-                contentType: false,
-                /*data: JSON.stringify(jsonObj)*/
-                data: jsonObj
-            }).done(function (data, textStatus, jqXHR) {
-                d.resolve(data);
-                $(".loadDiv").hide();
-                $(".overlay-back").hide();
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log('---FAILED---');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log('---FAILED---');
-                
-                d.resolve({
-                    status : 'ERROR',
-                    message : errorThrown
-                });
-            });
-            return d.promise();
-        };
-        
-        function GetURLParameter(sParam){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++)
+        });
+        return d.promise();
+    }
+
+    var docket_number = GetURLParameter('docket_number');
+    if (docket_number !== undefined && docket_number !== null) {
+        docket_number = String(docket_number).trim();
+    }
+    var fi = $.cookie('field_office_id');
+    if (fi) {
+        fi = String(fi).trim();
+    }
+
+    var dataTable = null;
+
+    function populateKindOptions(clientTypeVal) {
+        var $k = $('.cmisTable');
+        $k.empty();
+        if (!clientTypeVal || clientTypeVal === 'none') {
+            $k.append('<option value="none" disabled selected>Select</option>');
+            $k.trigger('change');
+            populateTypeOptions(null);
+            return;
+        }
+        if (clientTypeVal === 'parolee') {
+            $k.append(
+                '<option value="" disabled selected>Select</option>' +
+                    '<option value="F21T15RR_parolee">Referrals Received</option>' +
+                    '<option value="F21T15TERM_parolee">Referrals Terminated</option>'
+            );
+        } else if (clientTypeVal === 'pardonee') {
+            $k.append(
+                '<option value="" disabled selected>Select</option>' +
+                    '<option value="F21T15_pardonee_rcv">Referrals Received</option>' +
+                    '<option value="F21T15_pardonee_term">Referrals Terminated</option>'
+            );
+        } else {
+            $k.append('<option value="none" disabled selected>Select</option>');
+            showAttachmentsError('Invalid Client Type selection.');
+            showPisToast('Invalid Client Type selection.', 'warning');
+            populateTypeOptions(null);
+            $k.trigger('change');
+            return;
+        }
+        $k.trigger('change');
+        populateTypeOptions($k.val());
+    }
+
+    function populateTypeOptions(cmisVal) {
+        var $t = $('.type');
+        $t.empty();
+        if (!cmisVal || cmisVal === 'none' || cmisVal === '') {
+            $t.append('<option value="none" disabled selected>Select</option>');
+            $t.trigger('change');
+            return;
+        }
+        if (cmisVal === 'F21T15RR_parolee' || cmisVal === 'F21T15_pardonee_rcv') {
+            $t.append(
+                '<option value="" disabled selected>Select</option>' +
+                    '<option value="Request for Courtesy Supervision">Request for Courtesy Supervision</option>' +
+                    '<option value="Other Document/s">Other Document/s</option>'
+            );
+        } else if (cmisVal === 'F21T15TERM_parolee' || cmisVal === 'F21T15_pardonee_term') {
+            $t.append(
+                '<option value="" disabled selected>Select</option>' +
+                    '<option value="Courtesy Supervision Terminated">Courtesy Supervision Terminated</option>' +
+                    '<option value="Other Document/s">Other Document/s</option>'
+            );
+        } else {
+            $t.append('<option value="none" disabled selected>Select</option>');
+            showAttachmentsError('Invalid Kind selection. Choose a Kind from the list.');
+            showPisToast('Invalid Kind selection.', 'warning');
+        }
+        $t.trigger('change');
+    }
+
+    function tableColumns() {
+        return [
             {
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == sParam)
-                {
-                    return decodeURIComponent(sParameterName[1]);
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.settings._iDisplayStart + meta.row + 1;
+                }
+            },
+            { data: 'fileName' },
+            { data: 'remarks' },
+            {
+                data: null,
+                render: function (data) {
+                    if (!data || data.id == null) {
+                        return '';
+                    }
+                    var id = data.id;
+                    var viewHref = fileServiceHref('8080/file/view/' + id);
+                    var dlHref = fileServiceHref('8080/file/download/' + id);
+                    var idAttr = escAttr(id);
+                    return (
+                        '<a class="btn btn-primary btn-sm mr-1 mb-1" href="' +
+                        viewHref +
+                        '" target="_blank" rel="noopener noreferrer">' +
+                        '<i class="fa fa-eye" aria-hidden="true"></i> View</a>' +
+                        '<a class="btn btn-primary btn-sm mr-1 mb-1" href="' +
+                        dlHref +
+                        '" target="_blank" rel="noopener noreferrer">' +
+                        '<i class="fa fa-download" aria-hidden="true"></i> Download</a>' +
+                        '<button type="button" class="btn btn-danger btn-sm btn-delete mb-1" data-id="' +
+                        idAttr +
+                        '">' +
+                        '<i class="fa fa-trash" aria-hidden="true"></i> Delete</button>'
+                    );
                 }
             }
-        }
+        ];
+    }
 
-        var docket_number = GetURLParameter('docket_number');
-        var type = "supervision";
-        var id = GetURLParameter('id');
-        var fi = $.cookie("field_office_id");
-        var dataTable = null; // Initialize the variable globally to store the DataTable instance
+    var TABLE_SEL = '#courtesy_csup_uploads_table';
 
-        $('.client_type').on('change', function() {
-            $(".cmisTable").empty();
-            var value = $(this).val();
-            
-            // console.log(value)
-            if (value === "parolee") {
-                $(".cmisTable").append(`
-                    <option value="" disabled="" selected="">Select</option>
-                    <option value="F21T15RR_parolee">Referrals Received</option>
-                    <option value="F21T15TERM_parolee">Referrals Terminated</option>
-                `)
-            } else if (value === "pardonee") {
-                $(".cmisTable").append(`
-                    <option value="" disabled="" selected="">Select</option>
-                    <option value="F21T15_pardonee_rcv">Referrals Received</option>
-                    <option value="F21T15_pardonee_term">Referrals Terminated</option>
-                `)
-            }  else {
-                // alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
-                window.location.reload(true)
-            }
-        })
+    function loadTable(fileType, uuid, officeId) {
+        var listUrl = joinApiUrl(
+            getApiBase(),
+            '8080/file/page/' +
+                encodeURIComponent(fileType) +
+                '/' +
+                encodeURIComponent(uuid) +
+                '/' +
+                encodeURIComponent(officeId)
+        );
 
-        $('.cmisTable').on('change', function() {
-            $(".type").empty();
-            var value = $(this).val();
-
-            // console.log(value)
-            if (value === "F21T15RR_parolee" || value === "F21T15_pardonee_rcv") {
-                $(".type").append(`
-                    <option value="" disabled="" selected="">Select</option>
-                    <option value="Request for Courtesy Supervision">Request for Courtesy Supervision</option>
-                    <option value="Other Document/s">Other Document/s</option>
-                `)
-            } else if (value === "F21T15TERM_parolee" || value === "F21T15_pardonee_term") {
-                $(".type").append(`
-                    <option value="" disabled="" selected="">Select</option>
-                    <option value="Courtesy Supervision Terminated">Courtesy Supervision Terminated</option>
-                    <option value="Other Document/s">Other Document/s</option>
-                `)
-            } else {
-                // alert ("CMIS Table dropdown doesn't load properply refreshing the page ...")
-                window.location.reload(true)
-            }
-        })
-
-        function tableColumns() {
-            return [
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        return meta.settings._iDisplayStart + meta.row + 1;
-                    }
+        if (!dataTable) {
+            dataTable = $(TABLE_SEL).DataTable({
+                processing: true,
+                serverSide: true,
+                scrollX: false,
+                searching: false,
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10,
+                language: {
+                    processing: 'Loading files…'
                 },
-                {
-                    "data": 'fileName',
-                },
-                {
-                    "data": 'remarks',
-                },
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-
-                        // Render the action buttons
-                        let actions = `
-                            <a href=${___ctx}8080/file/view/${data.id} target='_blank'>
-                                <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-eye'></i> View
-                                </button>
-                            </a>
-                            <a href=${___ctx}8080/file/download/${data.id} target='_blank'>
-                                <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-download'></i> Download
-                                </button>
-                            </a>
-                            <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                <i class='fa fa-trash'></i> Delete
-                            </button>
-                        `;
-                        return actions;
-                    }
-                }
-            ]
-        }
-        var load_table = function (type, uuid, officeId) {
-            if (!dataTable) {
-                dataTable = $('.table_head').DataTable({
-                    "processing": false,
-                    "serverSide": true,
-                    "scrollX": false,
-                    "searching": false,
-                    "lengthMenu": [10, 25, 50, 100],
-                    "pageLength": 10,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "30%", "targets": [1] },
-                        { "width": "40%", "targets": [2] },
-                        { "width": "25%", "targets": [3] },
-                    ],
-                    ajax: {
-                        url: `${api}8080/file/page/${type}/${uuid}/${officeId}`, // Base URL remains the same
-                        type: 'GET',
-                        cache: true,
-                        data: function (d) {
-                            // Dynamically add the current 'type' parameter
-                            return {
-                                page: d.start / d.length,  // Pagination
-                                size: d.length,            // Page size
-                            };
-                        },
-                        dataFilter: function (data) {
+                columnDefs: [
+                    { width: '5%', targets: [0] },
+                    { width: '28%', targets: [1] },
+                    { width: '32%', targets: [2] },
+                    { width: '35%', targets: [3] }
+                ],
+                ajax: {
+                    url: listUrl,
+                    type: 'GET',
+                    cache: true,
+                    data: function (d) {
+                        return {
+                            page: d.start / d.length,
+                            size: d.length
+                        };
+                    },
+                    dataFilter: function (data) {
+                        try {
                             var json = jQuery.parseJSON(data);
+                            if (json.content && Array.isArray(json.content)) {
+                                json.content.sort(function (a, b) {
+                                    if (a.fileName === b.fileName) {
+                                        return (b.version || 0) - (a.version || 0);
+                                    }
+                                    return String(a.fileName || '').localeCompare(String(b.fileName || ''));
+                                });
+                            }
                             json.recordsTotal = json.totalElements;
                             json.recordsFiltered = json.totalElements;
-                            json.data = json.content;
+                            json.data = json.content || [];
                             return JSON.stringify(json);
-                        }
-                    },
-                    columns: tableColumns() // Call your function to get table columns
-                });
-                // Delete button event (delegated for DataTable dynamic rows)
-                $(document).off("click", ".btn-delete").on("click", ".btn-delete", function(){
-                    let fileId = $(this).data("id");
-
-                    if(confirm("Are you sure you want to delete this file?")) {
-                        __executeExternalGet(`8080/file/delete/${fileId}`).done(function (res) {
-                            if(res.status !== "ERROR") {
-                                alert("File deleted successfully!");
-                                window.location.reload(true);
-                            } else {
-                                alert("Error deleting file!");
-                            }
-                        });
-                    }
-                });
-            } else {
-                // Update the AJAX URL and reload the DataTable
-                dataTable.ajax.url(`${api}8080/file/page/${type}/${uuid}/${officeId}`).load();
-            }
-        }
-        __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
-            if (result.status != "ERROR") {
-                var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
-                var officeId = result.departmentId;
-                __executeExternalGet('8000/docketbook/'+docket_number+'/'+fi).done(function (result) {
-                    var result = result.response;
-
-                    $(".name").val(result.fullName);
-                    $(".docket_num").val(result.docketNumber)
-
-                    load_table(type, result.docketNumber, officeId)
-
-                    // for uploading file
-                    $(".btn-confirm").unbind("click").on("click", function(){
-                        console.log("clicked upload confirm")
-                        var fileToUpload = $('#fileupload').prop('files')[0];
-                        if (fileToUpload === undefined) {
-                            alert("Please Choose File Before Upload!")
-                        }
-                        else {
-                            var form = new FormData();
-                            form.append("file", fileToUpload, fileToUpload.name);
-                            // console.log(fileToUpload.name)
-                            var settings = {
-                                // "url": api+"8080/file/upload?uuid="+result.docketNumber+"&type="+type+"&createdby="+fullname+"&version=0&kind="+$(".cmisTable").val()+"&officeId="+officeId+"&remarks="+$(".type").val(),
-                                "url": `${api}8080/file/upload?uuid=${result.docketNumber}&type=${type}&createdby=${fullname}&version=0&kind=${$(".cmisTable").val()}&officeId=${officeId}&remarks=${$(".type").val()}`,
-                                "method": "POST",
-                                "timeout": 0,
-                                "processData": false,
-                                "mimeType": "multipart/form-data",
-                                "contentType": false,
-                                "data": form
-                            };
-
-                            $.ajax(settings).done(function (response) {
-                                console.log(response);
-                                if (response) {
-                                    $('#success_upload').show();
-                                    setTimeout(function () {
-                                        $('#success_upload').hide();
-                                        window.location.reload(true);
-                                    }, 1000);
-                                } else {
-
-                                }
+                        } catch (e) {
+                            return JSON.stringify({
+                                recordsTotal: 0,
+                                recordsFiltered: 0,
+                                data: []
                             });
                         }
-                    })
-                })
-            }else{
-                alert("failed")
-            }
-        })
+                    }
+                },
+                columns: tableColumns()
+            });
+        } else {
+            dataTable.ajax.url(listUrl).load();
+        }
+    }
 
-    } )( jQuery );
+    $(document).on('click.csupAttDel', TABLE_SEL + ' .btn-delete', function () {
+        var fileId = $(this).data('id');
+        if (fileId === undefined || fileId === null || fileId === '') {
+            return;
+        }
+        if (!window.confirm('Are you sure you want to delete this file?')) {
+            return;
+        }
+        __executeExternalGet('8080/file/delete/' + fileId).done(function (res) {
+            if (res.status !== 'ERROR') {
+                hideAttachmentsError();
+                $('#success_upload')
+                    .html('<i class="fa fa-check" aria-hidden="true"></i> File deleted. Refreshing…')
+                    .show();
+                showPisToast('File deleted.', 'success');
+                setTimeout(function () {
+                    window.location.reload(true);
+                }, 800);
+            } else {
+                showAttachmentsError('Could not delete the file. Please try again.');
+                showPisToast('Could not delete the file. Please try again.', 'danger');
+            }
+        });
+    });
+
+    function bindUploadConfirm(officeId, createdByName, docketRow) {
+        $('.btn-confirm').off('click.csupAttUp').on('click.csupAttUp', function () {
+            hideAttachmentsError();
+
+            var clientType = $('.client_type').val();
+            if (!clientType || clientType === 'none') {
+                showAttachmentsError('Please select a Client Type.');
+                showPisToast('Please select a Client Type.', 'warning');
+                return;
+            }
+
+            var kind = $('.cmisTable').val();
+            var docType = $('.type').val();
+            if (!kind || kind === 'none') {
+                showAttachmentsError('Please select a Kind.');
+                showPisToast('Please select a Kind.', 'warning');
+                return;
+            }
+            if (!docType || docType === 'none' || docType === '') {
+                showAttachmentsError('Please select a Type.');
+                showPisToast('Please select a Type.', 'warning');
+                return;
+            }
+
+            var fileInput = document.getElementById('fileupload');
+            var fileToUpload = fileInput && fileInput.files ? fileInput.files[0] : null;
+            if (!fileToUpload) {
+                showAttachmentsError('Please choose a file before uploading.');
+                showPisToast('Please choose a file before uploading.', 'warning');
+                return;
+            }
+
+            var $btn = $('.btn-confirm').prop('disabled', true);
+            var form = new FormData();
+            form.append('file', fileToUpload, fileToUpload.name);
+
+            var uploadUrl = joinApiUrl(getApiBase(), '8080/file/upload?' + $.param({
+                uuid: docketRow.docketNumber,
+                type: FILE_TYPE,
+                createdby: createdByName,
+                version: 0,
+                kind: kind,
+                officeId: officeId,
+                remarks: docType
+            }));
+
+            $.ajax({
+                url: uploadUrl,
+                method: 'POST',
+                timeout: 0,
+                processData: false,
+                contentType: false,
+                data: form
+            }).done(function (response) {
+                if (response && response.status === 'ERROR') {
+                    showAttachmentsError('Upload failed. Please try again.');
+                    showPisToast('Upload failed. Please try again.', 'danger');
+                    $btn.prop('disabled', false);
+                    return;
+                }
+                $('#success_upload')
+                    .html('<i class="fa fa-check" aria-hidden="true"></i> Successfully uploaded.')
+                    .show();
+                showPisToast('Successfully uploaded.', 'success');
+                setTimeout(function () {
+                    window.location.reload(true);
+                }, 1000);
+            }).fail(function () {
+                showAttachmentsError('Upload could not be completed. Check your connection and try again.');
+                showPisToast('Upload could not be completed. Check your connection and try again.', 'danger');
+                $btn.prop('disabled', false);
+            });
+        });
+    }
+
+    function startPage() {
+        hideAttachmentsError();
+        setPageLoader(true);
+        $('.btn-confirm').prop('disabled', true);
+
+        if (!docket_number) {
+            setPageLoader(false);
+            $('.btn-confirm').prop('disabled', true);
+            showAttachmentsError(
+                'This page is missing a docket number. Open attachments from the Courtesy Supervision list.'
+            );
+            showPisToast(
+                'This page is missing a docket number. Open attachments from the Courtesy Supervision list.',
+                'warning'
+            );
+            return;
+        }
+        if (!fi) {
+            setPageLoader(false);
+            $('.btn-confirm').prop('disabled', true);
+            showAttachmentsError(
+                'Your field office could not be determined. Try signing in again or return to the list.'
+            );
+            showPisToast(
+                'Your field office could not be determined. Try signing in again or return to the list.',
+                'warning'
+            );
+            return;
+        }
+
+        var userUuid = $.cookie('uuid');
+        if (!userUuid) {
+            setPageLoader(false);
+            $('.btn-confirm').prop('disabled', true);
+            showAttachmentsError('Your session is missing user id. Try signing in again.');
+            showPisToast('Your session is missing user id. Try signing in again.', 'warning');
+            return;
+        }
+
+        __executeExternalGet('8088/user/' + userUuid).done(function (userProfile) {
+            if (!userProfile || userProfile.status === 'ERROR') {
+                setPageLoader(false);
+                $('.btn-confirm').prop('disabled', true);
+                showAttachmentsError('Could not load your user profile. Please try again.');
+                showPisToast('Could not load your user profile. Please try again.', 'danger');
+                return;
+            }
+
+            var officeId = userProfile.departmentId;
+            var createdByName = formatUserFullName(userProfile);
+
+            __executeExternalGet('8000/docketbook/' + docket_number + '/' + fi).done(function (apiResult) {
+                setPageLoader(false);
+
+                var docketRow = apiResult.response;
+                if (apiResult.status === 'ERROR' || !docketRow || docketRow.status === 'ERROR') {
+                    $('.btn-confirm').prop('disabled', true);
+                    showAttachmentsError('Could not load this docket. Return to the list and try again.');
+                    showPisToast('Could not load this docket.', 'danger');
+                    return;
+                }
+
+                hideAttachmentsError();
+                $('.name').val(formatDocketClientName(docketRow));
+                $('.docket_num').val(docketRow.docketNumber || '');
+
+                loadTable(FILE_TYPE, docketRow.docketNumber, officeId);
+                bindUploadConfirm(officeId, createdByName, docketRow);
+                $('.btn-confirm').prop('disabled', false);
+            });
+        });
+    }
+
+    $(function () {
+        populateKindOptions($('.client_type').val());
+
+        $('.client_type').on('change.csupKind', function () {
+            hideAttachmentsError();
+            populateKindOptions($(this).val());
+        });
+
+        $('.cmisTable').on('change.csupType', function () {
+            hideAttachmentsError();
+            populateTypeOptions($(this).val());
+        });
+
+        startPage();
+    });
+})(jQuery);

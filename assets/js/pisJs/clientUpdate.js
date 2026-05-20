@@ -132,6 +132,7 @@
 
                 if (result.status != "ERROR") {
                     var name = `${result.firstName} ${result.middleName ?? ""} ${result.lastName} ${result.suffixName ?? ""}`
+                    console.log(result)
                     $("#petitionerName").text(name)
                     $(".gender_update").val(result.sex).trigger("change");
                     $(".firstName_update").val(result.firstName);
@@ -182,6 +183,11 @@
                 }else{
                     alert("failed")
                 }
+            })
+            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+                // console.log(result)
+                var psirData = JSON.parse(result.response.jsonData);
+                console.log(psirData)
             })
         }
 
