@@ -15,6 +15,27 @@ jQuery(document).ready(function($) {
 		$('body').toggleClass('open');
 	});
 
+	function isMobileSidebar() {
+		return window.matchMedia('(max-width: 768px)').matches;
+	}
+
+	$(document).on('click', function(event) {
+		if (!isMobileSidebar()) {
+			return;
+		}
+
+		var $mainMenu = $('#main-menu');
+		if (!$mainMenu.hasClass('show')) {
+			return;
+		}
+
+		if ($(event.target).closest('#left-panel').length) {
+			return;
+		}
+
+		$mainMenu.collapse('hide');
+	});
+
 	$('.search-trigger').on('click', function(event) {
 		event.preventDefault();
 		event.stopPropagation();

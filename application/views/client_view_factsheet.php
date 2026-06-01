@@ -381,6 +381,267 @@
     .page-client-factsheet .fs-docket-actions a.btn {
         text-decoration: none;
     }
+
+    .page-client-factsheet .fs-info-body {
+        margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+        .page-client-factsheet .right-panel,
+        .page-client-factsheet .content,
+        .page-client-factsheet .content .animated,
+        .page-client-factsheet .content .row,
+        .page-client-factsheet .content [class*="col-"],
+        .page-client-factsheet .card,
+        .page-client-factsheet .card-body {
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .page-client-factsheet .right-panel {
+            overflow-x: hidden;
+        }
+
+        .page-client-factsheet .content.mt-3 {
+            margin-top: 0.5rem !important;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .page-client-factsheet .breadcrumbs {
+            padding: 8px 10px !important;
+        }
+
+        .page-client-factsheet .breadcrumb {
+            flex-wrap: wrap;
+            font-size: 0.8125rem;
+            margin-bottom: 0;
+            padding: 0.35rem 0;
+        }
+
+        .page-client-factsheet .card .card-header {
+            padding: 0.65rem 0.75rem;
+        }
+
+        .page-client-factsheet .card .card-body {
+            padding: 0.75rem;
+        }
+
+        .page-client-factsheet .card .card-footer {
+            padding: 0.75rem;
+        }
+
+        .page-client-factsheet .card-footer .btn {
+            float: none !important;
+            width: 100%;
+        }
+
+        .page-client-factsheet .fs-profile-outer {
+            overflow-x: visible;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .page-client-factsheet .profile-container {
+            min-width: 0;
+            min-height: 0;
+            width: 100%;
+            max-width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0.75rem;
+        }
+
+        .page-client-factsheet .name-container {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            padding: 0;
+        }
+
+        .page-client-factsheet .name-header {
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .page-client-factsheet .img-body {
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+            margin: 0.75rem auto 0;
+            padding-top: 0;
+        }
+
+        .page-client-factsheet .img-cont,
+        .page-client-factsheet .btn-cont {
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+        }
+
+        .page-client-factsheet .img-cont {
+            height: auto;
+        }
+
+        .page-client-factsheet .img-cont img {
+            height: auto;
+            max-height: 180px;
+            object-fit: contain;
+        }
+
+        .page-client-factsheet .fs-info-body {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+            margin-top: 1rem !important;
+        }
+
+        .page-client-factsheet .info-nav {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-client-factsheet .info-nav-tabs-scroll {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 -0.15rem;
+            padding-bottom: 4px;
+        }
+
+        .page-client-factsheet .info-nav-tabs-scroll .nav-tabs {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .page-client-factsheet .info-nav-tabs-scroll .nav-link {
+            font-size: 0.8125rem;
+            padding: 0.5rem 0.65rem;
+        }
+
+        .page-client-factsheet .info-action {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+            justify-content: stretch;
+            padding: 0.5rem 0 0.75rem;
+        }
+
+        .page-client-factsheet .info-action .btn {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            white-space: normal;
+            text-align: center;
+        }
+
+        .page-client-factsheet .fs-tab-panel-wrap,
+        .page-client-factsheet .info-details {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+            margin: 0;
+        }
+
+        .page-client-factsheet .info-details .tab-pane {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .page-client-factsheet .info-details table {
+            width: 100% !important;
+            margin-bottom: 0;
+        }
+
+        .page-client-factsheet .dataTables_wrapper {
+            width: 100% !important;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .page-client-factsheet div.dataTables_wrapper div.row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .page-client-factsheet div.dataTables_wrapper div.dataTables_length,
+        .page-client-factsheet div.dataTables_wrapper div.dataTables_filter,
+        .page-client-factsheet div.dataTables_wrapper div.dataTables_info,
+        .page-client-factsheet div.dataTables_wrapper div.dataTables_paginate {
+            float: none !important;
+            width: 100% !important;
+            max-width: 100%;
+            text-align: left !important;
+            margin-bottom: 0.5rem;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .page-client-factsheet div.dataTables_wrapper div.dataTables_filter label {
+            width: 100%;
+            display: block;
+        }
+
+        .page-client-factsheet div.dataTables_wrapper div.dataTables_filter input {
+            width: 100% !important;
+            max-width: 100%;
+            margin-left: 0 !important;
+            display: block;
+        }
+
+        .page-client-factsheet div.dataTables_wrapper div.dataTables_paginate {
+            text-align: center !important;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .page-client-factsheet .table td .btn,
+        .page-client-factsheet .table td .btn-group {
+            display: inline-block;
+            margin: 0.15rem 0.15rem 0.15rem 0;
+            white-space: nowrap;
+        }
+
+        .page-client-factsheet #rehabilatationContent,
+        .page-client-factsheet .tc-header,
+        .page-client-factsheet .tc-search,
+        .page-client-factsheet .tc-body {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: none !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        .page-client-factsheet .tc-search {
+            display: flex !important;
+            flex-direction: column;
+            align-items: stretch !important;
+            gap: 0.5rem;
+            padding: 0.5rem 0 !important;
+        }
+
+        .page-client-factsheet .tc-search .form-control,
+        .page-client-factsheet .tc-search .btn {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 !important;
+        }
+
+        .page-client-factsheet .tc-body {
+            padding-top: 0.5rem !important;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
 </style>
 <body class="page-client-factsheet">
     <!-- Left Panel -->
@@ -842,7 +1103,7 @@
                                 </div>
                             </div>
                             </div>
-                            <div class="info-body" style="margin-top: 40px">
+                            <div class="info-body fs-info-body">
                                 <div class="info-nav info-nav-tabs-scroll">
                                     <ul class="nav nav-tabs flex-nowrap">
                                         <li class="nav-item">
@@ -894,9 +1155,6 @@
                                     </div>
                                 </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="button" class="btn btn-primary btn-confirm_update btn-sm float-right">Confirm</button>
                             </div>
                         </div>
                     </div>

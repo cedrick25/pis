@@ -141,6 +141,10 @@ $pis_open_org_dropdown = in_array(
         </div>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <div class="mobile-menu-brand">
+                <img src="images/avatar/images.png" alt="PPIS Logo">
+                <span>PPIS</span>
+            </div>
             <ul class="nav navbar-nav" id="mm">
                 <li class="aa dashboard<?php echo $pis_nav === 'dashboard' ? ' active' : ''; ?>" style="display:none;">
                     <a href="dashboard"> <i class="menu-icon fa fa-dashboard" aria-hidden="true"></i>Dashboard</a>
