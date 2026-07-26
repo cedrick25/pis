@@ -143,11 +143,11 @@
 
             $(".btn_update").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
-                window.location.href = 'http://localhost/pis/parolee_courtesy_supervision_update?docket_number='+docket_number;
+                window.location.href = (window.__PIS_BASE_URL || '') + 'parolee_courtesy_supervision_update?docket_number='+docket_number;
             })
             $(".btn_view").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
-                window.location.href = 'http://localhost/pis/parolee_courtesy_supervision_view?docket_number='+docket_number;
+                window.location.href = (window.__PIS_BASE_URL || '') + 'parolee_courtesy_supervision_view?docket_number='+docket_number;
             })
         }
 

@@ -2,7 +2,7 @@
         
         // var api = localStorage.getItem('api');
         // var ___ctx = api;
-        var ___ctx = "http://192.168.1.147:";
+        var ___ctx = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
         console.log(___ctx)
 
         var __setContext = function(newctx) {

@@ -118,7 +118,7 @@
         }
 
         var __tablePB = function(){
-            __executeExternalPost('http://localhost:8000/petitioner/search',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/petitioner/search',JSON.stringify(payload)).done(function (result) {
                 // console.log(result);
                 // var result = result.response;
                 if (result.status != "ERROR") {
@@ -155,7 +155,7 @@
                     $(".btn_viewClient").unbind("click").on("click", function(){
                         var cId     = $(this).data("id");
                         console.log(cId)
-                        window.location.href = 'http://localhost/pis/factSheetClientInfo?clientId='+cId;
+                        window.location.href = (window.__PIS_BASE_URL || '') + 'factSheetClientInfo?clientId='+cId;
                     })
                     $(".btn_viewDocuments").unbind("click").on("click", function(){
                         var clientId     = $(this).data("id");
@@ -164,7 +164,7 @@
                         console.log(fieldOfficeId)
                         var clientType =$(this).data("type")
                         console.log(clientType)
-                        window.location.href = 'http://localhost/pis/factSheetUploadedDocuments?clientId='+clientId+'&clientType='+clientType+'&fieldOfficeId='+fieldOfficeId;
+                        window.location.href = (window.__PIS_BASE_URL || '') + 'factSheetUploadedDocuments?clientId='+clientId+'&clientType='+clientType+'&fieldOfficeId='+fieldOfficeId;
                     })
                     $(".btn_viewWorksheet").unbind("click").on("click", function(){
                         var clientId     = $(this).data("id");
@@ -173,7 +173,7 @@
                         // console.log(fieldOfficeId)
                         var clientType =$(this).data("type")
                         console.log(clientType)
-                        window.location.href = 'http://localhost/pis/factSheetText?clientId='+clientId+'&clientType='+clientType;
+                        window.location.href = (window.__PIS_BASE_URL || '') + 'factSheetText?clientId='+clientId+'&clientType='+clientType;
                     })
                 }else{
                     alert("failed")

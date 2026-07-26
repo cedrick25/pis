@@ -243,7 +243,7 @@
                             $('#success').show();
                                 setTimeout(function () {
                                     $('#success').hide();
-                                    window.location.href = 'http://localhost/pis/pardonee_supervision_docketing';
+                                    window.location.href = (window.__PIS_BASE_URL || '') + 'pardonee_supervision_docketing';
                                 }, 2000);
                             }else{
                                 alert("failed")

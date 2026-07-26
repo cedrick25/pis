@@ -200,7 +200,7 @@
             $(".btn_view").unbind("click").on("click", function(){
                 var id = $(this).data("id");
                 var docket_number = $(this).data("docket");
-                window.location.href = 'http://localhost/pis/sent_view?docket_number='+docket_number+'&id='+id;
+                window.location.href = (window.__PIS_BASE_URL || '') + 'sent_view?docket_number='+docket_number+'&id='+id;
             })
         }
 

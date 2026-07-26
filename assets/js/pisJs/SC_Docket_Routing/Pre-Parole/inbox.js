@@ -175,7 +175,7 @@
                 var id = $(this).data("id");
                 var fi = $(this).data("fi");
                 var senderId = $(this).data("sender");
-                window.location.href = 'http://localhost/pis/parolee_docket_forward?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
+                window.location.href = (window.__PIS_BASE_URL || '') + 'parolee_docket_forward?docket_number='+docket_number+'&id='+id+'&fo='+fi+'&senderId='+senderId;
             })
             $("#btn_upload").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");

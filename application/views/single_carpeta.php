@@ -94,7 +94,7 @@
 
     <script type="text/javascript">
     ( function ( $ ) {
-        var ___ctx = '';
+        var ___ctx = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -105,7 +105,9 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            if (path && !/^https?:\/\//i.test(path)) {
+                path = __getContext() + path;
+            }
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -188,7 +190,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8000/docketbook/list/sc').done(function (result) {
+            __executeExternalGet('8000/docketbook/list/sc').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -221,7 +223,7 @@
                         $(".docket").html(docket_number)
                         $(".btn_remove_confirm").unbind("click").on("click", function(){
 
-                            __executeExternalPost('http://localhost:8000/docketbook/remove/'+docket_number).done(function (result) {
+                            __executeExternalPost('8000/docketbook/remove/'+docket_number).done(function (result) {
                                 if (result.status != "ERROR") {
                                         $(".form-control").val('');
                                         $('#success_remove').show();
@@ -243,7 +245,7 @@
 
                     $(".btn_update").unbind("click").on("click", function(){
                         var docket_number = $(this).data("docket");
-                        window.location.href = 'http://localhost/pis/single_carpeta_update?docket_number='+docket_number;
+                        window.location.href = (window.__PIS_BASE_URL || '') + 'single_carpeta_update?docket_number='+docket_number;
                     })
                    
                 }

@@ -149,7 +149,7 @@ $pis_open_org_dropdown = in_array(
                 <li class="aa dashboard<?php echo $pis_nav === 'dashboard' ? ' active' : ''; ?>" style="display:none;">
                     <a href="dashboard"> <i class="menu-icon fa fa-dashboard" aria-hidden="true"></i>Dashboard</a>
                 </li>
-                <h3 class="menu-title docketing_module" style="display:none;">Docketing</h3>
+                <h3 class="menu-title docketing_module" style="display:none;">Docket Access</h3>
                 <li class="menu-item-has-children dropdown probation_docketing_module<?php echo $pis_open_probation_dropdown ? ' show active' : ''; ?>" style="display:none;">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="<?php echo $pis_open_probation_dropdown ? 'true' : 'false'; ?>"> <i class="menu-icon fa fa-building-o"></i>Probation</a>
                     <ul class="sub-menu children dropdown-menu<?php echo $pis_open_probation_dropdown ? ' show' : ''; ?>">

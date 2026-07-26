@@ -177,13 +177,31 @@
         }
     }
 
+    function resolveFieldOfficeId(callback) {
+        var fieldOfficeId = $.cookie('field_office_id');
+        if (fieldOfficeId != null && String(fieldOfficeId).trim() !== '') {
+            callback(fieldOfficeId);
+            return;
+        }
+        if (typeof window.__pisEnsureUserSession === 'function') {
+            window.__pisEnsureUserSession()
+                .done(function () {
+                    callback($.cookie('field_office_id'));
+                })
+                .fail(function () {
+                    callback(null);
+                });
+            return;
+        }
+        callback(null);
+    }
+
     function investigationListAjax(data, callback /* , settings */) {
         setPisInvDocketListLoader(true);
         hidePisInvSearchError();
 
         var page = data.start / data.length;
         var size = data.length;
-        var fieldOfficeId = $.cookie('field_office_id');
         var term = searchTermForAjax();
 
         function finishFail(message) {
@@ -196,17 +214,18 @@
             });
         }
 
-        if (fieldOfficeId == null || String(fieldOfficeId).trim() === '') {
-            finishFail('Your field office could not be determined. Please sign in again.');
-            setPisInvDocketListLoader(false);
-            return;
-        }
-
         function onAjaxComplete() {
             setPisInvDocketListLoader(false);
         }
 
-        if (!term) {
+        function loadDockets(fieldOfficeId) {
+            if (fieldOfficeId == null || String(fieldOfficeId).trim() === '') {
+                finishFail('Your field office could not be determined. Please sign in again.');
+                setPisInvDocketListLoader(false);
+                return;
+            }
+
+            if (!term) {
             $.ajax({
                 url: joinApiUrl(___ctx, '8000/docketbook'),
                 type: 'GET',
@@ -273,7 +292,10 @@
                     finishFail('Search could not be completed. Please try again.');
                 })
                 .always(onAjaxComplete);
+            }
         }
+
+        resolveFieldOfficeId(loadDockets);
     }
 
     function buttonVisibility() {
@@ -638,10 +660,21 @@
         return;
     }
 
-    wireSearchAndModalUi();
-    bindRowActionsOnce();
-    bindRemoveModalConfirm();
-    initInvestigationListDataTable();
-    injectSearch();
-    updatePisInvSearchClearState();
+    function startInvestigationDocketListPage() {
+        wireSearchAndModalUi();
+        bindRowActionsOnce();
+        bindRemoveModalConfirm();
+        initInvestigationListDataTable();
+        injectSearch();
+        updatePisInvSearchClearState();
+    }
+
+    resolveFieldOfficeId(function (fieldOfficeId) {
+        if (fieldOfficeId == null || String(fieldOfficeId).trim() === '') {
+            setPisInvDocketListLoader(false);
+            showPisInvSearchError('Your field office could not be determined. Please sign in again.');
+            return;
+        }
+        startInvestigationDocketListPage();
+    });
 })(jQuery);

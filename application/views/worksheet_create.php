@@ -1995,7 +1995,7 @@
 <script type="text/javascript">
 
     ( function ( $ ) {
-        var ___ctx = '';
+        var ___ctx = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
         var __setContext = function(newctx) {
             ___ctx = newctx;
         };
@@ -2003,7 +2003,9 @@
             return ___ctx;
         };
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            if (path && !/^https?:\/\//i.test(path)) {
+                path = __getContext() + path;
+            }
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -2122,7 +2124,7 @@
 
             console.log(payload)
 
-            __executeExternalPost('http://localhost:8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/worksheet/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
@@ -2131,7 +2133,7 @@
                         $('#success').hide();
                         setTimeout(function () {
                         // window.location.reload(true);
-                        // window.location.href = 'http://localhost/pis/worksheet_present_offense?client_id='+client_id;
+                        // window.location.href = (window.__PIS_BASE_URL || '') + 'worksheet_present_offense?client_id='+client_id;
                         }, 500);
                     }, 2000);
                 }else{

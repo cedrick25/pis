@@ -1,0 +1,9 @@
+{
+  "_comment": "Optional per-screenshot overrides. Use fractional coords (0-1) when screenshot height varies.",
+  "060-fact-sheet-pdl-add-record-add-record.png": [
+    [0.58, 0.78, 0.68, 0.82, "Click"]
+  ],
+  "066-user-accounts-add-record-add-record.png": [
+    [0.58, 0.615, 0.68, 0.635, "Click"]
+  ]
+}

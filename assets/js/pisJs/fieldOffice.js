@@ -1,5 +1,5 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        var ___ctx = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +10,9 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            if (path && !/^https?:\/\//i.test(path)) {
+                path = __getContext() + path;
+            }
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -98,7 +100,7 @@
                 }
             // console.log(payload);
 
-            __executeExternalPost('http://localhost:8088/region/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8088/region/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                 $(".form-control").val('');
@@ -118,7 +120,7 @@
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
 
-            __executeExternalGet('http://localhost:8088/user?page=0&size=50').done(function (result) {
+            __executeExternalGet('8088/user?page=0&size=50').done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -150,7 +152,7 @@
                 $(".btn_update").unbind("click").on("click", function(){
                     var data_id = $(this).data("id");
                     console.log(data_id)
-                    __executeExternalGet('http://localhost:8088/region/'+data_id).done(function (result) {
+                    __executeExternalGet('8088/region/'+data_id).done(function (result) {
                         console.log(result);
                         if (result.status != "ERROR") {
                             $(".field_office_update").val(result.field_office);
@@ -164,7 +166,7 @@
                                 }
                                 // console.log(payload)
 
-                                __executeExternalPost('http://localhost:8088/region/update/'+data_id,JSON.stringify(payload)).done(function (result) {
+                                __executeExternalPost('8088/region/update/'+data_id,JSON.stringify(payload)).done(function (result) {
                                     console.log(result);
                                     if (result.status != "ERROR") {
                                     $(".form-control").val('');

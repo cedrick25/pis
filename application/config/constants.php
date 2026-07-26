@@ -83,3 +83,28 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/*
+|--------------------------------------------------------------------------
+| External API host override
+|--------------------------------------------------------------------------
+|
+| Used by the frontend as: {protocol}://{host}:
+| Ported microservices append 8000 / 8080 / 8088 after the trailing colon.
+|
+| Leave empty to use the current request hostname (HTTPS-ready).
+| Examples:
+|   define('PIS_API_HOST', 'localhost');
+|   define('PIS_API_HOST', '192.168.1.147');
+|   define('PIS_API_HOST', 'api.example.gov.ph');
+|
+*/
+defined('PIS_API_HOST') OR define('PIS_API_HOST', '');
+
+/*
+|--------------------------------------------------------------------------
+| Optional external notification endpoints (login OTP)
+|--------------------------------------------------------------------------
+*/
+defined('PIS_SMS_API_URL') OR define('PIS_SMS_API_URL', 'http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually');
+defined('PIS_EMAIL_API_URL') OR define('PIS_EMAIL_API_URL', 'http://192.168.1.219/ppa-api-uams/wsv1/api/email');

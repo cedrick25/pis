@@ -1,5 +1,5 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        var ___ctx = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +10,9 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            if (path && !/^https?:\/\//i.test(path)) {
+                path = __getContext() + path;
+            }
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -108,7 +110,7 @@
 
         var docket_number = GetURLParameter('docket_number');
         var __fields = function(){
-            __executeExternalGet('http://localhost:8000/docketbook/'+docket_number).done(function (result) {
+            __executeExternalGet('8000/docketbook/'+docket_number).done(function (result) {
                 console.log(result);
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -130,7 +132,7 @@
                             "lastStatusUpdateDate"  : "",
                         }
 
-                        __executeExternalPost('http://localhost:8000/workflow/create',JSON.stringify(payload)).done(function (result) {
+                        __executeExternalPost('8000/workflow/create',JSON.stringify(payload)).done(function (result) {
                             console.log(result);
                             if (result.status != "ERROR") {
                             $(".form-control").val('');

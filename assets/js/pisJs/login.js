@@ -47,6 +47,64 @@
         
         return d.promise();
     };
+        var __executeExternalGet = function(path, customLoader) {
+            path = __getContext() + path;
+            var d = $.Deferred();
+            if (customLoader != "") {
+                $("#" + customLoader).show();
+                $("#" + customLoader).removeClass("hide");
+            }
+            $.ajax({
+                method: "GET",
+                url: path,
+                dataType: "json"
+            }).done(function (data) {
+                if (customLoader != "") {
+                    $("#" + customLoader).hide();
+                    $("#" + customLoader).addClass("hide");
+                }
+                d.resolve(data);
+            }).fail(function (jqXHR, textStatus, errorThrown, request) {
+                d.resolve({
+                    status: 'ERROR',
+                    message: request
+                });
+                if (customLoader != "") {
+                    $("#" + customLoader).hide();
+                    $("#" + customLoader).addClass("hide");
+                }
+            });
+            return d.promise();
+        };
+
+        function persistUserSessionAndRedirect(uuid, redirectUrl) {
+            __executeExternalGet('8088/user/' + uuid).done(function (user) {
+                if (user && user.status !== 'ERROR') {
+                    if (user.departmentId != null && String(user.departmentId).trim() !== '') {
+                        $.cookie('field_office_id', user.departmentId, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+                    }
+                    if (user.roleId != null) {
+                        $.cookie('role_id', user.roleId, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+                    }
+                    if (user.departmentName != null) {
+                        $.cookie('departmentName', user.departmentName, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+                    }
+                    var managerId = null;
+                    try {
+                        managerId = user.managerId ? JSON.parse(user.managerId) : null;
+                    } catch (e) {
+                        managerId = null;
+                    }
+                    var name = [user.firstName, user.middleName, user.lastName, user.suffix]
+                        .filter(function (part) { return part != null && String(part).trim() !== ''; })
+                        .join(' ');
+                    localStorage.setItem('userName', name);
+                    localStorage.setItem('managerId', JSON.stringify(managerId));
+                }
+                window.location.href = redirectUrl;
+            });
+        }
+
         var __executeExternalPost = function(path, jsonObj, customLoader) {
             path = __getContext() + path;
             var d = $.Deferred();
@@ -146,17 +204,27 @@
                                     message_DATETIME : dt
                                 }
                                 console.log(payloadSMS)
-                                __executeExternalPost2('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payloadSMS)).done(function (resultSMS) {
-                                    console.log(resultSMS)
-                                });
+                                var smsUrl = window.__PIS_SMS_API_URL || '';
+                                var emailUrl = window.__PIS_EMAIL_API_URL || '';
+                                if (smsUrl) {
+                                    __executeExternalPost2(smsUrl, JSON.stringify(payloadSMS)).done(function (resultSMS) {
+                                        console.log(resultSMS)
+                                    });
+                                } else {
+                                    console.warn('PIS_SMS_API_URL is not configured');
+                                }
 
                                 var payloadEmail  = {
                                     "message_CONTENT" : "Hi " + result.firstName+ ", your OTP KEY is " + otp +".",
                                     "message_TO" : result.email,
                                 }
-                                __executeExternalPost2('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
-                                   console.log(resultemail)
-                                });
+                                if (emailUrl) {
+                                    __executeExternalPost2(emailUrl, JSON.stringify(payloadEmail)).done(function (resultemail) {
+                                       console.log(resultemail)
+                                    });
+                                } else {
+                                    console.warn('PIS_EMAIL_API_URL is not configured');
+                                }
                             }
                             SMSEmail();
 
@@ -210,7 +278,7 @@
                                     var uuid = result.uuid
                                     // var roleid = result.role.roleId
                                     // $.cookie("roleid", roleid);
-                                    $.cookie("uuid", uuid);
+                                    $.cookie("uuid", uuid, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
                                     localStorage.clear();
                                     
                                     // check if localstorage is clear
@@ -221,8 +289,8 @@
                                     localStorage.setItem('permission', JSON.stringify(permission_role));
 
                                     setTimeout(function () {
-                                        window.location.href="dashboard"
-                                    },1000);
+                                        persistUserSessionAndRedirect(uuid, "dashboard");
+                                    }, 1000);
                                 } else{
                                     $('.prompt_OTP').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> "Invalid OTP. Please enter the correct OTP to proceed." </div>');
                                     console.log("OTP not approved")
@@ -278,7 +346,7 @@
                                 var roleName = result.role.roleName;
                                 // var roleid = result.role.roleId
                                 // $.cookie("roleid", roleid);
-                                $.cookie("uuid", uuid);
+                                $.cookie("uuid", uuid, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
                                 
                                 // check if localstorage is clear
                                 var data = JSON.parse(localStorage.getItem('permission'));
@@ -291,8 +359,8 @@
                                 var data = JSON.parse(localStorage.getItem('permission'));
                                 console.log(data)
                                 setTimeout(function () {
-                                    window.location.href="investigation_docketing"
-                                },1000);
+                                    persistUserSessionAndRedirect(uuid, "investigation_docketing");
+                                }, 1000);
                             } else {
                                 $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                                 // console.log("this account is locked")

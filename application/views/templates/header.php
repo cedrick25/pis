@@ -36,4 +36,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             height: calc(2.25rem + 2px)!important;
         }
     </style>
+    <?php
+        $pis_base_url = $this->config->item('base_url');
+        $pis_is_https = !empty($this->config->item('is_https'));
+        $pis_protocol = $pis_is_https ? 'https://' : 'http://';
+        $pis_api_host = defined('PIS_API_HOST') ? trim((string) PIS_API_HOST) : '';
+        if ($pis_api_host === '') {
+            $pis_api_host = isset($_SERVER['HTTP_HOST']) ? preg_replace('/:\d+$/', '', (string) $_SERVER['HTTP_HOST']) : 'localhost';
+        }
+        $pis_api_base = $pis_protocol.$pis_api_host.':';
+    ?>
+    <script type="text/javascript">
+        window.__PIS_BASE_URL = <?= json_encode($pis_base_url) ?>;
+        window.__PIS_API_BASE = <?= json_encode($pis_api_base) ?>;
+        window.__PIS_IS_HTTPS = <?= $pis_is_https ? 'true' : 'false' ?>;
+        window.__PIS_SMS_API_URL = <?= json_encode(defined('PIS_SMS_API_URL') ? PIS_SMS_API_URL : '') ?>;
+        window.__PIS_EMAIL_API_URL = <?= json_encode(defined('PIS_EMAIL_API_URL') ? PIS_EMAIL_API_URL : '') ?>;
+        window.pisUrl = function (path) {
+            var base = window.__PIS_BASE_URL || '';
+            var p = String(path == null ? '' : path).replace(/^\/+/, '');
+            return base + p;
+        };
+        window.pisApiUrl = function (path) {
+            var base = window.__PIS_API_BASE || (localStorage.getItem('api') || '');
+            var p = String(path == null ? '' : path).replace(/^\/+/, '');
+            if (!base) {
+                return p;
+            }
+            if (base.slice(-1) === ':' && /^\d+\//.test(p)) {
+                return base + p;
+            }
+            return base.replace(/\/+$/, '') + (p ? '/' + p : '');
+        };
+        window.__PIS_COOKIE_OPTS = function () {
+            var opts = { path: '/' };
+            if (window.__PIS_IS_HTTPS || window.location.protocol === 'https:') {
+                opts.secure = true;
+            }
+            return opts;
+        };
+        try {
+            localStorage.setItem('api', window.__PIS_API_BASE);
+        } catch (e) {}
+    </script>
 </head>

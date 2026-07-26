@@ -198,7 +198,7 @@
 
     <script type="text/javascript">
     ( function ( $ ) {
-        var ___ctx = '';
+        var ___ctx = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -209,7 +209,9 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            if (path && !/^https?:\/\//i.test(path)) {
+                path = __getContext() + path;
+            }
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -361,7 +363,7 @@
         var __select = function(){
             $('.field_office').empty();
 
-            __executeExternalGet('http://localhost:8088/department/list').done(function (result) {
+            __executeExternalGet('8088/department/list').done(function (result) {
                 // console.log(result)
                 if (result.status != "ERROR") {
                     $('.field_office').append("<option selected disabled> - - Select Field Office - - </option>");
@@ -428,7 +430,7 @@
                 "status"        : 1,
             }
             console.log(payload)
-            __executeExternalPost('http://localhost:8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $(".form-control").val('');

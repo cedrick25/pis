@@ -1,5 +1,5 @@
     ( function ( $ ) {
-        var ___ctx = '';
+        var ___ctx = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
 
         var __setContext = function(newctx) {
             ___ctx = newctx;
@@ -10,7 +10,9 @@
         };
 
         var __executeExternalGet = function(path, customLoader) {
-            // path = $.wms.getContextPath() + path;
+            if (path && !/^https?:\/\//i.test(path)) {
+                path = __getContext() + path;
+            }
             var d = $.Deferred();
             if(customLoader != ""){
                 $("#"+customLoader).show();
@@ -98,7 +100,7 @@
                 $('.docket_num').empty();
                 const type = this.value
                 console.log(type)
-                __executeExternalGet('http://localhost:8000/docketbook/list/'+type+'/'+$.cookie('field_office_id')).done(function (result) {
+                __executeExternalGet('8000/docketbook/list/'+type+'/'+$.cookie('field_office_id')).done(function (result) {
                     if (result.status != "ERROR") {
 
                         $('.docket_num').append("<option selected disabled> - - Select Docket Number - - </option>");
@@ -122,7 +124,7 @@
         var list_upload = function(docket_number){
             $('.table_head').DataTable().destroy();
             $('.table_body').empty();
-            __executeExternalGet('http://localhost:8080/file/list/'+docket_number).done(function (result) {
+            __executeExternalGet('8080/file/list/'+docket_number).done(function (result) {
 
                 if (result.status != "ERROR") {
                     $('.docket_result').show()
@@ -132,7 +134,7 @@
                                 "<td></td>"+
                                 "<td>"+data.fileName+"</td>"+
                                 "<td>"+data.createdDate+"</td>"+
-                                "<td class='options'><a href="+'http://localhost:8080/file/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                                "<td class='options'><a href='"+(window.pisApiUrl ? window.pisApiUrl('8080/file/view/'+data.id) : (__getContext()+'8080/file/view/'+data.id))+"'><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                             )
                         });
                     }
@@ -155,7 +157,7 @@
         var list_workflow = function(docket_number){
             $('.an_body').empty();
 
-            __executeExternalGet('http://localhost:8000/workflow/docket/'+docket_number+'?page=0&size=100').done(function (result) {
+            __executeExternalGet('8000/workflow/docket/'+docket_number+'?page=0&size=100').done(function (result) {
                 // console.log("==========")
                 // console.log(result)
                 // console.log(result.content.length)
@@ -165,14 +167,14 @@
                         result.content.forEach(function(data){
                             console.log(data)
                             console.log(data.fieldOfficeId)
-                            __executeExternalGet('http://localhost:8088/department/'+data.fieldOfficeId).done(function (result) {
+                            __executeExternalGet('8088/department/'+data.fieldOfficeId).done(function (result) {
                                 if (result.status != "ERROR") {
                                     console.log(result);
                                     console.log(result.name);
                                     var fo = result.name;
-                                    __executeExternalGet('http://localhost:8088/user/'+data.senderId).done(function (result) {
+                                    __executeExternalGet('8088/user/'+data.senderId).done(function (result) {
                                         var sender = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
-                                        __executeExternalGet('http://localhost:8088/user/'+data.receiverId).done(function (result) {
+                                        __executeExternalGet('8088/user/'+data.receiverId).done(function (result) {
                                             var receiver = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix;
                                             $('.an_body').prepend(`
                                                 <div class="card-announcement">

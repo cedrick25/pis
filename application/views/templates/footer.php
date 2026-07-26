@@ -41,8 +41,11 @@
             });
         });
         // localStorage.removeItem('api');
-        // localStorage.setItem('api', 'http://192.168.1.147:');
-        localStorage.setItem('api', 'http://localhost:');
+        // Prefer values injected by header.php (HTTPS-ready). Fall back for older pages.
+        var apiBase = (typeof window.__PIS_API_BASE === 'string' && window.__PIS_API_BASE)
+            ? window.__PIS_API_BASE
+            : (window.location.protocol + '//' + window.location.hostname + ':');
+        localStorage.setItem('api', apiBase);
         var api = localStorage.getItem('api');
 
         var ___ctx = api;
@@ -163,64 +166,84 @@
 
         buttonVisibility();
 
+        function applyUserSession(result) {
+            if (!result || result.status === 'ERROR') {
+                return false;
+            }
+            console.log("====this is user logged in=====");
+            console.log(result);
+            console.log("====this is user logged in=====");
+            $(".f_name").html(result.username);
+            var field_office_id = result.departmentId;
+            var role_id = result.roleId;
+            var departmentName = result.departmentName;
+            var managerId = null;
+            try {
+                managerId = result.managerId ? JSON.parse(result.managerId) : null;
+            } catch (e) {
+                managerId = null;
+            }
+            var name = `${result.firstName} ${result.middleName ?? ""} ${result.lastName} ${result.suffix ?? ""}`;
+            localStorage.setItem("userName", name);
+            localStorage.setItem('managerId', JSON.stringify(managerId));
+            if (field_office_id != null && String(field_office_id).trim() !== '') {
+                $.cookie("field_office_id", field_office_id, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+            }
+            if (role_id != null) {
+                $.cookie("role_id", role_id, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+            }
+            if (departmentName != null) {
+                $.cookie("departmentName", departmentName, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+            }
+            if (result.roleId == "1") {
+                $(".org_module").show();
+            }
+            $(document).trigger('pis:userSessionReady', [result]);
+            return field_office_id != null && String(field_office_id).trim() !== '';
+        }
+
+        window.__pisEnsureUserSession = function () {
+            if (window.__pisUserSessionPromise) {
+                return window.__pisUserSessionPromise;
+            }
+            var d = $.Deferred();
+            window.__pisUserSessionPromise = d.promise();
+
+            var existingFo = $.cookie('field_office_id');
+            if (existingFo != null && String(existingFo).trim() !== '') {
+                d.resolve({ fieldOfficeId: existingFo });
+                return d.promise();
+            }
+
+            var uuid = $.cookie('uuid');
+            if (uuid == null || String(uuid).trim() === '') {
+                d.reject({ reason: 'no_uuid' });
+                return d.promise();
+            }
+
+            __executeExternalGet('8088/user/' + uuid).done(function (result) {
+                if (applyUserSession(result)) {
+                    d.resolve(result);
+                } else {
+                    d.reject({ reason: 'no_field_office', result: result });
+                }
+            });
+
+            return d.promise();
+        };
 
         if ($.cookie("uuid") != undefined) {
-            __executeExternalGet('8088/user/'+$.cookie("uuid")).done(function (result) {
-                if (result.status != "ERROR") {
-                    console.log("====this is user logged in=====");
-                    console.log(result);
-                    console.log("====this is user logged in=====");
-                    $(".f_name").html(result.username);
-                    var field_office_id = result.departmentId
-                    var role_id = result.roleId
-                    var departmentName = result.departmentName
-                    var managerId = JSON.parse(result.managerId);
-                    var name = `${result.firstName} ${result.middleName ?? ""} ${result.lastName} ${result.suffix ?? ""}`
-                    localStorage.setItem("userName", name);
-                    localStorage.setItem('managerId', JSON.stringify(managerId));
-                    $.cookie("field_office_id", field_office_id);
-                    $.cookie("role_id", role_id)
-                    $.cookie("departmentName", departmentName)
-
-                    // const roleId = ["1"];
-                    // if (roleId.includes("1")) {
-                    //     $(".org_module").show()
-                    // }
-
-                    if (result.roleId == "1") {
-                        $(".org_module").show()
-                    }
-                    // result.permissions.forEach(function(data){
-                    //     if (data.type == "ACTION") {
-                    //         // console.log(data.value)
-                    //         setTimeout(function() {
-                    //             if (!data.value) {
-                    //                 var element = $('.' + data.detail);
-                    //                 element.hide();
-                    //             }else{
-                    //                 var element = $('.' + data.detail);
-                    //                 element.show();
-                    //             }
-                    //         }, 1000);
-                    //     }else if (data.type == "VIEW") {
-                    //         if (!data.value) {
-                    //             var element = $('.' + data.detail);
-                    //             element.hide();
-                    //         }else{
-                    //             var element = $('.' + data.detail);
-                    //             element.show();
-                    //         }
-                    //     }else{
-                    //     }
-                    // });
-                }
-            })
+            window.__pisEnsureUserSession();
         } else {
-            console.log("no user logged in")
+            console.log("no user logged in");
         }
         $(".btn_logout").unbind("click").on("click", function(){
             console.log('clicked')
             $.removeCookie('uuid');
+            $.removeCookie('field_office_id');
+            $.removeCookie('role_id');
+            $.removeCookie('departmentName');
+            window.__pisUserSessionPromise = null;
             localStorage.clear();
             setTimeout(function () {
                 window.location.href="./"

@@ -1,0 +1,2384 @@
+{
+  "generatedAt": "2026-06-29T01:43:49.590Z",
+  "records": [
+    {
+      "module": "Login",
+      "name": "Login",
+      "kind": "page",
+      "filename": "001-login-page.png",
+      "url": "http://localhost/pis/",
+      "controls": {
+        "buttons": [
+          "SIGN IN"
+        ],
+        "fields": [
+          "Email address",
+          "********"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Navigation",
+      "name": "Main Navigation",
+      "kind": "expanded menus",
+      "filename": "002-main-navigation-expanded-menus.png",
+      "url": "http://localhost/pis/investigation_docketing",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblPisInvestigationDockets_length",
+          "Docket Number, CC Number, Name"
+        ],
+        "tables": [
+          "#, Docket Number, Received Date, Name, Criminal Case No., Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Investigation",
+      "name": "Probation Investigation",
+      "kind": "list page",
+      "filename": "003-probation-investigation-list-page.png",
+      "url": "http://localhost/pis/investigation_docketing",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblPisInvestigationDockets_length",
+          "Docket Number, CC Number, Name"
+        ],
+        "tables": [
+          "#, Docket Number, Received Date, Name, Criminal Case No., Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Investigation",
+      "name": "Probation Investigation View",
+      "kind": "View",
+      "filename": "004-probation-investigation-view-view.png",
+      "url": "http://localhost/pis/investigation_docket_view?docket_number=PI-2025-09-00235&officeId=5",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "text-input",
+          "Plea Bargain",
+          "Criminal Case Number",
+          "Court of Origin",
+          "Offense",
+          "Sentence",
+          "Date of Court Order",
+          "Date Received by PPO",
+          "Investigation Officer",
+          "PSIR Date",
+          "PPO's Recommendation",
+          "Manifestation Date"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Investigation",
+      "name": "Probation Investigation Update",
+      "kind": "Update",
+      "filename": "005-probation-investigation-update-update.png",
+      "url": "http://localhost/pis/investigation_docket_update?docket_number=PI-2025-09-00235&officeId=5&petitionerId=7323",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "docket_number_display",
+          "client_name_display",
+          "Plea Bargain",
+          "Criminal Case Number",
+          "Court of Origin",
+          "Offense",
+          "Sentence",
+          "Date of Court Order",
+          "Date Received by PPO",
+          "Investigation Officer",
+          "PSIR Date",
+          "PPO's Recommendation"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Investigation",
+      "name": "Probation Investigation Attachments",
+      "kind": "Attachments",
+      "filename": "006-probation-investigation-attachments-attachments.png",
+      "url": "http://localhost/pis/pis-investigation-file-upload?docket_number=PI-2025-09-00235&officeId=5",
+      "controls": {
+        "buttons": [
+          "Confirm",
+          "View",
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Kind",
+          "Type",
+          "Upload File",
+          "tblPisInvestigationUploads_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions",
+          "Data table"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Investigation",
+      "name": "Probation Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "007-probation-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/investigation_docketing",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblPisInvestigationDockets_length",
+          "Docket Number, CC Number, Name"
+        ],
+        "tables": [
+          "#, Docket Number, Received Date, Name, Criminal Case No., Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Courtesy Investigation",
+      "name": "Probation Courtesy Investigation",
+      "kind": "list page",
+      "filename": "008-probation-courtesy-investigation-list-page.png",
+      "url": "http://localhost/pis/probation-courtesy-investigation-list",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblCourtesyInvestigationDockets_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Date Completed and Returned, Name, Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Courtesy Investigation",
+      "name": "Probation Courtesy Investigation View",
+      "kind": "View",
+      "filename": "009-probation-courtesy-investigation-view-view.png",
+      "url": "http://localhost/pis/probation-courtesy-investigation-view?docket_number=CPI-2025-09-00035&officeId=5",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "Docket Number",
+          "Petitioner's Name",
+          "Referring Office",
+          "Date Received from the PPO",
+          "Investigating Officer",
+          "Reasons",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Investigation",
+      "name": "Probation Courtesy Investigation Update",
+      "kind": "Update",
+      "filename": "010-probation-courtesy-investigation-update-update.png",
+      "url": "http://localhost/pis/probation-courtesy-investigation-update?docket_number=CPI-2025-09-00035&officeId=5&petitionerId=16737",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Docket Number",
+          "Petitioner's Name",
+          "Referring Office",
+          "Date Received from the PPO",
+          "Investigating Officer",
+          "Reasons",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Investigation",
+      "name": "Probation Courtesy Investigation Attachments",
+      "kind": "Attachments",
+      "filename": "011-probation-courtesy-investigation-attachments-attachments.png",
+      "url": "http://localhost/pis/probation-courtesy-investigation-uploads?docket_number=CPI-2025-09-00035&id=16737&type=investigation&fi=5",
+      "controls": {
+        "buttons": [
+          "Confirm",
+          "View",
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Kind",
+          "Type",
+          "Upload File",
+          "courtesy_uploads_table_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Investigation",
+      "name": "Probation Courtesy Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "012-probation-courtesy-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/probation-courtesy-investigation-list",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblCourtesyInvestigationDockets_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Date Completed and Returned, Name, Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Supervision",
+      "name": "Probation Supervision",
+      "kind": "list page",
+      "filename": "013-probation-supervision-list-page.png",
+      "url": "http://localhost/pis/supervision_docketing",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblSupervisionDocketing_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Received Date, Name, Criminal Case No., Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Supervision",
+      "name": "Probation Supervision View",
+      "kind": "View",
+      "filename": "014-probation-supervision-view-view.png",
+      "url": "http://localhost/pis/supervision_docket_view?docket_number=TPS-2025-09-00151",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "sup_view_docket",
+          "sup_view_client",
+          "Alias",
+          "Type of Referrals",
+          "Criminal Case Number",
+          "Court of Origin",
+          "Case Classification",
+          "Date Received by PPO",
+          "Supervising Officer",
+          "Probation Start Date",
+          "Probation End Date",
+          "Office Findings"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Supervision",
+      "name": "Probation Supervision Update",
+      "kind": "Update",
+      "filename": "015-probation-supervision-update-update.png",
+      "url": "http://localhost/pis/supervision_docket_update?docket_number=TPS-2025-09-00151",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "sup_docket_number",
+          "sup_client_name",
+          "Alias",
+          "Type of Referrals",
+          "Criminal Case Number",
+          "Court of Origin",
+          "Case Classification",
+          "Date Received by PPO",
+          "Supervising Officer",
+          "Probation Start Date",
+          "Probation End Date",
+          "Office Findings"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Supervision",
+      "name": "Probation Supervision Attachments",
+      "kind": "Attachments",
+      "filename": "016-probation-supervision-attachments-attachments.png",
+      "url": "http://localhost/pis/pis-supervision-file-upload?docket_number=TPS-2025-09-00151&id=&type=&fi=5",
+      "controls": {
+        "buttons": [
+          "Confirm",
+          "View",
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Kind",
+          "Type",
+          "Upload File",
+          "supervision_uploads_table_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Supervision",
+      "name": "Probation Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "017-probation-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/supervision_docketing",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblSupervisionDocketing_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Received Date, Name, Criminal Case No., Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Courtesy Supervision",
+      "name": "Probation Courtesy Supervision",
+      "kind": "list page",
+      "filename": "018-probation-courtesy-supervision-list-page.png",
+      "url": "http://localhost/pis/probation-courtesy-supervision-list",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblCourtesySupervisionDockets_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Date Completed and Returned, Name, Criminal Case No., Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Probation Courtesy Supervision",
+      "name": "Probation Courtesy Supervision View",
+      "kind": "View",
+      "filename": "019-probation-courtesy-supervision-view-view.png",
+      "url": "http://localhost/pis/probation-courtesy-supervision-view?docket_number=CPS-2025-06-00006&officeId=5&petitionerId=131871",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "csup_view_docket",
+          "csup_view_client",
+          "Criminal Case No.",
+          "Court of Origin",
+          "Referring Office",
+          "Date Received from the PPO",
+          "Supervising Officer",
+          "Period of Supervision",
+          "Case Classification",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Supervision",
+      "name": "Probation Courtesy Supervision Update",
+      "kind": "Update",
+      "filename": "020-probation-courtesy-supervision-update-update.png",
+      "url": "http://localhost/pis/probation-courtesy-supervision-update?docket_number=CPS-2025-06-00006&officeId=5&petitionerId=131871",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "csup_docket_number",
+          "csup_client_name",
+          "Criminal Case No.",
+          "Court of Origin",
+          "Referring Office",
+          "Date Received from the PPO",
+          "Supervising Officer",
+          "Period of Supervision",
+          "Case Classification",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Supervision",
+      "name": "Probation Courtesy Supervision Attachments",
+      "kind": "Attachments",
+      "filename": "021-probation-courtesy-supervision-attachments-attachments.png",
+      "url": "http://localhost/pis/probation-courtesy-supervision-uploads?docket_number=CPS-2025-06-00006&id=131871&type=supervision&fi=5",
+      "controls": {
+        "buttons": [
+          "Confirm",
+          "View",
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Kind",
+          "Type",
+          "Upload File",
+          "courtesy_supervision_uploads_table_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Supervision",
+      "name": "Probation Courtesy Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "022-probation-courtesy-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/probation-courtesy-supervision-list",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblCourtesySupervisionDockets_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Date Completed and Returned, Name, Criminal Case No., Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Investigation",
+      "name": "Parole and Pardon Investigation",
+      "kind": "list page",
+      "filename": "023-parole-and-pardon-investigation-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-investigation-list",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleInv_length",
+          "Docket Number, CC Number, Name"
+        ],
+        "tables": [
+          "#, Docket Number, Full Name, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Investigation",
+      "name": "Parole and Pardon Investigation View",
+      "kind": "View",
+      "filename": "024-parole-and-pardon-investigation-view-view.png",
+      "url": "http://localhost/pis/parole-pardon-investigation-view?docket_number=SCPPIINV-2024-06-00001",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "Docket No.",
+          "Client Name",
+          "Criminal Case No.",
+          "Name of Prison/Jail",
+          "From",
+          "Offense",
+          "Date Received by the PPO",
+          "Investigating Officer",
+          "Date Pre-Parole/Executive Clemency Investigation Report Submitted",
+          "PPO's Recommendation",
+          "Transfer Date",
+          "Transfer To"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Investigation",
+      "name": "Parole and Pardon Investigation Update",
+      "kind": "Update",
+      "filename": "025-parole-and-pardon-investigation-update-update.png",
+      "url": "http://localhost/pis/parole-pardon-investigation-update?docket_number=SCPPIINV-2024-06-00001",
+      "controls": {
+        "buttons": [
+          "Update"
+        ],
+        "fields": [
+          "Docket No.",
+          "Client Name",
+          "Criminal Case No.",
+          "Name of Prison/Jail",
+          "From",
+          "Offense",
+          "Date Received by the PPO",
+          "Investigating Officer",
+          "Date Pre-Parole/Executive Clemency Investigation Report Submitted",
+          "PPO's Recommendation",
+          "Transfer Date",
+          "Transfer To"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Investigation",
+      "name": "Parole and Pardon Investigation Attachments",
+      "kind": "Attachments",
+      "filename": "026-parole-and-pardon-investigation-attachments-attachments.png",
+      "url": "http://localhost/pis/parole-pardon-investigation-upload?docket_number=SCPPIINV-2024-06-00001",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Kind",
+          "Type",
+          "Upload File",
+          "pinv_investigation_uploads_table_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions",
+          "Data table"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Investigation",
+      "name": "Parole and Pardon Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "027-parole-and-pardon-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-investigation-list",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleInv_length",
+          "Docket Number, CC Number, Name"
+        ],
+        "tables": [
+          "#, Docket Number, Full Name, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Investigation",
+      "name": "Parole and Pardon Courtesy Investigation",
+      "kind": "list page",
+      "filename": "028-parole-and-pardon-courtesy-investigation-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-investigation-list",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleCourtesyInv_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Full Name, Referring Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Investigation",
+      "name": "Parole and Pardon Courtesy Investigation View",
+      "kind": "View",
+      "filename": "029-parole-and-pardon-courtesy-investigation-view-view.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-investigation-view?docket_number=CPPI-2025-09-00034",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "sc_cinv_view_docket",
+          "sc_cinv_view_client",
+          "Referring Office",
+          "Date Received by the PPO",
+          "Investigating Officer",
+          "Reasons",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Investigation",
+      "name": "Parole and Pardon Courtesy Investigation Update",
+      "kind": "Update",
+      "filename": "030-parole-and-pardon-courtesy-investigation-update-update.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-investigation-update?docket_number=CPPI-2025-09-00034",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "sc_cinv_docket_number",
+          "sc_cinv_client_name",
+          "Referring Office",
+          "Date Received by the PPO",
+          "Investigating Officer",
+          "Reasons",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Investigation",
+      "name": "Parole and Pardon Courtesy Investigation Attachments",
+      "kind": "Attachments",
+      "filename": "031-parole-and-pardon-courtesy-investigation-attachments-attachments.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-investigation-upload?docket_number=CPPI-2025-09-00034",
+      "controls": {
+        "buttons": [
+          "Confirm",
+          "View",
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Kind",
+          "Type",
+          "Upload File",
+          "courtesy_cinv_uploads_table_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Investigation",
+      "name": "Parole and Pardon Courtesy Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "032-parole-and-pardon-courtesy-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-investigation-list",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleCourtesyInv_length",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Full Name, Referring Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Supervision",
+      "name": "Parole and Pardon Supervision",
+      "kind": "list page",
+      "filename": "033-parole-and-pardon-supervision-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-supervision",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleSupervision_length",
+          "sc_ppr_sup_client_type",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Received Date, Name, Criminal Case No., Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Supervision",
+      "name": "Parole and Pardon Supervision View",
+      "kind": "View",
+      "filename": "034-parole-and-pardon-supervision-view-view.png",
+      "url": "http://localhost/pis/parole-pardon-supervision-view?docket_number=PR-2025-08-00008",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "Client Type",
+          "Docket Number",
+          "Client",
+          "Case Classification",
+          "Date Received by the PPO",
+          "Supervising Officer",
+          "Supervision Start Date",
+          "Supervision End Date",
+          "Office Findings",
+          "Specify the Other Submitted Reports",
+          "Date Submitted to the Board",
+          "Date Report Submitted to the Regional Director for Transfer to Other PPO's"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Supervision",
+      "name": "Parole and Pardon Supervision Update",
+      "kind": "Update",
+      "filename": "035-parole-and-pardon-supervision-update-update.png",
+      "url": "http://localhost/pis/parole-pardon-supervision-update?docket_number=PR-2025-08-00008",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Client Type",
+          "Docket No.",
+          "Client",
+          "Case Classification",
+          "Date Received by the PPO",
+          "Supervising Officer",
+          "Supervision Start Date",
+          "Supervision End Date",
+          "Office Findings",
+          "Specify the Other Submitted Reports",
+          "Date Submitted to the Board",
+          "Date Report Submitted to the Regional Director for Transfer to Other PPO's"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Supervision",
+      "name": "Parole and Pardon Supervision Attachments",
+      "kind": "Attachments",
+      "filename": "036-parole-and-pardon-supervision-attachments-attachments.png",
+      "url": "http://localhost/pis/parole-pardon-supervision-upload?docket_number=PR-2025-08-00008",
+      "controls": {
+        "buttons": [
+          "Confirm",
+          "View",
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Client Type",
+          "Kind",
+          "Type",
+          "Upload File",
+          "supervision_uploads_table_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Supervision",
+      "name": "Parole and Pardon Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "037-parole-and-pardon-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-supervision",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleSupervision_length",
+          "sc_ppr_sup_client_type",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Received Date, Name, Criminal Case No., Field Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Supervision",
+      "name": "Parole and Pardon Courtesy Supervision",
+      "kind": "list page",
+      "filename": "038-parole-and-pardon-courtesy-supervision-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-supervision-list",
+      "controls": {
+        "buttons": [
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleCourtesySup_length",
+          "sc_ppcsup_client_type",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Full Name, Referring Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Supervision",
+      "name": "Parole and Pardon Courtesy Supervision View",
+      "kind": "View",
+      "filename": "039-parole-and-pardon-courtesy-supervision-view-view.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-supervision-view?docket_number=CPR-2025-09-00001",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "Docket Number",
+          "Petitioner's Name",
+          "Criminal Case No.",
+          "Court of Origin",
+          "Referring Office",
+          "Date Received from the PPO",
+          "Supervising Officer",
+          "Period of Supervision",
+          "Case Classification",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Supervision",
+      "name": "Parole and Pardon Courtesy Supervision Update",
+      "kind": "Update",
+      "filename": "040-parole-and-pardon-courtesy-supervision-update-update.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-supervision-update?docket_number=CPR-2025-09-00001",
+      "controls": {
+        "buttons": [
+          "Update"
+        ],
+        "fields": [
+          "Client Type",
+          "Docket Number",
+          "Petitioner's Name",
+          "Criminal Case No.",
+          "Court of Origin",
+          "Referring Office",
+          "Date Received from the PPO",
+          "Supervising Officer",
+          "Period of Supervision",
+          "Case Classification",
+          "Date Completed and Returned"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Supervision",
+      "name": "Parole and Pardon Courtesy Supervision Attachments",
+      "kind": "Attachments",
+      "filename": "041-parole-and-pardon-courtesy-supervision-attachments-attachments.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-supervision-upload?docket_number=CPR-2025-09-00001",
+      "controls": {
+        "buttons": [
+          "Confirm",
+          "View",
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "Name",
+          "Docket Number",
+          "Client Type",
+          "Kind",
+          "Type",
+          "Upload File",
+          "courtesy_csup_uploads_table_length"
+        ],
+        "tables": [
+          "#, File Name, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Supervision",
+      "name": "Parole and Pardon Courtesy Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "042-parole-and-pardon-courtesy-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-supervision-list",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Remove permanently",
+          "Run search",
+          "View",
+          "Update",
+          "Attachments",
+          "Remove"
+        ],
+        "fields": [
+          "tblScPreParoleCourtesySup_length",
+          "sc_ppcsup_client_type",
+          "Search docket / name"
+        ],
+        "tables": [
+          "#, Docket Number, Full Name, Referring Office, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Permanently remove docket?"
+        ]
+      }
+    },
+    {
+      "module": "PDL Routing",
+      "name": "PDL Routing",
+      "kind": "list page",
+      "filename": "043-pdl-routing-list-page.png",
+      "url": "http://localhost/pis/pdl-docket",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Client Type",
+          "Client",
+          "User Account",
+          "Subject",
+          "Details"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Sent PDL",
+      "name": "Sent PDL",
+      "kind": "list page",
+      "filename": "044-sent-pdl-list-page.png",
+      "url": "http://localhost/pis/pdl-sent",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "DataTables_Table_0_length",
+          "form-control form-control-sm"
+        ],
+        "tables": [
+          "#, Transaction Number, Field Office, Sender, Subject, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Complete Docket"
+        ]
+      }
+    },
+    {
+      "module": "Inbox PDL",
+      "name": "Inbox PDL",
+      "kind": "list page",
+      "filename": "045-inbox-pdl-list-page.png",
+      "url": "http://localhost/pis/pdl-receive",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "DataTables_Table_0_length"
+        ],
+        "tables": [
+          "#, Status, Field Office, Sender, Sender Field Office, Subject, Actions"
+        ],
+        "tabs": [
+          "Investigation",
+          "Supervision"
+        ],
+        "modals": [
+          "Complete Docket"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation",
+      "kind": "list page",
+      "filename": "046-fact-sheet-probation-list-page.png",
+      "url": "http://localhost/pis/client_list",
+      "controls": {
+        "buttons": [
+          "Run search"
+        ],
+        "fields": [
+          "Name or case number",
+          "tblProbationClientList_length"
+        ],
+        "tables": [
+          "#, Full Name, Criminal Case Number, Field Office, Worksheet Status"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation open client name",
+      "kind": "open client name",
+      "filename": "076-fact-sheet-probation-open-client-name.png",
+      "url": "http://localhost/pis/client_list",
+      "controls": {
+        "buttons": [
+          "Run search"
+        ],
+        "fields": [
+          "Name or case number",
+          "tblProbationClientList_length"
+        ],
+        "tables": [
+          "#, Full Name, Criminal Case Number, Field Office, Worksheet Status"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation client profile",
+      "kind": "client profile",
+      "filename": "077-fact-sheet-probation-client-profile.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=7323&field_office_id=5",
+      "controls": {
+        "buttons": [
+          "Take Photo",
+          "Upload Photo",
+          "Upload Fingerprint",
+          "Add Investigation Document/Report",
+          "View",
+          "Download"
+        ],
+        "fields": [
+          "investigationTableStart_length"
+        ],
+        "tables": [
+          "#, Reports, Investigating Officer, Actions"
+        ],
+        "tabs": [
+          "Investigation",
+          "Supervision",
+          "Rehabilitation",
+          "Reporting Dates",
+          "Notes/Other Documents",
+          "Task List",
+          "Docket List"
+        ],
+        "modals": [
+          "Capture Camera",
+          "Upload Profile",
+          "Add Reporting Date",
+          "View fingerprints \u2014 petitioner",
+          "Notes/Other Documents",
+          "Upload Fingerprint",
+          "Investigation Documents",
+          "Supervision Documents"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation upload photo",
+      "kind": "upload photo",
+      "filename": "078-fact-sheet-probation-upload-photo.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=7323&field_office_id=5",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Take Photo",
+          "Upload Photo",
+          "Upload Fingerprint",
+          "Add Investigation Document/Report",
+          "View",
+          "Download"
+        ],
+        "fields": [
+          "file-input",
+          "investigationTableStart_length"
+        ],
+        "tables": [
+          "#, Reports, Investigating Officer, Actions"
+        ],
+        "tabs": [
+          "Investigation",
+          "Supervision",
+          "Rehabilitation",
+          "Reporting Dates",
+          "Notes/Other Documents",
+          "Task List",
+          "Docket List"
+        ],
+        "modals": [
+          "Capture Camera",
+          "Upload Profile",
+          "Add Reporting Date",
+          "View fingerprints \u2014 petitioner",
+          "Notes/Other Documents",
+          "Upload Fingerprint",
+          "Investigation Documents",
+          "Supervision Documents"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation take photo",
+      "kind": "take photo",
+      "filename": "079-fact-sheet-probation-take-photo.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=7323&field_office_id=5",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Open cam",
+          "Cancel",
+          "Confirm",
+          "Take Photo",
+          "Upload Photo",
+          "Upload Fingerprint",
+          "Add Investigation Document/Report",
+          "View",
+          "Download"
+        ],
+        "fields": [
+          "investigationTableStart_length"
+        ],
+        "tables": [
+          "#, Reports, Investigating Officer, Actions"
+        ],
+        "tabs": [
+          "Investigation",
+          "Supervision",
+          "Rehabilitation",
+          "Reporting Dates",
+          "Notes/Other Documents",
+          "Task List",
+          "Docket List"
+        ],
+        "modals": [
+          "Capture Camera",
+          "Upload Profile",
+          "Add Reporting Date",
+          "View fingerprints \u2014 petitioner",
+          "Notes/Other Documents",
+          "Upload Fingerprint",
+          "Investigation Documents",
+          "Supervision Documents"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation upload fingerprint",
+      "kind": "upload fingerprint",
+      "filename": "080-fact-sheet-probation-upload-fingerprint.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=7323&field_office_id=5",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Refresh",
+          "Cancel",
+          "Confirm",
+          "Take Photo",
+          "Upload Photo",
+          "Upload Fingerprint",
+          "Add Investigation Document/Report",
+          "View",
+          "Download"
+        ],
+        "fields": [
+          "investigationTableStart_length"
+        ],
+        "tables": [
+          "#, Reports, Investigating Officer, Actions"
+        ],
+        "tabs": [
+          "Investigation",
+          "Supervision",
+          "Rehabilitation",
+          "Reporting Dates",
+          "Notes/Other Documents",
+          "Task List",
+          "Docket List"
+        ],
+        "modals": [
+          "Capture Camera",
+          "Upload Profile",
+          "Add Reporting Date",
+          "View fingerprints \u2014 petitioner",
+          "Notes/Other Documents",
+          "Upload Fingerprint",
+          "Investigation Documents",
+          "Supervision Documents"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet Parole and Pardone",
+      "name": "Fact Sheet Parole and Pardone",
+      "kind": "list page",
+      "filename": "047-fact-sheet-parole-and-pardone-list-page.png",
+      "url": "http://localhost/pis/client_list_parole_and_pardone",
+      "controls": {
+        "buttons": [
+          "Update",
+          "Attachments"
+        ],
+        "fields": [
+          "DataTables_Table_0_length",
+          "Search Client"
+        ],
+        "tables": [
+          "#, Full Name, Criminal Case Number, Field Office, Actions"
+        ],
+        "tabs": [
+          "Parole",
+          "Pardone"
+        ],
+        "modals": [
+          "Remove Docket"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet Parole and Pardone",
+      "name": "Fact Sheet Parole and Pardone Create Client",
+      "kind": "create client",
+      "filename": "081-fact-sheet-parole-and-pardone-create-client-create-client.png",
+      "url": "http://localhost/pis/client_list_parole_and_pardone_create",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Client Type",
+          "Criminal Case No.",
+          "First Name",
+          "Middle Name",
+          "Last Name",
+          "Suffix Name",
+          "Sex",
+          "Educ. Attainment",
+          "Occupation",
+          "Birthdate",
+          "Birth Place",
+          "Address"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet Parole and Pardone",
+      "name": "Fact Sheet Parole and Pardone Update",
+      "kind": "Update",
+      "filename": "048-fact-sheet-parole-and-pardone-update-update.png",
+      "url": "http://localhost/pis/client_list_parole_and_pardone_update?client_id=4283",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Client Type",
+          "Criminal Case No.",
+          "First Name",
+          "Middle Name",
+          "Last Name",
+          "Suffix Name",
+          "Sex",
+          "Education",
+          "Occupation",
+          "Birthdate",
+          "Birth Place",
+          "Address"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet Parole and Pardone",
+      "name": "Fact Sheet Parole and Pardone Attachments",
+      "kind": "Attachments",
+      "filename": "049-fact-sheet-parole-and-pardone-attachments-attachments.png",
+      "url": "http://localhost/pis/client_list_parole_and_pardone_upload?client_id=4283&client_type=PAROLEE",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Uploader",
+          "Type",
+          "Remarks",
+          "Upload File",
+          "DataTables_Table_0_length"
+        ],
+        "tables": [
+          "#, File Name, Version, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet PDL",
+      "name": "Fact Sheet PDL",
+      "kind": "list page",
+      "filename": "050-fact-sheet-pdl-list-page.png",
+      "url": "http://localhost/pis/client_list_single_carpeta",
+      "controls": {
+        "buttons": [
+          "Add Client",
+          "Update",
+          "View",
+          "Attachments"
+        ],
+        "fields": [
+          "tblPdlClientList_length",
+          "Search Client"
+        ],
+        "tables": [
+          "#, First Name, Middle Name, Last Name, Criminal Case Number, Prison Number, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Remove PDL Client"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet PDL",
+      "name": "Fact Sheet PDL View",
+      "kind": "View",
+      "filename": "051-fact-sheet-pdl-view-view.png",
+      "url": "http://localhost/pis/pdl-view?client_id=253261&client_type=PDL-Investigation",
+      "controls": {
+        "buttons": [
+          "Investigation Item 1",
+          "Confirm"
+        ],
+        "fields": [],
+        "tables": [],
+        "tabs": [
+          "Investigation",
+          "Supervision"
+        ],
+        "modals": [
+          "Remove"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet PDL",
+      "name": "Fact Sheet PDL Update",
+      "kind": "Update",
+      "filename": "052-fact-sheet-pdl-update-update.png",
+      "url": "http://localhost/pis/client_update_single_carpeta?client_id=253261&client_type=PDL-Investigation",
+      "controls": {
+        "buttons": [
+          "Add more",
+          "Investigation (Item 1)",
+          "Confirm"
+        ],
+        "fields": [
+          "First Name",
+          "Middle Name",
+          "Last Name",
+          "Suffix Name",
+          "Alias",
+          "Sex",
+          "Birthdate",
+          "Birth Place",
+          "Civil Status",
+          "Nationality",
+          "Educational Attainment",
+          "Occupation"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": [
+          "Remove"
+        ]
+      }
+    },
+    {
+      "module": "Fact Sheet PDL",
+      "name": "Fact Sheet PDL Attachments",
+      "kind": "Attachments",
+      "filename": "053-fact-sheet-pdl-attachments-attachments.png",
+      "url": "http://localhost/pis/client_single_carpeta_upload?client_id=253261&client_type=PDL-Investigation",
+      "controls": {
+        "buttons": [
+          "Confirm"
+        ],
+        "fields": [
+          "Uploader",
+          "Type",
+          "Remarks",
+          "Upload File",
+          "DataTables_Table_0_length"
+        ],
+        "tables": [
+          "#, File Name, Version, Remarks, Actions"
+        ],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet PDL",
+      "name": "Fact Sheet PDL Add record",
+      "kind": "Add record",
+      "filename": "054-fact-sheet-pdl-add-record-add-record.png",
+      "url": "http://localhost/pis/new_client_single_carpeta?client_type=PDL-Investigation",
+      "controls": {
+        "buttons": [
+          "Add more",
+          "Investigation (Item 1)",
+          "Confirm"
+        ],
+        "fields": [
+          "First Name",
+          "Middle Name",
+          "Last Name",
+          "Suffix Name",
+          "Alias",
+          "Sex",
+          "Birthdate",
+          "Birth Place",
+          "Civil Status",
+          "Nationality",
+          "Educational Attainment",
+          "Occupation"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": [
+          "Remove"
+        ]
+      }
+    },
+    {
+      "module": "Forms",
+      "name": "Forms",
+      "kind": "list page",
+      "filename": "055-forms-list-page.png",
+      "url": "http://localhost/pis/form_list",
+      "controls": {
+        "buttons": [
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "DataTables_Table_0_length",
+          "form-control form-control-sm"
+        ],
+        "tables": [
+          "#, File Name, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Remove Docket"
+        ]
+      }
+    },
+    {
+      "module": "Forms",
+      "name": "Forms Add record",
+      "kind": "Add record",
+      "filename": "056-forms-add-record-add-record.png",
+      "url": "http://localhost/pis/form_list",
+      "controls": {
+        "buttons": [
+          "Download",
+          "Delete"
+        ],
+        "fields": [
+          "DataTables_Table_0_length",
+          "form-control form-control-sm"
+        ],
+        "tables": [
+          "#, File Name, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Remove Docket"
+        ]
+      }
+    },
+    {
+      "module": "User Accounts",
+      "name": "User Accounts",
+      "kind": "list page",
+      "filename": "057-user-accounts-list-page.png",
+      "url": "http://localhost/pis/user_accounts",
+      "controls": {
+        "buttons": [
+          "Add User Account",
+          "Search",
+          "Update",
+          "Deactivate",
+          "Remove",
+          "Restrict",
+          "Activate"
+        ],
+        "fields": [
+          "Enter Username",
+          "DataTables_Table_0_length"
+        ],
+        "tables": [
+          "Id, Full Name, Username, Email Address, User Role, Field Office, Status, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update User Accounts",
+          "New User Account",
+          "Activate User Account",
+          "Deactivate User Account",
+          "Remove User Account",
+          "Restrict User Account",
+          "Lift User Account"
+        ]
+      }
+    },
+    {
+      "module": "User Accounts",
+      "name": "User Accounts Update",
+      "kind": "Update",
+      "filename": "058-user-accounts-update-update.png",
+      "url": "http://localhost/pis/user_accounts",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add User Account",
+          "Search",
+          "Update",
+          "Deactivate",
+          "Remove",
+          "Restrict",
+          "Activate"
+        ],
+        "fields": [
+          "First Name *",
+          "Middle Name *",
+          "Last Name *",
+          "Suffix",
+          "Birthday",
+          "Contact No.",
+          "Email Address *",
+          "Field Office *",
+          "Username *",
+          "Password",
+          "User Roles *",
+          "Enter Username"
+        ],
+        "tables": [
+          "Id, Full Name, Username, Email Address, User Role, Field Office, Status, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update User Accounts",
+          "New User Account",
+          "Activate User Account",
+          "Deactivate User Account",
+          "Remove User Account",
+          "Restrict User Account",
+          "Lift User Account"
+        ]
+      }
+    },
+    {
+      "module": "User Accounts",
+      "name": "User Accounts Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "059-user-accounts-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/user_accounts",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add User Account",
+          "Search",
+          "Update",
+          "Deactivate",
+          "Remove",
+          "Restrict",
+          "Activate"
+        ],
+        "fields": [
+          "Enter Username",
+          "DataTables_Table_0_length"
+        ],
+        "tables": [
+          "Id, Full Name, Username, Email Address, User Role, Field Office, Status, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update User Accounts",
+          "New User Account",
+          "Activate User Account",
+          "Deactivate User Account",
+          "Remove User Account",
+          "Restrict User Account",
+          "Lift User Account"
+        ]
+      }
+    },
+    {
+      "module": "User Accounts",
+      "name": "User Accounts Add record",
+      "kind": "Add record",
+      "filename": "060-user-accounts-add-record-add-record.png",
+      "url": "http://localhost/pis/user_accounts",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add User Account",
+          "Search",
+          "Update",
+          "Deactivate",
+          "Remove",
+          "Restrict",
+          "Activate"
+        ],
+        "fields": [
+          "First Name *",
+          "Middle Name *",
+          "Last Name *",
+          "Suffix",
+          "Birthday",
+          "Contact No.",
+          "Email Address *",
+          "Field Office *",
+          "Username *",
+          "Password *",
+          "User Roles *",
+          "Enter Username"
+        ],
+        "tables": [
+          "Id, Full Name, Username, Email Address, User Role, Field Office, Status, Actions"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update User Accounts",
+          "New User Account",
+          "Activate User Account",
+          "Deactivate User Account",
+          "Remove User Account",
+          "Restrict User Account",
+          "Lift User Account"
+        ]
+      }
+    },
+    {
+      "module": "User Roles",
+      "name": "User Roles",
+      "kind": "list page",
+      "filename": "061-user-roles-list-page.png",
+      "url": "http://localhost/pis/user_roles",
+      "controls": {
+        "buttons": [
+          "Add Role",
+          "Update",
+          "Grant Permission",
+          "Update Permission"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [
+          "Id, Name, Description, Actions, Permission"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update User Accounts",
+          "New User Role",
+          "Grant Permission",
+          "Update Permission"
+        ]
+      }
+    },
+    {
+      "module": "User Roles",
+      "name": "User Roles Update",
+      "kind": "Update",
+      "filename": "062-user-roles-update-update.png",
+      "url": "http://localhost/pis/user_roles",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Role",
+          "Update",
+          "Grant Permission",
+          "Update Permission"
+        ],
+        "fields": [
+          "User Role Name",
+          "Search"
+        ],
+        "tables": [
+          "Id, Name, Description, Actions, Permission"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update User Accounts",
+          "New User Role",
+          "Grant Permission",
+          "Update Permission"
+        ]
+      }
+    },
+    {
+      "module": "User Roles",
+      "name": "User Roles Add record",
+      "kind": "Add record",
+      "filename": "063-user-roles-add-record-add-record.png",
+      "url": "http://localhost/pis/user_roles",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Role",
+          "Update",
+          "Grant Permission",
+          "Update Permission"
+        ],
+        "fields": [
+          "User Role Name",
+          "User Role Description",
+          "Search"
+        ],
+        "tables": [
+          "Id, Name, Description, Actions, Permission"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update User Accounts",
+          "New User Role",
+          "Grant Permission",
+          "Update Permission"
+        ]
+      }
+    },
+    {
+      "module": "Field Office",
+      "name": "Field Office",
+      "kind": "list page",
+      "filename": "064-field-office-list-page.png",
+      "url": "http://localhost/pis/department",
+      "controls": {
+        "buttons": [
+          "Add Field Office",
+          "Update",
+          "Add",
+          "View",
+          "Remove"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [
+          "ID, Field Office Name, Description, Region, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Field Office",
+          "Remove Field Office",
+          "New Field Office",
+          "Add Department",
+          "View details"
+        ]
+      }
+    },
+    {
+      "module": "Field Office",
+      "name": "Field Office View",
+      "kind": "View",
+      "filename": "065-field-office-view-view.png",
+      "url": "http://localhost/pis/department",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Add Field Office",
+          "Update",
+          "Add",
+          "View",
+          "Remove"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [
+          "ID, Field Office Name, Description, Region, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Field Office",
+          "Remove Field Office",
+          "New Field Office",
+          "Add Department",
+          "View details"
+        ]
+      }
+    },
+    {
+      "module": "Field Office",
+      "name": "Field Office Update",
+      "kind": "Update",
+      "filename": "066-field-office-update-update.png",
+      "url": "http://localhost/pis/department",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Field Office",
+          "Update",
+          "Add",
+          "View",
+          "Remove"
+        ],
+        "fields": [
+          "Region",
+          "Field Office",
+          "Description",
+          "Search"
+        ],
+        "tables": [
+          "ID, Field Office Name, Description, Region, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Field Office",
+          "Remove Field Office",
+          "New Field Office",
+          "Add Department",
+          "View details"
+        ]
+      }
+    },
+    {
+      "module": "Field Office",
+      "name": "Field Office Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "067-field-office-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/department",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Field Office",
+          "Update",
+          "Add",
+          "View",
+          "Remove"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [
+          "ID, Field Office Name, Description, Region, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Field Office",
+          "Remove Field Office",
+          "New Field Office",
+          "Add Department",
+          "View details"
+        ]
+      }
+    },
+    {
+      "module": "Field Office",
+      "name": "Field Office Add record",
+      "kind": "Add record",
+      "filename": "068-field-office-add-record-add-record.png",
+      "url": "http://localhost/pis/department",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Field Office",
+          "Update",
+          "Add",
+          "View",
+          "Remove"
+        ],
+        "fields": [
+          "Region",
+          "Field Office",
+          "Description",
+          "Search"
+        ],
+        "tables": [
+          "ID, Field Office Name, Description, Region, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Field Office",
+          "Remove Field Office",
+          "New Field Office",
+          "Add Department",
+          "View details"
+        ]
+      }
+    },
+    {
+      "module": "Region",
+      "name": "Region",
+      "kind": "list page",
+      "filename": "069-region-list-page.png",
+      "url": "http://localhost/pis/location",
+      "controls": {
+        "buttons": [
+          "Add Region",
+          "Update",
+          "Remove"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [
+          "ID, Region, Address, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Region",
+          "Remove Field Office",
+          "New Region",
+          "Deactivate User Account",
+          "Accept User Account"
+        ]
+      }
+    },
+    {
+      "module": "Region",
+      "name": "Region Update",
+      "kind": "Update",
+      "filename": "070-region-update-update.png",
+      "url": "http://localhost/pis/location",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Region",
+          "Update",
+          "Remove"
+        ],
+        "fields": [
+          "Region Name",
+          "Search"
+        ],
+        "tables": [
+          "ID, Region, Address, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Region",
+          "Remove Field Office",
+          "New Region",
+          "Deactivate User Account",
+          "Accept User Account"
+        ]
+      }
+    },
+    {
+      "module": "Region",
+      "name": "Region Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "071-region-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/location",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Region",
+          "Update",
+          "Remove"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [
+          "ID, Region, Address, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Region",
+          "Remove Field Office",
+          "New Region",
+          "Deactivate User Account",
+          "Accept User Account"
+        ]
+      }
+    },
+    {
+      "module": "Region",
+      "name": "Region Add record",
+      "kind": "Add record",
+      "filename": "072-region-add-record-add-record.png",
+      "url": "http://localhost/pis/location",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Region",
+          "Update",
+          "Remove"
+        ],
+        "fields": [
+          "Region",
+          "Description",
+          "Search"
+        ],
+        "tables": [
+          "ID, Region, Address, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Region",
+          "Remove Field Office",
+          "New Region",
+          "Deactivate User Account",
+          "Accept User Account"
+        ]
+      }
+    },
+    {
+      "module": "Permission",
+      "name": "Permission",
+      "kind": "list page",
+      "filename": "073-permission-list-page.png",
+      "url": "http://localhost/pis/permission",
+      "controls": {
+        "buttons": [
+          "Add Permission",
+          "Update"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [
+          "ID, Permission Name, Type, Detail, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Permission",
+          "Remove Field Office",
+          "New Permission"
+        ]
+      }
+    },
+    {
+      "module": "Permission",
+      "name": "Permission Update",
+      "kind": "Update",
+      "filename": "074-permission-update-update.png",
+      "url": "http://localhost/pis/permission",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Permission",
+          "Update"
+        ],
+        "fields": [
+          "Permission Name",
+          "Type",
+          "Detail",
+          "Search"
+        ],
+        "tables": [
+          "ID, Permission Name, Type, Detail, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Permission",
+          "Remove Field Office",
+          "New Permission"
+        ]
+      }
+    },
+    {
+      "module": "Permission",
+      "name": "Permission Add record",
+      "kind": "Add record",
+      "filename": "075-permission-add-record-add-record.png",
+      "url": "http://localhost/pis/permission",
+      "controls": {
+        "buttons": [
+          "\u00d7",
+          "Cancel",
+          "Confirm",
+          "Add Permission",
+          "Update"
+        ],
+        "fields": [
+          "Permission Name",
+          "Type",
+          "Detail",
+          "Search"
+        ],
+        "tables": [
+          "ID, Permission Name, Type, Detail, Action"
+        ],
+        "tabs": [],
+        "modals": [
+          "Update Permission",
+          "Remove Field Office",
+          "New Permission"
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "annotation": {
+    "style": "Red boxes and arrows indicate the menu item or control referenced in each step.",
+    "sourceFolder": "C:\\wamp64\\www\\pis\\PIS_End_User_Manual_Screenshots"
+  }
+}

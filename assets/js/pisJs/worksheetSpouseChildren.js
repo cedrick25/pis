@@ -1,6 +1,5 @@
     ( function ( $ ) {
-        var ___ctx = '';
-        var api = localStorage.getItem('api');
+        var api = localStorage.getItem('api') || (window.__PIS_API_BASE || '');
         var ___ctx = api;
         console.log(___ctx)
 
