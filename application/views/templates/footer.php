@@ -42,9 +42,11 @@
         });
         // localStorage.removeItem('api');
         // Prefer values injected by header.php (HTTPS-ready). Fall back for older pages.
+        // Path style (default): https://host/8088/...  Port style: https://host:8088/...
         var apiBase = (typeof window.__PIS_API_BASE === 'string' && window.__PIS_API_BASE)
             ? window.__PIS_API_BASE
-            : (window.location.protocol + '//' + window.location.hostname + ':');
+            : (window.location.protocol + '//' + window.location.hostname +
+                (window.__PIS_API_PATH_STYLE === false ? ':' : '/'));
         localStorage.setItem('api', apiBase);
         var api = localStorage.getItem('api');
 

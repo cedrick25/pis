@@ -89,18 +89,19 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 | External API host override
 |--------------------------------------------------------------------------
 |
-| Used by the frontend as: {protocol}://{host}:
-| Ported microservices append 8000 / 8080 / 8088 after the trailing colon.
-|
 | Leave empty to use the current request hostname (HTTPS-ready).
 | Examples:
 |   define('PIS_API_HOST', 'localhost');
 |   define('PIS_API_HOST', '192.168.1.147');
 |   define('PIS_API_HOST', 'api.example.gov.ph');
 |
+| PIS_API_PATH_STYLE:
+|   true  -> {protocol}://{host}/8088/...  (Proxy Manager / reverse proxy paths)
+|   false -> {protocol}://{host}:8088/... (direct Docker host ports)
+|
 */
 defined('PIS_API_HOST') OR define('PIS_API_HOST', '');
-
+defined('PIS_API_PATH_STYLE') OR define('PIS_API_PATH_STYLE', true);
 /*
 |--------------------------------------------------------------------------
 | Optional external notification endpoints (login OTP)

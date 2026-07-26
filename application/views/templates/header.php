@@ -44,11 +44,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         if ($pis_api_host === '') {
             $pis_api_host = isset($_SERVER['HTTP_HOST']) ? preg_replace('/:\d+$/', '', (string) $_SERVER['HTTP_HOST']) : 'localhost';
         }
-        $pis_api_base = $pis_protocol.$pis_api_host.':';
+        // Path style: https://host/8088/... (Proxy Manager). Port style: https://host:8088/...
+        $pis_api_path_style = !defined('PIS_API_PATH_STYLE') || PIS_API_PATH_STYLE;
+        $pis_api_base = $pis_protocol.$pis_api_host.($pis_api_path_style ? '/' : ':');
     ?>
     <script type="text/javascript">
         window.__PIS_BASE_URL = <?= json_encode($pis_base_url) ?>;
         window.__PIS_API_BASE = <?= json_encode($pis_api_base) ?>;
+        window.__PIS_API_PATH_STYLE = <?= $pis_api_path_style ? 'true' : 'false' ?>;
         window.__PIS_IS_HTTPS = <?= $pis_is_https ? 'true' : 'false' ?>;
         window.__PIS_SMS_API_URL = <?= json_encode(defined('PIS_SMS_API_URL') ? PIS_SMS_API_URL : '') ?>;
         window.__PIS_EMAIL_API_URL = <?= json_encode(defined('PIS_EMAIL_API_URL') ? PIS_EMAIL_API_URL : '') ?>;
