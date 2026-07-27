@@ -107,5 +107,5 @@ defined('PIS_API_PATH_STYLE') OR define('PIS_API_PATH_STYLE', true);
 | Optional external notification endpoints (login OTP)
 |--------------------------------------------------------------------------
 */
-defined('PIS_SMS_API_URL') OR define('PIS_SMS_API_URL', 'http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually');
-defined('PIS_EMAIL_API_URL') OR define('PIS_EMAIL_API_URL', 'http://192.168.1.219/ppa-api-uams/wsv1/api/email');
+defined('PIS_SMS_API_URL') OR define('PIS_SMS_API_URL', 'https://otp.probation.gov.ph/ppa-api-uams/wsv1/api/insertSMSManually');
+defined('PIS_EMAIL_API_URL') OR define('PIS_EMAIL_API_URL', 'https://uams.probation.gov.ph/ppa-api-uams/wsv1/api/email');
