@@ -96,12 +96,41 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 |   define('PIS_API_HOST', 'api.example.gov.ph');
 |
 | PIS_API_PATH_STYLE:
-|   true  -> {protocol}://{host}/8088/...  (Proxy Manager / reverse proxy paths)
-|   false -> {protocol}://{host}:8088/... (direct Docker host ports)
+|   'auto' -> local/private hosts use port style; others use proxy path style
+|   true   -> {protocol}://{host}/8088/...  (Proxy Manager / reverse proxy paths)
+|   false  -> {protocol}://{host}:8088/... (direct local / Docker host ports)
 |
 */
 defined('PIS_API_HOST') OR define('PIS_API_HOST', '');
-defined('PIS_API_PATH_STYLE') OR define('PIS_API_PATH_STYLE', true);
+defined('PIS_API_PATH_STYLE') OR define('PIS_API_PATH_STYLE', 'auto');
+/*
+|--------------------------------------------------------------------------
+| Offline mode — PHP twin APIs for local/WAMP use without Spring Boot
+|--------------------------------------------------------------------------
+|
+| When TRUE, browser list calls to 8000/docketbook (paginated, /list, /search)
+| are rewritten to index.php/api/docketbook/offline...
+|
+*/
+defined('PIS_OFFLINE_MODE') OR define('PIS_OFFLINE_MODE', FALSE);
+/*
+|--------------------------------------------------------------------------
+| Offline docket book snapshot sync
+|--------------------------------------------------------------------------
+|
+| On login, PIS pulls docket books into docket_book_offline_cache.
+| When PIS_OFFLINE_MODE is TRUE, list/search reads that cache only
+| (via index.php/api/docketbook/offline...) — not port 8000.
+|
+| PIS_DOCKET_ONLINE_BASE: base URL for the live Java API used during sync
+|   fallback HTTP pulls. Empty = derive from request host + :8000 (or /8000).
+|
+*/
+defined('PIS_DOCKET_ONLINE_BASE') OR define('PIS_DOCKET_ONLINE_BASE', '');
+defined('PIS_OFFLINE_CLIENT_TYPES') OR define(
+	'PIS_OFFLINE_CLIENT_TYPES',
+	'PROBATIONER,PAROLEE,PARDONEE'
+);
 /*
 |--------------------------------------------------------------------------
 | Optional external notification endpoints (login OTP)

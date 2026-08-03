@@ -289,7 +289,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    `${api}/pis/psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
                         });
                 });
@@ -332,7 +332,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                `${api}/pis/psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                         }, 2000);
                     });
                 });

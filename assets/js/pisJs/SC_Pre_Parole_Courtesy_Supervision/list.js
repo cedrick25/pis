@@ -311,6 +311,7 @@
                 dataType: 'json',
                 data: JSON.stringify({
                     name: term,
+                    type: 'SC_PPI_CSUP',
                     fieldOfficeId: fieldOfficeId,
                     canSeeOtherOffices: false
                 }),

@@ -358,6 +358,7 @@
                 dataType: 'json',
                 data: JSON.stringify({
                     name: term,
+                    type: 'PIS_SUP',
                     fieldOfficeId: fieldOfficeId,
                     canSeeOtherOffices: false
                 }),

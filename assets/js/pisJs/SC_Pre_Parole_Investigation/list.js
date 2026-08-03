@@ -332,6 +332,7 @@
                 dataType: 'json',
                 data: JSON.stringify({
                     name: term,
+                    type: 'SC_PPI_INV',
                     fieldOfficeId: fieldOfficeId,
                     canSeeOtherOffices: false
                 }),

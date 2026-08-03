@@ -213,6 +213,7 @@
                     dataType: 'json',
                     data: JSON.stringify({
                         name: term,
+                        type: 'PIS_CSINV',
                         fieldOfficeId: fieldOfficeId,
                         canSeeOtherOffices: false
                     })

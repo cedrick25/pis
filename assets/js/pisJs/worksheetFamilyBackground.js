@@ -552,13 +552,13 @@
                             if (res.status === "ERROR") return;
 
                             $(".form-control").val('');
-                            $('#save_success').show();
+                            $('#create_success').show();
 
                             setTimeout(() => {
-                                $('#save_success').hide();
+                                $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    `${api}/pis/psir_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    `${api}/pis/worksheet_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
                         });
                 });
@@ -591,15 +591,15 @@
                         .done(function (res) {
                             if (res.status === "ERROR") return;
                             $(".form-control").val('');
-                            $('#create_success').show();
-                            $("#saveModal .btn-save").prop("disabled", true)
+                            $('#update_success').show();
+                            $("#saveModal .btn-update").prop("disabled", true)
 
                             setTimeout(() => {
-                                $('#create_success').hide();
+                                $('#update_success').hide();
                                 $('#saveModal').modal("hide");
-                                $("#saveModal .btn-save").prop("disabled", false)
+                                $("#saveModal .btn-update").prop("disabled", false)
                                 window.location.href =
-                                    `${api}/pis/worksheet_family_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    `${api}/pis/worksheet_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
                         });
                 });

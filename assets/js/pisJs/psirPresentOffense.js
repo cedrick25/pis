@@ -260,6 +260,9 @@
             $("#saveModal .saveModalTitle").text("Save Changes")
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
+            if (window.PsirPrefill) {
+                PsirPrefill.fromWorksheet(client_id, "presentOffense", __executeExternalGet);
+            }
         } else {
             __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
@@ -297,6 +300,9 @@
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
+                        if (window.PsirPrefill) {
+                            PsirPrefill.fromWorksheet(client_id, "presentOffense", __executeExternalGet);
+                        }
                     }
 
                 }

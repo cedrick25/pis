@@ -90,7 +90,15 @@
             return d.promise();
         };
         var userRole = localStorage.getItem("userRole");
-        var managerIds = JSON.parse(localStorage.getItem("managerId"));
+        var managerIds = [];
+        try {
+            var parsedManagerIds = JSON.parse(localStorage.getItem("managerId"));
+            if (Array.isArray(parsedManagerIds)) {
+                managerIds = parsedManagerIds;
+            }
+        } catch (e) {
+            managerIds = [];
+        }
         var selectPdl = function () {
             $(".pdl_client").prop("disabled", true)
             $(".field_office").prop("disabled", true)

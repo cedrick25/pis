@@ -104,6 +104,24 @@
         }
     }
 
+    function initSelect2Safe(selector) {
+        var $els = $(selector);
+        if (!$els.length) {
+            return;
+        }
+        $els.each(function () {
+            var $el = $(this);
+            if ($el.hasClass('select2-hidden-accessible')) {
+                try {
+                    $el.select2('destroy');
+                } catch (e) {
+                    // ignore destroy errors on non-select2 nodes
+                }
+            }
+            $el.select2({ width: '100%' });
+        });
+    }
+
     function fieldOffices(fieldOfficeDropdown, fieldOffice) {
         $(`${fieldOfficeDropdown}`).empty().append(`<option value="" selected disabled>Loading ...</option>`);
         __executeExternalGet('8088/department/list').done(function (result) {
@@ -253,15 +271,28 @@
                 var itemSupervisionWalkIn = 0;
                 // fetch the data for the investigation and display it
                 __executeExternalGet(`8000/data/${client_type}/${client_id}`).done(function (result) {
-                    console.log("Data: ", result.response)
-                    for (var i = 0; i < result.response.length; i++) {
-                        var rawData = result.response[i];
-                        $(".btn-confirm").data("id", rawData.id)
+                    var rows = (result && result.status !== 'ERROR' && Array.isArray(result.response))
+                        ? result.response
+                        : [];
+                    console.log("Data: ", rows)
+                    for (var i = 0; i < rows.length; i++) {
+                        var rawData = rows[i];
+                        if (rawData && rawData.id != null) {
+                            $(".btn-confirm").data("id", rawData.id)
+                        }
                         if (rawData.type === "PDL-Investigation") {
-                            var investigationData = JSON.parse(rawData.jsonData)
+                            var investigationData;
+                            try {
+                                investigationData = JSON.parse(rawData.jsonData || '{}');
+                            } catch (e) {
+                                investigationData = { investigation: [], supervision: [] };
+                            }
                             console.log("Parse Data: ", investigationData)
-                            for (var j = 0; j < investigationData.investigation.length; j++) {
-                                var data = investigationData.investigation[j];
+                            var investigationList = (investigationData && Array.isArray(investigationData.investigation))
+                                ? investigationData.investigation
+                                : [];
+                            for (var j = 0; j < investigationList.length; j++) {
+                                var data = investigationList[j] || {};
                                 investigation_counter++;
                                 item++;
                                 $("#investigation_card_body_accordion").append(`
@@ -380,23 +411,33 @@
                                         </div>
                                     </div>
                                 `)
-                                $(`#forwarded_to_fo_${investigation_counter},#forwarded_to_ro_${investigation_counter},#type_report${investigation_counter},#request_type${investigation_counter}`).select2({
-                                    width: '100%'
-                                });
+                                initSelect2Safe(
+                                    `#forwarded_to_fo_${investigation_counter},#forwarded_to_ro_${investigation_counter},#type_report${investigation_counter},#request_type${investigation_counter}`
+                                );
                                 fieldOffices(`#forwarded_to_fo_${investigation_counter}`, data.forwarded_to_fo)
                                 regionalOffices(`#forwarded_to_ro_${investigation_counter}`, data.forwarded_to_ro)
                                 $(`#type_report${investigation_counter}`).val(data.type_report).trigger("change")
                                 $(`#request_type${investigation_counter}`).val(data.request_type).trigger("change")
                             }
                         } else if (rawData.type === "PDL-Supervision") {
-                            var supervisionData = JSON.parse(rawData.jsonData)
-                            // console.log(supervisionData.supervision)
-                            var investigationData = localStorage.setItem('investigationData', JSON.stringify(supervisionData.investigation))
-                            // for (var j = 0; j < supervisionData.supervision.length; j++) {
-                                var data = supervisionData.supervision;
-                                // console.log(data)
-                                for (var supBpp = 0; supBpp < data.supervision_bpp.length; supBpp++) {
-                                    var supervision_bpp_data = data.supervision_bpp[supBpp];
+                            var supervisionData;
+                            try {
+                                supervisionData = JSON.parse(rawData.jsonData || '{}');
+                            } catch (e) {
+                                supervisionData = { investigation: [], supervision: {} };
+                            }
+                            var supervisionInvestigation = (supervisionData && Array.isArray(supervisionData.investigation))
+                                ? supervisionData.investigation
+                                : [];
+                            localStorage.setItem('investigationData', JSON.stringify(supervisionInvestigation));
+                            var data = (supervisionData && supervisionData.supervision && typeof supervisionData.supervision === 'object')
+                                ? supervisionData.supervision
+                                : {};
+                            var supervisionBppList = Array.isArray(data.supervision_bpp) ? data.supervision_bpp : [];
+                            var supervisionOrffList = Array.isArray(data.supervision_orff) ? data.supervision_orff : [];
+                            var supervisionWalkInList = Array.isArray(data.supervision_walkIn) ? data.supervision_walkIn : [];
+                                for (var supBpp = 0; supBpp < supervisionBppList.length; supBpp++) {
+                                    var supervision_bpp_data = supervisionBppList[supBpp] || {};
                                     supervision_counter++;
                                     itemSupervision++;
                                     $(`#supervision_accordion_card`).append(`
@@ -467,15 +508,15 @@
                                             </div>
                                         </div>
                                     `)
-                                    $(`#forwarded_to_fo_sup_${supervision_counter},#forwarded_to_ro_sup_${supervision_counter},#bpp_resolutions_${supervision_counter}`).select2({
-                                        width: '100%'
-                                    });
+                                    initSelect2Safe(
+                                        `#forwarded_to_fo_sup_${supervision_counter},#forwarded_to_ro_sup_${supervision_counter},#bpp_resolutions_${supervision_counter}`
+                                    );
                                     fieldOffices(`#forwarded_to_fo_sup_${supervision_counter}`, supervision_bpp_data.forwarded_to_fo_sup)
                                     regionalOffices(`#forwarded_to_ro_sup_${supervision_counter}`, supervision_bpp_data.forwarded_to_ro_sup)
                                     $(`#bpp_resolutions_${supervision_counter}`).val(supervision_bpp_data.bpp_resolutions).trigger("change")
                                 }
-                                for (var supOrff = 0; supOrff < data.supervision_orff.length; supOrff++){
-                                    var supervision_orff_data = data.supervision_orff[i];
+                                for (var supOrff = 0; supOrff < supervisionOrffList.length; supOrff++){
+                                    var supervision_orff_data = supervisionOrffList[supOrff] || {};
                                     originatedFromTheFieldCounter++;
                                     itemSupervisionORFF++;
                                     $(`#supervision_originated_from_the_field_accordion_card`).append(`
@@ -561,29 +602,29 @@
                                             </div>
                                         </div>
                                     `)
-                                    $(`#forwarded_to_fo_sup_ortftf_${originatedFromTheFieldCounter},#forwarded_to_ro_sup_ortftf_${originatedFromTheFieldCounter},#type_report_${originatedFromTheFieldCounter}`).select2({
-                                        width: "100%"
-                                    })
+                                    initSelect2Safe(
+                                        `#forwarded_to_fo_sup_ortftf_${originatedFromTheFieldCounter},#forwarded_to_ro_sup_ortftf_${originatedFromTheFieldCounter},#type_report_${originatedFromTheFieldCounter}`
+                                    );
                                     fieldOffices(`#forwarded_to_fo_sup_ortftf_${originatedFromTheFieldCounter}`, supervision_orff_data.forwarded_to_fo_sup_ortftf)
                                     regionalOffices(`#forwarded_to_ro_sup_ortftf_${originatedFromTheFieldCounter}`, supervision_orff_data.forwarded_to_ro_sup_ortftf)
                                     $(`#type_report_${originatedFromTheFieldCounter}`).val(supervision_orff_data.type_report).trigger("change")
                                 }
-                                for (var supWalkIn = 0; supWalkIn < data.supervision_walkIn.length; supWalkIn++){
-                                    var supervision_walkIn_data = data.supervision_walkIn[i];
+                                for (var supWalkIn = 0; supWalkIn < supervisionWalkInList.length; supWalkIn++){
+                                    var supervision_walkIn_data = supervisionWalkInList[supWalkIn] || {};
                                     walkInCounter++;
                                     itemSupervisionWalkIn++;
                                     $("#supervision_walk_in_accordion_card").append(`
                                         <div class="card" id="supervision_walk_in_card_${walkInCounter}" style="border-radius: 10px; margin-bottom: 0px">
                                             <div class="card-header d-flex" style="background: transparent;">
-                                                <button class="btn btn-link" data-toggle="collapse" data-target="#supervision_walk_in_accordion_walkInCounter" aria-expanded="true" aria-controls="">
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#supervision_walk_in_accordion_${walkInCounter}" aria-expanded="true" aria-controls="">
                                                   Supervision - Walk in (Item ${itemSupervisionWalkIn})
                                                 </button>
                                                 <button class="btn btn-link delete_supervision ml-auto p-2" data-id="${walkInCounter}" data-type="supervision_walkIn">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                 </button>
                                             </div>
-                                            <div class="collapse hide" id="supervision_walk_in_accordion_walkInCounter" data-parent="#supervision_walk_in_card">
-                                                <div class="card-body supervision_walk_in_body_walkInCounter">
+                                            <div class="collapse hide" id="supervision_walk_in_accordion_${walkInCounter}" data-parent="#supervision_walk_in_card">
+                                                <div class="card-body supervision_walk_in_body_${walkInCounter}">
                                                     <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                                         <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                             <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Received by TSD</label></div>
@@ -612,12 +653,9 @@
                                             </div>
                                         </div>
                                     `)
-                                    $(`#forwarded_to_fo_walk_in_${walkInCounter}`).select2({
-                                        width: "100%"
-                                    })
+                                    initSelect2Safe(`#forwarded_to_fo_walk_in_${walkInCounter}`);
                                     fieldOffices(`#forwarded_to_fo_walk_in_${walkInCounter}`, supervision_walkIn_data.forwarded_to_fo_walk_in)
                                 }
-                            // }
                         }
                     }
                 })
@@ -723,7 +761,7 @@
                     } else {
                         pdlClientType = "PDL-Supervision"
                         var payload = petitionerPayload(pdlClientType)
-                        var investigationData = localStorage.getItem('investigationData')
+                        var investigationDataRaw = localStorage.getItem('investigationData')
 
                         // Initialize the array for JSON Data of supervision
                         data =  {   
@@ -731,7 +769,12 @@
                             supervision: []
                         };
 
-                        data.investigation = JSON.parse(investigationData);
+                        try {
+                            var parsedInvestigation = investigationDataRaw ? JSON.parse(investigationDataRaw) : [];
+                            data.investigation = Array.isArray(parsedInvestigation) ? parsedInvestigation : [];
+                        } catch (e) {
+                            data.investigation = [];
+                        }
 
                         // construct the JSON Data for supervision_bpp start
                         const transmittal_bpp_date = $(".transmittal_bpp_date");
@@ -807,8 +850,8 @@
                     __executeExternalPost('8000/petitioner/update/'+client_id,JSON.stringify(payload)).done(function (result) {
                         // console.log(result);
                         var petitionerId = client_id
+                        var hasExistingDataId = idData !== undefined && idData !== null && idData !== '';
                         var dataPayload = {
-                          "id": idData,
                           "petitionerId": petitionerId,
                           "type": pdlClientType,
                           "jsonData": JSON.stringify(data),
@@ -817,10 +860,19 @@
                           "updatedBy": $.cookie("uuid"),
                           "status": true
                         }
+                        if (hasExistingDataId) {
+                            dataPayload.id = idData;
+                        }
                         if (result.status != "ERROR") {
-                            __executeExternalPost('8000/data/update/'+idData,JSON.stringify(dataPayload)).done(function (result) {
-                                console.log(result);
-                                if (result.status != "ERROR") {                        
+                            var dataSaveUrl = hasExistingDataId
+                                ? '8000/data/update/' + idData
+                                : '8000/data/create';
+                            __executeExternalPost(dataSaveUrl, JSON.stringify(dataPayload)).done(function (saveResult) {
+                                console.log(saveResult);
+                                if (saveResult.status != "ERROR") {
+                                    if (!hasExistingDataId && saveResult.response && saveResult.response.id != null) {
+                                        $(".btn-confirm").data("id", saveResult.response.id);
+                                    }
                                     $(".form-control").val('');
                                     $('#success').show();
                                     setTimeout(function () {
@@ -912,7 +964,7 @@
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Request Type</label></div>
                                                 <div class="col-12 col-md-8">
-                                                    <select class="form-control request_type select2">
+                                                    <select class="form-control request_type select2" id="request_type${investigation_counter}">
                                                         <option value="" selected disabled>Select</option>
                                                         <option value="REQUEST PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)">REQUEST PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)</option>
                                                         <option value="REQUEST PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)">REQUEST PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)</option>
@@ -936,7 +988,7 @@
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
                                                 <div class="col-12 col-md-8">
-                                                    <select class="form-control type_report select2">
+                                                    <select class="form-control type_report select2" id="type_report${investigation_counter}">
                                                         <option value="" selected disabled>Select</option>
                                                         <option value="RESULT PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)">RESULT PRE-PAROLE INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PPIR W/ CI)</option>
                                                         <option value="RESULT PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)">RESULT PRE-EXECUTIVE CLEMENCY INVESTIGATION REPORT W/ COMMUNITY INTERVIEW (PECIR W/ CI)</option>
@@ -960,9 +1012,9 @@
                                 </div>
                             </div>
                         `)
-                        $(`#forwarded_to_fo_${investigation_counter},#forwarded_to_ro_${investigation_counter},#type_report${investigation_counter},#request_type${investigation_counter}`).select2({
-                            width: '100%'
-                        });
+                        initSelect2Safe(
+                            `#forwarded_to_fo_${investigation_counter},#forwarded_to_ro_${investigation_counter},#type_report${investigation_counter},#request_type${investigation_counter}`
+                        );
                         fieldOffices(`#forwarded_to_fo_${investigation_counter}`, "")
                         regionalOffices(`#forwarded_to_ro_${investigation_counter}`, "")            
                     })
@@ -1063,7 +1115,7 @@
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <div class="col col-md-4"><label for="text-input" class="form-control-label">BPP Resolutions</label></div>
                                                 <div class="col-12 col-md-8">
-                                                    <select class="form-control bpp_resolutions select2">
+                                                    <select class="form-control bpp_resolutions select2" id="bpp_resolutions_${supervision_counter}">
                                                         <option value="" selected disabled>Select</option>
                                                         <option value="DISCHARGE ON PAROLE (DOP)">DISCHARGE ON PAROLE (DOP)</option>
                                                         <option value="GRANTED FINAL RELEASE & DISCHARGE (GFRD)">GRANTED FINAL RELEASE & DISCHARGE (GFRD)</option>
@@ -1079,6 +1131,9 @@
                                 </div>
                             </div>
                         `)
+                        initSelect2Safe(
+                            `#forwarded_to_fo_sup_${supervision_counter},#forwarded_to_ro_sup_${supervision_counter},#bpp_resolutions_${supervision_counter}`
+                        );
                         fieldOffices(`#forwarded_to_fo_sup_${supervision_counter}`, "")
                         regionalOffices(`#forwarded_to_ro_sup_${supervision_counter}`, "")
                     })
@@ -1150,7 +1205,7 @@
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="type_of_report_field">
                                                 <div class="col col-md-4"><label for="text-input" class=" form-control-label">Type of Report</label></div>
                                                 <div class="col-12 col-md-8">
-                                                    <select class="form-control type_report select2">
+                                                    <select class="form-control type_report select2" id="type_report_${originatedFromTheFieldCounter}">
                                                         <option value="" selected disabled>Select</option>
                                                         <option value="SUMMARY REPORT (SR)">SUMMARY REPORT (SR)</option>
                                                         <option value="ARRIVAL / BRIEFING REPORT (AR)">ARRIVAL / BRIEFING REPORT (AR)</option>
@@ -1169,6 +1224,9 @@
                                 </div>
                             </div>
                         `)
+                        initSelect2Safe(
+                            `#forwarded_to_fo_sup_ortftf_${originatedFromTheFieldCounter},#forwarded_to_ro_sup_ortftf_${originatedFromTheFieldCounter},#type_report_${originatedFromTheFieldCounter}`
+                        );
                         fieldOffices(`#forwarded_to_fo_sup_ortftf_${originatedFromTheFieldCounter}`, "")
                         regionalOffices(`#forwarded_to_ro_sup_ortftf_${originatedFromTheFieldCounter}`, "")
                     })
@@ -1179,32 +1237,32 @@
                         $("#supervision_walk_in_accordion_card").append(`
                             <div class="card" id="supervision_walk_in_card_${walkInCounter}" style="border-radius: 10px; margin-bottom: 0px">
                                 <div class="card-header d-flex" style="background: transparent;">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#supervision_walk_in_accordion_walkInCounter" aria-expanded="true" aria-controls="">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#supervision_walk_in_accordion_${walkInCounter}" aria-expanded="true" aria-controls="">
                                       Supervision - Walk in (Item ${itemSupervisionWalkIn})
                                     </button>
                                     <button class="btn btn-link delete_supervision ml-auto p-2" data-id="${walkInCounter}" data-type="supervision_walkIn">
                                         <i class="fa fa-times" aria-hidden="true"></i>
                                     </button>
                                 </div>
-                                <div class="collapse hide" id="supervision_walk_in_accordion_walkInCounter" data-parent="#supervision_walk_in_card">
-                                    <div class="card-body supervision_walk_in_body_walkInCounter">
+                                <div class="collapse hide" id="supervision_walk_in_accordion_${walkInCounter}" data-parent="#supervision_walk_in_card">
+                                    <div class="card-body supervision_walk_in_body_${walkInCounter}">
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Received by TSD</label></div>
+                                                <div class="col col-md-4"><label for="text-input" class="form-control-label">Date Received by TSD</label></div>
                                                 <div class="col-12 col-md-8"><input type="date" class="form-control date_received_by_tsd_walk_in"></div>
                                             </div>
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                <div class="col col-md-4"><label for="text-input" class=" form-control-label">Indorsement Date</label></div>
+                                                <div class="col col-md-4"><label for="text-input" class="form-control-label">Indorsement Date</label></div>
                                                 <div class="col-12 col-md-8"><input type="date" class="form-control indorsement_date_walk_in"></div>
                                             </div>
                                         </div>
                                         <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                <div class="col col-md-4"><label for="text-input" class=" form-control-label">Date Forwarded to Field Office</label></div>
+                                                <div class="col col-md-4"><label for="text-input" class="form-control-label">Date Forwarded to Field Office</label></div>
                                                 <div class="col-12 col-md-8"><input type="date" class="form-control date_forwarded_to_fo_walk_in"></div>
                                             </div>
                                             <div class="row form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                <div class="col col-md-4"><label for="text-input" class=" form-control-label">Field Office</label></div>
+                                                <div class="col col-md-4"><label for="text-input" class="form-control-label">Field Office</label></div>
                                                 <div class="col-12 col-md-8">
                                                     <select class="form-control forwarded_to_fo_walk_in select2" id="forwarded_to_fo_walk_in_${walkInCounter}">
                                                         <option value="" selected disabled>Select</option>
@@ -1216,6 +1274,7 @@
                                 </div>
                             </div>
                         `)
+                        initSelect2Safe(`#forwarded_to_fo_walk_in_${walkInCounter}`);
                         fieldOffices(`#forwarded_to_fo_walk_in_${walkInCounter}`, "")
                     })
                 // for deleting supervisions start

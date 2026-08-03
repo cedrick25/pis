@@ -230,6 +230,9 @@
             $("#saveModal .saveModalTitle").text("Save Changes")
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
+            if (window.PsirPrefill) {
+                PsirPrefill.fromWorksheet(client_id, "educationAndJobHistory", __executeExternalGet);
+            }
         } else {
             __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
@@ -257,7 +260,9 @@
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
-
+                        if (window.PsirPrefill) {
+                            PsirPrefill.fromWorksheet(client_id, "educationAndJobHistory", __executeExternalGet);
+                        }
                     }
 
                 }
@@ -296,7 +301,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    `${api}/pis/psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    `${api}/pis/psir_medical_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
                         });
                 });
@@ -339,7 +344,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                `${api}/pis/psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                `${api}/pis/psir_medical_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                         }, 2000);
                     });
                 });

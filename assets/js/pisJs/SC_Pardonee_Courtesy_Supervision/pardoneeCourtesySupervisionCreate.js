@@ -192,7 +192,11 @@
                 "legalAge"                  : true,
                 "militaryCourt"             : true,
                 "supervisionStartDate"      : $(".start_sup_date").val(),
-                "supervisionEndDate"        : $(".end_sup_date").val()
+                "supervisionEndDate"        : $(".end_sup_date").val(),
+                "referringOfficeCourtesySup": $(".ref_office option:selected").text() || "",
+                "referringOfficeCourtesySupId": $(".ref_office").val() || "",
+                "referringOfficeCourtesyInv": "",
+                "referringOfficeCourtesyInvId": ""
             }
             console.log(payload)
             __executeExternalPost('8000/docketbook/create',JSON.stringify(payload)).done(function (result) {

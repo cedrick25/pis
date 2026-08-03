@@ -44,8 +44,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         if ($pis_api_host === '') {
             $pis_api_host = isset($_SERVER['HTTP_HOST']) ? preg_replace('/:\d+$/', '', (string) $_SERVER['HTTP_HOST']) : 'localhost';
         }
-        // Path style: https://host/8088/... (Proxy Manager). Port style: https://host:8088/...
-        $pis_api_path_style = !defined('PIS_API_PATH_STYLE') || PIS_API_PATH_STYLE;
+
+        // Resolve API URL style:
+        // path  -> https://host/8088/... (Proxy Manager)
+        // port  -> https://host:8088/... (local WAMP / Docker ports)
+        $pis_api_path_style_raw = defined('PIS_API_PATH_STYLE') ? PIS_API_PATH_STYLE : 'auto';
+        $pis_api_host_for_detect = strtolower(trim($pis_api_host, "[] \t\n\r\0\x0B"));
+        $pis_is_local_api_host = (
+            $pis_api_host_for_detect === ''
+            || $pis_api_host_for_detect === 'localhost'
+            || $pis_api_host_for_detect === '127.0.0.1'
+            || $pis_api_host_for_detect === '::1'
+            || substr($pis_api_host_for_detect, -6) === '.local'
+            || (
+                filter_var($pis_api_host_for_detect, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)
+                && !filter_var(
+                    $pis_api_host_for_detect,
+                    FILTER_VALIDATE_IP,
+                    FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+                )
+            )
+        );
+        if ($pis_api_path_style_raw === 'auto' || $pis_api_path_style_raw === null || $pis_api_path_style_raw === '') {
+            $pis_api_path_style = !$pis_is_local_api_host;
+        } else {
+            $pis_api_path_style = filter_var($pis_api_path_style_raw, FILTER_VALIDATE_BOOLEAN);
+        }
         $pis_api_base = $pis_protocol.$pis_api_host.($pis_api_path_style ? '/' : ':');
     ?>
     <script type="text/javascript">
@@ -53,6 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         window.__PIS_API_BASE = <?= json_encode($pis_api_base) ?>;
         window.__PIS_API_PATH_STYLE = <?= $pis_api_path_style ? 'true' : 'false' ?>;
         window.__PIS_IS_HTTPS = <?= $pis_is_https ? 'true' : 'false' ?>;
+        window.__PIS_OFFLINE_MODE = <?= (defined('PIS_OFFLINE_MODE') && PIS_OFFLINE_MODE) ? 'true' : 'false' ?>;
         window.__PIS_SMS_API_URL = <?= json_encode(defined('PIS_SMS_API_URL') ? PIS_SMS_API_URL : '') ?>;
         window.__PIS_EMAIL_API_URL = <?= json_encode(defined('PIS_EMAIL_API_URL') ? PIS_EMAIL_API_URL : '') ?>;
         window.pisUrl = function (path) {
@@ -70,6 +95,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 return base + p;
             }
             return base.replace(/\/+$/, '') + (p ? '/' + p : '');
+        };
+        /** Builds list API URL: online 8000/docketbook... or offline api/docketbook/offline... */
+        window.pisDocketbookListUrl = function (suffix) {
+            var rest = String(suffix == null ? '' : suffix);
+            if (rest && rest.charAt(0) !== '/' && rest.charAt(0) !== '?') {
+                rest = '/' + rest;
+            }
+            if (window.__PIS_OFFLINE_MODE) {
+                return window.pisUrl('index.php/api/docketbook/offline' + rest);
+            }
+            return window.pisApiUrl('8000/docketbook' + rest);
+        };
+        /** Rewrites only the three list surfaces when offline; leaves create/update/get alone. */
+        window.__pisRewriteOfflineDocketListUrl = function (url) {
+            if (!window.__PIS_OFFLINE_MODE || !url) {
+                return null;
+            }
+            var marker = '8000/docketbook';
+            var idx = String(url).indexOf(marker);
+            if (idx === -1) {
+                return null;
+            }
+            var after = String(url).substring(idx + marker.length);
+            if (after === '' || after.charAt(0) === '?') {
+                return window.pisUrl('index.php/api/docketbook/offline' + after);
+            }
+            if (after.indexOf('/list/') === 0 || after.indexOf('/search/') === 0) {
+                return window.pisUrl('index.php/api/docketbook/offline' + after);
+            }
+            return null;
         };
         window.__PIS_COOKIE_OPTS = function () {
             var opts = { path: '/' };

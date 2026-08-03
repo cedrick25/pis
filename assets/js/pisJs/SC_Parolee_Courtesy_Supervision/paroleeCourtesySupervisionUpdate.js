@@ -226,7 +226,11 @@
                         "legalAge"                  : true,
                         "militaryCourt"             : true,
                         "supervisionStartDate"      : $(".start_sup_date_update").val(),
-                        "supervisionEndDate"        : $(".end_sup_date_update").val()
+                        "supervisionEndDate"        : $(".end_sup_date_update").val(),
+                        "referringOfficeCourtesySup": $(".ref_office_update option:selected").text() || "",
+                        "referringOfficeCourtesySupId": $(".ref_office_update").val() || "",
+                        "referringOfficeCourtesyInv": "",
+                        "referringOfficeCourtesyInvId": ""
 
                         }
 

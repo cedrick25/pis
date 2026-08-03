@@ -421,6 +421,7 @@
                     dataType: 'json',
                     data: JSON.stringify({
                         name: searchVal,
+                        type: 'SC_PPI_CSINV',
                         fieldOfficeId: fieldOfficeId,
                         canSeeOtherOffices: false
                     }),

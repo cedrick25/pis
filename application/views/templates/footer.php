@@ -40,13 +40,31 @@
                 width: '100%',
             });
         });
-        // localStorage.removeItem('api');
         // Prefer values injected by header.php (HTTPS-ready). Fall back for older pages.
-        // Path style (default): https://host/8088/...  Port style: https://host:8088/...
+        // Path style: https://host/8088/...  Port style: https://host:8088/...
+        // Auto (when header unset): localhost / private LAN -> port style; else proxy path style.
+        var isLocalApiHost = function (hostname) {
+            hostname = String(hostname || '').toLowerCase().replace(/^\[|\]$/g, '');
+            if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1') {
+                return true;
+            }
+            if (hostname.slice(-6) === '.local') {
+                return true;
+            }
+            if (/^10\.\d+\.\d+\.\d+$/.test(hostname) || /^192\.168\.\d+\.\d+$/.test(hostname)) {
+                return true;
+            }
+            if (/^172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+$/.test(hostname)) {
+                return true;
+            }
+            return false;
+        };
+        var usePathStyle = (typeof window.__PIS_API_PATH_STYLE === 'boolean')
+            ? window.__PIS_API_PATH_STYLE
+            : !isLocalApiHost(window.location.hostname);
         var apiBase = (typeof window.__PIS_API_BASE === 'string' && window.__PIS_API_BASE)
             ? window.__PIS_API_BASE
-            : (window.location.protocol + '//' + window.location.hostname +
-                (window.__PIS_API_PATH_STYLE === false ? ':' : '/'));
+            : (window.location.protocol + '//' + window.location.hostname + (usePathStyle ? '/' : ':'));
         localStorage.setItem('api', apiBase);
         var api = localStorage.getItem('api');
 
@@ -59,6 +77,20 @@
         var __getContext = function() {
             return ___ctx;
         };
+
+        if (window.__PIS_OFFLINE_MODE && typeof $.ajaxPrefilter === 'function') {
+            $.ajaxPrefilter(function (options) {
+                if (!options || !options.url) {
+                    return;
+                }
+                var rewritten = typeof window.__pisRewriteOfflineDocketListUrl === 'function'
+                    ? window.__pisRewriteOfflineDocketListUrl(options.url)
+                    : null;
+                if (rewritten) {
+                    options.url = rewritten;
+                }
+            });
+        }
 
         var __executeExternalGet = function(path, customLoader) {
             path = __getContext() + path;

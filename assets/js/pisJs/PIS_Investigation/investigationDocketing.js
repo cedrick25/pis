@@ -269,6 +269,7 @@
                 dataType: 'json',
                 data: JSON.stringify({
                     name: term,
+                    type: INVESTIGATION_DOCKET_TYPE,
                     fieldOfficeId: fieldOfficeId,
                     canSeeOtherOffices: false
                 })

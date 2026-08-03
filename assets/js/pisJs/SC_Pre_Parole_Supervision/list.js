@@ -431,6 +431,7 @@
                     dataType: 'json',
                     data: JSON.stringify({
                         name: searchVal,
+                        type: DOCKET_LIST_TYPE,
                         fieldOfficeId: fieldOfficeId,
                         canSeeOtherOffices: false
                     }),

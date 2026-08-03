@@ -260,9 +260,14 @@
             __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
                 .done(function (result) {
 
-                    let workSheetData = JSON.parse(result.response.jsonData);
-
-                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+                    let existing = {};
+                    if (result.response && result.response.jsonData) {
+                        try {
+                            existing = JSON.parse(result.response.jsonData) || {};
+                        } catch (e) {
+                            existing = {};
+                        }
+                    }
 
                     let payload = saveWorksheet(existing, data);
 
@@ -277,8 +282,15 @@
                             setTimeout(() => {
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
-                                window.location.href =
-                                    `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                var nextStatus = res.response && res.response.worksheetStatus
+                                    ? res.response.worksheetStatus : "incomplete";
+                                if (String(nextStatus).toLowerCase() === "complete") {
+                                    window.location.href =
+                                        `${api}/pis/client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`;
+                                } else {
+                                    window.location.href =
+                                        `${api}/pis/psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`;
+                                }
                             }, 2000);
                         });
                 });
@@ -320,13 +332,14 @@
                             $('#update_success').hide();
                             $('#saveModal').modal("hide");
 
-                            if (res.response.worksheetStatus.toLowerCase() === "complete") {
-                            window.location.href =
-                                `${api}/pis/client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`;
-
+                            var nextStatus = res.response && res.response.worksheetStatus
+                                ? res.response.worksheetStatus : "incomplete";
+                            if (String(nextStatus).toLowerCase() === "complete") {
+                                window.location.href =
+                                    `${api}/pis/client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`;
                             } else {
-                            window.location.href =
-                                `${api}/pis/psir_traits_and_community_background?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;    
+                                window.location.href =
+                                    `${api}/pis/psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`;
                             }
                         }, 2000);
                     });

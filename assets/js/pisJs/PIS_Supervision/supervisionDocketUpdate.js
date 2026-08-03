@@ -176,7 +176,7 @@
 
             $('#carryOver .office_findings').val(row.officeFindingsForPendingDisposition || '').trigger('change');
             $('#carryOver .date_submitted_court').val(row.referralsNotActedUponDateOrderReceived || '');
-            $('#carryOver .supervising_officer_carry_over').val(row.supervisingOfficer || '');
+            $('#carryOver .supervising_officer_carry_over').val(row.supervisingOfficerCarryOver || '');
 
             if ($('.sentence').length) {
                 $('.sentence').val(row.sentence || '');
@@ -278,7 +278,8 @@
                 boardOrderStatus: docketData.boardOrderStatus || '',
                 referringOfficeId: docketData.referringOfficeId || '',
                 dateCICAR: docketData.dateCICAR || '',
-                supervisingOfficer: $('.supervising_officer').val() || $('#carryOver .supervising_officer_carry_over').val() || docketData.supervisingOfficer || '',
+                supervisingOfficer: $('.supervising_officer').val() || docketData.supervisingOfficer || '',
+                supervisingOfficerCarryOver: $('#carryOver .supervising_officer_carry_over').val() || docketData.supervisingOfficerCarryOver || '',
                 supervisionStartDate: docketData.supervisionStartDate || '',
                 supervisionEndDate: docketData.supervisionEndDate || '',
                 probationEndDate: $('.prob_end_date').val() || docketData.probationEndDate || '',

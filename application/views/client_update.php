@@ -150,9 +150,7 @@
                                                 <div class="col-12 col-md-1"></div>
                                                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Educ'l Attainment</label></div>
                                                 <div class="col-12 col-md-4">
-                                                    <select class="form-control educational_attainment_update select2">
-                                                        <option selected value="" disabled>Select</option>
-                                                    </select>
+                                                    <input type="text" name="text-input" placeholder="Educational Attainment" class="form-control educational_attainment_update">
                                                 </div>
                                             </div>
                                             <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">

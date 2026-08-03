@@ -230,6 +230,9 @@
             $("#saveModal .saveModalTitle").text("Save Changes")
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
+            if (window.PsirPrefill) {
+                PsirPrefill.fromWorksheet(client_id, "identifyingData", __executeExternalGet);
+            }
         } else {
             __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
@@ -262,6 +265,9 @@
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
+                        if (window.PsirPrefill) {
+                            PsirPrefill.fromWorksheet(client_id, "identifyingData", __executeExternalGet);
+                        }
                     }
 
                 }
@@ -299,14 +305,14 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    `${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    `${api}/pis/psir_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
                         });
                 });
         });
 
         // evend handler for updating data
-        $(".btn-update").unbind("click").on("click", function () {
+        $("#saveModal .btn-update").unbind("click").on("click", function () {
 
             let data = collectIdentifyingData();
 
@@ -342,7 +348,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                `${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                `${api}/pis/psir_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                         }, 2000);
                     });
                 });

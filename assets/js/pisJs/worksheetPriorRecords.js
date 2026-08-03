@@ -342,7 +342,7 @@
                                         </div>
                                         <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
                                             <label class="form-control-label">Particulars</label>
-                                            <input type="date" placeholder="Particulars" class="form-control particulars" value="${data.particulars}">
+                                            <input type="text" placeholder="Particulars" class="form-control particulars" value="${data.particulars}">
                                         </div>
                                         <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="info_records_button_group_${index}">
                                         </div>
@@ -499,7 +499,7 @@
                     </div>
                     <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
                         <label class="form-control-label">Particulars</label>
-                        <input type="date" placeholder="Prticulars" class="form-control particulars">
+                        <input type="text" placeholder="Particulars" class="form-control particulars">
                     </div>
                     <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
                         <button type="button" class="btn btn-danger btn-delInfo btn-sm" style="border-radius:2px" data-id="${infoCounter}">

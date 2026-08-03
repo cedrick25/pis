@@ -258,6 +258,61 @@
 
 
         let childrenCounter = 0;
+        var suppressCivilStatusClear = false;
+
+        function resetChildrenList() {
+            childrenCounter = 0;
+            $("#children_list").empty().append(`
+                <li class="list-group-item d-flex align-items-center" id="children_list_${childrenCounter}">
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">Age</label>
+                        <input type="text" placeholder="Age" class="form-control children_age">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">In/Out of School</label>
+                        <input type="text" placeholder="In/Out of School" class="form-control children_school">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-control-label">Educational Attainment</label>
+                        <input type="text" placeholder="Educational Attainment" class="form-control children_education">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">Legitimate</label>
+                        <input type="text" placeholder="Legitimate" class="form-control children_legitimate">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">Illegitimate</label>
+                        <input type="text" placeholder="Illegitimate" class="form-control children_illegitimate">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
+                        <button type="button" class="btn btn-primary btn-addChildren btn-sm" style="border-radius:2px" data-id="${childrenCounter}">
+                            <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                        </button>
+                    </div>
+                </li>
+            `);
+        }
+
+        function clearSpouseAndChildrenFields() {
+            $(".spouse_name, .spouse_age, .spouse_occupation, .spouse_home_address, .spouse_work_address, .total_children, .remarks_children").val("");
+            $(".spouse_sex").val(null).trigger("change");
+            $(".relationship_with_children").val(null).trigger("change");
+            resetChildrenList();
+        }
+
+        function toggleSpouseChildrenByCivilStatus(civilStatus, shouldClear) {
+            var isSingle = civilStatus === "single";
+            if (isSingle) {
+                $("#spouse_section").hide();
+                $("#children_section").hide();
+                if (shouldClear) {
+                    clearSpouseAndChildrenFields();
+                }
+            } else {
+                $("#spouse_section").show();
+                $("#children_section").show();
+            }
+        }
 
         // display buttons and data
         if (status === "null" || !status || status === "Not Available") {
@@ -296,6 +351,14 @@
                     </div>
                 </li>
             `)
+            if (window.PsirPrefill) {
+                PsirPrefill.fromWorksheet(client_id, "presentSituation", __executeExternalGet).done(function (applied) {
+                    if (applied && typeof window.__psirPrefillChildrenCounter === "number") {
+                        childrenCounter = window.__psirPrefillChildrenCounter;
+                    }
+                    toggleSpouseChildrenByCivilStatus($(".civil_status").val(), $(".civil_status").val() === "single");
+                });
+            }
         } else {
             __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
@@ -309,6 +372,7 @@
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
 
+                        suppressCivilStatusClear = true;
                         $(".civil_status").val(presentSituation.civilStatus).trigger("change")
                         $(".status_of_marriage").val(presentSituation.statusOfMarriage).trigger("change")
                         $(".other_married_status").val(presentSituation.otherStatusOfMarriage)
@@ -381,6 +445,8 @@
                                 }
                             })
                         }
+                        toggleSpouseChildrenByCivilStatus(presentSituation.civilStatus, presentSituation.civilStatus === "single");
+                        suppressCivilStatusClear = false;
 
                     } else {
                         
@@ -418,6 +484,14 @@
                                 </div>
                             </li>
                         `)
+                        if (window.PsirPrefill) {
+                            PsirPrefill.fromWorksheet(client_id, "presentSituation", __executeExternalGet).done(function (applied) {
+                                if (applied && typeof window.__psirPrefillChildrenCounter === "number") {
+                                    childrenCounter = window.__psirPrefillChildrenCounter;
+                                }
+                                toggleSpouseChildrenByCivilStatus($(".civil_status").val(), $(".civil_status").val() === "single");
+                            });
+                        }
                     }
 
                 }
@@ -430,7 +504,9 @@
                 $("#married_status_field").show();
             } else {
                 $("#married_status_field").hide();
+                $(".status_of_marriage").val(null).trigger("change");
             }
+            toggleSpouseChildrenByCivilStatus(value, !suppressCivilStatusClear);
         });
 
         $('.status_of_marriage').change(function(){

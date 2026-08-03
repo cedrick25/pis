@@ -250,7 +250,7 @@
                                         <input type="text" name="text-input" placeholder="Cause" class="form-control seperation_cause">
                                     </div>
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" id="spouse_section">
                                     <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -336,6 +336,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div id="children_section">
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Number of Children</label>
@@ -373,6 +374,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                     <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">

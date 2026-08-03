@@ -347,6 +347,7 @@
                 dataType: 'json',
                 data: JSON.stringify({
                     name: term,
+                    type: 'PIS_CSUP',
                     fieldOfficeId: fieldOfficeId,
                     canSeeOtherOffices: false
                 }),

@@ -248,6 +248,13 @@ $route['resident'] = "routes/resident";
 $route['blotter'] = "routes/blotter";
 $route['announcement'] = "routes/announcement";
 $route['inventory'] = "routes/inventory";
+// Offline docket book snapshot API (PIS/Apache — not port 8000)
+$route['api/docketbook/offline'] = 'api_docketbook/offline';
+$route['api/docketbook/offline/list/(:any)/(:any)'] = 'api_docketbook/offline_list/$1/$2';
+$route['api/docketbook/offline/search/(:any)'] = 'api_docketbook/offline_search/$1';
+$route['api/docketbook/sync'] = 'api_docketbook/sync';
+$route['api/docketbook/sync/status'] = 'api_docketbook/sync_status';
+
 $route['default_controller'] = 'Routes';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

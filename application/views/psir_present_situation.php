@@ -281,19 +281,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" id="spouse_section">
                                     <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 SPOUSE
                                                 <div>
-                                                    <a data-toggle="collapse" href="#presentCivilStatus" role="button" aria-expanded="true" aria-controls="presentCivilStatus">
+                                                    <a data-toggle="collapse" href="#presentSpouseCard" role="button" aria-expanded="true" aria-controls="presentSpouseCard">
                                                         <i class="fa fa-window-minimize" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="presentCivilStatus" class="collapse show">
+                                        <div id="presentSpouseCard" class="collapse show">
                                             <div class="card-body">
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -333,7 +333,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
+                                <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col" id="children_section">
                                     <div class="card" style="width: 100%; border-radius: 5px; border-color: #aaaaaa;">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -537,6 +537,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/psirPresentSituation.js"></script>
 
 

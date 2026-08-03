@@ -211,24 +211,20 @@
             var docketPromise = __executeExternalPost(
                 '8000/docketbook/getclient/'+client_id+'?page='+docketCurrentPage+'&size='+docketPageSize, '{}'
             );
-            var petitionerPromise = cachedWsStatus !== null
+            var petitionerPromise = (cachedWsStatus !== null && cachedPsStatus !== null)
                 ? $.Deferred().resolve(null)
                 : __executeExternalGet('8000/petitioner/'+client_id);
-            var psirPromise = cachedPsStatus !== null
-                ? $.Deferred().resolve(null)
-                : __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id);
 
-            $.when(docketPromise, petitionerPromise, psirPromise)
-            .done(function (docketRes, petitionerRes, psirRes) {
+            $.when(docketPromise, petitionerPromise)
+            .done(function (docketRes, petitionerRes) {
                 $(".table_body_tc .docket-loader-row").remove();
 
-                if (cachedWsStatus === null) {
-                    cachedWsStatus = petitionerRes && petitionerRes.response
-                        ? petitionerRes.response.worksheetStatus : "Not Available";
-                }
-                if (cachedPsStatus === null) {
-                    cachedPsStatus = psirRes && psirRes.response
-                        ? psirRes.response.worksheetStatus : null;
+                if (cachedWsStatus === null || cachedPsStatus === null) {
+                    var petitioner = petitionerRes && petitionerRes.response ? petitionerRes.response : null;
+                    cachedWsStatus = (petitioner && petitioner.worksheetStatus)
+                        ? petitioner.worksheetStatus : "Not Available";
+                    cachedPsStatus = (petitioner && petitioner.psirStatus)
+                        ? petitioner.psirStatus : "Not Available";
                 }
 
                 var dockets = docketRes && docketRes.content ? docketRes.content : [];
@@ -245,8 +241,8 @@
                     return;
                 }
 
-                var wsStatus = cachedWsStatus || "Not Available";
-                var psStatus = cachedPsStatus === null || cachedPsStatus === "null" ? "Not Available" : cachedPsStatus;
+                var wsStatus = (!cachedWsStatus || cachedWsStatus === "null") ? "Not Available" : cachedWsStatus;
+                var psStatus = (!cachedPsStatus || cachedPsStatus === "null") ? "Not Available" : cachedPsStatus;
 
                 dockets.forEach(function (docket) {
                     docketRowCount++;

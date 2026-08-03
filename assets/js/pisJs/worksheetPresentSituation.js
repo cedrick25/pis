@@ -270,6 +270,66 @@
         }
 
         let childrenCounter = 0;
+
+        function resetChildrenList() {
+            childrenCounter = 0;
+            $("#children_list").empty().append(`
+                <li class="list-group-item d-flex align-items-center">
+                    <div class="form-group col-sm-4 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-control-label">Name</label>
+                        <input type="text" placeholder="Name" class="form-control children_name">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">Date of Birth</label>
+                        <input type="date" placeholder="Degree of Relationship" class="form-control children_dob">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">Age</label>
+                        <input type="text" placeholder="Age" class="form-control children_age">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">Educational Attainment</label>
+                        <input type="text" placeholder="Educational Attainment" class="form-control children_education">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                        <label class="form-control-label">Occupation</label>
+                        <input type="text" placeholder="Occupation" class="form-control children_occupation">
+                    </div>
+                    <div class="form-group col-sm-4 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;">
+                        <button type="button" class="btn btn-primary btn-addChildren btn-sm" style="border-radius:2px;">
+                            <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                        </button>
+                    </div>
+                </li>
+            `);
+        }
+
+        function clearSpouseAndChildrenFields() {
+            $(".spouse_last_name, .spouse_first_name, .spouse_middle_name, .spouse_home_address, .spouse_place_of_birth, .spouse_date_of_birth, .spouse_occupation, .spouse_work_address, .date_of_marriage, .nature_ceremony, .reason_seperation, .no_of_children").val("");
+            $(".relationship_with_spouse").val(null).trigger("change");
+            $(".relationship_with_children").val(null).trigger("change");
+            resetChildrenList();
+        }
+
+        var suppressCivilStatusClear = false;
+
+        function toggleSpouseChildrenByCivilStatus(civilStatus, shouldClear) {
+            var isSingle = civilStatus === "single";
+            if (isSingle) {
+                $("#spouse_section").hide();
+                $("#children_section").hide();
+                if (shouldClear) {
+                    clearSpouseAndChildrenFields();
+                }
+            } else {
+                $("#spouse_section").show();
+                $("#children_section").show();
+            }
+        }
+
+        $(".civil_status").on("change", function () {
+            toggleSpouseChildrenByCivilStatus($(this).val(), !suppressCivilStatusClear);
+        });
         
         // event handler for showing modal upon saving and updating data
         $(".btn-saveData").unbind("click").on("click", function(){
@@ -420,7 +480,8 @@
                             }
                         })
 
-                        $(".civil_status").val(presentSituation.civilStatus).trigger("change")
+                        suppressCivilStatusClear = true;
+                        $(".civil_status").val(presentSituation.civilStatus).trigger("change");
                         $(".spouse_last_name").val(presentSituation.spouseLastName)
                         $(".spouse_first_name").val(presentSituation.spouseMiddleName)
                         $(".spouse_middle_name").val(presentSituation.spouseFirstName)
@@ -444,6 +505,8 @@
                         $(".no_of_dependents_others").val(presentSituation.numberOfDependentsOthers)
                         $(".major_family_problem").val(presentSituation.majorFamilyProblem).trigger("change")
                         $(".comments").val(presentSituation.commentsOnFamilyProblem)
+                        toggleSpouseChildrenByCivilStatus(presentSituation.civilStatus, presentSituation.civilStatus === "single");
+                        suppressCivilStatusClear = false;
 
                     } else {
                         $("#saveModal .saveModalTitle").text("Update Changes")

@@ -96,7 +96,7 @@
 
         $('#carryOver .office_findings').val(row.officeFindingsForPendingDisposition || '').trigger('change');
         $('#carryOver .date_submitted_court').val(row.referralsNotActedUponDateOrderReceived || '');
-        $('#carryOver .supervising_officer_carry_over').val(row.supervisingOfficer || '');
+        $('#carryOver .supervising_officer_carry_over').val(row.supervisingOfficerCarryOver || '');
     }
 
     function loadSupervisionDocket(docket_number, officeId) {

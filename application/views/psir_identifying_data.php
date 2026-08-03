@@ -525,6 +525,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/psirIdentifyingData.js"></script>
 
 

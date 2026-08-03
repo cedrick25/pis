@@ -188,7 +188,7 @@
         function saveWorksheet(existing, newPriorRecordsAndDerogatoryRecord) {
 
             // update identifyingData
-            existing.priorRecords = newPriorRecordsAndDerogatoryRecord;
+            existing.priorRecordsAndDerogatoryRecord = newPriorRecordsAndDerogatoryRecord;
 
             let check = worksheetChecker(existing);
 
@@ -312,6 +312,18 @@
                     </div>
                 </li>
             `)
+            if (window.PsirPrefill) {
+                PsirPrefill.fromWorksheet(client_id, "priorRecordsAndDerogatoryRecord", __executeExternalGet).done(function (applied) {
+                    if (applied) {
+                        if (typeof window.__psirPrefillRecordCounter === "number") {
+                            recordCounter = window.__psirPrefillRecordCounter;
+                        }
+                        if (typeof window.__psirPrefillInfoCounter === "number") {
+                            infoCounter = window.__psirPrefillInfoCounter;
+                        }
+                    }
+                });
+            }
         } else {
             __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
 
@@ -473,6 +485,18 @@
                                 </div>
                             </li>
                         `)
+                        if (window.PsirPrefill) {
+                            PsirPrefill.fromWorksheet(client_id, "priorRecordsAndDerogatoryRecord", __executeExternalGet).done(function (applied) {
+                                if (applied) {
+                                    if (typeof window.__psirPrefillRecordCounter === "number") {
+                                        recordCounter = window.__psirPrefillRecordCounter;
+                                    }
+                                    if (typeof window.__psirPrefillInfoCounter === "number") {
+                                        infoCounter = window.__psirPrefillInfoCounter;
+                                    }
+                                }
+                            });
+                        }
                     }
 
                 }
