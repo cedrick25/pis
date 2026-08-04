@@ -255,6 +255,13 @@ $route['api/docketbook/offline/search/(:any)'] = 'api_docketbook/offline_search/
 $route['api/docketbook/sync'] = 'api_docketbook/sync';
 $route['api/docketbook/sync/status'] = 'api_docketbook/sync_status';
 
+// Offline worksheet API (PIS/Apache — never calls port 8000)
+$route['api/worksheet/offline/create'] = 'api_worksheet/create';
+$route['api/worksheet/offline/update/(:num)'] = 'api_worksheet/update/$1';
+$route['api/worksheet/offline/updatePetitioner/(:any)/(:any)'] = 'api_worksheet/update_petitioner/$1/$2';
+$route['api/worksheet/offline/getPetitioner/(:any)/(:any)'] = 'api_worksheet/get_petitioner/$1/$2';
+$route['api/worksheet/offline/(:any)/(:num)'] = 'api_worksheet/get_by_id/$1/$2';
+
 $route['default_controller'] = 'Routes';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
