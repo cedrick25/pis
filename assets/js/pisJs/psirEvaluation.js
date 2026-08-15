@@ -259,20 +259,12 @@
 
             __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
                 .done(function (result) {
+                    var parsed = window.PsirRecord.parseExisting(result);
+                    if (parsed.error) return;
 
-                    let existing = {};
-                    if (result.response && result.response.jsonData) {
-                        try {
-                            existing = JSON.parse(result.response.jsonData) || {};
-                        } catch (e) {
-                            existing = {};
-                        }
-                    }
+                    let payload = saveWorksheet(parsed.existing, data);
 
-                    let payload = saveWorksheet(existing, data);
-
-                    __executeExternalPost("8000/worksheet/create", JSON.stringify(payload))
-                        .done(function (res) {
+                    window.PsirRecord.persist(__executeExternalPost, client_id, payload, parsed, function (res) {
 
                             if (res.status === "ERROR") return;
 

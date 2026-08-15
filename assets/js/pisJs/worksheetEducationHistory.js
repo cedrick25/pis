@@ -290,7 +290,10 @@
                         $(".voc_high").val(educationalHistory.vocHigh)
                         $(".voc_award").val(educationalHistory.vocAward)
                         $(".voc_date").val(educationalHistory.vocDate)
-                        $(".unschooled").val(educationalHistory.unschooled)
+                        var unschooledValue = educationalHistory.unschooled === "illeterate"
+                            ? "illiterate"
+                            : educationalHistory.unschooled;
+                        $(".unschooled").val(unschooledValue).trigger("change")
                         $(".explain").val(educationalHistory.conductInSchoolExplain)
                         $(".conduct_in_school").val(educationalHistory.conductInSchool).trigger("change")
 

@@ -157,7 +157,23 @@
                     $(".btn_psir").unbind("click").on("click", function(){
                         var client_id   = $(this).data("id");
                         var foid        = $(this).data("foid");
-                        window.location.href = (window.__PIS_BASE_URL || '') + 'psir_identifying_data?client_id='+client_id+'&field_office_id='+foid;
+                        var psStatus    = $(this).data("psir-status") || $(this).data("status");
+                        function openPsir(status) {
+                            if (!status || status === "null") {
+                                status = "Not Available";
+                            }
+                            window.location.href = (window.__PIS_BASE_URL || '') + 'psir_identifying_data?client_id='+client_id+'&field_office_id='+foid+'&status='+encodeURIComponent(status);
+                        }
+                        if (psStatus) {
+                            openPsir(psStatus);
+                            return;
+                        }
+                        __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
+                            var petitioner = result && result.response ? result.response : {};
+                            openPsir(petitioner.psirStatus);
+                        }).fail(function () {
+                            openPsir("Not Available");
+                        });
                     })
                     $(".btn_pdfPSIR").unbind("click").on("click", function(){
                         var client_id   = $(this).data("id");

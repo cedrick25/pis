@@ -123,6 +123,14 @@
             };
         }
 
+        function normalizeNeighborhoodArea(value) {
+            if (value == null || value === "") return value;
+            var key = String(value).toLowerCase().replace(/[\s-]+/g, "_");
+            if (key.indexOf("non") !== -1 && key.indexOf("slum") !== -1) return "non_slum_area";
+            if (key.indexOf("slum") !== -1) return "slum_area";
+            return value;
+        }
+
         function worksheetChecker(data) {
 
             if (!data) data = {};
@@ -253,7 +261,7 @@
                         $(".acceptanceSpecify").val(communityBackground.communityAcceptanceSpecify)
                         $(".peerRel").val(communityBackground.peerRelationship).trigger("change")
                         $(".peerSpecify").val(communityBackground.peerRelationshipSpecify)
-                        $(".area").val(communityBackground.neighborhoodArea)
+                        $(".area").val(normalizeNeighborhoodArea(communityBackground.neighborhoodArea)).trigger("change")
                         $(".resourcesForRehabilition").val(communityBackground.resourcesForRehabilitation).trigger("change")
                         $(".resourcesForRehabilitionSpecify").val(communityBackground.resourcesForRehabilitationSpecify)
 

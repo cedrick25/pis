@@ -459,7 +459,7 @@
                                         <select class="form-control unschooled select2">
                                             <option value="" selected disabled>Select</option>
                                             <option value="unschooled_but_literate">Unschooled but Literate</option>
-                                            <option value="illeterate">Illiterate</option>
+                                            <option value="illiterate">Illiterate</option>
                                         </select>
                                     </div>
                                 </div>

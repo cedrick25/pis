@@ -409,7 +409,7 @@
                                     </div>
                                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
                                         <label class="form-control-label">Date of Birth</label>
-                                        <input type="date" placeholder="Degree of Relationship" class="form-control children_dob" value="${data.relationship}">
+                                        <input type="date" placeholder="Date of Birth" class="form-control children_dob" value="${data.dob || ''}">
                                     </div>
                                     <div class="form-group col-sm-4 col-md-2 col-lg-2 col-xl-2">
                                         <label class="form-control-label">Age</label>
@@ -483,8 +483,8 @@
                         suppressCivilStatusClear = true;
                         $(".civil_status").val(presentSituation.civilStatus).trigger("change");
                         $(".spouse_last_name").val(presentSituation.spouseLastName)
-                        $(".spouse_first_name").val(presentSituation.spouseMiddleName)
-                        $(".spouse_middle_name").val(presentSituation.spouseFirstName)
+                        $(".spouse_first_name").val(presentSituation.spouseFirstName)
+                        $(".spouse_middle_name").val(presentSituation.spouseMiddleName)
                         $(".spouse_home_address").val(presentSituation.spouseHomeAddress)
                         $(".spouse_place_of_birth").val(presentSituation.spouseBirthPlace)
                         $(".spouse_date_of_birth").val(presentSituation.spouseBirthDate)

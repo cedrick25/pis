@@ -114,6 +114,26 @@
         let previousJobCounter = 0;
         let hospitalCounter = 0;
 
+        function appendEmptyHospitalizationRow() {
+            $("#previous_hospitalization_list").append(`
+                <li class="list-group-item d-flex align-items-center" id="hospital_item_${hospitalCounter}">
+                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <label class="form-control-label">Name of Hospital</label>
+                        <input type="text" placeholder="Name of Hospital" class="form-control hospital">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                        <label class="form-control-label">Date Hospitalized</label>
+                        <input type="date" class="form-control hospital_date">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="button_group_hospital">
+                        <button type="button" class="btn btn-primary btn-addHospital btn-sm" style="border-radius:2px;" data-id="${hospitalCounter}">
+                            <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                        </button>
+                    </div>
+                </li>
+            `);
+            hospitalCounter += 1;
+        }
 
         function collectEmploymentHistory() {
 
@@ -324,7 +344,7 @@
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
 
-                        employmentHistory.previousJobs.forEach(function(data, index){
+                        (employmentHistory.previousJobs || []).forEach(function(data, index){
                             $("#previous_job_list").append(`
                                 <li class="list-group-item d-flex align-items-center" id="job_item_${index}">
                                     <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3">
@@ -366,7 +386,7 @@
                             }
                         })
 
-                        employmentHistory.hospitalizations.forEach(function(data, index){
+                        (employmentHistory.hospitalizations || []).forEach(function(data, index){
                             $("#previous_hospitalization_list").append(`
                                 <li class="list-group-item d-flex align-items-center" id="hospital_item_${index}">
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -554,6 +574,9 @@
             if (value === "yes") {
                 $("#specify_treatment_field").show();
                 $("#previousHospitalizationsList").show();
+                if ($("#previous_hospitalization_list li").length === 0) {
+                    appendEmptyHospitalizationRow();
+                }
             } else {
                 $("#specify_treatment_field").hide();
                 $("#previousHospitalizationsList").hide();
