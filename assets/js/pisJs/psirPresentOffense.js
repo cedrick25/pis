@@ -300,9 +300,9 @@
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
-                        if (window.PsirPrefill) {
-                            PsirPrefill.fromWorksheet(client_id, "presentOffense", __executeExternalGet);
-                        }
+                    }
+                    if (window.PsirPrefill) {
+                        PsirPrefill.fromWorksheet(client_id, "presentOffense", __executeExternalGet);
                     }
 
                 }

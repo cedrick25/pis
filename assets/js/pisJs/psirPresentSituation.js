@@ -447,6 +447,14 @@
                         }
                         toggleSpouseChildrenByCivilStatus(presentSituation.civilStatus, presentSituation.civilStatus === "single");
                         suppressCivilStatusClear = false;
+                        if (window.PsirPrefill) {
+                            PsirPrefill.fromWorksheet(client_id, "presentSituation", __executeExternalGet).done(function (applied) {
+                                if (applied && typeof window.__psirPrefillChildrenCounter === "number") {
+                                    childrenCounter = window.__psirPrefillChildrenCounter;
+                                }
+                                toggleSpouseChildrenByCivilStatus($(".civil_status").val(), false);
+                            });
+                        }
 
                     } else {
                         

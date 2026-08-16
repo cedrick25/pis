@@ -265,9 +265,9 @@
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
-                        if (window.PsirPrefill) {
-                            PsirPrefill.fromWorksheet(client_id, "identifyingData", __executeExternalGet);
-                        }
+                    }
+                    if (window.PsirPrefill) {
+                        PsirPrefill.fromWorksheet(client_id, "identifyingData", __executeExternalGet);
                     }
 
                 }

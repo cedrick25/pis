@@ -295,6 +295,7 @@
 
                             if (res.status === "ERROR") return;
 
+                            function finish() {
                             $(".form-control").val('');
                             $('#save_success').show();
 
@@ -304,6 +305,12 @@
                                 window.location.href =
                                     `${api}/pis/worksheet_environmental_factor?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
+                            }
+                            if (window.PsirPrefill && PsirPrefill.afterSave) {
+                                PsirPrefill.afterSave(client_id, __executeExternalGet, __executeExternalPost, finish);
+                            } else {
+                                finish();
+                            }
                         });
                 });
         });
@@ -334,6 +341,7 @@
                     __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
                         .done(function (res) {
                             if (res.status === "ERROR") return;
+                            function finish() {
                             $(".form-control").val('');
                             $('#create_success').show();
                             $("#saveModal .btn-save").prop("disabled", true)
@@ -344,6 +352,12 @@
                                 $("#saveModal .btn-save").prop("disabled", false)
                                 window.location.href =`${api}/pis/worksheet_environmental_factor?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
+                            }
+                            if (window.PsirPrefill && PsirPrefill.afterSave) {
+                                PsirPrefill.afterSave(client_id, __executeExternalGet, __executeExternalPost, finish);
+                            } else {
+                                finish();
+                            }
                         });
                 });
         });

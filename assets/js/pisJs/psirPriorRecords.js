@@ -423,6 +423,19 @@
                             }
                         })
 
+                        if (window.PsirPrefill) {
+                            PsirPrefill.fromWorksheet(client_id, "priorRecordsAndDerogatoryRecord", __executeExternalGet).done(function (applied) {
+                                if (applied) {
+                                    if (typeof window.__psirPrefillRecordCounter === "number") {
+                                        recordCounter = window.__psirPrefillRecordCounter;
+                                    }
+                                    if (typeof window.__psirPrefillInfoCounter === "number") {
+                                        infoCounter = window.__psirPrefillInfoCounter;
+                                    }
+                                }
+                            });
+                        }
+
                     } else {
                         
                         $("#saveModal .saveModalTitle").text("Update Changes")

@@ -198,8 +198,9 @@
                 <div class="row">
                   <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header d-flex align-items-center justify-content-between">
                                 <strong class="card-title">PETITIONER'S EDUCATIONAL HISTORY</strong>
+                                <?php $this->load->view('templates/factsheet_link.php'); ?>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -497,6 +498,8 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/psirRecordSave.js"></script>
+    <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/worksheetEducationHistory.js"></script>
 
 

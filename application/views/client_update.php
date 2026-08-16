@@ -163,11 +163,11 @@
                                             </div>
                                             <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Address</label></div>
-                                                <div class="col-12 col-md-4"><textarea  placeholder="Address" class="form-control occupation_update" style="height: 100px; align-content: center;"></textarea></div>
+                                                <div class="col-12 col-md-4"><textarea  placeholder="Address" class="form-control address_update" style="height: 100px; align-content: center;"></textarea></div>
                                                 <div class="col col-md-1"></div>
                                                 <div class="col-12 col-md-1"></div>
                                                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Occupation</label></div>
-                                                <div class="col-12 col-md-4"><textarea  placeholder="Occupation" class="form-control address_update" style="height: 100px; align-content: center;"></textarea></div>
+                                                <div class="col-12 col-md-4"><textarea  placeholder="Occupation" class="form-control occupation_update" style="height: 100px; align-content: center;"></textarea></div>
                                             </div>
                                             <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                 <div class="col col-md-1"><label for="text-input" class=" form-control-label">Date of Birth</label></div>
@@ -210,7 +210,7 @@
                                                 <div class="col-12 col-md-4"><input type="text" name="text-input" placeholder="Sibling Rank" class="form-control sibling_rank_update"></div>
                                             </div>
                                             <div class="row form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Birth City</label></div>
+                                                <div class="col col-md-1"><label for="text-input" class=" form-control-label">Sex</label></div>
                                                 <div class="col-12 col-md-4">
                                                     <select class="form-control gender_update select2">
                                                         <option selected value="none" disabled>Select</option>
@@ -351,6 +351,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/clientUpdate.js"></script>
 
 

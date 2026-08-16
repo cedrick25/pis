@@ -272,6 +272,7 @@
 
                             if (res.status === "ERROR") return;
 
+                            function finish() {
                             $(".form-control").val('');
                             $('#create_success').show();
 
@@ -281,6 +282,12 @@
                                 window.location.href =
                                     `${api}/pis/worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                             }, 2000);
+                            }
+                            if (window.PsirPrefill && PsirPrefill.afterSave) {
+                                PsirPrefill.afterSave(client_id, __executeExternalGet, __executeExternalPost, finish);
+                            } else {
+                                finish();
+                            }
                         });
                 });
         });
@@ -315,6 +322,7 @@
 
                         if (res.status === "ERROR") return;
 
+                        function finish() {
                         $('#update_success').show();
 
                         setTimeout(() => {
@@ -324,6 +332,12 @@
                             window.location.href =
                                 `${api}/pis/worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
                         }, 2000);
+                        }
+                        if (window.PsirPrefill && PsirPrefill.afterSave) {
+                            PsirPrefill.afterSave(client_id, __executeExternalGet, __executeExternalPost, finish);
+                        } else {
+                            finish();
+                        }
                     });
                 });
         });
