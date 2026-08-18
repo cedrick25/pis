@@ -1,0 +1,28 @@
+﻿Compiled from "DepartmentDto.java"
+public class com.techsolve.uam.dto.departments.DepartmentDto extends com.techsolve.uam.dto.BaseDto implements java.io.Serializable {
+  private java.lang.String name;
+  private java.lang.String description;
+  private java.lang.Long parentId;
+  private java.lang.Long locationId;
+  private java.lang.String locationName;
+  private boolean hasChild;
+  public static com.techsolve.uam.dto.departments.DepartmentDto$DepartmentDtoBuilder builder();
+  public java.lang.String getName();
+  public java.lang.String getDescription();
+  public java.lang.Long getParentId();
+  public java.lang.Long getLocationId();
+  public java.lang.String getLocationName();
+  public boolean isHasChild();
+  public void setName(java.lang.String);
+  public void setDescription(java.lang.String);
+  public void setParentId(java.lang.Long);
+  public void setLocationId(java.lang.Long);
+  public void setLocationName(java.lang.String);
+  public void setHasChild(boolean);
+  public java.lang.String toString();
+  public boolean equals(java.lang.Object);
+  protected boolean canEqual(java.lang.Object);
+  public int hashCode();
+  public com.techsolve.uam.dto.departments.DepartmentDto();
+  public com.techsolve.uam.dto.departments.DepartmentDto(java.lang.String, java.lang.String, java.lang.Long, java.lang.Long, java.lang.String, boolean);
+}

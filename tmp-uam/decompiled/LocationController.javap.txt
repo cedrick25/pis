@@ -1,0 +1,514 @@
+﻿Classfile /C:/wamp64/www/pis/BOOT-INF/classes/com/techsolve/uam/presentation/LocationController.class
+  Last modified 13 Jul 2025; size 4623 bytes
+  SHA-256 checksum da78788efc572ff4a7547c0d7343fec20a9163a2a5900e9109dcdad58d2e5995
+  Compiled from "LocationController.java"
+public class com.techsolve.uam.presentation.LocationController
+  minor version: 0
+  major version: 61
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #8                          // com/techsolve/uam/presentation/LocationController
+  super_class: #2                         // java/lang/Object
+  interfaces: 0, fields: 2, methods: 9, attributes: 2
+Constant pool:
+    #1 = Methodref          #2.#3         // java/lang/Object."<init>":()V
+    #2 = Class              #4            // java/lang/Object
+    #3 = NameAndType        #5:#6         // "<init>":()V
+    #4 = Utf8               java/lang/Object
+    #5 = Utf8               <init>
+    #6 = Utf8               ()V
+    #7 = Fieldref           #8.#9         // com/techsolve/uam/presentation/LocationController.log:Lorg/slf4j/Logger;
+    #8 = Class              #10           // com/techsolve/uam/presentation/LocationController
+    #9 = NameAndType        #11:#12       // log:Lorg/slf4j/Logger;
+   #10 = Utf8               com/techsolve/uam/presentation/LocationController
+   #11 = Utf8               log
+   #12 = Utf8               Lorg/slf4j/Logger;
+   #13 = String             #14           // Creating location
+   #14 = Utf8               Creating location
+   #15 = InterfaceMethodref #16.#17       // org/slf4j/Logger.info:(Ljava/lang/String;)V
+   #16 = Class              #18           // org/slf4j/Logger
+   #17 = NameAndType        #19:#20       // info:(Ljava/lang/String;)V
+   #18 = Utf8               org/slf4j/Logger
+   #19 = Utf8               info
+   #20 = Utf8               (Ljava/lang/String;)V
+   #21 = Fieldref           #8.#22        // com/techsolve/uam/presentation/LocationController.locationService:Lcom/techsolve/uam/core/service/LocationService;
+   #22 = NameAndType        #23:#24       // locationService:Lcom/techsolve/uam/core/service/LocationService;
+   #23 = Utf8               locationService
+   #24 = Utf8               Lcom/techsolve/uam/core/service/LocationService;
+   #25 = InterfaceMethodref #26.#27       // com/techsolve/uam/core/service/LocationService.createLocation:(Lcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #26 = Class              #28           // com/techsolve/uam/core/service/LocationService
+   #27 = NameAndType        #29:#30       // createLocation:(Lcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #28 = Utf8               com/techsolve/uam/core/service/LocationService
+   #29 = Utf8               createLocation
+   #30 = Utf8               (Lcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #31 = Methodref          #32.#33       // org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+   #32 = Class              #34           // org/springframework/http/ResponseEntity
+   #33 = NameAndType        #35:#36       // ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+   #34 = Utf8               org/springframework/http/ResponseEntity
+   #35 = Utf8               ok
+   #36 = Utf8               (Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+   #37 = String             #38           // Updating location
+   #38 = Utf8               Updating location
+   #39 = Methodref          #40.#41       // java/lang/Long.longValue:()J
+   #40 = Class              #42           // java/lang/Long
+   #41 = NameAndType        #43:#44       // longValue:()J
+   #42 = Utf8               java/lang/Long
+   #43 = Utf8               longValue
+   #44 = Utf8               ()J
+   #45 = InterfaceMethodref #26.#46       // com/techsolve/uam/core/service/LocationService.updateLocation:(JLcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #46 = NameAndType        #47:#48       // updateLocation:(JLcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #47 = Utf8               updateLocation
+   #48 = Utf8               (JLcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #49 = InterfaceMethodref #26.#50       // com/techsolve/uam/core/service/LocationService.removeLocationDtoById:(J)Z
+   #50 = NameAndType        #51:#52       // removeLocationDtoById:(J)Z
+   #51 = Utf8               removeLocationDtoById
+   #52 = Utf8               (J)Z
+   #53 = Methodref          #54.#55       // java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+   #54 = Class              #56           // java/lang/Boolean
+   #55 = NameAndType        #57:#58       // valueOf:(Z)Ljava/lang/Boolean;
+   #56 = Utf8               java/lang/Boolean
+   #57 = Utf8               valueOf
+   #58 = Utf8               (Z)Ljava/lang/Boolean;
+   #59 = String             #60           // Get Paged location
+   #60 = Utf8               Get Paged location
+   #61 = InterfaceMethodref #26.#62       // com/techsolve/uam/core/service/LocationService.getAllPagedLocation:(II)Lorg/springframework/data/domain/Page;
+   #62 = NameAndType        #63:#64       // getAllPagedLocation:(II)Lorg/springframework/data/domain/Page;
+   #63 = Utf8               getAllPagedLocation
+   #64 = Utf8               (II)Lorg/springframework/data/domain/Page;
+   #65 = String             #66           // Get Paged location by name
+   #66 = Utf8               Get Paged location by name
+   #67 = InterfaceMethodref #26.#68       // com/techsolve/uam/core/service/LocationService.getAllPagedLocationByName:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+   #68 = NameAndType        #69:#70       // getAllPagedLocationByName:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+   #69 = Utf8               getAllPagedLocationByName
+   #70 = Utf8               (IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+   #71 = String             #72           // Get Paged location as list
+   #72 = Utf8               Get Paged location as list
+   #73 = InterfaceMethodref #26.#74       // com/techsolve/uam/core/service/LocationService.getLocationsAsList:()Ljava/util/List;
+   #74 = NameAndType        #75:#76       // getLocationsAsList:()Ljava/util/List;
+   #75 = Utf8               getLocationsAsList
+   #76 = Utf8               ()Ljava/util/List;
+   #77 = InterfaceMethodref #26.#78       // com/techsolve/uam/core/service/LocationService.getLocationDtoById:(J)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #78 = NameAndType        #79:#80       // getLocationDtoById:(J)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #79 = Utf8               getLocationDtoById
+   #80 = Utf8               (J)Lcom/techsolve/uam/dto/locations/LocationDto;
+   #81 = Methodref          #82.#83       // org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+   #82 = Class              #84           // org/slf4j/LoggerFactory
+   #83 = NameAndType        #85:#86       // getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+   #84 = Utf8               org/slf4j/LoggerFactory
+   #85 = Utf8               getLogger
+   #86 = Utf8               (Ljava/lang/Class;)Lorg/slf4j/Logger;
+   #87 = Utf8               RuntimeVisibleAnnotations
+   #88 = Utf8               Lorg/springframework/beans/factory/annotation/Autowired;
+   #89 = Utf8               Code
+   #90 = Utf8               LineNumberTable
+   #91 = Utf8               LocalVariableTable
+   #92 = Utf8               this
+   #93 = Utf8               Lcom/techsolve/uam/presentation/LocationController;
+   #94 = Utf8               (Lcom/techsolve/uam/dto/locations/LocationDto;)Lorg/springframework/http/ResponseEntity;
+   #95 = Utf8               location
+   #96 = Utf8               Lcom/techsolve/uam/dto/locations/LocationDto;
+   #97 = Utf8               locationDto
+   #98 = Utf8               MethodParameters
+   #99 = Utf8               Lorg/springframework/web/bind/annotation/PostMapping;
+  #100 = Utf8               value
+  #101 = Utf8               /create
+  #102 = Utf8               RuntimeVisibleParameterAnnotations
+  #103 = Utf8               Lorg/springframework/web/bind/annotation/RequestBody;
+  #104 = Utf8               (Ljava/lang/Long;Lcom/techsolve/uam/dto/locations/LocationDto;)Lorg/springframework/http/ResponseEntity;
+  #105 = Utf8               id
+  #106 = Utf8               Ljava/lang/Long;
+  #107 = Utf8               response
+  #108 = Utf8               Exceptions
+  #109 = Class              #110          // com/techsolve/uam/core/exception/RecordNotFoundException
+  #110 = Utf8               com/techsolve/uam/core/exception/RecordNotFoundException
+  #111 = Utf8               /update/{id}
+  #112 = Utf8               Lorg/springframework/web/bind/annotation/PathVariable;
+  #113 = Utf8               removeLocation
+  #114 = Utf8               (Ljava/lang/Long;)Lorg/springframework/http/ResponseEntity;
+  #115 = Utf8               Z
+  #116 = Utf8               /remove/{id}
+  #117 = Utf8               getPagedLocation
+  #118 = Utf8               (II)Lorg/springframework/http/ResponseEntity;
+  #119 = Utf8               page
+  #120 = Utf8               I
+  #121 = Utf8               size
+  #122 = Utf8               Lorg/springframework/data/domain/Page;
+  #123 = Utf8               LocalVariableTypeTable
+  #124 = Utf8               Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/locations/LocationDto;>;
+  #125 = Utf8               Lorg/springframework/web/bind/annotation/GetMapping;
+  #126 = Utf8               params
+  #127 = Utf8               Lorg/springframework/web/bind/annotation/RequestParam;
+  #128 = Utf8               getPagedLocationByName
+  #129 = Utf8               (IILjava/lang/String;)Lorg/springframework/http/ResponseEntity;
+  #130 = Utf8               name
+  #131 = Utf8               Ljava/lang/String;
+  #132 = Utf8               getLocationAsList
+  #133 = Utf8               ()Lorg/springframework/http/ResponseEntity;
+  #134 = Utf8               Ljava/util/List;
+  #135 = Utf8               Ljava/util/List<Lcom/techsolve/uam/dto/locations/LocationDto;>;
+  #136 = Utf8               /list
+  #137 = Utf8               getLocationById
+  #138 = Utf8               /{id}
+  #139 = Utf8               <clinit>
+  #140 = Utf8               SourceFile
+  #141 = Utf8               LocationController.java
+  #142 = Utf8               Lorg/springframework/web/bind/annotation/RestController;
+  #143 = Utf8               Lorg/springframework/web/bind/annotation/RequestMapping;
+  #144 = Utf8               /location
+{
+  private static final org.slf4j.Logger log;
+    descriptor: Lorg/slf4j/Logger;
+    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL
+
+  private com.techsolve.uam.core.service.LocationService locationService;
+    descriptor: Lcom/techsolve/uam/core/service/LocationService;
+    flags: (0x0002) ACC_PRIVATE
+    RuntimeVisibleAnnotations:
+      0: #88()
+        org.springframework.beans.factory.annotation.Autowired
+
+  public com.techsolve.uam.presentation.LocationController();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 18: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/techsolve/uam/presentation/LocationController;
+
+  public org.springframework.http.ResponseEntity createLocation(com.techsolve.uam.dto.locations.LocationDto);
+    descriptor: (Lcom/techsolve/uam/dto/locations/LocationDto;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #13                 // String Creating location
+         5: invokeinterface #15,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #21                 // Field locationService:Lcom/techsolve/uam/core/service/LocationService;
+        14: aload_1
+        15: invokeinterface #25,  2           // InterfaceMethod com/techsolve/uam/core/service/LocationService.createLocation:(Lcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+        20: astore_2
+        21: aload_2
+        22: invokestatic  #31                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        25: areturn
+      LineNumberTable:
+        line 25: 0
+        line 26: 10
+        line 27: 21
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      26     0  this   Lcom/techsolve/uam/presentation/LocationController;
+            0      26     1 location   Lcom/techsolve/uam/dto/locations/LocationDto;
+           21       5     2 locationDto   Lcom/techsolve/uam/dto/locations/LocationDto;
+    MethodParameters:
+      Name                           Flags
+      location
+    RuntimeVisibleAnnotations:
+      0: #99(#100=[s#101])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/create"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #103()
+          org.springframework.web.bind.annotation.RequestBody
+
+  public org.springframework.http.ResponseEntity updateLocation(java.lang.Long, com.techsolve.uam.dto.locations.LocationDto) throws com.techsolve.uam.core.exception.RecordNotFoundException;
+    descriptor: (Ljava/lang/Long;Lcom/techsolve/uam/dto/locations/LocationDto;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=4, locals=4, args_size=3
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #37                 // String Updating location
+         5: invokeinterface #15,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #21                 // Field locationService:Lcom/techsolve/uam/core/service/LocationService;
+        14: aload_1
+        15: invokevirtual #39                 // Method java/lang/Long.longValue:()J
+        18: aload_2
+        19: invokeinterface #45,  4           // InterfaceMethod com/techsolve/uam/core/service/LocationService.updateLocation:(JLcom/techsolve/uam/dto/locations/LocationDto;)Lcom/techsolve/uam/dto/locations/LocationDto;
+        24: astore_3
+        25: aload_3
+        26: invokestatic  #31                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        29: areturn
+      LineNumberTable:
+        line 32: 0
+        line 33: 10
+        line 34: 25
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      30     0  this   Lcom/techsolve/uam/presentation/LocationController;
+            0      30     1    id   Ljava/lang/Long;
+            0      30     2 location   Lcom/techsolve/uam/dto/locations/LocationDto;
+           25       5     3 response   Lcom/techsolve/uam/dto/locations/LocationDto;
+    Exceptions:
+      throws com.techsolve.uam.core.exception.RecordNotFoundException
+    MethodParameters:
+      Name                           Flags
+      id
+      location
+    RuntimeVisibleAnnotations:
+      0: #99(#100=[s#111])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/update/{id}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #112(#100=s#105)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="id"
+          )
+      parameter 1:
+        0: #103()
+          org.springframework.web.bind.annotation.RequestBody
+
+  public org.springframework.http.ResponseEntity removeLocation(java.lang.Long) throws com.techsolve.uam.core.exception.RecordNotFoundException;
+    descriptor: (Ljava/lang/Long;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: aload_0
+         1: getfield      #21                 // Field locationService:Lcom/techsolve/uam/core/service/LocationService;
+         4: aload_1
+         5: invokevirtual #39                 // Method java/lang/Long.longValue:()J
+         8: invokeinterface #49,  3           // InterfaceMethod com/techsolve/uam/core/service/LocationService.removeLocationDtoById:(J)Z
+        13: istore_2
+        14: iload_2
+        15: invokestatic  #53                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        18: invokestatic  #31                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        21: areturn
+      LineNumberTable:
+        line 39: 0
+        line 40: 14
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      22     0  this   Lcom/techsolve/uam/presentation/LocationController;
+            0      22     1    id   Ljava/lang/Long;
+           14       8     2 response   Z
+    Exceptions:
+      throws com.techsolve.uam.core.exception.RecordNotFoundException
+    MethodParameters:
+      Name                           Flags
+      id
+    RuntimeVisibleAnnotations:
+      0: #99(#100=[s#116])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/remove/{id}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #112(#100=s#105)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="id"
+          )
+
+  public org.springframework.http.ResponseEntity getPagedLocation(int, int) throws com.techsolve.uam.core.exception.RecordNotFoundException;
+    descriptor: (II)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=4, args_size=3
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #59                 // String Get Paged location
+         5: invokeinterface #15,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #21                 // Field locationService:Lcom/techsolve/uam/core/service/LocationService;
+        14: iload_1
+        15: iload_2
+        16: invokeinterface #61,  3           // InterfaceMethod com/techsolve/uam/core/service/LocationService.getAllPagedLocation:(II)Lorg/springframework/data/domain/Page;
+        21: astore_3
+        22: aload_3
+        23: invokestatic  #31                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        26: areturn
+      LineNumberTable:
+        line 45: 0
+        line 46: 10
+        line 47: 22
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      27     0  this   Lcom/techsolve/uam/presentation/LocationController;
+            0      27     1  page   I
+            0      27     2  size   I
+           22       5     3 response   Lorg/springframework/data/domain/Page;
+      LocalVariableTypeTable:
+        Start  Length  Slot  Name   Signature
+           22       5     3 response   Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/locations/LocationDto;>;
+    Exceptions:
+      throws com.techsolve.uam.core.exception.RecordNotFoundException
+    MethodParameters:
+      Name                           Flags
+      page
+      size
+    RuntimeVisibleAnnotations:
+      0: #125(#126=[s#119,s#121])
+        org.springframework.web.bind.annotation.GetMapping(
+          params=["page","size"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #127(#100=s#119)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="page"
+          )
+      parameter 1:
+        0: #127(#100=s#121)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="size"
+          )
+
+  public org.springframework.http.ResponseEntity getPagedLocationByName(int, int, java.lang.String);
+    descriptor: (IILjava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=4, locals=5, args_size=4
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #65                 // String Get Paged location by name
+         5: invokeinterface #15,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #21                 // Field locationService:Lcom/techsolve/uam/core/service/LocationService;
+        14: iload_1
+        15: iload_2
+        16: aload_3
+        17: invokeinterface #67,  4           // InterfaceMethod com/techsolve/uam/core/service/LocationService.getAllPagedLocationByName:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+        22: astore        4
+        24: aload         4
+        26: invokestatic  #31                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        29: areturn
+      LineNumberTable:
+        line 52: 0
+        line 53: 10
+        line 54: 24
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      30     0  this   Lcom/techsolve/uam/presentation/LocationController;
+            0      30     1  page   I
+            0      30     2  size   I
+            0      30     3  name   Ljava/lang/String;
+           24       6     4 response   Lorg/springframework/data/domain/Page;
+      LocalVariableTypeTable:
+        Start  Length  Slot  Name   Signature
+           24       6     4 response   Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/locations/LocationDto;>;
+    MethodParameters:
+      Name                           Flags
+      page
+      size
+      name
+    RuntimeVisibleAnnotations:
+      0: #125(#126=[s#119,s#121,s#130])
+        org.springframework.web.bind.annotation.GetMapping(
+          params=["page","size","name"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #127(#100=s#119)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="page"
+          )
+      parameter 1:
+        0: #127(#100=s#121)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="size"
+          )
+      parameter 2:
+        0: #127(#100=s#130)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="name"
+          )
+
+  public org.springframework.http.ResponseEntity getLocationAsList();
+    descriptor: ()Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=1
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #71                 // String Get Paged location as list
+         5: invokeinterface #15,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #21                 // Field locationService:Lcom/techsolve/uam/core/service/LocationService;
+        14: invokeinterface #73,  1           // InterfaceMethod com/techsolve/uam/core/service/LocationService.getLocationsAsList:()Ljava/util/List;
+        19: astore_1
+        20: aload_1
+        21: invokestatic  #31                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        24: areturn
+      LineNumberTable:
+        line 59: 0
+        line 60: 10
+        line 61: 20
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      25     0  this   Lcom/techsolve/uam/presentation/LocationController;
+           20       5     1 response   Ljava/util/List;
+      LocalVariableTypeTable:
+        Start  Length  Slot  Name   Signature
+           20       5     1 response   Ljava/util/List<Lcom/techsolve/uam/dto/locations/LocationDto;>;
+    RuntimeVisibleAnnotations:
+      0: #125(#100=[s#136])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/list"]
+        )
+
+  public org.springframework.http.ResponseEntity getLocationById(java.lang.Long);
+    descriptor: (Ljava/lang/Long;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #71                 // String Get Paged location as list
+         5: invokeinterface #15,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #21                 // Field locationService:Lcom/techsolve/uam/core/service/LocationService;
+        14: aload_1
+        15: invokevirtual #39                 // Method java/lang/Long.longValue:()J
+        18: invokeinterface #77,  3           // InterfaceMethod com/techsolve/uam/core/service/LocationService.getLocationDtoById:(J)Lcom/techsolve/uam/dto/locations/LocationDto;
+        23: astore_2
+        24: aload_2
+        25: invokestatic  #31                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        28: areturn
+      LineNumberTable:
+        line 66: 0
+        line 67: 10
+        line 68: 24
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      29     0  this   Lcom/techsolve/uam/presentation/LocationController;
+            0      29     1    id   Ljava/lang/Long;
+           24       5     2 response   Lcom/techsolve/uam/dto/locations/LocationDto;
+    MethodParameters:
+      Name                           Flags
+      id
+    RuntimeVisibleAnnotations:
+      0: #125(#100=[s#138])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/{id}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #112(#100=s#105)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="id"
+          )
+
+  static {};
+    descriptor: ()V
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=1, locals=0, args_size=0
+         0: ldc           #8                  // class com/techsolve/uam/presentation/LocationController
+         2: invokestatic  #81                 // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+         5: putstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         8: return
+      LineNumberTable:
+        line 15: 0
+}
+SourceFile: "LocationController.java"
+RuntimeVisibleAnnotations:
+  0: #142()
+    org.springframework.web.bind.annotation.RestController
+  1: #143(#100=[s#144])
+    org.springframework.web.bind.annotation.RequestMapping(
+      value=["/location"]
+    )

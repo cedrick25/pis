@@ -112,7 +112,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Supervision Docket List</strong>
-                                <!-- <a href="supervision_docket_create"><button class="btn btn-sm btn-success float-right pb_sup_add" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button></a> -->
+                                <!-- <a href="supervision_docket_create"><button class="btn btn-sm btn-success float-right " data-permission="can_create_docket_probation_supervision" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button></a> -->
                             </div>
                             <div class="card-body">
                                 <div class="sup-docket-list-wrap position-relative">

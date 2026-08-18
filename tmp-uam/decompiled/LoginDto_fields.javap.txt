@@ -1,0 +1,30 @@
+﻿Compiled from "LoginDto.java"
+public class com.techsolve.uam.dto.users.LoginDto implements java.io.Serializable {
+  private java.lang.Boolean encoded;
+  private java.lang.String username;
+  private java.lang.String password;
+  private java.lang.String lastAccessDate;
+  private java.lang.String failedAttemptsCount;
+  private java.lang.String isLocked;
+  private java.lang.String accountStatus;
+  public java.lang.Boolean getEncoded();
+  public java.lang.String getUsername();
+  public java.lang.String getPassword();
+  public java.lang.String getLastAccessDate();
+  public java.lang.String getFailedAttemptsCount();
+  public java.lang.String getIsLocked();
+  public java.lang.String getAccountStatus();
+  public void setEncoded(java.lang.Boolean);
+  public void setUsername(java.lang.String);
+  public void setPassword(java.lang.String);
+  public void setLastAccessDate(java.lang.String);
+  public void setFailedAttemptsCount(java.lang.String);
+  public void setIsLocked(java.lang.String);
+  public void setAccountStatus(java.lang.String);
+  public boolean equals(java.lang.Object);
+  protected boolean canEqual(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+  public com.techsolve.uam.dto.users.LoginDto();
+  public com.techsolve.uam.dto.users.LoginDto(java.lang.Boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String);
+}

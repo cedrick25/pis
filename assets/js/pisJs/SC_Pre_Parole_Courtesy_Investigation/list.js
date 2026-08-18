@@ -119,36 +119,21 @@
     };
 
     function buttonVisibility() {
+        if (typeof window.applyPermissionVisibility === 'function') {
+            window.applyPermissionVisibility();
+            return;
+        }
         var raw = localStorage.getItem('permission');
         var data = null;
         if (raw) {
-            try {
-                data = JSON.parse(raw);
-            } catch (e) {
-                data = null;
-            }
+            try { data = JSON.parse(raw); } catch (e) { data = null; }
         }
-        if (data == null || !Array.isArray(data)) {
-            return;
-        }
+        $('[data-permission]').hide();
+        if (!data || !Array.isArray(data)) { return; }
         data.forEach(function (row) {
-            if (row.type === 'ACTION') {
-                setTimeout(function () {
-                    var el = $('.' + row.detail);
-                    if (!row.value) {
-                        el.hide();
-                    } else {
-                        el.show();
-                    }
-                }, 10);
-            } else if (row.type === 'VIEW') {
-                var elv = $('.' + row.detail);
-                if (!row.value) {
-                    elv.hide();
-                } else {
-                    elv.show();
-                }
-            }
+            if (!row || !row.detail) { return; }
+            var $el = $('[data-permission="' + row.detail + '"]');
+            if (row.value) { $el.show(); } else { $el.hide(); }
         });
     }
 
@@ -181,15 +166,18 @@
     function bindRowActionsOnce() {
         $(document).off('click.scPpcInv', '.btn_update').on('click.scPpcInv', '.btn_update', function () {
             var docket_number = $(this).data('docket');
-            window.location.href = joinApiUrl(api, 'pis/parole-pardon-courtesy-investigation-update?docket_number=' + encodeURIComponent(docket_number));
+            var officeId = $(this).data('oi') || $.cookie('field_office_id');
+            window.location.href = joinApiUrl(api, 'pis/parole-pardon-courtesy-investigation-update?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId));
         });
         $(document).off('click.scPpcInv', '.btn_view').on('click.scPpcInv', '.btn_view', function () {
             var docket_number = $(this).data('docket');
-            window.location.href = joinApiUrl(api, 'pis/parole-pardon-courtesy-investigation-view?docket_number=' + encodeURIComponent(docket_number));
+            var officeId = $(this).data('oi') || $.cookie('field_office_id');
+            window.location.href = joinApiUrl(api, 'pis/parole-pardon-courtesy-investigation-view?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId));
         });
         $(document).off('click.scPpcInv', '.btn_attachments').on('click.scPpcInv', '.btn_attachments', function () {
             var docket_number = $(this).data('docket');
-            window.location.href = joinApiUrl(api, 'pis/parole-pardon-courtesy-investigation-upload?docket_number=' + encodeURIComponent(docket_number));
+            var officeId = $(this).data('oi') || $.cookie('field_office_id');
+            window.location.href = joinApiUrl(api, 'pis/parole-pardon-courtesy-investigation-upload?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId));
         });
 
         $('#removeModal').off('show.bs.modal.scPpcInv').on('show.bs.modal.scPpcInv', function (e) {
@@ -301,10 +289,10 @@
             {
                 data: null,
                 render: function (data) {
-                    return "<button class='btn btn-sm btn-primary btn_view ppr_cinv_view' type='button' data-docket='" + data.docketNumber + "'><i class='fa fa-eye'></i> View</button> " +
-                        "<button class='btn btn-sm btn-primary btn_update ppr_cinv_update' type='button' data-docket='" + data.docketNumber + "'><i class='fa fa-edit'></i> Update</button> " +
-                        "<button class='btn btn-sm btn-primary btn_attachments ppr_cinv_attachments' type='button' data-docket='" + data.docketNumber + "'><i class='fa fa-upload'></i> Attachments</button> " +
-                        "<button type='button' class='btn btn-sm btn-danger btn_remove ppr_cinv_remove' data-toggle='modal' data-target='#removeModal' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "' aria-label='Remove docket " + String(data.docketNumber == null ? '' : data.docketNumber).replace(/'/g, '&#39;') + "' title='Remove'><i class='fa fa-remove' aria-hidden='true'></i> Remove</button>";
+                    return "<button class='btn btn-sm btn-primary btn_view' data-permission='can_view_docket_pre_parole_courtesy_investigation' type='button' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "'><i class='fa fa-eye'></i> View</button> " +
+                        "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_docket_pre_parole_courtesy_investigation' type='button' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "'><i class='fa fa-edit'></i> Update</button> " +
+                        "<button class='btn btn-sm btn-primary btn_attachments' data-permission='can_attachments_docket_pre_parole_courtesy_investigation' type='button' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "'><i class='fa fa-upload'></i> Attachments</button> " +
+                        "<button type='button' class='btn btn-sm btn-danger btn_remove' data-permission='can_delete_docket_pre_parole_courtesy_investigation' data-toggle='modal' data-target='#removeModal' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "' aria-label='Remove docket " + String(data.docketNumber == null ? '' : data.docketNumber).replace(/'/g, '&#39;') + "' title='Remove'><i class='fa fa-remove' aria-hidden='true'></i> Remove</button>";
                 }
             }
         ];
@@ -319,7 +307,6 @@
         $(TABLE_SEL).DataTable({
             processing: false,
             serverSide: true,
-            scrollX: true,
             searching: false,
             lengthMenu: [10, 25, 50, 100],
             pageLength: 10,
@@ -329,10 +316,10 @@
             },
             columnDefs: [
                 { width: '5%', targets: [0] },
-                { width: '25%', targets: [1] },
-                { width: '20%', targets: [2] },
-                { width: '25%', targets: [3] },
-                { width: '25%', targets: [4] }
+                { width: '28%', targets: [1] },
+                { width: '24%', targets: [2] },
+                { width: '28%', targets: [3] },
+                { width: '1%', targets: [4], orderable: false, className: 'pis-actions-col text-nowrap' }
             ],
             ajax: {
                 url: api + '8000/docketbook',
@@ -343,7 +330,7 @@
                         page: d.start / d.length,
                         size: d.length,
                         type: 'SC_PPI_CSINV',
-                        officeId: $.cookie('field_office_id')
+                        officeId: (window.PisDocketOfficeFilter ? window.PisDocketOfficeFilter.docketListQuery().officeId : $.cookie('field_office_id'))
                     };
                 },
                 beforeSend: function () {
@@ -384,7 +371,10 @@
     }
 
     function drawSearchTable(searchVal) {
-        var fieldOfficeId = $.cookie('field_office_id');
+        var officeQuery = window.PisDocketOfficeFilter
+            ? window.PisDocketOfficeFilter.docketListQuery()
+            : { officeId: $.cookie('field_office_id'), fieldOfficeId: $.cookie('field_office_id'), canSeeOtherOffices: false };
+        var fieldOfficeId = officeQuery.fieldOfficeId;
 
         if ($.fn.DataTable.isDataTable(TABLE_SEL)) {
             $(TABLE_SEL).DataTable().destroy();
@@ -394,7 +384,6 @@
         $(TABLE_SEL).DataTable({
             processing: false,
             serverSide: true,
-            scrollX: true,
             searching: false,
             lengthMenu: [10, 25, 50, 100],
             pageLength: 10,
@@ -404,10 +393,10 @@
             },
             columnDefs: [
                 { width: '5%', targets: [0] },
-                { width: '25%', targets: [1] },
-                { width: '20%', targets: [2] },
-                { width: '25%', targets: [3] },
-                { width: '25%', targets: [4] }
+                { width: '28%', targets: [1] },
+                { width: '24%', targets: [2] },
+                { width: '28%', targets: [3] },
+                { width: '1%', targets: [4], orderable: false, className: 'pis-actions-col text-nowrap' }
             ],
             ajax: function (data, callback /* , settings */) {
                 var page = data.start / data.length;
@@ -422,8 +411,8 @@
                     data: JSON.stringify({
                         name: searchVal,
                         type: 'SC_PPI_CSINV',
-                        fieldOfficeId: fieldOfficeId,
-                        canSeeOtherOffices: false
+                        fieldOfficeId: officeQuery.fieldOfficeId,
+                        canSeeOtherOffices: officeQuery.canSeeOtherOffices
                     }),
                     success: function (json) {
                         if (!json || json.totalElements == null) {
@@ -517,6 +506,22 @@
         $('.btn_remove_confirm').prop('disabled', false);
     });
 
+    if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.mountDocketOfficeFilter === 'function') {
+        window.PisDocketOfficeFilter.mountDocketOfficeFilter('.card-header', function () {
+            var searchVal = ($('.docketSearchInput').val() || '').trim();
+            if ($.fn.DataTable.isDataTable(TABLE_SEL)) {
+                $(TABLE_SEL).DataTable().destroy();
+                $('.table_body').empty();
+            }
+            if (searchVal) {
+                drawSearchTable(searchVal);
+            } else {
+                drawTable();
+            }
+            injectSearch(searchVal);
+            updateScSearchClearState();
+        });
+    }
     bindRowActionsOnce();
     drawTable();
     injectSearch();

@@ -121,33 +121,23 @@
         }) 
     }
 
-    function buttonVisibility (){
-        var data = JSON.parse(localStorage.getItem('permission'));
-        if (data != null) {
-            data.forEach(function(data){
-                if (data.type == "ACTION") {
-                    // console.log(data.value)
-                    setTimeout(function() {
-                        if (!data.value) {
-                            var element = $('.' + data.detail);
-                            element.hide();
-                        }else{
-                            var element = $('.' + data.detail);
-                            element.show();
-                        }
-                    }, 10);
-                }else if (data.type == "VIEW") {
-                    if (!data.value) {
-                        var element = $('.' + data.detail);
-                        element.hide();
-                    }else{
-                        var element = $('.' + data.detail);
-                        element.show();
-                    }
-                }else{
-                }
-            });
+    function buttonVisibility() {
+        if (typeof window.applyPermissionVisibility === 'function') {
+            window.applyPermissionVisibility();
+            return;
         }
+        var raw = localStorage.getItem('permission');
+        var data = null;
+        if (raw) {
+            try { data = JSON.parse(raw); } catch (e) { data = null; }
+        }
+        $('[data-permission]').hide();
+        if (!data || !Array.isArray(data)) { return; }
+        data.forEach(function (row) {
+            if (!row || !row.detail) { return; }
+            var $el = $('[data-permission="' + row.detail + '"]');
+            if (row.value) { $el.show(); } else { $el.hide(); }
+        });
     }
 
     function drawTable(clientType) {
@@ -262,23 +252,23 @@
                     //     if (clientDataStorage.length > 0 && clientDataStorage[0].petitionerId == data.id) {
                     //         if (clientDataStorage[0].worksheetStatus == "COMPLETED") {
                     //             console.log("Show")
-                    //             return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
+                    //             return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_probation' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload' data-permission='can_attachments_fact_sheet_probation' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet' data-permission="can_worksheet_fact_sheet_probation" perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir' data-permission="can_psir_fact_sheet_probation" perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR' data-permission="can_generate_psir_fact_sheet_probation" perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>";
                     //         }
                     //     } else {
                     //         console.log("Hide")
-                    //         // return "<button class='btn btn-sm btn-primary btn_update client_update' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload client_upload' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button>";
+                    //         // return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_probation' type='submit' data-id='" + data.id + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-success btn_upload' data-permission='can_attachments_fact_sheet_probation' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Upload</button> <button class='btn btn-sm btn-primary btn_view client_view' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-success btn_worksheet' data-permission="can_worksheet_fact_sheet_probation" perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button>";
                     //     }
                     //     loggedValues.add(data);
                     // }
                     // // Return an empty string if the condition is not met
                     // return "";
                     // <button class='btn btn-sm btn-primary btn_pecir' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-plus-circle'></i> PECIR</button>
-                    return "<button class='btn btn-sm btn-primary btn_update client_update_pd_and_pr' type='submit' data-id='" + data.id + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload client_upload_pd_and_pr' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
+                    return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload' data-permission='can_attachments_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
                 }
             }
         ]
     }
-    // <button class='btn btn-sm btn-success btn_worksheet worksheet perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir psir perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR pdf_psir perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>
+    // <button class='btn btn-sm btn-success btn_worksheet' data-permission="can_worksheet_fact_sheet_probation" perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir' data-permission="can_psir_fact_sheet_probation" perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR' data-permission="can_generate_psir_fact_sheet_probation" perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>
 
     var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
         '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +

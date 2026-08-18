@@ -144,8 +144,8 @@
                         <div class="card">
                             <div class="card-header" id="pager">
                                 <strong class="card-title">Courtesy Investigation Docket List</strong>
-                                <!-- <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right pb_cinv_add" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
-                                <!-- <a href="probation-courtesy-investigation-create"> <button class="btn btn-sm btn-success float-right pb_csup_add" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
+                                <!-- <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right " data-permission="can_create_docket_probation_courtesy_investigation" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
+                                <!-- <a href="probation-courtesy-investigation-create"> <button class="btn btn-sm btn-success float-right " data-permission="can_create_docket_probation_courtesy_supervision" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>
                             <div class="card-body">
                                 <div id="courtesyInvListSearchError" class="alert alert-danger" style="display:none;" role="alert"></div>

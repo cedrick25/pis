@@ -27,8 +27,7 @@
     /** Round checkbox style (matches worksheet print helper). */
     function chk(label, on) {
         return (
-            '<span class="pch' +
-            (on ? " on" : "") +
+            '<span class="pch' + (on ? " on" : "") +
             '"><span class="pdot"></span>' +
             esc(label) +
             "</span>"
@@ -833,8 +832,7 @@
     function of3Page(ws, meta, pageIdx, showMast, innerHtml) {
         var brk = pageIdx < OF3_PAGE_TOTAL ? " page-break-after" : "";
         return (
-            '<section class="of3-page' +
-            brk +
+            '<section class="of3-page' + brk +
             '">' +
             of3TopHeader(ws, meta, pageIdx) +
             (showMast ? letterheadBlock(meta) + of3BannerBlock() : "") +
@@ -851,8 +849,7 @@
 
     function of3LabeledFill(label, value, flexGrow) {
         return (
-            '<div class="of3-item' +
-            (flexGrow ? " of3-grow" : "") +
+            '<div class="of3-item' + (flexGrow ? " of3-grow" : "") +
             '">' +
             '<span class="of3-ll">' +
             esc(label) +
@@ -931,8 +928,7 @@
         var nm = splitPetitionerNameParts(id);
         function petLine(txt, gCol) {
             return (
-                '<div class="of3-pet-line ' +
-                gCol +
+                '<div class="of3-pet-line ' + gCol +
                 '"><span class="of3-pet-txt">' +
                 esc(str(txt).toUpperCase()) +
                 "</span></div>"

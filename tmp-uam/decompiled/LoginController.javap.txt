@@ -1,0 +1,241 @@
+﻿Classfile /C:/wamp64/www/pis/BOOT-INF/classes/com/techsolve/uam/presentation/LoginController.class
+  Last modified 13 Jul 2025; size 2640 bytes
+  SHA-256 checksum 279050d14489a7599f6d8c4a4aac68451453a5a08506866f29a7eee21c16ee0b
+  Compiled from "LoginController.java"
+public class com.techsolve.uam.presentation.LoginController
+  minor version: 0
+  major version: 61
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #8                          // com/techsolve/uam/presentation/LoginController
+  super_class: #2                         // java/lang/Object
+  interfaces: 0, fields: 2, methods: 5, attributes: 2
+Constant pool:
+   #1 = Methodref          #2.#3          // java/lang/Object."<init>":()V
+   #2 = Class              #4             // java/lang/Object
+   #3 = NameAndType        #5:#6          // "<init>":()V
+   #4 = Utf8               java/lang/Object
+   #5 = Utf8               <init>
+   #6 = Utf8               ()V
+   #7 = Fieldref           #8.#9          // com/techsolve/uam/presentation/LoginController.userService:Lcom/techsolve/uam/core/service/UserService;
+   #8 = Class              #10            // com/techsolve/uam/presentation/LoginController
+   #9 = NameAndType        #11:#12        // userService:Lcom/techsolve/uam/core/service/UserService;
+  #10 = Utf8               com/techsolve/uam/presentation/LoginController
+  #11 = Utf8               userService
+  #12 = Utf8               Lcom/techsolve/uam/core/service/UserService;
+  #13 = InterfaceMethodref #14.#15        // com/techsolve/uam/core/service/UserService.authenticateRequest:(Lcom/techsolve/uam/dto/users/LoginDto;)Lcom/techsolve/uam/dto/users/LoginResponseDto;
+  #14 = Class              #16            // com/techsolve/uam/core/service/UserService
+  #15 = NameAndType        #17:#18        // authenticateRequest:(Lcom/techsolve/uam/dto/users/LoginDto;)Lcom/techsolve/uam/dto/users/LoginResponseDto;
+  #16 = Utf8               com/techsolve/uam/core/service/UserService
+  #17 = Utf8               authenticateRequest
+  #18 = Utf8               (Lcom/techsolve/uam/dto/users/LoginDto;)Lcom/techsolve/uam/dto/users/LoginResponseDto;
+  #19 = Methodref          #20.#21        // org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+  #20 = Class              #22            // org/springframework/http/ResponseEntity
+  #21 = NameAndType        #23:#24        // ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+  #22 = Utf8               org/springframework/http/ResponseEntity
+  #23 = Utf8               ok
+  #24 = Utf8               (Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+  #25 = InterfaceMethodref #14.#26        // com/techsolve/uam/core/service/UserService.authenticateOtp:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Boolean;
+  #26 = NameAndType        #27:#28        // authenticateOtp:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Boolean;
+  #27 = Utf8               authenticateOtp
+  #28 = Utf8               (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Boolean;
+  #29 = InterfaceMethodref #14.#30        // com/techsolve/uam/core/service/UserService.resendOtp:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Boolean;
+  #30 = NameAndType        #31:#28        // resendOtp:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Boolean;
+  #31 = Utf8               resendOtp
+  #32 = Methodref          #33.#34        // org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+  #33 = Class              #35            // org/slf4j/LoggerFactory
+  #34 = NameAndType        #36:#37        // getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+  #35 = Utf8               org/slf4j/LoggerFactory
+  #36 = Utf8               getLogger
+  #37 = Utf8               (Ljava/lang/Class;)Lorg/slf4j/Logger;
+  #38 = Fieldref           #8.#39         // com/techsolve/uam/presentation/LoginController.log:Lorg/slf4j/Logger;
+  #39 = NameAndType        #40:#41        // log:Lorg/slf4j/Logger;
+  #40 = Utf8               log
+  #41 = Utf8               Lorg/slf4j/Logger;
+  #42 = Utf8               RuntimeVisibleAnnotations
+  #43 = Utf8               Lorg/springframework/beans/factory/annotation/Autowired;
+  #44 = Utf8               Code
+  #45 = Utf8               LineNumberTable
+  #46 = Utf8               LocalVariableTable
+  #47 = Utf8               this
+  #48 = Utf8               Lcom/techsolve/uam/presentation/LoginController;
+  #49 = Utf8               authenticateUser
+  #50 = Utf8               (Lcom/techsolve/uam/dto/users/LoginDto;)Lorg/springframework/http/ResponseEntity;
+  #51 = Utf8               loginDetails
+  #52 = Utf8               Lcom/techsolve/uam/dto/users/LoginDto;
+  #53 = Utf8               responseDto
+  #54 = Utf8               Lcom/techsolve/uam/dto/users/LoginResponseDto;
+  #55 = Utf8               MethodParameters
+  #56 = Utf8               Signature
+  #57 = Utf8               (Lcom/techsolve/uam/dto/users/LoginDto;)Lorg/springframework/http/ResponseEntity<Lcom/techsolve/uam/dto/users/LoginResponseDto;>;
+  #58 = Utf8               Lorg/springframework/web/bind/annotation/PostMapping;
+  #59 = Utf8               RuntimeVisibleParameterAnnotations
+  #60 = Utf8               Lorg/springframework/web/bind/annotation/RequestBody;
+  #61 = Utf8               (Ljava/lang/String;Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+  #62 = Utf8               otpKey
+  #63 = Utf8               Ljava/lang/String;
+  #64 = Utf8               uuid
+  #65 = Utf8               (Ljava/lang/String;Ljava/lang/String;)Lorg/springframework/http/ResponseEntity<Ljava/lang/Boolean;>;
+  #66 = Utf8               Lorg/springframework/web/bind/annotation/GetMapping;
+  #67 = Utf8               value
+  #68 = Utf8               /otp/{otpKey}/{uuid}
+  #69 = Utf8               Lorg/springframework/web/bind/annotation/PathVariable;
+  #70 = Utf8               /otp/resend/{otpKey}/{uuid}
+  #71 = Utf8               <clinit>
+  #72 = Utf8               SourceFile
+  #73 = Utf8               LoginController.java
+  #74 = Utf8               Lorg/springframework/web/bind/annotation/RestController;
+  #75 = Utf8               Lorg/springframework/web/bind/annotation/RequestMapping;
+  #76 = Utf8               /authenticate
+{
+  private static final org.slf4j.Logger log;
+    descriptor: Lorg/slf4j/Logger;
+    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL
+
+  private com.techsolve.uam.core.service.UserService userService;
+    descriptor: Lcom/techsolve/uam/core/service/UserService;
+    flags: (0x0002) ACC_PRIVATE
+    RuntimeVisibleAnnotations:
+      0: #43()
+        org.springframework.beans.factory.annotation.Autowired
+
+  public com.techsolve.uam.presentation.LoginController();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 14: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/techsolve/uam/presentation/LoginController;
+
+  public org.springframework.http.ResponseEntity<com.techsolve.uam.dto.users.LoginResponseDto> authenticateUser(com.techsolve.uam.dto.users.LoginDto);
+    descriptor: (Lcom/techsolve/uam/dto/users/LoginDto;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=2
+         0: aload_0
+         1: getfield      #7                  // Field userService:Lcom/techsolve/uam/core/service/UserService;
+         4: aload_1
+         5: invokeinterface #13,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.authenticateRequest:(Lcom/techsolve/uam/dto/users/LoginDto;)Lcom/techsolve/uam/dto/users/LoginResponseDto;
+        10: astore_2
+        11: aload_2
+        12: invokestatic  #19                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        15: areturn
+      LineNumberTable:
+        line 21: 0
+        line 22: 11
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      16     0  this   Lcom/techsolve/uam/presentation/LoginController;
+            0      16     1 loginDetails   Lcom/techsolve/uam/dto/users/LoginDto;
+           11       5     2 responseDto   Lcom/techsolve/uam/dto/users/LoginResponseDto;
+    MethodParameters:
+      Name                           Flags
+      loginDetails
+    Signature: #57                          // (Lcom/techsolve/uam/dto/users/LoginDto;)Lorg/springframework/http/ResponseEntity<Lcom/techsolve/uam/dto/users/LoginResponseDto;>;
+    RuntimeVisibleAnnotations:
+      0: #58()
+        org.springframework.web.bind.annotation.PostMapping
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #60()
+          org.springframework.web.bind.annotation.RequestBody
+
+  public org.springframework.http.ResponseEntity<java.lang.Boolean> authenticateOtp(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=3
+         0: aload_0
+         1: getfield      #7                  // Field userService:Lcom/techsolve/uam/core/service/UserService;
+         4: aload_1
+         5: aload_2
+         6: invokeinterface #25,  3           // InterfaceMethod com/techsolve/uam/core/service/UserService.authenticateOtp:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Boolean;
+        11: invokestatic  #19                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        14: areturn
+      LineNumberTable:
+        line 27: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      15     0  this   Lcom/techsolve/uam/presentation/LoginController;
+            0      15     1 otpKey   Ljava/lang/String;
+            0      15     2  uuid   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      otpKey
+      uuid
+    Signature: #65                          // (Ljava/lang/String;Ljava/lang/String;)Lorg/springframework/http/ResponseEntity<Ljava/lang/Boolean;>;
+    RuntimeVisibleAnnotations:
+      0: #66(#67=[s#68])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/otp/{otpKey}/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #69()
+          org.springframework.web.bind.annotation.PathVariable
+      parameter 1:
+        0: #69()
+          org.springframework.web.bind.annotation.PathVariable
+
+  public org.springframework.http.ResponseEntity<java.lang.Boolean> resendOtp(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=3
+         0: aload_0
+         1: getfield      #7                  // Field userService:Lcom/techsolve/uam/core/service/UserService;
+         4: aload_1
+         5: aload_2
+         6: invokeinterface #29,  3           // InterfaceMethod com/techsolve/uam/core/service/UserService.resendOtp:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Boolean;
+        11: invokestatic  #19                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        14: areturn
+      LineNumberTable:
+        line 33: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      15     0  this   Lcom/techsolve/uam/presentation/LoginController;
+            0      15     1 otpKey   Ljava/lang/String;
+            0      15     2  uuid   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      otpKey
+      uuid
+    Signature: #65                          // (Ljava/lang/String;Ljava/lang/String;)Lorg/springframework/http/ResponseEntity<Ljava/lang/Boolean;>;
+    RuntimeVisibleAnnotations:
+      0: #66(#67=[s#70])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/otp/resend/{otpKey}/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #69()
+          org.springframework.web.bind.annotation.PathVariable
+      parameter 1:
+        0: #69()
+          org.springframework.web.bind.annotation.PathVariable
+
+  static {};
+    descriptor: ()V
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=1, locals=0, args_size=0
+         0: ldc           #8                  // class com/techsolve/uam/presentation/LoginController
+         2: invokestatic  #32                 // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+         5: putstatic     #38                 // Field log:Lorg/slf4j/Logger;
+         8: return
+      LineNumberTable:
+        line 11: 0
+}
+SourceFile: "LoginController.java"
+RuntimeVisibleAnnotations:
+  0: #74()
+    org.springframework.web.bind.annotation.RestController
+  1: #75(#67=[s#76])
+    org.springframework.web.bind.annotation.RequestMapping(
+      value=["/authenticate"]
+    )

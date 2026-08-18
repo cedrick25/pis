@@ -136,34 +136,21 @@
     };
 
     function buttonVisibility() {
+        if (typeof window.applyPermissionVisibility === 'function') {
+            window.applyPermissionVisibility();
+            return;
+        }
         var raw = localStorage.getItem('permission');
         var data = null;
         if (raw) {
-            try {
-                data = JSON.parse(raw);
-            } catch (e) {
-                data = null;
-            }
+            try { data = JSON.parse(raw); } catch (e) { data = null; }
         }
-        if (data == null) {
-            return;
-        }
+        $('[data-permission]').hide();
+        if (!data || !Array.isArray(data)) { return; }
         data.forEach(function (row) {
-            if (row.type === 'ACTION') {
-                var el = $('.' + row.detail);
-                if (!row.value) {
-                    el.hide();
-                } else {
-                    el.show();
-                }
-            } else if (row.type === 'VIEW') {
-                var elv = $('.' + row.detail);
-                if (!row.value) {
-                    elv.hide();
-                } else {
-                    elv.show();
-                }
-            }
+            if (!row || !row.detail) { return; }
+            var $el = $('[data-permission="' + row.detail + '"]');
+            if (row.value) { $el.show(); } else { $el.hide(); }
         });
     }
 
@@ -177,11 +164,13 @@
     function bindRowActionsOnce() {
         $(document).off('click.supDocket', '.btn_update').on('click.supDocket', '.btn_update', function () {
             var docket_number = $(this).data('docket');
-            window.location.href = joinApiUrl(api, 'pis/supervision_docket_update?docket_number=' + encodeURIComponent(docket_number));
+            var officeId = $(this).data('oi') || $.cookie('field_office_id');
+            window.location.href = joinApiUrl(api, 'pis/supervision_docket_update?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId));
         });
         $(document).off('click.supDocket', '.btn_view').on('click.supDocket', '.btn_view', function () {
             var docket_number = $(this).data('docket');
-            window.location.href = joinApiUrl(api, 'pis/supervision_docket_view?docket_number=' + encodeURIComponent(docket_number));
+            var officeId = $(this).data('oi') || $.cookie('field_office_id');
+            window.location.href = joinApiUrl(api, 'pis/supervision_docket_view?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId));
         });
 
         $(document).off('click.supDocket', '.btn_remove').on('click.supDocket', '.btn_remove', function () {
@@ -280,10 +269,10 @@
                     var dn = escAttr(data.docketNumber);
                     var oi = escAttr(data.fieldOfficeId);
                     return (
-                        '<button class="btn btn-sm btn-primary btn_view pb_sup_view" style="display:none;" type="button" data-docket="' + dn + '"><i class="fa fa-eye"></i> View</button> ' +
-                        '<button class="btn btn-sm btn-primary btn_update pb_sup_update" style="display:none;" type="button" data-docket="' + dn + '"><i class="fa fa-edit"></i> Update</button> ' +
-                        '<button class="btn btn-sm btn-primary btn_attachments pb_sup_attachments" style="display:none;" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-paperclip"></i> Attachments</button> ' +
-                        '<button type="button" class="btn btn-sm btn-danger btn_remove pb_sup_delete" style="display:none;" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>'
+                        '<button class="btn btn-sm btn-primary btn_view " data-permission="can_view_docket_probation_supervision" style="display:none;" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-eye"></i> View</button> ' +
+                        '<button class="btn btn-sm btn-primary btn_update " data-permission="can_edit_docket_probation_supervision" style="display:none;" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-edit"></i> Update</button> ' +
+                        '<button class="btn btn-sm btn-primary btn_attachments " data-permission="can_attachments_docket_probation_supervision" style="display:none;" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-paperclip"></i> Attachments</button> ' +
+                        '<button type="button" class="btn btn-sm btn-danger btn_remove " data-permission="can_delete_docket_probation_supervision" style="display:none;" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>'
                     );
                 }
             }
@@ -296,7 +285,10 @@
 
         var page = data.start / data.length;
         var size = data.length;
-        var fieldOfficeId = $.cookie('field_office_id');
+        var officeQuery = window.PisDocketOfficeFilter
+            ? window.PisDocketOfficeFilter.docketListQuery()
+            : { officeId: $.cookie('field_office_id'), fieldOfficeId: $.cookie('field_office_id'), canSeeOtherOffices: false };
+        var fieldOfficeId = officeQuery.officeId;
         var term = searchTermForAjax();
 
         function finishFail(message) {
@@ -319,7 +311,7 @@
                     page: page,
                     size: size,
                     type: 'PIS_SUP',
-                    officeId: fieldOfficeId
+                    officeId: officeQuery.officeId
                 },
                 success: function (json) {
                     try {
@@ -359,8 +351,8 @@
                 data: JSON.stringify({
                     name: term,
                     type: 'PIS_SUP',
-                    fieldOfficeId: fieldOfficeId,
-                    canSeeOtherOffices: false
+                    fieldOfficeId: officeQuery.fieldOfficeId,
+                    canSeeOtherOffices: officeQuery.canSeeOtherOffices
                 }),
                 success: function (json) {
                     safeDataTablesCallback(callback, {
@@ -388,7 +380,6 @@
         supDocketListDataTable = $('#tblSupervisionDocketing').DataTable({
             processing: false,
             serverSide: true,
-            scrollX: true,
             searching: false,
             lengthMenu: [10, 25, 50, 100],
             pageLength: 10,
@@ -397,13 +388,13 @@
                 zeroRecords: 'No dockets found.'
             },
             columnDefs: [
-                { width: '5%', targets: [0] },
-                { width: '15%', targets: [1] },
-                { width: '10%', targets: [2] },
-                { width: '17%', targets: [3] },
-                { width: '13%', targets: [4] },
-                { width: '15%', targets: [5] },
-                { width: '25%', targets: [6] }
+                { width: '4%', targets: [0] },
+                { width: '16%', targets: [1] },
+                { width: '12%', targets: [2] },
+                { width: '24%', targets: [3] },
+                { width: '18%', targets: [4] },
+                { width: '18%', targets: [5] },
+                { width: '1%', targets: [6], orderable: false, className: 'pis-actions-col text-nowrap' }
             ],
             ajax: supervisionListAjax,
             columns: tableColumns()
@@ -471,6 +462,13 @@
         $('.btn_remove_confirm').prop('disabled', false);
     });
 
+    if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.mountDocketOfficeFilter === 'function') {
+        window.PisDocketOfficeFilter.mountDocketOfficeFilter('.card-header', function () {
+            if (supDocketListDataTable) {
+                supDocketListDataTable.ajax.reload(null, true);
+            }
+        });
+    }
     bindRowActionsOnce();
     bindTableDrawOnce();
     initSupDocketListDataTable();

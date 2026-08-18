@@ -20,12 +20,25 @@
     <script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="vendors/datatables.net-buttons/js/buttons.colVis.min.js"></script>
     <script src="assets/js/init-scripts/data-table/datatables-init.js"></script>
+    <script>
+    (function ($) {
+        if (!$ || !$.fn || !$.fn.dataTable) {
+            return;
+        }
+        // Site-wide: no column sorting; headers stay plain left-aligned labels
+        $.extend(true, $.fn.dataTable.defaults, {
+            ordering: false,
+            order: []
+        });
+    })(window.jQuery);
+    </script>
 
     <script src="assets/js/moment.min.js"></script>
     <!-- <script src="assets/js/bootstrap-datetimepicker.min.js"></script> -->
     <script src="assets/js/select2.min.js"></script>
     <script src="assets/js/jquery.cookie.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/pisJs/tableActionIcons.js"></script>
     <script src="assets/js/webcam.min.js"></script>
     <script src="assets/js/webcam.js"></script>
     <script src="assets/js/jspdf.min.js"></script>
@@ -169,36 +182,139 @@
         };
 
 
-        function buttonVisibility (){
-            var data = JSON.parse(localStorage.getItem('permission'));
-            if (data != null) {
-                data.forEach(function(data){
-                    if (data.type == "ACTION") {
-                        // console.log(data.value)
-                        setTimeout(function() {
-                            if (!data.value) {
-                                var element = $('.' + data.detail);
-                                element.hide();
-                            }else{
-                                var element = $('.' + data.detail);
-                                element.show();
-                            }
-                        }, 10);
-                    }else if (data.type == "VIEW") {
-                        if (!data.value) {
-                            var element = $('.' + data.detail);
-                            element.hide();
-                        }else{
-                            var element = $('.' + data.detail);
-                            element.show();
-                        }
-                    }else{
-                    }
-                });
+        /**
+         * Permission gating via data-permission="can_*" (not CSS classes).
+         * Hide all marked elements first, then show only granted ones.
+         */
+        function getStoredPermissions() {
+            var raw = localStorage.getItem('permission');
+            if (!raw) {
+                return null;
+            }
+            try {
+                var data = JSON.parse(raw);
+                return Array.isArray(data) ? data : null;
+            } catch (e) {
+                return null;
             }
         }
 
-        buttonVisibility();
+        function hasAnyGrantedPermission(data) {
+            data = data || getStoredPermissions();
+            if (!data || !data.length) {
+                return false;
+            }
+            return data.some(function (row) {
+                return row && row.detail && !!row.value;
+            });
+        }
+
+        function isNoPermissionPage() {
+            var path = String(window.location.pathname || '');
+            return /\/no_permission\/?$/.test(path) || path.indexOf('no_permission') !== -1;
+        }
+
+        function isAuthPage() {
+            var path = String(window.location.pathname || '').toLowerCase();
+            return /(^|\/)(login|index\.php\/?|pis\/?)$/.test(path) || path.indexOf('/login') !== -1;
+        }
+
+        function pisAppUrl(slug) {
+            var base = (typeof window.__PIS_BASE_URL === 'string' && window.__PIS_BASE_URL)
+                ? window.__PIS_BASE_URL
+                : (window.location.protocol + '//' + window.location.host + '/pis/');
+            if (base.slice(-1) !== '/') {
+                base += '/';
+            }
+            return base + String(slug || '').replace(/^\//, '');
+        }
+
+        function redirectIfNoRolePermissions() {
+            if (isAuthPage() || isNoPermissionPage()) {
+                return;
+            }
+            var data = getStoredPermissions();
+            // Only redirect when permission payload exists but nothing is granted.
+            if (data === null) {
+                return;
+            }
+            if (!hasAnyGrantedPermission(data)) {
+                window.location.replace(pisAppUrl('no_permission'));
+            }
+        }
+
+        function showMissingActionPermissionNotice() {
+            if (isNoPermissionPage() || isAuthPage()) {
+                return;
+            }
+            var $actionBtns = $('table [data-permission^="can_view_"], table [data-permission^="can_edit_"], table [data-permission^="can_delete_"], table [data-permission^="can_attachments_"], table [data-permission^="can_create_"], table [data-permission^="can_forward_"]');
+            if (!$actionBtns.length) {
+                $('#pisNoActionPermissionAlert').remove();
+                $('.pis-no-action-perm').remove();
+                return;
+            }
+            var anyVisible = $actionBtns.filter(':visible').length > 0;
+            if (anyVisible) {
+                $('#pisNoActionPermissionAlert').remove();
+                $('.pis-no-action-perm').remove();
+                return;
+            }
+
+            if (!$('#pisNoActionPermissionAlert').length) {
+                var $host = $('.content.mt-3').first();
+                if ($host.length) {
+                    $host.prepend(
+                        '<div id="pisNoActionPermissionAlert" class="alert alert-warning" role="alert" style="margin: 0 15px 15px;">' +
+                        '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ' +
+                        '<strong>No action permissions for this page.</strong> ' +
+                        'Your role can open this screen, but View / Update / Attachments / Delete (or other actions) are not assigned. ' +
+                        'Ask an administrator to grant the needed permissions in <strong>User Roles → Grant Permission</strong>, then sign out and sign in again.' +
+                        '</div>'
+                    );
+                }
+            }
+
+            $('table tbody tr').each(function () {
+                var $row = $(this);
+                var $rowBtns = $row.find('[data-permission^="can_view_"], [data-permission^="can_edit_"], [data-permission^="can_delete_"], [data-permission^="can_attachments_"], [data-permission^="can_create_"], [data-permission^="can_forward_"]');
+                if (!$rowBtns.length) {
+                    return;
+                }
+                if ($rowBtns.filter(':visible').length === 0 && !$row.find('.pis-no-action-perm').length) {
+                    var $cell = $rowBtns.first().closest('td');
+                    if ($cell.length) {
+                        $cell.append('<span class="pis-no-action-perm text-muted small">No action permission assigned</span>');
+                    }
+                }
+            });
+        }
+
+        function applyPermissionVisibility() {
+            var data = getStoredPermissions();
+            $('[data-permission]').hide();
+            if (!data) {
+                redirectIfNoRolePermissions();
+                return;
+            }
+            data.forEach(function (row) {
+                if (!row || !row.detail) {
+                    return;
+                }
+                var $el = $('[data-permission="' + row.detail + '"]');
+                if (row.value) {
+                    $el.show();
+                } else {
+                    $el.hide();
+                }
+            });
+            redirectIfNoRolePermissions();
+            showMissingActionPermissionNotice();
+        }
+
+        window.applyPermissionVisibility = applyPermissionVisibility;
+        window.buttonVisibility = applyPermissionVisibility;
+        window.hasAnyGrantedPermission = hasAnyGrantedPermission;
+        applyPermissionVisibility();
 
         function applyUserSession(result) {
             if (!result || result.status === 'ERROR') {
@@ -230,7 +346,7 @@
                 $.cookie("departmentName", departmentName, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
             }
             if (result.roleId == "1") {
-                $(".org_module").show();
+                $('[data-permission="can_access_organization"]').show();
             }
             $(document).trigger('pis:userSessionReady', [result]);
             return field_office_id != null && String(field_office_id).trim() !== '';
@@ -295,3 +411,4 @@
     })
 ( jQuery );
     </script>
+    <script src="assets/js/pisJs/docketOfficeFilter.js"></script>

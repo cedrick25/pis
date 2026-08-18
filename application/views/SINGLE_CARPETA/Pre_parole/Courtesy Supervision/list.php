@@ -112,7 +112,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Parole and Pardon Courtesy Supervision Docket List</strong>
-                                <!-- <a href="pre-parole-courtesy-supervision-create"> <button class="btn btn-sm btn-success float-right ppr_csup_create" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
+                                <!-- <a href="pre-parole-courtesy-supervision-create"> <button class="btn btn-sm btn-success float-right " data-permission="can_create_docket_pre_parole_courtesy_supervision" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>
                             <div class="card-body">
                                 <div class="sup-docket-list-wrap position-relative">

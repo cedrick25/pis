@@ -30,6 +30,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('dashboard');
 	}
+	public function no_permission()
+	{
+		$this->load->view('no_permission');
+	}
 	public function inventory()
 	{
 		$this->load->view('inventory');

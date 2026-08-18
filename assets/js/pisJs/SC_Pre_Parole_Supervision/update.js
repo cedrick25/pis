@@ -127,7 +127,7 @@
         if (docketNumber !== undefined && docketNumber !== null) {
             docketNumber = String(docketNumber).trim();
         }
-        var officeId = $.cookie('field_office_id');
+        var officeId = (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.resolvePageOfficeId()) || $.cookie('field_office_id');
         if (officeId) {
             officeId = String(officeId).trim();
         }

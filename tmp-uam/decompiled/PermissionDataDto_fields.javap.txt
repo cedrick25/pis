@@ -1,0 +1,25 @@
+﻿Compiled from "PermissionDataDto.java"
+public class com.techsolve.uam.dto.permission.PermissionDataDto implements java.io.Serializable {
+  private java.lang.String id;
+  private java.lang.String name;
+  private java.lang.String detail;
+  private java.lang.String type;
+  private boolean value;
+  public static com.techsolve.uam.dto.permission.PermissionDataDto$PermissionDataDtoBuilder builder();
+  public java.lang.String getId();
+  public java.lang.String getName();
+  public java.lang.String getDetail();
+  public java.lang.String getType();
+  public boolean isValue();
+  public void setId(java.lang.String);
+  public void setName(java.lang.String);
+  public void setDetail(java.lang.String);
+  public void setType(java.lang.String);
+  public void setValue(boolean);
+  public java.lang.String toString();
+  public boolean equals(java.lang.Object);
+  protected boolean canEqual(java.lang.Object);
+  public int hashCode();
+  public com.techsolve.uam.dto.permission.PermissionDataDto();
+  public com.techsolve.uam.dto.permission.PermissionDataDto(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean);
+}

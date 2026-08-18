@@ -1,0 +1,170 @@
+/**
+ * Icon-only table action buttons — CSS hides labels immediately (no flash).
+ * JS only strips leftover text and attaches hover tooltips.
+ */
+
+/* Compact square + hide text only when an icon is present (:has) */
+table td .btn.btn-sm:has(> .fa),
+table td .btn.btn-sm:has(> i[class*="fa-"]),
+table td .btn.btn-sm:has(.fa),
+table td button.btn:has(> .fa),
+table td button.btn:has(> i[class*="fa-"]),
+table td a.btn.btn-sm:has(> .fa),
+table td a.btn.btn-sm:has(> i[class*="fa-"]),
+.table td .btn.btn-sm:has(> .fa),
+.table td .btn.btn-sm:has(> i[class*="fa-"]),
+.table td .btn.btn-sm:has(.fa),
+.table td button.btn:has(> .fa),
+.table td button.btn:has(> i[class*="fa-"]),
+.table td a.btn.btn-sm:has(> .fa),
+.table td a.btn.btn-sm:has(> i[class*="fa-"]),
+/* After JS marks the button */
+table td .pis-action-btn,
+.table td .pis-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  padding: 0 !important;
+  margin: 0 2px 2px 0;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 0 !important;
+  letter-spacing: 0;
+  word-spacing: 0;
+  overflow: hidden;
+}
+
+/* Keep Font Awesome icons visible */
+table td .btn.btn-sm > .fa,
+table td .btn.btn-sm > i,
+table td .btn.btn-sm .fa,
+table td button.btn > .fa,
+table td button.btn > i,
+table td button.btn .fa,
+table td a.btn.btn-sm > .fa,
+table td a.btn.btn-sm > i,
+table td a.btn.btn-sm .fa,
+table td .pis-action-btn > .fa,
+table td .pis-action-btn > i,
+.table td .btn.btn-sm > .fa,
+.table td .btn.btn-sm > i,
+.table td .btn.btn-sm .fa,
+.table td button.btn > .fa,
+.table td button.btn > i,
+.table td button.btn .fa,
+.table td a.btn.btn-sm > .fa,
+.table td a.btn.btn-sm > i,
+.table td a.btn.btn-sm .fa,
+.table td .pis-action-btn > .fa,
+.table td .pis-action-btn > i {
+  font-size: 14px !important;
+  line-height: 1;
+  margin: 0 !important;
+  width: auto;
+  display: inline-block;
+}
+
+/* Explicit label spans */
+table td .btn .pis-action-label,
+.table td .btn .pis-action-label,
+table td .btn.btn-sm:has(.fa) > span:not(.fa):not([class*="fa-"]),
+.table td .btn.btn-sm:has(.fa) > span:not(.fa):not([class*="fa-"]) {
+  display: none !important;
+}
+
+/* Grouped action cells */
+table td .pis-table-actions,
+.table td .pis-table-actions,
+table td .pis-inv-docket-actions,
+.table td .pis-inv-docket-actions,
+table td [role="group"][aria-label^="Actions"],
+.table td [role="group"][aria-label^="Actions"] {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+table td .btn[title],
+.table td .btn[title] {
+  cursor: pointer;
+}
+
+/*
+ * One table, one set of columns: do not split header/body (scrollX).
+ * If the table is wider than the card, scroll the whole table together.
+ */
+div.dataTables_wrapper {
+  overflow-x: auto;
+}
+
+table.dataTable thead th,
+table.dataTable thead td,
+table.table_head thead th,
+.table thead th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+table.dataTable tbody td,
+table.table_head tbody td,
+.table tbody td {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+/* Hide DataTables sort arrows if a table still enables ordering */
+table.dataTable thead > tr > th.sorting,
+table.dataTable thead > tr > th.sorting_asc,
+table.dataTable thead > tr > th.sorting_desc,
+table.dataTable thead > tr > th.sorting_asc_disabled,
+table.dataTable thead > tr > th.sorting_desc_disabled,
+table.dataTable thead > tr > th.sorting_disabled,
+table.dataTable thead > tr > td.sorting,
+table.dataTable thead > tr > td.sorting_asc,
+table.dataTable thead > tr > td.sorting_desc {
+  background-image: none !important;
+  cursor: default !important;
+  padding-right: 0.75rem !important;
+}
+
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before,
+table.dataTable thead .sorting_desc_disabled:after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Shrink Actions column to the icon buttons only */
+table.dataTable th.pis-actions-col,
+table.dataTable td.pis-actions-col,
+table.dataTable tbody td:has(.pis-action-btn),
+table.dataTable tbody td:has(.btn.btn-sm .fa),
+table.dataTable tbody td:has(.pis-inv-docket-actions),
+table.dataTable tbody td:has(.courtesy-inv-actions),
+table.dataTable tbody td:has([role="group"][aria-label^="Actions"]) {
+  width: 1% !important;
+  max-width: 1% !important;
+  white-space: nowrap !important;
+  vertical-align: middle;
+  text-align: left !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+table.dataTable thead th.pis-actions-col {
+  white-space: nowrap !important;
+  text-align: left !important;
+}

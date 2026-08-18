@@ -201,7 +201,7 @@
         if (docket_number !== undefined && docket_number !== null) {
             docket_number = String(docket_number).trim();
         }
-        var officeId = $.cookie('field_office_id');
+        var officeId = (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.resolvePageOfficeId()) || $.cookie('field_office_id');
         if (officeId) {
             officeId = String(officeId).trim();
         }

@@ -1,0 +1,892 @@
+﻿Classfile /C:/wamp64/www/pis/BOOT-INF/classes/com/techsolve/uam/presentation/UsersController.class
+  Last modified 22 Feb 2026; size 6840 bytes
+  SHA-256 checksum 0833b34c34568e5e6c4080fb22673f5d8f4d969df41ee97d8d16988fdc2119d8
+  Compiled from "UsersController.java"
+public class com.techsolve.uam.presentation.UsersController
+  minor version: 0
+  major version: 61
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #8                          // com/techsolve/uam/presentation/UsersController
+  super_class: #2                         // java/lang/Object
+  interfaces: 0, fields: 2, methods: 17, attributes: 2
+Constant pool:
+    #1 = Methodref          #2.#3         // java/lang/Object."<init>":()V
+    #2 = Class              #4            // java/lang/Object
+    #3 = NameAndType        #5:#6         // "<init>":()V
+    #4 = Utf8               java/lang/Object
+    #5 = Utf8               <init>
+    #6 = Utf8               ()V
+    #7 = Fieldref           #8.#9         // com/techsolve/uam/presentation/UsersController.log:Lorg/slf4j/Logger;
+    #8 = Class              #10           // com/techsolve/uam/presentation/UsersController
+    #9 = NameAndType        #11:#12       // log:Lorg/slf4j/Logger;
+   #10 = Utf8               com/techsolve/uam/presentation/UsersController
+   #11 = Utf8               log
+   #12 = Utf8               Lorg/slf4j/Logger;
+   #13 = String             #14           // Create User for {}
+   #14 = Utf8               Create User for {}
+   #15 = Methodref          #16.#17       // com/techsolve/uam/dto/users/UserProfileDto.getCorpKey:()Ljava/lang/String;
+   #16 = Class              #18           // com/techsolve/uam/dto/users/UserProfileDto
+   #17 = NameAndType        #19:#20       // getCorpKey:()Ljava/lang/String;
+   #18 = Utf8               com/techsolve/uam/dto/users/UserProfileDto
+   #19 = Utf8               getCorpKey
+   #20 = Utf8               ()Ljava/lang/String;
+   #21 = InterfaceMethodref #22.#23       // org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+   #22 = Class              #24           // org/slf4j/Logger
+   #23 = NameAndType        #25:#26       // info:(Ljava/lang/String;Ljava/lang/Object;)V
+   #24 = Utf8               org/slf4j/Logger
+   #25 = Utf8               info
+   #26 = Utf8               (Ljava/lang/String;Ljava/lang/Object;)V
+   #27 = Fieldref           #8.#28        // com/techsolve/uam/presentation/UsersController.userService:Lcom/techsolve/uam/core/service/UserService;
+   #28 = NameAndType        #29:#30       // userService:Lcom/techsolve/uam/core/service/UserService;
+   #29 = Utf8               userService
+   #30 = Utf8               Lcom/techsolve/uam/core/service/UserService;
+   #31 = InterfaceMethodref #32.#33       // com/techsolve/uam/core/service/UserService.createUser:(Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #32 = Class              #34           // com/techsolve/uam/core/service/UserService
+   #33 = NameAndType        #35:#36       // createUser:(Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #34 = Utf8               com/techsolve/uam/core/service/UserService
+   #35 = Utf8               createUser
+   #36 = Utf8               (Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #37 = Methodref          #38.#39       // org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+   #38 = Class              #40           // org/springframework/http/ResponseEntity
+   #39 = NameAndType        #41:#42       // ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+   #40 = Utf8               org/springframework/http/ResponseEntity
+   #41 = Utf8               ok
+   #42 = Utf8               (Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+   #43 = String             #44           // Get User details for {}
+   #44 = Utf8               Get User details for {}
+   #45 = InterfaceMethodref #32.#46       // com/techsolve/uam/core/service/UserService.getUser:(Ljava/lang/String;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #46 = NameAndType        #47:#48       // getUser:(Ljava/lang/String;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #47 = Utf8               getUser
+   #48 = Utf8               (Ljava/lang/String;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #49 = String             #50           // response {}
+   #50 = Utf8               response {}
+   #51 = Methodref          #52.#53       // com/techsolve/uam/dto/users/UserResponseDto.toString:()Ljava/lang/String;
+   #52 = Class              #54           // com/techsolve/uam/dto/users/UserResponseDto
+   #53 = NameAndType        #55:#20       // toString:()Ljava/lang/String;
+   #54 = Utf8               com/techsolve/uam/dto/users/UserResponseDto
+   #55 = Utf8               toString
+   #56 = String             #57           // Update User Details for {}
+   #57 = Utf8               Update User Details for {}
+   #58 = InterfaceMethodref #32.#59       // com/techsolve/uam/core/service/UserService.updateUser:(Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #59 = NameAndType        #60:#61       // updateUser:(Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #60 = Utf8               updateUser
+   #61 = Utf8               (Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #62 = InterfaceMethodref #32.#63       // com/techsolve/uam/core/service/UserService.updateUserViaEmail:(Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #63 = NameAndType        #64:#61       // updateUserViaEmail:(Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+   #64 = Utf8               updateUserViaEmail
+   #65 = String             #66           // Mark User {} as inactive
+   #66 = Utf8               Mark User {} as inactive
+   #67 = InterfaceMethodref #32.#68       // com/techsolve/uam/core/service/UserService.markInactive:(Ljava/lang/String;)Z
+   #68 = NameAndType        #69:#70       // markInactive:(Ljava/lang/String;)Z
+   #69 = Utf8               markInactive
+   #70 = Utf8               (Ljava/lang/String;)Z
+   #71 = Methodref          #72.#73       // java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+   #72 = Class              #74           // java/lang/Boolean
+   #73 = NameAndType        #75:#76       // valueOf:(Z)Ljava/lang/Boolean;
+   #74 = Utf8               java/lang/Boolean
+   #75 = Utf8               valueOf
+   #76 = Utf8               (Z)Ljava/lang/Boolean;
+   #77 = InterfaceMethodref #32.#78       // com/techsolve/uam/core/service/UserService.markActive:(Ljava/lang/String;)Z
+   #78 = NameAndType        #79:#70       // markActive:(Ljava/lang/String;)Z
+   #79 = Utf8               markActive
+   #80 = String             #81           // Remove User {}
+   #81 = Utf8               Remove User {}
+   #82 = InterfaceMethodref #32.#83       // com/techsolve/uam/core/service/UserService.removeUser:(Ljava/lang/String;)Z
+   #83 = NameAndType        #84:#70       // removeUser:(Ljava/lang/String;)Z
+   #84 = Utf8               removeUser
+   #85 = InterfaceMethodref #32.#86       // com/techsolve/uam/core/service/UserService.unlockUserById:(Ljava/lang/String;)Z
+   #86 = NameAndType        #87:#70       // unlockUserById:(Ljava/lang/String;)Z
+   #87 = Utf8               unlockUserById
+   #88 = InterfaceMethodref #32.#89       // com/techsolve/uam/core/service/UserService.lockUserById:(Ljava/lang/String;)Z
+   #89 = NameAndType        #90:#70       // lockUserById:(Ljava/lang/String;)Z
+   #90 = Utf8               lockUserById
+   #91 = String             #92           // Get Paginated Result
+   #92 = Utf8               Get Paginated Result
+   #93 = InterfaceMethodref #22.#94       // org/slf4j/Logger.info:(Ljava/lang/String;)V
+   #94 = NameAndType        #25:#95       // info:(Ljava/lang/String;)V
+   #95 = Utf8               (Ljava/lang/String;)V
+   #96 = InterfaceMethodref #32.#97       // com/techsolve/uam/core/service/UserService.getPaginatedResults:(II)Lorg/springframework/data/domain/Page;
+   #97 = NameAndType        #98:#99       // getPaginatedResults:(II)Lorg/springframework/data/domain/Page;
+   #98 = Utf8               getPaginatedResults
+   #99 = Utf8               (II)Lorg/springframework/data/domain/Page;
+  #100 = String             #101          // Get Paginated Result by name
+  #101 = Utf8               Get Paginated Result by name
+  #102 = InterfaceMethodref #32.#103      // com/techsolve/uam/core/service/UserService.getPaginatedResultsByName:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+  #103 = NameAndType        #104:#105     // getPaginatedResultsByName:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+  #104 = Utf8               getPaginatedResultsByName
+  #105 = Utf8               (IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+  #106 = InterfaceMethodref #32.#107      // com/techsolve/uam/core/service/UserService.getPaginatedResultsByStatus:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+  #107 = NameAndType        #108:#105     // getPaginatedResultsByStatus:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+  #108 = Utf8               getPaginatedResultsByStatus
+  #109 = InterfaceMethodref #32.#110      // com/techsolve/uam/core/service/UserService.getAllActiveUserByDepartmentId:(J)Ljava/util/List;
+  #110 = NameAndType        #111:#112     // getAllActiveUserByDepartmentId:(J)Ljava/util/List;
+  #111 = Utf8               getAllActiveUserByDepartmentId
+  #112 = Utf8               (J)Ljava/util/List;
+  #113 = InterfaceMethodref #32.#114      // com/techsolve/uam/core/service/UserService.getAllActiveUser:()Ljava/util/List;
+  #114 = NameAndType        #115:#116     // getAllActiveUser:()Ljava/util/List;
+  #115 = Utf8               getAllActiveUser
+  #116 = Utf8               ()Ljava/util/List;
+  #117 = InterfaceMethodref #32.#118      // com/techsolve/uam/core/service/UserService.getAllUsersUnderManagerUuid:(Ljava/lang/String;)Ljava/util/List;
+  #118 = NameAndType        #119:#120     // getAllUsersUnderManagerUuid:(Ljava/lang/String;)Ljava/util/List;
+  #119 = Utf8               getAllUsersUnderManagerUuid
+  #120 = Utf8               (Ljava/lang/String;)Ljava/util/List;
+  #121 = Methodref          #122.#123     // org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+  #122 = Class              #124          // org/slf4j/LoggerFactory
+  #123 = NameAndType        #125:#126     // getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+  #124 = Utf8               org/slf4j/LoggerFactory
+  #125 = Utf8               getLogger
+  #126 = Utf8               (Ljava/lang/Class;)Lorg/slf4j/Logger;
+  #127 = Utf8               RuntimeVisibleAnnotations
+  #128 = Utf8               Lorg/springframework/beans/factory/annotation/Autowired;
+  #129 = Utf8               Code
+  #130 = Utf8               LineNumberTable
+  #131 = Utf8               LocalVariableTable
+  #132 = Utf8               this
+  #133 = Utf8               Lcom/techsolve/uam/presentation/UsersController;
+  #134 = Utf8               (Lcom/techsolve/uam/dto/users/UserProfileDto;)Lorg/springframework/http/ResponseEntity;
+  #135 = Utf8               userProfile
+  #136 = Utf8               Lcom/techsolve/uam/dto/users/UserProfileDto;
+  #137 = Utf8               responseDto
+  #138 = Utf8               Lcom/techsolve/uam/dto/users/UserResponseDto;
+  #139 = Utf8               MethodParameters
+  #140 = Utf8               Signature
+  #141 = Utf8               (Lcom/techsolve/uam/dto/users/UserProfileDto;)Lorg/springframework/http/ResponseEntity<Lcom/techsolve/uam/dto/users/UserResponseDto;>;
+  #142 = Utf8               Lorg/springframework/web/bind/annotation/PostMapping;
+  #143 = Utf8               value
+  #144 = Utf8               /create
+  #145 = Utf8               RuntimeVisibleParameterAnnotations
+  #146 = Utf8               Lorg/springframework/web/bind/annotation/RequestBody;
+  #147 = Utf8               (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+  #148 = Utf8               uuid
+  #149 = Utf8               Ljava/lang/String;
+  #150 = Utf8               Lorg/springframework/web/bind/annotation/GetMapping;
+  #151 = Utf8               /{uuid}
+  #152 = Utf8               Lorg/springframework/web/bind/annotation/PathVariable;
+  #153 = Utf8               (Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lorg/springframework/http/ResponseEntity;
+  #154 = Utf8               /update/{uuid}
+  #155 = Utf8               email
+  #156 = Utf8               /update/mail/{email}
+  #157 = Utf8               setUserInactive
+  #158 = Utf8               response
+  #159 = Utf8               Z
+  #160 = Utf8               /inactive/{uuid}
+  #161 = Utf8               setUseractive
+  #162 = Utf8               /active/{uuid}
+  #163 = Utf8               /remove/{uuid}
+  #164 = Utf8               liftLockedAccessById
+  #165 = Utf8               /lift/{uuid}
+  #166 = Utf8               restrictAccessById
+  #167 = Utf8               /restrict/{uuid}
+  #168 = Utf8               getPagedUserByPageAndSize
+  #169 = Utf8               page
+  #170 = Utf8               I
+  #171 = Utf8               size
+  #172 = Utf8               Exceptions
+  #173 = Class              #174          // com/techsolve/uam/core/exception/RecordNotFoundException
+  #174 = Utf8               com/techsolve/uam/core/exception/RecordNotFoundException
+  #175 = Utf8               (II)Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/users/UserResponseDto;>;
+  #176 = Utf8               params
+  #177 = Utf8               Lorg/springframework/web/bind/annotation/RequestParam;
+  #178 = Utf8               getPagedUserByPageAndSizeAndName
+  #179 = Utf8               name
+  #180 = Utf8               (IILjava/lang/String;)Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/users/UserResponseDto;>;
+  #181 = Utf8               /byUsername
+  #182 = Utf8               getPagedUserByPageAndSizeAndStatus
+  #183 = Utf8               status
+  #184 = Utf8               /byStatus
+  #185 = Utf8               getActiveUserList
+  #186 = Utf8               (J)Lorg/springframework/http/ResponseEntity;
+  #187 = Utf8               departmentId
+  #188 = Utf8               J
+  #189 = Utf8               /list/{departmentId}
+  #190 = Utf8               ()Lorg/springframework/http/ResponseEntity;
+  #191 = Utf8               /list
+  #192 = Utf8               getUuidListByManagerUuid
+  #193 = Utf8               /userList/{uuid}
+  #194 = Utf8               <clinit>
+  #195 = Utf8               SourceFile
+  #196 = Utf8               UsersController.java
+  #197 = Utf8               Lorg/springframework/web/bind/annotation/RestController;
+  #198 = Utf8               Lorg/springframework/web/bind/annotation/RequestMapping;
+  #199 = Utf8               /user
+{
+  private static final org.slf4j.Logger log;
+    descriptor: Lorg/slf4j/Logger;
+    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL
+
+  private com.techsolve.uam.core.service.UserService userService;
+    descriptor: Lcom/techsolve/uam/core/service/UserService;
+    flags: (0x0002) ACC_PRIVATE
+    RuntimeVisibleAnnotations:
+      0: #128()
+        org.springframework.beans.factory.annotation.Autowired
+
+  public com.techsolve.uam.presentation.UsersController();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 16: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/techsolve/uam/presentation/UsersController;
+
+  public org.springframework.http.ResponseEntity<com.techsolve.uam.dto.users.UserResponseDto> createUser(com.techsolve.uam.dto.users.UserProfileDto);
+    descriptor: (Lcom/techsolve/uam/dto/users/UserProfileDto;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #13                 // String Create User for {}
+         5: aload_1
+         6: invokevirtual #15                 // Method com/techsolve/uam/dto/users/UserProfileDto.getCorpKey:()Ljava/lang/String;
+         9: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        14: aload_0
+        15: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        18: aload_1
+        19: invokeinterface #31,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.createUser:(Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+        24: astore_2
+        25: aload_2
+        26: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        29: areturn
+      LineNumberTable:
+        line 23: 0
+        line 24: 14
+        line 25: 25
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      30     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      30     1 userProfile   Lcom/techsolve/uam/dto/users/UserProfileDto;
+           25       5     2 responseDto   Lcom/techsolve/uam/dto/users/UserResponseDto;
+    MethodParameters:
+      Name                           Flags
+      userProfile
+    Signature: #141                         // (Lcom/techsolve/uam/dto/users/UserProfileDto;)Lorg/springframework/http/ResponseEntity<Lcom/techsolve/uam/dto/users/UserResponseDto;>;
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#144])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/create"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #146()
+          org.springframework.web.bind.annotation.RequestBody
+
+  public org.springframework.http.ResponseEntity getUser(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #43                 // String Get User details for {}
+         5: aload_1
+         6: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        11: aload_0
+        12: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        15: aload_1
+        16: invokeinterface #45,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.getUser:(Ljava/lang/String;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+        21: astore_2
+        22: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+        25: ldc           #49                 // String response {}
+        27: aload_2
+        28: invokevirtual #51                 // Method com/techsolve/uam/dto/users/UserResponseDto.toString:()Ljava/lang/String;
+        31: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        36: aload_2
+        37: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        40: areturn
+      LineNumberTable:
+        line 30: 0
+        line 31: 11
+        line 32: 22
+        line 33: 36
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      41     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      41     1  uuid   Ljava/lang/String;
+           22      19     2 responseDto   Lcom/techsolve/uam/dto/users/UserResponseDto;
+    MethodParameters:
+      Name                           Flags
+      uuid
+    RuntimeVisibleAnnotations:
+      0: #150(#143=[s#151])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+
+  public org.springframework.http.ResponseEntity updateUser(java.lang.String, com.techsolve.uam.dto.users.UserProfileDto);
+    descriptor: (Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=4, args_size=3
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #56                 // String Update User Details for {}
+         5: aload_1
+         6: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        11: aload_0
+        12: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        15: aload_1
+        16: aload_2
+        17: invokeinterface #58,  3           // InterfaceMethod com/techsolve/uam/core/service/UserService.updateUser:(Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+        22: astore_3
+        23: aload_3
+        24: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        27: areturn
+      LineNumberTable:
+        line 38: 0
+        line 39: 11
+        line 40: 23
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      28     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      28     1  uuid   Ljava/lang/String;
+            0      28     2 userProfile   Lcom/techsolve/uam/dto/users/UserProfileDto;
+           23       5     3 responseDto   Lcom/techsolve/uam/dto/users/UserResponseDto;
+    MethodParameters:
+      Name                           Flags
+      uuid
+      userProfile
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#154])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/update/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+      parameter 1:
+        0: #146()
+          org.springframework.web.bind.annotation.RequestBody
+
+  public org.springframework.http.ResponseEntity updateUserViaEmail(java.lang.String, com.techsolve.uam.dto.users.UserProfileDto);
+    descriptor: (Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=4, args_size=3
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #56                 // String Update User Details for {}
+         5: aload_1
+         6: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        11: aload_0
+        12: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        15: aload_1
+        16: aload_2
+        17: invokeinterface #62,  3           // InterfaceMethod com/techsolve/uam/core/service/UserService.updateUserViaEmail:(Ljava/lang/String;Lcom/techsolve/uam/dto/users/UserProfileDto;)Lcom/techsolve/uam/dto/users/UserResponseDto;
+        22: astore_3
+        23: aload_3
+        24: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        27: areturn
+      LineNumberTable:
+        line 45: 0
+        line 46: 11
+        line 47: 23
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      28     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      28     1 email   Ljava/lang/String;
+            0      28     2 userProfile   Lcom/techsolve/uam/dto/users/UserProfileDto;
+           23       5     3 responseDto   Lcom/techsolve/uam/dto/users/UserResponseDto;
+    MethodParameters:
+      Name                           Flags
+      email
+      userProfile
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#156])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/update/mail/{email}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#155)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="email"
+          )
+      parameter 1:
+        0: #146()
+          org.springframework.web.bind.annotation.RequestBody
+
+  public org.springframework.http.ResponseEntity setUserInactive(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #65                 // String Mark User {} as inactive
+         5: aload_1
+         6: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        11: aload_0
+        12: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        15: aload_1
+        16: invokeinterface #67,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.markInactive:(Ljava/lang/String;)Z
+        21: istore_2
+        22: iload_2
+        23: invokestatic  #71                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        26: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        29: areturn
+      LineNumberTable:
+        line 52: 0
+        line 53: 11
+        line 54: 22
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      30     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      30     1  uuid   Ljava/lang/String;
+           22       8     2 response   Z
+    MethodParameters:
+      Name                           Flags
+      uuid
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#160])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/inactive/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+
+  public org.springframework.http.ResponseEntity setUseractive(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #65                 // String Mark User {} as inactive
+         5: aload_1
+         6: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        11: aload_0
+        12: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        15: aload_1
+        16: invokeinterface #77,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.markActive:(Ljava/lang/String;)Z
+        21: istore_2
+        22: iload_2
+        23: invokestatic  #71                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        26: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        29: areturn
+      LineNumberTable:
+        line 59: 0
+        line 60: 11
+        line 61: 22
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      30     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      30     1  uuid   Ljava/lang/String;
+           22       8     2 response   Z
+    MethodParameters:
+      Name                           Flags
+      uuid
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#162])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/active/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+
+  public org.springframework.http.ResponseEntity removeUser(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #80                 // String Remove User {}
+         5: aload_1
+         6: invokeinterface #21,  3           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+        11: aload_0
+        12: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        15: aload_1
+        16: invokeinterface #82,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.removeUser:(Ljava/lang/String;)Z
+        21: istore_2
+        22: iload_2
+        23: invokestatic  #71                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        26: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        29: areturn
+      LineNumberTable:
+        line 66: 0
+        line 67: 11
+        line 68: 22
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      30     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      30     1  uuid   Ljava/lang/String;
+           22       8     2 response   Z
+    MethodParameters:
+      Name                           Flags
+      uuid
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#163])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/remove/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+
+  public org.springframework.http.ResponseEntity liftLockedAccessById(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=2
+         0: aload_0
+         1: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+         4: aload_1
+         5: invokeinterface #85,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.unlockUserById:(Ljava/lang/String;)Z
+        10: istore_2
+        11: iload_2
+        12: invokestatic  #71                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        15: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        18: areturn
+      LineNumberTable:
+        line 73: 0
+        line 74: 11
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      19     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      19     1  uuid   Ljava/lang/String;
+           11       8     2 response   Z
+    MethodParameters:
+      Name                           Flags
+      uuid
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#165])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/lift/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+
+  public org.springframework.http.ResponseEntity restrictAccessById(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=2
+         0: aload_0
+         1: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+         4: aload_1
+         5: invokeinterface #88,  2           // InterfaceMethod com/techsolve/uam/core/service/UserService.lockUserById:(Ljava/lang/String;)Z
+        10: istore_2
+        11: iload_2
+        12: invokestatic  #71                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        15: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        18: areturn
+      LineNumberTable:
+        line 79: 0
+        line 80: 11
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      19     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      19     1  uuid   Ljava/lang/String;
+           11       8     2 response   Z
+    MethodParameters:
+      Name                           Flags
+      uuid
+    RuntimeVisibleAnnotations:
+      0: #142(#143=[s#167])
+        org.springframework.web.bind.annotation.PostMapping(
+          value=["/restrict/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+
+  public org.springframework.data.domain.Page<com.techsolve.uam.dto.users.UserResponseDto> getPagedUserByPageAndSize(int, int) throws com.techsolve.uam.core.exception.RecordNotFoundException;
+    descriptor: (II)Lorg/springframework/data/domain/Page;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=3
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #91                 // String Get Paginated Result
+         5: invokeinterface #93,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        14: iload_1
+        15: iload_2
+        16: invokeinterface #96,  3           // InterfaceMethod com/techsolve/uam/core/service/UserService.getPaginatedResults:(II)Lorg/springframework/data/domain/Page;
+        21: areturn
+      LineNumberTable:
+        line 85: 0
+        line 86: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      22     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      22     1  page   I
+            0      22     2  size   I
+    Exceptions:
+      throws com.techsolve.uam.core.exception.RecordNotFoundException
+    MethodParameters:
+      Name                           Flags
+      page
+      size
+    Signature: #175                         // (II)Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/users/UserResponseDto;>;
+    RuntimeVisibleAnnotations:
+      0: #150(#176=[s#169,s#171])
+        org.springframework.web.bind.annotation.GetMapping(
+          params=["page","size"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #177(#143=s#169)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="page"
+          )
+      parameter 1:
+        0: #177(#143=s#171)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="size"
+          )
+
+  public org.springframework.data.domain.Page<com.techsolve.uam.dto.users.UserResponseDto> getPagedUserByPageAndSizeAndName(int, int, java.lang.String) throws com.techsolve.uam.core.exception.RecordNotFoundException;
+    descriptor: (IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=4, locals=4, args_size=4
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #100                // String Get Paginated Result by name
+         5: invokeinterface #93,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        14: iload_1
+        15: iload_2
+        16: aload_3
+        17: invokeinterface #102,  4          // InterfaceMethod com/techsolve/uam/core/service/UserService.getPaginatedResultsByName:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+        22: areturn
+      LineNumberTable:
+        line 91: 0
+        line 92: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      23     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      23     1  page   I
+            0      23     2  size   I
+            0      23     3  name   Ljava/lang/String;
+    Exceptions:
+      throws com.techsolve.uam.core.exception.RecordNotFoundException
+    MethodParameters:
+      Name                           Flags
+      page
+      size
+      name
+    Signature: #180                         // (IILjava/lang/String;)Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/users/UserResponseDto;>;
+    RuntimeVisibleAnnotations:
+      0: #150(#143=[s#181],#176=[s#169,s#171,s#179])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/byUsername"]
+          params=["page","size","name"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #177(#143=s#169)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="page"
+          )
+      parameter 1:
+        0: #177(#143=s#171)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="size"
+          )
+      parameter 2:
+        0: #177(#143=s#179)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="name"
+          )
+
+  public org.springframework.data.domain.Page<com.techsolve.uam.dto.users.UserResponseDto> getPagedUserByPageAndSizeAndStatus(int, int, java.lang.String) throws com.techsolve.uam.core.exception.RecordNotFoundException;
+    descriptor: (IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=4, locals=4, args_size=4
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #100                // String Get Paginated Result by name
+         5: invokeinterface #93,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        14: iload_1
+        15: iload_2
+        16: aload_3
+        17: invokeinterface #106,  4          // InterfaceMethod com/techsolve/uam/core/service/UserService.getPaginatedResultsByStatus:(IILjava/lang/String;)Lorg/springframework/data/domain/Page;
+        22: areturn
+      LineNumberTable:
+        line 97: 0
+        line 98: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      23     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      23     1  page   I
+            0      23     2  size   I
+            0      23     3 status   Ljava/lang/String;
+    Exceptions:
+      throws com.techsolve.uam.core.exception.RecordNotFoundException
+    MethodParameters:
+      Name                           Flags
+      page
+      size
+      status
+    Signature: #180                         // (IILjava/lang/String;)Lorg/springframework/data/domain/Page<Lcom/techsolve/uam/dto/users/UserResponseDto;>;
+    RuntimeVisibleAnnotations:
+      0: #150(#143=[s#184],#176=[s#169,s#171,s#183])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/byStatus"]
+          params=["page","size","status"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #177(#143=s#169)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="page"
+          )
+      parameter 1:
+        0: #177(#143=s#171)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="size"
+          )
+      parameter 2:
+        0: #177(#143=s#183)
+          org.springframework.web.bind.annotation.RequestParam(
+            value="status"
+          )
+
+  public org.springframework.http.ResponseEntity getActiveUserList(long);
+    descriptor: (J)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #91                 // String Get Paginated Result
+         5: invokeinterface #93,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        14: lload_1
+        15: invokeinterface #109,  3          // InterfaceMethod com/techsolve/uam/core/service/UserService.getAllActiveUserByDepartmentId:(J)Ljava/util/List;
+        20: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        23: areturn
+      LineNumberTable:
+        line 103: 0
+        line 104: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      24     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      24     1 departmentId   J
+    MethodParameters:
+      Name                           Flags
+      departmentId
+    RuntimeVisibleAnnotations:
+      0: #150(#143=[s#189])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/list/{departmentId}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#187)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="departmentId"
+          )
+
+  public org.springframework.http.ResponseEntity getActiveUserList();
+    descriptor: ()Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #91                 // String Get Paginated Result
+         5: invokeinterface #93,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        14: invokeinterface #113,  1          // InterfaceMethod com/techsolve/uam/core/service/UserService.getAllActiveUser:()Ljava/util/List;
+        19: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        22: areturn
+      LineNumberTable:
+        line 109: 0
+        line 110: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      23     0  this   Lcom/techsolve/uam/presentation/UsersController;
+    RuntimeVisibleAnnotations:
+      0: #150(#143=[s#191])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/list"]
+        )
+
+  public org.springframework.http.ResponseEntity getUuidListByManagerUuid(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lorg/springframework/http/ResponseEntity;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: getstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         3: ldc           #91                 // String Get Paginated Result
+         5: invokeinterface #93,  2           // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+        10: aload_0
+        11: getfield      #27                 // Field userService:Lcom/techsolve/uam/core/service/UserService;
+        14: aload_1
+        15: invokeinterface #117,  2          // InterfaceMethod com/techsolve/uam/core/service/UserService.getAllUsersUnderManagerUuid:(Ljava/lang/String;)Ljava/util/List;
+        20: invokestatic  #37                 // Method org/springframework/http/ResponseEntity.ok:(Ljava/lang/Object;)Lorg/springframework/http/ResponseEntity;
+        23: areturn
+      LineNumberTable:
+        line 116: 0
+        line 117: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      24     0  this   Lcom/techsolve/uam/presentation/UsersController;
+            0      24     1  uuid   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      uuid
+    RuntimeVisibleAnnotations:
+      0: #150(#143=[s#193])
+        org.springframework.web.bind.annotation.GetMapping(
+          value=["/userList/{uuid}"]
+        )
+    RuntimeVisibleParameterAnnotations:
+      parameter 0:
+        0: #152(#143=s#148)
+          org.springframework.web.bind.annotation.PathVariable(
+            value="uuid"
+          )
+
+  static {};
+    descriptor: ()V
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=1, locals=0, args_size=0
+         0: ldc           #8                  // class com/techsolve/uam/presentation/UsersController
+         2: invokestatic  #121                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+         5: putstatic     #7                  // Field log:Lorg/slf4j/Logger;
+         8: return
+      LineNumberTable:
+        line 13: 0
+}
+SourceFile: "UsersController.java"
+RuntimeVisibleAnnotations:
+  0: #197()
+    org.springframework.web.bind.annotation.RestController
+  1: #198(#143=[s#199])
+    org.springframework.web.bind.annotation.RequestMapping(
+      value=["/user"]
+    )

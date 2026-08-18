@@ -106,34 +106,21 @@
     };
 
     function buttonVisibility() {
+        if (typeof window.applyPermissionVisibility === 'function') {
+            window.applyPermissionVisibility();
+            return;
+        }
         var raw = localStorage.getItem('permission');
         var data = null;
         if (raw) {
-            try {
-                data = JSON.parse(raw);
-            } catch (e) {
-                data = null;
-            }
+            try { data = JSON.parse(raw); } catch (e) { data = null; }
         }
-        if (data == null) {
-            return;
-        }
+        $('[data-permission]').hide();
+        if (!data || !Array.isArray(data)) { return; }
         data.forEach(function (row) {
-            if (row.type === 'ACTION') {
-                var el = $('.' + row.detail);
-                if (!row.value) {
-                    el.hide();
-                } else {
-                    el.show();
-                }
-            } else if (row.type === 'VIEW') {
-                var elv = $('.' + row.detail);
-                if (!row.value) {
-                    elv.hide();
-                } else {
-                    elv.show();
-                }
-            }
+            if (!row || !row.detail) { return; }
+            var $el = $('[data-permission="' + row.detail + '"]');
+            if (row.value) { $el.show(); } else { $el.hide(); }
         });
     }
 
@@ -147,13 +134,13 @@
     function bindRowActionsOnce() {
         $(document).off('click.csup', '.btn_update').on('click.csup', '.btn_update', function () {
             var docket_number = $(this).data('docket');
-            var officeId = $.cookie('field_office_id');
+            var officeId = $(this).data('oi') || $.cookie('field_office_id');
             var petitionerId = $(this).data('cid');
             window.location.href = joinApiUrl(api, 'pis/probation-courtesy-supervision-update?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId) + '&petitionerId=' + encodeURIComponent(petitionerId));
         });
         $(document).off('click.csup', '.btn_view').on('click.csup', '.btn_view', function () {
             var docket_number = $(this).data('docket');
-            var officeId = $.cookie('field_office_id');
+            var officeId = $(this).data('oi') || $.cookie('field_office_id');
             var petitionerId = $(this).data('cid');
             window.location.href = joinApiUrl(api, 'pis/probation-courtesy-supervision-view?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId) + '&petitionerId=' + encodeURIComponent(petitionerId));
         });
@@ -269,10 +256,10 @@
                     var cid = escAttr(data.clientId);
                     var oi = escAttr(data.fieldOfficeId);
                     return (
-                        '<button class="btn btn-sm btn-primary btn_view pb_csup_view" type="button" data-docket="' + dn + '" data-cid="' + cid + '"><i class="fa fa-eye"></i> View</button> ' +
-                        '<button class="btn btn-sm btn-primary btn_update pb_csup_update" type="button" data-docket="' + dn + '" data-cid="' + cid + '"><i class="fa fa-edit"></i> Update</button> ' +
-                        '<button class="btn btn-sm btn-primary btn_attachments pb_csup_attachments" type="button" data-docket="' + dn + '" data-id="' + cid + '" data-oi="' + oi + '"><i class="fa fa-paperclip"></i> Attachments</button> ' +
-                        '<button type="button" class="btn btn-sm btn-danger btn_remove pb_csup_remove" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" data-cid="' + cid + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>'
+                        '<button class="btn btn-sm btn-primary btn_view " data-permission="can_view_docket_probation_courtesy_supervision" type="button" data-docket="' + dn + '" data-cid="' + cid + '" data-oi="' + oi + '"><i class="fa fa-eye"></i> View</button> ' +
+                        '<button class="btn btn-sm btn-primary btn_update " data-permission="can_edit_docket_probation_courtesy_supervision" type="button" data-docket="' + dn + '" data-cid="' + cid + '" data-oi="' + oi + '"><i class="fa fa-edit"></i> Update</button> ' +
+                        '<button class="btn btn-sm btn-primary btn_attachments " data-permission="can_attachments_docket_probation_courtesy_supervision" type="button" data-docket="' + dn + '" data-id="' + cid + '" data-oi="' + oi + '"><i class="fa fa-paperclip"></i> Attachments</button> ' +
+                        '<button type="button" class="btn btn-sm btn-danger btn_remove " data-permission="can_delete_docket_probation_courtesy_supervision" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" data-cid="' + cid + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>'
                     );
                 }
             }
@@ -285,7 +272,10 @@
 
         var page = data.start / data.length;
         var size = data.length;
-        var fieldOfficeId = $.cookie('field_office_id');
+        var officeQuery = window.PisDocketOfficeFilter
+            ? window.PisDocketOfficeFilter.docketListQuery()
+            : { officeId: $.cookie('field_office_id'), fieldOfficeId: $.cookie('field_office_id'), canSeeOtherOffices: false };
+        var fieldOfficeId = officeQuery.officeId;
         var term = searchTermForAjax();
 
         function finishFail(message) {
@@ -308,7 +298,7 @@
                     page: page,
                     size: size,
                     type: 'PIS_CSUP',
-                    officeId: fieldOfficeId
+                    officeId: officeQuery.officeId
                 },
                 success: function (json) {
                     try {
@@ -348,8 +338,8 @@
                 data: JSON.stringify({
                     name: term,
                     type: 'PIS_CSUP',
-                    fieldOfficeId: fieldOfficeId,
-                    canSeeOtherOffices: false
+                    fieldOfficeId: officeQuery.fieldOfficeId,
+                    canSeeOtherOffices: officeQuery.canSeeOtherOffices
                 }),
                 success: function (json) {
                     safeDataTablesCallback(callback, {
@@ -377,7 +367,6 @@
         csupListDataTable = $('#tblCourtesySupervisionDockets').DataTable({
             processing: false,
             serverSide: true,
-            scrollX: true,
             searching: false,
             lengthMenu: [10, 25, 50, 100],
             pageLength: 10,
@@ -387,11 +376,11 @@
             },
             columnDefs: [
                 { width: '5%', targets: [0] },
-                { width: '15%', targets: [1] },
-                { width: '15%', targets: [2] },
-                { width: '20%', targets: [3] },
-                { width: '15%', targets: [4] },
-                { width: '30%', targets: [5] }
+                { width: '18%', targets: [1] },
+                { width: '18%', targets: [2] },
+                { width: '24%', targets: [3] },
+                { width: '20%', targets: [4] },
+                { width: '1%', targets: [5], orderable: false, className: 'pis-actions-col text-nowrap' }
             ],
             ajax: csupListAjax,
             columns: tableColumns()
@@ -459,6 +448,13 @@
         $('.btn_remove_confirm').prop('disabled', false);
     });
 
+    if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.mountDocketOfficeFilter === 'function') {
+        window.PisDocketOfficeFilter.mountDocketOfficeFilter('.card-header', function () {
+            if (csupListDataTable) {
+                csupListDataTable.ajax.reload(null, true);
+            }
+        });
+    }
     bindRowActionsOnce();
     bindTableDrawOnce();
     initCsupListDataTable();

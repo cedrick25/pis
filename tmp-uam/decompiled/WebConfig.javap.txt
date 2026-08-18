@@ -1,0 +1,125 @@
+﻿Classfile /C:/wamp64/www/pis/BOOT-INF/classes/com/techsolve/uam/config/WebConfig.class
+  Last modified 13 Mar 2024; size 1314 bytes
+  SHA-256 checksum 4e992662f8477087df72d5ac1b59ba108f0e1af2d0ff6617c8f396760157d606
+  Compiled from "WebConfig.java"
+public class com.techsolve.uam.config.WebConfig extends org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+  minor version: 0
+  major version: 61
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #31                         // com/techsolve/uam/config/WebConfig
+  super_class: #2                         // org/springframework/web/servlet/config/annotation/WebMvcConfigurerAdapter
+  interfaces: 0, fields: 0, methods: 2, attributes: 2
+Constant pool:
+   #1 = Methodref          #2.#3          // org/springframework/web/servlet/config/annotation/WebMvcConfigurerAdapter."<init>":()V
+   #2 = Class              #4             // org/springframework/web/servlet/config/annotation/WebMvcConfigurerAdapter
+   #3 = NameAndType        #5:#6          // "<init>":()V
+   #4 = Utf8               org/springframework/web/servlet/config/annotation/WebMvcConfigurerAdapter
+   #5 = Utf8               <init>
+   #6 = Utf8               ()V
+   #7 = String             #8             // /**
+   #8 = Utf8               /**
+   #9 = Methodref          #10.#11        // org/springframework/web/servlet/config/annotation/CorsRegistry.addMapping:(Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #10 = Class              #12            // org/springframework/web/servlet/config/annotation/CorsRegistry
+  #11 = NameAndType        #13:#14        // addMapping:(Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #12 = Utf8               org/springframework/web/servlet/config/annotation/CorsRegistry
+  #13 = Utf8               addMapping
+  #14 = Utf8               (Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #15 = Class              #16            // java/lang/String
+  #16 = Utf8               java/lang/String
+  #17 = String             #18            // *
+  #18 = Utf8               *
+  #19 = Methodref          #20.#21        // org/springframework/web/servlet/config/annotation/CorsRegistration.allowedHeaders:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #20 = Class              #22            // org/springframework/web/servlet/config/annotation/CorsRegistration
+  #21 = NameAndType        #23:#24        // allowedHeaders:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #22 = Utf8               org/springframework/web/servlet/config/annotation/CorsRegistration
+  #23 = Utf8               allowedHeaders
+  #24 = Utf8               ([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #25 = Methodref          #20.#26        // org/springframework/web/servlet/config/annotation/CorsRegistration.allowedMethods:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #26 = NameAndType        #27:#24        // allowedMethods:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #27 = Utf8               allowedMethods
+  #28 = Methodref          #20.#29        // org/springframework/web/servlet/config/annotation/CorsRegistration.allowedOrigins:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #29 = NameAndType        #30:#24        // allowedOrigins:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+  #30 = Utf8               allowedOrigins
+  #31 = Class              #32            // com/techsolve/uam/config/WebConfig
+  #32 = Utf8               com/techsolve/uam/config/WebConfig
+  #33 = Utf8               Code
+  #34 = Utf8               LineNumberTable
+  #35 = Utf8               LocalVariableTable
+  #36 = Utf8               this
+  #37 = Utf8               Lcom/techsolve/uam/config/WebConfig;
+  #38 = Utf8               addCorsMappings
+  #39 = Utf8               (Lorg/springframework/web/servlet/config/annotation/CorsRegistry;)V
+  #40 = Utf8               registry
+  #41 = Utf8               Lorg/springframework/web/servlet/config/annotation/CorsRegistry;
+  #42 = Utf8               MethodParameters
+  #43 = Utf8               SourceFile
+  #44 = Utf8               WebConfig.java
+  #45 = Utf8               RuntimeVisibleAnnotations
+  #46 = Utf8               Lorg/springframework/context/annotation/Configuration;
+  #47 = Utf8               Lorg/springframework/web/servlet/config/annotation/EnableWebMvc;
+{
+  public com.techsolve.uam.config.WebConfig();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method org/springframework/web/servlet/config/annotation/WebMvcConfigurerAdapter."<init>":()V
+         4: return
+      LineNumberTable:
+        line 10: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/techsolve/uam/config/WebConfig;
+
+  public void addCorsMappings(org.springframework.web.servlet.config.annotation.CorsRegistry);
+    descriptor: (Lorg/springframework/web/servlet/config/annotation/CorsRegistry;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=5, locals=2, args_size=2
+         0: aload_1
+         1: ldc           #7                  // String /**
+         3: invokevirtual #9                  // Method org/springframework/web/servlet/config/annotation/CorsRegistry.addMapping:(Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+         6: iconst_1
+         7: anewarray     #15                 // class java/lang/String
+        10: dup
+        11: iconst_0
+        12: ldc           #17                 // String *
+        14: aastore
+        15: invokevirtual #19                 // Method org/springframework/web/servlet/config/annotation/CorsRegistration.allowedHeaders:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+        18: iconst_1
+        19: anewarray     #15                 // class java/lang/String
+        22: dup
+        23: iconst_0
+        24: ldc           #17                 // String *
+        26: aastore
+        27: invokevirtual #25                 // Method org/springframework/web/servlet/config/annotation/CorsRegistration.allowedMethods:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+        30: iconst_1
+        31: anewarray     #15                 // class java/lang/String
+        34: dup
+        35: iconst_0
+        36: ldc           #17                 // String *
+        38: aastore
+        39: invokevirtual #28                 // Method org/springframework/web/servlet/config/annotation/CorsRegistration.allowedOrigins:([Ljava/lang/String;)Lorg/springframework/web/servlet/config/annotation/CorsRegistration;
+        42: pop
+        43: return
+      LineNumberTable:
+        line 14: 0
+        line 15: 15
+        line 16: 27
+        line 17: 39
+        line 19: 43
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      44     0  this   Lcom/techsolve/uam/config/WebConfig;
+            0      44     1 registry   Lorg/springframework/web/servlet/config/annotation/CorsRegistry;
+    MethodParameters:
+      Name                           Flags
+      registry
+}
+SourceFile: "WebConfig.java"
+RuntimeVisibleAnnotations:
+  0: #46()
+    org.springframework.context.annotation.Configuration
+  1: #47()
+    org.springframework.web.servlet.config.annotation.EnableWebMvc

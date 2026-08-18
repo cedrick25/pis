@@ -1,0 +1,22 @@
+﻿Compiled from "UserRoleDto.java"
+public class com.techsolve.uam.dto.roles.UserRoleDto extends com.techsolve.uam.dto.BaseDto {
+  private java.lang.String userId;
+  private java.lang.String roleId;
+  private java.lang.String roleName;
+  private java.lang.Boolean status;
+  public static com.techsolve.uam.dto.roles.UserRoleDto$UserRoleDtoBuilder builder();
+  public java.lang.String getUserId();
+  public java.lang.String getRoleId();
+  public java.lang.String getRoleName();
+  public java.lang.Boolean getStatus();
+  public void setUserId(java.lang.String);
+  public void setRoleId(java.lang.String);
+  public void setRoleName(java.lang.String);
+  public void setStatus(java.lang.Boolean);
+  public java.lang.String toString();
+  public boolean equals(java.lang.Object);
+  protected boolean canEqual(java.lang.Object);
+  public int hashCode();
+  public com.techsolve.uam.dto.roles.UserRoleDto();
+  public com.techsolve.uam.dto.roles.UserRoleDto(java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean);
+}

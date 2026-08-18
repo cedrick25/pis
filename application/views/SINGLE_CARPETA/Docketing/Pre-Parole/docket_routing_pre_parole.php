@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm float-right">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm float-right" data-permission="can_forward_docket_routing_pre_parole" style="display:none;">Confirm</button>
                             </div>
                         </div>
                     </div>

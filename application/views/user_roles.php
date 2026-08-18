@@ -2,21 +2,43 @@
 
 <style>
   .permission-item {
-    margin-bottom: 10px;
+    margin-bottom: 4px;
+    width: 100%;
   }
   .permission-row {
     display: flex;
     align-items: center;
-    gap: 8px; /* spacing between switch and label */
+    gap: 10px;
+    padding: 4px 0;
   }
   .permission-label {
-    /*font-weight: bold;*/
-    margin-left: 5px;
-    /*margin-bottom: 30px;*/
+    margin-left: 0;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  .permission-item.is-module > .permission-row .permission-label {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1b1b1b;
+  }
+  .permission-item.is-submodule > .permission-row .permission-label {
+    font-weight: 600;
+    color: #2c2c2c;
+  }
+  .permission-item.is-action > .permission-row .permission-label {
+    font-weight: 400;
+    color: #444;
   }
   .sub-permission {
-    margin-left: 15px;
-    margin-top: 10px;
+    margin-left: 22px;
+    margin-top: 2px;
+    margin-bottom: 6px;
+    padding-left: 12px;
+    border-left: 2px solid #e3e6ea;
+    width: 100%;
+  }
+  .sub-permission .sub-permission {
+    margin-left: 18px;
   }
   /* switch style */
   .switch {
@@ -24,6 +46,7 @@
     display: inline-block;
     width: 40px;
     height: 20px;
+    flex-shrink: 0;
   }
   .switch input {
     opacity: 0;
@@ -169,7 +192,6 @@
                 <div class="modal-body col-md-12">
                     <div class="col col-md-12 row">
                         <div class="col col-md-10"><label for="text-input" class=" form-control-label" style="display:block">Permissions:</label></div>
-                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" style="display:block">Grant</label></div>
                     </div>
                     <div class="col col-md-12 row permission_list_update">
                     </div>
@@ -250,6 +272,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/permissionTree.js"></script>
     <script src="assets/js/pisJs/user_roles.js"></script>
 </body>
 

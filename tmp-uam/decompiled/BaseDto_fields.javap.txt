@@ -1,0 +1,25 @@
+﻿Compiled from "BaseDto.java"
+public abstract class com.techsolve.uam.dto.BaseDto implements java.io.Serializable {
+  private static final long serialVersionUID;
+  private java.lang.Long id;
+  private java.lang.String createdBy;
+  private java.time.LocalDateTime createdDate;
+  private java.lang.String updatedBy;
+  private java.time.LocalDateTime updatedDate;
+  public java.lang.Long getId();
+  public java.lang.String getCreatedBy();
+  public java.time.LocalDateTime getCreatedDate();
+  public java.lang.String getUpdatedBy();
+  public java.time.LocalDateTime getUpdatedDate();
+  public void setId(java.lang.Long);
+  public void setCreatedBy(java.lang.String);
+  public void setCreatedDate(java.time.LocalDateTime);
+  public void setUpdatedBy(java.lang.String);
+  public void setUpdatedDate(java.time.LocalDateTime);
+  public boolean equals(java.lang.Object);
+  protected boolean canEqual(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+  public com.techsolve.uam.dto.BaseDto(java.lang.Long, java.lang.String, java.time.LocalDateTime, java.lang.String, java.time.LocalDateTime);
+  public com.techsolve.uam.dto.BaseDto();
+}

@@ -178,6 +178,10 @@
     }
 
     function resolveFieldOfficeId(callback) {
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.resolveListOfficeId === 'function') {
+            window.PisDocketOfficeFilter.resolveListOfficeId(callback);
+            return;
+        }
         var fieldOfficeId = $.cookie('field_office_id');
         if (fieldOfficeId != null && String(fieldOfficeId).trim() !== '') {
             callback(fieldOfficeId);
@@ -194,6 +198,17 @@
             return;
         }
         callback(null);
+    }
+
+    function listOfficeQuery(fieldOfficeId) {
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.docketListQuery === 'function') {
+            return window.PisDocketOfficeFilter.docketListQuery(fieldOfficeId);
+        }
+        return {
+            officeId: fieldOfficeId,
+            fieldOfficeId: fieldOfficeId,
+            canSeeOtherOffices: false
+        };
     }
 
     function investigationListAjax(data, callback /* , settings */) {
@@ -224,6 +239,7 @@
                 setPisInvDocketListLoader(false);
                 return;
             }
+            var officeQuery = listOfficeQuery(fieldOfficeId);
 
             if (!term) {
             $.ajax({
@@ -235,7 +251,7 @@
                     page: page,
                     size: size,
                     type: INVESTIGATION_DOCKET_TYPE,
-                    officeId: fieldOfficeId
+                    officeId: officeQuery.officeId
                 }
             })
                 .done(function (json) {
@@ -270,8 +286,8 @@
                 data: JSON.stringify({
                     name: term,
                     type: INVESTIGATION_DOCKET_TYPE,
-                    fieldOfficeId: fieldOfficeId,
-                    canSeeOtherOffices: false
+                    fieldOfficeId: officeQuery.fieldOfficeId,
+                    canSeeOtherOffices: officeQuery.canSeeOtherOffices
                 })
             })
                 .done(function (json) {
@@ -300,34 +316,21 @@
     }
 
     function buttonVisibility() {
-        var raw = localStorage.getItem('permission');
-        var perm = null;
-        if (raw) {
-            try {
-                perm = JSON.parse(raw);
-            } catch (e) {
-                perm = null;
-            }
-        }
-        if (!Array.isArray(perm)) {
+        if (typeof window.applyPermissionVisibility === 'function') {
+            window.applyPermissionVisibility();
             return;
         }
-        perm.forEach(function (row) {
-            if (row.type === 'ACTION') {
-                var el = $('.' + row.detail);
-                if (!row.value) {
-                    el.hide();
-                } else {
-                    el.show();
-                }
-            } else if (row.type === 'VIEW') {
-                var elv = $('.' + row.detail);
-                if (!row.value) {
-                    elv.hide();
-                } else {
-                    elv.show();
-                }
-            }
+        var raw = localStorage.getItem('permission');
+        var data = null;
+        if (raw) {
+            try { data = JSON.parse(raw); } catch (e) { data = null; }
+        }
+        $('[data-permission]').hide();
+        if (!data || !Array.isArray(data)) { return; }
+        data.forEach(function (row) {
+            if (!row || !row.detail) { return; }
+            var $el = $('[data-permission="' + row.detail + '"]');
+            if (row.value) { $el.show(); } else { $el.hide(); }
         });
     }
 
@@ -348,7 +351,7 @@
             .on('click.pisInvDock', '.btn_update', function () {
                 var docket_number = $(this).data('docket');
                 var petitionerId = $(this).data('cid');
-                var officeId = $.cookie('field_office_id');
+                var officeId = $(this).data('oi') || $.cookie('field_office_id');
                 window.location.href = joinApiUrl(
                     api,
                     'pis/investigation_docket_update?docket_number=' +
@@ -364,7 +367,7 @@
             .off('click.pisInvDock', '.btn_view')
             .on('click.pisInvDock', '.btn_view', function () {
                 var docket_number = $(this).data('docket');
-                var officeId = $.cookie('field_office_id');
+                var officeId = $(this).data('oi') || $.cookie('field_office_id');
                 window.location.href = joinApiUrl(
                     api,
                     'pis/investigation_docket_view?docket_number=' +
@@ -451,8 +454,9 @@
         investigationListDataTable = $(TABLE_SEL).DataTable({
             processing: false,
             serverSide: true,
-            scrollX: true,
             searching: false,
+            ordering: false,
+            order: [],
             lengthMenu: [10, 25, 50, 100],
             pageLength: 10,
             language: {
@@ -460,13 +464,13 @@
                 zeroRecords: 'No dockets found.'
             },
             columnDefs: [
-                { width: '5%', targets: [0] },
-                { width: '15%', targets: [1] },
-                { width: '10%', targets: [2] },
-                { width: '17%', targets: [3] },
-                { width: '13%', targets: [4] },
-                { width: '15%', targets: [5] },
-                { width: '25%', targets: [6] }
+                { width: '4%', targets: [0] },
+                { width: '16%', targets: [1] },
+                { width: '12%', targets: [2] },
+                { width: '24%', targets: [3] },
+                { width: '18%', targets: [4] },
+                { width: '18%', targets: [5] },
+                { width: '1%', targets: [6], orderable: false, className: 'pis-actions-col text-nowrap' }
             ],
             ajax: investigationListAjax,
             columns: tableColumns()
@@ -559,28 +563,32 @@
                         '<div class="pis-inv-docket-actions" role="group" aria-label="Actions for docket ' +
                         dn +
                         '">' +
-                        '<button type="button" class="btn btn-sm btn-primary btn_view pb_inv_view" data-docket="' +
+                        '<button type="button" class="btn btn-sm btn-primary btn_view " data-permission="can_view_docket_probation_investigation" data-docket="' +
                         dn +
                         '" data-petitionerid="' +
                         cid +
+                        '" data-oi="' +
+                        oi +
                         '" aria-label="View docket ' +
                         dn +
                         '" title="View"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
-                        ' <button type="button" class="btn btn-sm btn-primary btn_update pb_inv_update" data-docket="' +
+                        ' <button type="button" class="btn btn-sm btn-primary btn_update " data-permission="can_edit_docket_probation_investigation" data-docket="' +
                         dn +
                         '" data-cid="' +
                         cid +
+                        '" data-oi="' +
+                        oi +
                         '" aria-label="Update docket ' +
                         dn +
                         '" title="Update"><i class="fa fa-edit" aria-hidden="true"></i> Update</button>' +
-                        '  <button type="button" class="btn btn-sm btn-primary btn_attachments pb_inv_attachments" data-docket="' +
+                        '  <button type="button" class="btn btn-sm btn-primary btn_attachments " data-permission="can_attachments_docket_probation_investigation" data-docket="' +
                         dn +
                         '" data-oi="' +
                         oi +
                         '" aria-label="Attachments for docket ' +
                         dn +
                         '" title="Attachments"><i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</button>' +
-                        ' <button type="button" class="btn btn-sm btn-danger btn_remove pb_inv_remove" data-toggle="modal" data-target="#removeModal" data-docket="' +
+                        ' <button type="button" class="btn btn-sm btn-danger btn_remove " data-permission="can_delete_docket_probation_investigation" data-toggle="modal" data-target="#removeModal" data-docket="' +
                         dn +
                         '" data-oi="' +
                         oi +
@@ -662,6 +670,13 @@
     }
 
     function startInvestigationDocketListPage() {
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.mountDocketOfficeFilter === 'function') {
+            window.PisDocketOfficeFilter.mountDocketOfficeFilter('#pager', function () {
+                if (investigationListDataTable) {
+                    investigationListDataTable.ajax.reload(null, true);
+                }
+            });
+        }
         wireSearchAndModalUi();
         bindRowActionsOnce();
         bindRemoveModalConfirm();

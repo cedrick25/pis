@@ -314,7 +314,7 @@
                 "data": null,
                 "render": function (data, type, row) {
                     // <button class='btn btn-sm btn-danger btn_remove client_remove' type='submit' data-id='" + data.id + "'><i class='fa fa-trash'></i> Remove</button>
-                    return "<button class='btn btn-sm btn-primary btn_update client_update client_update_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_view client_view client_view_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_upload client_upload client_upload_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
+                    return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-refresh'></i> Update</button> <button class='btn btn-sm btn-primary btn_view client_view' data-permission='can_view_fact_sheet_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-eye'></i> View</button> <button class='btn btn-sm btn-primary btn_upload' data-permission='can_attachments_fact_sheet_pdl' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
                 }
             }
         ]

@@ -167,76 +167,21 @@
             drawTable(type, uuid); // Draw or reload the table
         });
 
-        function buttonVisibility (){
-            var data = JSON.parse(localStorage.getItem('permission'));
-            if (data != null) {
-                data.forEach(function(data){
-                    if (data.type == "ACTION") {
-                        // console.log(data.value)
-                        setTimeout(function() {
-                            if (!data.value) {
-                                var element = $('.' + data.detail);
-                                element.hide();
-                            }else{
-                                var element = $('.' + data.detail);
-                                element.show();
-                            }
-                        }, 10);
-                    }else if (data.type == "VIEW") {
-                        if (!data.value) {
-                            var element = $('.' + data.detail);
-                            element.hide();
-                        }else{
-                            var element = $('.' + data.detail);
-                            element.show();
-                        }
-                    }else{
-                    }
-                });
-            }
+        function buttonVisibility() {
+        if (typeof window.applyPermissionVisibility === 'function') {
+            window.applyPermissionVisibility();
+            return;
         }
-
-        function buttonFunctionality(){
-            $(".btn_view").unbind("click").on("click", function(){
-                var id = $(this).data("id");
-                var docket_number = $(this).data("docket");
-                window.location.href = (window.__PIS_BASE_URL || '') + 'sent_view?docket_number='+docket_number+'&id='+id;
-            })
+        var raw = localStorage.getItem('permission');
+        var data = null;
+        if (raw) {
+            try { data = JSON.parse(raw); } catch (e) { data = null; }
         }
-
-        function tableColumns() {
-            return [
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        return meta.settings._iDisplayStart + meta.row + 1;
-                    }
-                },
-                {
-                    "data": 'docketNumber'
-                },
-                {
-                    "data": 'fieldOfficeName'
-                },
-                {
-                    "data": 'details',
-                },
-                {
-                    "data": 'senderName'
-                },
-                {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        return "Sent"
-                    }
-                },
-                {
-                    "data": null,
-                    render: function(data, type, row) {
-                        return "<button class='btn btn-sm btn-primary btn_view' type='submit' data-docket='"+data.docketNumber+"' data-id='"+data.id+"' data-type='"+data.type+"' data-fi='"+data.departmentId+"'><i class='fa fa-eye'></i> View</button>";
-                    }
-                }
-            ]
-        }
-
+        $('[data-permission]').hide();
+        if (!data || !Array.isArray(data)) { return; }
+        data.forEach(function (row) {
+            if (!row || !row.detail) { return; }
+            var $el = $('[data-permission="' + row.detail + '"]');
+            if (row.value) { $el.show(); } else { $el.hide(); }
+        });
     } )( jQuery );

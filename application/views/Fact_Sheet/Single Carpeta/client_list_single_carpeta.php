@@ -231,7 +231,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-success client_add client_add_pdl ml-auto" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button>
+                                <button class="btn btn-sm btn-success client_add ml-auto" data-permission="can_create_fact_sheet_pdl" style='display:none;' type="submit"><i class="fa fa-plus-circle"></i> Add Client</button>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="myTabContent">

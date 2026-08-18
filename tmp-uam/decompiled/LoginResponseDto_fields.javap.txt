@@ -1,0 +1,40 @@
+﻿Compiled from "LoginResponseDto.java"
+public class com.techsolve.uam.dto.users.LoginResponseDto implements java.io.Serializable {
+  private boolean authenticated;
+  private java.lang.Long failedAttemptsCount;
+  private java.lang.Boolean isLocked;
+  private java.lang.String accountStatus;
+  private java.lang.String uuid;
+  private com.techsolve.uam.dto.roles.UserRoleDto role;
+  private java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto> rolePermission;
+  private java.lang.String firstName;
+  private java.lang.String email;
+  private java.lang.String mobileNumber;
+  public static com.techsolve.uam.dto.users.LoginResponseDto$LoginResponseDtoBuilder builder();
+  public boolean isAuthenticated();
+  public java.lang.Long getFailedAttemptsCount();
+  public java.lang.Boolean getIsLocked();
+  public java.lang.String getAccountStatus();
+  public java.lang.String getUuid();
+  public com.techsolve.uam.dto.roles.UserRoleDto getRole();
+  public java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto> getRolePermission();
+  public java.lang.String getFirstName();
+  public java.lang.String getEmail();
+  public java.lang.String getMobileNumber();
+  public void setAuthenticated(boolean);
+  public void setFailedAttemptsCount(java.lang.Long);
+  public void setIsLocked(java.lang.Boolean);
+  public void setAccountStatus(java.lang.String);
+  public void setUuid(java.lang.String);
+  public void setRole(com.techsolve.uam.dto.roles.UserRoleDto);
+  public void setRolePermission(java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto>);
+  public void setFirstName(java.lang.String);
+  public void setEmail(java.lang.String);
+  public void setMobileNumber(java.lang.String);
+  public boolean equals(java.lang.Object);
+  protected boolean canEqual(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+  public com.techsolve.uam.dto.users.LoginResponseDto();
+  public com.techsolve.uam.dto.users.LoginResponseDto(boolean, java.lang.Long, java.lang.Boolean, java.lang.String, java.lang.String, com.techsolve.uam.dto.roles.UserRoleDto, java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto>, java.lang.String, java.lang.String, java.lang.String);
+}

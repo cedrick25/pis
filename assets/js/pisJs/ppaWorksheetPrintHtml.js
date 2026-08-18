@@ -26,8 +26,7 @@
 
     function chk(label, on) {
         return (
-            '<span class="chk' +
-            (on ? " on" : "") +
+            '<span class="chk' + (on ? " on" : "") +
             '"><span class="dot"></span>' +
             esc(label) +
             "</span>"

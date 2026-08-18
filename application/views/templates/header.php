@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.css"> -->
     <link rel="stylesheet" href="assets/css/select2.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pis-table-actions.css">
 
     <link rel="stylesheet" href="assets/css/fonts.css">
     <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'> -->

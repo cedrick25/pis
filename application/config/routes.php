@@ -77,6 +77,7 @@ $route['permission'] = "routes/permission";
 $route['user_accounts'] = "routes/user_accounts";
 $route['user_roles'] = "routes/user_roles";
 $route['dashboard'] = "routes/dashboard";
+$route['no_permission'] = "routes/no_permission";
 $route['single_carpeta_create'] = "routes/single_carpeta_create";
 $route['single_carpeta'] = "routes/single_carpeta";
 $route['single_carpeta_update'] = "routes/single_carpeta_update";

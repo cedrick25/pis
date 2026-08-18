@@ -170,7 +170,10 @@
 
             var page = data.start / data.length;
             var size = data.length;
-            var fieldOfficeId = $.cookie('field_office_id');
+            var officeQuery = window.PisDocketOfficeFilter
+                ? window.PisDocketOfficeFilter.docketListQuery()
+                : { officeId: $.cookie('field_office_id'), fieldOfficeId: $.cookie('field_office_id'), canSeeOtherOffices: false };
+            var fieldOfficeId = officeQuery.officeId;
             var term = searchTermForAjax();
 
             function finishFail(message) {
@@ -192,7 +195,7 @@
                         page: page,
                         size: size,
                         type: 'PIS_CSINV',
-                        officeId: fieldOfficeId
+                        officeId: officeQuery.officeId
                     }
                 }).done(function (json) {
                     callback({
@@ -214,8 +217,8 @@
                     data: JSON.stringify({
                         name: term,
                         type: 'PIS_CSINV',
-                        fieldOfficeId: fieldOfficeId,
-                        canSeeOtherOffices: false
+                        fieldOfficeId: officeQuery.fieldOfficeId,
+                        canSeeOtherOffices: officeQuery.canSeeOtherOffices
                     })
                 }).done(function (json) {
                     callback({
@@ -231,32 +234,23 @@
             }
         }
 
-        function buttonVisibility (){
-            var data = JSON.parse(localStorage.getItem('permission'));
-            if (data != null) {
-                data.forEach(function(data){
-                    if (data.type == "ACTION") {
-                        setTimeout(function() {
-                            if (!data.value) {
-                                var element = $('.' + data.detail);
-                                element.hide();
-                            }else{
-                                var element = $('.' + data.detail);
-                                element.show();
-                            }
-                        }, 10);
-                    }else if (data.type == "VIEW") {
-                        if (!data.value) {
-                            var element = $('.' + data.detail);
-                            element.hide();
-                        }else{
-                            var element = $('.' + data.detail);
-                            element.show();
-                        }
-                    }else{
-                    }
-                });
+        function buttonVisibility() {
+            if (typeof window.applyPermissionVisibility === 'function') {
+                window.applyPermissionVisibility();
+                return;
             }
+            var raw = localStorage.getItem('permission');
+            var data = null;
+            if (raw) {
+                try { data = JSON.parse(raw); } catch (e) { data = null; }
+            }
+            $('[data-permission]').hide();
+            if (!data || !Array.isArray(data)) { return; }
+            data.forEach(function (row) {
+                if (!row || !row.detail) { return; }
+                var $el = $('[data-permission="' + row.detail + '"]');
+                if (row.value) { $el.show(); } else { $el.hide(); }
+            });
         }
 
         function buttonFunctionality(){
@@ -334,7 +328,6 @@
             courtesyListDataTable = $table.DataTable({
                 "processing": false,
                 "serverSide": true,
-                "scrollX": true,
                 "searching": false,
                 "lengthMenu": [10, 25, 50, 100],
                 "pageLength": 10,
@@ -344,11 +337,11 @@
                 },
                 "columnDefs": [
                     { "width": "5%", "targets": [0] },
-                    { "width": "15%", "targets": [1] },
-                    { "width": "20%", "targets": [2] },
-                    { "width": "15%", "targets": [3] },
-                    { "width": "15%", "targets": [4] },
-                    { "width": "30%", "targets": [5] }
+                    { "width": "18%", "targets": [1] },
+                    { "width": "24%", "targets": [2] },
+                    { "width": "18%", "targets": [3] },
+                    { "width": "20%", "targets": [4] },
+                    { "width": "1%", "targets": [5], "orderable": false, "className": "pis-actions-col text-nowrap" }
                 ],
                 "ajax": courtesyListAjax,
                 "columns": tableColumns()
@@ -435,10 +428,10 @@
                         var oi = escAttr(data.fieldOfficeId);
                         return (
                             '<div class="courtesy-inv-actions" role="group" aria-label="Actions for docket ' + dn + '">' +
-                            '<button type="button" class="btn btn-sm btn-primary btn_view pb_cinv_view" data-docket="' + dn + '" aria-label="View docket ' + dn + '" title="View"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
-                            '<button type="button" class="btn btn-sm btn-primary btn_update pb_cinv_update" data-docket="' + dn + '" data-cid="' + cid + '" aria-label="Update docket ' + dn + '" title="Update"><i class="fa fa-edit" aria-hidden="true"></i> Update</button>' +
-                            '<button type="button" class="btn btn-sm btn-primary btn_attachments pb_cinv_attachments" data-docket="' + dn + '" data-id="' + cid + '" data-type="investigation" data-oi="' + oi + '" aria-label="Attachments for docket ' + dn + '" title="Attachments"><i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</button>' +
-                            '<button type="button" class="btn btn-sm btn-danger btn_remove pb_cinv_remove" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>' +
+                            '<button type="button" class="btn btn-sm btn-primary btn_view" data-permission="can_view_docket_probation_courtesy_investigation" data-docket="' + dn + '" aria-label="View docket ' + dn + '" title="View"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
+                            '<button type="button" class="btn btn-sm btn-primary btn_update" data-permission="can_edit_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-cid="' + cid + '" aria-label="Update docket ' + dn + '" title="Update"><i class="fa fa-edit" aria-hidden="true"></i> Update</button>' +
+                            '<button type="button" class="btn btn-sm btn-primary btn_attachments" data-permission="can_attachments_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-id="' + cid + '" data-type="investigation" data-oi="' + oi + '" aria-label="Attachments for docket ' + dn + '" title="Attachments"><i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</button>' +
+                            '<button type="button" class="btn btn-sm btn-danger btn_remove" data-permission="can_delete_docket_probation_courtesy_investigation" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>' +
                             '</div>'
                         );
                     }

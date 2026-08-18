@@ -1,0 +1,16 @@
+﻿Compiled from "RolePermissionDto.java"
+public class com.techsolve.uam.dto.roles.RolePermissionDto implements java.io.Serializable {
+  private java.lang.String roleId;
+  private java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto> permissionList;
+  public static com.techsolve.uam.dto.roles.RolePermissionDto$RolePermissionDtoBuilder builder();
+  public java.lang.String getRoleId();
+  public java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto> getPermissionList();
+  public void setRoleId(java.lang.String);
+  public void setPermissionList(java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto>);
+  public java.lang.String toString();
+  public boolean equals(java.lang.Object);
+  protected boolean canEqual(java.lang.Object);
+  public int hashCode();
+  public com.techsolve.uam.dto.roles.RolePermissionDto();
+  public com.techsolve.uam.dto.roles.RolePermissionDto(java.lang.String, java.util.List<com.techsolve.uam.dto.permission.PermissionDataDto>);
+}

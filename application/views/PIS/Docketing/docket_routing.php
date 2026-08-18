@@ -131,7 +131,7 @@
                                 <!-- reset button class: probation_rcv_reset
                                     if needed pls attach to the button -->
                                 <button type="button" class="btn btn-secondary btn-sm btn-reset" style='display:none;'>Reset</button>
-                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm probation_rcv_submit float-right" style='display:none;'>Confirm</button>
+                                <button type="button" class="btn btn-primary btn-confirm_forward btn-sm float-right" data-permission="can_forward_docket_routing_probation" style='display:none;'>Confirm</button>
                             </div>
                         </div>
                     </div>
