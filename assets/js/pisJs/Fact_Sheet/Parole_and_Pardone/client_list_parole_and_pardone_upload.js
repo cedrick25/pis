@@ -279,12 +279,13 @@
                 if (result.status != "ERROR") {
                     var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffix; 
                     // console.log(fullname)
-                    var officeId = result.departmentId;
+                    var userOfficeId = result.departmentId;
                     // console.log(officeId);
                     $(".uploader").val(fullname);
                     $(".uploader").prop('disabled', true);
                     __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
                         var result = result.response;
+                        var officeId = result.fieldOfficeId || GetURLParameter('field_office_id') || userOfficeId;
                         // console.log(client_id)
                         var name = result.firstName + " " + result.lastName;
                         load_table('investigation', `ppis_${client_id}`, officeId)

@@ -119,11 +119,11 @@
         __executeExternalGet('8000/petitioner/'+client_id).done(function (result) {
             var result = result.response;
             // console.log(result)
-            var officeId = result.fieldOfficeId;
+            var officeId = result.fieldOfficeId || GetURLParameter('field_office_id') || $.cookie("field_office_id");
             var fullname = result.firstName+" "+result.middleName+" "+result.lastName+" "+result.suffixName;
             var file_uuid = result.clientType + "_" + result.criminalCaseNo;
             // console.log(officeId)
-            __executeExternalGet('8080/file/list/'+result.clientType+'/'+file_uuid+'/'+$.cookie("field_office_id")).done(function (result) {
+            __executeExternalGet('8080/file/list/'+result.clientType+'/'+file_uuid+'/'+officeId).done(function (result) {
             // console.log("==========")
             // console.log(result)
             // console.log("==========")

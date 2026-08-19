@@ -99,9 +99,8 @@
 
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header d-flex flex-wrap align-items-center justify-content-between" id="pager">
-                                <strong class="card-title mb-0">Probation Fact Sheet</strong>
-                                <div id="prob_fs_client_search_slot" class="mt-2 mt-md-0"></div>
+                            <div class="card-header" id="pager">
+                                <strong class="card-title">Probation Fact Sheet</strong>
                             </div>
                             <div class="card-body">
                                 <div id="client_list_page_error" class="alert alert-danger" style="display:none;" role="alert"></div>

@@ -168,6 +168,23 @@
     };
 
     var officeId = $.cookie("field_office_id") || '';
+
+    function isFactSheetAdmin() {
+        return !!(window.PisDocketOfficeFilter &&
+            typeof window.PisDocketOfficeFilter.isDocketAdmin === 'function' &&
+            window.PisDocketOfficeFilter.isDocketAdmin());
+    }
+
+    function listOfficeQuery() {
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.docketListQuery === 'function') {
+            return window.PisDocketOfficeFilter.docketListQuery();
+        }
+        return {
+            officeId: officeId,
+            fieldOfficeId: officeId,
+            canSeeOtherOffices: false
+        };
+    }
     let petitionerData;
     let clientType;
     function buttonFunctionality () {
@@ -179,18 +196,21 @@
         })
         $(".btn_update").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
-            window.location.href = api+'/pis/client_update?client_id='+client_id;
+            var foid = $(this).data("foid") || $.cookie("field_office_id");
+            window.location.href = api+'/pis/client_update?client_id='+client_id+'&client_fo='+encodeURIComponent(foid || '');
             // window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
         })
         $(".btn_upload").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
             var client_type = $(this).data("type");
-            window.location.href = api+'/pis/client_file_upload?client_id='+client_id+'&client_type='+client_type;
+            var foid = $(this).data("foid") || $.cookie("field_office_id");
+            window.location.href = api+'/pis/client_file_upload?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || '');
         })
         $(".btn_view").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
             var client_type = $(this).data("type");
-            window.location.href = api+'/pis/client_view_upload?client_id='+client_id+'&client_type='+client_type;
+            var foid = $(this).data("foid") || $.cookie("field_office_id");
+            window.location.href = api+'/pis/client_view_upload?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || '');
         })
         $(".btn_psir").unbind("click").on("click", function(){
             var client_id   = $(this).data("id");
@@ -786,7 +806,10 @@
 
         var page = data.start / data.length;
         var size = data.length;
-        var fieldOfficeId = $.cookie('field_office_id');
+        var officeQuery = listOfficeQuery();
+        var fieldOfficeId = officeQuery.officeId;
+        var canSeeOther = !!officeQuery.canSeeOtherOffices ||
+            String(fieldOfficeId || '').toUpperCase() === 'ALL';
         var term = searchTermForAjax();
 
         function finishFail(message) {
@@ -803,7 +826,7 @@
             setProbFsClientListLoader(false);
         }
 
-        if (fieldOfficeId == null || String(fieldOfficeId).trim() === '') {
+        if (!canSeeOther && (fieldOfficeId == null || String(fieldOfficeId).trim() === '')) {
             finishFail('Your field office could not be determined. Please sign in again.');
             onAjaxComplete();
             return;
@@ -859,8 +882,8 @@
                 cache: false,
                 data: JSON.stringify({
                     name: term,
-                    fieldOfficeId: fieldOfficeId,
-                    canSeeOtherOffices: false
+                    fieldOfficeId: officeQuery.fieldOfficeId,
+                    canSeeOtherOffices: canSeeOther
                 })
             })
                 .done(function (json) {
@@ -962,7 +985,7 @@
 
     var searchHtml =
         '<div class="prob-fs-client-search-toolbar" role="search" style="display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px;">' +
-        '<label for="prob_fs_client_search" style="margin-bottom: 0; white-space: nowrap;">Search</label>' +
+        '<label for="prob_fs_client_search" style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
         '<div class="prob-fs-client-search-wrap" style="width: 250px; max-width: 100%;">' +
         '<input type="search" id="prob_fs_client_search" class="form-control form-control-sm prob-fs-client-search-input" placeholder="Name or case number" autocomplete="off" inputmode="search">' +
         '<button type="button" class="prob-fs-client-search-clear" title="Clear search" aria-label="Clear search">' +
@@ -1087,10 +1110,17 @@
                 'Application configuration is missing (API base URL). Try refreshing the page or contact your administrator.'
             );
         }
-    } else if (!officeId) {
+    } else if (!officeId && !isFactSheetAdmin()) {
         setProbFsClientListLoader(false);
         showClientListPageError('Your session is missing field office information. Please sign in again.');
     } else {
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.mountDocketOfficeFilter === 'function') {
+            window.PisDocketOfficeFilter.mountDocketOfficeFilter('#pager', function () {
+                if (probationClientListDataTable) {
+                    probationClientListDataTable.ajax.reload(null, true);
+                }
+            });
+        }
         wireProbationClientListSearchUi();
         initProbationClientListDataTable();
         if (probationClientListDataTable) {

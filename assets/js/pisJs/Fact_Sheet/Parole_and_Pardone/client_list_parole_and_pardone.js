@@ -95,6 +95,18 @@
     var officeId = $.cookie("field_office_id");
     let petitionerData;
     let clientType;
+
+    function listOfficeQuery() {
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.docketListQuery === 'function') {
+            return window.PisDocketOfficeFilter.docketListQuery();
+        }
+        return {
+            officeId: officeId,
+            fieldOfficeId: officeId,
+            canSeeOtherOffices: false
+        };
+    }
+
     function buttonFunctionality(){
         $(".btn_worksheet").unbind("click").on("click", function(){
             var client_id   = $(this).data("id");
@@ -104,20 +116,23 @@
         })
         $(".btn_update").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
-            window.location.href = api+'/pis/client_list_parole_and_pardone_update?client_id='+client_id;
+            var foid = $(this).data("foid") || $.cookie("field_office_id");
+            window.location.href = api+'/pis/client_list_parole_and_pardone_update?client_id='+client_id+'&field_office_id='+encodeURIComponent(foid || '');
             // window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
 
         })
         $(".btn_upload").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
             var client_type = $(this).data("type");
-            window.location.href = api+'/pis/client_list_parole_and_pardone_upload?client_id='+client_id+'&client_type='+client_type;
+            var foid = $(this).data("foid") || $.cookie("field_office_id");
+            window.location.href = api+'/pis/client_list_parole_and_pardone_upload?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || '');
         })
         $(".btn_view").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
             var client_type = $(this).data("type");
+            var foid = $(this).data("foid") || $.cookie("field_office_id");
             // console.log(client_type)
-            window.location.href = api+'/pis/client_list_parole_and_pardone_view_attachments?client_id='+client_id+'&client_type='+client_type;
+            window.location.href = api+'/pis/client_list_parole_and_pardone_view_attachments?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || '');
         }) 
     }
 
@@ -163,12 +178,12 @@
                     type: 'GET',
                     cache: true,
                     data: function (d) {
-                        // Dynamically add the current 'type' parameter
+                        var officeQuery = listOfficeQuery();
                         return {
                             page: d.start / d.length,  // Pagination
                             size: d.length,            // Page size
                             type: clientType,          // Pass the updated clientType (PAROLEE/PARDONEE)
-                            officeId: $.cookie('field_office_id')
+                            officeId: officeQuery.officeId
                         };
                     },
                     dataFilter: function (data) {
@@ -193,12 +208,12 @@
 
             // Modify the ajax data function to use the new clientType
             table.settings()[0].ajax.data = function(d) {
-                console.log("Updated client type on reload:", clientType);
+                var officeQuery = listOfficeQuery();
                 return {
                     page: d.start / d.length,  // Pagination
                     size: d.length,            // Page size
                     type: clientType,          // Pass the new clientType dynamically
-                    officeId: $.cookie('field_office_id')
+                    officeId: officeQuery.officeId
                 };
             };
 
@@ -263,14 +278,15 @@
                     // // Return an empty string if the condition is not met
                     // return "";
                     // <button class='btn btn-sm btn-primary btn_pecir' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-plus-circle'></i> PECIR</button>
-                    return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload' data-permission='can_attachments_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-upload'></i> Attachments</button>";
+                    var foid = data.fieldOfficeId == null ? '' : String(data.fieldOfficeId);
+                    return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-foid='" + foid + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload' data-permission='can_attachments_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "' data-foid='" + foid + "'><i class='fa fa-upload'></i> Attachments</button>";
                 }
             }
         ]
     }
     // <button class='btn btn-sm btn-success btn_worksheet' data-permission="can_worksheet_fact_sheet_probation" perm_worksheet' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> Worksheet</button> <button class='btn btn-sm btn-primary btn_psir' data-permission="can_psir_fact_sheet_probation" perm_psir' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-plus-circle'></i> PSIR</button> <button class='btn btn-sm btn-success btn_pdfPSIR' data-permission="can_generate_psir_fact_sheet_probation" perm_pdfPSIR' type='submit' data-id='" + data.id + "' data-foid='" + data.fieldOfficeId + "'><i class='fa fa-download'></i> Generate PSIR</button>
 
-    var searchHtml = '<div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">' +
+    var searchHtml = '<div class="sup-docket-search-toolbar" role="search" style="display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px;">' +
         '<label style="margin-bottom: 0; white-space: nowrap;">Search:</label>' +
         '<input type="text" class="form-control form-control-sm searchInput" placeholder="Search Client" style="width: 250px;">' +
         '<button class="btn btn-primary btn-sm client_search"><i class="fa fa-search"></i></button>' +
@@ -282,6 +298,14 @@
             $target.html(searchHtml);
             if (value) $target.find('.searchInput').val(value);
         }
+    }
+
+    if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.mountDocketOfficeFilter === 'function') {
+        window.PisDocketOfficeFilter.mountDocketOfficeFilter('#pager', function () {
+            if ($.fn.DataTable.isDataTable('.table_head')) {
+                $('.table_head').DataTable().ajax.reload(null, true);
+            }
+        });
     }
 
     var tableParolee = document.getElementById('client_pr');
@@ -340,8 +364,6 @@
             return;
         }
 
-        var fieldOfficeId = $.cookie('field_office_id');
-
         $('.table_head').DataTable({
             "processing": false,
             "serverSide": true,
@@ -359,14 +381,15 @@
             "ajax": function(data, callback, settings) {
                 var page = data.start / data.length;
                 var size = data.length;
+                var officeQuery = listOfficeQuery();
                 $.ajax({
                     url: `${___ctx}8000/petitioner/search/${clientType}?page=${page}&size=${size}`,
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({
                         name: searchVal,
-                        fieldOfficeId: fieldOfficeId,
-                        canSeeOtherOffices: false
+                        fieldOfficeId: officeQuery.fieldOfficeId,
+                        canSeeOtherOffices: officeQuery.canSeeOtherOffices
                     }),
                     success: function(json) {
                         callback({

@@ -8,6 +8,20 @@
     .nav-link.active {
         border-bottom: 3px solid #0069d9;
     }
+
+    @media (min-width: 768px) {
+        .card-body div.dataTables_wrapper > div.row:first-of-type {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-body div.dataTables_wrapper > div.row:first-of-type > div[class*="col-"] {
+            flex: 0 0 auto;
+            width: auto;
+            max-width: 100%;
+        }
+    }
 </style>
 <body>
     <!-- Left Panel -->
@@ -67,7 +81,7 @@
 
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header d-flex alig-items-center" id="pager">
+                            <div class="card-header" id="pager">
                                 <!-- <strong class="card-title">Probation Fact Sheet</strong> -->
                                 <ul class="nav" id="myTab" role="tablist">
                                     <li class="nav-item">
