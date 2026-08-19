@@ -266,12 +266,12 @@
             $(".btn_update").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
                 var petitionerId = $(this).data("cid");
-                var officeId = $.cookie("field_office_id");
+                var officeId = $(this).data("oi") || $.cookie("field_office_id");
                 window.location.href = joinApiUrl(api, 'pis/probation-courtesy-investigation-update?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId) + '&petitionerId=' + encodeURIComponent(petitionerId));
             });
             $(".btn_view").unbind("click").on("click", function(){
                 var docket_number = $(this).data("docket");
-                var officeId = $.cookie("field_office_id");
+                var officeId = $(this).data("oi") || $.cookie("field_office_id");
                 window.location.href = joinApiUrl(api, 'pis/probation-courtesy-investigation-view?docket_number=' + encodeURIComponent(docket_number) + '&officeId=' + encodeURIComponent(officeId));
             });
             $(".btn_attachments").unbind("click").on("click", function(){

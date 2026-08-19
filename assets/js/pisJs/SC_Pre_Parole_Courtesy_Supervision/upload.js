@@ -152,7 +152,7 @@
     if (docket_number !== undefined && docket_number !== null) {
         docket_number = String(docket_number).trim();
     }
-    var fi = $.cookie('field_office_id');
+    var fi = (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.resolvePageOfficeId()) || $.cookie('field_office_id');
     if (fi) {
         fi = String(fi).trim();
     }
@@ -478,10 +478,9 @@
                 return;
             }
 
-            var officeId = userProfile.departmentId;
             var createdByName = formatUserFullName(userProfile);
 
-            __executeExternalGet('8000/docketbook/' + docket_number + '/' + fi).done(function (apiResult) {
+            __executeExternalGet('8000/docketbook/' + encodeURIComponent(docket_number) + '/' + encodeURIComponent(fi)).done(function (apiResult) {
                 setPageLoader(false);
 
                 var docketRow = apiResult.response;
@@ -496,8 +495,9 @@
                 $('.name').val(formatDocketClientName(docketRow));
                 $('.docket_num').val(docketRow.docketNumber || '');
 
-                loadTable(FILE_TYPE, docketRow.docketNumber, officeId);
-                bindUploadConfirm(officeId, createdByName, docketRow);
+                var docketOfficeId = docketRow.fieldOfficeId || fi;
+                loadTable(FILE_TYPE, docketRow.docketNumber, docketOfficeId);
+                bindUploadConfirm(docketOfficeId, createdByName, docketRow);
                 $('.btn-confirm').prop('disabled', false);
             });
         });

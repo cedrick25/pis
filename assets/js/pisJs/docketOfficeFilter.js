@@ -70,7 +70,7 @@
     }
 
     function resolvePageOfficeId() {
-        var fromUrl = queryParam('officeId') || queryParam('office_id');
+        var fromUrl = queryParam('officeId') || queryParam('office_id') || queryParam('fi');
         if (fromUrl && fromUrl.toUpperCase() !== 'ALL') {
             return fromUrl;
         }

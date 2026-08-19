@@ -126,11 +126,7 @@
     if (!fileListType) {
         fileListType = 'supervision';
     }
-    var fiParam = GetURLParameter('fi');
-    if (fiParam !== undefined && fiParam !== null) {
-        fiParam = String(fiParam).trim();
-    }
-    var fi = fiParam || $.cookie('field_office_id');
+    var fi = (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.resolvePageOfficeId()) || $.cookie('field_office_id');
     if (fi) {
         fi = String(fi).trim();
     }
@@ -366,7 +362,6 @@
                 return;
             }
 
-            var officeId = userProfile.departmentId;
             var createdByName = formatUserFullName(userProfile);
 
             __executeExternalGet('8000/docketbook/' + encodeURIComponent(docket_number) + '/' + encodeURIComponent(fi)).done(function (apiResult) {
@@ -382,8 +377,9 @@
                 $('.name').val(formatDocketClientName(docketRow));
                 $('.docket_num').val(docketRow.docketNumber || '');
 
-                loadTable(fileListType, docketRow.docketNumber, officeId);
-                bindUploadConfirm(officeId, createdByName, docketRow);
+                var docketOfficeId = docketRow.fieldOfficeId || fi;
+                loadTable(fileListType, docketRow.docketNumber, docketOfficeId);
+                bindUploadConfirm(docketOfficeId, createdByName, docketRow);
             });
         });
     }
