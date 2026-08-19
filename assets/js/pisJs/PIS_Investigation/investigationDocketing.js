@@ -200,10 +200,17 @@
         callback(null);
     }
 
-    function listOfficeQuery(fieldOfficeId) {
+    function isInvestigationAdmin() {
+        return !!(window.PisDocketOfficeFilter &&
+            typeof window.PisDocketOfficeFilter.isDocketAdmin === 'function' &&
+            window.PisDocketOfficeFilter.isDocketAdmin());
+    }
+
+    function listOfficeQuery() {
         if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.docketListQuery === 'function') {
-            return window.PisDocketOfficeFilter.docketListQuery(fieldOfficeId);
+            return window.PisDocketOfficeFilter.docketListQuery();
         }
+        var fieldOfficeId = $.cookie('field_office_id');
         return {
             officeId: fieldOfficeId,
             fieldOfficeId: fieldOfficeId,
@@ -233,13 +240,16 @@
             setPisInvDocketListLoader(false);
         }
 
-        function loadDockets(fieldOfficeId) {
-            if (fieldOfficeId == null || String(fieldOfficeId).trim() === '') {
+        function loadDockets() {
+            var officeQuery = listOfficeQuery();
+            var fieldOfficeId = officeQuery.officeId;
+            var canSeeOther = !!officeQuery.canSeeOtherOffices ||
+                String(fieldOfficeId || '').toUpperCase() === 'ALL';
+            if (!canSeeOther && (fieldOfficeId == null || String(fieldOfficeId).trim() === '')) {
                 finishFail('Your field office could not be determined. Please sign in again.');
                 setPisInvDocketListLoader(false);
                 return;
             }
-            var officeQuery = listOfficeQuery(fieldOfficeId);
 
             if (!term) {
             $.ajax({
@@ -312,7 +322,9 @@
             }
         }
 
-        resolveFieldOfficeId(loadDockets);
+        resolveFieldOfficeId(function () {
+            loadDockets();
+        });
     }
 
     function buttonVisibility() {
@@ -686,7 +698,8 @@
     }
 
     resolveFieldOfficeId(function (fieldOfficeId) {
-        if (fieldOfficeId == null || String(fieldOfficeId).trim() === '') {
+        var hasOffice = fieldOfficeId != null && String(fieldOfficeId).trim() !== '';
+        if (!hasOffice && !isInvestigationAdmin()) {
             setPisInvDocketListLoader(false);
             showPisInvSearchError('Your field office could not be determined. Please sign in again.');
             return;

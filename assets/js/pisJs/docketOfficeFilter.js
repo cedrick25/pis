@@ -3,7 +3,7 @@
     var STYLE_ID = 'pisDocketOfficeFilterStyle';
 
     function isDocketAdmin() {
-        return String($.cookie('role_id') || '') === '1';
+        return String($.cookie('role_id') || '').trim() === '1';
     }
 
     function getCookieOfficeId() {
@@ -11,28 +11,50 @@
         return v != null && String(v).trim() !== '' ? String(v).trim() : '';
     }
 
+    function getFilterSelectValue() {
+        var $sel = $('#' + SELECT_ID);
+        if (!$sel.length) {
+            return '';
+        }
+        var val = $sel.val();
+        if (val != null && String(val).trim() !== '') {
+            return String(val).trim();
+        }
+        if ($.fn.select2 && $sel.data('select2')) {
+            var s2 = $sel.select2('val');
+            if (s2 != null && String(s2).trim() !== '') {
+                return String(s2).trim();
+            }
+        }
+        return '';
+    }
+
     function getSelectedDocketOfficeId() {
         if (isDocketAdmin()) {
-            var $sel = $('#' + SELECT_ID);
-            if ($sel.length) {
-                var val = $sel.val();
-                if (val != null && String(val).trim() !== '') {
-                    return String(val).trim();
-                }
+            var selected = getFilterSelectValue();
+            if (selected) {
+                return selected;
+            }
+            if ($('#' + SELECT_ID).length) {
+                return 'ALL';
             }
         }
         return getCookieOfficeId();
     }
 
     function docketListQuery(fieldOfficeId) {
-        var officeId =
-            fieldOfficeId != null && String(fieldOfficeId).trim() !== ''
-                ? String(fieldOfficeId).trim()
-                : getSelectedDocketOfficeId();
+        var officeId;
+        if (isDocketAdmin()) {
+            officeId = getSelectedDocketOfficeId() || 'ALL';
+        } else if (fieldOfficeId != null && String(fieldOfficeId).trim() !== '') {
+            officeId = String(fieldOfficeId).trim();
+        } else {
+            officeId = getSelectedDocketOfficeId();
+        }
         var isAll = String(officeId).toUpperCase() === 'ALL';
         return {
             officeId: officeId,
-            fieldOfficeId: isAll ? officeId : officeId,
+            fieldOfficeId: isAll ? 'ALL' : officeId,
             canSeeOtherOffices: isAll
         };
     }
@@ -130,7 +152,6 @@
             return;
         }
 
-        var defaultOffice = getCookieOfficeId();
         var $wrap = $('<div class="pis-docket-office-filter"></div>');
         $wrap.append('<label for="' + SELECT_ID + '">Field Office</label>');
         var $sel = $(
@@ -138,8 +159,7 @@
                 SELECT_ID +
                 '" class="form-control form-control-sm" aria-label="Field office"></select>'
         );
-        $sel.append('<option value="ALL">All Field Offices</option>');
-        $sel.append('<option value="" disabled>Loading…</option>');
+        $sel.append('<option value="ALL" selected>All Field Offices</option>');
         $wrap.append($sel);
         $header.append($wrap);
 
@@ -148,7 +168,6 @@
             type: 'GET',
             dataType: 'json'
         }).done(function (result) {
-            $sel.find('option[disabled]').remove();
             if (!result || result.status === 'ERROR' || !$.isArray(result)) {
                 return;
             }
@@ -165,9 +184,7 @@
                         '</option>'
                 );
             });
-            if (defaultOffice && $sel.find('option[value="' + defaultOffice.replace(/"/g, '') + '"]').length) {
-                $sel.val(defaultOffice);
-            }
+            $sel.val('ALL');
             if ($.fn.select2) {
                 $sel.select2({
                     width: '260px',
