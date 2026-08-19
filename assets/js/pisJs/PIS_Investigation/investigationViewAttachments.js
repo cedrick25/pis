@@ -187,22 +187,39 @@
                     $('#' + customLoader).hide();
                     $('#' + customLoader).addClass('hide');
                 }
-                var msg = typeof errorThrown === 'string' && errorThrown
-                    ? errorThrown
-                    : (textStatus || 'Network error');
+                var msg = '';
+                if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                    msg = jqXHR.responseJSON.message;
+                } else if (typeof errorThrown === 'string' && errorThrown && errorThrown !== 'error') {
+                    msg = errorThrown;
+                } else if (textStatus && textStatus !== 'error') {
+                    msg = textStatus;
+                }
                 d.resolve({ status: 'ERROR', message: msg });
             });
         return d.promise();
     };
 
+    function resolveAttachmentsOfficeId() {
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.resolvePageOfficeId === 'function') {
+            var fromFilter = window.PisDocketOfficeFilter.resolvePageOfficeId();
+            if (fromFilter != null && String(fromFilter).trim() !== '') {
+                return String(fromFilter).trim();
+            }
+        }
+        var fromUrl = GetURLParameter('officeId') || GetURLParameter('office_id') || GetURLParameter('fi');
+        if (fromUrl != null && String(fromUrl).trim() !== '') {
+            return String(fromUrl).trim();
+        }
+        var cookieOffice = $.cookie('field_office_id');
+        return cookieOffice != null && String(cookieOffice).trim() !== '' ? String(cookieOffice).trim() : '';
+    }
+
     var docket_number = GetURLParameter('docket_number');
     if (docket_number !== undefined && docket_number !== null) {
         docket_number = String(docket_number).trim();
     }
-    var fi = $.cookie('field_office_id');
-    if (fi) {
-        fi = String(fi).trim();
-    }
+    var fi = resolveAttachmentsOfficeId();
 
     var dataTable = null;
 
@@ -525,7 +542,7 @@
         if (!fi) {
             setPageLoader(false);
             var m2 =
-                'Your field office could not be determined. Try signing in again or return to the list.';
+                'This page is missing a field office. Open attachments from the Investigation Docket list.';
             showAttachmentsError(m2);
             showPisToast(m2, 'warning');
             return;
@@ -559,10 +576,11 @@
                 return;
             }
 
-            var officeId = userProfile.departmentId;
             var createdByName = formatUserFullName(userProfile);
 
-            __executeExternalGet('8000/docketbook/' + docket_number + '/' + fi).done(function (apiResult) {
+            __executeExternalGet(
+                '8000/docketbook/' + encodeURIComponent(docket_number) + '/' + encodeURIComponent(fi)
+            ).done(function (apiResult) {
                 setPageLoader(false);
 
                 var docketRow = apiResult.response;
@@ -582,9 +600,10 @@
                 $('.name').val(formatDocketClientName(docketRow));
                 $('.docket_num').val(docketRow.docketNumber || '');
 
+                var docketOfficeId = docketRow.fieldOfficeId || fi;
                 bindDeleteHandler();
-                loadTable(FILE_TYPE, docketRow.docketNumber, officeId);
-                bindUploadConfirm(officeId, createdByName, docketRow);
+                loadTable(FILE_TYPE, docketRow.docketNumber, docketOfficeId);
+                bindUploadConfirm(docketOfficeId, createdByName, docketRow);
                 $('.btn-confirm').prop('disabled', false);
             });
         });
