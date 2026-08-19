@@ -199,6 +199,87 @@
         });
     }
 
+    function factSheetPath(clientId, fieldOfficeId, clientType) {
+        var cid = clientId != null ? String(clientId).trim() : '';
+        if (!cid) {
+            return '';
+        }
+        var oi = fieldOfficeId != null ? String(fieldOfficeId).trim() : '';
+        var type = clientType != null ? String(clientType).trim().toUpperCase() : '';
+        if (type.indexOf('PDL') === 0) {
+            var pdl = 'pis/pdl-view?client_id=' + encodeURIComponent(cid);
+            if (clientType) {
+                pdl += '&client_type=' + encodeURIComponent(String(clientType).trim());
+            }
+            return pdl;
+        }
+        return (
+            'pis/client_view_factsheet?client_id=' +
+            encodeURIComponent(cid) +
+            '&field_office_id=' +
+            encodeURIComponent(oi)
+        );
+    }
+
+    function factSheetPermission(clientType) {
+        var type = clientType != null ? String(clientType).trim().toUpperCase() : '';
+        if (type.indexOf('PDL') === 0) {
+            return 'can_access_fact_sheet_pdl';
+        }
+        if (type === 'PAROLEE' || type === 'PARDONEE') {
+            return 'can_access_fact_sheet_parole_pardone';
+        }
+        return 'can_access_fact_sheet_probation';
+    }
+
+    function factSheetButtonHtml(row) {
+        if (!row || row.clientId == null || String(row.clientId).trim() === '') {
+            return '';
+        }
+        var cid = escapeAttr(row.clientId);
+        var oi = escapeAttr(row.fieldOfficeId);
+        var type = row.clientType == null ? '' : String(row.clientType);
+        var perm = factSheetPermission(type);
+        return (
+            '<button type="button" class="btn btn-sm btn-info btn_factsheet" data-permission="' +
+            escapeAttr(perm) +
+            '" data-cid="' +
+            cid +
+            '" data-oi="' +
+            oi +
+            '" data-ctype="' +
+            escapeAttr(type) +
+            '" title="Fact Sheet" aria-label="Open fact sheet"><i class="fa fa-file-text-o" aria-hidden="true"></i> Fact Sheet</button>'
+        );
+    }
+
+    function joinFilterApiUrl(base, path) {
+        var b = String(base == null ? '' : base).replace(/\/+$/, '');
+        var p = String(path == null ? '' : path).replace(/^\/+/, '');
+        if (!b) {
+            return p;
+        }
+        if (!p) {
+            return b;
+        }
+        if (b.slice(-1) === ':' && /^\d+\//.test(p)) {
+            return b + p;
+        }
+        return b + '/' + p;
+    }
+
+    $(document)
+        .off('click.pisFactSheet', '.btn_factsheet')
+        .on('click.pisFactSheet', '.btn_factsheet', function () {
+            var $btn = $(this);
+            var path = factSheetPath($btn.data('cid'), $btn.data('oi'), $btn.data('ctype'));
+            if (!path) {
+                return;
+            }
+            var base = localStorage.getItem('api') || window.__PIS_API_BASE || '';
+            window.location.href = joinFilterApiUrl(base, path);
+        });
+
     window.PisDocketOfficeFilter = {
         isDocketAdmin: isDocketAdmin,
         getCookieOfficeId: getCookieOfficeId,
@@ -206,6 +287,9 @@
         docketListQuery: docketListQuery,
         resolvePageOfficeId: resolvePageOfficeId,
         resolveListOfficeId: resolveListOfficeId,
-        mountDocketOfficeFilter: mountDocketOfficeFilter
+        mountDocketOfficeFilter: mountDocketOfficeFilter,
+        factSheetPath: factSheetPath,
+        factSheetPermission: factSheetPermission,
+        factSheetButtonHtml: factSheetButtonHtml
     };
 })(window, jQuery);

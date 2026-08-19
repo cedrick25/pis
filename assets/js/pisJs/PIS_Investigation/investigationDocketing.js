@@ -600,6 +600,9 @@
                         '" aria-label="Attachments for docket ' +
                         dn +
                         '" title="Attachments"><i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</button>' +
+                        (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.factSheetButtonHtml
+                            ? ' ' + window.PisDocketOfficeFilter.factSheetButtonHtml(data)
+                            : '') +
                         ' <button type="button" class="btn btn-sm btn-danger btn_remove " data-permission="can_delete_docket_probation_investigation" data-toggle="modal" data-target="#removeModal" data-docket="' +
                         dn +
                         '" data-oi="' +

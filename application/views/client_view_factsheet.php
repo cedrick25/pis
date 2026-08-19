@@ -1121,7 +1121,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="#" data-toggle="tab" id="otherDocumentsTab">Notes/Other Documents</a>
                                         </li>
-                                        <li class="nav-item">
+                                        <li class="nav-item" style="display: none;">
                                             <a class="nav-link" href="#" data-toggle="tab" id="taskListTab">Task List</a>
                                         </li>
                                         <li class="nav-item">

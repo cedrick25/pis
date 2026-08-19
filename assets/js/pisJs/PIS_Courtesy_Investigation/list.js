@@ -431,6 +431,9 @@
                             '<button type="button" class="btn btn-sm btn-primary btn_view" data-permission="can_view_docket_probation_courtesy_investigation" data-docket="' + dn + '" aria-label="View docket ' + dn + '" title="View"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
                             '<button type="button" class="btn btn-sm btn-primary btn_update" data-permission="can_edit_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-cid="' + cid + '" aria-label="Update docket ' + dn + '" title="Update"><i class="fa fa-edit" aria-hidden="true"></i> Update</button>' +
                             '<button type="button" class="btn btn-sm btn-primary btn_attachments" data-permission="can_attachments_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-id="' + cid + '" data-type="investigation" data-oi="' + oi + '" aria-label="Attachments for docket ' + dn + '" title="Attachments"><i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</button>' +
+                            (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.factSheetButtonHtml
+                                ? ' ' + window.PisDocketOfficeFilter.factSheetButtonHtml(data) + ' '
+                                : '') +
                             '<button type="button" class="btn btn-sm btn-danger btn_remove" data-permission="can_delete_docket_probation_courtesy_investigation" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>' +
                             '</div>'
                         );

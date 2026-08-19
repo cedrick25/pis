@@ -292,7 +292,11 @@
                     return "<button class='btn btn-sm btn-primary btn_view' data-permission='can_view_docket_pre_parole_courtesy_investigation' type='button' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "'><i class='fa fa-eye'></i> View</button> " +
                         "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_docket_pre_parole_courtesy_investigation' type='button' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "'><i class='fa fa-edit'></i> Update</button> " +
                         "<button class='btn btn-sm btn-primary btn_attachments' data-permission='can_attachments_docket_pre_parole_courtesy_investigation' type='button' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "'><i class='fa fa-upload'></i> Attachments</button> " +
-                        "<button type='button' class='btn btn-sm btn-danger btn_remove' data-permission='can_delete_docket_pre_parole_courtesy_investigation' data-toggle='modal' data-target='#removeModal' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "' aria-label='Remove docket " + String(data.docketNumber == null ? '' : data.docketNumber).replace(/'/g, '&#39;') + "' title='Remove'><i class='fa fa-remove' aria-hidden='true'></i> Remove</button>";
+                        (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.factSheetButtonHtml
+                            ? window.PisDocketOfficeFilter.factSheetButtonHtml(data) + ' '
+                            : '') +
+                        "<button type='button' class='btn btn-sm btn-danger btn_remove' data-permission='can_delete_docket_pre_parole_courtesy_investigation" +
+                        "' data-toggle='modal' data-target='#removeModal' data-docket='" + data.docketNumber + "' data-oi='" + data.fieldOfficeId + "' aria-label='Remove docket " + String(data.docketNumber == null ? '' : data.docketNumber).replace(/'/g, '&#39;') + "' title='Remove'><i class='fa fa-remove' aria-hidden='true'></i> Remove</button>";
                 }
             }
         ];

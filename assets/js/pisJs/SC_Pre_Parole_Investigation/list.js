@@ -239,6 +239,9 @@
                         '<button class="btn btn-sm btn-primary btn_view " data-permission="can_view_docket_pre_parole_investigation" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-eye" aria-hidden="true"></i> View</button> ' +
                         '<button class="btn btn-sm btn-primary btn_update " data-permission="can_edit_docket_pre_parole_investigation" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-edit" aria-hidden="true"></i> Update</button> ' +
                         '<button class="btn btn-sm btn-primary btn_attachments " data-permission="can_attachments_docket_pre_parole_investigation" type="button" data-docket="' + dn + '" data-oi="' + oi + '"><i class="fa fa-upload" aria-hidden="true"></i> Attachments</button> ' +
+                        (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.factSheetButtonHtml
+                            ? window.PisDocketOfficeFilter.factSheetButtonHtml(data) + ' '
+                            : '') +
                         '<button type="button" class="btn btn-sm btn-danger btn_remove " data-permission="can_delete_docket_pre_parole_investigation" data-toggle="modal" data-target="#removeModal" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="Remove docket ' + dn + '" title="Remove"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button>'
                     );
                 }
