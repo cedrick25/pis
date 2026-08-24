@@ -223,7 +223,7 @@
                             setTimeout(function () {
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                                window.location.href = api+'/pis/client_list';
+                                window.location.href = window.pisUrl('client_list');
                             }, 500);
                         }, 2000);
                     }else{
@@ -245,7 +245,7 @@
                         setTimeout(function () {
                         $(".overlay").hide();
                         $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/client_list';
+                            window.location.href = window.pisUrl('client_list');
                         }, 500);
                     }, 2000);
                 }else{
@@ -317,7 +317,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
+                        window.location.href = window.pisUrl('psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid);
                     }, 500);
                 });
             });

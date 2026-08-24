@@ -278,10 +278,10 @@
                                     ? res.response.worksheetStatus : "incomplete";
                                 if (String(nextStatus).toLowerCase() === "complete") {
                                     window.location.href =
-                                        `${api}/pis/client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`;
+                                        window.pisUrl(`client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`);
                                 } else {
                                     window.location.href =
-                                        `${api}/pis/psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`;
+                                        window.pisUrl(`psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`);
                                 }
                             }, 2000);
                         });
@@ -328,10 +328,10 @@
                                 ? res.response.worksheetStatus : "incomplete";
                             if (String(nextStatus).toLowerCase() === "complete") {
                                 window.location.href =
-                                    `${api}/pis/client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`;
+                                    window.pisUrl(`client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`);
                             } else {
                                 window.location.href =
-                                    `${api}/pis/psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`;
+                                    window.pisUrl(`psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`);
                             }
                         }, 2000);
                     });
@@ -348,8 +348,8 @@
                     $("#warningModal").modal("hide");
                     setTimeout(function () {
                         $(".overlay").hide();
-                        // window.location.href = `${api}/pis/worksheet_${psirType}?client_id=${client_id}`;
-                        window.location.href = `${api}/pis/psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
+                        // window.location.href = window.pisUrl(`worksheet_${psirType}?client_id=${client_id}`);
+                        window.location.href = window.pisUrl(`psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
                     }, 500);
                 });
             });

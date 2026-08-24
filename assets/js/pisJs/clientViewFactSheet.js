@@ -264,7 +264,7 @@
                                 <div class="fs-docket-cell-inner">
                                     <span class="fs-docket-status">${wsStatus}</span>
                                     <div class="fs-docket-actions">
-                                        <a href="${api}/pis/worksheet_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${wsStatus}" class="btn btn-sm btn-outline-primary" title="Edit worksheet" aria-label="Edit worksheet"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+                                        <a href="${window.pisUrl('worksheet_identifying_data?client_id=' + client_id + '&field_office_id=' + client_fo + '&status=' + encodeURIComponent(wsStatus || ''))}" class="btn btn-sm btn-outline-primary" title="Edit worksheet" aria-label="Edit worksheet"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
                                         <button type="button" class="btn btn-sm btn-outline-secondary btn_pdfWorksheet" title="Print worksheet (PDF)" aria-label="Print worksheet PDF"><i class="fa fa-print" aria-hidden="true"></i>Print</button>
                                     </div>
                                 </div>
@@ -273,7 +273,7 @@
                                 <div class="fs-docket-cell-inner">
                                     <span class="fs-docket-status">${psStatus}</span>
                                     <div class="fs-docket-actions">
-                                        <a href="${api}/pis/psir_identifying_data?client_id=${client_id}&field_office_id=${client_fo}&status=${psStatus}" class="btn btn-sm btn-outline-primary" title="Edit PSIR" aria-label="Edit PSIR"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+                                        <a href="${window.pisUrl('psir_identifying_data?client_id=' + client_id + '&field_office_id=' + client_fo + '&status=' + encodeURIComponent(psStatus || ''))}" class="btn btn-sm btn-outline-primary" title="Edit PSIR" aria-label="Edit PSIR"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
                                         <button type="button" class="btn btn-sm btn-outline-info btn_pdfPSIR" title="Print short PSIR" aria-label="Print short PSIR"><i class="fa fa-print" aria-hidden="true"></i>Short</button>
                                         <button type="button" class="btn btn-sm btn-outline-dark btn_pdfPSIRLong" title="Print long PSIR (includes transmittal and full recommendation blocks)" aria-label="Print long PSIR"><i class="fa fa-print" aria-hidden="true"></i>Long</button>
                                     </div>
@@ -1448,7 +1448,7 @@
         });
 
         $(".edit-link").unbind("click").on("click", function(){
-            window.location.href = api+'/pis/client_update?client_id='+client_id+'&client_fo='+client_fo;
+            window.location.href = window.pisUrl('client_update?client_id='+client_id+'&client_fo='+client_fo);
         })
 
         $(".btn-addInvestigation").unbind("click").on("click", function(){

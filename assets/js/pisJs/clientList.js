@@ -192,25 +192,25 @@
             var client_id   = $(this).data("id");
             var foid        = $(this).data("foid");
             // window.location.href = 'http://ppis.probation.gov.ph/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
-            window.location.href = api+'/pis/worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid;
+            window.location.href = window.pisUrl('worksheet_identifying_data?client_id='+client_id+'&field_office_id='+foid);
         })
         $(".btn_update").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
             var foid = $(this).data("foid") || $.cookie("field_office_id");
-            window.location.href = api+'/pis/client_update?client_id='+client_id+'&client_fo='+encodeURIComponent(foid || '');
+            window.location.href = window.pisUrl('client_update?client_id='+client_id+'&client_fo='+encodeURIComponent(foid || ''));
             // window.location.href = 'http://localhost/pis/client_update?client_id='+client_id;
         })
         $(".btn_upload").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
             var client_type = $(this).data("type");
             var foid = $(this).data("foid") || $.cookie("field_office_id");
-            window.location.href = api+'/pis/client_file_upload?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || '');
+            window.location.href = window.pisUrl('client_file_upload?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || ''));
         })
         $(".btn_view").unbind("click").on("click", function(){
             var client_id = $(this).data("id");
             var client_type = $(this).data("type");
             var foid = $(this).data("foid") || $.cookie("field_office_id");
-            window.location.href = api+'/pis/client_view_upload?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || '');
+            window.location.href = window.pisUrl('client_view_upload?client_id='+client_id+'&client_type='+client_type+'&field_office_id='+encodeURIComponent(foid || ''));
         })
         $(".btn_psir").unbind("click").on("click", function(){
             var client_id   = $(this).data("id");
@@ -220,7 +220,7 @@
                 if (!status || status === "null") {
                     status = "Not Available";
                 }
-                window.location.href = api+'/pis/psir_identifying_data?client_id='+client_id+'&field_office_id='+foid+'&status='+encodeURIComponent(status);
+                window.location.href = window.pisUrl('psir_identifying_data?client_id='+client_id+'&field_office_id='+foid+'&status='+encodeURIComponent(status));
             }
             if (psStatus) {
                 openPsir(psStatus);

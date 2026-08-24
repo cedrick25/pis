@@ -82,9 +82,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         window.__PIS_SMS_API_URL = <?= json_encode(defined('PIS_SMS_API_URL') ? PIS_SMS_API_URL : '') ?>;
         window.__PIS_EMAIL_API_URL = <?= json_encode(defined('PIS_EMAIL_API_URL') ? PIS_EMAIL_API_URL : '') ?>;
         window.pisUrl = function (path) {
-            var base = window.__PIS_BASE_URL || '';
+            var base = String(window.__PIS_BASE_URL || '').replace(/\/+$/, '');
             var p = String(path == null ? '' : path).replace(/^\/+/, '');
-            return base + p;
+            if (!base) {
+                return p;
+            }
+            return p ? (base + '/' + p) : (base + '/');
         };
         window.pisApiUrl = function (path) {
             var base = window.__PIS_API_BASE || (localStorage.getItem('api') || '');

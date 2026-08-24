@@ -273,7 +273,7 @@
                             setTimeout(function () {
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                                window.location.href = api+'/pis/worksheet_education_history?client_id='+client_id+'&field_office_id='+foid;
+                                window.location.href = window.pisUrl('worksheet_education_history?client_id='+client_id+'&field_office_id='+foid);
                             }, 500);
                         }, 2000);
                     }else{
@@ -300,7 +300,7 @@
                         setTimeout(function () {
                         $(".overlay").hide();
                         $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/worksheet_education_history?client_id='+client_id+'&field_office_id='+foid;
+                            window.location.href = window.pisUrl('worksheet_education_history?client_id='+client_id+'&field_office_id='+foid);
                         }, 500);
                     }, 2000);
                 }else{
@@ -497,7 +497,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = api+'/pis/worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid;
+                        window.location.href = window.pisUrl('worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid);
                     }, 500);
                 });
             });

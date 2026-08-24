@@ -184,7 +184,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_evaluation?client_id='+client_id+'&field_office_id='+foid;
+                            window.location.href = window.pisUrl('psir_evaluation?client_id='+client_id+'&field_office_id='+foid);
                         }, 500); 
                     }, 2000);
                 }else{
@@ -207,7 +207,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = api+'/pis/psir_evaluation?client_id='+client_id+'&field_office_id='+foid;
+                            window.location.href = window.pisUrl('psir_evaluation?client_id='+client_id+'&field_office_id='+foid);
                         }, 500); 
                     }, 2000);
                 }else{
@@ -224,7 +224,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = api+'/pis/psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid;
+                        window.location.href = window.pisUrl('psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid);
                     }, 500);
                 });
             });

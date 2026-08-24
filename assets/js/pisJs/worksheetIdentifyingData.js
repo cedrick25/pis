@@ -280,7 +280,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    `${api}/pis/worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                    window.pisUrl(`worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -330,7 +330,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                `${api}/pis/worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`;
+                                window.pisUrl(`worksheet_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
                         }, 2000);
                         }
                         if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -353,8 +353,8 @@
                     $("#warningModal").modal("hide");
                     setTimeout(function () {
                         $(".overlay").hide();
-                        // window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}`;
-                        window.location.href = `${api}/pis/worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`
+                        // window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}`);
+                        window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
                     }, 500);
                 });
             });
