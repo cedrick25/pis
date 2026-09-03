@@ -110,8 +110,8 @@
         var foid = GetURLParameter('field_office_id');
         var field_office_id = $.cookie('field_office_id');
 
-        __executeExternalGet('8000/worksheet/getPetitioner/environmentalFactor/'+client_id).done(function (result) {
-            __executeExternalGet('8000/worksheet/getPetitioner/psirEnvironmentalFactor/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('environmentalFactor')).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('psirEnvironmentalFactor')).done(function (result) {
                 var result = result.response;
                 if (result.status != "ERROR") {
                     if (result.worksheetStatus == "INCOMPLETE"){
@@ -162,6 +162,7 @@
 
             var payload = {
                 "petitionerId"              : client_id,
+                "docketNumber"              : WorksheetApi.docketNumber(),
                 "jsonData"                  : JSON.stringify(envFactor),
                 "type"                      : "psirEnvironmentalFactor",
                 "worksheetStatus"           : "INCOMPLETE",
@@ -184,7 +185,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = window.pisUrl('psir_evaluation?client_id='+client_id+'&field_office_id='+foid);
+                            window.location.href = window.pisUrl('psir_evaluation?' + WorksheetApi.pageQuery());
                         }, 500); 
                     }, 2000);
                 }else{
@@ -195,7 +196,7 @@
 
         $(".btn-update").unbind("click").on("click", function(){
             var payload = gatheredData();
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirEnvironmentalFactor/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost(WorksheetApi.updateUrl('psirEnvironmentalFactor'),JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 if (result.status != "ERROR") {
                     $('#success').show();
@@ -207,7 +208,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = window.pisUrl('psir_evaluation?client_id='+client_id+'&field_office_id='+foid);
+                            window.location.href = window.pisUrl('psir_evaluation?' + WorksheetApi.pageQuery());
                         }, 500); 
                     }, 2000);
                 }else{
@@ -224,7 +225,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = window.pisUrl('psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid);
+                        window.location.href = window.pisUrl('psir_'+psirType+'?' + WorksheetApi.pageQuery());
                     }, 500);
                 });
             });

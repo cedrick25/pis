@@ -99,7 +99,7 @@
             d.resolve(null);
             return d.promise();
         }
-        getFn("8000/worksheet/getPetitioner/worksheet/" + clientId).done(function (result) {
+        getFn(WorksheetApi.getUrl("worksheet")).done(function (result) {
             d.resolve(parseWorksheetPayload(result));
         }).fail(function () {
             d.resolve(null);
@@ -149,8 +149,11 @@
         assignIfPresent(out, "presentAddress", id.presentAddress);
         assignIfPresent(out, "permanentAdress", id.permanentAdress);
         assignIfPresent(out, "sex", iden.sex);
+        assignIfPresent(out, "sexOthers", iden.sexOthers);
         assignIfPresent(out, "citizenship", iden.citizenship);
+        assignIfPresent(out, "citizenshipOthers", iden.citizenshipOthers);
         assignIfPresent(out, "religion", iden.religion);
+        assignIfPresent(out, "religionOthers", iden.religionOthers);
         assignIfPresent(out, "age", iden.age);
         assignIfPresent(out, "identifyingMarks", iden.identifyingMarks);
         return sectionIfAny(out);
@@ -171,10 +174,12 @@
         assignIfPresent(out, "offendedParty", po.offendedParty);
         assignIfPresent(out, "offendedPartyAddress", po.offendedPartyAddress);
         assignIfPresent(out, "custody", po.custody);
+        assignIfPresent(out, "custodyOthers", po.custodyOthers);
         assignIfPresent(out, "periodOfDetention", po.periodOfDetention);
         assignIfPresent(out, "rorCustodian", po.rorCustodian);
         assignIfPresent(out, "rorCustodianAddress", po.rorCustodianAddress);
         assignIfPresent(out, "extentParticipation", po.extentParticipation);
+        assignIfPresent(out, "extentParticipationOthers", po.extentParticipationOthers);
         assignIfPresent(out, "mannerofCommision", po.mannerofCommision);
         return sectionIfAny(out);
     }
@@ -215,12 +220,19 @@
         assignIfPresent(out, "mothersAge", fam.motherAge);
         assignIfPresent(out, "mothersOccupation", fam.motherOccupation);
         assignIfPresent(out, "civilStatus", fam.civilStatus || iden.civilStatus);
+        assignIfPresent(out, "otherStatus", fam.civilStatusOthers);
         assignIfPresent(out, "familyRelationship", fam.familyRelationship);
+        assignIfPresent(out, "familyRelationshipOthers", fam.familyRelationshipOthers);
         assignIfPresent(out, "majorFamilyProblem", fam.majorFamilyProblem);
+        assignIfPresent(out, "majorFamilyProblemOthers", fam.majorFamilyProblemOthers);
         assignIfPresent(out, "familyReputationInCommunity", fam.familyReputation);
+        assignIfPresent(out, "familyReputationInCommunityOthers", fam.familyReputationOthers);
         assignIfPresent(out, "familyEconomicStatus", fam.familyEconomic);
+        assignIfPresent(out, "familyEconomicStatusOthers", fam.familyEconomicOthers);
         assignIfPresent(out, "homeCondition", fam.homeCondition);
+        assignIfPresent(out, "homeConditionOthers", fam.homeConditionOthers);
         assignIfPresent(out, "stabilityOfResidence", fam.stabilityOfResidence);
+        assignIfPresent(out, "stabilityOfResidenceOthers", fam.stabilityOfResidenceOthers);
         return sectionIfAny(out);
     }
 
@@ -228,17 +240,24 @@
         var ps = data.presentSituation || {};
         var out = {};
         assignIfPresent(out, "civilStatus", ps.civilStatus);
+        assignIfPresent(out, "civilStatusOthers", ps.civilStatusOthers);
         assignIfPresent(out, "spouseName", joinName(ps.spouseFirstName, ps.spouseMiddleName, ps.spouseLastName));
         assignIfPresent(out, "spouseOccupation", ps.spouseOccupation);
         assignIfPresent(out, "spouseHomeAddress", ps.spouseHomeAddress);
         assignIfPresent(out, "spouseWorkAddress", ps.spouseWorkAddress);
         assignIfPresent(out, "totalNoOfchildren", ps.noOfChildren);
         assignIfPresent(out, "childrenRelationship", ps.childrenRelationship);
+        assignIfPresent(out, "childrenRelationshipOthers", ps.childrenRelationshipOthers);
         assignIfPresent(out, "residenceStability", ps.residenceStability);
+        assignIfPresent(out, "residenceStabilityOthers", ps.residenceStabilityOthers);
         assignIfPresent(out, "physicalHomeCondition", ps.physicalHomeCondition);
+        assignIfPresent(out, "physicalHomeConditionOthers", ps.physicalHomeConditionOthers);
         assignIfPresent(out, "familyEconomicStatus", ps.familyEconomicStatus);
+        assignIfPresent(out, "familyEconomicStatusOthers", ps.familyEconomicStatusOthers);
         assignIfPresent(out, "familyBreadwinner", ps.familyBreadwinner);
+        assignIfPresent(out, "familyBreadwinnerOthers", ps.familyBreadwinnerOthers);
         assignIfPresent(out, "majorFamilyProblem", ps.majorFamilyProblem);
+        assignIfPresent(out, "otherFamilyProblem", ps.majorFamilyProblemOthers);
         var children = Array.isArray(ps.children) ? ps.children : [];
         if (children.some(function (child) {
             return child && (hasValue(child.age) || hasValue(child.education));
@@ -260,6 +279,7 @@
         var out = {};
         assignIfPresent(out, "educationAttainment", highestEducationSummary(edu));
         assignIfPresent(out, "overAllConductInSchool", edu.conductInSchool);
+        assignIfPresent(out, "overAllConductInSchoolOthers", edu.conductInSchoolOthers);
         assignIfPresent(out, "educationalRemarks", edu.conductInSchoolExplain);
         var jobs = Array.isArray(emp.previousJobs) ? emp.previousJobs : [];
         if (jobs.length) {
@@ -267,6 +287,7 @@
             assignIfPresent(out, "employerAddress", jobs[0].employerAddress);
         }
         assignIfPresent(out, "workStatus", emp.employmentStatus);
+        assignIfPresent(out, "workStatusOthers", emp.employmentStatusOthers);
         var skills = [];
         if (hasValue(emp.employableSkills)) skills.push(emp.employableSkills);
         if (hasValue(emp.otherEMployableSkills)) skills.push(emp.otherEMployableSkills);
@@ -359,8 +380,11 @@
         setText(".present_add", id.presentAddress);
         setText(".permanent_add", id.permanentAdress);
         setSelect(".sex", iden.sex);
+        setText(".sex_others", iden.sexOthers);
         setSelect(".citizenship", iden.citizenship);
+        setText(".citizenship_others", iden.citizenshipOthers);
         setSelect(".religion", iden.religion);
+        setText(".religion_others", iden.religionOthers);
         setText(".age", iden.age);
         setText(".identifying_marks", iden.identifyingMarks);
     }
@@ -379,10 +403,12 @@
         setText(".offended_party", po.offendedParty);
         setText(".offended_party_address", po.offendedPartyAddress);
         setSelect(".custody", po.custody);
+        setText(".custody_others", po.custodyOthers);
         setText(".period_detention", po.periodOfDetention);
         setText(".ror_custodian", po.rorCustodian);
         setText(".ror_custodian_address", po.rorCustodianAddress);
         setSelect(".extent_participation", po.extentParticipation);
+        setText(".extent_participation_others", po.extentParticipationOthers);
         setText(".manner_commission", po.mannerofCommision);
     }
 
@@ -510,12 +536,19 @@
         setText(".mother_age", fam.motherAge);
         setText(".mother_occupation", fam.motherOccupation);
         setSelect(".civil_status", fam.civilStatus || iden.civilStatus);
+        setText(".other_status_of_marriage", fam.civilStatusOthers);
         setSelect(".fam_relationship", fam.familyRelationship);
+        setText(".fam_relationship_others", fam.familyRelationshipOthers);
         setSelect(".family_problems", fam.majorFamilyProblem);
+        setText(".family_problems_others", fam.majorFamilyProblemOthers);
         setSelect(".family_reputation", fam.familyReputation);
+        setText(".family_reputation_others", fam.familyReputationOthers);
         setSelect(".family_economic", fam.familyEconomic);
+        setText(".family_economic_others", fam.familyEconomicOthers);
         setSelect(".home_condition", fam.homeCondition);
+        setText(".home_condition_others", fam.homeConditionOthers);
         setSelect(".residence_stability", fam.stabilityOfResidence);
+        setText(".residence_stability_others", fam.stabilityOfResidenceOthers);
     }
 
     function appendChildRow(index, child) {
@@ -558,17 +591,24 @@
     function applyPresentSituation(data) {
         var ps = data.presentSituation || {};
         setSelect(".civil_status", ps.civilStatus);
+        setText(".civil_status_others", ps.civilStatusOthers);
         setText(".spouse_name", joinName(ps.spouseFirstName, ps.spouseMiddleName, ps.spouseLastName));
         setText(".spouse_occupation", ps.spouseOccupation);
         setText(".spouse_home_address", ps.spouseHomeAddress);
         setText(".spouse_work_address", ps.spouseWorkAddress);
         setText(".total_children", ps.noOfChildren);
         setSelect(".relationship_with_children", ps.childrenRelationship);
+        setText(".relationship_with_children_others", ps.childrenRelationshipOthers);
         setSelect(".stability_residence", ps.residenceStability);
+        setText(".stability_residence_others", ps.residenceStabilityOthers);
         setSelect(".physical_home_conditions", ps.physicalHomeCondition);
+        setText(".physical_home_conditions_others", ps.physicalHomeConditionOthers);
         setSelect(".family_economic_status", ps.familyEconomicStatus);
+        setText(".family_economic_status_others", ps.familyEconomicStatusOthers);
         setSelect(".family_breadwinner", ps.familyBreadwinner);
+        setText(".family_breadwinner_others", ps.familyBreadwinnerOthers);
         setSelect(".major_family_problem", ps.majorFamilyProblem);
+        setText(".other_famiy_problem", ps.majorFamilyProblemOthers);
 
         var children = Array.isArray(ps.children) ? ps.children : [];
         if (!children.length) return;
@@ -592,6 +632,7 @@
         var emp = data.employmentHistory || {};
         setText(".educational_attainment", highestEducationSummary(edu));
         setSelect(".over_all_conduct_in_school", edu.conductInSchool);
+        setText(".over_all_conduct_in_school_others", edu.conductInSchoolOthers);
         setText(".remarks_education", edu.conductInSchoolExplain);
 
         var jobs = Array.isArray(emp.previousJobs) ? emp.previousJobs : [];
@@ -600,6 +641,7 @@
             setText(".employer_address", jobs[0].employerAddress);
         }
         setSelect(".work_status", emp.employmentStatus);
+        setText(".work_status_others", emp.employmentStatusOthers);
 
         var skills = [];
         if (hasValue(emp.employableSkills)) skills.push(emp.employableSkills);
@@ -619,6 +661,7 @@
     function apply(section, worksheetData) {
         if (!worksheetData || !appliers[section]) return false;
         appliers[section](worksheetData);
+        if (window.DropdownOthers) DropdownOthers.refresh();
         return true;
     }
 
@@ -641,15 +684,16 @@
             return d.promise();
         }
 
-        getFn("8000/worksheet/getPetitioner/worksheet/" + clientId).done(function (wsResult) {
+        getFn(WorksheetApi.getUrl("worksheet")).done(function (wsResult) {
             var wsData = parseWorksheetPayload(wsResult);
-            getFn("8000/worksheet/getPetitioner/psir/" + clientId).done(function (psirResult) {
+            getFn(WorksheetApi.getUrl("psir")).done(function (psirResult) {
                 var parsed = window.PsirRecord.parseExisting(psirResult);
                 var existing = parsed.existing || {};
                 var patch = toPsirPatch(wsData);
                 var merged = mergePatch(existing, patch);
                 var payload = {
                     petitionerId: clientId,
+                    docketNumber: WorksheetApi.docketNumber(),
                     jsonData: JSON.stringify(merged),
                     type: "psir",
                     worksheetStatus: isPsirComplete(merged) ? "complete" : "incomplete",

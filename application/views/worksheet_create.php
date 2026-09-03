@@ -2116,10 +2116,12 @@
 
             var payload = {
             "petitionerId"              : client_id,
+            "docketNumber"              : WorksheetApi.docketNumber(),
             "jsonData"                  : JSON.stringify(identifyingData),
             "type"						: "identifyingData",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
+            "fieldOfficeId"             : $.cookie("field_office_id"),
             }
 
             console.log(payload)

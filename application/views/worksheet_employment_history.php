@@ -261,7 +261,11 @@
                                             <option value="" selected disabled>Select</option>
                                             <option value="regular">Regular</option>
                                             <option value="irregular">Irregular</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control employment_status_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Specify</label>
@@ -347,7 +351,11 @@
                                             <option value="fair">Fair</option>
                                             <option value="satisfactory">Satisfactory</option>
                                             <option value="very_satisfactory">Very Satisfactory</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control physical_health_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Explain</label>
@@ -361,7 +369,11 @@
                                             <option value="" selected disabled>Select</option>
                                             <option value="none">None</option>
                                             <option value="yes">Yes</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control previous_treatment_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="specify_treatment_field" style="display: none;">
                                         <label for="text-input" class=" form-control-label">Specify</label>
@@ -396,7 +408,11 @@
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="occasionally">Occasionally</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control drug_usage_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Explain</label>
@@ -430,6 +446,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/dropdownOthers.js"></script>
     <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/worksheetEmploymentHistory.js"></script>

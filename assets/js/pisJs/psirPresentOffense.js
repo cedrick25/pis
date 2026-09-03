@@ -124,10 +124,12 @@
                 offendedParty               : $(".offended_party").val(),
                 offendedPartyAddress        : $(".offended_party_address").val(),
                 custody                     : $(".custody").val(),
+                custodyOthers               : DropdownOthers.collect($(".custody"), $(".custody_others")),
                 periodOfDetention           : $(".period_detention").val(),
                 rorCustodian                : $(".ror_custodian").val(),
                 rorCustodianAddress         : $(".ror_custodian_address").val(),
                 extentParticipation         : $(".extent_participation").val(),
+                extentParticipationOthers   : DropdownOthers.collect($(".extent_participation"), $(".extent_participation_others")),
                 mannerofCommision           : $(".manner_commission").val(),
                 offendersStatement          : $(".offenders_statement").val(),
                 victimsStatement            : $(".victims_statement").val(),
@@ -187,6 +189,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -223,6 +226,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -264,7 +268,7 @@
                 PsirPrefill.fromWorksheet(client_id, "presentOffense", __executeExternalGet);
             }
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('psir')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -288,10 +292,13 @@
                         $(".offended_party").val(presentOffense.offendedParty);
                         $(".offended_party_address").val(presentOffense.offendedPartyAddress);
                         $(".custody").val(presentOffense.custody).trigger("change");
+                        $(".custody_others").val(presentOffense.custodyOthers);
                         $(".period_detention").val(presentOffense.periodOfDetention);
                         $(".ror_custodian").val(presentOffense.rorCustodian);
                         $(".ror_custodian_address").val(presentOffense.rorCustodianAddress);
                         $(".extent_participation").val(presentOffense.extentParticipation).trigger("change");
+                        $(".extent_participation_others").val(presentOffense.extentParticipationOthers);
+                        DropdownOthers.refresh();
                         $(".manner_commission").val(presentOffense.mannerofCommision);
                         $(".offenders_statement").val(presentOffense.offendersStatement);
                         $(".victims_statement").val(presentOffense.victimsStatement);
@@ -319,7 +326,7 @@
 
             let data = collectPresentOffenseData();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
                     var parsed = window.PsirRecord.parseExisting(result);
                     if (parsed.error) return;
@@ -337,7 +344,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`psir_prior_records?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('psir_prior_records?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                         });
                 });
@@ -348,7 +355,7 @@
 
             let data = collectPresentOffenseData();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -367,7 +374,7 @@
                     let payload = updateWorksheet(existing, identifyingData, data, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, presentSituation, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, analysisAndProjectedThrust);
 
                     __executeExternalPost(
-                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        WorksheetApi.updateUrl('psir'),
                         JSON.stringify(payload)
                     ).done(function (res) {
 
@@ -380,7 +387,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                window.pisUrl(`psir_prior_records?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                window.pisUrl('psir_prior_records?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                         }, 2000);
                     });
                 });
@@ -397,7 +404,7 @@
                     setTimeout(function () {
                         $(".overlay").hide();
                         // window.location.href = window.pisUrl(`worksheet_${psirType}?client_id=${client_id}`);
-                        window.location.href = window.pisUrl(`psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
+                        window.location.href = window.pisUrl('psir_' + psirType + '?' + WorksheetApi.pageQuery({ status: status }))
                     }, 500);
                 });
             });

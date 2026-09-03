@@ -133,7 +133,9 @@
 
                 siblings            : siblings,
                 parentsRelationship : $(".relationship_with_parents").val(),
+                parentsRelationshipOthers : DropdownOthers.collect($(".relationship_with_parents"), $(".relationship_with_parents_others")),
                 civilStatus         : $(".civil_status").val(),
+                civilStatusOthers   : DropdownOthers.collect($(".civil_status"), $(".civil_status_others")),
 
                 fatherName          : $(".father_name").val(),
                 fatherBday          : $(".father_birthday").val(),
@@ -141,7 +143,9 @@
                 fatherAge           : $(".father_age").val(),
                 fatherAddress       : $(".father_address").val(),
                 fatherCitizenship   : $(".father_citizenship").val(),
+                fatherCitizenshipOthers : DropdownOthers.collect($(".father_citizenship"), $(".father_citizenship_others")),
                 fatherReligion      : $(".father_religion").val(),
+                fatherReligionOthers : DropdownOthers.collect($(".father_religion"), $(".father_religion_others")),
                 fatherEducation     : $(".father_education").val(),
                 fatherOccupation    : $(".father_occupation").val(),
                 fatherWorkAddress   : $(".father_work_address").val(),
@@ -157,7 +161,9 @@
                 motherAge           : $(".mother_age").val(),
                 motherAddress       : $(".mother_address").val(),
                 motherCitizenship   : $(".mother_citizenship").val(),
+                motherCitizenshipOthers : DropdownOthers.collect($(".mother_citizenship"), $(".mother_citizenship_others")),
                 motherReligion      : $(".mother_religion").val(),
+                motherReligionOthers : DropdownOthers.collect($(".mother_religion"), $(".mother_religion_others")),
                 motherEducation     : $(".mother_education").val(),
                 motherOccupation    : $(".mother_occupation").val(),
                 motherWorkAddress   : $(".mother_work_address").val(),
@@ -168,13 +174,20 @@
                 motherDateDeceased  : $(".mother_date_deceased").val(),
 
                 familyRelationship          : $(".fam_relationship").val(),
+                familyRelationshipOthers    : DropdownOthers.collect($(".fam_relationship"), $(".fam_relationship_others")),
                 majorFamilyProblem          : $(".family_problems").val(),
+                majorFamilyProblemOthers    : DropdownOthers.collect($(".family_problems"), $(".family_problems_others")),
                 familyReputation            : $(".family_reputation").val(),
+                familyReputationOthers      : DropdownOthers.collect($(".family_reputation"), $(".family_reputation_others")),
                 familyEconomic              : $(".family_economic").val(),
+                familyEconomicOthers        : DropdownOthers.collect($(".family_economic"), $(".family_economic_others")),
                 homeCondition               : $(".home_condition").val(),
+                homeConditionOthers         : DropdownOthers.collect($(".home_condition"), $(".home_condition_others")),
                 stabilityOfResidence        : $(".residence_stability").val(),
+                stabilityOfResidenceOthers  : DropdownOthers.collect($(".residence_stability"), $(".residence_stability_others")),
                 commentsOnBehavior          : $(".comments_behavior").val(),
                 childhoodCircumstances      : $(".childhood_circumstances").val(),
+                childhoodCircumstancesOthers : DropdownOthers.collect($(".childhood_circumstances"), $(".childhood_circumstances_others")),
                 explainCircumstances        : $(".explain_circumtances").val(),
 
             };
@@ -231,6 +244,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -291,6 +305,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -327,6 +342,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -348,7 +364,7 @@
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('worksheet')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -360,7 +376,9 @@
                         $("#saveModal .btn-update").show();
 
                         $(".civil_status").val(familyBackground.civilStatus).trigger("change");
+                        $(".civil_status_others").val(familyBackground.civilStatusOthers);
                         $(".relationship_with_parents").val(familyBackground.parentsRelationship).trigger("change");
+                        $(".relationship_with_parents_others").val(familyBackground.parentsRelationshipOthers);
 
                         $(".father_name").val(familyBackground.fatherName);
                         $(".father_birthday").val(familyBackground.fatherBday);
@@ -368,7 +386,9 @@
                         $(".father_age").val(familyBackground.fatherAge);
                         $(".father_address").val(familyBackground.fatherAddress);
                         $(".father_citizenship").val(familyBackground.fatherCitizenship).trigger("change");
+                        $(".father_citizenship_others").val(familyBackground.fatherCitizenshipOthers);
                         $(".father_religion").val(familyBackground.fatherReligion).trigger("change");
+                        $(".father_religion_others").val(familyBackground.fatherReligionOthers);
                         $(".father_education").val(familyBackground.fatherEducation);
                         $(".father_occupation").val(familyBackground.fatherOccupation);
                         $(".father_work_address").val(familyBackground.fatherWorkAddress);
@@ -383,7 +403,9 @@
                         $(".mother_age").val(familyBackground.motherAge);
                         $(".mother_address").val(familyBackground.motherAddress);
                         $(".mother_citizenship").val(familyBackground.motherCitizenship).trigger("change");
+                        $(".mother_citizenship_others").val(familyBackground.motherCitizenshipOthers);
                         $(".mother_religion").val(familyBackground.motherReligion).trigger("change");
+                        $(".mother_religion_others").val(familyBackground.motherReligionOthers);
                         $(".mother_education").val(familyBackground.motherEducation);
                         $(".mother_occupation").val(familyBackground.motherOccupation);
                         $(".mother_work_address").val(familyBackground.motherWorkAddress);
@@ -393,14 +415,22 @@
                         $(".mother_deceased_cause").val(familyBackground.motherDeceasedCause);
 
                         $(".fam_relationship").val(familyBackground.familyRelationship).trigger("change");
+                        $(".fam_relationship_others").val(familyBackground.familyRelationshipOthers);
                         $(".family_problems").val(familyBackground.majorFamilyProblem).trigger("change");
+                        $(".family_problems_others").val(familyBackground.majorFamilyProblemOthers);
                         $(".family_reputation").val(familyBackground.familyReputation).trigger("change");
+                        $(".family_reputation_others").val(familyBackground.familyReputationOthers);
                         $(".family_economic").val(familyBackground.familyEconomic).trigger("change");
+                        $(".family_economic_others").val(familyBackground.familyEconomicOthers);
                         $(".home_condition").val(familyBackground.homeCondition).trigger("change");
+                        $(".home_condition_others").val(familyBackground.homeConditionOthers);
                         $(".residence_stability").val(familyBackground.stabilityOfResidence).trigger("change");
+                        $(".residence_stability_others").val(familyBackground.stabilityOfResidenceOthers);
                         $(".comments_behavior").val(familyBackground.commentsOnBehavior);
                         $(".childhood_circumstances").val(familyBackground.childhoodCircumstances).trigger("change");
+                        $(".childhood_circumstances_others").val(familyBackground.childhoodCircumstancesOthers);
                         $(".explain_circumtances").val(familyBackground.explainCircumstances);
+                        DropdownOthers.refresh();
 
 
 
@@ -537,7 +567,7 @@
 
             let data = collectFamilybackground();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -559,7 +589,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`worksheet_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('worksheet_present_situation?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -576,7 +606,7 @@
 
             let data = collectFamilybackground();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -594,7 +624,7 @@
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecords, identificationData, data, presentSituation, educationalHistory, employmentHistory, communityBackground);
                     console.log(JSON.parse(payload.jsonData))
 
-                    __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
+                    __executeExternalPost(WorksheetApi.updateUrl('worksheet'), JSON.stringify(payload))
                         .done(function (res) {
                             if (res.status === "ERROR") return;
                             function finish() {
@@ -607,7 +637,7 @@
                                 $('#saveModal').modal("hide");
                                 $("#saveModal .btn-update").prop("disabled", false)
                                 window.location.href =
-                                    window.pisUrl(`worksheet_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('worksheet_present_situation?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -629,7 +659,7 @@
                     $("#warningModal").modal("hide");
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`);
+                        window.location.href = window.pisUrl('worksheet_' + worksheetType + '?' + WorksheetApi.pageQuery({ status: status }));
                     }, 500);
                 });
             });

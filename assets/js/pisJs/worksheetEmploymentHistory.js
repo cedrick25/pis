@@ -165,6 +165,7 @@
 
             return {
                 employmentStatus               : $(".employment_status").val(),
+                employmentStatusOthers         : DropdownOthers.collect($(".employment_status"), $(".employment_status_others")),
                 specifyEmplymentStatus           : $(".specify_employment_status").val(),
                 meansOfSupport              : $(".means_of_support").val(),
                 specifyMeansOfSupport             : $(".specify_means_of_support").val(),
@@ -173,10 +174,13 @@
                 sourceOfIncome               : $(".other_source_income").val(),
                 otherSourceOfIncome          : $(".other_income").val(),
                 physicalHealth            : $(".physical_health").val(),
+                physicalHealthOthers      : DropdownOthers.collect($(".physical_health"), $(".physical_health_others")),
                 explainPhysicalHealthCondition              : $(".explainHealthCondition").val(),
                 previousTreatment              : $(".previous_treatment").val(),
+                previousTreatmentOthers        : DropdownOthers.collect($(".previous_treatment"), $(".previous_treatment_others")),
                 specifyTreatment              : $(".specify_treatment").val(),
                 drugUsage          : $(".drug_usage").val(),
+                drugUsageOthers    : DropdownOthers.collect($(".drug_usage"), $(".drug_usage_others")),
                 explainDrugUsage          : $(".explain_use_of_drugs").val(),
                 previousJobs             : previousJobs,
                 hospitalizations    : hospitalization
@@ -235,6 +239,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -271,6 +276,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -333,7 +339,7 @@
                 </li>
             `) 
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('worksheet')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -420,6 +426,7 @@
                         })
 
                         $(".employment_status").val(employmentHistory.employmentStatus).trigger("change")
+                        $(".employment_status_others").val(employmentHistory.employmentStatusOthers)
                         $(".specify_employment_status").val(employmentHistory.specifyEmplymentStatus)
                         $(".means_of_support").val(employmentHistory.meansOfSupport).trigger("change")
                         $(".specify_means_of_support").val(employmentHistory.specifyMeansOfSupport)
@@ -428,11 +435,15 @@
                         $(".other_source_income").val(employmentHistory.sourceOfIncome).trigger("change")
                         $(".other_income").val(employmentHistory.otherSourceOfIncome)
                         $(".physical_health").val(employmentHistory.physicalHealth).trigger("change")
+                        $(".physical_health_others").val(employmentHistory.physicalHealthOthers)
                         $(".explainHealthCondition").val(employmentHistory.explainPhysicalHealthCondition)
                         $(".previous_treatment").val(employmentHistory.previousTreatment).trigger("change")
+                        $(".previous_treatment_others").val(employmentHistory.previousTreatmentOthers)
                         $(".specify_treatment").val(employmentHistory.specifyTreatment)
                         $(".drug_usage").val(employmentHistory.drugUsage).trigger("change")
+                        $(".drug_usage_others").val(employmentHistory.drugUsageOthers)
                         $(".explain_use_of_drugs").val(employmentHistory.explainDrugUsage)
+                        DropdownOthers.refresh();
 
                     } else {
                         $("#saveModal .saveModalTitle").text("Update Changes")
@@ -588,7 +599,7 @@
 
             let data = collectEmploymentHistory();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -610,7 +621,7 @@
                                 $('#save_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`worksheet_environmental_factor?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('worksheet_environmental_factor?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -627,7 +638,7 @@
 
             let data = collectEmploymentHistory();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -645,7 +656,7 @@
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecords, identificationData, familyBackground, presentSituation, educationalHistory, data, communityBackground);
                     // console.log(payload)
 
-                    __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
+                    __executeExternalPost(WorksheetApi.updateUrl('worksheet'), JSON.stringify(payload))
                         .done(function (res) {
                             if (res.status === "ERROR") return;
                             function finish() {
@@ -657,7 +668,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 $("#saveModal .btn-save").prop("disabled", false)
-                                window.location.href =window.pisUrl(`worksheet_environmental_factor?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                window.location.href =window.pisUrl('worksheet_environmental_factor?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -679,7 +690,7 @@
                     $("#warningModal").modal("hide");
                     setTimeout(function () {
                         // $(".overlay").hide();
-                        window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`);
+                        window.location.href = window.pisUrl('worksheet_' + worksheetType + '?' + WorksheetApi.pageQuery({ status: status }));
                     }, 500);
                 });
             });

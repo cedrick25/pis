@@ -132,27 +132,37 @@
 
             return {
                 civilStatus : $(".civil_status").val(),
+                civilStatusOthers : DropdownOthers.collect($(".civil_status"), $(".civil_status_others")),
                 statusOfMarriage : $(".status_of_marriage").val(),
                 otherStatusOfMarriage : $(".other_married_status").val(),
                 remarksCivilStatus : $(".remarks_civil_status").val(),
                 spouseName : $(".spouse_name").val(),
                 spouseAge : $(".spouse_age").val(),
                 spouseSex : $(".spouse_sex").val(),
+                spouseSexOthers : DropdownOthers.collect($(".spouse_sex"), $(".spouse_sex_others")),
                 spouseOccupation : $(".spouse_occupation").val(),
                 spouseHomeAddress : $(".spouse_home_address").val(),
                 spouseWorkAddress : $(".spouse_work_address").val(),
                 totalNoOfchildren : $(".total_children").val(),
                 childrenRelationship : $(".relationship_with_children").val(),
+                childrenRelationshipOthers : DropdownOthers.collect($(".relationship_with_children"), $(".relationship_with_children_others")),
                 remarksInChildren : $(".remarks_children").val(),
                 dwelling : $(".dwelling").val(),
+                dwellingOthers : DropdownOthers.collect($(".dwelling"), $(".dwelling_others")),
                 yearsStayedOwned : $(".years_of_stay_owned").val(),
                 yearsStayedRented : $(".years_of_stay_rented").val(),
                 residenceStability : $(".stability_residence").val(),
+                residenceStabilityOthers : DropdownOthers.collect($(".stability_residence"), $(".stability_residence_others")),
                 physicalHomeCondition : $(".physical_home_conditions").val(),
+                physicalHomeConditionOthers : DropdownOthers.collect($(".physical_home_conditions"), $(".physical_home_conditions_others")),
                 familyEconomicStatus : $(".family_economic_status").val(),
+                familyEconomicStatusOthers : DropdownOthers.collect($(".family_economic_status"), $(".family_economic_status_others")),
                 familyBreadwinner: $(".family_breadwinner").val(),
+                familyBreadwinnerOthers : DropdownOthers.collect($(".family_breadwinner"), $(".family_breadwinner_others")),
                 roleInTheFamily : $(".role_in_the_family").val(),
+                roleInTheFamilyOthers : DropdownOthers.collect($(".role_in_the_family"), $(".role_in_the_family_others")),
                 incomeContributor : $(".income_contributor").val(),
+                incomeContributorOthers : DropdownOthers.collect($(".income_contributor"), $(".income_contributor_others")),
                 majorFamilyProblem : $(".major_family_problem").val(),
                 otherFamilyProblem : $(".other_famiy_problem").val(),
                 remarksInPetitionersSituation : $(".remarks_situation").val(),
@@ -212,6 +222,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -248,6 +259,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -360,7 +372,7 @@
                 });
             }
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('psir')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -374,19 +386,28 @@
 
                         suppressCivilStatusClear = true;
                         $(".civil_status").val(presentSituation.civilStatus).trigger("change")
+                        $(".civil_status_others").val(presentSituation.civilStatusOthers)
                         $(".status_of_marriage").val(presentSituation.statusOfMarriage).trigger("change")
                         $(".other_married_status").val(presentSituation.otherStatusOfMarriage)
                         $(".relationship_with_children").val(presentSituation.childrenRelationship).trigger("change")
+                        $(".relationship_with_children_others").val(presentSituation.childrenRelationshipOthers)
                         $(".remarks_children").val(presentSituation.remarksInChildren)
                         $(".dwelling").val(presentSituation.dwelling).trigger("change")
+                        $(".dwelling_others").val(presentSituation.dwellingOthers)
                         $(".years_of_stay_owned").val(presentSituation.yearsStayedOwned)
                         $(".years_of_stay_rented").val(presentSituation.yearsStayedRented)
                         $(".stability_residence").val(presentSituation.residenceStability).trigger("change")
+                        $(".stability_residence_others").val(presentSituation.residenceStabilityOthers)
                         $(".physical_home_conditions").val(presentSituation.physicalHomeCondition).trigger("change")
+                        $(".physical_home_conditions_others").val(presentSituation.physicalHomeConditionOthers)
                         $(".family_economic_status").val(presentSituation.familyEconomicStatus).trigger("change")
+                        $(".family_economic_status_others").val(presentSituation.familyEconomicStatusOthers)
                         $(".family_breadwinner").val(presentSituation.familyBreadwinner).trigger("change")
+                        $(".family_breadwinner_others").val(presentSituation.familyBreadwinnerOthers)
                         $(".role_in_the_family").val(presentSituation.roleInTheFamily).trigger("change")
+                        $(".role_in_the_family_others").val(presentSituation.roleInTheFamilyOthers)
                         $(".income_contributor").val(presentSituation.incomeContributor).trigger("change")
+                        $(".income_contributor_others").val(presentSituation.incomeContributorOthers)
                         $(".major_family_problem").val(presentSituation.majorFamilyProblem).trigger("change")
                         $(".other_famiy_problem").val(presentSituation.otherFamilyProblem)
                         $(".remarks_situation").val(presentSituation.remarksInPetitionersSituation)
@@ -396,6 +417,8 @@
                         $(".spouse_name").val(presentSituation.spouseName)
                         $(".spouse_age").val(presentSituation.spouseAge)
                         $(".spouse_sex").val(presentSituation.spouseSex).trigger("change")
+                        $(".spouse_sex_others").val(presentSituation.spouseSexOthers)
+                        DropdownOthers.refresh();
                         $(".spouse_occupation").val(presentSituation.spouseOccupation)
                         $(".spouse_home_address").val(presentSituation.spouseHomeAddress)
                         $(".spouse_work_address").val(presentSituation.spouseWorkAddress)
@@ -610,7 +633,7 @@
 
             let data = collectPresentSituation();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
                     var parsed = window.PsirRecord.parseExisting(result);
                     if (parsed.error) return;
@@ -628,7 +651,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('psir_education_history?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                         });
                 });
@@ -639,7 +662,7 @@
 
             let data = collectPresentSituation();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -658,7 +681,7 @@
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, data, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, analysisAndProjectedThrust);
 
                     __executeExternalPost(
-                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        WorksheetApi.updateUrl('psir'),
                         JSON.stringify(payload)
                     ).done(function (res) {
 
@@ -671,7 +694,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                window.pisUrl(`psir_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                window.pisUrl('psir_education_history?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                         }, 2000);
                     });
                 });
@@ -688,7 +711,7 @@
                     setTimeout(function () {
                         $(".overlay").hide();
                         // window.location.href = window.pisUrl(`worksheet_${psirType}?client_id=${client_id}`);
-                        window.location.href = window.pisUrl(`psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
+                        window.location.href = window.pisUrl('psir_' + psirType + '?' + WorksheetApi.pageQuery({ status: status }))
                     }, 500);
                 });
             });

@@ -144,6 +144,7 @@
             }
             var payload = {
             "petitionerId"              : client_id,
+            "docketNumber"              : WorksheetApi.docketNumber(),
             "jsonData"                  : JSON.stringify(employmentHistory),
             "type"                      : "psirEmploymentHistory",
             "worksheetStatus"           : "INCOMPLETE",
@@ -166,7 +167,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = window.pisUrl('psir_environmental_factor?client_id='+client_id+'&field_office_id='+foid);
+                            window.location.href = window.pisUrl('psir_environmental_factor?' + WorksheetApi.pageQuery());
                         }, 500); 
                     }, 2000);
                 }else{
@@ -176,8 +177,8 @@
         })
 
 
-        __executeExternalGet('8000/worksheet/getPetitioner/employmentHistory/'+client_id).done(function (result) {
-            __executeExternalGet('8000/worksheet/getPetitioner/psirEmploymentHistory/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('employmentHistory')).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('psirEmploymentHistory')).done(function (result) {
                 var result = result.response;
                 if (result.status != "ERROR") {
 
@@ -255,7 +256,7 @@
 
         $(".btn-update").unbind("click").on("click", function(){
             var payload = gatheredData();
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirEmploymentHistory/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost(WorksheetApi.updateUrl('psirEmploymentHistory'),JSON.stringify(payload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $('#success').show();
                     setTimeout(function () {
@@ -266,7 +267,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = window.pisUrl('psir_environmental_factor?client_id='+client_id+'&field_office_id='+foid);
+                            window.location.href = window.pisUrl('psir_environmental_factor?' + WorksheetApi.pageQuery());
                         }, 500); 
                     }, 2000);
                 }else{
@@ -283,7 +284,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = window.pisUrl('psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid);
+                        window.location.href = window.pisUrl('psir_'+psirType+'?' + WorksheetApi.pageQuery());
                     }, 500);
                 });
             });

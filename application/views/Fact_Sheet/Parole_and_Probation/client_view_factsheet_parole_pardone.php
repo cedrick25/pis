@@ -1047,7 +1047,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li><a href="client_list">Client List</a></li>
+                            <li><a href="client_list_parole_and_pardone">Parole and Pardone</a></li>
                             <li class="active">Fact Sheet</li>
                         </ol>
                     </div>
@@ -1061,7 +1061,7 @@
                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <strong class="card-title">Fact Sheet</strong>
+                                <strong class="card-title">Parole and Pardone Fact Sheet</strong>
                                 <!-- <div class="spinner ml-auto" role="status" aria-hidden="true" id="spinner_update"></div> -->
                             </div>
                             <div class="fs-toast-host" aria-live="polite" aria-atomic="true">
@@ -1077,10 +1077,6 @@
                                     <div class="name-container">
                                         <div class="name-header">
                                             <span class="name-text" id="petitionerName"></span>
-                                            <div class="name-actions">
-                                                <a href="#" class="toggle-link"><i class="fa fa-plus-circle"></i> Show</a>
-                                                <a href="#" class="edit-link"><i class="fa fa-edit"></i></a>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1088,15 +1084,15 @@
                                 <div class="img-body">
                                     <div class="img-cont">
                                         <img class="align-content" id="client_photo" src="images/nopic.jpg">
-                                        <button type="button" data-toggle="modal" data-target="#cameraModal" class="btn btn-sm btn-outline-primary btn-block btn-take rounded-0">
+                                        <button type="button" data-toggle="modal" data-target="#cameraModal" class="btn btn-sm btn-outline-primary btn-block btn-take rounded-0 fs-owner-only" style="display: none;">
                                             <i class="fa fa-camera" aria-hidden="true"></i> Take Photo
                                         </button>
                                     </div>
                                     <div class="btn-cont">
-                                        <button type="button" data-toggle="modal" data-target="#uploadPicModal" class="btn btn-primary btn-sm btn-block btn-photo">
+                                        <button type="button" data-toggle="modal" data-target="#uploadPicModal" class="btn btn-primary btn-sm btn-block btn-photo fs-owner-only" style="display: none;">
                                             <i class="fa fa-picture-o" aria-hidden="true"></i> Upload Photo
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm btn-block btn-fingerprint">
+                                        <button type="button" class="btn btn-danger btn-sm btn-block btn-fingerprint fs-owner-only" style="display: none;">
                                             <i class="fa fa-upload" aria-hidden="true"></i> Upload Fingerprint
                                         </button>
                                     </div>
@@ -1124,13 +1120,10 @@
                                         <li class="nav-item" style="display: none;">
                                             <a class="nav-link" href="#" data-toggle="tab" id="taskListTab">Task List</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-toggle="tab" id="docketListTab">Docket List</a>
-                                        </li>
                                     </ul>
                                 </div>
                                 <div class="info-action">
-                                    <button class="btn btn-sm btn-primary btn-addInvestigation" type="submit"><i class="fa fa-plus-circle"></i>  Add Investigation Document/Report</button>
+                                    <button class="btn btn-sm btn-primary btn-addInvestigation fs-owner-only" type="submit" style="display: none;"><i class="fa fa-plus-circle"></i>  Add Investigation Document/Report</button>
                                 </div>
                                 <div class="fs-tab-panel-wrap position-relative">
                                 <div id="fsTabContentLoader" class="fs-panel-loader is-hidden" aria-live="polite" aria-busy="false">
@@ -1169,9 +1162,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
     <script src="assets/js/html2canvas.min.js"></script>
-    <script src="assets/js/pisJs/ppaWorksheetPrintHtml.js"></script>
-    <script src="assets/js/pisJs/ppaPsirPrintHtml.js"></script>
-    <script src="assets/js/pisJs/clientViewFactSheet.js"></script>
+    <script src="assets/js/pisJs/Fact_Sheet/Parole_and_Pardone/clientViewFactSheetParolePardone.js"></script>
 
 
 </body>

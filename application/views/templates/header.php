@@ -78,7 +78,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         window.__PIS_API_BASE = <?= json_encode($pis_api_base) ?>;
         window.__PIS_API_PATH_STYLE = <?= $pis_api_path_style ? 'true' : 'false' ?>;
         window.__PIS_IS_HTTPS = <?= $pis_is_https ? 'true' : 'false' ?>;
-        window.__PIS_OFFLINE_MODE = <?= (defined('PIS_OFFLINE_MODE') && PIS_OFFLINE_MODE) ? 'true' : 'false' ?>;
         window.__PIS_SMS_API_URL = <?= json_encode(defined('PIS_SMS_API_URL') ? PIS_SMS_API_URL : '') ?>;
         window.__PIS_EMAIL_API_URL = <?= json_encode(defined('PIS_EMAIL_API_URL') ? PIS_EMAIL_API_URL : '') ?>;
         window.pisUrl = function (path) {
@@ -99,36 +98,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 return base + p;
             }
             return base.replace(/\/+$/, '') + (p ? '/' + p : '');
-        };
-        /** Builds list API URL: online 8000/docketbook... or offline api/docketbook/offline... */
-        window.pisDocketbookListUrl = function (suffix) {
-            var rest = String(suffix == null ? '' : suffix);
-            if (rest && rest.charAt(0) !== '/' && rest.charAt(0) !== '?') {
-                rest = '/' + rest;
-            }
-            if (window.__PIS_OFFLINE_MODE) {
-                return window.pisUrl('index.php/api/docketbook/offline' + rest);
-            }
-            return window.pisApiUrl('8000/docketbook' + rest);
-        };
-        /** Rewrites only the three list surfaces when offline; leaves create/update/get alone. */
-        window.__pisRewriteOfflineDocketListUrl = function (url) {
-            if (!window.__PIS_OFFLINE_MODE || !url) {
-                return null;
-            }
-            var marker = '8000/docketbook';
-            var idx = String(url).indexOf(marker);
-            if (idx === -1) {
-                return null;
-            }
-            var after = String(url).substring(idx + marker.length);
-            if (after === '' || after.charAt(0) === '?') {
-                return window.pisUrl('index.php/api/docketbook/offline' + after);
-            }
-            if (after.indexOf('/list/') === 0 || after.indexOf('/search/') === 0) {
-                return window.pisUrl('index.php/api/docketbook/offline' + after);
-            }
-            return null;
         };
         window.__PIS_COOKIE_OPTS = function () {
             var opts = { path: '/' };

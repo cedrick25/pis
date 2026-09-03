@@ -110,7 +110,7 @@
         var foid = GetURLParameter('field_office_id');
         console.log(client_id)
         
-        __executeExternalGet('8000/worksheet/getPetitioner/psirIdentifyingData/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('psirIdentifyingData')).done(function (result) {
 
             var result = result.response;
 
@@ -180,6 +180,7 @@
 
             var payload = {
             "petitionerId"              : client_id,
+            "docketNumber"              : WorksheetApi.docketNumber(),
             "jsonData"                  : JSON.stringify(psirRecommendation),
             "type"                      : "psirRecommendation",
             "worksheetStatus"           : "COMPLETED",
@@ -234,7 +235,7 @@
         })
         $(".btn-update").unbind("click").on("click", function(){
             var payload = gatheredData();
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirRecommendation/'+client_id,JSON.stringify(payload)).done(function (result) {
+            __executeExternalPost(WorksheetApi.updateUrl('psirRecommendation'),JSON.stringify(payload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
@@ -255,7 +256,7 @@
 
         })
 
-        __executeExternalGet('8000/worksheet/getPetitioner/psirRecommendation/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('psirRecommendation')).done(function (result) {
             var result = result.response;
             if (result.status != "ERROR") {
                 if (result.worksheetStatus == "COMPLETED"){
@@ -317,7 +318,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = window.pisUrl('psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid);
+                        window.location.href = window.pisUrl('psir_'+psirType+'?' + WorksheetApi.pageQuery());
                     }, 500);
                 });
             });

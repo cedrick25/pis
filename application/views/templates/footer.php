@@ -37,6 +37,7 @@
     <!-- <script src="assets/js/bootstrap-datetimepicker.min.js"></script> -->
     <script src="assets/js/select2.min.js"></script>
     <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/pisJs/worksheetDocketApi.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/pisJs/tableActionIcons.js"></script>
     <script src="assets/js/webcam.min.js"></script>
@@ -90,20 +91,6 @@
         var __getContext = function() {
             return ___ctx;
         };
-
-        if (window.__PIS_OFFLINE_MODE && typeof $.ajaxPrefilter === 'function') {
-            $.ajaxPrefilter(function (options) {
-                if (!options || !options.url) {
-                    return;
-                }
-                var rewritten = typeof window.__pisRewriteOfflineDocketListUrl === 'function'
-                    ? window.__pisRewriteOfflineDocketListUrl(options.url)
-                    : null;
-                if (rewritten) {
-                    options.url = rewritten;
-                }
-            });
-        }
 
         var __executeExternalGet = function(path, customLoader) {
             path = __getContext() + path;
@@ -342,6 +329,9 @@
             if (role_id != null) {
                 $.cookie("role_id", role_id, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
             }
+            if (result.id != null && String(result.id).trim() !== '') {
+                $.cookie("user_id", String(result.id), window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+            }
             if (departmentName != null) {
                 $.cookie("departmentName", departmentName, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
             }
@@ -360,8 +350,10 @@
             window.__pisUserSessionPromise = d.promise();
 
             var existingFo = $.cookie('field_office_id');
-            if (existingFo != null && String(existingFo).trim() !== '') {
-                d.resolve({ fieldOfficeId: existingFo });
+            var existingUserId = $.cookie('user_id');
+            if (existingFo != null && String(existingFo).trim() !== ''
+                && existingUserId != null && String(existingUserId).trim() !== '') {
+                d.resolve({ fieldOfficeId: existingFo, id: existingUserId });
                 return d.promise();
             }
 
@@ -393,6 +385,7 @@
             $.removeCookie('field_office_id');
             $.removeCookie('role_id');
             $.removeCookie('departmentName');
+            $.removeCookie('user_id');
             window.__pisUserSessionPromise = null;
             localStorage.clear();
             setTimeout(function () {

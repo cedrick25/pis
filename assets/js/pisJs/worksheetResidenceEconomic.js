@@ -174,6 +174,7 @@
 
             var payload = {
             "petitionerId"              : client_id,
+            "docketNumber"              : WorksheetApi.docketNumber(),
             "jsonData"                  : JSON.stringify(residenceEco),
             "type"                      : "residenceEconomic",
             "worksheetStatus"           : "INCOMPLETE",
@@ -218,7 +219,7 @@
                             setTimeout(function () {
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                                window.location.href = window.pisUrl('worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid);
+                                window.location.href = window.pisUrl('worksheet_spouse_children?' + WorksheetApi.pageQuery());
                             }, 500);
                         }, 2000);
                     }else{
@@ -234,7 +235,7 @@
             //         setTimeout(function () {
             //             $('#success').hide();
             //             setTimeout(function () {
-            //                 window.location.href = window.pisUrl('worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid);
+            //                 window.location.href = window.pisUrl('worksheet_spouse_children?' + WorksheetApi.pageQuery());
             //             }, 500);
             //         }, 2000);
             //     }else{
@@ -244,7 +245,7 @@
 
             })
 
-        __executeExternalGet('8000/worksheet/getPetitioner/residenceEconomic/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('residenceEconomic')).done(function (result) {
 
             var result = result.response;
 
@@ -304,7 +305,7 @@
 
             var dataPayload = gatheredDataResEco();
 
-            __executeExternalPost('8000/worksheet/updatePetitioner/residenceEconomic/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
+            __executeExternalPost(WorksheetApi.updateUrl('residenceEconomic'),JSON.stringify(dataPayload)).done(function (result) {
                     if (result.status != "ERROR") {
                         $(".form-control").val('');
                         $('#success').show();
@@ -315,7 +316,7 @@
                             setTimeout(function () {
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                                window.location.href = window.pisUrl('worksheet_spouse_children?client_id='+client_id+'&field_office_id='+foid);
+                                window.location.href = window.pisUrl('worksheet_spouse_children?' + WorksheetApi.pageQuery());
                             }, 500);
                         }, 2000);
                     }else{
@@ -334,7 +335,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = window.pisUrl('worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid);
+                        window.location.href = window.pisUrl('worksheet_'+worksheetType+'?' + WorksheetApi.pageQuery());
                     }, 500);
                 });
             });

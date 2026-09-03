@@ -28,8 +28,11 @@
     }
 
     function persist(postFn, clientId, payload, parsed, done) {
+        if (window.WorksheetApi && WorksheetApi.attachPayload) {
+            WorksheetApi.attachPayload(payload);
+        }
         var url = parsed.hasRecord
-            ? "8000/worksheet/updatePetitioner/psir/" + clientId
+            ? WorksheetApi.updateUrl("psir")
             : "8000/worksheet/create";
         if (parsed.hasRecord) {
             payload.updatedBy = payload.updatedBy || payload.createdBy;

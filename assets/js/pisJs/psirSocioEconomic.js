@@ -125,6 +125,7 @@
 
             var payload = {
             "petitionerId"              : client_id,
+            "docketNumber"              : WorksheetApi.docketNumber(),
             "jsonData"                  : JSON.stringify(socioEco),
             "type"                      : "psirSocioEconomic",
             "worksheetStatus"           : "INCOMPLETE",
@@ -148,7 +149,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = window.pisUrl('psir_residence_economic?client_id='+client_id+'&field_office_id='+foid);
+                            window.location.href = window.pisUrl('psir_residence_economic?' + WorksheetApi.pageQuery());
                         }, 500); 
                     }, 2000);
                 }else{
@@ -158,8 +159,8 @@
 
         })
 
-        __executeExternalGet('8000/worksheet/getPetitioner/socioEconomic/'+client_id).done(function (result) {
-                __executeExternalGet('8000/worksheet/getPetitioner/psirSocioEconomic/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('socioEconomic')).done(function (result) {
+                __executeExternalGet(WorksheetApi.getUrl('psirSocioEconomic')).done(function (result) {
                     var result = result.response;
                     if (result.status != "ERROR") {
                         if (result.worksheetStatus == "INCOMPLETE"){
@@ -196,7 +197,7 @@
         $('.card-body').find('input, select, button, textarea, select2').prop('disabled', true);
         $(".btn-update").unbind("click").on("click", function(){
             var dataPayload = gatheredData();
-            __executeExternalPost('8000/worksheet/updatePetitioner/psirSocioEconomic/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
+            __executeExternalPost(WorksheetApi.updateUrl('psirSocioEconomic'),JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $('#success').show();
                     setTimeout(function () {
@@ -207,7 +208,7 @@
                             $(".overlay").hide();
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                            window.location.href = window.pisUrl('psir_residence_economic?client_id='+client_id+'&field_office_id='+foid);
+                            window.location.href = window.pisUrl('psir_residence_economic?' + WorksheetApi.pageQuery());
                         }, 500); 
                     }, 2000);
                 }else{
@@ -224,7 +225,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = window.pisUrl('psir_'+psirType+'?client_id='+client_id+'&field_office_id='+foid);
+                        window.location.href = window.pisUrl('psir_'+psirType+'?' + WorksheetApi.pageQuery());
                     }, 500);
                 });
             });

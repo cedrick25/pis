@@ -245,7 +245,11 @@
                                             <option value="" selected disabled>Select Neighborhood</option>
                                             <option value="rural">Rural</option>
                                             <option value="urban">Urban</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control neighborhood_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Area</label>
@@ -253,7 +257,11 @@
                                             <option value="" selected disabled>Select Area</option>
                                             <option value="non_slum_area">Non-Slum Area</option>
                                             <option value="slum_area">Slum Area</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control area_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -270,7 +278,11 @@
                                             <option value="high">High</option>
                                             <option value="low">Low</option>
                                             <option value="minimal">Minimal</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control neighCrim_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Explain</label>
@@ -286,7 +298,11 @@
                                             <option value="fair">Fair</option>
                                             <option value="satisfactory">Satisfactory</option>
                                             <option value="very_satisfactory">Very Satisfactory</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control comAcceptance_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Specify</label>
@@ -302,7 +318,11 @@
                                             <option value="fair">Fair</option>
                                             <option value="satisfactory">Satisfactory</option>
                                             <option value="very_satisfactory">Very Satisfactory</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control resourcesForRehabilition_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Specify</label>
@@ -317,7 +337,11 @@
                                             <option value="desirable">Desirable</option>
                                             <option value="undesirable_with_potential_for_improvement">Undesirable with Potential for Improvement</option>
                                             <option value="undesirable_with_no_potential_for_improvement">Undesirable with no Potential for Improvement</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control peerRel_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Specify</label>
@@ -341,6 +365,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/dropdownOthers.js"></script>
     <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/worksheetEnvironmentalFactor.js"></script>

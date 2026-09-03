@@ -274,7 +274,7 @@
             }
 
             async function getData(client_id, endpoint) {
-                const url = `8000/worksheet/getPetitioner/${endpoint}/${client_id}`;
+                const url = WorksheetApi.getUrl(endpoint);
                 return await fetchData(url);
             }
 

@@ -258,7 +258,11 @@
                                                             <option value="satisfactory">Satisfactory</option>
                                                             <option value="fair">Fair</option>
                                                             <option value="poor">Poor</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control over_all_conduct_in_school_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -301,7 +305,11 @@
                                                             <option value="casual">Casual</option>
                                                             <option value="intermittent">Intermittent</option>
                                                             <option value="seasonal">Seasonal</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control work_status_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -346,6 +354,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/dropdownOthers.js"></script>
     <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/psirEducationHistory.js"></script>

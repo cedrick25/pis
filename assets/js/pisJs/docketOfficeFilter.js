@@ -213,6 +213,14 @@
             }
             return pdl;
         }
+        if (type === 'PAROLEE' || type === 'PARDONEE') {
+            return (
+                'pis/client_view_factsheet_parole_pardone?client_id=' +
+                encodeURIComponent(cid) +
+                '&field_office_id=' +
+                encodeURIComponent(oi)
+            );
+        }
         return (
             'pis/client_view_factsheet?client_id=' +
             encodeURIComponent(cid) +

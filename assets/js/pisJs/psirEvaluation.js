@@ -170,6 +170,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -206,6 +207,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -221,7 +223,7 @@
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('psir')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -257,7 +259,7 @@
 
             let data = collectAnalysisAndThrusts();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
                     var parsed = window.PsirRecord.parseExisting(result);
                     if (parsed.error) return;
@@ -281,7 +283,7 @@
                                         window.pisUrl(`client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`);
                                 } else {
                                     window.location.href =
-                                        window.pisUrl(`psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`);
+                                        window.pisUrl('psir_evaluation?' + WorksheetApi.pageQuery({ status: nextStatus }));
                                 }
                             }, 2000);
                         });
@@ -293,7 +295,7 @@
 
             let data = collectAnalysisAndThrusts();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -312,7 +314,7 @@
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, presentSituation, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, data);
 
                     __executeExternalPost(
-                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        WorksheetApi.updateUrl('psir'),
                         JSON.stringify(payload)
                     ).done(function (res) {
 
@@ -331,7 +333,7 @@
                                     window.pisUrl(`client_view_factsheet?client_id=${client_id}&field_office_id=${foid}`);
                             } else {
                                 window.location.href =
-                                    window.pisUrl(`psir_evaluation?client_id=${client_id}&field_office_id=${foid}&status=${nextStatus}`);
+                                    window.pisUrl('psir_evaluation?' + WorksheetApi.pageQuery({ status: nextStatus }));
                             }
                         }, 2000);
                     });
@@ -349,7 +351,7 @@
                     setTimeout(function () {
                         $(".overlay").hide();
                         // window.location.href = window.pisUrl(`worksheet_${psirType}?client_id=${client_id}`);
-                        window.location.href = window.pisUrl(`psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
+                        window.location.href = window.pisUrl('psir_' + psirType + '?' + WorksheetApi.pageQuery({ status: status }))
                     }, 500);
                 });
             });

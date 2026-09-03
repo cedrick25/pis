@@ -128,12 +128,15 @@
                 aggravatingCirsumstances    : $(".aggravating_circumstances").val(),
                 mitigatingCircumstances     : $(".mitigating_circumstances").val(),
                 custody                     : $(".custody").val(),
+                custodyOthers               : DropdownOthers.collect($(".custody"), $(".custody_others")),
                 periodOfDetention           : $(".period_detention").val(),
                 rorCustodian                : $(".ror_custodian").val(),
                 rorCustodianAddress         : $(".ror_custodian_address").val(),
                 extentParticipation         : $(".extent_participation").val(),
+                extentParticipationOthers   : DropdownOthers.collect($(".extent_participation"), $(".extent_participation_others")),
                 mannerofCommision           : $(".manner_commission").val(),
                 motives                     : $(".motives").val(),
+                motivesOthers               : DropdownOthers.collect($(".motives"), $(".motives_others")),
                 explain                     : $(".explain").val(),
             };
         }
@@ -190,6 +193,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -226,6 +230,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -240,7 +245,7 @@
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('worksheet')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -272,13 +277,17 @@
                         $(".aggravating_circumstances").val(presentOffense.aggravatingCirsumstances);
                         $(".mitigating_circumstances").val(presentOffense.mitigatingCircumstances);
                         $(".custody").val(presentOffense.custody).trigger("change");
+                        $(".custody_others").val(presentOffense.custodyOthers);
                         $(".period_detention").val(presentOffense.periodOfDetention);
                         $(".ror_custodian").val(presentOffense.rorCustodian);
                         $(".ror_custodian_address").val(presentOffense.rorCustodianAddress);
                         $(".extent_participation").val(presentOffense.extentParticipation).trigger("change");
+                        $(".extent_participation_others").val(presentOffense.extentParticipationOthers);
                         $(".manner_commission").val(presentOffense.mannerofCommision);
                         $(".motives").val(presentOffense.motives).trigger("change");
+                        $(".motives_others").val(presentOffense.motivesOthers);
                         $(".explain").val(presentOffense.explain);
+                        DropdownOthers.refresh();
                     } else {
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
@@ -323,7 +332,7 @@
 
             let data = collectPresentOffenseData();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -345,7 +354,7 @@
                                 $('#save_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`worksheet_prior_records?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('worksheet_prior_records?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -362,7 +371,7 @@
 
             let data = collectPresentOffenseData();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -379,7 +388,7 @@
 
                     let payload = updateWorksheet(existing, identifyingData, data, priorRecords, identificationData, familyBackground, presentSituation, educationalHistory, employmentHistory, communityBackground);
                     console.log(JSON.parse(payload.jsonData))
-                    __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
+                    __executeExternalPost(WorksheetApi.updateUrl('worksheet'), JSON.stringify(payload))
                         .done(function (res) {
                             if (res.status === "ERROR") return;
                             function finish() {
@@ -392,7 +401,7 @@
                                 $('#saveModal').modal("hide");
                                 $("#saveModal .btn-save").prop("disabled", false)
                                 window.location.href =
-                                    window.pisUrl(`worksheet_prior_records?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('worksheet_prior_records?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -415,7 +424,7 @@
                     setTimeout(function () {
                         $(".overlay").hide();
                         // window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}`);
-                        window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
+                        window.location.href = window.pisUrl('worksheet_' + worksheetType + '?' + WorksheetApi.pageQuery({ status: status }))
                     }, 500);
                 });
             });

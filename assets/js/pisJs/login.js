@@ -86,6 +86,9 @@
                     if (user.roleId != null) {
                         $.cookie('role_id', user.roleId, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
                     }
+                    if (user.id != null && String(user.id).trim() !== '') {
+                        $.cookie('user_id', String(user.id), window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+                    }
                     if (user.departmentName != null) {
                         $.cookie('departmentName', user.departmentName, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
                     }

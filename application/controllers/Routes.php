@@ -348,6 +348,10 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('client_view_factsheet');
 	}
+	public function client_view_factsheet_parole_pardone()
+	{
+		$this->load->view('Fact_Sheet/Parole_and_Probation/client_view_factsheet_parole_pardone');
+	}
 	public function client_view_upload_single_carpeta()
 	{
 		$this->load->view('Fact_Sheet/Single Carpeta/client_view_upload_single_carpeta');

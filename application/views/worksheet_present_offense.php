@@ -346,7 +346,11 @@
                                             <option value="on_bail">On Bail</option>
                                             <option value="on_detention">On Detention</option>
                                             <option value="ror_custodian">ROR-Custodian</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control custody_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" id="period_detention_field" style="display:none;">
                                         <label for="text-input" class=" form-control-label">Period of Detention</label>
@@ -369,7 +373,11 @@
                                                 <option value="accessory">Accessory</option>
                                                 <option value="accomplice">Accomplice</option>
                                                 <option value="principal">Principal</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control extent_participation_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -390,6 +398,9 @@
                                                 <option value="unintentional">Unintentional</option>
                                                 <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control motives_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -414,6 +425,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/dropdownOthers.js"></script>
     <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/worksheetPresentOffense.js"></script>

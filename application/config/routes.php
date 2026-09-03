@@ -118,6 +118,7 @@ $route['client_file_upload'] = "routes/client_file_upload";
 $route['client_single_carpeta_upload'] = "routes/client_single_carpeta_upload";
 $route['client_update'] = "routes/client_update";
 $route['client_view_factsheet'] = "routes/client_view_factsheet";
+$route['client_view_factsheet_parole_pardone'] = "routes/client_view_factsheet_parole_pardone";
 $route['client_view_upload_single_carpeta'] = "routes/client_view_upload_single_carpeta";
 $route['client_uploads'] = "routes/client_uploads";
 $route['client_file_view'] = "routes/client_file_view";
@@ -249,19 +250,19 @@ $route['resident'] = "routes/resident";
 $route['blotter'] = "routes/blotter";
 $route['announcement'] = "routes/announcement";
 $route['inventory'] = "routes/inventory";
-// Offline docket book snapshot API (PIS/Apache — not port 8000)
-$route['api/docketbook/offline'] = 'api_docketbook/offline';
-$route['api/docketbook/offline/list/(:any)/(:any)'] = 'api_docketbook/offline_list/$1/$2';
-$route['api/docketbook/offline/search/(:any)'] = 'api_docketbook/offline_search/$1';
-$route['api/docketbook/sync'] = 'api_docketbook/sync';
-$route['api/docketbook/sync/status'] = 'api_docketbook/sync_status';
 
-// Offline worksheet API (PIS/Apache — never calls port 8000)
-$route['api/worksheet/offline/create'] = 'api_worksheet/create';
-$route['api/worksheet/offline/update/(:num)'] = 'api_worksheet/update/$1';
-$route['api/worksheet/offline/updatePetitioner/(:any)/(:any)'] = 'api_worksheet/update_petitioner/$1/$2';
-$route['api/worksheet/offline/getPetitioner/(:any)/(:any)'] = 'api_worksheet/get_petitioner/$1/$2';
-$route['api/worksheet/offline/(:any)/(:num)'] = 'api_worksheet/get_by_id/$1/$2';
+// Offline docket book API (PIS/Apache — not port 8000)
+$route['api/docketbook/offline/getclient/(:any)'] = 'api_docketbook/offline_getclient/$1';
+
+// Offline worksheet API (PIS/Apache — not port 8000)
+// GET api/worksheet/offline/{type}/{docketNumber}?fieldOfficeId=
+$route['api/worksheet/offline/(:any)/(:any)'] = 'api_worksheet/get_by_docket/$1/$2';
+
+// Offline petitioner snapshot API (PIS/Apache — not port 8000)
+$route['api/petitioner/offline/search/(:any)'] = 'api_petitioner/offline_search/$1';
+$route['api/petitioner/offline/(:num)'] = 'api_petitioner/offline_get/$1';
+$route['api/petitioner/offline'] = 'api_petitioner/offline';
+$route['api/petitioner/sync'] = 'api_petitioner/sync';
 
 $route['default_controller'] = 'Routes';
 $route['404_override'] = '';

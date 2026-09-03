@@ -422,7 +422,7 @@
 
         $(".btn-next").unbind("click").on("click", function(){
                 // window.location.href = (window.__PIS_BASE_URL || '') + 'client_list';
-            __executeExternalGet('8000/worksheet/getPetitioner/environmentalFactor/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('environmentalFactor')).done(function (result) {
                 console.log(result)
                    if (result.status != "ERROR") {
  
@@ -439,7 +439,7 @@
             })
         })
 
-        __executeExternalGet('8000/worksheet/getPetitioner/environmentalFactor/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('environmentalFactor')).done(function (result) {
                 console.log("==========")
                 console.log(result)
                 console.log("==========")
@@ -503,7 +503,7 @@
         //     console.log(payload)
 
 
-        //     __executeExternalPost('8000/worksheet/updatePetitioner/environmentalFactor/'+client_id,JSON.stringify(payload)).done(function (result) {
+        //     __executeExternalPost(WorksheetApi.updateUrl('environmentalFactor'),JSON.stringify(payload)).done(function (result) {
         //         console.log(result);
         //         if (result.status != "ERROR") {
         //             $(".form-control").val('');

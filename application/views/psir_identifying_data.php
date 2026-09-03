@@ -273,7 +273,11 @@
                                             <option value="FEMALE">Female</option>
                                             <option value="MALE">Male</option>
                                             <option value="LGBT">LGBT</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control sex_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -473,7 +477,11 @@
                                             <option value="yemenite">Yemenite</option>
                                             <option value="zambian">Zambian</option>
                                             <option value="zimbabwean">Zimbabwean</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control citizenship_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Religion</label>
@@ -491,6 +499,9 @@
                                             <option value="CATHOLIC">Roman Catholic</option>
                                             <option value="SEVENTH DAY ADVENTIST">Seventh Day Adventist</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control religion_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -526,6 +537,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/dropdownOthers.js"></script>
     <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/psirIdentifyingData.js"></script>

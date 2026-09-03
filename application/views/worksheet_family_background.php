@@ -470,7 +470,11 @@
                                                             <option value="yemenite">Yemenite</option>
                                                             <option value="zambian">Zambian</option>
                                                             <option value="zimbabwean">Zimbabwean</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control father_citizenship_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -490,6 +494,9 @@
                                                             <option value="CATHOLIC">Roman Catholic</option>
                                                             <option value="SEVENTH DAY ADVENTIST">Seventh Day Adventist</option>
                                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control father_religion_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Education</label>
@@ -765,7 +772,11 @@
                                                             <option value="yemenite">Yemenite</option>
                                                             <option value="zambian">Zambian</option>
                                                             <option value="zimbabwean">Zimbabwean</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control mother_citizenship_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -785,6 +796,9 @@
                                                             <option value="CATHOLIC">Roman Catholic</option>
                                                             <option value="SEVENTH DAY ADVENTIST">Seventh Day Adventist</option>
                                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control mother_religion_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Education</label>
@@ -833,7 +847,11 @@
                                             <option value="seperated">Seperated</option>
                                             <option value="married">Married</option>
                                             <option value="common_law">Live-in/Common-Law</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control civil_status_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="text-input" class=" form-control-label">Relationship with Parents</label>
@@ -843,7 +861,11 @@
                                             <option value="fair">Fair</option>
                                             <option value="satisfactory">Satisfactory</option>
                                             <option value="very_satisfactory">Very Satisfactory</option>
+                                            <option value="others">Others</option>
                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control relationship_with_parents_others" placeholder="Specify">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -888,7 +910,11 @@
                                                             <option value="satisfactory">Satisfactory</option>
                                                             <option value="fair">Fair</option>
                                                             <option value="poor">Poor</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control fam_relationship_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Major Family Problems</label>
@@ -902,6 +928,9 @@
                                                             <option value="sibling_conflict">Sibling Conflict</option>
                                                             <option value="others">Others</option>
                                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control family_problems_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -913,7 +942,11 @@
                                                             <option value="satisfactory">Satisfactory</option>
                                                             <option value="fair">Fair</option>
                                                             <option value="poor">Poor</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control family_reputation_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Family Economic Status</label>
@@ -923,7 +956,11 @@
                                                             <option value="adequate">Adequate</option>
                                                             <option value="inadequate">Inadequate</option>
                                                             <option value="below_poverty_lines">Below Poverty Lines</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control family_economic_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -935,7 +972,11 @@
                                                             <option value="satisfactory">Satisfactory</option>
                                                             <option value="fair">Fair</option>
                                                             <option value="poor">Poor</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control home_condition_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Stability of Residence</label>
@@ -945,7 +986,11 @@
                                                             <option value="occasional_change">Occasional Change</option>
                                                             <option value="frequent_change">Frequent Change</option>
                                                             <option value="no_stability">No Stability</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control residence_stability_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -961,7 +1006,11 @@
                                                             <option value="" selected disabled>Select Circumstance</option>
                                                             <option value="sad">Sad</option>
                                                             <option value="happy">Happy</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control childhood_circumstances_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -990,6 +1039,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/dropdownOthers.js"></script>
     <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/worksheetFamilyBackground.js"></script>

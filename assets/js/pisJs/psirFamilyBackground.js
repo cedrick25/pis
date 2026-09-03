@@ -130,14 +130,21 @@
 
                 civilStatus         : $(".civil_status").val(),
                 seperationStatus         : $(".seperation_status").val(),
+                seperationStatusOthers   : DropdownOthers.collect($(".seperation_status"), $(".seperation_status_others")),
                 otherStatus         : $(".other_status_of_marriage").val(),
 
                 familyRelationship          : $(".fam_relationship").val(),
+                familyRelationshipOthers    : DropdownOthers.collect($(".fam_relationship"), $(".fam_relationship_others")),
                 majorFamilyProblem          : $(".family_problems").val(),
+                majorFamilyProblemOthers    : DropdownOthers.collect($(".family_problems"), $(".family_problems_others")),
                 familyReputationInCommunity            : $(".family_reputation").val(),
+                familyReputationInCommunityOthers      : DropdownOthers.collect($(".family_reputation"), $(".family_reputation_others")),
                 familyEconomicStatus              : $(".family_economic").val(),
+                familyEconomicStatusOthers        : DropdownOthers.collect($(".family_economic"), $(".family_economic_others")),
                 homeCondition               : $(".home_condition").val(),
+                homeConditionOthers         : DropdownOthers.collect($(".home_condition"), $(".home_condition_others")),
                 stabilityOfResidence        : $(".residence_stability").val(),
+                stabilityOfResidenceOthers  : DropdownOthers.collect($(".residence_stability"), $(".residence_stability_others")),
                 remarks          : $(".remarks_socio_economic").val(),
 
             };
@@ -195,6 +202,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -231,6 +239,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -250,7 +259,7 @@
                 PsirPrefill.fromWorksheet(client_id, "familyBackgroundAndBirthData", __executeExternalGet);
             }
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('psir')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -275,12 +284,20 @@
                         $(".remarks_socio_economic").val(familyBackgroundAndBirthData.remarks);
                         $(".civil_status").val(familyBackgroundAndBirthData.civilStatus).trigger("change");
                         $(".seperation_status").val(familyBackgroundAndBirthData.seperationStatus).trigger("change");
+                        $(".seperation_status_others").val(familyBackgroundAndBirthData.seperationStatusOthers);
                         $(".fam_relationship").val(familyBackgroundAndBirthData.familyRelationship).trigger("change");
+                        $(".fam_relationship_others").val(familyBackgroundAndBirthData.familyRelationshipOthers);
                         $(".family_problems").val(familyBackgroundAndBirthData.majorFamilyProblem).trigger("change");
+                        $(".family_problems_others").val(familyBackgroundAndBirthData.majorFamilyProblemOthers);
                         $(".family_reputation").val(familyBackgroundAndBirthData.familyReputationInCommunity).trigger("change");
+                        $(".family_reputation_others").val(familyBackgroundAndBirthData.familyReputationInCommunityOthers);
                         $(".family_economic").val(familyBackgroundAndBirthData.familyEconomicStatus).trigger("change");
+                        $(".family_economic_others").val(familyBackgroundAndBirthData.familyEconomicStatusOthers);
                         $(".home_condition").val(familyBackgroundAndBirthData.homeCondition).trigger("change");
+                        $(".home_condition_others").val(familyBackgroundAndBirthData.homeConditionOthers);
                         $(".residence_stability").val(familyBackgroundAndBirthData.stabilityOfResidence).trigger("change");
+                        $(".residence_stability_others").val(familyBackgroundAndBirthData.stabilityOfResidenceOthers);
+                        DropdownOthers.refresh();
                     } else {
                         $("#saveModal .saveModalTitle").text("Update Changes")
                         $("#saveModal #updateMessage").show();
@@ -318,7 +335,7 @@
 
             let data = collectFamilybackground();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
                     var parsed = window.PsirRecord.parseExisting(result);
                     if (parsed.error) return;
@@ -336,7 +353,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`psir_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('psir_present_situation?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                         });
                 });
@@ -347,7 +364,7 @@
 
             let data = collectFamilybackground();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -366,7 +383,7 @@
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecordsAndDerogatoryRecord, data, presentSituation, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, analysisAndProjectedThrust);
 
                     __executeExternalPost(
-                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        WorksheetApi.updateUrl('psir'),
                         JSON.stringify(payload)
                     ).done(function (res) {
 
@@ -379,7 +396,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                window.pisUrl(`psir_present_situation?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                window.pisUrl('psir_present_situation?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                         }, 2000);
                     });
                 });
@@ -396,7 +413,7 @@
                     setTimeout(function () {
                         $(".overlay").hide();
                         // window.location.href = window.pisUrl(`worksheet_${psirType}?client_id=${client_id}`);
-                        window.location.href = window.pisUrl(`psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
+                        window.location.href = window.pisUrl('psir_' + psirType + '?' + WorksheetApi.pageQuery({ status: status }))
                     }, 500);
                 });
             });

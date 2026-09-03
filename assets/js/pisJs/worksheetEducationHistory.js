@@ -140,8 +140,10 @@
                 vocAward          : $(".voc_award").val(),
                 vocDate           : $(".voc_date").val(),
                 unschooled          : $(".unschooled").val(),
+                unschooledOthers    : DropdownOthers.collect($(".unschooled"), $(".unschooled_others")),
                 conductInSchoolExplain       : $(".explain").val(),
-                conductInSchool           : $(".conduct_in_school").val()
+                conductInSchool           : $(".conduct_in_school").val(),
+                conductInSchoolOthers     : DropdownOthers.collect($(".conduct_in_school"), $(".conduct_in_school_others"))
             };
         }
 
@@ -197,6 +199,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -233,6 +236,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -254,7 +258,7 @@
             $("#saveModal .btn-save").show();
 
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('worksheet')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -294,8 +298,11 @@
                             ? "illiterate"
                             : educationalHistory.unschooled;
                         $(".unschooled").val(unschooledValue).trigger("change")
+                        $(".unschooled_others").val(educationalHistory.unschooledOthers)
                         $(".explain").val(educationalHistory.conductInSchoolExplain)
                         $(".conduct_in_school").val(educationalHistory.conductInSchool).trigger("change")
+                        $(".conduct_in_school_others").val(educationalHistory.conductInSchoolOthers)
+                        DropdownOthers.refresh();
 
                     } else {
                         $("#saveModal .saveModalTitle").text("Update Changes")
@@ -311,7 +318,7 @@
 
             let data = collectEducationalHistory();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -333,7 +340,7 @@
                                 $('#save_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`worksheet_employment_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('worksheet_employment_history?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -350,7 +357,7 @@
 
             let data = collectEducationalHistory();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -368,7 +375,7 @@
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecords, identificationData, familyBackground, presentSituation, data, employmentHistory, communityBackground);
                     // console.log(payload)
 
-                    __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
+                    __executeExternalPost(WorksheetApi.updateUrl('worksheet'), JSON.stringify(payload))
                         .done(function (res) {
                             if (res.status === "ERROR") return;
                             function finish() {
@@ -380,7 +387,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 $("#saveModal .btn-save").prop("disabled", false)
-                                window.location.href =window.pisUrl(`worksheet_employment_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                window.location.href =window.pisUrl('worksheet_employment_history?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -402,7 +409,7 @@
                     $("#warningModal").modal("hide");
                     setTimeout(function () {
                         // $(".overlay").hide();
-                        window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`);
+                        window.location.href = window.pisUrl('worksheet_' + worksheetType + '?' + WorksheetApi.pageQuery({ status: status }));
                     }, 500);
                 });
             });

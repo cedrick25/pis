@@ -411,7 +411,7 @@
         }
 
         function prefillClientUpdateFromPsir() {
-            __executeExternalGet("8000/worksheet/getPetitioner/psir/" + client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl("psir")).done(function (result) {
                 if (!result || result.status === "ERROR" || !result.response || !result.response.jsonData) {
                     return;
                 }
@@ -508,7 +508,7 @@
                     }
 
                     function patchExistingPsirThenFinish() {
-                        __executeExternalGet("8000/worksheet/getPetitioner/psir/" + client_id).done(function (psirResult) {
+                        __executeExternalGet(WorksheetApi.getUrl("psir")).done(function (psirResult) {
                             if (!window.PsirRecord) {
                                 finishUpdateSuccess();
                                 return;
@@ -552,6 +552,7 @@
 
                             var payload = {
                                 petitionerId: client_id,
+                                docketNumber: WorksheetApi.docketNumber(),
                                 jsonData: JSON.stringify(data),
                                 type: "psir",
                                 worksheetStatus: (psirResult.response && psirResult.response.worksheetStatus) || "incomplete",

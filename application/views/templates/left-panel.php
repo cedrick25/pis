@@ -51,7 +51,7 @@ if ($pis_nav !== '') {
         $pis_submenu_li = 'can_access_docket_routing_inbox_pardone';
     } elseif ($pis_nav === 'pdl-receive') {
         $pis_submenu_li = 'can_access_docket_routing_inbox_pdl';
-    } elseif (strpos($pis_nav, 'client_list_parole_and_pardone') === 0) {
+    } elseif (strpos($pis_nav, 'client_list_parole_and_pardone') === 0 || $pis_nav === 'client_view_factsheet_parole_pardone') {
         $pis_submenu_li = 'can_access_fact_sheet_parole_pardone';
     } elseif (strpos($pis_nav, 'single_carpeta') === 0 || in_array($pis_nav, array('client_list_single_carpeta', 'new_client_single_carpeta', 'client_update_single_carpeta', 'client_view_upload_single_carpeta', 'client_single_carpeta_upload'), TRUE)) {
         $pis_submenu_li = 'can_access_fact_sheet_pdl';

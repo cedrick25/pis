@@ -233,16 +233,22 @@
             {
                 "data": null,
                 "render": function (data, type, row, meta) {
+                    var client_fo = data.fieldOfficeId;
+                    var client_id = data.id;
+                    var name;
                     if (
                         data.firstName === null &&
                         data.middleName === null &&
                         data.lastName === null &&
                         data.suffixName === null
                     ) {
-                        return data.fullName || "N/A";
+                        name = data.fullName || "N/A";
+                    } else {
+                        name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`.trim();
                     }
-                    var name = `${data.firstName ?? ""} ${data.middleName ?? ""} ${data.lastName ?? ""} ${data.suffixName ?? ""}`.trim();
-                    return name || "N/A";
+                    var base = String(__getContext() || '').replace(/\/+$/, '');
+                    var href = base + '/pis/client_view_factsheet_parole_pardone?client_id=' + encodeURIComponent(String(client_id == null ? '' : client_id)) + '&field_office_id=' + encodeURIComponent(String(client_fo == null ? '' : client_fo));
+                    return '<a href="' + href.replace(/"/g, '&quot;') + '" class="text-primary">' + $('<div/>').text(name || 'N/A').html() + '</a>';
                 }
             },
             {
@@ -279,7 +285,14 @@
                     // return "";
                     // <button class='btn btn-sm btn-primary btn_pecir' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "'><i class='fa fa-plus-circle'></i> PECIR</button>
                     var foid = data.fieldOfficeId == null ? '' : String(data.fieldOfficeId);
-                    return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-foid='" + foid + "'><i class='fa fa-edit'></i> Update</button> <button class='btn btn-sm btn-primary btn_upload' data-permission='can_attachments_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "' data-foid='" + foid + "'><i class='fa fa-upload'></i> Attachments</button>";
+                    var factSheetBtn = (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.factSheetButtonHtml)
+                        ? (' ' + window.PisDocketOfficeFilter.factSheetButtonHtml({
+                            clientId: data.id,
+                            fieldOfficeId: data.fieldOfficeId,
+                            clientType: data.clientType || 'PAROLEE'
+                        }))
+                        : '';
+                    return "<button class='btn btn-sm btn-primary btn_update' data-permission='can_edit_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-foid='" + foid + "'><i class='fa fa-edit'></i> Update</button>" + factSheetBtn + " <button class='btn btn-sm btn-primary btn_upload' data-permission='can_attachments_fact_sheet_parole_pardone' type='submit' data-id='" + data.id + "' data-type='" + data.clientType + "' data-foid='" + foid + "'><i class='fa fa-upload'></i> Attachments</button>";
                 }
             }
         ]

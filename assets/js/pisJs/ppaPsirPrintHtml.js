@@ -34,6 +34,25 @@
         );
     }
 
+    function isOthersValue(v) {
+        var t = str(v).toLowerCase();
+        return t === "others" || t === "other";
+    }
+
+    function othersLabel(text) {
+        var t = str(text);
+        return t ? "Others: " + t : "Others";
+    }
+
+    function othersChk(on, text) {
+        return chk(on ? othersLabel(text) : "Others", on);
+    }
+
+    function printMapped(val, othersText) {
+        if (isOthersValue(val)) return othersLabel(othersText);
+        return str(val);
+    }
+
     function uline(val, cls) {
         return '<span class="ul ' + (cls || "") + '">' + esc(str(val)) + "</span>";
     }
@@ -580,6 +599,7 @@
             chk("On Bail", cust.onBail) +
             '<span class="cust-gap"></span>' +
             chk("On Detention", cust.onDetention) +
+            othersChk(isOthersValue(po.custody), po.custodyOthers) +
             "</div>" +
             '<div class="id-full cust-ror">' +
             chk("ROR – Custodian", cust.ror) +
@@ -901,6 +921,7 @@
             chk("Principal", p === "principal") +
             chk("Accomplice", p === "accomplice") +
             chk("Accessory", p === "accessory") +
+            othersChk(isOthersValue(po.extentParticipation), po.extentParticipationOthers) +
             "</span>"
         );
     }
@@ -915,6 +936,7 @@
             chk("On Detention", cust.onDetention) +
             of3LabeledFill("Period of Detention", pd, false) +
             chk("ROR – Custodian", cust.ror) +
+            othersChk(isOthersValue(po.custody), po.custodyOthers) +
             "</div>" +
             '<div class="of3-row of3-mb">' +
             of3LabeledFill("", po.rorCustodian, true) +
@@ -956,8 +978,8 @@
             "<div class=\"of3-row of3-mb\">" +
             of3LabeledFill("Weight (kilos)", id.weight, false) +
             "</div>" +
-            of3LabeledFillTwo("Age:", id.age, "Sex:", id.sex) +
-            of3LabeledFillTwo("Citizenship:", id.citizenship, "Religion:", id.religion) +
+            of3LabeledFillTwo("Age:", id.age, "Sex:", printMapped(id.sex, id.sexOthers)) +
+            of3LabeledFillTwo("Citizenship:", printMapped(id.citizenship, id.citizenshipOthers), "Religion:", printMapped(id.religion, id.religionOthers)) +
             of3FieldRowFlex(of3LabeledFill("Identifying Marks/Unusual Features:", id.identifyingMarks || id.remarks, true), "of3-mb") +
             of3FieldRowFlex(of3LabeledFill("Present Address:", id.presentAddress, true), "of3-mb") +
             of3FieldRowFlex(of3LabeledFill("Permanent Address:", id.permanentAdress || id.permanentAddress, true), "of3-mb")
@@ -1086,8 +1108,7 @@
             chk("Legal", of3sel(sep, ["legal"])) +
             chk("Estranged", of3sel(sep, ["estranged"])) +
             chk("Common-Law/Live-in", of3sel(fb.civilStatus, ["common_law", "common-law"])) +
-            chk("Others", !!oth || of3sel(sep, ["others"])) +
-            (oth ? '<span class="of3-ul">' + esc(oth) + "</span>" : "") +
+            othersChk(!!oth || of3sel(sep, ["others"]) || of3sel(fb.civilStatus, ["others"]), oth || fb.seperationStatusOthers) +
             "</div>"
         );
     }
@@ -1099,11 +1120,21 @@
     function of3SocTriCol(titleA, optsA, selA, titleB, optsB, selB, titleC, optsC, selC) {
         function col(title, opts, sel) {
             var h = '<div class="of3-soc-col"><div class="of3-soc-title">' + esc(title) + "</div>";
+            var hasOthers = false;
             for (var i = 0; i < opts.length; i++) {
                 var pair = opts[i];
                 var label = pair[0];
                 var keys = pair[1];
-                h += "<div>" + of3chk(sel, label, keys) + "</div>";
+                var othTxt = pair[2];
+                if (label === "Others" || (keys && keys.indexOf("others") !== -1)) {
+                    hasOthers = true;
+                    h += "<div>" + othersChk(of3sel(sel, keys) || isOthersValue(sel), othTxt) + "</div>";
+                } else {
+                    h += "<div>" + of3chk(sel, label, keys) + "</div>";
+                }
+            }
+            if (!hasOthers && opts.othersText !== undefined) {
+                h += "<div>" + othersChk(isOthersValue(sel), opts.othersText) + "</div>";
             }
             h += "</div>";
             return h;
@@ -1175,7 +1206,7 @@
                     ["One-Parent-Family", ["one_parent_family"]],
                     ["Parent-Child Conflict", ["parent_child_conflict"]],
                     ["Sibling Conflict", ["sibling_conflict"]],
-                    ["Others", ["others"]],
+                    ["Others", ["others"], fb.familyRelationshipOthers],
                 ],
                 fb.familyRelationship,
                 "Major Family Problems",
@@ -1184,6 +1215,7 @@
                     ["Economic", ["economic"]],
                     ["Mental/Physical Illness", ["mental_physical_illness"]],
                     ["Marital Problem", ["marital_problem"]],
+                    ["Others", ["others"], fb.majorFamilyProblemOthers],
                 ],
                 fb.majorFamilyProblem,
                 "Family Reputation in the Community",
@@ -1192,6 +1224,7 @@
                     ["Satisfactory", ["satisfactory"]],
                     ["Fair", ["fair"]],
                     ["Poor", ["poor"]],
+                    ["Others", ["others"], fb.familyReputationInCommunityOthers],
                 ],
                 fb.familyReputationInCommunity
             ) +
@@ -1202,6 +1235,7 @@
                     ["Adequate", ["adequate"]],
                     ["Inadequate", ["inadequate"]],
                     ["Below Poverty Line", ["below_poverty_lines", "below_poverty_line"]],
+                    ["Others", ["others"], fb.familyEconomicStatusOthers],
                 ],
                 fb.familyEconomicStatus,
                 "Physical Home Conditions",
@@ -1210,6 +1244,7 @@
                     ["Satisfactory", ["satisfactory"]],
                     ["Fair", ["fair"]],
                     ["Poor", ["poor"]],
+                    ["Others", ["others"], fb.homeConditionOthers],
                 ],
                 fb.homeCondition,
                 "Stability of Residence",
@@ -1218,6 +1253,7 @@
                     ["Occasional Change", ["occasional_change"]],
                     ["Frequent Change", ["frequent_change"]],
                     ["No Stability", ["no_stability"]],
+                    ["Others", ["others"], fb.stabilityOfResidenceOthers],
                 ],
                 fb.stabilityOfResidence
             ) +
@@ -1231,7 +1267,8 @@
             chk("Single", of3sel(ps.civilStatus, ["single"])) +
             chk("Married", of3sel(ps.civilStatus, ["married"])) +
             chk("Widow/Widower", of3sel(ps.civilStatus, ["widow/widower", "widow", "widower"])) +
-            chk("With Common-Law/Live-in Partner", of3sel(ps.civilStatus, ["common_law", "common-law"]))
+            chk("With Common-Law/Live-in Partner", of3sel(ps.civilStatus, ["common_law", "common-law"])) +
+            othersChk(of3sel(ps.civilStatus, ["others"]) || isOthersValue(ps.civilStatus), ps.civilStatusOthers)
         );
     }
 
@@ -1240,6 +1277,7 @@
             '<span class="of3-sex-chk">Sex: ' +
             chk("Male", of3sel(ps.spouseSex, ["male"])) +
             chk("Female", of3sel(ps.spouseSex, ["female"])) +
+            othersChk(isOthersValue(ps.spouseSex), ps.spouseSexOthers) +
             "</span>"
         );
     }
@@ -1284,6 +1322,7 @@
             chk("Satisfactory", of3sel(r, ["satisfactory"])) +
             chk("Fair", of3sel(r, ["fair"])) +
             chk("Poor", of3sel(r, ["poor"])) +
+            othersChk(isOthersValue(r), ps.childrenRelationshipOthers) +
             "</div>"
         );
     }
@@ -1299,19 +1338,21 @@
             chk("Owned: Yrs of Stay " + esc(str(ps.yearsStayedOwned || "")), of3sel(d, ["owned"])) +
             chk("Rented: Yrs of Stay " + esc(str(ps.yearsStayedRented || "")), of3sel(d, ["rented"])) +
             chk("Informal Settler", of3sel(d, ["informal_settler"])) +
-            chk("Others", of3sel(d, ["others"])) +
+            othersChk(of3sel(d, ["others"]) || isOthersValue(d), ps.dwellingOthers) +
             "</div></td><td>" +
             '<div class="of3-stack">' +
             chk("Stable", of3sel(ps.residenceStability, ["stable"])) +
             chk("Occasional Change", of3sel(ps.residenceStability, ["occasional_change"])) +
             chk("Frequent Change", of3sel(ps.residenceStability, ["frequent_change"])) +
             chk("No Stability", of3sel(ps.residenceStability, ["no_stability"])) +
+            othersChk(isOthersValue(ps.residenceStability), ps.residenceStabilityOthers) +
             "</div></td><td>" +
             '<div class="of3-stack">' +
             chk("Very Satisfactory", of3sel(ps.physicalHomeCondition, ["very_satisfactory"])) +
             chk("Satisfactory", of3sel(ps.physicalHomeCondition, ["satisfactory"])) +
             chk("Fair", of3sel(ps.physicalHomeCondition, ["fair"])) +
             chk("Poor", of3sel(ps.physicalHomeCondition, ["poor"])) +
+            othersChk(isOthersValue(ps.physicalHomeCondition), ps.physicalHomeConditionOthers) +
             "</div></td></tr></tbody></table>"
         );
     }
@@ -1331,12 +1372,13 @@
             chk("Adequate", of3sel(fe, ["adequate"])) +
             chk("Inadequate", of3sel(fe, ["inadequate"])) +
             chk("Below Poverty Level", of3sel(fe, ["below_poverty_lines", "below_poverty"])) +
+            othersChk(isOthersValue(fe), ps.familyEconomicStatusOthers) +
             "</div></td><td>" +
             '<div class="of3-stack">' +
             chk("Petitioner", of3sel(fbw, ["petitioner"])) +
             chk("Spouse", of3sel(fbw, ["spouse"])) +
             chk("Petitioner and Spouse", of3sel(fbw, ["petiioner_and_spouse", "petitioner_and_spouse"])) +
-            chk("Others", of3sel(fbw, ["other"])) +
+            othersChk(of3sel(fbw, ["other"]) || isOthersValue(fbw), ps.familyBreadwinnerOthers) +
             "</div></td><td>" +
             '<div class="of3-stack">' +
             chk("Income Contributor", of3sel(role, ["income_contributor"])) +
@@ -1344,6 +1386,8 @@
             chk("Partial", of3sel(inc, ["partial"])) +
             chk("Primary Care-giver", of3sel(role, ["primary_care_giver"])) +
             chk("Dependent", of3sel(role, ["dependent"])) +
+            othersChk(isOthersValue(role), ps.roleInTheFamilyOthers) +
+            othersChk(isOthersValue(inc), ps.incomeContributorOthers) +
             "</div></td></tr></tbody></table>"
         );
     }
@@ -1359,7 +1403,7 @@
             chk("Sibling conflict", of3sel(m, ["sibling_conflict"])) +
             chk("Economic", of3sel(m, ["economic"])) +
             chk("Physical Illness", of3sel(m, ["physical_illness"])) +
-            chk("Others " + esc(o), of3sel(m, ["others"])) +
+            othersChk(of3sel(m, ["others"]) || isOthersValue(m), o) +
             chk("Husband-Wife Conflict", of3sel(m, ["husband_wife_conflict"])) +
             chk("Parent-Child Conflict", of3sel(m, ["parent_child_conflict"])) +
             "</div>"
@@ -1383,10 +1427,7 @@
             chk("Separated", of3sel(ps.statusOfMarriage, ["seperated", "separated"])) +
             chk("Legal", of3sel(ps.statusOfMarriage, ["legal"])) +
             chk("Estranged", of3sel(ps.statusOfMarriage, ["estranged"])) +
-            chk("Others", of3sel(ps.statusOfMarriage, ["others"])) +
-            (ps.otherStatusOfMarriage
-                ? '<span class="of3-ul">' + esc(str(ps.otherStatusOfMarriage)) + "</span>"
-                : "") +
+            othersChk(of3sel(ps.statusOfMarriage, ["others"]) || isOthersValue(ps.statusOfMarriage), ps.otherStatusOfMarriage) +
             "</div>" +
             '<div class="of3-row of3-mb">' +
             of3LabeledFill("Remarks:", ps.remarksCivilStatus, true) +
@@ -1442,6 +1483,7 @@
             chk("Satisfactory", of3sel(c, ["satisfactory"])) +
             chk("Fair", of3sel(c, ["fair"])) +
             chk("Poor", of3sel(c, ["poor"])) +
+            othersChk(isOthersValue(c), ej.overAllConductInSchoolOthers) +
             "</div>"
         );
     }
@@ -1457,6 +1499,7 @@
             chk("Casual", of3sel(w, ["casual"])) +
             chk("Intermittent", of3sel(w, ["intermittent"])) +
             chk("Seasonal", of3sel(w, ["seasonal"])) +
+            othersChk(isOthersValue(w), ej.workStatusOthers) +
             "</div>"
         );
     }
@@ -1502,6 +1545,7 @@
             '<span class="of3-ll">Drug/Alcohol Use:</span> ' +
             chk("No", drug === "no") +
             chk("Yes", drug === "yes") +
+            othersChk(isOthersValue(drug), med.drugOrAlcoholUseOthers) +
             of3LabeledFill("Extent of Use:", med.extentOfUse, true) +
             "</div>" +
             '<div class="of3-sub2">REMARKS/ADDITIONAL INFORMATION</div>' +

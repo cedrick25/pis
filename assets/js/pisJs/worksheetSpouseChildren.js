@@ -229,6 +229,7 @@
 
             var payload = {
                 "petitionerId"              : client_id,
+                "docketNumber"              : WorksheetApi.docketNumber(),
                 "jsonData"                  : JSON.stringify(spouseChildren),
                 "type"                      : "spouseChildren",
                 "worksheetStatus"           : "INCOMPLETE",
@@ -273,7 +274,7 @@
                             setTimeout(function () {
                             $(".overlay").hide();
                             $(".btn-next").prop('disabled', false);
-                                window.location.href = window.pisUrl('worksheet_education_history?client_id='+client_id+'&field_office_id='+foid);
+                                window.location.href = window.pisUrl('worksheet_education_history?' + WorksheetApi.pageQuery());
                             }, 500);
                         }, 2000);
                     }else{
@@ -289,7 +290,7 @@
 
             var dataPayload = gatheredData();
 
-            __executeExternalPost('8000/worksheet/updatePetitioner/spouseChildren/'+client_id,JSON.stringify(dataPayload)).done(function (result) {
+            __executeExternalPost(WorksheetApi.updateUrl('spouseChildren'),JSON.stringify(dataPayload)).done(function (result) {
                 if (result.status != "ERROR") {
                     $(".form-control").val('');
                     $('#success').show();
@@ -300,7 +301,7 @@
                         setTimeout(function () {
                         $(".overlay").hide();
                         $(".btn-next").prop('disabled', false);
-                            window.location.href = window.pisUrl('worksheet_education_history?client_id='+client_id+'&field_office_id='+foid);
+                            window.location.href = window.pisUrl('worksheet_education_history?' + WorksheetApi.pageQuery());
                         }, 500);
                     }, 2000);
                 }else{
@@ -309,7 +310,7 @@
             })
         })
 
-        __executeExternalGet('8000/worksheet/getPetitioner/spouseChildren/'+client_id).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('spouseChildren')).done(function (result) {
             var result = result.response;
             if (result.status != "ERROR") {
                 if (result.worksheetStatus == "INCOMPLETE"){
@@ -497,7 +498,7 @@
                     $(".overlay").show();
                     setTimeout(function () {
                         $(".overlay").hide();
-                        window.location.href = window.pisUrl('worksheet_'+worksheetType+'?client_id='+client_id+'&field_office_id='+foid);
+                        window.location.href = window.pisUrl('worksheet_'+worksheetType+'?' + WorksheetApi.pageQuery());
                     }, 500);
                 });
             });

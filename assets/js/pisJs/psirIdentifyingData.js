@@ -120,8 +120,11 @@
                 weight              : $(".weight").val(),
                 age                 : $(".age").val(),
                 sex                 : $(".sex").val(),
+                sexOthers           : DropdownOthers.collect($(".sex"), $(".sex_others")),
                 citizenship         : $(".citizenship").val(),
+                citizenshipOthers   : DropdownOthers.collect($(".citizenship"), $(".citizenship_others")),
                 religion            : $(".religion").val(),
+                religionOthers      : DropdownOthers.collect($(".religion"), $(".religion_others")),
                 identifyingMarks    : $(".identifying_marks").val(),
                 presentAddress      : $(".present_add").val(),
                 permanentAdress     : $(".permanent_add").val(),
@@ -180,6 +183,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -216,6 +220,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "psir",
                 worksheetStatus: status,
@@ -234,7 +239,7 @@
                 PsirPrefill.fromWorksheet(client_id, "identifyingData", __executeExternalGet);
             }
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/psir/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('psir')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -256,8 +261,12 @@
                         $(".weight").val(identifyingData.weight);
                         $(".age").val(identifyingData.age);
                         $(".sex").val(identifyingData.sex).trigger("change");
+                        $(".sex_others").val(identifyingData.sexOthers);
                         $(".citizenship").val(identifyingData.citizenship).trigger("change");
+                        $(".citizenship_others").val(identifyingData.citizenshipOthers);
                         $(".religion").val(identifyingData.religion).trigger("change");
+                        $(".religion_others").val(identifyingData.religionOthers);
+                        DropdownOthers.refresh();
                         $(".identifying_marks").val(identifyingData.identifyingMarks);
                         $(".present_add").val(identifyingData.presentAddress);
                         $(".permanent_add").val(identifyingData.permanentAdress);
@@ -284,7 +293,7 @@
 
             let data = collectIdentifyingData();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
                     var parsed = window.PsirRecord.parseExisting(result);
                     if (parsed.error) return;
@@ -302,7 +311,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`psir_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('psir_present_offense?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                         });
                 });
@@ -313,7 +322,7 @@
 
             let data = collectIdentifyingData();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/psir/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('psir'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -332,7 +341,7 @@
                     let payload = updateWorksheet(existing, data, presentOffense, priorRecordsAndDerogatoryRecord, familyBackgroundAndBirthData, presentSituation, educationAndJobHistory, medicalHistory, traitsAndCommunityBackground, analysisAndProjectedThrust);
 
                     __executeExternalPost(
-                        `8000/worksheet/updatePetitioner/psir/${client_id}`,
+                        WorksheetApi.updateUrl('psir'),
                         JSON.stringify(payload)
                     ).done(function (res) {
 
@@ -345,7 +354,7 @@
                             $('#saveModal').modal("hide");
 
                             window.location.href =
-                                window.pisUrl(`psir_present_offense?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                window.pisUrl('psir_present_offense?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                         }, 2000);
                     });
                 });
@@ -363,7 +372,7 @@
                     setTimeout(function () {
                         $(".overlay").hide();
                         // window.location.href = window.pisUrl(`worksheet_${psirType}?client_id=${client_id}`);
-                        window.location.href = window.pisUrl(`psir_${psirType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`)
+                        window.location.href = window.pisUrl('psir_' + psirType + '?' + WorksheetApi.pageQuery({ status: status }))
                     }, 500);
                 });
             });

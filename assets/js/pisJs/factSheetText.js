@@ -108,7 +108,7 @@
         var clientId = GetURLParameter('clientId');
         var clientType = GetURLParameter('clientType');
 
-        __executeExternalGet('8000/worksheet/getPetitioner/identifyingData/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('identifyingData')).done(function (result) {
             console.log(result)
 
             if (result.status != "ERROR") {
@@ -145,7 +145,7 @@
                 $(".identityTab").hide()
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/presentOffense/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('presentOffense')).done(function (result) {
             console.log(result)
 
 
@@ -208,7 +208,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/priorRecords/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('priorRecords')).done(function (result) {
             console.log(result)
 
             if (result != "ERROR"){
@@ -266,7 +266,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/familyBackground/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('familyBackground')).done(function (result) {
             console.log(result)
 
             if (result != "ERROR"){
@@ -375,7 +375,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/socioEconomic/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('socioEconomic')).done(function (result) {
             console.log(result)
 
             if (result != "ERROR"){
@@ -410,7 +410,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/residenceEconomic/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('residenceEconomic')).done(function (result) {
             console.log(result)
 
             if (result != "ERROR"){
@@ -466,7 +466,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/spouseChildren/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('spouseChildren')).done(function (result) {
             console.log(result)
 
             if (result != "ERROR"){
@@ -533,7 +533,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/educationHistory/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('educationHistory')).done(function (result) {
             console.log(result)
 
             if (result != "ERROR"){
@@ -613,7 +613,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/employmentHistory/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('employmentHistory')).done(function (result) {
             var result = result.response;
 
             if (result.status != "ERROR") {
@@ -658,7 +658,7 @@
                 console.log("error fetching data")
             }
         })
-        __executeExternalGet('8000/worksheet/getPetitioner/environmentalFactor/'+clientId).done(function (result) {
+        __executeExternalGet(WorksheetApi.getUrl('environmentalFactor')).done(function (result) {
 
             var result = result.response;
 

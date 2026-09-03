@@ -33,12 +33,53 @@
         );
     }
 
+    function isOthersValue(v) {
+        var t = str(v).toLowerCase();
+        return t === "others" || t === "other";
+    }
+
+    function othersLabel(text) {
+        var t = str(text);
+        return t ? "Others: " + t : "Others";
+    }
+
+    function othersChk(on, text) {
+        return chk(on ? othersLabel(text) : "Others", on);
+    }
+
+    function printMapped(val, map, othersText) {
+        if (isOthersValue(val)) return othersLabel(othersText);
+        var key = str(val);
+        if (map && map[key]) return map[key];
+        return key;
+    }
+
+    function chkRowWithOthers(pairs, sel, othersText) {
+        var html = "";
+        var onOthers = isOthersValue(sel);
+        for (var i = 0; i < pairs.length; i++) {
+            html += chk(pairs[i][1], !onOthers && str(sel) === pairs[i][0]);
+        }
+        html += othersChk(onOthers, othersText);
+        return html;
+    }
+
     /** Vertical list of radios (socio-economic columns). */
-    function chkCol(titleU, pairs, sel, mapDisp) {
+    function chkCol(titleU, pairs, sel, mapDisp, othersText) {
         var lines = [];
         if (titleU) lines.push('<div class="col-title-under">' + esc(titleU) + "</div>");
+        var onOthers = isOthersValue(sel);
+        var hasOthersPair = false;
         for (var i = 0; i < pairs.length; i++) {
-            lines.push('<div>' + chk(pairs[i][1], pairs[i][0] === sel) + "</div>");
+            if (isOthersValue(pairs[i][0])) {
+                hasOthersPair = true;
+                lines.push("<div>" + othersChk(onOthers, othersText) + "</div>");
+            } else {
+                lines.push('<div>' + chk(pairs[i][1], !onOthers && pairs[i][0] === sel) + "</div>");
+            }
+        }
+        if (othersText !== undefined && !hasOthersPair) {
+            lines.push("<div>" + othersChk(onOthers, othersText) + "</div>");
         }
         return '<td class="vert-col">' + lines.join("") + "</td>";
     }
@@ -155,6 +196,8 @@
         var selUrban = n === "urban";
         var selSlum = a === "slum_area";
         var selNonSlum = a === "non_slum_area";
+        var nOthers = isOthersValue(cb.neighborhood);
+        var aOthers = isOthersValue(cb.neighborhoodArea);
         return (
             '<div class="nb-row">' +
             chk("Rural", selRural) +
@@ -165,6 +208,8 @@
             chk("Urban", selUrban) +
             chk("Slum Area", selUrban && selSlum) +
             chk("Non-Slum Area", selUrban && selNonSlum) +
+            othersChk(nOthers, cb.neighborhoodOthers) +
+            othersChk(aOthers, cb.neighborhoodAreaOthers) +
             "</div>"
         );
     }
@@ -355,17 +400,14 @@
                 ["portrait_artist", "Portrait Artist"],
                 ["billboard_artist", "Billboard Artist"],
             ];
-            var othOn = cur === "others";
+            var othOn = isOthersValue(cur);
             var c3html =
                 '<td class="skill-col">';
             for (var j = 0; j < c3.length; j++)
                 c3html += '<div>' + chk(c3[j][1], cur === c3[j][0]) + "</div>";
             c3html +=
                 "<div>" +
-                chk("Others", othOn) +
-                (othOn && str(em.otherEMployableSkills)
-                    ? " " + '<span class="uline short">' + esc(str(em.otherEMployableSkills)) + "</span>"
-                    : "") +
+                othersChk(othOn, em.otherEMployableSkills) +
                 "</div></td>";
             return (
                 '<table class="skill-table">' +
@@ -403,13 +445,10 @@
                 ["metro_aide", "Metro Aide"],
                 ["janitor", "Janitor"],
             ];
-            var othOn = src === "others";
+            var othOn = isOthersValue(src);
             var c4 =
                 '<td class="skill-col"><div>' +
-                chk("Others", othOn) +
-                (othOn && str(em.otherSourceOfIncome)
-                    ? " " + '<span class="uline short">' + esc(str(em.otherSourceOfIncome)) + "</span>"
-                    : "") +
+                othersChk(othOn, em.otherSourceOfIncome) +
                 "</div></td>";
             return (
                 '<table class="skill-table">' +
@@ -483,7 +522,8 @@
             chk(
                 "On Detention",
                 selCustody === "On Detention"
-            );
+            ) +
+            othersChk(isOthersValue(po.custody), po.custodyOthers);
         if (selCustody === "On Detention" && po.periodOfDetention)
             h += '<span class="uline">' + esc(str(po.periodOfDetention)) + "</span>";
         h +=
@@ -497,6 +537,7 @@
             chk("Principal", selExtent === "Principal") +
             chk("Accomplice", selExtent === "Accomplice") +
             chk("Accessory", selExtent === "Accessory") +
+            othersChk(isOthersValue(po.extentParticipation), po.extentParticipationOthers) +
             "</div>";
 
         function motiveRow(labels) {
@@ -513,16 +554,19 @@
             motiveRow(["Circumstantial", "Imprudence", "Unintentional"]) +
             "</span><br/>" +
             '<span class="chk-row motive-line">' +
-            motiveRow(["High Times", "Temper", "Others"]) +
+            motiveRow(["High Times", "Temper"]) +
+            othersChk(isOthersValue(po.motives), po.motivesOthers) +
             "</span></div>" +
             fieldLine("Explain:", po.explain) +
             '<div class="subsection">B. PRIOR RECORDS</div>' +
             '<div><span class="flabel nowrap">Alleged By:</span> ' +
             chk("Petitioner", selAlleged === "Petitioner") +
             chk("Other Source", selAlleged === "Other Source") +
+            othersChk(isOthersValue(prior.allegedBy), prior.allegedByOthers) +
             "</div>" +
             '<div style="margin-top:2mm;">' +
             chk("No Record", selRecord === "No Record") +
+            othersChk(isOthersValue(prior.record), prior.recordOthers) +
             "</div>" +
             '<div>' +
             chk("With Derogatory Record", selRecord === "With Derogatory Record") +
@@ -542,6 +586,7 @@
                 "Has been/not been on Probation",
                 str(prior.probation).toLowerCase() === "yes" || prior.probation === true
             ) +
+            othersChk(isOthersValue(prior.probation), prior.probationOthers) +
             "</div>" +
             '<div class="subsection sm">Other Derogatory Information</div>' +
             tableFromObjects(
@@ -555,13 +600,13 @@
             '<div class="section-num page-break-before">III. PERSONAL AND SOCIAL HISTORY</div>' +
             '<div class="subsection">A. IDENTIFICATION DATA</div>' +
             '<table class="id-row"><tr><td>Sex:<br/>' +
-            uline(ident.sex, "90") +
+            uline(printMapped(ident.sex, {}, ident.sexOthers), "90") +
             '</td><td>Civil Status:<br/>' +
-            uline(ident.civilStatus, "90") +
+            uline(printMapped(ident.civilStatus, mapPsCivil, ident.civilStatusOthers), "90") +
             '</td><td>Citizenship:<br/>' +
-            uline(ident.citizenship, "90") +
+            uline(printMapped(ident.citizenship, {}, ident.citizenshipOthers), "90") +
             '</td><td>Religion:<br/>' +
-            uline(ident.religion, "90") +
+            uline(printMapped(ident.religion, {}, ident.religionOthers), "90") +
             '</td></tr><tr><td>DOB:<br/>' +
             uline(ident.dateOfBirth, "90") +
             '</td><td colspan="2">Age:<br/>' +
@@ -573,7 +618,7 @@
             chk("Tattoo", selMark === "Tattoo") +
             chk("Mole", selMark === "Mole") +
             chk("Scar", selMark === "Scar") +
-            chk("Others", selMark === "Others") +
+            othersChk(isOthersValue(ident.identifyingMarks), ident.identifyingMarksOthers) +
             "</div>" +
             fieldLine("Description:", ident.description) +
             fieldLine("Physical Handicap:", ident.physicalHandicap) +
@@ -606,14 +651,14 @@
             esc(str(fb.motherAddress)) +
             "</td></tr>" +
             "<tr><td>Citizenship</td><td>" +
-            esc(str(fb.fatherCitizenship)) +
+            esc(printMapped(fb.fatherCitizenship, {}, fb.fatherCitizenshipOthers)) +
             "</td><td>" +
-            esc(str(fb.motherCitizenship)) +
+            esc(printMapped(fb.motherCitizenship, {}, fb.motherCitizenshipOthers)) +
             "</td></tr>" +
             "<tr><td>Religion</td><td>" +
-            esc(str(fb.fatherReligion)) +
+            esc(printMapped(fb.fatherReligion, {}, fb.fatherReligionOthers)) +
             "</td><td>" +
-            esc(str(fb.motherReligion)) +
+            esc(printMapped(fb.motherReligion, {}, fb.motherReligionOthers)) +
             "</td></tr>" +
             "<tr><td>Education</td><td>" +
             esc(str(fb.fatherEducation)) +
@@ -655,12 +700,14 @@
             chk("Married", selCivilParents === "Married") +
             chk("Separated", selCivilParents === "Separated") +
             chk("Live-in/Common-Law", selCivilParents === "Live-in/Common-Law") +
+            othersChk(isOthersValue(fb.civilStatus), fb.civilStatusOthers) +
             "</div>" +
             '<div class="field-line"><span class="flabel nowrap">Relationship with Parents:</span>' +
             chk("Poor", selRelParents === "Poor") +
             chk("Fair", selRelParents === "Fair") +
             chk("Satisfactory", selRelParents === "Satisfactory") +
             chk("Very Satisfactory", selRelParents === "Very Satisfactory") +
+            othersChk(isOthersValue(fb.parentsRelationship), fb.parentsRelationshipOthers) +
             "</div>" +
             tableFromObjects(
                 [
@@ -674,13 +721,14 @@
             ) +
             '<div class="subsection">2. SOCIO-ECONOMIC BACKGROUND:</div>' +
             '<table class="socio-grid"><tr>' +
-            chkCol("Family Relationship", frPairs, str(fb.familyRelationship), {}) +
-            chkCol("Major Family Problem", mfpPairs, str(fb.majorFamilyProblem), mapFamProb) +
+            chkCol("Family Relationship", frPairs, str(fb.familyRelationship), {}, fb.familyRelationshipOthers) +
+            chkCol("Major Family Problem", mfpPairs, str(fb.majorFamilyProblem), mapFamProb, fb.majorFamilyProblemOthers) +
             chkCol(
                 "Family Reputation in the Community",
                 frPairs,
                 str(fb.familyReputation),
-                {}
+                {},
+                fb.familyReputationOthers
             ) +
             "</tr><tr>" +
             chkCol(
@@ -692,16 +740,18 @@
                     ["below_poverty_lines", "Below Poverty Line"],
                 ],
                 str(fb.familyEconomic),
-                mapFamEco
+                mapFamEco,
+                fb.familyEconomicOthers
             ) +
-            chkCol("Physical Home Conditions", frPairs, str(fb.homeCondition), mapHomeCond) +
-            chkCol("Stability of Residence", Object.keys(mapStab).map(function (k) { return [k, mapStab[k]]; }), str(fb.stabilityOfResidence), {}) +
+            chkCol("Physical Home Conditions", frPairs, str(fb.homeCondition), mapHomeCond, fb.homeConditionOthers) +
+            chkCol("Stability of Residence", Object.keys(mapStab).map(function (k) { return [k, mapStab[k]]; }), str(fb.stabilityOfResidence), {}, fb.stabilityOfResidenceOthers) +
             "</tr></table>" +
             '<div class="muted-label">Comments: Effects of the above condition\'s on the petitioner behavior</div>' +
             uline(fb.commentsOnBehavior, "100") +
             '<div class="field-line" style="margin-top:3mm;"><span class="flabel nowrap">Childhood Circumstances:</span>' +
             chk("Sad", str(fb.childhoodCircumstances) === "sad") +
             chk("Happy", str(fb.childhoodCircumstances) === "happy") +
+            othersChk(isOthersValue(fb.childhoodCircumstances), fb.childhoodCircumstancesOthers) +
             "</div>" +
             fieldLine("Explain:", fb.explainCircumstances);
 
@@ -711,8 +761,10 @@
             var sv = str(ps.civilStatus);
             var keys = ["single", "married", "widow_widower", "with_common_law_spouse", "seperated"];
             var html = "";
+            var onOthers = isOthersValue(sv);
             for (var i = 0; i < keys.length; i++)
-                html += chk(mapPsCivil[keys[i]], sv === keys[i]);
+                html += chk(mapPsCivil[keys[i]], !onOthers && sv === keys[i]);
+            html += othersChk(onOthers, ps.civilStatusOthers);
             return html;
         }
 
@@ -740,17 +792,19 @@
         var relKeys = ["very_satisfactory", "satisfactory", "fair", "poor"];
         var relLbls = mapRelGood;
         var selRelS = mapRelGood[str(ps.wifeRelationship)] || "";
-        function relBlk(sel) {
+        function relBlk(sel, rawKey, othersText) {
             var out = "";
+            var onOthers = isOthersValue(rawKey);
             for (var ri = 0; ri < relKeys.length; ri++) {
                 var rk = relKeys[ri];
-                out += chk(relLbls[rk], sel === relLbls[rk]);
+                out += chk(relLbls[rk], !onOthers && sel === relLbls[rk]);
             }
+            out += othersChk(onOthers, othersText);
             return out;
         }
 
         h +=
-            '<div class="field-line"><span class="flabel nowrap">Relationship with Spouse:</span>' + relBlk(selRelS) + "</div>" +
+            '<div class="field-line"><span class="flabel nowrap">Relationship with Spouse:</span>' + relBlk(selRelS, ps.wifeRelationship, ps.wifeRelationshipOthers) + "</div>" +
             fieldLine("No. of Children:", ps.noOfChildren) +
             tableFromObjects(
                 [
@@ -763,7 +817,7 @@
                 ps.children || [{}]
             ) +
             '<div class="field-line"><span class="flabel nowrap">Relationship with Children:</span>' +
-            relBlk(mapRelGood[str(ps.childrenRelationship)] || "") +
+            relBlk(mapRelGood[str(ps.childrenRelationship)] || "", ps.childrenRelationship, ps.childrenRelationshipOthers) +
             "</div>";
 
         /* Residence */
@@ -792,6 +846,7 @@
             chk("Ocassional Change", selStabPs === "Ocassional Change") +
             chk("Frequent Change", selStabPs === "Frequent Change") +
             chk("No Stability", selStabPs === "No Stability") +
+            othersChk(isOthersValue(ps.residenceStability), ps.residenceStabilityOthers) +
             "</div>" +
             '<div class="tri-radio-head">Stability of Residence</div>' +
             '<div class="chk-col-set">' +
@@ -799,7 +854,7 @@
             chk("Apartment", selResTypeDisp === "Apartment") +
             chk("Rented", selResTypeDisp === "Rented") +
             chk("Owned", selResTypeDisp === "Owned") +
-            chk("Others", selResTypeDisp === "Others") +
+            othersChk(isOthersValue(ps.residenceType), ps.residenceTypeOthers) +
             "</div>";
 
         var selHomePs = mapHomeCond[str(ps.physicalHomeCondition)] || "";
@@ -810,6 +865,7 @@
             chk("Satisfactory", selHomePs === "Satisfactory") +
             chk("Fair", selHomePs === "Fair") +
             chk("Poor", selHomePs === "Poor") +
+            othersChk(isOthersValue(ps.physicalHomeCondition), ps.physicalHomeConditionOthers) +
             "</div>";
 
         /* Economic */
@@ -824,13 +880,14 @@
             chk("Adequate", selFamEcoPs === "Adequate") +
             chk("Inadequate", selFamEcoPs === "Inadequate") +
             chk("Below Poverty Line", selFamEcoPs === "Below Poverty Line") +
+            othersChk(isOthersValue(ps.familyEconomicStatus), ps.familyEconomicStatusOthers) +
             "</div>" +
             '<div class="tri-radio-head">Family Breadwinner</div>' +
             '<div class="chk-col-set">' +
             chk("Petitioner", selBread === "Petitioner") +
             chk("Spouse", selBread === "Spouse") +
             chk("Pet. and Spouse", selBread === "Pet. and Spouse") +
-            chk("Others", selBread === "Others") +
+            othersChk(isOthersValue(ps.familyBreadwinner), ps.familyBreadwinnerOthers) +
             "</div>" +
             '<div class="field-line"><span class="flabel nowrap">No. of Dependants </span>';
 
@@ -854,7 +911,11 @@
                         matchedKey = k;
                         break;
                     }
-                u += '<div>' + chk(L, matchedKey !== "" && mk === matchedKey) + "</div>";
+                if (L === "Others") {
+                    u += "<div>" + othersChk(isOthersValue(mk), ps.majorFamilyProblemOthers) + "</div>";
+                } else {
+                    u += '<div>' + chk(L, matchedKey !== "" && mk === matchedKey) + "</div>";
+                }
             }
             return "<td>" + u + "</td>";
         }
@@ -887,9 +948,10 @@
             '<div style="margin:2mm 0">' +
             chk("Unschooled but Literate", str(eh.unschooled) === "unschooled_but_literate") +
             chk("Illiterate", str(eh.unschooled) === "illiterate") +
+            othersChk(isOthersValue(eh.unschooled), eh.unschooledOthers) +
             "</div>" +
             '<div class="field-line"><span class="flabel nowrap">Over-all Conduct in School:</span>' +
-            relBlk(mapRelGood[str(eh.conductInSchool)] || "") +
+            relBlk(mapRelGood[str(eh.conductInSchool)] || "", eh.conductInSchool, eh.conductInSchoolOthers) +
             "</div>" +
             fieldLine("Explain:", eh.conductInSchoolExplain);
 
@@ -922,13 +984,14 @@
             '<div class="field-line"><span class="flabel">Status of Employment/Self Employment </span>' +
             chk("Regular", em.employmentStatus === "regular") +
             chk("Irregular", em.employmentStatus === "irregular") +
+            othersChk(isOthersValue(em.employmentStatus), em.employmentStatusOthers) +
             "</div>" +
             fieldLine("Specify:", em.specifyEmplymentStatus) +
             empLine(
                 "If unemployed, state means of support:",
                 chk("Pension", str(em.meansOfSupport) === "pension") +
                     chk("Children Support", str(em.meansOfSupport) === "children_support") +
-                    chk("Others", str(em.meansOfSupport) === "others")
+                    othersChk(isOthersValue(em.meansOfSupport), em.specifyMeansOfSupport)
             ) +
             fieldLine("Specify:", em.specifyMeansOfSupport) +
             '<div style="margin:2mm 0">' +
@@ -944,7 +1007,8 @@
             return (
                 chk("Yes", str(em.drugUsage) === "yes") +
                 chk("No", str(em.drugUsage) === "no") +
-                chk("Occasionally", str(em.drugUsage) === "occasionally")
+                chk("Occasionally", str(em.drugUsage) === "occasionally") +
+                othersChk(isOthersValue(em.drugUsage), em.drugUsageOthers)
             );
         }
 
@@ -954,12 +1018,14 @@
                 chk("Very Satisfactory", selHlth === "Very Satisfactory") +
                     chk("Satisfactory", selHlth === "Satisfactory") +
                     chk("Fair", selHlth === "Fair") +
-                    chk("Poor", selHlth === "Poor")
+                    chk("Poor", selHlth === "Poor") +
+                    othersChk(isOthersValue(em.physicalHealth), em.physicalHealthOthers)
             ) +
             fieldLine("Explain:", em.explainPhysicalHealthCondition) +
             '<div class="field-line"><span class="flabel nowrap">Previous Treatment/Hospitalization:</span>' +
             chk("None", str(em.previousTreatment) === "none") +
             chk("Yes", str(em.previousTreatment) === "yes") +
+            othersChk(isOthersValue(em.previousTreatment), em.previousTreatmentOthers) +
             (str(em.previousTreatment) === "yes" && em.specifyTreatment
                 ? '<span class="hint"> Specify: </span>' + uline(em.specifyTreatment, "50")
                 : "") +
@@ -984,6 +1050,7 @@
             chk("High", str(cb.criminalityInNeighborhood) === "high") +
             chk("Low", str(cb.criminalityInNeighborhood) === "low") +
             chk("Minimal", str(cb.criminalityInNeighborhood) === "minimal") +
+            othersChk(isOthersValue(cb.criminalityInNeighborhood), cb.criminalityInNeighborhoodOthers) +
             "</div>" +
             fieldLine("Describe:", cb.criminalityExplain) +
             '<div class="field-line"><span class="flabel nowrap">Community Acceptance:</span>' +
@@ -991,6 +1058,7 @@
             chk("Satisfactory", selCA === "Satisfactory") +
             chk("Fair", selCA === "Fair") +
             chk("Poor", selCA === "Poor") +
+            othersChk(isOthersValue(cb.communityAcceptance), cb.communityAcceptanceOthers) +
             "</div>" +
             fieldLine("Specify:", cb.communityAcceptanceSpecify) +
             '<div class="field-line muted-wrap"><span class="flabel nowrap">Community Acceptance:</span>' +
@@ -1009,6 +1077,7 @@
                 "Undesirable with no Potential for Improvement",
                 str(cb.peerRelationship) === "undesirable_with_no_potential_for_improvement"
             ) +
+            othersChk(isOthersValue(cb.peerRelationship), cb.peerRelationshipOthers) +
             "</span></div>" +
             fieldLine("Specify:", cb.peerRelationshipSpecify);
 

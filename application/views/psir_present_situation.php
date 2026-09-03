@@ -254,7 +254,11 @@
                                                             <option value="married">Married</option>
                                                             <option value="widow/widower">Widow/Widower</option>
                                                             <option value="common_law">With Common Law/ Lived-In</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control civil_status_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: none;" id="married_status_field">
                                                         <label for="text-input" class=" form-control-label">Status of Marriage</label>
@@ -313,7 +317,11 @@
                                                             <option value="" selected disabled>Select Sex</option>
                                                             <option value="male">Male</option>
                                                             <option value="female">Female</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control spouse_sex_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Occupation</label>
@@ -363,7 +371,11 @@
                                                             <option value="fair">Fair</option>
                                                             <option value="satisfactory">Satisfactory</option>
                                                             <option value="very_satisfactory">Very Satisfactory</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control relationship_with_children_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -400,6 +412,9 @@
                                                             <option value="informal_settler">Informal Settler</option>
                                                             <option value="others">Others</option>
                                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control dwelling_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: none;" id="years_of_stay_owned_field">
                                                         <label for="text-input" class=" form-control-label">Years of Stay</label>
@@ -419,7 +434,11 @@
                                                             <option value="occasional_change">Occasional Change</option>
                                                             <option value="frequent_change">Frequent Change</option>
                                                             <option value="no_stability">No Stability</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control stability_residence_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Physical Home Conditions</label>
@@ -429,7 +448,11 @@
                                                             <option value="fair">Fair</option>
                                                             <option value="satisfactory">Satisfactory</option>
                                                             <option value="very_satisfactory">Very Satisfactory</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control physical_home_conditions_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -459,7 +482,11 @@
                                                             <option value="adequate">Adequate</option>
                                                             <option value="inadequate">Inadequate</option>
                                                             <option value="below_poverty_lines">Below Poverty Level</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control family_economic_status_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                         <label for="text-input" class=" form-control-label">Family Breadwinner</label>
@@ -470,6 +497,9 @@
                                                             <option value="petiioner_and_spouse">Petitioner and Spouse</option>
                                                             <option value="other">Other</option>
                                                         </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control family_breadwinner_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">
@@ -480,7 +510,11 @@
                                                             <option value="income_contributor">Income Contributor</option>
                                                             <option value="primary_care_giver">Primary Care-giver</option>
                                                             <option value="dependent">Dependent</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control role_in_the_family_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: none;" id="income_contributor_field">
                                                         <label for="text-input" class=" form-control-label">Income Contributor</label>
@@ -488,7 +522,11 @@
                                                             <option value="" selected disabled>Select</option>
                                                             <option value="total">Total</option>
                                                             <option value="partial">Partial</option>
-                                                        </select>
+                                            <option value="others">Others</option>
+                                        </select>
+                                        <div class="dropdown-others-wrap" style="display:none;margin-top:8px;">
+                                            <input type="text" class="form-control income_contributor_others" placeholder="Specify">
+                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -538,6 +576,7 @@
     <!-- Right Panel -->
 
     <?php $this->load->view('templates/footer.php'); ?> 
+    <script src="assets/js/pisJs/dropdownOthers.js"></script>
     <script src="assets/js/pisJs/psirRecordSave.js"></script>
     <script src="assets/js/pisJs/psirPrefillFromWorksheet.js"></script>
     <script src="assets/js/pisJs/psirPresentSituation.js"></script>

@@ -143,6 +143,7 @@
 
             return {
                 civilStatus : $(".civil_status").val(),
+                civilStatusOthers : DropdownOthers.collect($(".civil_status"), $(".civil_status_others")),
                 seperationCause : $(".seperation_cause_field").val(),
                 spouseLastName : $(".spouse_last_name").val(),
                 spouseMiddleName : $(".spouse_middle_name").val(),
@@ -156,16 +157,24 @@
                 marriageNature : $(".nature_ceremony").val(),
                 reasonSeparation : $(".reason_seperation").val(),
                 wifeRelationship : $(".relationship_with_spouse").val(),
+                wifeRelationshipOthers : DropdownOthers.collect($(".relationship_with_spouse"), $(".relationship_with_spouse_others")),
                 noOfChildren : $(".no_of_children").val(),
                 childrenRelationship : $(".relationship_with_children").val(),
+                childrenRelationshipOthers : DropdownOthers.collect($(".relationship_with_children"), $(".relationship_with_children_others")),
                 residenceStability : $(".stability_residence").val(),
+                residenceStabilityOthers : DropdownOthers.collect($(".stability_residence"), $(".stability_residence_others")),
                 residenceType : $(".type_residence").val(),
+                residenceTypeOthers : DropdownOthers.collect($(".type_residence"), $(".type_residence_others")),
                 physicalHomeCondition : $(".physical_home_conditions").val(),
+                physicalHomeConditionOthers : DropdownOthers.collect($(".physical_home_conditions"), $(".physical_home_conditions_others")),
                 familyEconomicStatus : $(".family_economic_status").val(),
+                familyEconomicStatusOthers : DropdownOthers.collect($(".family_economic_status"), $(".family_economic_status_others")),
                 familyBreadwinner : $(".family_breadwinner").val(),
+                familyBreadwinnerOthers : DropdownOthers.collect($(".family_breadwinner"), $(".family_breadwinner_others")),
                 numberOfDependentsChildren : $(".no_of_dependents_children").val(),
                 numberOfDependentsOthers : $(".no_of_dependents_others").val(),
                 majorFamilyProblem : $(".major_family_problem").val(),
+                majorFamilyProblemOthers : DropdownOthers.collect($(".major_family_problem"), $(".major_family_problem_others")),
                 commentsOnFamilyProblem : $(".comments").val(),
                 children : children,
                 residence: residence
@@ -225,6 +234,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -261,6 +271,7 @@
 
             return {
                 petitionerId: client_id,
+                docketNumber: WorksheetApi.docketNumber(),
                 jsonData: JSON.stringify(existing),
                 type: "worksheet",
                 worksheetStatus: status,
@@ -389,7 +400,7 @@
                 </li>
             `) 
         } else {
-            __executeExternalGet('8000/worksheet/getPetitioner/worksheet/'+client_id).done(function (result) {
+            __executeExternalGet(WorksheetApi.getUrl('worksheet')).done(function (result) {
 
                 var result = result.response;
                 if (result.status != "ERROR") {
@@ -482,6 +493,7 @@
 
                         suppressCivilStatusClear = true;
                         $(".civil_status").val(presentSituation.civilStatus).trigger("change");
+                        $(".civil_status_others").val(presentSituation.civilStatusOthers);
                         $(".spouse_last_name").val(presentSituation.spouseLastName)
                         $(".spouse_first_name").val(presentSituation.spouseFirstName)
                         $(".spouse_middle_name").val(presentSituation.spouseMiddleName)
@@ -494,17 +506,26 @@
                         $(".nature_ceremony").val(presentSituation.marriageNature)
                         $(".reason_seperation").val(presentSituation.reasonSeparation)
                         $(".relationship_with_spouse").val(presentSituation.wifeRelationship).trigger("change")
+                        $(".relationship_with_spouse_others").val(presentSituation.wifeRelationshipOthers)
                         $(".no_of_children").val(presentSituation.noOfChildren)
                         $(".relationship_with_children").val(presentSituation.childrenRelationship).trigger("change")
+                        $(".relationship_with_children_others").val(presentSituation.childrenRelationshipOthers)
                         $(".stability_residence").val(presentSituation.residenceStability).trigger("change")
+                        $(".stability_residence_others").val(presentSituation.residenceStabilityOthers)
                         $(".type_residence").val(presentSituation.residenceType).trigger("change")
+                        $(".type_residence_others").val(presentSituation.residenceTypeOthers)
                         $(".physical_home_conditions").val(presentSituation.physicalHomeCondition).trigger("change")
+                        $(".physical_home_conditions_others").val(presentSituation.physicalHomeConditionOthers)
                         $(".family_economic_status").val(presentSituation.familyEconomicStatus).trigger("change")
+                        $(".family_economic_status_others").val(presentSituation.familyEconomicStatusOthers)
                         $(".family_breadwinner").val(presentSituation.familyBreadwinner).trigger("change")
+                        $(".family_breadwinner_others").val(presentSituation.familyBreadwinnerOthers)
                         $(".no_of_dependents_children").val(presentSituation.numberOfDependentsChildren)
                         $(".no_of_dependents_others").val(presentSituation.numberOfDependentsOthers)
                         $(".major_family_problem").val(presentSituation.majorFamilyProblem).trigger("change")
+                        $(".major_family_problem_others").val(presentSituation.majorFamilyProblemOthers)
                         $(".comments").val(presentSituation.commentsOnFamilyProblem)
+                        DropdownOthers.refresh();
                         toggleSpouseChildrenByCivilStatus(presentSituation.civilStatus, presentSituation.civilStatus === "single");
                         suppressCivilStatusClear = false;
 
@@ -638,7 +659,7 @@
 
             let data = collectPresentSituation();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -660,7 +681,7 @@
                                 $('#save_success').hide();
                                 $('#saveModal').modal("hide");
                                 window.location.href =
-                                    window.pisUrl(`worksheet_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                    window.pisUrl('worksheet_education_history?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -677,7 +698,7 @@
 
             let data = collectPresentSituation();
 
-            __executeExternalGet(`8000/worksheet/getPetitioner/worksheet/${client_id}`)
+            __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
                     let workSheetData = JSON.parse(result.response.jsonData);
@@ -695,7 +716,7 @@
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecords, identificationData, familyBackground, data, educationalHistory, employmentHistory, communityBackground);
                     console.log(payload)
 
-                    __executeExternalPost(`8000/worksheet/updatePetitioner/worksheet/${client_id}`, JSON.stringify(payload))
+                    __executeExternalPost(WorksheetApi.updateUrl('worksheet'), JSON.stringify(payload))
                         .done(function (res) {
                             if (res.status === "ERROR") return;
                             function finish() {
@@ -707,7 +728,7 @@
                                 $('#create_success').hide();
                                 $('#saveModal').modal("hide");
                                 $("#saveModal .btn-save").prop("disabled", false)
-                                window.location.href =window.pisUrl(`worksheet_education_history?client_id=${client_id}&field_office_id=${foid}&status=${res.response.worksheetStatus}`);
+                                window.location.href =window.pisUrl('worksheet_education_history?' + WorksheetApi.pageQuery({ status: res.response.worksheetStatus }));
                             }, 2000);
                             }
                             if (window.PsirPrefill && PsirPrefill.afterSave) {
@@ -729,7 +750,7 @@
                     $("#warningModal").modal("hide");
                     setTimeout(function () {
                         // $(".overlay").hide();
-                        window.location.href = window.pisUrl(`worksheet_${worksheetType}?client_id=${client_id}&field_office_id=${foid}&status=${status}`);
+                        window.location.href = window.pisUrl('worksheet_' + worksheetType + '?' + WorksheetApi.pageQuery({ status: status }));
                     }, 500);
                 });
             });
