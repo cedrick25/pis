@@ -107,6 +107,25 @@
         var field_office_id = $.cookie('field_office_id');
         // var status = "Not Available"
         var status = GetURLParameter('status');
+        var FACTSHEET_OWNER_SCOPED_ROLE_IDS = ['4', '41', '43'];
+
+        function isOwnerScopedRole() {
+            return FACTSHEET_OWNER_SCOPED_ROLE_IDS.indexOf(String($.cookie('role_id') || '').trim()) !== -1;
+        }
+
+        function enforceOwnerScopedPsirAccess(record) {
+            if (!isOwnerScopedRole()) {
+                return true;
+            }
+            var owner = String(record && record.createdBy != null ? record.createdBy : '').trim();
+            var me = String($.cookie('uuid') || '').trim();
+            if (!owner || owner === me) {
+                return true;
+            }
+            alert('You can only edit PSIR records you created.');
+            window.location.href = window.pisUrl('client_view_factsheet?client_id=' + encodeURIComponent(client_id) + '&field_office_id=' + encodeURIComponent(foid || field_office_id || ''));
+            return false;
+        }
 
 
         // utility for checking the worksheet if complete
@@ -235,6 +254,14 @@
             $("#saveModal .saveModalTitle").text("Save Changes")
             $("#saveModal #saveMessage").show();
             $("#saveModal .btn-save").show();
+            if (isOwnerScopedRole()) {
+                __executeExternalGet(WorksheetApi.getUrl('psir')).done(function (result) {
+                    var record = result && result.response ? result.response : null;
+                    if (record && record.id && !enforceOwnerScopedPsirAccess(record)) {
+                        return;
+                    }
+                });
+            }
             if (window.PsirPrefill) {
                 PsirPrefill.fromWorksheet(client_id, "identifyingData", __executeExternalGet);
             }
@@ -243,6 +270,9 @@
 
                 var result = result.response;
                 if (result.status != "ERROR") {
+                    if (!enforceOwnerScopedPsirAccess(result)) {
+                        return;
+                    }
                     var worksheetData = JSON.parse(result.jsonData);
                     var identifyingData = worksheetData.identifyingData;
                     console.log(worksheetData)

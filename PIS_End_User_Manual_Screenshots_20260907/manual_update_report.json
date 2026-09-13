@@ -1,0 +1,20 @@
+{
+  "output": "e:\\Downloads\\v3_PIS_End_User_Manual_Revision.docx",
+  "backup": "e:\\Downloads\\v3_PIS_End_User_Manual_Revision_backup_before_20260907.docx",
+  "screenshots_indexed": 133,
+  "images_replaced": 70,
+  "images_skipped": 2,
+  "images_unmatched": [
+    "Main navigation",
+    "Probation Investigation (Delete)",
+    "Probation Supervision (Delete)",
+    "Fact Sheet Tabs",
+    "User Accounts (Delete)",
+    "Field Office (Delete)",
+    "Region (Update)",
+    "Region (Delete)",
+    "Permission (Update)"
+  ],
+  "text_updates": 3,
+  "role_section_blocks": 41
+}

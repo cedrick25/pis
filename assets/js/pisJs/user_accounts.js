@@ -535,18 +535,19 @@
                 $('.table_head').DataTable({
                     "processing": true,
                     "serverSide": true,
-                    "scrollX": true,
+                    "autoWidth": false,
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "searching": false,
                     "columnDefs": [
-                        { "width": "5%", "targets": 0 },
-                        { "width": "15%", "targets": 1 },
-                        { "width": "10%", "targets": 3 },
-                        { "width": "15%", "targets": 4 },
-                        { "width": "15%", "targets": 5 },
-                        { "width": "7%", "targets": 6 },
-                        { "width": "33%", "targets": 7 }
+                        { "width": "4%", "targets": 0 },
+                        { "width": "16%", "targets": 1 },
+                        { "width": "12%", "targets": 2 },
+                        { "width": "18%", "targets": 3 },
+                        { "width": "14%", "targets": 4 },
+                        { "width": "18%", "targets": 5 },
+                        { "width": "8%", "targets": 6 },
+                        { "width": "10%", "className": "pis-actions-col", "targets": 7 }
                     ],
                     ajax: function(data, callback, settings) {
                         if (searchByUsername) {

@@ -1,0 +1,58 @@
+{
+  "output": "e:\\Downloads\\v5_PIS_End_User_Manual_Revision_20260911_admin.docx",
+  "also_updated": "e:\\Downloads\\v5_PIS_End_User_Manual_Revision_20260910.docx",
+  "backup": "e:\\Downloads\\v5_PIS_End_User_Manual_Revision_20260910_backup_before_admin_rescreenshot.docx",
+  "screenshot_dir": "C:\\wamp64\\www\\pis\\PIS_End_User_Manual_Screenshots_20260911",
+  "screenshots_indexed": 287,
+  "images_replaced": 91,
+  "images_skipped": 2,
+  "images_resized": 91,
+  "images_unmatched": [
+    "User Accounts (Update)",
+    "User Accounts (Delete)"
+  ],
+  "wording_edits": [
+    {
+      "from": "Docket Access \u2013 Shows the docket records of probation, parole, and pardon",
+      "to": "Docket Access \u2013 Shows probation, parole, and pardon docket records."
+    },
+    {
+      "from": "Fact Sheet - Maintains client investigation and supervision case records. This serves as the eCase Folder of the client",
+      "to": "Fact Sheet \u2013 Maintains client investigation and supervision records (eCase Folder)."
+    },
+    {
+      "from": "Forms \u2013 Views and adds documents or forms when permitted.",
+      "to": "Forms \u2013 View and add documents or forms when permitted."
+    },
+    {
+      "from": "My Organization - Maintains users, roles, field offices, regions, and permissions.",
+      "to": "My Organization \u2013 Maintains users, roles, field offices, regions, and permissions."
+    },
+    {
+      "from": "From any docket list, the end-user can open the client fact sheet without leaving Docket Access. Use Fact Sheet in the Actions column of the selected row.",
+      "to": "From any docket list, open the client fact sheet with Fact Sheet in the Actions column."
+    },
+    {
+      "from": "Use this page to search, review, update, attach documents to, or remove probation investigation dockets.",
+      "to": "Use this page to search, review, update, attach files to, or remove probation investigation dockets."
+    },
+    {
+      "from": "Use this page to manage courtesy investigation dockets under the probation workflow.",
+      "to": "Use this page to manage probation courtesy investigation dockets."
+    },
+    {
+      "from": "The Worksheet and Post-Sentence Investigation Report (PSIR) are prepared from the Docket List tab on the client view profile. Each Worksheet and each PSIR belongs to one docket number. When the status is Not Available, click Edit to start a new Worksheet or PSIR for that docket. When a Worksheet or PSIR already exists, click Edit to continue or update it.",
+      "to": "Prepare the Worksheet and PSIR from the Docket List tab. Each belongs to one docket. If status is Not Available, Edit starts a new record; otherwise Edit opens the existing one."
+    },
+    {
+      "from": "Take Photo, Upload Photo, Upload Fingerprint, and Add document buttons are shown to the officer who created the client profile, a CPPO, or a System Administrator. Other accounts can review the profile. File actions appear as Restricted.",
+      "to": "Photo, fingerprint, and add-document actions are available to the profile owner, a CPPO, or a System Administrator. Other accounts can review the profile; restricted actions are marked Restricted."
+    }
+  ],
+  "notes": [
+    "User Accounts Update/Delete screenshots could not be captured: UAM http://localhost:8088/user returns HTTP 500, so the admin User Accounts table is empty.",
+    "Navigation numbered steps were left unchanged per request.",
+    "Image display size capped at ~6.5 inches wide with preserved aspect ratio (no stretch).",
+    "No annotation boxes were drawn on screenshots."
+  ]
+}

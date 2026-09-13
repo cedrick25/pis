@@ -109,11 +109,87 @@
         var userName = localStorage.getItem("userName")
         localStorage.removeItem("psirStatus");
 
+        // Full factsheet access (photo/files/worksheet/PSIR without owner limits)
+        var FACTSHEET_FULL_ACCESS_ROLE_IDS = ['1', '39', '49', '50', '63', '32', '33', '34'];
+        // Can use factsheet functions, but worksheet/PSIR edit+print only for own createdBy uuid
+        var FACTSHEET_OWNER_SCOPED_ROLE_IDS = ['4', '41', '43'];
+
+        function loggedInRoleId() {
+            return String($.cookie('role_id') || '').trim();
+        }
+
+        function loggedInUuid() {
+            return String($.cookie('uuid') || '').trim();
+        }
+
+        function isFactsheetFullAccessRole() {
+            return FACTSHEET_FULL_ACCESS_ROLE_IDS.indexOf(loggedInRoleId()) !== -1;
+        }
+
+        function isFactsheetOwnerScopedRole() {
+            return FACTSHEET_OWNER_SCOPED_ROLE_IDS.indexOf(loggedInRoleId()) !== -1;
+        }
+
+        // Everyone except full-access and owner-scoped roles is fully restricted
+        function isFactsheetRestrictedRole() {
+            var roleId = loggedInRoleId();
+            if (!roleId) {
+                return true;
+            }
+            return !isFactsheetFullAccessRole() && !isFactsheetOwnerScopedRole();
+        }
+
+        function restrictedActionsPlaceholderHtml() {
+            return '<span class="text-muted small">Restricted</span>';
+        }
+
+        function normalizeCreatedBy(value) {
+            return String(value == null ? '' : value).trim();
+        }
+
+        /**
+         * Owner-scoped roles (4,41,43): create when none exists; edit/print only if createdBy matches logged-in uuid.
+         * Full-access roles: unrestricted. All other roles: none.
+         */
+        function canManageWorksheetOrPsirRecord(createdBy, status) {
+            if (isFactsheetRestrictedRole()) {
+                return false;
+            }
+            if (!isFactsheetOwnerScopedRole()) {
+                return true;
+            }
+            var normalizedStatus = String(status == null ? '' : status).trim();
+            if (!normalizedStatus || normalizedStatus === 'Not Available' || normalizedStatus === 'null') {
+                return true;
+            }
+            var owner = normalizeCreatedBy(createdBy);
+            if (!owner) {
+                return true;
+            }
+            return owner === loggedInUuid();
+        }
+
+        function applyFactsheetRestrictedUi() {
+            if (!isFactsheetRestrictedRole()) {
+                return;
+            }
+            $('.btn-take, .btn-photo, .btn-fingerprint, .btn-addInvestigation, .btn-addSupervision, .btn-addNotes, .btn-addReportingDate').hide();
+            $('.info-action').html('');
+            $('.takePhotoContainer, .uploadAttachmentContainer, .takeFingerPrintContainer').hide();
+        }
+
         function setInfoActionHtml(html) {
+            if (isFactsheetRestrictedRole()) {
+                $('.info-action').html('');
+                return;
+            }
             $('.info-action').html(html || '');
         }
 
         function fileProfileActionButtonsHtml(data, options) {
+            if (isFactsheetRestrictedRole()) {
+                return restrictedActionsPlaceholderHtml();
+            }
             var id = data && data.id != null ? data.id : '';
             var filePath = data && data.filePath != null ? data.filePath : '';
             var fileName = data && data.fileName != null ? data.fileName : '';
@@ -136,6 +212,9 @@
         }
 
         function docketFileActionButtonsHtml(data) {
+            if (isFactsheetRestrictedRole()) {
+                return restrictedActionsPlaceholderHtml();
+            }
             var id = data && data.id != null ? data.id : '';
             return `
                 <a href="${___ctx}8080/file/view/${id}" target="_blank">
@@ -262,6 +341,49 @@
                     + "&status=" + encodeURIComponent(status || "");
             }
 
+            function buildWorksheetActionsHtml(docketNumber, status, createdBy) {
+                if (isFactsheetRestrictedRole() || !canManageWorksheetOrPsirRecord(createdBy, status)) {
+                    return isFactsheetOwnerScopedRole()
+                        ? '<span class="text-muted small">Owner only</span>'
+                        : '';
+                }
+                var worksheetEditHref = window.pisUrl("worksheet_identifying_data?" + docketPageQuery(docketNumber, status || "Not Available"));
+                return `<div class="fs-docket-actions">
+                                        <a href="${worksheetEditHref}" class="btn btn-sm btn-outline-primary fs-edit-worksheet" title="Edit worksheet" aria-label="Edit worksheet"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary btn_pdfWorksheet" title="Print worksheet (PDF)" aria-label="Print worksheet PDF"><i class="fa fa-print" aria-hidden="true"></i>Print</button>
+                                    </div>`;
+            }
+
+            function buildPsirActionsHtml(docketNumber, status, createdBy) {
+                if (isFactsheetRestrictedRole() || !canManageWorksheetOrPsirRecord(createdBy, status)) {
+                    return isFactsheetOwnerScopedRole()
+                        ? '<span class="text-muted small">Owner only</span>'
+                        : '';
+                }
+                var psirEditHref = window.pisUrl("psir_identifying_data?" + docketPageQuery(docketNumber, status || "Not Available"));
+                return `<div class="fs-docket-actions">
+                                        <a href="${psirEditHref}" class="btn btn-sm btn-outline-primary fs-edit-psir" title="Edit PSIR" aria-label="Edit PSIR"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+                                        <button type="button" class="btn btn-sm btn-outline-info btn_pdfPSIR" title="Print short PSIR" aria-label="Print short PSIR"><i class="fa fa-print" aria-hidden="true"></i>Short</button>
+                                        <button type="button" class="btn btn-sm btn-outline-dark btn_pdfPSIRLong" title="Print long PSIR (includes transmittal and full recommendation blocks)" aria-label="Print long PSIR"><i class="fa fa-print" aria-hidden="true"></i>Long</button>
+                                    </div>`;
+            }
+
+            function applyDocketWorksheetActions($row, docketNumber, status, createdBy) {
+                $row.attr('data-ws-created-by', normalizeCreatedBy(createdBy));
+                $row.attr('data-ws-status', status || 'Not Available');
+                var $cell = $row.find('.fs-docket-cell-inner').first();
+                $cell.find('.fs-docket-actions, .text-muted.small').remove();
+                $cell.append(buildWorksheetActionsHtml(docketNumber, status, createdBy));
+            }
+
+            function applyDocketPsirActions($row, docketNumber, status, createdBy) {
+                $row.attr('data-ps-created-by', normalizeCreatedBy(createdBy));
+                $row.attr('data-ps-status', status || 'Not Available');
+                var $cell = $row.find('.fs-docket-cell-inner').eq(1);
+                $cell.find('.fs-docket-actions, .text-muted.small').remove();
+                $cell.append(buildPsirActionsHtml(docketNumber, status, createdBy));
+            }
+
             fetchInvestigationDockets(client_id)
             .done(function (dockets) {
                 $(".table_body_tc .docket-loader-row").remove();
@@ -289,20 +411,11 @@
                     var status = docket.status || "N/A";
                     var docketNumEscAttr = String(docketNumber).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
                     var rowId = "fs-docket-row-" + docketRowCount;
-                    var worksheetEditHref = window.pisUrl("worksheet_identifying_data?" + docketPageQuery(docketNumber, "Not Available"));
-                    var psirEditHref = window.pisUrl("psir_identifying_data?" + docketPageQuery(docketNumber, "Not Available"));
-                    var worksheetActionsHtml = `<div class="fs-docket-actions">
-                                        <a href="${worksheetEditHref}" class="btn btn-sm btn-outline-primary fs-edit-worksheet" title="Edit worksheet" aria-label="Edit worksheet"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary btn_pdfWorksheet" title="Print worksheet (PDF)" aria-label="Print worksheet PDF"><i class="fa fa-print" aria-hidden="true"></i>Print</button>
-                                    </div>`;
-                    var psirActionsHtml = `<div class="fs-docket-actions">
-                                        <a href="${psirEditHref}" class="btn btn-sm btn-outline-primary fs-edit-psir" title="Edit PSIR" aria-label="Edit PSIR"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
-                                        <button type="button" class="btn btn-sm btn-outline-info btn_pdfPSIR" title="Print short PSIR" aria-label="Print short PSIR"><i class="fa fa-print" aria-hidden="true"></i>Short</button>
-                                        <button type="button" class="btn btn-sm btn-outline-dark btn_pdfPSIRLong" title="Print long PSIR (includes transmittal and full recommendation blocks)" aria-label="Print long PSIR"><i class="fa fa-print" aria-hidden="true"></i>Long</button>
-                                    </div>`;
+                    var worksheetActionsHtml = buildWorksheetActionsHtml(docketNumber, "Not Available", "");
+                    var psirActionsHtml = buildPsirActionsHtml(docketNumber, "Not Available", "");
 
                     $(".table_body_tc").append(`
-                        <tr id="${rowId}" data-docket-number="${docketNumEscAttr}" data-docket-type="${docket.type || ''}">
+                        <tr id="${rowId}" data-docket-number="${docketNumEscAttr}" data-docket-type="${docket.type || ''}" data-ws-created-by="" data-ps-created-by="" data-ws-status="Not Available" data-ps-status="Not Available">
                             <td>${docketRowCount}</td>
                             <td>${docketNumber}</td>
                             <td>${dateReceived}</td>
@@ -335,17 +448,19 @@
                         __executeExternalGet(WorksheetApi.getUrl("worksheet", docketNumber, officeId)),
                         __executeExternalGet(WorksheetApi.getUrl("psir", docketNumber, officeId))
                     ).done(function (wsRes, psRes) {
+                        var wsResponse = wsRes && wsRes.response ? wsRes.response : {};
+                        var psResponse = psRes && psRes.response ? psRes.response : {};
                         var wsStatus = normalizeWsStatus(wsRes);
                         var psStatus = normalizeWsStatus(psRes);
                         $row.find(".fs-ws-status").text(wsStatus);
                         $row.find(".fs-ps-status").text(psStatus);
-                        $row.find(".fs-edit-worksheet").attr("href", window.pisUrl("worksheet_identifying_data?" + docketPageQuery(docketNumber, wsStatus)));
-                        $row.find(".fs-edit-psir").attr("href", window.pisUrl("psir_identifying_data?" + docketPageQuery(docketNumber, psStatus)));
+                        applyDocketWorksheetActions($row, docketNumber, wsStatus, wsResponse.createdBy);
+                        applyDocketPsirActions($row, docketNumber, psStatus, psResponse.createdBy);
                     }).fail(function () {
                         $row.find(".fs-ws-status").text("Not Available");
                         $row.find(".fs-ps-status").text("Not Available");
-                        $row.find(".fs-edit-worksheet").attr("href", window.pisUrl("worksheet_identifying_data?" + docketPageQuery(docketNumber, "Not Available")));
-                        $row.find(".fs-edit-psir").attr("href", window.pisUrl("psir_identifying_data?" + docketPageQuery(docketNumber, "Not Available")));
+                        applyDocketWorksheetActions($row, docketNumber, "Not Available", "");
+                        applyDocketPsirActions($row, docketNumber, "Not Available", "");
                     });
                 });
 
@@ -416,6 +531,37 @@
             });
         }
         getClientDetails();
+        applyFactsheetRestrictedUi();
+        $(document).on('pis:userSessionReady', function () {
+            applyFactsheetRestrictedUi();
+        });
+        $(document).on('show.bs.modal', '#cameraModal, #uploadPicModal, #uploadFingerprintModal, #investigationUploadModal, #supervisionUploadModal, #addOtherDocumentModal, #addReportingDateModal', function (e) {
+            if (isFactsheetRestrictedRole()) {
+                e.preventDefault();
+            }
+        });
+        function denyOwnerScopedWorksheetPsirAction(kind) {
+            fsToast('You can only ' + (kind || 'edit or print') + ' worksheet/PSIR records you created.', 'warning');
+        }
+
+        $(document).on('click', '.fs-edit-worksheet, .fs-edit-psir', function (e) {
+            if (isFactsheetRestrictedRole()) {
+                e.preventDefault();
+                return false;
+            }
+            if (!isFactsheetOwnerScopedRole()) {
+                return;
+            }
+            var $row = $(this).closest('tr');
+            var isPsir = $(this).hasClass('fs-edit-psir');
+            var createdBy = $row.attr(isPsir ? 'data-ps-created-by' : 'data-ws-created-by');
+            var status = $row.attr(isPsir ? 'data-ps-status' : 'data-ws-status');
+            if (!canManageWorksheetOrPsirRecord(createdBy, status)) {
+                e.preventDefault();
+                denyOwnerScopedWorksheetPsirAction('edit');
+                return false;
+            }
+        });
 
         handleFingerPrintUpload("rthumb", "rthumb_fingerprint")
         handleFingerPrintUpload("rindex", "rindex_fingerprint")
@@ -439,6 +585,9 @@
             $("#rlittle").click();
         })
         $(".btn-fingerprint").unbind("click").on("click", function(){
+            if (isFactsheetRestrictedRole()) {
+                return;
+            }
             $("#uploadFingerprintModal").modal("show")
             getLatestFingerPrint ("rthumb", "rthumb_fingerprint")
             getLatestFingerPrint ("rindex", "rindex_fingerprint")
@@ -501,6 +650,9 @@
         }
 
         $('.uploadPhotoBtn').unbind("click").on("click", function(){
+            if (isFactsheetRestrictedRole()) {
+                return;
+            }
             var imgInput = $('#file-input')[0];
             var file = imgInput.files[0];
             if (!file) {
@@ -605,6 +757,9 @@
             });
         }
         $('.saveFingerPrints').unbind("click").on("click", function(){
+            if (isFactsheetRestrictedRole()) {
+                return;
+            }
             var imgInputsArray = ['rthumb','rindex','rmiddle','rring','rlittle']
             for (var i = 0; i < imgInputsArray.length; i++) {
                 var imgInputs = $(`#${imgInputsArray[i]}`)[0];
@@ -670,13 +825,17 @@
                 var remarks = f.remarks != null ? String(f.remarks) : '—';
                 var finger = f.fingerLabel || '—';
                 var $actions = $('<td/>');
-                var $viewBtn = $('<a/>', { href: viewUrl, target: '_blank', rel: 'noopener noreferrer', class: 'btn btn-primary btn-sm' });
-                $viewBtn.append($('<i/>', { class: 'fa fa-eye' }));
-                $viewBtn.append(document.createTextNode(' View'));
-                var $dlBtn = $('<a/>', { href: dlUrl, target: '_blank', rel: 'noopener noreferrer', class: 'btn btn-secondary btn-sm' });
-                $dlBtn.append($('<i/>', { class: 'fa fa-download' }));
-                $dlBtn.append(document.createTextNode(' Download'));
-                $actions.append($viewBtn, document.createTextNode(' '), $dlBtn);
+                if (isFactsheetRestrictedRole()) {
+                    $actions.html(restrictedActionsPlaceholderHtml());
+                } else {
+                    var $viewBtn = $('<a/>', { href: viewUrl, target: '_blank', rel: 'noopener noreferrer', class: 'btn btn-primary btn-sm' });
+                    $viewBtn.append($('<i/>', { class: 'fa fa-eye' }));
+                    $viewBtn.append(document.createTextNode(' View'));
+                    var $dlBtn = $('<a/>', { href: dlUrl, target: '_blank', rel: 'noopener noreferrer', class: 'btn btn-secondary btn-sm' });
+                    $dlBtn.append($('<i/>', { class: 'fa fa-download' }));
+                    $dlBtn.append(document.createTextNode(' Download'));
+                    $actions.append($viewBtn, document.createTextNode(' '), $dlBtn);
+                }
                 $tb.append(
                     $('<tr/>').append(
                         $('<td/>').text(idx + 1),
@@ -1533,6 +1692,9 @@
 
         function bindInvestigationUploadButton() {
             $(".btn-addInvestigation").unbind("click").on("click", function(){
+                if (isFactsheetRestrictedRole()) {
+                    return;
+                }
                 $("#investigationUploadModal").modal("show");
                 $(".saveInvestigationDocument").unbind("click").on("click", function(){
                     performInvestigationDocumentUpload();
@@ -1586,6 +1748,9 @@
             `)
 
             $(".btn-addSupervision").unbind("click").on("click", function(){
+                if (isFactsheetRestrictedRole()) {
+                    return;
+                }
                 $("#supervisionUploadModal").modal("show")
 
                 $(".saveSupervisionDocument").unbind("click").on("click", function(){
@@ -1679,10 +1844,9 @@
             fsTabLoaderNonce++;
             fsHideTabLoader();
             $(".info-details").html('')
-            $(".info-action").html('');
-            $(".info-action").append(`
+            setInfoActionHtml(`
                 <button class="btn btn-sm btn-primary btn-addReportingDate" type="submit"><i class="fa fa-plus-circle"></i>  Add Reporting Date</button>
-            `)
+            `);
             $(".info-details").append(`
                 <div class="tab-pane fade show active" id="reportingDateContent" style="overflow: auto; max-height: 100%">
                     <div class="tc-header" style="height: 50px; width: 100%; padding: 10px 20px;">
@@ -1713,6 +1877,9 @@
                 </div>
             `)
             $(".btn-addReportingDate").unbind("click").on("click", function(){
+                if (isFactsheetRestrictedRole()) {
+                    return;
+                }
                 $("#addReportingDateModal").modal("show")
             })
             dataTableReportingDate = null;
@@ -1757,6 +1924,9 @@
                 </div>
             `)
             $(".btn-addNotes").unbind("click").on("click", function(){
+                if (isFactsheetRestrictedRole()) {
+                    return;
+                }
                 $("#addOtherDocumentModal").modal("show")
 
                 $(".saveOtherDocument").unbind("click").on("click", function(){
@@ -1910,17 +2080,32 @@
             });
 
             $(".btn-addNotes").unbind("click").on("click", function(){
+                if (isFactsheetRestrictedRole()) {
+                    return;
+                }
                 $("#addOtherDocumentModal").modal("show")
             })
         })
 
         $(document).off("click", ".btn_pdfPSIR").on("click", ".btn_pdfPSIR", function(e) {
             e.preventDefault();
+            if (isFactsheetRestrictedRole()) {
+                return;
+            }
             var $btn = $(this);
-            var dockCell = ($btn.closest("tr").attr("data-docket-number") || "").trim();
+            var $row = $btn.closest("tr");
+            var dockCell = ($row.attr("data-docket-number") || "").trim();
+            if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord($row.attr("data-ps-created-by"), $row.attr("data-ps-status"))) {
+                denyOwnerScopedWorksheetPsirAction("print");
+                return;
+            }
             __executeExternalGet(WorksheetApi.getUrl("psir", dockCell, client_fo)).done(function (result) {
                 if (result.status === "ERROR") {
                     alert("Could not load PSIR worksheet.");
+                    return;
+                }
+                if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord(result.response && result.response.createdBy, result.response && result.response.worksheetStatus)) {
+                    denyOwnerScopedWorksheetPsirAction("print");
                     return;
                 }
                 try {
@@ -2030,11 +2215,23 @@
 
         $(document).off("click", ".btn_pdfPSIRLong").on("click", ".btn_pdfPSIRLong", function(e) {
             e.preventDefault();
+            if (isFactsheetRestrictedRole()) {
+                return;
+            }
             var $btn = $(this);
-            var dockCell = ($btn.closest("tr").attr("data-docket-number") || "").trim();
+            var $row = $btn.closest("tr");
+            var dockCell = ($row.attr("data-docket-number") || "").trim();
+            if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord($row.attr("data-ps-created-by"), $row.attr("data-ps-status"))) {
+                denyOwnerScopedWorksheetPsirAction("print");
+                return;
+            }
             __executeExternalGet(WorksheetApi.getUrl("psir", dockCell, client_fo)).done(function (result) {
                 if (result.status === "ERROR") {
                     alert("Could not load PSIR worksheet.");
+                    return;
+                }
+                if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord(result.response && result.response.createdBy, result.response && result.response.worksheetStatus)) {
+                    denyOwnerScopedWorksheetPsirAction("print");
                     return;
                 }
                 try {
@@ -2144,9 +2341,21 @@
 
         $(document).off("click", ".btn_pdfWorksheet").on("click", ".btn_pdfWorksheet", function(e) {
             e.preventDefault();
-            var dockCell = ($(this).closest("tr").attr("data-docket-number") || "").trim();
+            if (isFactsheetRestrictedRole()) {
+                return;
+            }
+            var $row = $(this).closest("tr");
+            var dockCell = ($row.attr("data-docket-number") || "").trim();
+            if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord($row.attr("data-ws-created-by"), $row.attr("data-ws-status"))) {
+                denyOwnerScopedWorksheetPsirAction("print");
+                return;
+            }
             __executeExternalGet(WorksheetApi.getUrl("worksheet", dockCell, client_fo)).done(function (result) {
                 if (result.status != "ERROR") {
+                    if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord(result.response && result.response.createdBy, result.response && result.response.worksheetStatus)) {
+                        denyOwnerScopedWorksheetPsirAction("print");
+                        return;
+                    }
                     try {
                         var worksheetData = JSON.parse(result.response.jsonData);
                         if (typeof fsBuildPpaWorksheetPrintDocument !== "function") {

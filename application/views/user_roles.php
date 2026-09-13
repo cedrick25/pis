@@ -244,7 +244,7 @@
                                 <label style=" display: inline-flex; margin-left: 5px; margin-right: 20px; margin-top: 25px" class="float-right" >Search:<input type="search" class="form-control form-control-sm searchBar" id= "searchBar" placeholder="Search" style="margin-left: 7px"></label>
                             </div>
                             <div class="card-body">
-                                <table id="" class="table table-striped table-bordered table_head">
+                                <table id="" class="table table-striped table-bordered table_head" width="100%" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Id</th>

@@ -1,0 +1,625 @@
+{
+  "generatedAt": "2026-09-07T12:48:25.733Z",
+  "records": [
+    {
+      "module": "Login",
+      "name": "Login",
+      "kind": "page",
+      "filename": "001-login-page.png",
+      "url": "http://localhost/pis/",
+      "controls": {
+        "buttons": [
+          "SIGN IN"
+        ],
+        "fields": [
+          "Email address",
+          "********"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Navigation",
+      "name": "Main Navigation",
+      "kind": "expanded menus",
+      "filename": "002-main-navigation-expanded-menus.png",
+      "url": "http://localhost/pis/",
+      "controls": {
+        "buttons": [
+          "SIGN IN"
+        ],
+        "fields": [
+          "Email address",
+          "********"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Dashboard",
+      "name": "Dashboard",
+      "kind": "list page",
+      "filename": "003-dashboard-list-page.png",
+      "url": "http://localhost/pis/dashboard",
+      "controls": {
+        "buttons": [],
+        "fields": [],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Investigation",
+      "name": "Probation Investigation",
+      "kind": "list page",
+      "filename": "004-probation-investigation-list-page.png",
+      "url": "http://localhost/pis/investigation_docketing",
+      "controls": {
+        "buttons": [],
+        "fields": [],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Investigation",
+      "name": "Probation Courtesy Investigation",
+      "kind": "list page",
+      "filename": "005-probation-courtesy-investigation-list-page.png",
+      "url": "http://localhost/pis/probation-courtesy-investigation-list",
+      "controls": {
+        "buttons": [
+          "Run search"
+        ],
+        "fields": [
+          "tblCourtesyInvestigationDockets_length",
+          "Search docket / name"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Supervision",
+      "name": "Probation Supervision",
+      "kind": "list page",
+      "filename": "006-probation-supervision-list-page.png",
+      "url": "http://localhost/pis/supervision_docketing",
+      "controls": {
+        "buttons": [
+          "Run search"
+        ],
+        "fields": [
+          "tblSupervisionDocketing_length",
+          "Search docket / name"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Courtesy Supervision",
+      "name": "Probation Courtesy Supervision",
+      "kind": "list page",
+      "filename": "007-probation-courtesy-supervision-list-page.png",
+      "url": "http://localhost/pis/probation-courtesy-supervision-list",
+      "controls": {
+        "buttons": [
+          "Run search"
+        ],
+        "fields": [
+          "tblCourtesySupervisionDockets_length",
+          "Search docket / name"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Investigation",
+      "name": "Parole and Pardon Investigation",
+      "kind": "list page",
+      "filename": "008-parole-and-pardon-investigation-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-investigation-list",
+      "controls": {
+        "buttons": [],
+        "fields": [],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Investigation",
+      "name": "Parole and Pardon Courtesy Investigation",
+      "kind": "list page",
+      "filename": "009-parole-and-pardon-courtesy-investigation-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-investigation-list",
+      "controls": {
+        "buttons": [
+          "Run search"
+        ],
+        "fields": [
+          "tblScPreParoleCourtesyInv_length",
+          "Search docket / name"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Supervision",
+      "name": "Parole and Pardon Supervision",
+      "kind": "list page",
+      "filename": "010-parole-and-pardon-supervision-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-supervision",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "tblScPreParoleSupervision_length"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Parole and Pardon Courtesy Supervision",
+      "name": "Parole and Pardon Courtesy Supervision",
+      "kind": "list page",
+      "filename": "011-parole-and-pardon-courtesy-supervision-list-page.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-supervision-list",
+      "controls": {
+        "buttons": [
+          "Run search"
+        ],
+        "fields": [
+          "tblScPreParoleCourtesySup_length",
+          "sc_ppcsup_client_type",
+          "Search docket / name"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation",
+      "kind": "list page",
+      "filename": "012-fact-sheet-probation-list-page.png",
+      "url": "http://localhost/pis/client_list",
+      "controls": {
+        "buttons": [],
+        "fields": [],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Fact Sheet Parole and Pardone",
+      "name": "Fact Sheet Parole and Pardone",
+      "kind": "list page",
+      "filename": "013-fact-sheet-parole-and-pardone-list-page.png",
+      "url": "http://localhost/pis/client_list_parole_and_pardone",
+      "controls": {
+        "buttons": [],
+        "fields": [
+          "DataTables_Table_0_length",
+          "Search Client"
+        ],
+        "tables": [],
+        "tabs": [
+          "Parole",
+          "Pardone"
+        ],
+        "modals": []
+      }
+    },
+    {
+      "module": "Forms",
+      "name": "Forms",
+      "kind": "list page",
+      "filename": "014-forms-list-page.png",
+      "url": "http://localhost/pis/form_list",
+      "controls": {
+        "buttons": [],
+        "fields": [],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Forms",
+      "name": "Forms Add record",
+      "kind": "Add record",
+      "filename": "015-forms-add-record-add-record.png",
+      "url": "http://localhost/pis/form_list",
+      "controls": {
+        "buttons": [],
+        "fields": [],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "User Accounts",
+      "name": "User Accounts",
+      "kind": "list page",
+      "filename": "016-user-accounts-list-page.png",
+      "url": "http://localhost/pis/user_accounts",
+      "controls": {
+        "buttons": [
+          "Add User Account",
+          "Search"
+        ],
+        "fields": [
+          "Enter Username",
+          "DataTables_Table_0_length"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "User Accounts",
+      "name": "User Accounts Add record",
+      "kind": "Add record",
+      "filename": "017-user-accounts-add-record-add-record.png",
+      "url": "http://localhost/pis/user_accounts",
+      "controls": {
+        "buttons": [
+          "×",
+          "Cancel",
+          "Confirm",
+          "Add User Account",
+          "Search"
+        ],
+        "fields": [
+          "First Name *",
+          "Middle Name *",
+          "Last Name *",
+          "Suffix",
+          "Birthday",
+          "Contact No.",
+          "Email Address *",
+          "Field Office *",
+          "Username *",
+          "Password *",
+          "User Roles *",
+          "Enter Username",
+          "DataTables_Table_0_length"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "User Roles",
+      "name": "User Roles",
+      "kind": "list page",
+      "filename": "018-user-roles-list-page.png",
+      "url": "http://localhost/pis/user_roles",
+      "controls": {
+        "buttons": [
+          "Add Role"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "User Roles",
+      "name": "User Roles Add record",
+      "kind": "Add record",
+      "filename": "019-user-roles-add-record-add-record.png",
+      "url": "http://localhost/pis/user_roles",
+      "controls": {
+        "buttons": [
+          "×",
+          "Cancel",
+          "Confirm",
+          "Add Role"
+        ],
+        "fields": [
+          "User Role Name",
+          "User Role Description",
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Field Office",
+      "name": "Field Office",
+      "kind": "list page",
+      "filename": "020-field-office-list-page.png",
+      "url": "http://localhost/pis/department",
+      "controls": {
+        "buttons": [
+          "Add Field Office"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Field Office",
+      "name": "Field Office Add record",
+      "kind": "Add record",
+      "filename": "021-field-office-add-record-add-record.png",
+      "url": "http://localhost/pis/department",
+      "controls": {
+        "buttons": [
+          "×",
+          "Cancel",
+          "Confirm",
+          "Add Field Office"
+        ],
+        "fields": [
+          "Region",
+          "Field Office",
+          "Description",
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Region",
+      "name": "Region",
+      "kind": "list page",
+      "filename": "022-region-list-page.png",
+      "url": "http://localhost/pis/location",
+      "controls": {
+        "buttons": [
+          "Add Region"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Region",
+      "name": "Region Add record",
+      "kind": "Add record",
+      "filename": "023-region-add-record-add-record.png",
+      "url": "http://localhost/pis/location",
+      "controls": {
+        "buttons": [
+          "×",
+          "Cancel",
+          "Confirm",
+          "Add Region"
+        ],
+        "fields": [
+          "Region",
+          "Description",
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Permission",
+      "name": "Permission",
+      "kind": "list page",
+      "filename": "024-permission-list-page.png",
+      "url": "http://localhost/pis/permission",
+      "controls": {
+        "buttons": [
+          "Add Permission"
+        ],
+        "fields": [
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Permission",
+      "name": "Permission Add record",
+      "kind": "Add record",
+      "filename": "025-permission-add-record-add-record.png",
+      "url": "http://localhost/pis/permission",
+      "controls": {
+        "buttons": [
+          "×",
+          "Cancel",
+          "Confirm",
+          "Add Permission"
+        ],
+        "fields": [
+          "Permission Name",
+          "Type",
+          "Detail",
+          "Search"
+        ],
+        "tables": [],
+        "tabs": [],
+        "modals": []
+      }
+    },
+    {
+      "module": "Probation Investigation",
+      "name": "Probation Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "026-probation-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/investigation_docketing"
+    },
+    {
+      "module": "Probation Courtesy Investigation",
+      "name": "Probation Courtesy Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "027-probation-courtesy-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/probation-courtesy-investigation-list"
+    },
+    {
+      "module": "Probation Supervision",
+      "name": "Probation Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "028-probation-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/supervision_docketing"
+    },
+    {
+      "module": "Probation Courtesy Supervision",
+      "name": "Probation Courtesy Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "029-probation-courtesy-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/probation-courtesy-supervision-list"
+    },
+    {
+      "module": "Parole and Pardon Investigation",
+      "name": "Parole and Pardon Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "030-parole-and-pardon-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-investigation-list"
+    },
+    {
+      "module": "Parole and Pardon Courtesy Investigation",
+      "name": "Parole and Pardon Courtesy Investigation Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "031-parole-and-pardon-courtesy-investigation-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-investigation-list"
+    },
+    {
+      "module": "Parole and Pardon Supervision",
+      "name": "Parole and Pardon Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "032-parole-and-pardon-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-supervision"
+    },
+    {
+      "module": "Parole and Pardon Courtesy Supervision",
+      "name": "Parole and Pardon Courtesy Supervision Remove confirmation",
+      "kind": "Remove confirmation",
+      "filename": "033-parole-and-pardon-courtesy-supervision-remove-confirmation-remove-confirmation.png",
+      "url": "http://localhost/pis/parole-pardon-courtesy-supervision-list"
+    },
+    {
+      "module": "CPPO fact sheet full access",
+      "name": "CPPO fact sheet full access client profile",
+      "kind": "client profile",
+      "filename": "034-cppo-fact-sheet-full-access-client-profile-client-profile.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation upload fingerprint",
+      "kind": "upload fingerprint",
+      "filename": "035-fact-sheet-probation-upload-fingerprint-upload-fingerprint.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "CPPO fact sheet full access",
+      "name": "CPPO fact sheet full access docket list",
+      "kind": "docket list",
+      "filename": "036-cppo-fact-sheet-full-access-docket-list-docket-list.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation Worksheet and PSIR Overview",
+      "kind": "docket list",
+      "filename": "037-fact-sheet-probation-worksheet-and-psir-overview-docket-list.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation Navigate to Worksheet",
+      "kind": "docket worksheet",
+      "filename": "038-fact-sheet-probation-navigate-to-worksheet-docket-worksheet.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation Navigate to PSIR",
+      "kind": "docket psir",
+      "filename": "039-fact-sheet-probation-navigate-to-psir-docket-psir.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Field Officer fact sheet owner scoped",
+      "name": "Field Officer fact sheet owner scoped client profile",
+      "kind": "client profile",
+      "filename": "040-field-officer-fact-sheet-owner-scoped-client-profile-client-profile.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Field Officer fact sheet owner scoped",
+      "name": "Field Officer fact sheet owner scoped docket list",
+      "kind": "docket list",
+      "filename": "041-field-officer-fact-sheet-owner-scoped-docket-list-docket-list.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Clerk other fact sheet restricted",
+      "name": "Clerk other fact sheet restricted client profile",
+      "kind": "client profile",
+      "filename": "042-clerk-other-fact-sheet-restricted-client-profile-client-profile.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Clerk other fact sheet restricted",
+      "name": "Clerk other fact sheet restricted docket list",
+      "kind": "docket list",
+      "filename": "043-clerk-other-fact-sheet-restricted-docket-list-docket-list.png",
+      "url": "http://localhost/pis/client_view_factsheet?client_id=1&field_office_id=1"
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation Fill Out Worksheet",
+      "kind": "worksheet editor",
+      "filename": "044-fact-sheet-probation-fill-out-worksheet-worksheet-editor.png",
+      "url": "http://localhost/pis/worksheet_identifying_data?docket_number=NCR-FO-0001&client_id=1&field_office_id=1&status=Not%20Available"
+    },
+    {
+      "module": "Fact Sheet Probation",
+      "name": "Fact Sheet Probation Fill Out PSIR",
+      "kind": "psir editor",
+      "filename": "045-fact-sheet-probation-fill-out-psir-psir-editor.png",
+      "url": "http://localhost/pis/psir_identifying_data?docket_number=NCR-FO-0001&client_id=1&field_office_id=1&status=Not%20Available"
+    }
+  ],
+  "errors": [
+    {
+      "module": "Role workflows",
+      "message": "browserContext.addCookies: Cookie should have either url or path"
+    }
+  ]
+}

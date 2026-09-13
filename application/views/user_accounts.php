@@ -403,7 +403,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table id="" class="table table_head" width="100%">
+                                <table id="" class="table table_head" width="100%" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Id</th>

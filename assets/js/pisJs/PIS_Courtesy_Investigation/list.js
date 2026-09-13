@@ -428,8 +428,8 @@
                         var oi = escAttr(data.fieldOfficeId);
                         return (
                             '<div class="courtesy-inv-actions" role="group" aria-label="Actions for docket ' + dn + '">' +
-                            '<button type="button" class="btn btn-sm btn-primary btn_view" data-permission="can_view_docket_probation_courtesy_investigation" data-docket="' + dn + '" aria-label="View docket ' + dn + '" title="View"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
-                            '<button type="button" class="btn btn-sm btn-primary btn_update" data-permission="can_edit_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-cid="' + cid + '" aria-label="Update docket ' + dn + '" title="Update"><i class="fa fa-edit" aria-hidden="true"></i> Update</button>' +
+                            '<button type="button" class="btn btn-sm btn-primary btn_view" data-permission="can_view_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-oi="' + oi + '" aria-label="View docket ' + dn + '" title="View"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
+                            '<button type="button" class="btn btn-sm btn-primary btn_update" data-permission="can_edit_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-cid="' + cid + '" data-oi="' + oi + '" aria-label="Update docket ' + dn + '" title="Update"><i class="fa fa-edit" aria-hidden="true"></i> Update</button>' +
                             '<button type="button" class="btn btn-sm btn-primary btn_attachments" data-permission="can_attachments_docket_probation_courtesy_investigation" data-docket="' + dn + '" data-id="' + cid + '" data-type="investigation" data-oi="' + oi + '" aria-label="Attachments for docket ' + dn + '" title="Attachments"><i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</button>' +
                             (window.PisDocketOfficeFilter && window.PisDocketOfficeFilter.factSheetButtonHtml
                                 ? ' ' + window.PisDocketOfficeFilter.factSheetButtonHtml(data) + ' '
@@ -443,6 +443,15 @@
         }
 
         bindRemoveModalConfirm();
+
+        if (window.PisDocketOfficeFilter && typeof window.PisDocketOfficeFilter.mountDocketOfficeFilter === 'function') {
+            window.PisDocketOfficeFilter.mountDocketOfficeFilter('#pager', function () {
+                if (courtesyListDataTable) {
+                    courtesyListDataTable.ajax.reload(null, true);
+                }
+            });
+        }
+
         initCourtesyListDataTable();
         injectSearch();
         updateCourtesySearchClearState();

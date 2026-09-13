@@ -78,6 +78,7 @@ $route['user_accounts'] = "routes/user_accounts";
 $route['user_roles'] = "routes/user_roles";
 $route['dashboard'] = "routes/dashboard";
 $route['no_permission'] = "routes/no_permission";
+$route['no_assignment'] = "routes/no_assignment";
 $route['single_carpeta_create'] = "routes/single_carpeta_create";
 $route['single_carpeta'] = "routes/single_carpeta";
 $route['single_carpeta_update'] = "routes/single_carpeta_update";
@@ -250,19 +251,6 @@ $route['resident'] = "routes/resident";
 $route['blotter'] = "routes/blotter";
 $route['announcement'] = "routes/announcement";
 $route['inventory'] = "routes/inventory";
-
-// Offline docket book API (PIS/Apache — not port 8000)
-$route['api/docketbook/offline/getclient/(:any)'] = 'api_docketbook/offline_getclient/$1';
-
-// Offline worksheet API (PIS/Apache — not port 8000)
-// GET api/worksheet/offline/{type}/{docketNumber}?fieldOfficeId=
-$route['api/worksheet/offline/(:any)/(:any)'] = 'api_worksheet/get_by_docket/$1/$2';
-
-// Offline petitioner snapshot API (PIS/Apache — not port 8000)
-$route['api/petitioner/offline/search/(:any)'] = 'api_petitioner/offline_search/$1';
-$route['api/petitioner/offline/(:num)'] = 'api_petitioner/offline_get/$1';
-$route['api/petitioner/offline'] = 'api_petitioner/offline';
-$route['api/petitioner/sync'] = 'api_petitioner/sync';
 
 $route['default_controller'] = 'Routes';
 $route['404_override'] = '';

@@ -153,12 +153,15 @@
                 $('.table_head').DataTable({
                     "processing": true,
                     "serverSide": true,
-                    "scrollX": true,
+                    "autoWidth": false,
                     "lengthChange": false,
                     "searching": false,
                     "columnDefs": [
-                        { "width": "20%", "targets": [1,2,3,4] },
-                        { "width": "5%", "targets": [0]}
+                        { "width": "5%", "targets": 0 },
+                        { "width": "25%", "targets": 1 },
+                        { "width": "35%", "targets": 2 },
+                        { "width": "12%", "className": "pis-actions-col", "targets": 3 },
+                        { "width": "23%", "className": "pis-actions-col", "targets": 4 }
                     ],
                     ajax: {
                         url: api+'8088/role',
