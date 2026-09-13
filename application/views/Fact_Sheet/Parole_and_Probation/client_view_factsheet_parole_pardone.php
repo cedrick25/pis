@@ -1,4 +1,12 @@
-<?php $this->load->view('templates/header.php'); ?> 
+<?php $this->load->view('templates/header.php'); ?>
+<?php
+$fs_full_access_roles = array('1', '39', '49', '50', '63', '32', '33', '34');
+$fs_owner_scoped_roles = array('4', '41', '43');
+$fs_role_id = isset($_COOKIE['role_id']) ? trim((string) $_COOKIE['role_id']) : '';
+$fs_is_restricted_role = ($fs_role_id === '')
+    || (!in_array($fs_role_id, $fs_full_access_roles, true)
+        && !in_array($fs_role_id, $fs_owner_scoped_roles, true));
+?>
 <style>    
     *,
     *:before,
@@ -759,6 +767,7 @@
                         <div class="validateClientHeader" style="width: 100%; height: 50px; padding: 10px; display: flex; align-items: center; justify-content: center;">
                             <span style="font-weight: bold; color: #007bff;"> Validate Client: </span>
                         </div>
+                        <?php if (!$fs_is_restricted_role): ?>
                         <div class="takeFingerPrintContainer" style="width: 100%; height: 150px; padding: 10px; align-items: center; margin: auto;">
                             <button type="button" class="btn btn-info btn-sm btn-viewPetitionerFingerprints" style="width: 100%; border-radius: 3px;"><i class="fa fa-eye" aria-hidden="true"></i>  View Fingerprint</button>
                         </div>
@@ -773,6 +782,7 @@
                                 <img id="reporting_photo_preview" src="" alt="Selected photo preview" style="max-width: 100%; max-height: 90px; border-radius: 4px; display: none; margin: 0 auto 8px;">
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1084,18 +1094,22 @@
                                 <div class="img-body">
                                     <div class="img-cont">
                                         <img class="align-content" id="client_photo" src="images/nopic.jpg">
-                                        <button type="button" data-toggle="modal" data-target="#cameraModal" class="btn btn-sm btn-outline-primary btn-block btn-take rounded-0 fs-owner-only" style="display: none;">
+                                        <?php if (!$fs_is_restricted_role): ?>
+                                        <button type="button" data-toggle="modal" data-target="#cameraModal" class="btn btn-sm btn-outline-primary btn-block btn-take rounded-0">
                                             <i class="fa fa-camera" aria-hidden="true"></i> Take Photo
                                         </button>
+                                        <?php endif; ?>
                                     </div>
+                                    <?php if (!$fs_is_restricted_role): ?>
                                     <div class="btn-cont">
-                                        <button type="button" data-toggle="modal" data-target="#uploadPicModal" class="btn btn-primary btn-sm btn-block btn-photo fs-owner-only" style="display: none;">
+                                        <button type="button" data-toggle="modal" data-target="#uploadPicModal" class="btn btn-primary btn-sm btn-block btn-photo">
                                             <i class="fa fa-picture-o" aria-hidden="true"></i> Upload Photo
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm btn-block btn-fingerprint fs-owner-only" style="display: none;">
+                                        <button type="button" class="btn btn-danger btn-sm btn-block btn-fingerprint">
                                             <i class="fa fa-upload" aria-hidden="true"></i> Upload Fingerprint
                                         </button>
                                     </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             </div>
@@ -1123,7 +1137,9 @@
                                     </ul>
                                 </div>
                                 <div class="info-action">
-                                    <button class="btn btn-sm btn-primary btn-addInvestigation fs-owner-only" type="submit" style="display: none;"><i class="fa fa-plus-circle"></i>  Add Investigation Document/Report</button>
+                                    <?php if (!$fs_is_restricted_role): ?>
+                                    <button class="btn btn-sm btn-primary btn-addInvestigation" type="submit"><i class="fa fa-plus-circle"></i>  Add Investigation Document/Report</button>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="fs-tab-panel-wrap position-relative">
                                 <div id="fsTabContentLoader" class="fs-panel-loader is-hidden" aria-live="polite" aria-busy="false">

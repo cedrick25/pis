@@ -109,78 +109,56 @@
         var userName = localStorage.getItem("userName")
         localStorage.removeItem("psirStatus");
 
-        var ROLE_SYSTEM_ADMIN = '1';
-        var ROLE_CPPO = '32';
-        var petitionerCreatedBy = '';
+        // Full factsheet access (photo/files without owner limits)
+        var FACTSHEET_FULL_ACCESS_ROLE_IDS = ['1', '39', '49', '50', '63', '32', '33', '34'];
+        // Can use factsheet functions (same as probation); worksheet/PSIR owner-scope unused on this page
+        var FACTSHEET_OWNER_SCOPED_ROLE_IDS = ['4', '41', '43'];
 
-        function isFactsheetPrivilegedRole() {
-            var roleId = String($.cookie('role_id') || '').trim();
-            return roleId === ROLE_CPPO || roleId === ROLE_SYSTEM_ADMIN;
+        function loggedInRoleId() {
+            return String($.cookie('role_id') || '').trim();
         }
 
-        function loggedInUserNumericId() {
-            return String($.cookie('user_id') || '').trim();
+        function isFactsheetFullAccessRole() {
+            return FACTSHEET_FULL_ACCESS_ROLE_IDS.indexOf(loggedInRoleId()) !== -1;
         }
 
-        function persistLoggedInUserId(userId) {
-            if (userId == null || String(userId).trim() === '') {
+        function isFactsheetOwnerScopedRole() {
+            return FACTSHEET_OWNER_SCOPED_ROLE_IDS.indexOf(loggedInRoleId()) !== -1;
+        }
+
+        // Everyone except full-access and owner-scoped roles is fully restricted
+        function isFactsheetRestrictedRole() {
+            var roleId = loggedInRoleId();
+            if (!roleId) {
+                return true;
+            }
+            return !isFactsheetFullAccessRole() && !isFactsheetOwnerScopedRole();
+        }
+
+        function restrictedActionsPlaceholderHtml() {
+            return '<span class="text-muted small">Restricted</span>';
+        }
+
+        function applyFactsheetRestrictedUi() {
+            if (!isFactsheetRestrictedRole()) {
                 return;
             }
-            $.cookie('user_id', String(userId).trim(), window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
-        }
-
-        function loadLoggedInUserNumericId() {
-            var existing = loggedInUserNumericId();
-            if (existing) {
-                return $.Deferred().resolve(existing).promise();
-            }
-            var uuid = String($.cookie('uuid') || '').trim();
-            if (!uuid) {
-                return $.Deferred().resolve('').promise();
-            }
-            return __executeExternalGet('8088/user/' + uuid).then(function (user) {
-                if (user && user.status !== 'ERROR' && user.id != null) {
-                    persistLoggedInUserId(user.id);
-                    return String(user.id).trim();
-                }
-                return '';
-            });
-        }
-
-        function canManagePetitionerProfile() {
-            if (isFactsheetPrivilegedRole()) {
-                return true;
-            }
-            var userId = loggedInUserNumericId();
-            var created = String(petitionerCreatedBy || '').trim();
-            return userId !== '' && created !== '' && userId === created;
-        }
-
-        function requirePetitionerProfileAccess(actionLabel) {
-            if (canManagePetitionerProfile()) {
-                return true;
-            }
-            fsToast('Only the officer who created this petitioner profile, a CPPO, or a System Administrator can ' + (actionLabel || 'perform this action') + '.', 'warning');
-            return false;
-        }
-
-        function applyFactsheetOwnerUi() {
-            $('.fs-owner-only').toggle(canManagePetitionerProfile());
-            if (!canManagePetitionerProfile()) {
-                $('.info-action .btn-addInvestigation, .info-action .btn-addSupervision, .info-action .btn-addNotes, .info-action .btn-addReportingDate').hide();
-            }
+            $('.btn-take, .btn-photo, .btn-fingerprint, .btn-addInvestigation, .btn-addSupervision, .btn-addNotes, .btn-addReportingDate').hide();
+            $('.info-action').html('');
+            $('.takePhotoContainer, .uploadAttachmentContainer, .takeFingerPrintContainer').hide();
         }
 
         function setInfoActionHtml(html) {
-            $('.info-action').html('');
-            if (canManagePetitionerProfile() && html) {
-                $('.info-action').html(html);
+            if (isFactsheetRestrictedRole()) {
+                $('.info-action').html('');
+                return;
             }
+            $('.info-action').html(html || '');
         }
 
         function fileProfileActionButtonsHtml(data, options) {
-            if (!canManagePetitionerProfile()) {
-                return '<span class="text-muted small">Restricted</span>';
+            if (isFactsheetRestrictedRole()) {
+                return restrictedActionsPlaceholderHtml();
             }
             var id = data && data.id != null ? data.id : '';
             var filePath = data && data.filePath != null ? data.filePath : '';
@@ -204,8 +182,8 @@
         }
 
         function docketFileActionButtonsHtml(data) {
-            if (!canManagePetitionerProfile()) {
-                return '<span class="text-muted small">Restricted</span>';
+            if (isFactsheetRestrictedRole()) {
+                return restrictedActionsPlaceholderHtml();
             }
             var id = data && data.id != null ? data.id : '';
             return `
@@ -343,13 +321,10 @@
         }
         let petitionersName;
         function getClientDetails () {
-            var petitionerPromise = __executeExternalGet('8000/petitioner/'+client_id);
-            var userIdPromise = loadLoggedInUserNumericId();
-            $.when(petitionerPromise, userIdPromise).done(function (petitionerRes) {
+            __executeExternalGet('8000/petitioner/'+client_id).done(function (petitionerRes) {
                 var result = petitionerRes && petitionerRes.response ? petitionerRes.response : null;
 
                 if (result && result.status != "ERROR") {
-                    petitionerCreatedBy = result.createdBy != null ? String(result.createdBy) : '';
                     let fullName = "";
 
                     if ( result.firstName === null &&
@@ -368,15 +343,23 @@
                 } else{
                     fsToast('Could not load client details.', 'danger');
                 }
-                applyFactsheetOwnerUi();
+                applyFactsheetRestrictedUi();
                 loadInvestigationFiles();
             }).fail(function () {
-                applyFactsheetOwnerUi();
+                applyFactsheetRestrictedUi();
                 loadInvestigationFiles();
             });
         }
         getClientDetails();
-        applyFactsheetOwnerUi();
+        applyFactsheetRestrictedUi();
+        $(document).on('pis:userSessionReady', function () {
+            applyFactsheetRestrictedUi();
+        });
+        $(document).on('show.bs.modal', '#cameraModal, #uploadPicModal, #uploadFingerprintModal, #investigationUploadModal, #supervisionUploadModal, #addOtherDocumentModal, #addReportingDateModal', function (e) {
+            if (isFactsheetRestrictedRole()) {
+                e.preventDefault();
+            }
+        });
 
         handleFingerPrintUpload("rthumb", "rthumb_fingerprint")
         handleFingerPrintUpload("rindex", "rindex_fingerprint")
@@ -400,7 +383,7 @@
             $("#rlittle").click();
         })
         $(".btn-fingerprint").unbind("click").on("click", function(){
-            if (!requirePetitionerProfileAccess('upload files')) {
+            if (isFactsheetRestrictedRole()) {
                 return;
             }
             $("#uploadFingerprintModal").modal("show")
@@ -465,7 +448,7 @@
         }
 
         $('.uploadPhotoBtn').unbind("click").on("click", function(){
-            if (!requirePetitionerProfileAccess('upload files')) {
+            if (isFactsheetRestrictedRole()) {
                 return;
             }
             var imgInput = $('#file-input')[0];
@@ -572,7 +555,7 @@
             });
         }
         $('.saveFingerPrints').unbind("click").on("click", function(){
-            if (!requirePetitionerProfileAccess('upload files')) {
+            if (isFactsheetRestrictedRole()) {
                 return;
             }
             var imgInputsArray = ['rthumb','rindex','rmiddle','rring','rlittle']
@@ -640,7 +623,7 @@
                 var remarks = f.remarks != null ? String(f.remarks) : 'â€”';
                 var finger = f.fingerLabel || 'â€”';
                 var $actions = $('<td/>');
-                if (canManagePetitionerProfile()) {
+                if (!isFactsheetRestrictedRole()) {
                     var $viewBtn = $('<a/>', { href: viewUrl, target: '_blank', rel: 'noopener noreferrer', class: 'btn btn-primary btn-sm' });
                     $viewBtn.append($('<i/>', { class: 'fa fa-eye' }));
                     $viewBtn.append(document.createTextNode(' View'));
@@ -905,7 +888,7 @@
         }
 
         function performInvestigationDocumentUpload() {
-            if (!requirePetitionerProfileAccess('upload files')) {
+            if (isFactsheetRestrictedRole()) {
                 return;
             }
             var $dockSel = $('#select-docket-investigation');
@@ -967,7 +950,7 @@
         }
 
         function performSupervisionDocumentUpload() {
-            if (!requirePetitionerProfileAccess('upload files')) {
+            if (isFactsheetRestrictedRole()) {
                 return;
             }
             var $dockSel = $('#select-docket-supervision');
@@ -1431,7 +1414,7 @@
                         $('#capture').css('z-index','30');
 
                         $('.btn_confirm').unbind("click").on("click", function(){
-                            if (!requirePetitionerProfileAccess('upload files')) {
+                            if (isFactsheetRestrictedRole()) {
                                 return;
                             }
                             var dataURL = canvas.toDataURL();
@@ -1531,7 +1514,7 @@
 
         function bindInvestigationUploadButton() {
             $(".btn-addInvestigation").unbind("click").on("click", function(){
-                if (!requirePetitionerProfileAccess('upload files')) {
+                if (isFactsheetRestrictedRole()) {
                     return;
                 }
                 $("#investigationUploadModal").modal("show");
@@ -1587,7 +1570,7 @@
             `)
 
             $(".btn-addSupervision").unbind("click").on("click", function(){
-                if (!requirePetitionerProfileAccess('upload files')) {
+                if (isFactsheetRestrictedRole()) {
                     return;
                 }
                 $("#supervisionUploadModal").modal("show")
@@ -1683,10 +1666,9 @@
             fsTabLoaderNonce++;
             fsHideTabLoader();
             $(".info-details").html('')
-            $(".info-action").html('');
-            $(".info-action").append(`
+            setInfoActionHtml(`
                 <button class="btn btn-sm btn-primary btn-addReportingDate" type="submit"><i class="fa fa-plus-circle"></i>  Add Reporting Date</button>
-            `)
+            `);
             $(".info-details").append(`
                 <div class="tab-pane fade show active" id="reportingDateContent" style="overflow: auto; max-height: 100%">
                     <div class="tc-header" style="height: 50px; width: 100%; padding: 10px 20px;">
@@ -1717,6 +1699,9 @@
                 </div>
             `)
             $(".btn-addReportingDate").unbind("click").on("click", function(){
+                if (isFactsheetRestrictedRole()) {
+                    return;
+                }
                 $("#addReportingDateModal").modal("show")
             })
             dataTableReportingDate = null;
@@ -1761,13 +1746,13 @@
                 </div>
             `)
             $(".btn-addNotes").unbind("click").on("click", function(){
-                if (!requirePetitionerProfileAccess('upload files')) {
+                if (isFactsheetRestrictedRole()) {
                     return;
                 }
                 $("#addOtherDocumentModal").modal("show")
 
                 $(".saveOtherDocument").unbind("click").on("click", function(){
-                    if (!requirePetitionerProfileAccess('upload files')) {
+                    if (isFactsheetRestrictedRole()) {
                         return;
                     }
                     var fileToUpload = $('#file-input-other').prop('files')[0];
