@@ -110,9 +110,9 @@
         localStorage.removeItem("psirStatus");
 
         // Full factsheet access (photo/files/worksheet/PSIR without owner limits)
-        var FACTSHEET_FULL_ACCESS_ROLE_IDS = ['1', '39', '49', '50', '63', '32', '33', '34'];
+        var FACTSHEET_FULL_ACCESS_ROLE_IDS = ['1', '39', '49', '50', '63', '32', '33', '34', '10', '36', '37', '38', '60', '64', '58', '29', '47', '48', '51', '6', '7', '61', '62'];
         // Can use factsheet functions, but worksheet/PSIR edit+print only for own createdBy uuid
-        var FACTSHEET_OWNER_SCOPED_ROLE_IDS = ['4', '41', '43'];
+        var FACTSHEET_OWNER_SCOPED_ROLE_IDS = ['4', '41', '43', '5', '57', '59'];
 
         function loggedInRoleId() {
             return String($.cookie('role_id') || '').trim();
@@ -139,6 +139,11 @@
             return !isFactsheetFullAccessRole() && !isFactsheetOwnerScopedRole();
         }
 
+        // Restricted roles (e.g. clerk) may still upload investigation/supervision files
+        function canUploadInvestigationSupervisionDocuments() {
+            return !!loggedInRoleId();
+        }
+
         function restrictedActionsPlaceholderHtml() {
             return '<span class="text-muted small">Restricted</span>';
         }
@@ -148,7 +153,7 @@
         }
 
         /**
-         * Owner-scoped roles (4,41,43): create when none exists; edit/print only if createdBy matches logged-in uuid.
+         * Owner-scoped roles (4,5,41,43,57,59): create when none exists; edit/print only if createdBy matches logged-in uuid.
          * Full-access roles: unrestricted. All other roles: none.
          */
         function canManageWorksheetOrPsirRecord(createdBy, status) {
@@ -173,13 +178,12 @@
             if (!isFactsheetRestrictedRole()) {
                 return;
             }
-            $('.btn-take, .btn-photo, .btn-fingerprint, .btn-addInvestigation, .btn-addSupervision, .btn-addNotes, .btn-addReportingDate').hide();
-            $('.info-action').html('');
+            $('.btn-take, .btn-photo, .btn-fingerprint, .btn-addNotes, .btn-addReportingDate').hide();
             $('.takePhotoContainer, .uploadAttachmentContainer, .takeFingerPrintContainer').hide();
         }
 
-        function setInfoActionHtml(html) {
-            if (isFactsheetRestrictedRole()) {
+        function setInfoActionHtml(html, allowRestricted) {
+            if (isFactsheetRestrictedRole() && !allowRestricted) {
                 $('.info-action').html('');
                 return;
             }
@@ -212,7 +216,7 @@
         }
 
         function docketFileActionButtonsHtml(data) {
-            if (isFactsheetRestrictedRole()) {
+            if (!canUploadInvestigationSupervisionDocuments()) {
                 return restrictedActionsPlaceholderHtml();
             }
             var id = data && data.id != null ? data.id : '';
@@ -535,8 +539,13 @@
         $(document).on('pis:userSessionReady', function () {
             applyFactsheetRestrictedUi();
         });
-        $(document).on('show.bs.modal', '#cameraModal, #uploadPicModal, #uploadFingerprintModal, #investigationUploadModal, #supervisionUploadModal, #addOtherDocumentModal, #addReportingDateModal', function (e) {
+        $(document).on('show.bs.modal', '#cameraModal, #uploadPicModal, #uploadFingerprintModal, #addOtherDocumentModal, #addReportingDateModal', function (e) {
             if (isFactsheetRestrictedRole()) {
+                e.preventDefault();
+            }
+        });
+        $(document).on('show.bs.modal', '#investigationUploadModal, #supervisionUploadModal', function (e) {
+            if (!canUploadInvestigationSupervisionDocuments()) {
                 e.preventDefault();
             }
         });
@@ -1692,7 +1701,7 @@
 
         function bindInvestigationUploadButton() {
             $(".btn-addInvestigation").unbind("click").on("click", function(){
-                if (isFactsheetRestrictedRole()) {
+                if (!canUploadInvestigationSupervisionDocuments()) {
                     return;
                 }
                 $("#investigationUploadModal").modal("show");
@@ -1708,7 +1717,7 @@
             $(".info-details").html('');
             setInfoActionHtml(`
                 <button class="btn btn-sm btn-primary btn-addInvestigation" type="submit"><i class="fa fa-plus-circle"></i>  Add Investigation Document/Report</button>
-            `);
+            `, true);
             $(".info-details").append(`
                 <div class="tab-pane fade show active" id="investigationContent">
                     <table id="investigationTable" class="table table-bordered table_head" style="max-width: 100%;">
@@ -1731,7 +1740,7 @@
             $(".info-details").html('')
             setInfoActionHtml(`
                 <button class="btn btn-sm btn-primary btn-addSupervision" type="submit"><i class="fa fa-plus-circle"></i>  Add Supervision Document/Report</button>
-            `);
+            `, true);
             $(".info-details").append(`
                 <div class="tab-pane fade show active" id="supervisionContent">
                     <table id="" class="table table-bordered table_head" style="max-width: 100%;">
@@ -1748,7 +1757,7 @@
             `)
 
             $(".btn-addSupervision").unbind("click").on("click", function(){
-                if (isFactsheetRestrictedRole()) {
+                if (!canUploadInvestigationSupervisionDocuments()) {
                     return;
                 }
                 $("#supervisionUploadModal").modal("show")

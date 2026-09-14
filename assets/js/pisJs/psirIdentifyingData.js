@@ -107,7 +107,7 @@
         var field_office_id = $.cookie('field_office_id');
         // var status = "Not Available"
         var status = GetURLParameter('status');
-        var FACTSHEET_OWNER_SCOPED_ROLE_IDS = ['4', '41', '43'];
+        var FACTSHEET_OWNER_SCOPED_ROLE_IDS = ['4', '41', '43', '5', '57', '59'];
 
         function isOwnerScopedRole() {
             return FACTSHEET_OWNER_SCOPED_ROLE_IDS.indexOf(String($.cookie('role_id') || '').trim()) !== -1;

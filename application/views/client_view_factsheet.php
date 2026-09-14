@@ -1,11 +1,12 @@
 <?php $this->load->view('templates/header.php'); ?>
 <?php
-$fs_full_access_roles = array('1', '39', '49', '50', '63', '32', '33', '34');
-$fs_owner_scoped_roles = array('4', '41', '43');
+$fs_full_access_roles = array('1', '39', '49', '50', '63', '32', '33', '34', '10', '36', '37', '38', '60', '64', '58', '29', '47', '48', '51', '6', '7', '61', '62');
+$fs_owner_scoped_roles = array('4', '41', '43', '5', '57', '59');
 $fs_role_id = isset($_COOKIE['role_id']) ? trim((string) $_COOKIE['role_id']) : '';
 $fs_is_restricted_role = ($fs_role_id === '')
     || (!in_array($fs_role_id, $fs_full_access_roles, true)
         && !in_array($fs_role_id, $fs_owner_scoped_roles, true));
+$fs_can_upload_inv_sup = ($fs_role_id !== '');
 ?>
 <style>    
     *,
@@ -1144,7 +1145,7 @@ $fs_is_restricted_role = ($fs_role_id === '')
                                     </ul>
                                 </div>
                                 <div class="info-action">
-                                    <?php if (!$fs_is_restricted_role): ?>
+                                    <?php if ($fs_can_upload_inv_sup): ?>
                                     <button class="btn btn-sm btn-primary btn-addInvestigation" type="submit"><i class="fa fa-plus-circle"></i>  Add Investigation Document/Report</button>
                                     <?php endif; ?>
                                 </div>
