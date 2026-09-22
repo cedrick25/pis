@@ -258,7 +258,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label class="form-label">Interviewed By</label>
-                                        <input type="text" class="form-control alias" placeholder="Interviewed By">
+                                        <input type="text" class="form-control interviewed_by" placeholder="Interviewed By">
                                     </div>
                                 </div>
                                 <div class="form-row col-sm-12 col-md-12 col-lg-12 col-xl-12 custom-col">

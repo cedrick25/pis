@@ -224,8 +224,8 @@
 
         function saveWorksheet(existing, newEmploymentHistory) {
 
-            // update identifyingData
-            existing.employmentHistory = employmentHistory;
+            // update employmentHistory
+            existing.employmentHistory = newEmploymentHistory;
 
             let check = worksheetChecker(existing);
 
@@ -350,99 +350,131 @@
                         $("#saveModal #updateMessage").show();
                         $("#saveModal .btn-update").show();
 
-                        (employmentHistory.previousJobs || []).forEach(function(data, index){
+                        var previousJobs = employmentHistory.previousJobs || [];
+                        if (previousJobs.length === 0) {
                             $("#previous_job_list").append(`
-                                <li class="list-group-item d-flex align-items-center" id="job_item_${index}">
+                                <li class="list-group-item d-flex align-items-center" id="job_item_0">
                                     <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3">
                                         <label class="form-control-label">Job Held</label>
-                                        <input type="text" placeholder="Job Held" class="form-control job_held" value="${data.jobHeld}">
+                                        <input type="text" placeholder="Job Held" class="form-control job_held">
                                     </div>
                                     <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3">
                                         <label class="form-control-label">Employer Address</label>
-                                        <input type="text" placeholder="Employer Address" class="form-control employer_address" value="${data.employerAddress}">
+                                        <input type="text" placeholder="Employer Address" class="form-control employer_address">
                                     </div>
                                     <div class="form-group col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="form-control-label">Dates</label>
-                                        <input type="date" class="form-control job_date" value="${data.date}">
+                                        <input type="date" class="form-control job_date">
                                     </div>
                                     <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3">
                                         <label class="form-control-label">Income</label>
-                                        <input type="text" placeholder="Income" class="form-control income" value="${data.income}">
+                                        <input type="text" placeholder="Income" class="form-control income">
                                     </div>
-                                    <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="button_group_job">
-                                    </div>
-                                </li>
-                                `
-                            )
-                            previousJobCounter += 1;
-
-                            if (index === 0) {
-                                $(`#button_group_job`).append(`
-                                    <button type="button" class="btn btn-primary btn-addJob btn-sm" style="border-radius:2px;" data-id=${index}>
-                                        <i class="fa fa-plus"></i><span class="mx-2">Add</span>
-                                    </button>
-                                `)
-                            } else {
-                                $(`#button_group_job`).append(`
-                                    <button type="button" class="btn btn-danger btn-delJob btn-sm" style="border-radius:2px;" data-id=${index}>
-                                        <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
-                                    </button>
-                                `)
-
-                            }
-                        })
-
-                        (employmentHistory.hospitalizations || []).forEach(function(data, index){
-                            $("#previous_hospitalization_list").append(`
-                                <li class="list-group-item d-flex align-items-center" id="hospital_item_${index}">
-                                    <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label class="form-control-label">Name of Hospital</label>
-                                        <input type="text" placeholder="Name of Hospital" class="form-control hospital" value="${data.hospital}">
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-5 col-lg-5 col-xl-5">
-                                        <label class="form-control-label">Date Hospitalized</label>
-                                        <input type="date" class="form-control hospital_date" value="${data.dateHospitalized}">
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="button_group_hospital">
+                                    <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="button_group_job_0">
+                                        <button type="button" class="btn btn-primary btn-addJob btn-sm" style="border-radius:2px;" data-id="0">
+                                            <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                                        </button>
                                     </div>
                                 </li>
-                            `) 
-                            hospitalCounter += 1;
+                            `);
+                            previousJobCounter = 1;
+                        } else {
+                            previousJobs.forEach(function(data, index){
+                                $("#previous_job_list").append(`
+                                    <li class="list-group-item d-flex align-items-center" id="job_item_${index}">
+                                        <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                            <label class="form-control-label">Job Held</label>
+                                            <input type="text" placeholder="Job Held" class="form-control job_held" value="${data.jobHeld || ''}">
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                            <label class="form-control-label">Employer Address</label>
+                                            <input type="text" placeholder="Employer Address" class="form-control employer_address" value="${data.employerAddress || ''}">
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                            <label class="form-control-label">Dates</label>
+                                            <input type="date" class="form-control job_date" value="${data.date || ''}">
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                            <label class="form-control-label">Income</label>
+                                            <input type="text" placeholder="Income" class="form-control income" value="${data.income || ''}">
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="button_group_job_${index}">
+                                        </div>
+                                    </li>
+                                `);
+                                previousJobCounter += 1;
 
-                            if (index === 0) {
-                                $(`#button_group_hospital`).append(`
-                                    <button type="button" class="btn btn-primary btn-addHospital btn-sm" style="border-radius:2px;" data-id=${index}>
-                                        <i class="fa fa-plus"></i><span class="mx-2">Add</span>
-                                    </button>
-                                `)
-                            } else {
-                                $(`#button_group_hospital`).append(`
-                                    <button type="button" class="btn btn-danger btn-delHospital btn-sm" style="border-radius:2px;" data-id=${index}>
-                                        <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
-                                    </button>
-                                `)
+                                if (index === 0) {
+                                    $(`#button_group_job_${index}`).append(`
+                                        <button type="button" class="btn btn-primary btn-addJob btn-sm" style="border-radius:2px;" data-id=${index}>
+                                            <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                                        </button>
+                                    `);
+                                } else {
+                                    $(`#button_group_job_${index}`).append(`
+                                        <button type="button" class="btn btn-danger btn-delJob btn-sm" style="border-radius:2px;" data-id=${index}>
+                                            <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
+                                        </button>
+                                    `);
+                                }
+                            });
+                        }
 
-                            }
-                        })
+                        var hospitalizations = employmentHistory.hospitalizations || [];
+                        if (hospitalizations.length === 0) {
+                            appendEmptyHospitalizationRow();
+                        } else {
+                            hospitalizations.forEach(function(data, index){
+                                $("#previous_hospitalization_list").append(`
+                                    <li class="list-group-item d-flex align-items-center" id="hospital_item_${index}">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label class="form-control-label">Name of Hospital</label>
+                                            <input type="text" placeholder="Name of Hospital" class="form-control hospital" value="${data.hospital || ''}">
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                                            <label class="form-control-label">Date Hospitalized</label>
+                                            <input type="date" class="form-control hospital_date" value="${data.dateHospitalized || ''}">
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-1 d-flex mt-auto" style="margin-bottom: 20px;" id="button_group_hospital_${index}">
+                                        </div>
+                                    </li>
+                                `);
+                                hospitalCounter += 1;
 
-                        $(".employment_status").val(employmentHistory.employmentStatus).trigger("change")
-                        $(".employment_status_others").val(employmentHistory.employmentStatusOthers)
-                        $(".specify_employment_status").val(employmentHistory.specifyEmplymentStatus)
-                        $(".means_of_support").val(employmentHistory.meansOfSupport).trigger("change")
-                        $(".specify_means_of_support").val(employmentHistory.specifyMeansOfSupport)
-                        $(".employable_skills").val(employmentHistory.employableSkills).trigger("change")
-                        $(".other_skills").val(employmentHistory.otherEMployableSkills)
-                        $(".other_source_income").val(employmentHistory.sourceOfIncome).trigger("change")
-                        $(".other_income").val(employmentHistory.otherSourceOfIncome)
-                        $(".physical_health").val(employmentHistory.physicalHealth).trigger("change")
-                        $(".physical_health_others").val(employmentHistory.physicalHealthOthers)
-                        $(".explainHealthCondition").val(employmentHistory.explainPhysicalHealthCondition)
-                        $(".previous_treatment").val(employmentHistory.previousTreatment).trigger("change")
-                        $(".previous_treatment_others").val(employmentHistory.previousTreatmentOthers)
-                        $(".specify_treatment").val(employmentHistory.specifyTreatment)
-                        $(".drug_usage").val(employmentHistory.drugUsage).trigger("change")
-                        $(".drug_usage_others").val(employmentHistory.drugUsageOthers)
-                        $(".explain_use_of_drugs").val(employmentHistory.explainDrugUsage)
+                                if (index === 0) {
+                                    $(`#button_group_hospital_${index}`).append(`
+                                        <button type="button" class="btn btn-primary btn-addHospital btn-sm" style="border-radius:2px;" data-id=${index}>
+                                            <i class="fa fa-plus"></i><span class="mx-2">Add</span>
+                                        </button>
+                                    `);
+                                } else {
+                                    $(`#button_group_hospital_${index}`).append(`
+                                        <button type="button" class="btn btn-danger btn-delHospital btn-sm" style="border-radius:2px;" data-id=${index}>
+                                            <i class="fa fa-trash"></i><span class="mx-2">Remove</span>
+                                        </button>
+                                    `);
+                                }
+                            });
+                        }
+
+                        $(".employment_status").val(employmentHistory.employmentStatus).trigger("change");
+                        $(".employment_status_others").val(employmentHistory.employmentStatusOthers);
+                        $(".specify_employment_status").val(employmentHistory.specifyEmplymentStatus);
+                        $(".means_of_support").val(employmentHistory.meansOfSupport).trigger("change");
+                        $(".specify_means_of_support").val(employmentHistory.specifyMeansOfSupport);
+                        $(".employable_skills").val(employmentHistory.employableSkills).trigger("change");
+                        $(".other_skills").val(employmentHistory.otherEMployableSkills);
+                        $(".other_source_income").val(employmentHistory.sourceOfIncome).trigger("change");
+                        $(".other_income").val(employmentHistory.otherSourceOfIncome);
+                        $(".physical_health").val(employmentHistory.physicalHealth).trigger("change");
+                        $(".physical_health_others").val(employmentHistory.physicalHealthOthers);
+                        $(".explainHealthCondition").val(employmentHistory.explainPhysicalHealthCondition);
+                        $(".previous_treatment").val(employmentHistory.previousTreatment).trigger("change");
+                        $(".previous_treatment_others").val(employmentHistory.previousTreatmentOthers);
+                        $(".specify_treatment").val(employmentHistory.specifyTreatment);
+                        $(".drug_usage").val(employmentHistory.drugUsage).trigger("change");
+                        $(".drug_usage_others").val(employmentHistory.drugUsageOthers);
+                        $(".explain_use_of_drugs").val(employmentHistory.explainDrugUsage);
                         DropdownOthers.refresh();
 
                     } else {
@@ -602,9 +634,9 @@
             __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
-                    let workSheetData = JSON.parse(result.response.jsonData);
-
-                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+                    let existing = (result.response && result.response.jsonData)
+                        ? JSON.parse(result.response.jsonData)
+                        : {};
 
                     let payload = saveWorksheet(existing, data);
 
@@ -641,7 +673,9 @@
             __executeExternalGet(WorksheetApi.getUrl('worksheet'))
                 .done(function (result) {
 
-                    let workSheetData = JSON.parse(result.response.jsonData);
+                    let workSheetData = (result.response && result.response.jsonData)
+                        ? JSON.parse(result.response.jsonData)
+                        : {};
                     let identifyingData = workSheetData.identifyingData;
                     let presentOffense = workSheetData.presentOffense;
                     let priorRecords = workSheetData.priorRecords;
@@ -651,7 +685,7 @@
                     let educationalHistory = workSheetData.educationalHistory;
                     let communityBackground = workSheetData.communityBackground;
 
-                    let existing = result.jsonData ? JSON.parse(result.jsonData) : {};
+                    let existing = workSheetData;
 
                     let payload = updateWorksheet(existing, identifyingData, presentOffense, priorRecords, identificationData, familyBackground, presentSituation, educationalHistory, data, communityBackground);
                     // console.log(payload)
