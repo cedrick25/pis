@@ -698,7 +698,7 @@
                     type: "psir",
                     worksheetStatus: isPsirComplete(merged) ? "complete" : "incomplete",
                     createdBy: typeof $.cookie === "function" ? $.cookie("uuid") : "",
-                    fieldOfficeId: typeof $.cookie === "function" ? $.cookie("field_office_id") : ""
+                    fieldOfficeId: (window.WorksheetApi ? WorksheetApi.fieldOfficeId() : "")
                 };
 
                 var settled = false;

@@ -249,7 +249,7 @@
                 type: "worksheet",
                 worksheetStatus: status,
                 createdBy: $.cookie("uuid"),
-                fieldOfficeId: $.cookie("field_office_id")
+                fieldOfficeId: (window.WorksheetApi ? WorksheetApi.fieldOfficeId() : $.cookie("field_office_id"))
             };
         }
         
@@ -310,7 +310,7 @@
                 type: "worksheet",
                 worksheetStatus: status,
                 createdBy: $.cookie("uuid"),
-                fieldOfficeId: $.cookie("field_office_id")
+                fieldOfficeId: (window.WorksheetApi ? WorksheetApi.fieldOfficeId() : $.cookie("field_office_id"))
             };
         }
 
@@ -347,7 +347,7 @@
                 type: "worksheet",
                 worksheetStatus: status,
                 createdBy: $.cookie("uuid"),
-                fieldOfficeId: $.cookie("field_office_id")
+                fieldOfficeId: (window.WorksheetApi ? WorksheetApi.fieldOfficeId() : $.cookie("field_office_id"))
             };
         }
         

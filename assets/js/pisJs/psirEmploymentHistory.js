@@ -149,7 +149,7 @@
             "type"                      : "psirEmploymentHistory",
             "worksheetStatus"           : "INCOMPLETE",
             "createdBy"                 : $.cookie("uuid"),
-            "fieldOfficeId"             : $.cookie("field_office_id")
+            "fieldOfficeId"             : (window.WorksheetApi ? WorksheetApi.fieldOfficeId() : $.cookie("field_office_id"))
             }
             return payload;
         }
