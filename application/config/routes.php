@@ -252,6 +252,8 @@ $route['blotter'] = "routes/blotter";
 $route['announcement'] = "routes/announcement";
 $route['inventory'] = "routes/inventory";
 
+$route['maintenance'] = 'maintenance/index';
+$route['administrator-sign-in'] = 'routes/index';
 $route['default_controller'] = 'Routes';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
