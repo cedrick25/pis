@@ -4,12 +4,10 @@
     width: 100% !important;
     word-wrap: break-word;
 }
-.pis-inv-docket-list-wrap {
+.courtesy-inv-list-wrap {
     min-height: 8rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
 }
-.pis-inv-docket-list-loader {
+.courtesy-inv-list-loader {
     position: absolute;
     inset: 0;
     z-index: 2;
@@ -20,10 +18,7 @@
     background: rgba(255, 255, 255, 0.88);
     border-radius: 0.25rem;
 }
-.pis-inv-docket-list-loader.is-hidden {
-    display: none !important;
-}
-/* Same search chrome as supervision/courtesy docketing lists (injectSearch targets .sup-docket-search-wrap) */
+/* Same search chrome as supervision docketing (injectSearch targets .sup-docket-search-wrap) */
 .sup-docket-search-wrap {
     position: relative;
     display: inline-block;
@@ -53,7 +48,7 @@
 .sup-docket-search-wrap.has-value .sup-docket-search-clear {
     display: block;
 }
-/* Length left, search group right — same row as courtesy investigation list */
+/* Length left, search group right — same row as supervision */
 @media (min-width: 768px) {
     .card-body div.dataTables_wrapper > div.row:first-of-type {
         display: flex;
@@ -67,24 +62,24 @@
         max-width: 100%;
     }
 }
-.pis-inv-docket-actions {
+.courtesy-inv-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.35rem;
     max-width: 14rem;
 }
-.pis-inv-docket-actions .btn {
+.courtesy-inv-actions .btn {
     flex: 1 1 calc(50% - 0.35rem);
     min-width: 5.5rem;
     white-space: nowrap;
 }
 @media (min-width: 992px) {
-    .pis-inv-docket-actions {
+    .courtesy-inv-actions {
         max-width: none;
         flex-wrap: nowrap;
     }
-.pis-inv-docket-actions .btn {
+.courtesy-inv-actions .btn {
     flex: 0 0 auto;
 }
 }
@@ -125,12 +120,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mediumModalLabel">Permanently remove docket?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close dialog">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="alert alert-success" role="alert" id="success_remove" style="display:none">
-                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <i class="fa fa-check"></i>
                         Removed Successfully  
                 </div>
                 <div class="alert alert-danger" role="alert" id="error_remove" style="display:none"></div>
@@ -158,7 +153,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-left">
                             <li><a href="dashboard">Dashboard</a></li>
-                            <li class="active">Investigation</li>
+                            <li><a href="investigation_docketing">Investigation</a></li>
+                            <li class="active">Carry Over</li>
                         </ol>
                     </div>
                 </div>
@@ -171,24 +167,23 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <?php $this->load->view('PIS/Investigation/investigation_module_tabs', array('pis_inv_tab' => 'investigation')); ?>
+                                <?php $this->load->view('PIS/Investigation/investigation_module_tabs', array('pis_inv_tab' => 'carry_over')); ?>
                             </div>
                             <div class="card-body">
-                                <div id="pisInvDocketListSearchError" class="alert alert-danger" style="display:none;" role="alert"></div>
-                                <div class="pis-inv-docket-list-wrap position-relative">
-                                    <div id="pisInvDocketListLoader" class="pis-inv-docket-list-loader" aria-live="polite" aria-busy="true">
+                                <div id="courtesyInvListSearchError" class="alert alert-danger" style="display:none;" role="alert"></div>
+                                <div class="courtesy-inv-list-wrap position-relative">
+                                    <div id="courtesyInvListLoader" class="courtesy-inv-list-loader" aria-live="polite" aria-busy="true">
                                         <i class="fa fa-spinner fa-spin fa-2x text-muted" aria-hidden="true"></i>
                                         <p class="mb-0 mt-2 text-muted">Loading dockets…</p>
                                     </div>
-                                    <table id="tblPisInvestigationDockets" class="table table_head" width="100%">
-                                        <caption class="sr-only">Investigation Docket List</caption>
+                                    <table id="tblCourtesyInvestigationDockets" class="table table_head" width="100%">
+                                        <caption class="sr-only">Carry Over Investigation Docket List</caption>
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Docket Number</th>
-                                                <th scope="col">Received Date</th>
+                                                <th scope="col">Date Completed and Returned</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col">Criminal Case No.</th>
                                                 <th scope="col">Field Office</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
@@ -212,7 +207,7 @@
 
     <?php $this->load->view('templates/footer.php'); ?> 
 
-    <script src="assets/js/pisJs/PIS_Investigation/investigationDocketing.js">
+    <script src="assets/js/pisJs/PIS_Carry_Over_Investigation/list.js">
 
     </script>
 

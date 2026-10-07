@@ -229,6 +229,12 @@ $route['probation-courtesy-investigation-uploads'] = "routes/probation_courtesy_
 $route['probation-courtesy-investigation-create'] = "routes/probation_courtesy_investigation_create";
 $route['probation-courtesy-investigation-update'] = "routes/probation_courtesy_investigation_update";
 $route['probation-courtesy-investigation-view'] = "routes/probation_courtesy_investigation_view";
+// for probation carry over investigation
+$route['probation-carry-over-investigation-list'] = "routes/probation_carry_over_investigation_list";
+$route['probation-carry-over-investigation-uploads'] = "routes/probation_carry_over_investigation_uploads";
+$route['probation-carry-over-investigation-create'] = "routes/probation_carry_over_investigation_create";
+$route['probation-carry-over-investigation-update'] = "routes/probation_carry_over_investigation_update";
+$route['probation-carry-over-investigation-view'] = "routes/probation_carry_over_investigation_view";
 // for probation courtesy supervision
 $route['probation-courtesy-supervision-list'] = "routes/probation_courtesy_supervision_list";
 $route['probation-courtesy-supervision-uploads'] = "routes/probation_courtesy_supervision_uploads";

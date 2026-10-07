@@ -742,6 +742,27 @@ class routes extends CI_Controller {
 	{
 		$this->load->view('PIS/courtesyInvestigation/view');
 	}
+	// probation carry over investigation
+	public function probation_carry_over_investigation_list()
+	{
+		$this->load->view('PIS/carryOverInvestigation/list');
+	}
+	public function probation_carry_over_investigation_uploads()
+	{
+		$this->load->view('PIS/carryOverInvestigation/upload');
+	}
+	public function probation_carry_over_investigation_create()
+	{
+		$this->load->view('PIS/carryOverInvestigation/create');
+	}
+	public function probation_carry_over_investigation_update()
+	{
+		$this->load->view('PIS/carryOverInvestigation/update');
+	}
+	public function probation_carry_over_investigation_view()
+	{
+		$this->load->view('PIS/carryOverInvestigation/view');
+	}
 	// probation courtesy supervision
 	public function probation_courtesy_supervision_list()
 	{

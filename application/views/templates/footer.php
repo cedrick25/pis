@@ -276,9 +276,33 @@
             });
         }
 
+        function userHasGrantedPermission(data, detail) {
+            if (!data || !detail) {
+                return false;
+            }
+            return data.some(function (row) {
+                return row && row.detail === detail && !!row.value;
+            });
+        }
+
+        function applyAnyPermissionVisibility(data) {
+            $('[data-permission-any]').each(function () {
+                var $el = $(this);
+                var keys = String($el.attr('data-permission-any') || '').split(',');
+                var granted = keys.some(function (key) {
+                    return userHasGrantedPermission(data, $.trim(key));
+                });
+                if (granted) {
+                    $el.show();
+                } else {
+                    $el.hide();
+                }
+            });
+        }
+
         function applyPermissionVisibility() {
             var data = getStoredPermissions();
-            $('[data-permission]').hide();
+            $('[data-permission], [data-permission-any]').hide();
             if (!data) {
                 redirectIfNoRolePermissions();
                 return;
@@ -294,6 +318,7 @@
                     $el.hide();
                 }
             });
+            applyAnyPermissionVisibility(data);
             redirectIfNoRolePermissions();
             showMissingActionPermissionNotice();
         }

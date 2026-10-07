@@ -317,7 +317,15 @@
         var docketRowCount = 0;
         var INVESTIGATION_DOCKET_TYPE = 'PIS_INV';
         var COURTESY_INVESTIGATION_DOCKET_TYPE = 'PIS_CSINV';
+        var CARRY_OVER_INVESTIGATION_DOCKET_TYPE = 'PIS_INV_CARRY_OVER';
+        var CARRY_OVER_INVESTIGATION_FILE_TYPE = 'carry_over_investigation';
         var SUPERVISION_DOCKET_TYPE = 'PIS_SUP';
+
+        function isInvestigationFamilyDocketType(docketType) {
+            return docketType === INVESTIGATION_DOCKET_TYPE
+                || docketType === COURTESY_INVESTIGATION_DOCKET_TYPE
+                || docketType === CARRY_OVER_INVESTIGATION_DOCKET_TYPE;
+        }
 
         function getDocketNumberDetails () {
             if (docketIsLoading || !docketHasMore) return;
@@ -413,15 +421,22 @@
                     var dateReceived = docket.receivedDateByPPO || "N/A";
                     var officer = docket.investigatingOfficer || docket.supervisingOfficer || "N/A";
                     var status = docket.status || "N/A";
+                    var typeLabelHtml = '';
+                    if (docket.type === CARRY_OVER_INVESTIGATION_DOCKET_TYPE) {
+                        typeLabelHtml = ' <span class="text-muted small">(Carry Over)</span>';
+                    } else if (docket.type === COURTESY_INVESTIGATION_DOCKET_TYPE) {
+                        typeLabelHtml = ' <span class="text-muted small">(Courtesy)</span>';
+                    }
                     var docketNumEscAttr = String(docketNumber).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+                    var fieldOfficeIdAttr = String(docket.fieldOfficeId || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
                     var rowId = "fs-docket-row-" + docketRowCount;
                     var worksheetActionsHtml = buildWorksheetActionsHtml(docketNumber, "Not Available", "");
                     var psirActionsHtml = buildPsirActionsHtml(docketNumber, "Not Available", "");
 
                     $(".table_body_tc").append(`
-                        <tr id="${rowId}" data-docket-number="${docketNumEscAttr}" data-docket-type="${docket.type || ''}" data-ws-created-by="" data-ps-created-by="" data-ws-status="Not Available" data-ps-status="Not Available">
+                        <tr id="${rowId}" data-docket-number="${docketNumEscAttr}" data-field-office-id="${fieldOfficeIdAttr}" data-docket-type="${docket.type || ''}" data-ws-created-by="" data-ps-created-by="" data-ws-status="Not Available" data-ps-status="Not Available">
                             <td>${docketRowCount}</td>
-                            <td>${docketNumber}</td>
+                            <td>${docketNumber}${typeLabelHtml}</td>
                             <td>${dateReceived}</td>
                             <td>N/A</td>
                             <td>${officer}</td>
@@ -1030,9 +1045,10 @@
             var d = $.Deferred();
             $.when(
                 fetchDocketsByClientId(clientId, INVESTIGATION_DOCKET_TYPE),
-                fetchDocketsByClientId(clientId, COURTESY_INVESTIGATION_DOCKET_TYPE)
-            ).done(function (inv, csinv) {
-                var merged = (inv || []).concat(csinv || []);
+                fetchDocketsByClientId(clientId, COURTESY_INVESTIGATION_DOCKET_TYPE),
+                fetchDocketsByClientId(clientId, CARRY_OVER_INVESTIGATION_DOCKET_TYPE)
+            ).done(function (inv, csinv, carryOver) {
+                var merged = (inv || []).concat(csinv || []).concat(carryOver || []);
                 merged.sort(function (a, b) {
                     var da = a && a.receivedDateByPPO ? String(a.receivedDateByPPO) : '';
                     var db = b && b.receivedDateByPPO ? String(b.receivedDateByPPO) : '';
@@ -1056,8 +1072,11 @@
                 if (d.type === COURTESY_INVESTIGATION_DOCKET_TYPE) {
                     parts.push('Courtesy');
                 }
+                if (d.type === CARRY_OVER_INVESTIGATION_DOCKET_TYPE) {
+                    parts.push('Carry Over');
+                }
                 if (d.status) parts.push(d.status);
-                $select.append($('<option/>').val(num).text(parts.join(' — ')));
+                $select.append($('<option/>').val(num).attr('data-docket-type', d.type || '').text(parts.join(' — ')));
             });
             $select.prop('disabled', dockets.length === 0);
         }
@@ -1117,8 +1136,12 @@
             var form = new FormData();
             form.append("file", fileToUpload, fileToUpload.name);
             var remarksVal = $(".investigatingOfficer").val() || '';
+            var selectedDocketType = $dockSel.find('option:selected').attr('data-docket-type') || '';
+            var uploadFileType = selectedDocketType === CARRY_OVER_INVESTIGATION_DOCKET_TYPE
+                ? CARRY_OVER_INVESTIGATION_FILE_TYPE
+                : 'Investigation';
             var settings = {
-                "url": api + "8080/file/upload?uuid=" + encodeURIComponent(docketNum) + "&type=Investigation&createdby=" + encodeURIComponent(userName) + "&version=0&kind=" + encodeURIComponent(fileToUpload.name) + "&officeId=" + encodeURIComponent(client_fo) + "&remarks=" + encodeURIComponent(remarksVal),
+                "url": api + "8080/file/upload?uuid=" + encodeURIComponent(docketNum) + "&type=" + encodeURIComponent(uploadFileType) + "&createdby=" + encodeURIComponent(userName) + "&version=0&kind=" + encodeURIComponent(fileToUpload.name) + "&officeId=" + encodeURIComponent(client_fo) + "&remarks=" + encodeURIComponent(remarksVal),
                 "method": "POST",
                 "timeout": 0,
                 "processData": false,
@@ -1271,6 +1294,33 @@
             return d.promise();
         }
 
+        function fetchInvestigationFamilyFiles(dockets, fileType, officeId, cacheKey) {
+            var tasks = [fetchFilesForDockets(dockets, fileType, officeId)];
+
+            if (cacheKey === 'inv') {
+                var carryOverDockets = (dockets || []).filter(function (docket) {
+                    return docket && docket.type === CARRY_OVER_INVESTIGATION_DOCKET_TYPE;
+                });
+                if (carryOverDockets.length) {
+                    tasks.push(fetchFilesForDockets(carryOverDockets, CARRY_OVER_INVESTIGATION_FILE_TYPE, officeId));
+                }
+            }
+
+            var d = $.Deferred();
+            $.when.apply($, tasks).done(function () {
+                var combined = [];
+                for (var i = 0; i < arguments.length; i++) {
+                    if ($.isArray(arguments[i])) {
+                        combined = combined.concat(arguments[i]);
+                    }
+                }
+                d.resolve(pickLatestFilesPerKind(combined));
+            }).fail(function () {
+                d.resolve([]);
+            });
+            return d.promise();
+        }
+
         function loadDocketFilesForType(docketType, fileType, cacheKey) {
             var d = $.Deferred();
             var cachedFiles = cacheKey === 'inv' ? cachedInvFiles : cachedSupFiles;
@@ -1280,12 +1330,12 @@
                 return d.promise();
             }
 
-            var docketsPromise = (docketType === INVESTIGATION_DOCKET_TYPE || docketType === COURTESY_INVESTIGATION_DOCKET_TYPE)
+            var docketsPromise = isInvestigationFamilyDocketType(docketType)
                 ? fetchInvestigationDockets(client_id)
                 : fetchDocketsByClientId(client_id, docketType);
 
             docketsPromise.done(function (dockets) {
-                fetchFilesForDockets(dockets || [], fileType, client_fo).done(function (files) {
+                fetchInvestigationFamilyFiles(dockets || [], fileType, client_fo, cacheKey).done(function (files) {
                     if (cacheKey === 'inv') {
                         cachedInvFiles = files;
                     } else {
@@ -2025,36 +2075,6 @@
             $(".info-details").html('')
             $(".info-action").html('');
             $(".info-details").append(`
-                <!-- Print Preview Modal -->
-                <div id="pdfPreviewModal" 
-                    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-                        background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
-
-                  <div style="background:#fff; padding:10px; border-radius:8px; width:90%; height:90%;
-                      position:relative; display:flex; flex-direction:column;">
-
-                    <!-- Header buttons -->
-                    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
-                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <button type="button" id="iframePrintBtn" class="btn btn-sm btn-primary" style="display:none" title="Print" aria-label="Print document">
-                            <i class="fa fa-print"></i> Print
-                        </button>
-                        <button type="button" id="iframeDownloadBtn" class="btn btn-sm btn-outline-secondary" style="display:none" title="Download" aria-label="Download document">
-                            <i class="fa fa-download"></i> Download
-                        </button>
-                        </div>
-                        <div style="flex:1;"></div>
-                        <button type="button" id="closePreview" class="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <!-- PDF iframe -->
-                    <iframe id="pdfIframe" style="flex:1; width:100%; border:none; border-radius:6px;"></iframe>
-
-                  </div>
-                </div>
-
                 <div class="tab-pane fade show active" id="docketListContent" style="overflow: auto; max-height: 100%">
                     <div class="tc-body" style="height: 500px; width: 100%; padding-top: 10px; overflow-y: auto;">
                         <table id="" class="table table-bordered table_head_tc" style="max-width: 100%;">
@@ -2096,12 +2116,206 @@
             })
         })
 
-        $(document).off("click", ".btn_pdfPSIR").on("click", ".btn_pdfPSIR", function(e) {
-            e.preventDefault();
+        var psirDownloadState = { url: null, html: "", fileBase: "PPA_PSIR", busy: false };
+
+        function syncPsirFormatCards() {
+            $("#psirDownloadModal .ws-dl-option").each(function () {
+                var selected = $(this).find("input[type='radio']").prop("checked");
+                $(this).toggleClass("is-selected", !!selected);
+            });
+        }
+
+        function closePsirDownload() {
+            $("#psirDownloadModal").css("display", "none");
+            var frame = document.getElementById("psirPreviewFrame");
+            if (frame) frame.src = "about:blank";
+            if (psirDownloadState.url) {
+                URL.revokeObjectURL(psirDownloadState.url);
+                psirDownloadState.url = null;
+            }
+            $(document).off("keydown.psirDownloadEsc");
+        }
+
+        function psirFileToken(value) {
+            return String(value || "").replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "");
+        }
+
+        function psirDownloadFileBase(worksheetData, variant, nameParts) {
+            nameParts = nameParts || {};
+            var idData = worksheetData.identifyingData || {};
+            var last = psirFileToken(nameParts.lastName);
+            var first = psirFileToken(nameParts.firstName);
+            var full = psirFileToken(
+                nameParts.fullName ||
+                idData.petitionersName ||
+                idData.name ||
+                idData.fullName ||
+                petitionersName
+            );
+            var stem = (last && first) ? (last + "_" + first) : full;
+            return (stem || "PSIR") + (variant === "long" ? "_longPsir" : "_shortPsir");
+        }
+
+        function openPsirDownload(html, fileBase, title) {
+            var modal = document.getElementById("psirDownloadModal");
+            var frame = document.getElementById("psirPreviewFrame");
+            if (!modal || !frame) {
+                alert("Download window failed to load. Refresh the page and try again.");
+                return;
+            }
+            if (psirDownloadState.url) {
+                URL.revokeObjectURL(psirDownloadState.url);
+                psirDownloadState.url = null;
+            }
+            var blob = new Blob([html], { type: "text/html;charset=utf-8" });
+            var previewUrl = URL.createObjectURL(blob);
+            psirDownloadState.url = previewUrl;
+            psirDownloadState.html = html;
+            psirDownloadState.fileBase = fileBase || "PPA_PSIR";
+            $("#psirDownloadTitle").text(title || "PSIR");
+            $("#psirFormatPdf").prop("checked", true);
+            syncPsirFormatCards();
+            frame.src = previewUrl;
+            modal.style.display = "flex";
+            $(document).off("keydown.psirDownloadEsc").on("keydown.psirDownloadEsc", function (ev) {
+                if (ev.key === "Escape") closePsirDownload();
+            });
+        }
+
+        function psirFieldOfficeId($btn) {
+            var $row = $btn.closest("tr");
+            var fieldOfficeId = ($row.attr("data-field-office-id") || "").trim();
+            if (!fieldOfficeId) {
+                fieldOfficeId = String(client_fo || "").trim();
+            }
+            if (!fieldOfficeId && window.WorksheetApi) {
+                fieldOfficeId = String(WorksheetApi.fieldOfficeId() || "").trim();
+            }
+            if (!fieldOfficeId) {
+                fieldOfficeId = String($.cookie("field_office_id") || "").trim();
+            }
+            return fieldOfficeId;
+        }
+
+        function formatPsirCoverDate(value) {
+            var raw = String(value == null ? "" : value).trim();
+            if (!raw || raw === "N/A" || raw.indexOf("0000-00-00") === 0) return "";
+            var match = /^(\d{4})-(\d{2})-(\d{2})/.exec(raw);
+            if (!match) return raw;
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var monthIndex = parseInt(match[2], 10) - 1;
+            var day = parseInt(match[3], 10);
+            if (monthIndex < 0 || monthIndex > 11 || !day) return raw;
+            return months[monthIndex] + " " + day + ", " + match[1];
+        }
+
+        function formatPsirSignatureDate(date) {
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var day = date.getDate();
+            var dayText = day < 10 ? "0" + day : String(day);
+            return months[date.getMonth()] + " " + dayText + " " + date.getFullYear();
+        }
+
+        function loadPetitionerNameParts() {
+            var deferred = $.Deferred();
+            var empty = { firstName: "", middleName: "", lastName: "", suffixName: "", fullName: "" };
+            function clean(value) {
+                var text = String(value == null ? "" : value).trim();
+                if (!text || text === "null" || text === "undefined") return "";
+                return text;
+            }
+            if (!client_id) {
+                deferred.resolve(empty);
+                return deferred.promise();
+            }
+            __executeExternalGet("8000/petitioner/" + encodeURIComponent(client_id)).done(function (res) {
+                var result = res && res.status !== "ERROR" ? (res.response || res) : null;
+                if (!result || result.status === "ERROR") {
+                    deferred.resolve(empty);
+                    return;
+                }
+                deferred.resolve({
+                    firstName: clean(result.firstName),
+                    middleName: clean(result.middleName),
+                    lastName: clean(result.lastName),
+                    suffixName: clean(result.suffixName),
+                    fullName: clean(result.fullName)
+                });
+            }).fail(function () {
+                deferred.resolve(empty);
+            });
+            return deferred.promise();
+        }
+
+        function loadShortPsirDocketCover($btn) {
+            var deferred = $.Deferred();
+            var empty = {
+                courtOrderDate: "",
+                officeReceivedDate: "",
+                probationOfficerName: "",
+                criminalCaseNumber: ""
+            };
+            var $row = $btn.closest("tr");
+            var docketNumber = ($row.attr("data-docket-number") || "").trim();
+            var fieldOfficeId = psirFieldOfficeId($btn);
+            if (!docketNumber || !fieldOfficeId) {
+                deferred.resolve(empty);
+                return deferred.promise();
+            }
+            __executeExternalGet(
+                "8000/docketbook/" + encodeURIComponent(docketNumber) + "/" + encodeURIComponent(fieldOfficeId)
+            ).done(function (result) {
+                var docket = result && result.status !== "ERROR" ? (result.response || result) : null;
+                if (!docket || docket.status === "ERROR") {
+                    deferred.resolve(empty);
+                    return;
+                }
+                deferred.resolve({
+                    courtOrderDate: formatPsirCoverDate(docket.courtOrderDate),
+                    officeReceivedDate: formatPsirCoverDate(docket.receivedDateByPPO),
+                    probationOfficerName: String(docket.investigatingOfficer || "").trim(),
+                    criminalCaseNumber: String(docket.criminalCaseNumber || "").trim()
+                });
+            }).fail(function () {
+                deferred.resolve(empty);
+            });
+            return deferred.promise();
+        }
+
+        function loadShortPsirOfficeHeader($btn) {
+            var deferred = $.Deferred();
+            var fallback = {
+                departmentName: ($.cookie("departmentName") || "").trim(),
+                officeName: ($.cookie("departmentName") || "").trim(),
+                officeAddress: ""
+            };
+            var fieldOfficeId = psirFieldOfficeId($btn);
+            if (!fieldOfficeId) {
+                deferred.resolve(fallback);
+                return deferred.promise();
+            }
+            __executeExternalGet("8088/department/" + encodeURIComponent(fieldOfficeId))
+                .done(function (dept) {
+                    if (!dept || dept.status === "ERROR") {
+                        deferred.resolve(fallback);
+                        return;
+                    }
+                    deferred.resolve({
+                        departmentName: String(dept.locationName || "").trim(),
+                        officeName: String(dept.name || "").trim(),
+                        officeAddress: String(dept.description || "").trim()
+                    });
+                })
+                .fail(function () {
+                    deferred.resolve(fallback);
+                });
+            return deferred.promise();
+        }
+
+        function startPsirDownload(variant, $btn) {
             if (isFactsheetRestrictedRole()) {
                 return;
             }
-            var $btn = $(this);
             var $row = $btn.closest("tr");
             var dockCell = ($row.attr("data-docket-number") || "").trim();
             if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord($row.attr("data-ps-created-by"), $row.attr("data-ps-status"))) {
@@ -2123,95 +2337,77 @@
                         alert("Print layout failed to load. Refresh the page and try again.");
                         return;
                     }
-                    __executeExternalGet(`8080/file/getLatest/petitioner_profile/${client_id}/${client_fo}`).always(function (resImage) {
-                        var logoP = loadImageToBase64(`images/pis_logo.png`);
+                    __executeExternalGet("8080/file/getLatest/petitioner_profile/" + client_id + "/" + client_fo).always(function (resImage) {
+                        var logoP = loadImageToBase64("images/pis_logo.png");
                         var photoP = Promise.resolve("");
                         if (resImage && resImage.status !== "ERROR" && resImage.files && resImage.files[0]) {
                             var petitionerProfileId = resImage.files[0].id;
-                            photoP = loadImageToBase64(`${___ctx}8080/file/view/${petitionerProfileId}`);
+                            photoP = loadImageToBase64(___ctx + "8080/file/view/" + petitionerProfileId);
                         }
                         var cov = "images/psir_cover/";
-                        var coverPpaSealP = loadImageToBase64(cov + "ppa-seal.png");
-                        var coverDojP = loadImageToBase64(cov + "doj-logo.png");
-                        var coverBpP = loadImageToBase64(cov + "bagong-pilipinas.png");
-                        var coverRedeemP = loadImageToBase64(cov + "redeeming-lives-banner.png");
-                        var coverIsoP = loadImageToBase64(cov + "iso-bureau-veritas.png");
+                        var officeHeaderP = loadShortPsirOfficeHeader($btn);
+                        var docketCoverP = loadShortPsirDocketCover($btn);
+                        var namePartsP = loadPetitionerNameParts();
                         Promise.all([
                             logoP,
                             photoP,
-                            coverPpaSealP,
-                            coverDojP,
-                            coverBpP,
-                            coverRedeemP,
-                            coverIsoP,
+                            loadImageToBase64(cov + "ppa-seal.png"),
+                            loadImageToBase64(cov + "doj-logo.png"),
+                            loadImageToBase64(cov + "bagong-pilipinas.png"),
+                            loadImageToBase64(cov + "redeeming-lives-banner.png"),
+                            loadImageToBase64(cov + "iso-bureau-veritas.png")
                         ]).then(function (imgs) {
-                            var $tr = $btn.closest("tr");
-                            var dockCell = ($tr.attr("data-docket-number") || $tr.find("td").eq(1).text() || "").trim();
-                            var meta = {
-                                variant: "short",
-                                logoSrc: imgs[0] || "",
-                                photoSrc: imgs[1] || "",
-                                coverPpaSealSrc: imgs[2] || "",
-                                coverDojLogoSrc: imgs[3] || "",
-                                coverBagongPilipinasSrc: imgs[4] || "",
-                                coverRedeemingLivesSrc: imgs[5] || "",
-                                coverIsoBvSrc: imgs[6] || "",
-                                departmentName: ($.cookie("departmentName") || "").trim(),
-                                officeName: ($.cookie("departmentName") || "").trim(),
-                                officeAddress: "",
-                                officePhone: "",
-                                officeWebsite: "",
-                                officeWebsiteLabel: "",
-                                coverFormRevision: "001",
-                                docketNumber: dockCell,
-                                petitionersName: petitionersName || "",
-                                pageNumber: "1"
-                            };
-                            var html = fsBuildPpaPsirPrintDocument(worksheetData, meta);
-                            var blob = new Blob([html], { type: "text/html;charset=utf-8" });
-                            var worksheetUrl = URL.createObjectURL(blob);
-                            var modal = document.getElementById("pdfPreviewModal");
-                            var iframe = document.getElementById("pdfIframe");
-                            if (!modal || !iframe) {
-                                var wopen = window.open("", "_blank");
-                                if (wopen) {
-                                    wopen.document.open();
-                                    wopen.document.write(html);
-                                    wopen.document.close();
-                                    wopen.focus();
-                                }
-                                URL.revokeObjectURL(worksheetUrl);
-                                return;
-                            }
-                            iframe.onload = function () {
-                                iframe.onload = null;
-                                try { iframe.contentWindow.focus(); } catch (ignored) {}
-                            };
-                            iframe.src = worksheetUrl;
-                            modal.style.display = "flex";
-                            var safeFileBase = (worksheetData.identifyingData && worksheetData.identifyingData.name)
-                                ? String(worksheetData.identifyingData.name)
-                                : ("client_" + String(client_id || "psir"));
-                            safeFileBase = safeFileBase.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "") || "PSIR";
-                            var downloadFileName = "PPA_PSIR_" + safeFileBase + ".html";
-                            $("#iframePrintBtn").show().off("click.wsPsirPrint").on("click.wsPsirPrint", function () {
-                                try { iframe.contentWindow.print(); } catch (e2) { console.error(e2); }
-                            });
-                            $("#iframeDownloadBtn").show().off("click.wsPsirDl").on("click.wsPsirDl", function () {
-                                try {
-                                    var a = document.createElement("a");
-                                    a.href = worksheetUrl;
-                                    a.download = downloadFileName;
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    document.body.removeChild(a);
-                                } catch (e3) { console.error(e3); }
-                            });
-                            $("#closePreview").off("click.fsPreviewClose").on("click.fsPreviewClose", function () {
-                                $("#pdfPreviewModal").css("display", "none");
-                                $("#iframePrintBtn").hide();
-                                $("#iframeDownloadBtn").hide();
-                                URL.revokeObjectURL(worksheetUrl);
+                            $.when(officeHeaderP, docketCoverP, namePartsP).done(function (officeHeader, docketCover, nameParts) {
+                                officeHeader = officeHeader || {};
+                                docketCover = docketCover || {};
+                                nameParts = nameParts || {};
+                                var signatureDate = variant === "short" ? formatPsirSignatureDate(new Date()) : "";
+                                var $tr = $btn.closest("tr");
+                                var dock = ($tr.attr("data-docket-number") || $tr.find("td").eq(1).text() || "").trim();
+                                var meta = {
+                                    variant: variant,
+                                    logoSrc: imgs[0] || "",
+                                    photoSrc: imgs[1] || "",
+                                    coverPpaSealSrc: imgs[2] || "",
+                                    coverDojLogoSrc: imgs[3] || "",
+                                    coverBagongPilipinasSrc: imgs[4] || "",
+                                    coverRedeemingLivesSrc: imgs[5] || "",
+                                    coverIsoBvSrc: imgs[6] || "",
+                                    departmentName: officeHeader.departmentName != null
+                                        ? officeHeader.departmentName
+                                        : ($.cookie("departmentName") || "").trim(),
+                                    officeName: officeHeader.officeName != null
+                                        ? officeHeader.officeName
+                                        : ($.cookie("departmentName") || "").trim(),
+                                    officeAddress: officeHeader.officeAddress != null
+                                        ? officeHeader.officeAddress
+                                        : "",
+                                    officePhone: "",
+                                    officeWebsite: "",
+                                    officeWebsiteLabel: "",
+                                    coverFormRevision: "001",
+                                    docketNumber: dock,
+                                    courtOrderDate: docketCover.courtOrderDate || "",
+                                    officeReceivedDate: docketCover.officeReceivedDate || "",
+                                    probationOfficerName: docketCover.probationOfficerName || "",
+                                    investigatingOfficer: variant === "short" ? (docketCover.probationOfficerName || "") : "",
+                                    investigatingDate: signatureDate,
+                                    headDate: signatureDate,
+                                    criminalCaseNumber: docketCover.criminalCaseNumber || "",
+                                    petitionerFirstName: nameParts.firstName || "",
+                                    petitionerMiddleName: nameParts.middleName || "",
+                                    petitionerLastName: nameParts.lastName || "",
+                                    petitionerSuffixName: nameParts.suffixName || "",
+                                    petitionerFullName: nameParts.fullName || "",
+                                    petitionersName: petitionersName || "",
+                                    pageNumber: "1"
+                                };
+                                var html = fsBuildPpaPsirPrintDocument(worksheetData, meta);
+                                openPsirDownload(
+                                    html,
+                                    psirDownloadFileBase(worksheetData, variant, nameParts),
+                                    variant === "long" ? "PSIR Long" : "PSIR"
+                                );
                             });
                         });
                     });
@@ -2220,131 +2416,127 @@
                     alert("Could not prepare the PSIR for printing.");
                 }
             });
+        }
+
+        $(document).off("click", ".btn_pdfPSIR").on("click", ".btn_pdfPSIR", function (e) {
+            e.preventDefault();
+            startPsirDownload("short", $(this));
         });
 
-        $(document).off("click", ".btn_pdfPSIRLong").on("click", ".btn_pdfPSIRLong", function(e) {
+        $(document).off("click", ".btn_pdfPSIRLong").on("click", ".btn_pdfPSIRLong", function (e) {
             e.preventDefault();
-            if (isFactsheetRestrictedRole()) {
+            startPsirDownload("long", $(this));
+        });
+
+        $(document).off("click.psirDl", "#psirDownloadClose").on("click.psirDl", "#psirDownloadClose", function () {
+            closePsirDownload();
+        });
+        $(document).off("change.psirDl", "input[name='psirDownloadFormat']").on("change.psirDl", "input[name='psirDownloadFormat']", function () {
+            syncPsirFormatCards();
+        });
+        $(document).off("click.psirDl", "#psirDownloadBtn").on("click.psirDl", "#psirDownloadBtn", function () {
+            if (psirDownloadState.busy) return;
+            if (!psirDownloadState.html) {
+                alert("Could not prepare the PSIR for download.");
                 return;
             }
+            if (typeof fsDownloadPpaPsir !== "function") {
+                alert("Download failed to load. Refresh the page and try again.");
+                return;
+            }
+            var format = $("input[name='psirDownloadFormat']:checked").val() || "pdf";
             var $btn = $(this);
-            var $row = $btn.closest("tr");
-            var dockCell = ($row.attr("data-docket-number") || "").trim();
-            if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord($row.attr("data-ps-created-by"), $row.attr("data-ps-status"))) {
-                denyOwnerScopedWorksheetPsirAction("print");
+            var html = psirDownloadState.html;
+            var fileBase = psirDownloadState.fileBase;
+            psirDownloadState.busy = true;
+            $btn.prop("disabled", true).html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Preparing…');
+            fsDownloadPpaPsir(html, format, fileBase).then(function () {
+                psirDownloadState.busy = false;
+                $btn.prop("disabled", false).html('<i class="fa fa-download" aria-hidden="true"></i> Download');
+            }, function (err) {
+                console.error(err);
+                psirDownloadState.busy = false;
+                $btn.prop("disabled", false).html('<i class="fa fa-download" aria-hidden="true"></i> Download');
+                alert("Could not create the PSIR file. Try again.");
+            });
+        });
+
+
+        var worksheetDownloadState = { url: null, html: "", fileBase: "PPA_Worksheet", busy: false };
+
+        function syncWorksheetFormatCards() {
+            $("#worksheetDownloadModal .ws-dl-option").each(function () {
+                var selected = $(this).find("input[type='radio']").prop("checked");
+                $(this).toggleClass("is-selected", !!selected);
+            });
+        }
+
+        function closeWorksheetDownload() {
+            $("#worksheetDownloadModal").css("display", "none");
+            var frame = document.getElementById("worksheetPreviewFrame");
+            if (frame) frame.src = "about:blank";
+            if (worksheetDownloadState.url) {
+                URL.revokeObjectURL(worksheetDownloadState.url);
+                worksheetDownloadState.url = null;
+            }
+            $(document).off("keydown.wsDownloadEsc");
+        }
+
+        function openWorksheetDownload(html, fileBase) {
+            var modal = document.getElementById("worksheetDownloadModal");
+            var frame = document.getElementById("worksheetPreviewFrame");
+            if (!modal || !frame) {
+                alert("Download window failed to load. Refresh the page and try again.");
                 return;
             }
-            __executeExternalGet(WorksheetApi.getUrl("psir", dockCell, client_fo)).done(function (result) {
-                if (result.status === "ERROR") {
-                    alert("Could not load PSIR worksheet.");
-                    return;
-                }
-                if (isFactsheetOwnerScopedRole() && !canManageWorksheetOrPsirRecord(result.response && result.response.createdBy, result.response && result.response.worksheetStatus)) {
-                    denyOwnerScopedWorksheetPsirAction("print");
-                    return;
-                }
-                try {
-                    var worksheetData = JSON.parse(result.response.jsonData);
-                    if (typeof fsBuildPpaPsirPrintDocument !== "function") {
-                        alert("Print layout failed to load. Refresh the page and try again.");
-                        return;
-                    }
-                    __executeExternalGet(`8080/file/getLatest/petitioner_profile/${client_id}/${client_fo}`).always(function (resImage) {
-                        var logoP = loadImageToBase64(`images/pis_logo.png`);
-                        var photoP = Promise.resolve("");
-                        if (resImage && resImage.status !== "ERROR" && resImage.files && resImage.files[0]) {
-                            var petitionerProfileId = resImage.files[0].id;
-                            photoP = loadImageToBase64(`${___ctx}8080/file/view/${petitionerProfileId}`);
-                        }
-                        var cov = "images/psir_cover/";
-                        var coverPpaSealP = loadImageToBase64(cov + "ppa-seal.png");
-                        var coverDojP = loadImageToBase64(cov + "doj-logo.png");
-                        var coverBpP = loadImageToBase64(cov + "bagong-pilipinas.png");
-                        var coverRedeemP = loadImageToBase64(cov + "redeeming-lives-banner.png");
-                        var coverIsoP = loadImageToBase64(cov + "iso-bureau-veritas.png");
-                        Promise.all([
-                            logoP,
-                            photoP,
-                            coverPpaSealP,
-                            coverDojP,
-                            coverBpP,
-                            coverRedeemP,
-                            coverIsoP,
-                        ]).then(function (imgs) {
-                            var $tr = $btn.closest("tr");
-                            var dockCell = ($tr.attr("data-docket-number") || $tr.find("td").eq(1).text() || "").trim();
-                            var meta = {
-                                variant: "long",
-                                logoSrc: imgs[0] || "",
-                                photoSrc: imgs[1] || "",
-                                coverPpaSealSrc: imgs[2] || "",
-                                coverDojLogoSrc: imgs[3] || "",
-                                coverBagongPilipinasSrc: imgs[4] || "",
-                                coverRedeemingLivesSrc: imgs[5] || "",
-                                coverIsoBvSrc: imgs[6] || "",
-                                departmentName: ($.cookie("departmentName") || "").trim(),
-                                officeName: ($.cookie("departmentName") || "").trim(),
-                                officeAddress: "",
-                                officePhone: "",
-                                officeWebsite: "",
-                                officeWebsiteLabel: "",
-                                coverFormRevision: "001",
-                                docketNumber: dockCell,
-                                petitionersName: petitionersName || "",
-                                pageNumber: "1"
-                            };
-                            var html = fsBuildPpaPsirPrintDocument(worksheetData, meta);
-                            var blob = new Blob([html], { type: "text/html;charset=utf-8" });
-                            var worksheetUrl = URL.createObjectURL(blob);
-                            var modal = document.getElementById("pdfPreviewModal");
-                            var iframe = document.getElementById("pdfIframe");
-                            if (!modal || !iframe) {
-                                var wopen = window.open("", "_blank");
-                                if (wopen) {
-                                    wopen.document.open();
-                                    wopen.document.write(html);
-                                    wopen.document.close();
-                                    wopen.focus();
-                                }
-                                URL.revokeObjectURL(worksheetUrl);
-                                return;
-                            }
-                            iframe.onload = function () {
-                                iframe.onload = null;
-                                try { iframe.contentWindow.focus(); } catch (ignored) {}
-                            };
-                            iframe.src = worksheetUrl;
-                            modal.style.display = "flex";
-                            var safeFileBase = (worksheetData.identifyingData && worksheetData.identifyingData.name)
-                                ? String(worksheetData.identifyingData.name)
-                                : ("client_" + String(client_id || "psir"));
-                            safeFileBase = safeFileBase.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "") || "PSIR";
-                            var downloadFileName = "PPA_PSIR_Long_" + safeFileBase + ".html";
-                            $("#iframePrintBtn").show().off("click.wsPsirPrint").on("click.wsPsirPrint", function () {
-                                try { iframe.contentWindow.print(); } catch (e2) { console.error(e2); }
-                            });
-                            // $("#iframeDownloadBtn").show().off("click.wsPsirDl").on("click.wsPsirDl", function () {
-                            //     try {
-                            //         var a = document.createElement("a");
-                            //         a.href = worksheetUrl;
-                            //         a.download = downloadFileName;
-                            //         document.body.appendChild(a);
-                            //         a.click();
-                            //         document.body.removeChild(a);
-                            //     } catch (e3) { console.error(e3); }
-                            // });
-                            $("#closePreview").off("click.fsPreviewClose").on("click.fsPreviewClose", function () {
-                                $("#pdfPreviewModal").css("display", "none");
-                                $("#iframePrintBtn").hide();
-                                $("#iframeDownloadBtn").hide();
-                                URL.revokeObjectURL(worksheetUrl);
-                            });
-                        });
-                    });
-                } catch (errPrint) {
-                    console.error(errPrint);
-                    alert("Could not prepare the PSIR for printing.");
-                }
+            if (worksheetDownloadState.url) {
+                URL.revokeObjectURL(worksheetDownloadState.url);
+                worksheetDownloadState.url = null;
+            }
+            var blob = new Blob([html], { type: "text/html;charset=utf-8" });
+            var worksheetUrl = URL.createObjectURL(blob);
+            worksheetDownloadState.url = worksheetUrl;
+            worksheetDownloadState.html = html;
+            worksheetDownloadState.fileBase = fileBase || "PPA_Worksheet";
+            $("#worksheetFormatPdf").prop("checked", true);
+            syncWorksheetFormatCards();
+            frame.src = worksheetUrl;
+            modal.style.display = "flex";
+            $(document).off("keydown.wsDownloadEsc").on("keydown.wsDownloadEsc", function (ev) {
+                if (ev.key === "Escape") closeWorksheetDownload();
+            });
+        }
+
+        $(document).off("click.wsDl", "#worksheetDownloadClose").on("click.wsDl", "#worksheetDownloadClose", function () {
+            closeWorksheetDownload();
+        });
+        $(document).off("change.wsDl", "input[name='worksheetDownloadFormat']").on("change.wsDl", "input[name='worksheetDownloadFormat']", function () {
+            syncWorksheetFormatCards();
+        });
+        $(document).off("click.wsDl", "#worksheetDownloadBtn").on("click.wsDl", "#worksheetDownloadBtn", function () {
+            if (worksheetDownloadState.busy) return;
+            if (!worksheetDownloadState.html) {
+                alert("Could not prepare the worksheet for download.");
+                return;
+            }
+            if (typeof fsDownloadPpaWorksheet !== "function") {
+                alert("Download failed to load. Refresh the page and try again.");
+                return;
+            }
+            var format = $("input[name='worksheetDownloadFormat']:checked").val() || "pdf";
+            var $btn = $(this);
+            var html = worksheetDownloadState.html;
+            var fileBase = worksheetDownloadState.fileBase;
+            worksheetDownloadState.busy = true;
+            $btn.prop("disabled", true).html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Preparing…');
+            fsDownloadPpaWorksheet(html, format, fileBase).then(function () {
+                worksheetDownloadState.busy = false;
+                $btn.prop("disabled", false).html('<i class="fa fa-download" aria-hidden="true"></i> Download');
+            }, function (err) {
+                console.error(err);
+                worksheetDownloadState.busy = false;
+                $btn.prop("disabled", false).html('<i class="fa fa-download" aria-hidden="true"></i> Download');
+                alert("Could not create the worksheet file. Try again.");
             });
         });
 
@@ -2372,53 +2564,34 @@
                             alert("Print layout failed to load. Refresh the page and try again.");
                             return;
                         }
-                        var html = fsBuildPpaWorksheetPrintDocument(worksheetData);
-                        var blob = new Blob([html], { type: "text/html;charset=utf-8" });
-                        var worksheetUrl = URL.createObjectURL(blob);
 
-                        var modal = document.getElementById("pdfPreviewModal");
-                        var iframe = document.getElementById("pdfIframe");
-
-                        if (!modal || !iframe) {
-                            var wopen = window.open("", "_blank");
-                            if (wopen) {
-                                wopen.document.open();
-                                wopen.document.write(html);
-                                wopen.document.close();
-                                wopen.focus();
-                            }
-                            URL.revokeObjectURL(worksheetUrl);
-                            return;
+                        function showWorksheetPreview(office) {
+                            var html = fsBuildPpaWorksheetPrintDocument(worksheetData, office || {});
+                            var safeFileBase = (worksheetData.identifyingData && worksheetData.identifyingData.name)
+                                ? String(worksheetData.identifyingData.name)
+                                : "worksheet";
+                            safeFileBase = safeFileBase.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "") || "worksheet";
+                            openWorksheetDownload(html, "PPA_Worksheet_" + safeFileBase);
                         }
 
-                        iframe.onload = function () {
-                            iframe.onload = null;
-                            try { iframe.contentWindow.focus(); } catch (ignored) {}
-                        };
-                        iframe.src = worksheetUrl;
-                        modal.style.display = "flex";
-                        var safeFileBase = (function () {
-                            var raw = (worksheetData.identifyingData && worksheetData.identifyingData.name)
-                                ? String(worksheetData.identifyingData.name)
-                                : ("client_" + String(client_id || "worksheet"));
-                            var s = raw.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "");
-                            return s || "PPA_Worksheet";
-                        })();
-                        var downloadFileName = "PPA_Worksheet_" + safeFileBase + ".html";
-
-                        $("#iframePrintBtn").show().off("click.wsWorksheetPrint").on("click.wsWorksheetPrint", function () {
-                            try {
-                                iframe.contentWindow.print();
-                            } catch (e2) {
-                                console.error(e2);
+                        var fieldOfficeId = ($row.attr("data-field-office-id") || "").trim();
+                        if (!fieldOfficeId && window.WorksheetApi) {
+                            fieldOfficeId = String(WorksheetApi.fieldOfficeId() || "").trim();
+                        }
+                        if (!fieldOfficeId) {
+                            showWorksheetPreview({});
+                            return;
+                        }
+                        __executeExternalGet("8088/department/" + encodeURIComponent(fieldOfficeId)).done(function (dept) {
+                            var office = {};
+                            if (dept && dept.status !== "ERROR") {
+                                office = {
+                                    region: dept.locationName || "",
+                                    officeName: dept.name || "",
+                                    address: dept.description || ""
+                                };
                             }
-                        });
-
-                        $("#closePreview").off("click.fsPreviewClose").on("click.fsPreviewClose", function () {
-                            $("#pdfPreviewModal").css("display", "none");
-                            $("#iframePrintBtn").hide();
-                            $("#iframeDownloadBtn").hide();
-                            URL.revokeObjectURL(worksheetUrl);
+                            showWorksheetPreview(office);
                         });
 
                     } catch (errPrint) {

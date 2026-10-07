@@ -1,4 +1,30 @@
 (function ($) {
+    function hasGrantedPermission(detail) {
+        var raw = localStorage.getItem('permission');
+        if (!raw) {
+            return false;
+        }
+        try {
+            var data = JSON.parse(raw);
+            if (!Array.isArray(data)) {
+                return false;
+            }
+            return data.some(function (row) {
+                return row && row.detail === detail && !!row.value;
+            });
+        } catch (e) {
+            return false;
+        }
+    }
+
+    if (!hasGrantedPermission('can_access_docket_probation_investigation')
+        && hasGrantedPermission('can_access_docket_probation_carry_over_investigation')) {
+        window.location.replace(typeof window.pisUrl === 'function'
+            ? window.pisUrl('probation-carry-over-investigation-list')
+            : 'probation-carry-over-investigation-list');
+        return;
+    }
+
     var INVESTIGATION_DOCKET_TYPE = 'PIS_INV';
     var INVESTIGATION_SEARCH_CLIENT = 'PROBATIONER';
     var TABLE_SEL = '#tblPisInvestigationDockets';

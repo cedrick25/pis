@@ -651,6 +651,135 @@ $fs_can_upload_inv_sup = ($fs_role_id !== '');
             -webkit-overflow-scrolling: touch;
         }
     }
+
+    #worksheetDownloadModal,
+    #psirDownloadModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 10050;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+    }
+
+    #worksheetDownloadModal .ws-dl-dialog,
+    #psirDownloadModal .ws-dl-dialog {
+        background: #fff;
+        width: min(1100px, 96vw);
+        height: min(860px, 92vh);
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.28);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    #worksheetDownloadModal .ws-dl-header,
+    #psirDownloadModal .ws-dl-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #e6e6e6;
+        flex-shrink: 0;
+    }
+
+    #worksheetDownloadModal .ws-dl-title,
+    #psirDownloadModal .ws-dl-title {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #212529;
+    }
+
+    #worksheetDownloadModal .ws-dl-body,
+    #psirDownloadModal .ws-dl-body {
+        display: flex;
+        flex: 1;
+        min-height: 0;
+    }
+
+    #worksheetDownloadModal .ws-dl-preview,
+    #psirDownloadModal .ws-dl-preview {
+        flex: 1;
+        min-width: 0;
+        padding: 16px;
+        background: #fff;
+    }
+
+    #worksheetDownloadModal .ws-dl-preview iframe,
+    #psirDownloadModal .ws-dl-preview iframe {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #e6e6e6;
+        border-radius: 4px;
+        background: #fff;
+    }
+
+    #worksheetDownloadModal .ws-dl-side,
+    #psirDownloadModal .ws-dl-side {
+        width: 280px;
+        flex-shrink: 0;
+        border-left: 1px solid #e6e6e6;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+    }
+
+    #worksheetDownloadModal .ws-dl-label,
+    #psirDownloadModal .ws-dl-label {
+        font-weight: 600;
+        margin: 0 0 12px;
+        color: #212529;
+    }
+
+    #worksheetDownloadModal .ws-dl-option,
+    #psirDownloadModal .ws-dl-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        padding: 12px 14px;
+        margin: 0 0 10px;
+        cursor: pointer;
+        background: #fff;
+        font-weight: 500;
+        color: #212529;
+    }
+
+    #worksheetDownloadModal .ws-dl-option input,
+    #psirDownloadModal .ws-dl-option input {
+        margin: 0;
+        accent-color: #0d6efd;
+    }
+
+    #worksheetDownloadModal .ws-dl-option.is-selected,
+    #psirDownloadModal .ws-dl-option.is-selected {
+        border-color: #0d6efd;
+        background: #e8f2ff;
+        box-shadow: 0 0 0 1px #0d6efd;
+    }
+
+    #worksheetDownloadModal .ws-dl-download,
+    #psirDownloadModal .ws-dl-download {
+        margin-top: auto;
+        width: 100%;
+        padding: 8px 12px;
+        font-weight: 600;
+    }
+
+    #worksheetDownloadModal .ws-dl-download .fa,
+    #psirDownloadModal .ws-dl-download .fa {
+        margin-right: 6px;
+    }
 </style>
 <body class="page-client-factsheet">
     <!-- Left Panel -->
@@ -1184,10 +1313,72 @@ $fs_can_upload_inv_sup = ($fs_role_id !== '');
 
     <!-- Right Panel -->
 
+    <div id="worksheetDownloadModal" role="dialog" aria-modal="true" aria-labelledby="worksheetDownloadTitle">
+        <div class="ws-dl-dialog">
+            <div class="ws-dl-header">
+                <h2 id="worksheetDownloadTitle" class="ws-dl-title">Worksheet</h2>
+                <button type="button" id="worksheetDownloadClose" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="ws-dl-body">
+                <div class="ws-dl-preview">
+                    <iframe id="worksheetPreviewFrame" title="Worksheet preview"></iframe>
+                </div>
+                <div class="ws-dl-side">
+                    <p class="ws-dl-label">Download as</p>
+                    <label class="ws-dl-option is-selected">
+                        <input type="radio" name="worksheetDownloadFormat" id="worksheetFormatPdf" value="pdf" checked>
+                        <span>PDF</span>
+                    </label>
+                    <label class="ws-dl-option">
+                        <input type="radio" name="worksheetDownloadFormat" id="worksheetFormatWord" value="word">
+                        <span>Word</span>
+                    </label>
+                    <button type="button" id="worksheetDownloadBtn" class="btn btn-primary ws-dl-download">
+                        <i class="fa fa-download" aria-hidden="true"></i> Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="psirDownloadModal" role="dialog" aria-modal="true" aria-labelledby="psirDownloadTitle">
+        <div class="ws-dl-dialog">
+            <div class="ws-dl-header">
+                <h2 id="psirDownloadTitle" class="ws-dl-title">PSIR</h2>
+                <button type="button" id="psirDownloadClose" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="ws-dl-body">
+                <div class="ws-dl-preview">
+                    <iframe id="psirPreviewFrame" title="PSIR preview"></iframe>
+                </div>
+                <div class="ws-dl-side">
+                    <p class="ws-dl-label">Download as</p>
+                    <label class="ws-dl-option is-selected">
+                        <input type="radio" name="psirDownloadFormat" id="psirFormatPdf" value="pdf" checked>
+                        <span>PDF</span>
+                    </label>
+                    <label class="ws-dl-option">
+                        <input type="radio" name="psirDownloadFormat" id="psirFormatWord" value="word">
+                        <span>Word</span>
+                    </label>
+                    <button type="button" id="psirDownloadBtn" class="btn btn-primary ws-dl-download">
+                        <i class="fa fa-download" aria-hidden="true"></i> Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php $this->load->view('templates/footer.php'); ?> 
     <script src="assets/js/html2canvas.min.js"></script>
     <script src="assets/js/pisJs/ppaWorksheetPrintHtml.js"></script>
+    <script src="assets/js/pisJs/ppaWorksheetDownload.js"></script>
     <script src="assets/js/pisJs/ppaPsirPrintHtml.js"></script>
+    <script src="assets/js/pisJs/ppaPsirDownload.js"></script>
     <script src="assets/js/pisJs/clientViewFactSheet.js"></script>
 
 

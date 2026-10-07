@@ -65,7 +65,8 @@
         return h;
     }
 
-    function resolveCriminalCaseNo(ws) {
+    function resolveCriminalCaseNo(ws, meta) {
+        if (meta && str(meta.criminalCaseNumber)) return str(meta.criminalCaseNumber);
         var po = nz(ws.presentOffense);
         return str(
             po.criminalCaseNo ||
@@ -123,6 +124,34 @@
             return { last: sp[0], first: sp[1], middle: "" };
         }
         return { last: raw, first: "", middle: "" };
+    }
+
+    /**
+     * Separate last / first / middle only when those fields are stored.
+     * A single full name stays on one line.
+     */
+    function petitionerNameLayout(id, meta) {
+        id = id || {};
+        meta = meta || {};
+        var last = str(id.lastName) || str(meta.petitionerLastName);
+        var first = str(id.firstName) || str(meta.petitionerFirstName);
+        var middle = str(id.middleName) || str(meta.petitionerMiddleName);
+        var suffix = str(id.suffixName) || str(meta.petitionerSuffixName);
+        if (last || first || middle) {
+            if (suffix) last = [last, suffix].filter(Boolean).join(" ");
+            return { separate: true, last: last, first: first, middle: middle };
+        }
+        return {
+            separate: false,
+            full: str(
+                id.petitionersName ||
+                    id.name ||
+                    id.fullName ||
+                    meta.petitionerFullName ||
+                    meta.petitionersName ||
+                    ""
+            ),
+        };
     }
 
     /** LAST, FIRST MIDDLE — matches tri-column PSIR fields (no stray commas). */
@@ -352,7 +381,7 @@
     function sectionPsirCoverLetter(meta, ws) {
         var judge = str((nz(ws.presentOffense).judge || meta.judgeName || "").trim());
         var pet = resolvePetitionerDisplay(ws, meta).toUpperCase();
-        var ccRaw = resolveCriminalCaseNo(ws) || "_______________";
+        var ccRaw = resolveCriminalCaseNo(ws, meta) || "_______________";
         var cc = str(ccRaw).toUpperCase();
         var headName = str(meta.headFieldOfficeName || "HEAD OF THE FIELD OFFICE");
         var dept = str(meta.departmentName || "REGION");
@@ -482,7 +511,7 @@
     function sectionMetaHeader(meta, ws) {
         var pageNum = str(meta.pageNumber || "1");
         var petUp = resolvePetitionerDisplay(ws, meta).toUpperCase();
-        var cc = resolveCriminalCaseNo(ws);
+        var cc = resolveCriminalCaseNo(ws, meta);
         var dock = str(meta.docketNumber || "");
         return (
             '<table class="meta-hdr">' +
@@ -540,33 +569,42 @@
         );
     }
 
-    function identifyingGrid(id) {
-        var nm = splitPetitionerNameParts(id);
+    function identifyingNameColumns(layout) {
         return (
-            '<section class="id-section">' +
-            secHead("I", "IDENTIFYING DATA") +
-            '<div class="pet-name-block">' +
-            '<div class="pet-name-label">PETITIONER\'S NAME <span class="court-rec-hint">(per court records)</span></div>' +
             '<div class="pet-three-col">' +
             '<div class="pet-cell">' +
             '<div class="fill-line">' +
-            esc(nm.last) +
+            esc(layout.last) +
             "</div>" +
             '<div class="pet-sub">(Last Name)</div>' +
             "</div>" +
             '<div class="pet-cell">' +
             '<div class="fill-line">' +
-            esc(nm.first) +
+            esc(layout.first) +
             "</div>" +
             '<div class="pet-sub">(First Name)</div>' +
             "</div>" +
             '<div class="pet-cell">' +
             '<div class="fill-line">' +
-            esc(nm.middle) +
+            esc(layout.middle) +
             "</div>" +
             '<div class="pet-sub">(Middle Name)</div>' +
             "</div>" +
-            "</div>" +
+            "</div>"
+        );
+    }
+
+    function identifyingGrid(id, meta) {
+        var layout = petitionerNameLayout(id, meta);
+        var nameBody = layout.separate
+            ? identifyingNameColumns(layout)
+            : '<div class="pet-name-single"><div class="fill-line">' + esc(layout.full) + "</div></div>";
+        return (
+            '<section class="id-section">' +
+            secHead("I", "IDENTIFYING DATA") +
+            '<div class="pet-name-block">' +
+            '<div class="pet-name-label">PETITIONER\'S NAME <span class="court-rec-hint">(per court records)</span></div>' +
+            nameBody +
             "</div>" +
             fieldFull("True Name:", id.trueName) +
             idRowTwo("Alias/es:", id.alias, "Education Attainment:", id.education) +
@@ -710,11 +748,14 @@
         );
     }
 
-    function recommendationBlock(ws, meta, pendingIntro) {
+    function recommendationBlock(ws, meta, pendingIntro, startNewPage) {
         var pet = resolvePetitionerDisplay(ws, meta);
         var petU = pet.toUpperCase();
+        var resultsFrom = str(meta.probationOfficerName || meta.investigatingOfficer);
         var introPending =
-            "WHEREFORE, in view of the foregoing, pending the result/s of the NBI/CMRD/Others (specify)/Courtesy Investigation Results from ______________________, it is respectfully recommended to the Honorable Court that the petition for probation of " +
+            "WHEREFORE, in view of the foregoing, pending the result/s of the NBI/CMRD/Others (specify)/Courtesy Investigation Results from " +
+            uline(resultsFrom, "inline-ul") +
+            ", it is respectfully recommended to the Honorable Court that the petition for probation of " +
             esc(petU) +
             " be GRANTED, subject to the following conditions:";
         var introComplete =
@@ -727,14 +768,19 @@
                 ? "(FOR CASES WITH PENDING RESULTS OF RECORDS CHECK OR GIOR)"
                 : "(FOR CASES WITH COMPLETE RECORDS CHECK OR GIOR)";
 
-        var list = '<ol class="cond-list">';
+        var list = '<div class="cond-list">';
         for (var i = 0; i < RECOMMENDATION_CONDITIONS.length; i++) {
-            list += "<li>" + esc(RECOMMENDATION_CONDITIONS[i]) + "</li>";
+            list +=
+                '<div class="cond-item"><span class="cond-num">' +
+                (i + 1) +
+                '.</span><span class="cond-txt">' +
+                esc(RECOMMENDATION_CONDITIONS[i]) +
+                "</span></div>";
         }
-        list += "</ol>";
+        list += "</div>";
 
         return (
-            '<section class="rec block">' +
+            '<section class="rec block' + (startNewPage ? " page-break-before" : "") + '">' +
             '<div class="sec-head">' +
             esc("VI. RECOMMENDATION") +
             "</div>" +
@@ -745,9 +791,10 @@
             intro +
             "</p>" +
             list +
-            '<p class="justify">' +
+            '<p class="justify rec-close">' +
             "In the event that petitioner fails to observe the preceding conditions and/or has committed any material misrepresentation in his/her application for probation, his/her probation may be revoked by the Court or the conditions thereof modified." +
             "</p>" +
+            '<div class="sig-block">' +
             '<div class="sig-date">' +
             uline(meta.cityProvinceDate || "City/Municipality, Province, Philippines, Date.", "wide") +
             "</div>" +
@@ -777,27 +824,13 @@
             uline(meta.headDate || "", "inline-ul") +
             "</div></div>" +
             "</div>" +
+            "</div>" +
             "</section>"
         );
     }
 
     /** --- PPA Form 3 official multi-page layout (variant "long") — matches client PSIR template --- */
-    var OF3_PAGE_TOTAL = 6;
-
-    var OF3_GRANTED_CONDITIONS = [
-        "Probationers shall report initially to the Chief Probation and Parole Officer at _____________________________________________________________________ within seventy-two (72) hours from the receipt of the Order granting probation.",
-        "He/She shall, thereafter, report to his/her supervising Probation and Parole Officer _____________________________________ unless otherwise modified by the Chief Probation and Parole Officer.",
-        "He/She shall reside at and shall not change his/her residence without prior approval of the Chief Probation and Parole Officer, or Court, as the case may be.",
-        "He/She shall secure a written permit to travel outside the jurisdiction of the Parole and Probation Office from the Chief Probation and Parole Officer, and from the Court if such travel exceeds thirty (30) days.",
-        "He/She shall not commit any crime or any other offense.",
-        "He/She shall render community service and will participate in tree-planting activities.",
-        "He/She shall allow the supervising Probation and Parole Officer or an authorized Volunteer Probation Aide to visit his/her home and place of work.",
-        "He/She shall meet his/her family responsibilities.",
-        "He/She shall undergo medical, psychological or psychiatric examination and treatment and enter and remain in a specified institution, when required for that purpose.",
-        "He/She shall devote himself/herself to a specific employment and shall not change said employment without prior notice to the supervising officer and/or pursue a prescribed secular study or vocational training.",
-        "He/She shall refrain from associating with persons of questionable character.",
-        "He/She shall cooperate with his/her rehabilitation and not unduly restrictive of his/her liberty incompatible with his/her freedom of conscience.",
-    ];
+    var OF3_PAGE_TOTAL = 7;
 
     function of3norm(v) {
         return str(v)
@@ -816,7 +849,7 @@
 
     function of3TopHeader(ws, meta, pageNum) {
         var pet = resolvePetitionerDisplayFromParts(ws, meta);
-        var cc = resolveCriminalCaseNo(ws);
+        var cc = resolveCriminalCaseNo(ws, meta);
         var dock = str(meta.docketNumber || "");
         var formTxt = pageNum === 1 ? "PPA FORM 3" : "PPA FORM 3/p." + pageNum;
         return (
@@ -947,7 +980,7 @@
 
     function of3IdentifySection(id, ws, meta) {
         id.petitionersName = id.petitionersName || id.name;
-        var nm = splitPetitionerNameParts(id);
+        var layout = petitionerNameLayout(id, meta);
         function petLine(txt, gCol) {
             return (
                 '<div class="of3-pet-line ' + gCol +
@@ -964,13 +997,15 @@
             '<div class="of3-pet-block of3-mb">' +
             '<div class="of3-pet-grid">' +
             '<span class="of3-pet-lbl">PETITIONER:</span>' +
-            petLine(nm.last, "of3-pet-g2") +
-            petLine(nm.first, "of3-pet-g3") +
-            petLine(nm.middle, "of3-pet-g4") +
-            '<span class="of3-pet-corner" aria-hidden="true"></span>' +
-            petCap("(Last Name)", "of3-pet-g2") +
-            petCap("(First Name)", "of3-pet-g3") +
-            petCap("(Middle Name)", "of3-pet-g4") +
+            (layout.separate
+                ? petLine(layout.last, "of3-pet-g2") +
+                  petLine(layout.first, "of3-pet-g3") +
+                  petLine(layout.middle, "of3-pet-g4") +
+                  '<span class="of3-pet-corner" aria-hidden="true"></span>' +
+                  petCap("(Last Name)", "of3-pet-g2") +
+                  petCap("(First Name)", "of3-pet-g3") +
+                  petCap("(Middle Name)", "of3-pet-g4")
+                : petLine(layout.full, "of3-pet-full")) +
             "</div>" +
             "</div>" +
             of3LabeledFillTwo("True Name:", id.trueName, "Source of Info:", id.sourceOfInfo) +
@@ -1583,73 +1618,111 @@
         );
     }
 
-    function of3FillConditionPlaceholders(html, meta) {
-        var ini = str(meta.initialReportOfficeLine || "").trim();
-        var sup = str(meta.supervisingOfficerLine || "").trim();
-        var out = html;
-        if (ini) {
-            out = out.replace(
-                "Chief Probation and Parole Officer at _____________________________________________________________________",
-                "Chief Probation and Parole Officer at " + ini
-            );
-        }
-        if (sup) {
-            out = out.replace(
-                "Probation and Parole Officer _____________________________________",
-                "Probation and Parole Officer " + sup
-            );
-        }
-        return out;
+    var OF3_GRANTED_CONDITIONS = [
+        "Probationer shall report initially to the Chief Probation and Parole Officer at ______________________________ within seventy-two (72) hours from the receipt of the Order granting probation.",
+        "He/She shall, thereafter, report to his/her supervising Probation and Parole Officer ______________________________ unless otherwise modified by the Chief Probation and Parole Officer.",
+        "He/She shall reside at and shall not change his/her residence without prior approval of the Chief Probation and Parole Officer, or Court, as the case may be.",
+        "He/She shall secure a written permit to travel outside the jurisdiction of the Parole and Probation Office from the Chief Probation and Parole Officer, and from the Court if such travel exceeds thirty (30) days.",
+        "He/She shall not commit any crime or any other offense.",
+        "He/She shall render community service and will participate in tree-planting activities.",
+        "He/She shall allow the supervising Probation and Parole Officer or an authorized Volunteer Probation Aide to visit his/her home and place of work.",
+        "He/She shall meet his/her family responsibilities.",
+        "He/She shall undergo medical, psychological or psychiatric examination and treatment and enter and remain in a specified institution, when required for that purpose.",
+        "He/She shall devote himself/herself to a specific employment and shall not change said employment without prior notice to the supervising officer and/or pursue a prescribed secular study or vocational training.",
+        "He/She shall refrain from associating with persons of questionable character.",
+        "He/She shall cooperate with his/her rehabilitation and not unduly restrictive of his/her liberty incompatible with his/her freedom of conscience."
+    ];
+
+    function of3RecommendationData(ws) {
+        return nz(ws.psirRecommendation || ws.recommendation);
+    }
+
+    function of3RecommendationHeading() {
+        return '<div class="of3-rec-title">RECOMMENDATION</div>';
+    }
+
+    function of3RecommendationSignatures(meta) {
+        return (
+            '<div class="of3-rec-signatures">' +
+            '<div class="of3-rec-sign of3-rec-approved">' +
+            '<div class="of3-rec-sign-head">APPROVED BY:</div>' +
+            '<div class="of3-rec-sign-rule"></div>' +
+            '<div>Chief Probation and Parole Office</div>' +
+            '<div>Date: _____________</div>' +
+            "</div>" +
+            '<div class="of3-rec-sign of3-rec-submitted">' +
+            '<div class="of3-rec-sign-head">SUBMITTED BY:</div>' +
+            '<div class="of3-rec-sign-rule"></div>' +
+            '<div>' +
+            esc(meta.investigatingOfficer || "Probation and Parole Officer") +
+            "</div>" +
+            '<div>Date: _____________</div>' +
+            "</div>" +
+            "</div>"
+        );
     }
 
     function of3RecommendationGranted(ws, meta) {
+        var rec = of3RecommendationData(ws);
         var pet = resolvePetitionerDisplayFromParts(ws, meta);
-        var period = str(meta.probationPeriodRecommended || "").trim();
-        var periodTxt = period ? period : "_______________________";
-        var ol = "<ol class=\"of3-cond\">";
+        var periodParts = [];
+        if (str(rec.supYear)) periodParts.push(str(rec.supYear) + " year(s)");
+        if (str(rec.supMonth)) periodParts.push(str(rec.supMonth) + " month(s)");
+        if (str(rec.supDay)) periodParts.push(str(rec.supDay) + " day(s)");
+        var period = periodParts.join(", ");
+        var list = '<ol class="of3-rec-list">';
         for (var i = 0; i < OF3_GRANTED_CONDITIONS.length; i++) {
-            var li = esc(of3FillConditionPlaceholders(OF3_GRANTED_CONDITIONS[i], meta));
-            ol += "<li>" + li + "</li>";
+            list += "<li>" + esc(OF3_GRANTED_CONDITIONS[i]) + "</li>";
         }
-        ol += "</ol>";
+        list += "</ol>";
         return (
-            '<div class="of3-sec">RECOMMENDATION</div>' +
-            '<p class="of3-justify">' +
-            "WHEREFORE, in view of the foregoing, it is respectfully recommended to the Honorable Court that the petition for probation of " +
-            '<span class="of3-ul">' +
+            '<div class="of3-official-rec">' +
+            of3RecommendationHeading() +
+            '<p class="of3-rec-para of3-rec-indent">WHEREFORE, in view of the foregoing, it is respectfully recommended to the Honorable Court that the petition for probation of <span class="of3-rec-fill">' +
             esc(pet) +
-            "</span> be " +
-            "<strong>GRANTED</strong> for a period of " +
-            '<span class="of3-ul">' +
-            esc(periodTxt) +
-            "</span>, to be counted from Probationer’s initial report for supervision and subject to the following conditions:" +
-            "</p>" +
-            ol +
-            '<p class="of3-justify">' +
-            "In the event that Petitioner fails to observe the preceding conditions and/or has committed any material misrepresentation in his application for probation, his probation may be revoked by the Court or the conditions thereof modified." +
-            "</p>" +
-            '<div class="of3-sigblock">' +
-            '<div class="of3-sigline">' +
-            esc(meta.cityProvinceDate || "_____________________________, Philippines __________________") +
-            "</div>" +
-            '<div class="of3-siggrid">' +
-            "<div><div class=\"of3-sigh\">SUBMITTED BY:</div><div class=\"of3-sigrule\"></div>" +
-            '<div class="of3-sigt">' +
-            esc(meta.investigatingOfficer || meta.probationOfficerName || "") +
-            "</div>" +
-            '<div class="of3-sigt">Probation and Parole Officer</div>' +
-            '<div class="of3-sigt">Date: <span class="of3-ul">' +
-            esc(meta.investigatingDate || "") +
-            "</span></div></div>" +
-            "<div><div class=\"of3-sigh\">APPROVED BY:</div><div class=\"of3-sigrule\"></div>" +
-            '<div class="of3-sigt">' +
-            esc(meta.headFieldOfficeName || "") +
-            "</div>" +
-            '<div class="of3-sigt">Chief Probation and Parole Office</div>' +
-            '<div class="of3-sigt">Date: <span class="of3-ul">' +
-            esc(meta.headDate || "") +
-            "</span></div></div>" +
-            "</div>" +
+            '</span> be <strong>GRANTED</strong> for a period of <span class="of3-rec-fill">' +
+            esc(period) +
+            "</span>, to be counted from Probationer’s initial report for supervision and subject to the following conditions:</p>" +
+            list +
+            '<p class="of3-rec-para of3-rec-indent">In the event that Petitioner fails to observe the preceding conditions and/or has committed any material misrepresentation in his application for probation, his probation may be revoked by the Court or the conditions thereof modified.</p>' +
+            '<div class="of3-rec-place">_____________________, Philippines ____________________ 2011</div>' +
+            of3RecommendationSignatures(meta) +
+            '<div class="of3-confidential">CONFIDENTIAL</div>' +
+            '<div class="of3-document-page">15</div>' +
+            "</div>"
+        );
+    }
+
+    function of3RecommendationDenied(ws, meta) {
+        var pet = resolvePetitionerDisplayFromParts(ws, meta);
+        return (
+            '<div class="of3-official-rec of3-denied-rec">' +
+            of3RecommendationHeading() +
+            '<p class="of3-rec-para of3-rec-indent">WHEREFORE, in view of the foregoing, it is respectfully recommended to the Honorable Court that the petition for probation of <span class="of3-rec-fill">' +
+            esc(pet) +
+            '</span> be <strong>DENIED</strong> pursuant to Paragraph a and b, Sec. 8 of PD 968 as amended which states that the probation shall be denied if:</p>' +
+            '<div class="of3-law-block">“xxx&nbsp; (a) the offender is in need of correctional treatment that can be provided most effectively by his commitment to an institution; or<br/>' +
+            "xxx (b) there is an undue risk that during the period of probation the offender will commit another crime; or<br/>" +
+            'xxx (c) Probation will depreciate the seriousness of the offense committed.”</div>' +
+            '<div class="of3-andor">and/or</div>' +
+            '<p class="of3-rec-para of3-rec-indent">Section 9 of PD 968 as amended which states that the benefits of probation shall not be extended to those:</p>' +
+            '<ol class="of3-alpha-list">' +
+            "<li>Sentenced to serve a maximum term of imprisonment of more than six (6) years;</li>" +
+            "<li>Convicted of any crime against national security or the public order;</li>" +
+            "<li>Who have previously been convicted by final judgment of an offense punished by imprisonment of not less than one month and one day and/or a fine of not less than Two Hundred Pesos; and</li>" +
+            "<li>Who have been once on probation under the provisions of this Decree; and</li>" +
+            "<li>Who are already serving sentence at the time the substantive provisions of this Decree became applicable pursuant to Section 33 hereof.</li>" +
+            "</ol>" +
+            '<div class="of3-andor">and/or</div>' +
+            '<p class="of3-rec-para">subject to the provision of Sec. 4 of PD 968, as amended by RA 10707.</p>' +
+            '<p class="of3-rec-para of3-law-quote"><em>“SEC. 4. Grant of Probation.</em> Subject to the provisions of this Decree, the trial court may, after it shall have convicted and sentenced a defendant for probationable penalty and upon application by said defendant within the period for perfecting an appeal, suspend the execution of the sentence and place the defendant on probation for such period and upon such terms and conditions as it may deem best. No application for probation shall be entertained or granted if the defendant has perfected the appeal from the judgment of conviction: <em>Provided,</em> That when a judgment of conviction imposing a non-probationable penalty is appealed or reviewed, and such judgment is modified through the imposition of a probationable penalty, the defendant shall be allowed to apply for probation based on the modified decision before such decision becomes final. The application for probation based on the modified decision shall be filed in the trial court where the judgment of conviction imposing a non-probationable penalty was rendered, or in the trial court where such case has since been re-raffled. In a case involving several defendants where some have taken further appeal, the other defendants may apply for probation by submitting a written application and attaching thereto a certified true copy of the judgment of conviction.</p>' +
+            '<p class="of3-rec-para of3-law-quote">“The trial court shall, upon receipt of the application filed, suspend the execution of the sentence imposed in the judgment.</p>' +
+            '<p class="of3-rec-para of3-law-quote">“This notwithstanding, the accused shall lose the benefit of probation should he seek a review of the modified decision which already imposes a probationable penalty.</p>' +
+            '<p class="of3-rec-para of3-law-quote">“Probation may be granted whether the sentence imposes a term of imprisonment or a fine only. The filing of the application shall be deemed a waiver of the right to appeal.</p>' +
+            '<p class="of3-rec-para of3-law-quote">An order granting or denying probation shall not be appealable.”</p>' +
+            of3RecommendationSignatures(meta) +
+            '<div class="of3-confidential">CONFIDENTIAL</div>' +
+            '<div class="of3-document-page">16</div>' +
             "</div>"
         );
     }
@@ -1668,7 +1741,8 @@
             of3Page(ws, meta, 3, false, of3PresentSituation(ps, ws, meta)) +
             of3Page(ws, meta, 4, false, of3EduJobMedTraits(ws, meta)) +
             of3Page(ws, meta, 5, false, of3CommunityAnalysis(ws)) +
-            of3Page(ws, meta, 6, false, of3RecommendationGranted(ws, meta));
+            of3Page(ws, meta, 6, false, of3RecommendationGranted(ws, meta)) +
+            of3Page(ws, meta, 7, false, of3RecommendationDenied(ws, meta));
         return '<article class="sheet sheet-of3">' + out + "</article>";
     }
 
@@ -1686,12 +1760,13 @@
             letterheadBlock(meta) +
             '<div class="psir-banner"><span class="psir-banner-inner">POST-SENTENCE INVESTIGATION REPORT</span></div>';
 
-        parts += identifyingGrid(id);
+        parts += identifyingGrid(id, meta);
         parts += criminalBlock(po, ws);
         parts += socioBlock(ws);
         parts += analysisBlock(ws, "short");
 
         parts += recommendationBlock(ws, meta, true);
+        parts += recommendationBlock(ws, meta, false, true);
 
         parts += "</article>";
         return parts;
@@ -1714,6 +1789,7 @@
             ".sheet{max-width:190mm;margin:0 auto;padding:0}" +
             ".block{margin-bottom:6mm}" +
             ".page-break-after{page-break-after:always}" +
+            ".page-break-before{page-break-before:always;break-before:page}" +
             ".page-break-inside-avoid{page-break-inside:avoid}" +
             ".psir-cover-sheet{box-sizing:border-box;width:100%;min-height:246mm;display:flex;flex-direction:column;font-family:'Times New Roman',Times,serif;font-size:11pt;line-height:1.15;color:#000}" +
             ".cover-sheet-inner{max-width:190mm;margin:0 auto;padding:0}" +
@@ -1795,6 +1871,8 @@
             ".pet-name-label{font-weight:700;margin-bottom:2mm}" +
             ".court-rec-hint{font-weight:400;font-style:italic;font-size:9pt}" +
             ".pet-three-col{display:flex;gap:6mm;align-items:flex-end}" +
+            ".pet-name-single{width:100%}" +
+            ".pet-name-single .fill-line{display:block;width:100%;flex:none;min-height:1.25em}" +
             ".pet-cell{flex:1;min-width:0}" +
             ".pet-cell .fill-line{border-bottom:1pt solid #000;min-height:1.25em;padding:0 0 2px;box-sizing:border-box}" +
             ".pet-sub{font-size:8pt;font-style:italic;text-align:center;margin-top:2mm;line-height:1.2}" +
@@ -1814,7 +1892,7 @@
             ".ul.grow{width:96%}" +
             ".ul.wide{width:100%}" +
             ".ul.mid{width:62mm}" +
-            ".inline-ul{min-width:35mm;border-bottom:1pt solid #000;display:inline-block}" +
+            ".inline-ul{min-width:35mm;border-bottom:1pt solid #000;display:inline-block;text-align:center;padding:0 1mm;box-sizing:border-box}" +
             ".pri{width:100%;border-collapse:collapse;margin:2mm 0 4mm;font-size:9.5pt;border-top:2.25pt solid #000;border-bottom:2.25pt solid #000}" +
             ".pri th,.pri td{border-left:none;border-right:none;padding:2.5mm 3mm 2.5mm 0;vertical-align:top}" +
             ".pri thead th{font-weight:700;text-align:left;background:transparent;border-bottom:1pt solid #000;padding-bottom:2mm}" +
@@ -1830,21 +1908,27 @@
             ".rule-top{margin-top:6mm;padding-top:3mm;border-top:0.35pt solid #bbb}" +
             ".body-text{white-space:pre-wrap;text-align:justify;margin:3mm 0;line-height:1.45}" +
             ".ruled-line{border-bottom:0.75pt solid #ccc;min-height:4.5mm;margin:0 0 2mm}" +
-            ".rec-sub{text-align:center;margin-bottom:4mm;font-size:10pt;font-weight:600}" +
-            ".justify{text-align:justify;line-height:1.42;margin:4mm 0}" +
-            ".cond-list{margin:3mm 0 4mm;padding-left:6mm}" +
-            ".cond-list li{margin:1.5mm 0;text-align:justify;line-height:1.4}" +
-            ".sig-date{margin:8mm 0 5mm}" +
-            ".sig-two{display:flex;gap:12mm;margin-top:6mm;font-size:10pt}" +
+            ".rec-sub{text-align:center;margin:0 0 4mm;font-size:10.5pt;font-weight:700}" +
+            ".justify{text-align:justify;line-height:1.4;margin:3.5mm 0}" +
+            ".rec-close{margin-top:3mm}" +
+            ".cond-list{margin:2mm 0 3mm;padding:0}" +
+            ".cond-item{display:flex;align-items:flex-start;gap:2.5mm;margin:1.4mm 0;text-align:justify;line-height:1.4}" +
+            ".cond-num{flex:0 0 8mm;text-align:right}" +
+            ".cond-txt{flex:1;min-width:0}" +
+            ".sig-block{margin-top:6mm}" +
+            ".sig-date{margin:0 0 6mm}" +
+            ".sig-date .ul.wide{display:block;width:100%;box-sizing:border-box}" +
+            ".sig-two{display:flex;gap:16mm;margin-top:2mm;font-size:10.5pt}" +
             ".sig-col{flex:1;min-width:0}" +
-            ".sig-h{font-weight:700;margin-bottom:2mm}" +
-            ".sig-two .rule{border-bottom:1pt solid #000;min-height:14mm;margin:5mm 0 3mm}" +
-            ".sig-two .hint{font-size:9pt;margin-top:1mm;color:#222}" +
+            ".sig-h{font-weight:700;margin-bottom:1mm;text-align:left}" +
+            ".sig-two .rule{border-bottom:1pt solid #000;min-height:12mm;margin:4mm 8mm 2mm 0}" +
+            ".sig-two .hint{font-size:10.5pt;margin-top:0.5mm;color:#000;text-align:left;line-height:1.35}" +
             ".right{text-align:right}" +
             ".small-muted{font-size:9pt;font-style:italic;margin-top:1mm;color:#333}" +
             ".salutation{margin:6mm 0 3mm;font-weight:700}" +
             ".closing{margin-top:10mm}" +
             ".sheet-of3{font-size:10.8pt;line-height:1.28}" +
+            ".sheet-of3 .rec{font-size:11pt;line-height:1.35}" +
             ".of3-page{box-sizing:border-box;padding:0;position:relative}" +
             ".of3-hdr{margin-bottom:2mm;font-size:10pt;line-height:1.22}" +
             ".of3-hdr-t{width:100%;border-collapse:collapse;margin:0}" +
@@ -1869,6 +1953,7 @@
             ".of3-pet-line.of3-pet-g2{grid-column:2;grid-row:1;align-self:end}" +
             ".of3-pet-line.of3-pet-g3{grid-column:3;grid-row:1;align-self:end}" +
             ".of3-pet-line.of3-pet-g4{grid-column:4;grid-row:1;align-self:end}" +
+            ".of3-pet-line.of3-pet-full{grid-column:2 / span 3;grid-row:1;align-self:end}" +
             ".of3-pet-corner{grid-column:1;grid-row:2;margin:0;padding:0}" +
             ".of3-pet-cap.of3-pet-g2{grid-column:2;grid-row:2}" +
             ".of3-pet-cap.of3-pet-g3{grid-column:3;grid-row:2}" +
@@ -1922,6 +2007,28 @@
             ".of3-sigh{font-weight:700;margin-bottom:2mm;font-size:10pt;text-align:left}" +
             ".of3-sigrule{border-bottom:1pt solid #000;min-height:14mm;margin:4mm 0 3mm}" +
             ".of3-sigt{font-size:9pt;text-align:center;line-height:1.35}" +
+            ".of3-official-rec{position:relative;font-family:Arial,Helvetica,sans-serif;font-size:8.6pt;line-height:1.25;padding-bottom:12mm;box-sizing:border-box}" +
+            ".of3-rec-title{text-align:center;font-weight:400;margin:5mm 0 4mm}" +
+            ".of3-rec-para{margin:1.5mm 0;text-align:justify}" +
+            ".of3-rec-indent{text-indent:12mm}" +
+            ".of3-rec-fill{display:inline-block;min-width:25mm;border-bottom:.75pt solid #000;text-indent:0;text-align:center}" +
+            ".of3-rec-list{margin:1.5mm 0 2mm 12mm;padding-left:6mm}" +
+            ".of3-rec-list li{padding-left:2mm;margin:.8mm 0;text-align:justify}" +
+            ".of3-rec-place{text-align:center;margin:3mm 0 4mm}" +
+            ".of3-rec-signatures{display:flex;justify-content:space-between;align-items:flex-start;margin-top:4mm}" +
+            ".of3-rec-sign{width:43%;text-align:center}" +
+            ".of3-rec-sign-head{text-align:left;margin-bottom:4mm}" +
+            ".of3-rec-sign-rule{border-bottom:.75pt solid #000;margin:0 4mm 1mm;min-height:2mm}" +
+            ".of3-rec-approved{margin-top:12mm}" +
+            ".of3-confidential{position:absolute;left:0;right:0;bottom:3mm;text-align:center;font-weight:700}" +
+            ".of3-document-page{position:absolute;right:0;bottom:-10mm;font-weight:700}" +
+            ".of3-law-block{margin:1mm 0 1mm 12mm;text-align:justify}" +
+            ".of3-andor{margin:1mm 0 1mm 12mm}" +
+            ".of3-alpha-list{list-style-type:lower-alpha;margin:1mm 0 1mm 17mm;padding-left:5mm}" +
+            ".of3-alpha-list li{padding-left:2mm;margin:.5mm 0;text-align:justify}" +
+            ".of3-law-quote{font-size:8.1pt;line-height:1.2;margin:.8mm 0}" +
+            ".of3-denied-rec .of3-rec-signatures{margin-top:3mm}" +
+            ".of3-denied-rec .of3-rec-approved{margin-top:10mm}" +
             "@media print{.psir-cover-sheet{page-break-inside:avoid;min-height:246mm}.mast{page-break-inside:avoid}.soc-row-three{page-break-inside:avoid}.rec{page-break-inside:avoid}.pet-three-col{page-break-inside:avoid}.of3-page{page-break-inside:auto}.of3-grid{page-break-inside:auto}.of3-soc-row{page-break-inside:avoid}.of3-pet-block{page-break-inside:avoid}}";
 
         return (

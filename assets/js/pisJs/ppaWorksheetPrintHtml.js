@@ -215,7 +215,23 @@
     }
 
     /** Build printable HTML fragment (inside body). */
-    function buildBody(ws) {
+    function agencyHeaderHtml(office) {
+        office = office || {};
+        var html =
+            "<div>Republic of the Philippines</div>" +
+            "<div>Department of Justice</div>" +
+            "<div><strong>PAROLE AND PROBATION ADMINISTRATION</strong></div>";
+        if (str(office.region)) html += "<div>" + esc(office.region) + "</div>";
+        if (str(office.officeName)) html += '<div class="hdr-office">' + esc(office.officeName) + "</div>";
+        if (str(office.address)) html += "<div>" + esc(office.address) + "</div>";
+        return '<div class="hdr-center">' + html + "</div>";
+    }
+
+    function blankSpan(extraClass) {
+        return '<span class="blank' + (extraClass ? " " + extraClass : "") + '"></span>';
+    }
+
+    function buildBody(ws, office) {
         var idData = nz(ws.identifyingData);
         var po = nz(ws.presentOffense);
         var prior = nz(ws.priorRecords);
@@ -471,11 +487,7 @@
             '<div class="meta-id">PPA-FO-FR-001</div>' +
             '<div class="clr"></div>' +
             '<div class="hdr-main">PPA FORM 1</div>' +
-            '<div class="hdr-center">' +
-            "<div>Republic of the Philippines</div>" +
-            "<div>Department of Justice</div>" +
-            "<div><strong>PAROLE AND PROBATION ADMINISTRATION</strong></div>" +
-            "</div>" +
+            agencyHeaderHtml(office) +
             twoColRow(
                 fieldLine("Date of Initial Interview:", str(idData.interview)) +
                     fieldLine("Interviewed by:", str(idData.interviewedBy)),
@@ -1081,56 +1093,63 @@
             "</span></div>" +
             fieldLine("Specify:", cb.peerRelationshipSpecify);
 
-        var petitionerPrintedName = esc(str(idData.name));
-        var waiverBody =
-            "I, " +
-            petitionerPrintedName +
-            ", recognizing that the foregoing Work Sheet forms part of the investigation/supervision " +
-            "record of my case handled by the Parole and Probation Administration (PPA), DOJ, voluntarily " +
-            "consent that PPA investigators or supervision officers may obtain, verify, and share such " +
-            "information as may be needed from collateral sources toward a fair disposition of my case. " +
-            "I waive any objections I may otherwise have relating to confidentiality of matters contained " +
-            "herein exclusively for legitimate PPA investigative or supervisory ends. I expressly release " +
-            "any person whom the PPA may contact from any obligation of secrecy with respect solely to such " +
-            "legitimate inquiry. Nothing herein diminishes protections against unrelated or unlawful disclosures " +
-            "under applicable law.";
-        var certBody =
-            "I hereby certify that the foregoing answers and statements appearing in this Work Sheet are " +
-            "true and correct according to my best knowledge and belief. Any false statements or omissions " +
-            "may adversely affect consideration of my case and may incur legal consequences.";
-        var signLine =
-            '<div class="sign-grid">' +
-            '<div><div class="sign-label">PETITIONER</div>' +
-            '<div class="sign-rule"></div>' +
-            '<div class="sign-hint">Signature over Printed Name / Date</div></div>' +
-            '<div><div class="sign-label">INVESTIGATION / FIELD OFFICE</div>' +
-            '<div class="sign-rule"></div>' +
-            '<div class="sign-hint">Signature of Officer Concerned / Date</div></div>' +
-            "</div>";
+        function waiverItem(n, text) {
+            return (
+                '<div class="waiver-item"><span class="item-blank"></span><div class="waiver-text">' +
+                n + ". " + text +
+                "</div></div>"
+            );
+        }
 
         h +=
-            '<div class="legal-footer page-break-before">' +
-            '<div class="section-num">WAIVER</div>' +
-            '<p class="legal-para justified">' +
-            waiverBody +
-            "</p>" +
-            '<div class="section-num" style="margin-top:5mm;">CERTIFICATION</div>' +
-            '<p class="legal-para justified">' +
-            certBody +
-            "</p>" +
-            signLine +
-            "</div>";
+            '<div class="legal-footer print-page cert-page">' +
+            '<div class="cert-folio">PPA FORM 1/p.8</div>' +
+            '<div class="cert-title">CERTIFICATION</div>' +
+            '<div class="cert-body">' +
+            '<p class="cert-line">I, ' + blankSpan("cert-name") + ", hereby declare that the</p>" +
+            '<p class="cert-line">information and facts given by me are true and correct and I am</p>' +
+            '<p class="cert-line">aware of the intent and consequence thereof.</p>' +
+            '<p class="cert-line cert-gap">Signed on the ' + blankSpan("day") + " day of " + blankSpan("month") + ", 20" + blankSpan("short") + "</p>" +
+            '<p class="cert-line">at ' + blankSpan("place") + ", Philippines.</p>" +
+            "</div>" +
+            '<div class="sign-page-center"><div class="sign-rule"></div><div>Petitioner</div></div>' +
+            '<div class="attest-block">' +
+            "<div>ATTESTED:</div>" +
+            '<div class="sign-indent"><div class="sign-rule"></div><div>Investigating Officer (IO)</div></div>' +
+            '<div class="sign-indent"><div class="sign-rule"></div><div>Date</div></div>' +
+            "</div></div>" +
+            '<div class="form2 print-page waiver-page">' +
+            '<div class="waiver-top"><div class="waiver-form-label">PPA FORM 2</div><div class="waiver-code">PPA-FO-FR-002</div></div>' +
+            agencyHeaderHtml(office) +
+            '<div class="waiver-title">WAIVER</div>' +
+            '<div class="waiver-body">' +
+            '<p class="intro-line">I, the undersigned, hereby authorize ' + blankSpan("auth") + " of</p>" +
+            '<p class="intro-line">' + blankSpan("auth2") + " to secure and make use of the following</p>" +
+            '<p class="intro-line intro-last">information and/or reports for purpose of evaluating my application for probation.</p>' +
+            waiverItem("1", "Record of previous arrest, arresting agency, date and place of arrest disposition.") +
+            waiverItem("2", "Record of previous probation/parole/pardon.") +
+            waiverItem("3", "School records.") +
+            waiverItem("4", "Medical records, including dates of all records of any physician, clinic or hospital where I have sought consultation or received treatment.") +
+            waiverItem("5", "Military records, including dates of all periods of active military services; records of disciplinary actions if any, other significant military history, awards, citations, date and type of discharge from active military service.") +
+            '<div class="waiver-item"><span class="item-blank"></span><div class="waiver-text">6. Others (Specify) ' + blankSpan("specify") + "</div></div>" +
+            '<div class="sign-right"><div class="sign-rule"></div><div>Signature</div></div>' +
+            '<div class="witness-label">WITNESSES:</div>' +
+            '<div class="witness-row"><div class="sign-slot"><div class="sign-rule"></div></div><div class="sign-slot"><div class="sign-rule"></div></div></div>' +
+            '<p class="jurat">SUBSCRIBED AND SWORN TO before me this ' + blankSpan("jurat") + " day of<br>" +
+            blankSpan("jurat") + ", 20" + blankSpan("short") + " at " + blankSpan("jurat") + ", Philippines.</p>" +
+            '<div class="sign-right"><div class="sign-rule"></div><div>CPPO</div></div>' +
+            "</div></div>";
 
         return h + "</div>";
     }
 
     /** Full standalone document for iframe / print dialog. */
-    function buildHtmlDocument(ws) {
-        var body = buildBody(ws);
+    function buildHtmlDocument(ws, office) {
+        var body = buildBody(ws, office);
         return (
             "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"/><title>PPA Worksheet</title><style>" +
             "@page { size: A4; margin: 12mm 11mm }" +
-            "html,body{margin:0;padding:0;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.35}"
+            "html,body{margin:0;padding:0;background:#fff;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.35}"
             +
             ".sheet{max-width:190mm;margin:0 auto;padding:0}"
             +
@@ -1141,6 +1160,8 @@
             ".hdr-main{text-align:left;font-weight:700;margin:3mm 0 2mm;width:72%;margin-left:auto;margin-right:auto;text-align:center}"
             +
             ".hdr-center{text-align:center;line-height:1.45;margin-bottom:5mm;font-size:10pt}"
+            +
+            ".hdr-office{font-weight:700}"
             +
             ".section-title{text-align:center;font-weight:700;margin:4mm 0 3mm;text-decoration:none}"
             +
@@ -1230,7 +1251,42 @@
             +
             ".muted-wrap{line-height:1.6!important}"
             +
-            ".legal-footer{font-size:9.5pt;line-height:1.45;margin-top:2mm}" +
+            ".cert-page,.waiver-page{color:#000;font-size:11pt;line-height:1.45}" +
+            ".cert-folio,.waiver-form-label,.waiver-code{font-weight:700;font-size:11pt}" +
+            ".cert-folio{margin:2mm 0 12mm}" +
+            ".cert-title,.waiver-title{text-align:center;font-weight:700;text-decoration:underline;text-underline-offset:2px;margin:6mm 0 8mm}" +
+            ".cert-body{text-align:center;max-width:168mm;margin:0 auto;line-height:1.85}" +
+            ".cert-line{margin:0;white-space:nowrap}" +
+            ".cert-gap{margin-top:7mm}" +
+            ".cert-page .blank,.waiver-page .blank{border-bottom-color:currentColor}" +
+            ".blank.cert-name{width:72mm;min-width:72mm}" +
+            ".blank.day{width:34mm;min-width:34mm}" +
+            ".blank.month{width:42mm;min-width:42mm}" +
+            ".blank.place{width:48mm;min-width:48mm}" +
+            ".blank.short{width:16mm;min-width:16mm}" +
+            ".sign-page-center{width:68mm;margin:16mm auto 0;text-align:center}" +
+            ".attest-block{margin-top:18mm}" +
+            ".sign-indent{width:62mm;margin:10mm 0 0 22mm;text-align:center}" +
+            ".cert-page .sign-rule,.waiver-page .sign-rule{border-bottom:0.7pt solid currentColor;min-height:8mm;margin-bottom:1mm}" +
+            ".waiver-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2mm}" +
+            ".waiver-page .hdr-center{line-height:1.35;margin:2mm 0 1mm;font-size:11pt}" +
+            ".waiver-page .hdr-office{font-weight:400}" +
+            ".waiver-body{margin:0 2mm 0 4mm}" +
+            ".intro-line{margin:0;white-space:nowrap;line-height:1.65}" +
+            ".intro-last{margin-bottom:5mm}" +
+            ".blank.auth{width:64mm;min-width:64mm}" +
+            ".blank.auth2{width:42mm;min-width:42mm}" +
+            ".blank.specify{min-width:72mm}" +
+            ".blank.jurat{min-width:36mm}" +
+            ".waiver-item{display:flex;align-items:flex-start;gap:3mm;margin:4.2mm 0}" +
+            ".item-blank{flex:0 0 34mm;border-bottom:0.7pt solid currentColor;min-height:1.15em;margin-top:0.15em}" +
+            ".waiver-text{flex:1;line-height:1.4}" +
+            ".sign-right{width:62mm;margin:7mm 6mm 0 auto;text-align:center}" +
+            ".witness-label{margin:8mm 0 3mm}" +
+            ".witness-row{display:flex;gap:14mm;margin:1mm 6mm 6mm 8mm}" +
+            ".witness-row .sign-slot{width:48mm}" +
+            ".jurat{text-align:center;margin:8mm auto 0;line-height:1.7;max-width:175mm}" +
+            ".legal-footer{font-size:11pt;line-height:1.45;margin-top:0}" +
             ".legal-para{margin:2mm 0;text-align:justify}" +
             ".justified{text-align:justify;text-justify:inter-word}" +
             ".sign-grid{display:flex;justify-content:space-between;gap:8mm;margin-top:8mm;flex-wrap:wrap}" +
@@ -1238,6 +1294,18 @@
             ".sign-label{font-weight:700;margin-bottom:2mm;font-size:9.5pt}" +
             ".sign-rule{border-bottom:0.35pt solid #000;min-height:10mm;margin-bottom:2mm}" +
             ".sign-hint{font-size:8.5pt;font-style:italic;color:#222}" +
+            ".blank{display:inline-block;border-bottom:0.35pt solid #000;min-width:42mm;min-height:1.05em;vertical-align:bottom}" +
+            ".blank.wide{min-width:62mm}" +
+            ".blank.med{min-width:38mm}" +
+            ".blank.short{min-width:14mm}" +
+            ".filled-name{border-bottom:0.35pt solid #000;padding:0 2mm;font-weight:600}" +
+            ".sign-center{width:72mm;margin:8mm auto 2mm;text-align:center}" +
+            ".sign-left{width:72mm;margin:6mm 0 2mm}" +
+            ".attest{margin-top:6mm}" +
+            ".waiver-item{margin:2.8mm 0;line-height:1.45}" +
+            ".witness-rule{min-width:120mm;max-width:100%}" +
+            ".print-page{break-before:page;page-break-before:always;break-after:auto}" +
+            "@media screen{.print-page{min-height:270mm;box-sizing:border-box;padding-top:6mm}}" +
             ".worksheet-confidential-footer{text-align:center;font-weight:700;font-style:italic;font-size:13pt;margin-top:10mm;padding-top:4mm;line-height:1.2;letter-spacing:.06em}" +
             "@media print{" +
             ".sheet{padding-bottom:16mm}" +
