@@ -55,7 +55,17 @@
                                 'can_view_docket_probation_courtesy_investigation',
                                 'can_edit_docket_probation_courtesy_investigation',
                                 'can_attachments_docket_probation_courtesy_investigation',
-                                'can_delete_docket_probation_courtesy_investigation'
+                                'can_delete_docket_probation_courtesy_investigation',
+                                {
+                                    detail: 'can_access_docket_probation_carry_over_courtesy_investigation',
+                                    label: 'Carry Over',
+                                    children: [
+                                        'can_view_docket_probation_carry_over_courtesy_investigation',
+                                        'can_edit_docket_probation_carry_over_courtesy_investigation',
+                                        'can_attachments_docket_probation_carry_over_courtesy_investigation',
+                                        'can_delete_docket_probation_carry_over_courtesy_investigation'
+                                    ]
+                                }
                             ]
                         },
                         {

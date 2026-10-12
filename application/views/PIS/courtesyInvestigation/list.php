@@ -83,6 +83,30 @@
         flex: 0 0 auto;
     }
 }
+.pis-inv-module-tabs {
+    margin-bottom: 0;
+    border-bottom: 0;
+    flex-wrap: wrap;
+}
+.pis-inv-module-tabs .nav-link {
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    color: #6c757d;
+    padding: 0.45rem 1rem;
+    transition: border-bottom 0.2s ease, color 0.2s ease;
+}
+.pis-inv-module-tabs .nav-link:hover,
+.pis-inv-module-tabs .nav-link:focus {
+    border-bottom-color: #0069d9;
+    color: #0069d9;
+}
+.pis-inv-module-tabs .nav-link.active {
+    background: transparent;
+    border-bottom: 3px solid #0069d9;
+    color: #0069d9;
+    font-weight: 600;
+}
 </style>
 <body>
     <!-- Left Panel -->
@@ -143,7 +167,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header" id="pager">
-                                <strong class="card-title">Courtesy Investigation Docket List</strong>
+                                <?php $this->load->view('PIS/courtesyInvestigation/courtesy_investigation_module_tabs', array('pis_cinv_tab' => 'courtesy_investigation')); ?>
                                 <!-- <a href="investigation_docket_create"> <button class="btn btn-sm btn-success float-right " data-permission="can_create_docket_probation_courtesy_investigation" style="display:none;" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                                 <!-- <a href="probation-courtesy-investigation-create"> <button class="btn btn-sm btn-success float-right " data-permission="can_create_docket_probation_courtesy_supervision" type="submit"><i class="fa fa-plus-circle"></i> Add Docket</button> </a> -->
                             </div>

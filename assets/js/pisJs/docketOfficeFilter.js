@@ -199,7 +199,7 @@
         });
     }
 
-    function factSheetPath(clientId, fieldOfficeId, clientType) {
+    function factSheetPath(clientId, fieldOfficeId, clientType, docketType) {
         var cid = clientId != null ? String(clientId).trim() : '';
         if (!cid) {
             return '';
@@ -221,12 +221,16 @@
                 encodeURIComponent(oi)
             );
         }
-        return (
+        var path =
             'pis/client_view_factsheet?client_id=' +
             encodeURIComponent(cid) +
             '&field_office_id=' +
-            encodeURIComponent(oi)
-        );
+            encodeURIComponent(oi);
+        var dt = docketType != null ? String(docketType).trim() : '';
+        if (dt) {
+            path += '&docket_type=' + encodeURIComponent(dt);
+        }
+        return path;
     }
 
     function factSheetPermission(clientType) {
@@ -247,6 +251,7 @@
         var cid = escapeAttr(row.clientId);
         var oi = escapeAttr(row.fieldOfficeId);
         var type = row.clientType == null ? '' : String(row.clientType);
+        var docketType = row.type == null ? '' : String(row.type);
         var perm = factSheetPermission(type);
         return (
             '<button type="button" class="btn btn-sm btn-info btn_factsheet" data-permission="' +
@@ -257,6 +262,8 @@
             oi +
             '" data-ctype="' +
             escapeAttr(type) +
+            '" data-docket-type="' +
+            escapeAttr(docketType) +
             '" title="Fact Sheet" aria-label="Open fact sheet"><i class="fa fa-file-text-o" aria-hidden="true"></i> Fact Sheet</button>'
         );
     }
@@ -280,7 +287,7 @@
         .off('click.pisFactSheet', '.btn_factsheet')
         .on('click.pisFactSheet', '.btn_factsheet', function () {
             var $btn = $(this);
-            var path = factSheetPath($btn.data('cid'), $btn.data('oi'), $btn.data('ctype'));
+            var path = factSheetPath($btn.data('cid'), $btn.data('oi'), $btn.data('ctype'), $btn.attr('data-docket-type'));
             if (!path) {
                 return;
             }

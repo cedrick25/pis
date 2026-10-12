@@ -7,6 +7,8 @@ $fs_is_restricted_role = ($fs_role_id === '')
     || (!in_array($fs_role_id, $fs_full_access_roles, true)
         && !in_array($fs_role_id, $fs_owner_scoped_roles, true));
 $fs_can_upload_inv_sup = ($fs_role_id !== '');
+$fs_docket_type = isset($_GET['docket_type']) ? strtoupper(trim((string) $_GET['docket_type'])) : '';
+$fs_hide_docket_list_tab = in_array($fs_docket_type, array('PIS_SUP', 'PIS_CSUP'), true);
 ?>
 <style>    
     *,
@@ -1268,7 +1270,7 @@ $fs_can_upload_inv_sup = ($fs_role_id !== '');
                                         <li class="nav-item" style="display: none;">
                                             <a class="nav-link" href="#" data-toggle="tab" id="taskListTab">Task List</a>
                                         </li>
-                                        <li class="nav-item">
+                                        <li class="nav-item" id="docketListTabItem"<?php if ($fs_hide_docket_list_tab): ?> style="display:none;" aria-hidden="true"<?php endif; ?>>
                                             <a class="nav-link" href="#" data-toggle="tab" id="docketListTab">Docket List</a>
                                         </li>
                                     </ul>
@@ -1379,7 +1381,7 @@ $fs_can_upload_inv_sup = ($fs_role_id !== '');
     <script src="assets/js/pisJs/ppaWorksheetDownload.js"></script>
     <script src="assets/js/pisJs/ppaPsirPrintHtml.js"></script>
     <script src="assets/js/pisJs/ppaPsirDownload.js"></script>
-    <script src="assets/js/pisJs/clientViewFactSheet.js"></script>
+    <script src="assets/js/pisJs/clientViewFactSheet.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/clientViewFactSheet.js'); ?>"></script>
 
 
 </body>

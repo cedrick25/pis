@@ -1,5 +1,31 @@
     ( function ( $ ) {
 
+        function hasGrantedPermission(detail) {
+            var raw = localStorage.getItem('permission');
+            if (!raw) {
+                return false;
+            }
+            try {
+                var data = JSON.parse(raw);
+                if (!Array.isArray(data)) {
+                    return false;
+                }
+                return data.some(function (row) {
+                    return row && row.detail === detail && !!row.value;
+                });
+            } catch (e) {
+                return false;
+            }
+        }
+
+        if (!hasGrantedPermission('can_access_docket_probation_courtesy_investigation')
+            && hasGrantedPermission('can_access_docket_probation_carry_over_courtesy_investigation')) {
+            window.location.replace(typeof window.pisUrl === 'function'
+                ? window.pisUrl('probation-carry-over-courtesy-investigation-list')
+                : 'probation-carry-over-courtesy-investigation-list');
+            return;
+        }
+
         var api = localStorage.getItem('api');
         var ___ctx = api;
         var COURTESY_INV_CLIENT_TYPE = 'PROBATIONER';

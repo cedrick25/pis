@@ -319,12 +319,25 @@
         var COURTESY_INVESTIGATION_DOCKET_TYPE = 'PIS_CSINV';
         var CARRY_OVER_INVESTIGATION_DOCKET_TYPE = 'PIS_INV_CARRY_OVER';
         var CARRY_OVER_INVESTIGATION_FILE_TYPE = 'carry_over_investigation';
+        var CARRY_OVER_COURTESY_INVESTIGATION_DOCKET_TYPE = 'PIS_CSINV_CARRY_OVER';
+        var CARRY_OVER_COURTESY_INVESTIGATION_FILE_TYPE = 'carry_over_courtesy_investigation';
         var SUPERVISION_DOCKET_TYPE = 'PIS_SUP';
+        var COURTESY_SUPERVISION_DOCKET_TYPE = 'PIS_CSUP';
+
+        function isSupervisionOrCourtesySupervisionDocketType(docketType) {
+            var type = String(docketType || '').trim();
+            return type === SUPERVISION_DOCKET_TYPE || type === COURTESY_SUPERVISION_DOCKET_TYPE;
+        }
+
+        function hideDocketListTab() {
+            $('#docketListTabItem, #docketListTab').closest('li').hide().attr('aria-hidden', 'true');
+        }
 
         function isInvestigationFamilyDocketType(docketType) {
             return docketType === INVESTIGATION_DOCKET_TYPE
                 || docketType === COURTESY_INVESTIGATION_DOCKET_TYPE
-                || docketType === CARRY_OVER_INVESTIGATION_DOCKET_TYPE;
+                || docketType === CARRY_OVER_INVESTIGATION_DOCKET_TYPE
+                || docketType === CARRY_OVER_COURTESY_INVESTIGATION_DOCKET_TYPE;
         }
 
         function getDocketNumberDetails () {
@@ -422,7 +435,9 @@
                     var officer = docket.investigatingOfficer || docket.supervisingOfficer || "N/A";
                     var status = docket.status || "N/A";
                     var typeLabelHtml = '';
-                    if (docket.type === CARRY_OVER_INVESTIGATION_DOCKET_TYPE) {
+                    if (docket.type === CARRY_OVER_COURTESY_INVESTIGATION_DOCKET_TYPE) {
+                        typeLabelHtml = ' <span class="text-muted small">(Courtesy Carry Over)</span>';
+                    } else if (docket.type === CARRY_OVER_INVESTIGATION_DOCKET_TYPE) {
                         typeLabelHtml = ' <span class="text-muted small">(Carry Over)</span>';
                     } else if (docket.type === COURTESY_INVESTIGATION_DOCKET_TYPE) {
                         typeLabelHtml = ' <span class="text-muted small">(Courtesy)</span>';
@@ -1046,9 +1061,10 @@
             $.when(
                 fetchDocketsByClientId(clientId, INVESTIGATION_DOCKET_TYPE),
                 fetchDocketsByClientId(clientId, COURTESY_INVESTIGATION_DOCKET_TYPE),
-                fetchDocketsByClientId(clientId, CARRY_OVER_INVESTIGATION_DOCKET_TYPE)
-            ).done(function (inv, csinv, carryOver) {
-                var merged = (inv || []).concat(csinv || []).concat(carryOver || []);
+                fetchDocketsByClientId(clientId, CARRY_OVER_INVESTIGATION_DOCKET_TYPE),
+                fetchDocketsByClientId(clientId, CARRY_OVER_COURTESY_INVESTIGATION_DOCKET_TYPE)
+            ).done(function (inv, csinv, carryOver, courtesyCarryOver) {
+                var merged = (inv || []).concat(csinv || []).concat(carryOver || []).concat(courtesyCarryOver || []);
                 merged.sort(function (a, b) {
                     var da = a && a.receivedDateByPPO ? String(a.receivedDateByPPO) : '';
                     var db = b && b.receivedDateByPPO ? String(b.receivedDateByPPO) : '';
@@ -1061,6 +1077,34 @@
             return d.promise();
         }
 
+        function syncDocketListTabVisibility() {
+            var urlType = GetURLParameter('docket_type') || '';
+            if (isSupervisionOrCourtesySupervisionDocketType(urlType)) {
+                hideDocketListTab();
+                return;
+            }
+            if (!client_id) {
+                return;
+            }
+            $.when(
+                fetchDocketsByClientId(client_id, SUPERVISION_DOCKET_TYPE),
+                fetchDocketsByClientId(client_id, COURTESY_SUPERVISION_DOCKET_TYPE)
+            ).done(function (supervisionDockets, courtesySupervisionDockets) {
+                var hasSupervisionFamily = (supervisionDockets || []).length > 0
+                    || (courtesySupervisionDockets || []).length > 0;
+                if (!hasSupervisionFamily) {
+                    return;
+                }
+                fetchInvestigationDockets(client_id).done(function (investigationDockets) {
+                    if (!(investigationDockets || []).length) {
+                        hideDocketListTab();
+                    }
+                });
+            });
+        }
+
+        syncDocketListTabVisibility();
+
         function fillDocketUploadSelect($select, dockets, emptyLabel) {
             $select.empty();
             var placeholder = dockets.length > 0 ? '— Select docket number —' : emptyLabel;
@@ -1069,10 +1113,11 @@
                 var num = (d.docketNumber != null ? String(d.docketNumber) : '').trim();
                 if (!num) return;
                 var parts = [num];
-                if (d.type === COURTESY_INVESTIGATION_DOCKET_TYPE) {
+                if (d.type === CARRY_OVER_COURTESY_INVESTIGATION_DOCKET_TYPE) {
+                    parts.push('Courtesy Carry Over');
+                } else if (d.type === COURTESY_INVESTIGATION_DOCKET_TYPE) {
                     parts.push('Courtesy');
-                }
-                if (d.type === CARRY_OVER_INVESTIGATION_DOCKET_TYPE) {
+                } else if (d.type === CARRY_OVER_INVESTIGATION_DOCKET_TYPE) {
                     parts.push('Carry Over');
                 }
                 if (d.status) parts.push(d.status);
@@ -1137,9 +1182,12 @@
             form.append("file", fileToUpload, fileToUpload.name);
             var remarksVal = $(".investigatingOfficer").val() || '';
             var selectedDocketType = $dockSel.find('option:selected').attr('data-docket-type') || '';
-            var uploadFileType = selectedDocketType === CARRY_OVER_INVESTIGATION_DOCKET_TYPE
-                ? CARRY_OVER_INVESTIGATION_FILE_TYPE
-                : 'Investigation';
+            var uploadFileType = 'Investigation';
+            if (selectedDocketType === CARRY_OVER_INVESTIGATION_DOCKET_TYPE) {
+                uploadFileType = CARRY_OVER_INVESTIGATION_FILE_TYPE;
+            } else if (selectedDocketType === CARRY_OVER_COURTESY_INVESTIGATION_DOCKET_TYPE) {
+                uploadFileType = CARRY_OVER_COURTESY_INVESTIGATION_FILE_TYPE;
+            }
             var settings = {
                 "url": api + "8080/file/upload?uuid=" + encodeURIComponent(docketNum) + "&type=" + encodeURIComponent(uploadFileType) + "&createdby=" + encodeURIComponent(userName) + "&version=0&kind=" + encodeURIComponent(fileToUpload.name) + "&officeId=" + encodeURIComponent(client_fo) + "&remarks=" + encodeURIComponent(remarksVal),
                 "method": "POST",
@@ -1304,6 +1352,12 @@
                 if (carryOverDockets.length) {
                     tasks.push(fetchFilesForDockets(carryOverDockets, CARRY_OVER_INVESTIGATION_FILE_TYPE, officeId));
                 }
+                var courtesyCarryOverDockets = (dockets || []).filter(function (docket) {
+                    return docket && docket.type === CARRY_OVER_COURTESY_INVESTIGATION_DOCKET_TYPE;
+                });
+                if (courtesyCarryOverDockets.length) {
+                    tasks.push(fetchFilesForDockets(courtesyCarryOverDockets, CARRY_OVER_COURTESY_INVESTIGATION_FILE_TYPE, officeId));
+                }
             }
 
             var d = $.Deferred();
@@ -1432,14 +1486,18 @@
                     "defaultContent": "N/A"
                 },
                 {
-                    "data": "createdDate",
-                    "defaultContent": "N/A"
+                    "data": "dateReceived",
+                    "defaultContent": "N/A",
+                    "render": function (data, type, row) {
+                        return data || (row && row.createdDate) || "N/A";
+                    }
                 },
                 {
                     "data": 'createdBy',
                 },
                 {
                     "data": 'remarks',
+                    "defaultContent": "N/A"
                 },
                 {
                     "data": null,
@@ -1545,6 +1603,24 @@
             }
         }
 
+        function detectNotesDocumentKind(file) {
+            if (!file) {
+                return '';
+            }
+            var mime = (file.type || '').toLowerCase();
+            if (mime.indexOf('image/') === 0) {
+                return 'image';
+            }
+            var name = (file.name || '').toLowerCase();
+            var imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg', '.tif', '.tiff', '.ico', '.heic', '.heif', '.jfif'];
+            for (var i = 0; i < imageExtensions.length; i++) {
+                if (name.slice(-imageExtensions[i].length) === imageExtensions[i]) {
+                    return 'image';
+                }
+            }
+            return 'others';
+        }
+
         function loadOtherUploadedDocuments(type, uuid, officeId) {
             var n = ++fsTabLoaderNonce;
             fsShowTabLoader();
@@ -1553,7 +1629,7 @@
                 .done(function (result) {
                     var files = [];
                     if (result && result.status !== "ERROR" && result.files && result.files.length) {
-                        files = pickLatestFilesPerKind(result.files);
+                        files = result.files;
                     }
                     renderOtherDocumentsTable(files);
                 })
@@ -2003,10 +2079,19 @@
                         }, 2000);
                     }
                     else {
+                        var remarksVal = $(".remarksOther").val() || '';
+                        var kindVal = detectNotesDocumentKind(fileToUpload);
+                        var dateReceivedVal = $("#addOtherDocumentModal .dateReceived").val() || '';
                         var form = new FormData();
                         form.append("file", fileToUpload, fileToUpload.name);
+                        form.append("remarks", remarksVal);
+                        form.append("kind", kindVal);
+                        var uploadUrl = api+"8080/file/upload?uuid="+encodeURIComponent(client_id)+"&type=notesAndOtherDocuments&createdby="+encodeURIComponent(userName)+"&version=0&officeId="+encodeURIComponent(client_fo);
+                        if (dateReceivedVal) {
+                            uploadUrl += "&dateReceived=" + encodeURIComponent(dateReceivedVal);
+                        }
                         var settings = {
-                            "url": api+"8080/file/upload?uuid="+client_id+"&type=notesAndOtherDocuments&createdby="+userName+"&version=0&kind="+fileToUpload.name+"&officeId="+client_fo+"&remarks="+$(".remarksOther").val(),
+                            "url": uploadUrl,
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,

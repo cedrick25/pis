@@ -15,7 +15,7 @@ if ($pis_nav !== '') {
         $pis_submenu_li = 'can_access_docket_pre_parole_courtesy_supervision';
     } elseif (strpos($pis_nav, 'parole-pardon-supervision') === 0 || strpos($pis_nav, 'parolee_supervision') === 0) {
         $pis_submenu_li = 'can_access_docket_pre_parole_supervision';
-    } elseif (strpos($pis_nav, 'probation-courtesy-investigation') === 0) {
+    } elseif (strpos($pis_nav, 'probation-carry-over-courtesy-investigation') === 0 || strpos($pis_nav, 'probation-courtesy-investigation') === 0) {
         $pis_submenu_li = 'can_access_docket_probation_courtesy_investigation';
     } elseif (strpos($pis_nav, 'probation-courtesy-supervision') === 0) {
         $pis_submenu_li = 'can_access_docket_probation_courtesy_supervision';
@@ -191,7 +191,7 @@ $pis_open_org_dropdown = in_array(
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="<?php echo $pis_open_probation_dropdown ? 'true' : 'false'; ?>"> <i class="menu-icon fa fa-building-o"></i>Probation</a>
                     <ul class="sub-menu children dropdown-menu<?php echo $pis_open_probation_dropdown ? ' show' : ''; ?>">
                         <li data-permission-any="can_access_docket_probation_investigation,can_access_docket_probation_carry_over_investigation"<?php echo $pis_submenu_li === 'can_access_docket_probation_investigation' ? ' class="active"' : ''; ?> style="display:none;"><i class="menu-icon fa fa-user"></i><a href="investigation_docketing">Investigation</a></li>
-                        <li data-permission="can_access_docket_probation_courtesy_investigation"<?php echo $pis_submenu_li === 'can_access_docket_probation_courtesy_investigation' ? ' class="active"' : ''; ?> style="display:none;"><i class="menu-icon fa fa-user"></i><a href="probation-courtesy-investigation-list">Courtesy Investigation</a></li>
+                        <li data-permission-any="can_access_docket_probation_courtesy_investigation,can_access_docket_probation_carry_over_courtesy_investigation"<?php echo $pis_submenu_li === 'can_access_docket_probation_courtesy_investigation' ? ' class="active"' : ''; ?> style="display:none;"><i class="menu-icon fa fa-user"></i><a href="probation-courtesy-investigation-list">Courtesy Investigation</a></li>
                         <li data-permission="can_access_docket_probation_supervision"<?php echo $pis_submenu_li === 'can_access_docket_probation_supervision' ? ' class="active"' : ''; ?> style="display:none;"><i class="menu-icon fa fa-user"></i><a href="supervision_docketing">Supervision</a></li>
                         <li data-permission="can_access_docket_probation_courtesy_supervision"<?php echo $pis_submenu_li === 'can_access_docket_probation_courtesy_supervision' ? ' class="active"' : ''; ?> style="display:none;"><i class="menu-icon fa fa-user"></i><a href="probation-courtesy-supervision-list">Courtesy Supervision</a></li>
                     </ul>

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
   `type` varchar(255) DEFAULT NULL,
   `value` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=latin1;
 
 INSERT INTO `permission` (`id`, `created_by`, `created_date`, `status`, `updated_by`, `updated_date`, `detail`, `name`, `parent_id`, `type`, `value`) VALUES
 -- Docketing > Probation
@@ -60,6 +60,11 @@ INSERT INTO `permission` (`id`, `created_by`, `created_date`, `status`, `updated
 (156, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_edit_docket_probation_carry_over_investigation', 'Update', 154, 'ACTION', 0),
 (157, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_attachments_docket_probation_carry_over_investigation', 'Attachments', 154, 'ACTION', 0),
 (158, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_delete_docket_probation_carry_over_investigation', 'Delete', 154, 'ACTION', 0),
+(159, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_access_docket_probation_carry_over_courtesy_investigation', 'Carry Over', 5, 'VIEW', 0),
+(160, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_view_docket_probation_carry_over_courtesy_investigation', 'View', 159, 'ACTION', 0),
+(161, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_edit_docket_probation_carry_over_courtesy_investigation', 'Update', 159, 'ACTION', 0),
+(162, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_attachments_docket_probation_carry_over_courtesy_investigation', 'Attachments', 159, 'ACTION', 0),
+(163, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_delete_docket_probation_carry_over_courtesy_investigation', 'Delete', 159, 'ACTION', 0),
 
 -- Docketing > Parole and Pardon (active parole-pardon-* pages)
 (17, 'SYSTEM', '2026-08-17 00:00:00', 1, NULL, NULL, 'can_access_docket_pre_parole', 'Parole and Pardon', 1, 'VIEW', 0),
