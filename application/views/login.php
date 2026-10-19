@@ -51,6 +51,12 @@
                                 <input type="password" class="form-control OTP" placeholder="OTP ********">
                             </div>
                         </div>
+                        <div class="form-group reset-password-group" style="display:none;">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                                <input type="password" class="form-control new-password" placeholder="New password">
+                            </div>
+                        </div>
                         <a><button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30 btn-resend" style="display:none;">Resend OTP</button>
                             <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30 btn-OTP">Enter OTP</button>
                         </a>

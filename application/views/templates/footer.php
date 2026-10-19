@@ -82,6 +82,47 @@
         localStorage.setItem('api', apiBase);
         var api = localStorage.getItem('api');
 
+        window.pisStoreFileToken = function (token) {
+            if (!token) {
+                return;
+            }
+            try {
+                localStorage.setItem('pisFileToken', token);
+            } catch (e) {}
+            var secure = (window.__PIS_IS_HTTPS || window.location.protocol === 'https:') ? '; Secure' : '';
+            document.cookie = 'pis_file_token=' + encodeURIComponent(token) + '; Path=/' + secure + '; SameSite=Lax';
+        };
+        window.pisFileToken = function () {
+            try {
+                var stored = localStorage.getItem('pisFileToken');
+                if (stored) {
+                    return stored;
+                }
+            } catch (e) {}
+            return $.cookie('pis_file_token') || '';
+        };
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                var url = settings && settings.url ? String(settings.url) : '';
+                if (url.indexOf('8080/file/') === -1) {
+                    return;
+                }
+                var token = window.pisFileToken();
+                if (token) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+            },
+            complete: function (xhr) {
+                var refreshed = xhr && xhr.getResponseHeader ? xhr.getResponseHeader('X-File-Token') : '';
+                if (refreshed) {
+                    window.pisStoreFileToken(refreshed);
+                }
+            }
+        });
+        if (window.pisFileToken()) {
+            window.pisStoreFileToken(window.pisFileToken());
+        }
+
         var ___ctx = api;
 
         var __setContext = function(newctx) {
@@ -411,6 +452,7 @@
             $.removeCookie('role_id');
             $.removeCookie('departmentName');
             $.removeCookie('user_id');
+            document.cookie = 'pis_file_token=; Path=/; Max-Age=0; SameSite=Lax';
             window.__pisUserSessionPromise = null;
             localStorage.clear();
             setTimeout(function () {

@@ -92,7 +92,7 @@
                         </div>
                         <div class="row form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
                             <div class="col col-sm-3 col-md-3 col-lg-3 col-xl-3"><label for="text-input" class=" form-control-label">Password</label></div>
-                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="password" name="" placeholder="*********" class="form-control password_update"></div>
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9"><input type="password" name="" placeholder="Leave blank to keep the current password" class="form-control password_update"></div>
                             <div class="errorMessage"></div>
                         </div>
                     </div>

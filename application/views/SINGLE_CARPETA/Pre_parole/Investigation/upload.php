@@ -148,7 +148,7 @@
                                 <div class="row form-group col-md-12">         
                                     <div class="col col-md-3"><label for="fileupload" class="form-control-label">Upload File</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="file" name="pinv_att_file" class="form-control-file" id="fileupload" accept=".pdf,.doc,.docx,image/*" aria-describedby="pinv_att_file_hint">
+                                        <input type="file" name="pinv_att_file" class="form-control-file" id="fileupload" accept=".pdf,.docx,.jpg,.jpeg,.png" aria-describedby="pinv_att_file_hint">
                                         <small id="pinv_att_file_hint" class="form-text text-muted">Accepted: PDF, Word documents, or images.</small>
                                     </div>
                                 </div>

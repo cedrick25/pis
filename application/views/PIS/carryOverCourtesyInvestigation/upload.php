@@ -108,7 +108,7 @@
                                 <div class="row form-group col-md-12">
                                     <div class="col col-md-3"><label for="fileupload" class="form-control-label">Upload File</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="file" name="cinv_att_file" class="form-control-file" id="fileupload" accept=".pdf,.doc,.docx,image/*">
+                                        <input type="file" name="cinv_att_file" class="form-control-file" id="fileupload" accept=".pdf,.docx,.jpg,.jpeg,.png">
                                     </div>
                                 </div>
                             </div>

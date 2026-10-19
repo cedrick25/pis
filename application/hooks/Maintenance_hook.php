@@ -201,7 +201,29 @@ class Maintenance_hook {
 			}
 			elseif (strpos($line, 'spring.datasource.password=') === 0)
 			{
-				$db['pass'] = substr($line, strlen('spring.datasource.password='));
+				$configured = substr($line, strlen('spring.datasource.password='));
+				if (strpos($configured, '${') !== 0)
+				{
+					$db['pass'] = $configured;
+				}
+			}
+		}
+
+		$fromEnv = getenv('SPRING_DATASOURCE_PASSWORD');
+		if ($fromEnv !== FALSE && $fromEnv !== '')
+		{
+			$db['pass'] = $fromEnv;
+		}
+		elseif ($db['pass'] === '')
+		{
+			$localSecrets = APPPATH.'config/local_secrets.php';
+			if (is_file($localSecrets))
+			{
+				$secrets = include $localSecrets;
+				if (is_array($secrets) && isset($secrets['db_password']))
+				{
+					$db['pass'] = $secrets['db_password'];
+				}
 			}
 		}
 

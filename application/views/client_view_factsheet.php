@@ -851,7 +851,7 @@ $fs_hide_docket_list_tab = in_array($fs_docket_type, array('PIS_SUP', 'PIS_CSUP'
                 </div>
                 <div class="modal-body col-md-12">
                     <label class="form-control-label small text-muted" for="file-input">Choose image file</label>
-                    <input type="file" id="file-input" class="form-control-file" accept="image/*">
+                    <input type="file" id="file-input" class="form-control-file" accept=".jpg,.jpeg,.png">
                     <div class="fs-invalid-hint" id="file-input-upload-hint" role="alert"></div>
                 </div>
                 <div class="modal-footer">
@@ -907,7 +907,7 @@ $fs_hide_docket_list_tab = in_array($fs_docket_type, array('PIS_SUP', 'PIS_CSUP'
                             <button type="button" class="btn btn-info btn-sm" style="width: 100%; border-radius: 3px;"><i class="fa fa-picture-o" aria-hidden="true"></i>  Take Photo</button> 
                         </div>
                         <div class="uploadAttachmentContainer" style="width: 100%; min-height: 150px; padding: 10px; align-items: center; margin: auto;">
-                            <input type="file" id="file-input-reporting-photo" accept="image/*" style="display: none;" aria-hidden="true">
+                            <input type="file" id="file-input-reporting-photo" accept=".jpg,.jpeg,.png" style="display: none;" aria-hidden="true">
                             <button type="button" class="btn btn-info btn-sm btn-uploadReportingPhotoPick" style="width: 100%; border-radius: 3px;"><i class="fa fa-upload" aria-hidden="true"></i>  Upload Photo</button>
                             <div class="fs-invalid-hint" id="file-input-reporting-photo-hint" role="alert"></div>
                             <div class="reporting-profile-photo-followup mt-2" style="display: none;">

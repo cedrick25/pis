@@ -158,7 +158,7 @@
                                 <div class="row form-group col-md-12 upload_form_row">
                                     <div class="col col-md-3"><label for="fileupload" class="form-control-label">Upload File</label></div>
                                     <div class="col-12 col-md-6">
-                                        <input type="file" name="sup_att_file" class="form-control-file" id="fileupload" accept=".pdf,.doc,.docx,image/*" disabled>
+                                        <input type="file" name="sup_att_file" class="form-control-file" id="fileupload" accept=".pdf,.docx,.jpg,.jpeg,.png" disabled>
                                     </div>
                                 </div>
                             </div>

@@ -299,7 +299,7 @@
                         $(".email_update").val(result.email);
                         $(".num_update").val(result.phoneNumber === "N/A" ? "" : result.phoneNumber);
                         $(".birthday_update").val(result.birthday);
-                        $(".password_update").val(result.password);
+                        $(".password_update").val("");
 
                         setTimeout (function () {
                             var userRoleNameUpdate = $(`.user_roles_update option:selected`).data('name');

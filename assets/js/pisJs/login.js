@@ -186,6 +186,7 @@
                             console.log("not lock")
                             $('.prompt').html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> Login Successfully </div>');
                             $(".OTP_div").show();
+                            $(".reset-password-group").hide();
                             $(".login_div").hide();
                             function generateOTP() {
                                 var otp = Math.floor(10000 + Math.random() * 90000); // Generate a random number between 10000 and 99999
@@ -283,6 +284,9 @@
                                     // $.cookie("roleid", roleid);
                                     $.cookie("uuid", uuid, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
                                     localStorage.clear();
+                                    if (result.fileToken && window.pisStoreFileToken) {
+                                        window.pisStoreFileToken(result.fileToken);
+                                    }
                                     
                                     // check if localstorage is clear
                                     var data = JSON.parse(localStorage.getItem('permission'));
@@ -303,6 +307,8 @@
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                             // console.log("this account is locked")
                         }
+                    } else if (result.passwordResetRequired === true) {
+                        beginServerPasswordReset(atob(keyParts[0]), result);
                     } else {
                         // console.log('no data found,inactive or removed')
                             $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> No record found,inactive or removed! </div>')
@@ -350,6 +356,9 @@
                                 // var roleid = result.role.roleId
                                 // $.cookie("roleid", roleid);
                                 $.cookie("uuid", uuid, window.__PIS_COOKIE_OPTS ? window.__PIS_COOKIE_OPTS() : { path: '/' });
+                                if (result.fileToken && window.pisStoreFileToken) {
+                                    window.pisStoreFileToken(result.fileToken);
+                                }
                                 
                                 // check if localstorage is clear
                                 var data = JSON.parse(localStorage.getItem('permission'));
@@ -368,6 +377,8 @@
                                 $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-check"></i> This account is locked!</div>')
                                 // console.log("this account is locked")
                             }
+                        } else if (result.passwordResetRequired === true) {
+                            beginServerPasswordReset($(".email").val(), result);
                         } else {
                             // console.log('no data found,inactive or removed')
                                 $('#prompt').html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> No record found,inactive or removed! </div>')
@@ -388,6 +399,66 @@
                     }
                 })
             })
+        }
+
+        function beginServerPasswordReset(username, result) {
+            $(".login_div").hide();
+            $(".OTP_div").show();
+            $(".reset-password-group").show();
+            $(".prompt_OTP").html('<div class="alert alert-warning" role="alert"> <i class="fa fa-exclamation-circle"></i> This password must be reset. Enter the one-time password that was sent to you, then choose a new password.</div>');
+            var duration = 300;
+            var timerInterval;
+            function tick() {
+                var minutes = parseInt(duration / 60, 10);
+                var seconds = parseInt(duration % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                $("#timer").text("Remaining time: " + minutes + ":" + seconds);
+                if (--duration < 0) {
+                    clearInterval(timerInterval);
+                    $("#timer").text("Time's up! OTP expired.");
+                    $(".btn-resend").show();
+                    $(".btn-OTP").hide();
+                    $(".OTP").prop("disabled", true);
+                }
+            }
+            timerInterval = setInterval(tick, 1000);
+
+            $(".btn-resend").unbind("click").on("click", function () {
+                __executeExternalPost("8088/authenticate/reset-password/resend", JSON.stringify({ username: username })).done(function (sent) {
+                    if (sent === true) {
+                        clearInterval(timerInterval);
+                        duration = 300;
+                        $(".btn-resend").hide();
+                        $(".btn-OTP").show();
+                        $(".OTP").prop("disabled", false);
+                        timerInterval = setInterval(tick, 1000);
+                    }
+                });
+            });
+
+            $(".btn-OTP").unbind("click").on("click", function () {
+                if ($(".OTP").val() === "" || $(".new-password").val() === "") {
+                    $(".prompt_OTP").html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> Enter the one-time password and a new password.</div>');
+                    return;
+                }
+                __executeExternalPost("8088/authenticate/reset-password", JSON.stringify({
+                    username: username,
+                    otp: $(".OTP").val(),
+                    password: $(".new-password").val()
+                })).done(function (reset) {
+                    if (reset === true) {
+                        $(".prompt_OTP").html('<div class="alert alert-success" role="alert"> <i class="fa fa-check-circle"></i> Password updated. Sign in with the new password.</div>');
+                        $(".OTP_div").hide();
+                        $(".login_div").show();
+                        $(".password").val("");
+                        $(".new-password").val("");
+                        $(".OTP").val("");
+                    } else {
+                        $(".prompt_OTP").html('<div class="alert alert-danger" role="alert"> <i class="fa fa-exclamation-circle"></i> The one-time password is invalid or already used.</div>');
+                    }
+                });
+            });
         }
 
         $(".email,.password").keyup(function(event){

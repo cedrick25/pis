@@ -73,11 +73,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+$pisDbPassword = getenv('SPRING_DATASOURCE_PASSWORD');
+if ($pisDbPassword === FALSE || $pisDbPassword === '')
+{
+	$localSecrets = APPPATH.'config/local_secrets.php';
+	if (is_file($localSecrets))
+	{
+		$secrets = include $localSecrets;
+		if (is_array($secrets) && isset($secrets['db_password']))
+		{
+			$pisDbPassword = $secrets['db_password'];
+		}
+	}
+}
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'pis',
-	'password' => 'P@ssw0rd',
+	'password' => ($pisDbPassword === FALSE ? '' : $pisDbPassword),
 	'database' => 'pis',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
