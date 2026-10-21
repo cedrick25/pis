@@ -24,6 +24,12 @@
         return t === "null" || t === "undefined" ? "" : t;
     }
 
+    function signImageHtml(value) {
+        var text = str(value);
+        if (!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(text)) return "";
+        return '<img class="esign" alt="" src="' + text + '"/>';
+    }
+
     /** Round checkbox style (matches worksheet print helper). */
     function chk(label, on) {
         return (
@@ -751,7 +757,9 @@
     function recommendationBlock(ws, meta, pendingIntro, startNewPage) {
         var pet = resolvePetitionerDisplay(ws, meta);
         var petU = pet.toUpperCase();
-        var resultsFrom = str(meta.probationOfficerName || meta.investigatingOfficer);
+        var resultsFrom = meta && meta.resultsFrom != null
+            ? str(meta.resultsFrom)
+            : str(meta.probationOfficerName || meta.investigatingOfficer);
         var introPending =
             "WHEREFORE, in view of the foregoing, pending the result/s of the NBI/CMRD/Others (specify)/Courtesy Investigation Results from " +
             uline(resultsFrom, "inline-ul") +
@@ -801,7 +809,7 @@
             '<div class="sig-two">' +
             '<div class="sig-col">' +
             '<div class="sig-h">Prepared and submitted by:</div>' +
-            '<div class="rule"></div>' +
+            '<div class="rule">' + signImageHtml(meta.officerSignature) + "</div>" +
             '<div class="hint">' +
             esc(meta.investigatingOfficer || "NAME OF INVESTIGATING OFFICER") +
             "</div>" +
@@ -813,7 +821,7 @@
             "</div></div>" +
             '<div class="sig-col">' +
             '<div class="sig-h">Reviewed and approved by:</div>' +
-            '<div class="rule"></div>' +
+            '<div class="rule">' + signImageHtml(meta.headSignature) + "</div>" +
             '<div class="hint">' +
             esc(meta.headFieldOfficeName || "HEAD OF THE FIELD OFFICE") +
             "</div>" +
@@ -830,7 +838,7 @@
     }
 
     /** --- PPA Form 3 official multi-page layout (variant "long") — matches client PSIR template --- */
-    var OF3_PAGE_TOTAL = 7;
+    var OF3_PAGE_TOTAL = 5;
 
     function of3norm(v) {
         return str(v)
@@ -1641,22 +1649,39 @@
         return '<div class="of3-rec-title">RECOMMENDATION</div>';
     }
 
+    function of3PlaceLine(meta) {
+        var place = str(meta.recommendationPlace);
+        var date = str(meta.recommendationDate);
+        if (!place && !date) {
+            return '<div class="of3-rec-place">_____________________, Philippines ____________________</div>';
+        }
+        return (
+            '<div class="of3-rec-place">' +
+            esc(place || "_____________________") +
+            ", Philippines " +
+            esc(date || "____________________") +
+            "</div>"
+        );
+    }
+
     function of3RecommendationSignatures(meta) {
+        var headDate = str(meta.headDate) || "_____________";
+        var officerDate = str(meta.investigatingDate) || "_____________";
         return (
             '<div class="of3-rec-signatures">' +
             '<div class="of3-rec-sign of3-rec-approved">' +
             '<div class="of3-rec-sign-head">APPROVED BY:</div>' +
-            '<div class="of3-rec-sign-rule"></div>' +
-            '<div>Chief Probation and Parole Office</div>' +
-            '<div>Date: _____________</div>' +
+            '<div class="of3-rec-sign-rule">' + signImageHtml(meta.headSignature) + "</div>" +
+            "<div>Chief Probation and Parole Office</div>" +
+            "<div>Date: " + esc(headDate) + "</div>" +
             "</div>" +
             '<div class="of3-rec-sign of3-rec-submitted">' +
             '<div class="of3-rec-sign-head">SUBMITTED BY:</div>' +
-            '<div class="of3-rec-sign-rule"></div>' +
-            '<div>' +
+            '<div class="of3-rec-sign-rule">' + signImageHtml(meta.officerSignature) + "</div>" +
+            "<div>" +
             esc(meta.investigatingOfficer || "Probation and Parole Officer") +
             "</div>" +
-            '<div>Date: _____________</div>' +
+            "<div>Date: " + esc(officerDate) + "</div>" +
             "</div>" +
             "</div>"
         );
@@ -1685,7 +1710,7 @@
             "</span>, to be counted from Probationer’s initial report for supervision and subject to the following conditions:</p>" +
             list +
             '<p class="of3-rec-para of3-rec-indent">In the event that Petitioner fails to observe the preceding conditions and/or has committed any material misrepresentation in his application for probation, his probation may be revoked by the Court or the conditions thereof modified.</p>' +
-            '<div class="of3-rec-place">_____________________, Philippines ____________________ 2011</div>' +
+            of3PlaceLine(meta) +
             of3RecommendationSignatures(meta) +
             '<div class="of3-confidential">CONFIDENTIAL</div>' +
             '<div class="of3-document-page">15</div>' +
@@ -1720,6 +1745,7 @@
             '<p class="of3-rec-para of3-law-quote">“This notwithstanding, the accused shall lose the benefit of probation should he seek a review of the modified decision which already imposes a probationable penalty.</p>' +
             '<p class="of3-rec-para of3-law-quote">“Probation may be granted whether the sentence imposes a term of imprisonment or a fine only. The filing of the application shall be deemed a waiver of the right to appeal.</p>' +
             '<p class="of3-rec-para of3-law-quote">An order granting or denying probation shall not be appealable.”</p>' +
+            of3PlaceLine(meta) +
             of3RecommendationSignatures(meta) +
             '<div class="of3-confidential">CONFIDENTIAL</div>' +
             '<div class="of3-document-page">16</div>' +
@@ -1740,9 +1766,7 @@
             of3Page(ws, meta, 2, false, of3PriorTable(ws) + of3Derogatory(ws) + of3FamilyBirth(fb)) +
             of3Page(ws, meta, 3, false, of3PresentSituation(ps, ws, meta)) +
             of3Page(ws, meta, 4, false, of3EduJobMedTraits(ws, meta)) +
-            of3Page(ws, meta, 5, false, of3CommunityAnalysis(ws)) +
-            of3Page(ws, meta, 6, false, of3RecommendationGranted(ws, meta)) +
-            of3Page(ws, meta, 7, false, of3RecommendationDenied(ws, meta));
+            of3Page(ws, meta, 5, false, of3CommunityAnalysis(ws));
         return '<article class="sheet sheet-of3">' + out + "</article>";
     }
 
@@ -1765,9 +1789,6 @@
         parts += socioBlock(ws);
         parts += analysisBlock(ws, "short");
 
-        parts += recommendationBlock(ws, meta, true);
-        parts += recommendationBlock(ws, meta, false, true);
-
         parts += "</article>";
         return parts;
     }
@@ -1780,10 +1801,8 @@
         return buildBodyLegacyShort(ws, meta);
     }
 
-    function buildHtmlDocument(ws, meta) {
-        meta = meta || {};
-        var body = buildBody(ws, meta);
-        var css =
+    function documentCss() {
+        return (
             "@page{size:A4;margin:25.4mm}" +
             "html,body{margin:0;padding:0;color:#000;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:'Times New Roman',Times,serif;font-size:11pt;line-height:1.35}" +
             ".sheet{max-width:190mm;margin:0 auto;padding:0}" +
@@ -2029,16 +2048,115 @@
             ".of3-law-quote{font-size:8.1pt;line-height:1.2;margin:.8mm 0}" +
             ".of3-denied-rec .of3-rec-signatures{margin-top:3mm}" +
             ".of3-denied-rec .of3-rec-approved{margin-top:10mm}" +
-            "@media print{.psir-cover-sheet{page-break-inside:avoid;min-height:246mm}.mast{page-break-inside:avoid}.soc-row-three{page-break-inside:avoid}.rec{page-break-inside:avoid}.pet-three-col{page-break-inside:avoid}.of3-page{page-break-inside:auto}.of3-grid{page-break-inside:auto}.of3-soc-row{page-break-inside:avoid}.of3-pet-block{page-break-inside:avoid}}";
+            "@media print{.psir-cover-sheet{page-break-inside:avoid;min-height:246mm}.mast{page-break-inside:avoid}.soc-row-three{page-break-inside:avoid}.rec{page-break-inside:avoid}.pet-three-col{page-break-inside:avoid}.of3-page{page-break-inside:auto}.of3-grid{page-break-inside:auto}.of3-soc-row{page-break-inside:avoid}.of3-pet-block{page-break-inside:avoid}}" +
+            ".sig-two .rule{display:flex;align-items:flex-end;justify-content:center}" +
+            ".esign{display:block;max-width:48mm;max-height:12mm;margin:0 auto}" +
+            ".of3-rec-sign-rule{display:flex;align-items:flex-end;justify-content:center;min-height:14mm}" +
+            ".of3-rec-sign-rule .esign{max-height:12mm;max-width:42mm}"
+        );
+    }
 
+    function wrapDocument(title, body) {
         return (
-            "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"/><title>PSIR — PPA Form 3</title><style>" +
-            css +
+            "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"/><title>" +
+            esc(title) +
+            "</title><style>" +
+            documentCss() +
             "</style></head><body>" +
             body +
             "</body></html>"
         );
     }
 
+    function buildHtmlDocument(ws, meta) {
+        meta = meta || {};
+        return wrapDocument("PSIR — PPA Form 3", buildBody(ws, meta));
+    }
+
+    function prettyDate(value) {
+        var text = str(value);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+        var parts = text.split("-");
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var month = months[Number(parts[1]) - 1] || parts[1];
+        return month + " " + Number(parts[2]) + ", " + parts[0];
+    }
+
+    function copyOwn(source) {
+        var out = {};
+        source = source || {};
+        for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) out[key] = source[key];
+        }
+        return out;
+    }
+
+    function applyRecommendationForm(kind, form, ws, meta) {
+        form = form || {};
+        var nextWs = copyOwn(ws);
+        var nextMeta = copyOwn(meta);
+        var pet = str(form.petitionerName);
+        if (pet) {
+            var nextId = copyOwn(nextWs.identifyingData);
+            nextId.name = pet;
+            nextId.petitionersName = pet;
+            nextId.fullName = pet;
+            nextId.lastName = pet;
+            nextId.firstName = "";
+            nextId.middleName = "";
+            nextWs.identifyingData = nextId;
+            nextMeta.petitionersName = pet;
+            nextMeta.petitionerFullName = pet;
+            nextMeta.petitionerLastName = pet;
+            nextMeta.petitionerFirstName = "";
+            nextMeta.petitionerMiddleName = "";
+        }
+        if (str(form.officerName)) nextMeta.investigatingOfficer = str(form.officerName);
+        if (str(form.officerPosition)) nextMeta.investigatingPosition = str(form.officerPosition);
+        if (str(form.officerDate)) nextMeta.investigatingDate = prettyDate(form.officerDate);
+        if (str(form.headName)) nextMeta.headFieldOfficeName = str(form.headName);
+        if (str(form.headPosition)) nextMeta.headPosition = str(form.headPosition);
+        if (str(form.headDate)) nextMeta.headDate = prettyDate(form.headDate);
+        if (str(form.placeDate)) nextMeta.cityProvinceDate = str(form.placeDate);
+        if (str(form.place)) nextMeta.recommendationPlace = str(form.place);
+        if (str(form.signedOn)) nextMeta.recommendationDate = prettyDate(form.signedOn);
+        nextMeta.officerSignature = str(form.officerSignature);
+        nextMeta.headSignature = str(form.headSignature);
+        if (kind === "pending") nextMeta.resultsFrom = str(form.resultsFrom);
+        if (kind === "granted") {
+            var nextRec = copyOwn(nextWs.psirRecommendation || nextWs.recommendation);
+            nextRec.supYear = str(form.supYear);
+            nextRec.supMonth = str(form.supMonth);
+            nextRec.supDay = str(form.supDay);
+            nextWs.psirRecommendation = nextRec;
+        }
+        return { ws: nextWs, meta: nextMeta };
+    }
+
+    function buildRecommendationDocument(kind, form, ws, meta) {
+        var applied = applyRecommendationForm(kind, form, ws, meta);
+        var title = "Recommendation";
+        var body = "";
+        if (kind === "pending") {
+            title = "Recommendation — pending records check";
+            body = '<article class="sheet">' + recommendationBlock(applied.ws, applied.meta, true, false) + "</article>";
+        } else if (kind === "complete") {
+            title = "Recommendation — complete records check";
+            body = '<article class="sheet">' + recommendationBlock(applied.ws, applied.meta, false, false) + "</article>";
+        } else if (kind === "granted") {
+            title = "Recommendation — granted";
+            body = '<article class="sheet sheet-of3"><section class="of3-page">' +
+                of3TopHeader(applied.ws, applied.meta, 6) +
+                '<div class="of3-content">' + of3RecommendationGranted(applied.ws, applied.meta) + "</div></section></article>";
+        } else {
+            title = "Recommendation — denied";
+            body = '<article class="sheet sheet-of3"><section class="of3-page">' +
+                of3TopHeader(applied.ws, applied.meta, 7) +
+                '<div class="of3-content">' + of3RecommendationDenied(applied.ws, applied.meta) + "</div></section></article>";
+        }
+        return wrapDocument(title, body);
+    }
+
     global.fsBuildPpaPsirPrintDocument = buildHtmlDocument;
+    global.fsBuildPsirRecommendationDocument = buildRecommendationDocument;
 })(typeof window !== "undefined" ? window : this);

@@ -546,6 +546,34 @@
             .replace(/[ \t\r\n]+/g, " ");
     }
 
+    var docxImages = [];
+
+    function signatureRel(node) {
+        if (!node || !node.querySelector) return "";
+        var img = node.querySelector("img.esign");
+        if (!img) return "";
+        var match = /^data:image\/png;base64,([A-Za-z0-9+/=]+)$/.exec(img.getAttribute("src") || "");
+        if (!match) return "";
+        docxImages.push(match[1]);
+        return "rIdSig" + docxImages.length;
+    }
+
+    function signatureDrawing(relId, docPrId) {
+        var cx = "1600200";
+        var cy = "514350";
+        return "<w:r><w:drawing><wp:inline distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\">" +
+            "<wp:extent cx=\"" + cx + "\" cy=\"" + cy + "\"/>" +
+            "<wp:effectExtent l=\"0\" t=\"0\" r=\"0\" b=\"0\"/>" +
+            "<wp:docPr id=\"" + docPrId + "\" name=\"Signature" + docPrId + "\"/>" +
+            "<wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect=\"1\"/></wp:cNvGraphicFramePr>" +
+            "<a:graphic><a:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/picture\">" +
+            "<pic:pic><pic:nvPicPr><pic:cNvPr id=\"" + docPrId + "\" name=\"signature" + docPrId + ".png\"/><pic:cNvPicPr/></pic:nvPicPr>" +
+            "<pic:blipFill><a:blip r:embed=\"" + relId + "\"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>" +
+            "<pic:spPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"" + cx + "\" cy=\"" + cy + "\"/></a:xfrm>" +
+            "<a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom></pic:spPr></pic:pic>" +
+            "</a:graphicData></a:graphic></wp:inline></w:drawing></w:r>";
+    }
+
     function blankText(node) {
         if (hasClass(node, "sign-rule")) return "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0";
         if (hasClass(node, "short")) return "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0";
@@ -807,7 +835,11 @@
             return certLines;
         }
         if (hasClass(node, "sign-rule") || hasClass(node, "ruled-line") || hasClass(node, "of3-rec-sign-rule") || hasClass(node, "rule")) {
-            return [paraXml(runXml(blankText(node), { underline: true, sz: styleOf(node).sz }), styleOf(node), false)];
+            var blocks = [];
+            var rel = hasClass(node, "sign-rule") ? signatureRel(node) : "";
+            if (rel) blocks.push(paraXml(signatureDrawing(rel, docxImages.length), styleOf(node), false));
+            blocks.push(paraXml(runXml(blankText(node), { underline: true, sz: styleOf(node).sz }), styleOf(node), false));
+            return blocks;
         }
         if (isSideBySide(node)) return sideBySideXml(node);
         var blocks;
@@ -837,6 +869,7 @@
     }
 
     function worksheetBodyXml(doc) {
+        docxImages = [];
         exportFlow = !!doc.querySelector(".psir-cover-sheet, .sheet-of3, .of3-page");
         seenRunningHeader = false;
         docHasCover = !!doc.querySelector(".psir-cover-sheet");
@@ -848,24 +881,32 @@
             blocks = blocks.concat(emitNode(children[i]));
         }
         if (!blocks.length) throw new Error("Worksheet layout was empty.");
-        return blocks.join("") +
-            "<w:sectPr>" +
-            '<w:pgSz w:w="11906" w:h="16838"/>' +
-            '<w:pgMar w:top="680" w:right="624" w:bottom="680" w:left="624" w:header="0" w:footer="0" w:gutter="0"/>' +
-            "</w:sectPr>";
+        return {
+            xml: blocks.join("") +
+                "<w:sectPr>" +
+                '<w:pgSz w:w="11906" w:h="16838"/>' +
+                '<w:pgMar w:top="680" w:right="624" w:bottom="680" w:left="624" w:header="0" w:footer="0" w:gutter="0"/>' +
+                "</w:sectPr>",
+            images: docxImages.slice()
+        };
     }
 
-    function packageDocx(bodyXml, title) {
+    function packageDocx(bodyXml, title, images) {
         if (typeof global.JSZip !== "function") {
             return Promise.reject(new Error("JSZip is not loaded."));
         }
+        images = images || [];
         var zip = new global.JSZip();
+        var pngDefault = images.length
+            ? '<Default Extension="png" ContentType="image/png"/>'
+            : "";
         zip.file(
             "[Content_Types].xml",
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
                 '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
                 '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
                 '<Default Extension="xml" ContentType="application/xml"/>' +
+                pngDefault +
                 '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
                 '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>' +
                 "</Types>"
@@ -885,15 +926,25 @@
                 "<dc:title>" + xmlEscape(title || "PPA Worksheet") + "</dc:title><dc:creator>PIS</dc:creator>" +
                 "</cp:coreProperties>"
         );
+        var rels = "";
+        for (var i = 0; i < images.length; i++) {
+            var name = "signature" + (i + 1) + ".png";
+            zip.file("word/media/" + name, images[i], { base64: true });
+            rels += '<Relationship Id="rIdSig' + (i + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/' + name + '"/>';
+        }
         zip.file(
             "word/_rels/document.xml.rels",
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-                '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>'
+                '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + rels + "</Relationships>"
         );
         zip.file(
             "word/document.xml",
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-                '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+                '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"' +
+                ' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"' +
+                ' xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"' +
+                ' xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"' +
+                ' xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">' +
                 "<w:body>" + bodyXml + "</w:body></w:document>"
         );
         return zip.generateAsync({
@@ -947,8 +998,8 @@
     }
 
     function buildTextDocx(html, title) {
-        return readWorksheetDocument(html).then(function (bodyXml) {
-            return packageDocx(bodyXml, title);
+        return readWorksheetDocument(html).then(function (parts) {
+            return packageDocx(parts.xml, title, parts.images);
         });
     }
 

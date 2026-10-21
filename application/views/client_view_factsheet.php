@@ -1375,12 +1375,16 @@ $fs_hide_docket_list_tab = in_array($fs_docket_type, array('PIS_SUP', 'PIS_CSUP'
         </div>
     </div>
 
+    <?php $this->load->view('templates/worksheet_legal_forms.php', array('legal_forms_skip_scripts' => true)); ?>
+    <?php $this->load->view('templates/psir_recommendation_forms.php'); ?>
     <?php $this->load->view('templates/footer.php'); ?> 
     <script src="assets/js/html2canvas.min.js"></script>
-    <script src="assets/js/pisJs/ppaWorksheetPrintHtml.js"></script>
-    <script src="assets/js/pisJs/ppaWorksheetDownload.js"></script>
-    <script src="assets/js/pisJs/ppaPsirPrintHtml.js"></script>
-    <script src="assets/js/pisJs/ppaPsirDownload.js"></script>
+    <script src="assets/js/pisJs/ppaWorksheetPrintHtml.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/ppaWorksheetPrintHtml.js'); ?>"></script>
+    <script src="assets/js/pisJs/ppaWorksheetDownload.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/ppaWorksheetDownload.js'); ?>"></script>
+    <script src="assets/js/pisJs/worksheetLegalForms.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/worksheetLegalForms.js'); ?>"></script>
+    <script src="assets/js/pisJs/ppaPsirPrintHtml.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/ppaPsirPrintHtml.js'); ?>"></script>
+    <script src="assets/js/pisJs/ppaPsirDownload.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/ppaPsirDownload.js'); ?>"></script>
+    <script src="assets/js/pisJs/psirRecommendationForms.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/psirRecommendationForms.js'); ?>"></script>
     <script src="assets/js/pisJs/clientViewFactSheet.js?v=<?php echo filemtime(FCPATH.'assets/js/pisJs/clientViewFactSheet.js'); ?>"></script>
 
 

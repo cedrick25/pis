@@ -373,8 +373,12 @@
                         : '';
                 }
                 var worksheetEditHref = window.pisUrl("worksheet_identifying_data?" + docketPageQuery(docketNumber, status || "Not Available"));
+                function legalAttr(value) {
+                    return String(value == null ? "" : value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+                }
                 return `<div class="fs-docket-actions">
                                         <a href="${worksheetEditHref}" class="btn btn-sm btn-outline-primary fs-edit-worksheet" title="Edit worksheet" aria-label="Edit worksheet"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+                                        <button type="button" class="btn btn-sm btn-outline-primary btn-legal-forms" title="Certification and waiver forms" aria-label="Certification and waiver forms" data-client-id="${legalAttr(client_id)}" data-docket-number="${legalAttr(docketNumber)}" data-office-id="${legalAttr(client_fo)}"><i class="fa fa-file-text-o" aria-hidden="true"></i>Forms</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary btn_pdfWorksheet" title="Print worksheet (PDF)" aria-label="Print worksheet PDF"><i class="fa fa-print" aria-hidden="true"></i>Print</button>
                                     </div>`;
             }
@@ -386,10 +390,14 @@
                         : '';
                 }
                 var psirEditHref = window.pisUrl("psir_identifying_data?" + docketPageQuery(docketNumber, status || "Not Available"));
+                function recAttr(value) {
+                    return String(value == null ? "" : value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+                }
                 return `<div class="fs-docket-actions">
                                         <a href="${psirEditHref}" class="btn btn-sm btn-outline-primary fs-edit-psir" title="Edit PSIR" aria-label="Edit PSIR"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
                                         <button type="button" class="btn btn-sm btn-outline-info btn_pdfPSIR" title="Print short PSIR" aria-label="Print short PSIR"><i class="fa fa-print" aria-hidden="true"></i>Short</button>
-                                        <button type="button" class="btn btn-sm btn-outline-dark btn_pdfPSIRLong" title="Print long PSIR (includes transmittal and full recommendation blocks)" aria-label="Print long PSIR"><i class="fa fa-print" aria-hidden="true"></i>Long</button>
+                                        <button type="button" class="btn btn-sm btn-outline-dark btn_pdfPSIRLong" title="Print long PSIR" aria-label="Print long PSIR"><i class="fa fa-print" aria-hidden="true"></i>Long</button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary btn-psir-rec" title="Recommendation forms" aria-label="Recommendation forms" data-client-id="${recAttr(client_id)}" data-docket-number="${recAttr(docketNumber)}" data-office-id="${recAttr(client_fo)}"><i class="fa fa-file-text-o" aria-hidden="true"></i>Rec</button>
                                     </div>`;
             }
 

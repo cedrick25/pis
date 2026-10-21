@@ -231,6 +231,31 @@
         return '<span class="blank' + (extraClass ? " " + extraClass : "") + '"></span>';
     }
 
+    function valueSpan(value, extraClass) {
+        var text = str(value);
+        var cls = "blank" + (extraClass ? " " + extraClass : "");
+        if (!text) return '<span class="' + cls + '"></span>';
+        return '<span class="' + cls + ' filled">' + esc(text) + "</span>";
+    }
+
+    function dateParts(iso) {
+        var text = str(iso);
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return { day: "", month: "", year: "" };
+        var monthIndex = parseInt(text.slice(5, 7), 10) - 1;
+        return {
+            day: String(parseInt(text.slice(8, 10), 10)),
+            month: months[monthIndex] || "",
+            year: text.slice(2, 4)
+        };
+    }
+
+    function longDate(iso) {
+        var parts = dateParts(iso);
+        if (!parts.day) return "";
+        return parts.day + " " + parts.month + " 20" + parts.year;
+    }
+
     function buildBody(ws, office) {
         var idData = nz(ws.identifyingData);
         var po = nz(ws.presentOffense);
@@ -1093,53 +1118,6 @@
             "</span></div>" +
             fieldLine("Specify:", cb.peerRelationshipSpecify);
 
-        function waiverItem(n, text) {
-            return (
-                '<div class="waiver-item"><span class="item-blank"></span><div class="waiver-text">' +
-                n + ". " + text +
-                "</div></div>"
-            );
-        }
-
-        h +=
-            '<div class="legal-footer print-page cert-page">' +
-            '<div class="cert-folio">PPA FORM 1/p.8</div>' +
-            '<div class="cert-title">CERTIFICATION</div>' +
-            '<div class="cert-body">' +
-            '<p class="cert-line">I, ' + blankSpan("cert-name") + ", hereby declare that the</p>" +
-            '<p class="cert-line">information and facts given by me are true and correct and I am</p>' +
-            '<p class="cert-line">aware of the intent and consequence thereof.</p>' +
-            '<p class="cert-line cert-gap">Signed on the ' + blankSpan("day") + " day of " + blankSpan("month") + ", 20" + blankSpan("short") + "</p>" +
-            '<p class="cert-line">at ' + blankSpan("place") + ", Philippines.</p>" +
-            "</div>" +
-            '<div class="sign-page-center"><div class="sign-rule"></div><div>Petitioner</div></div>' +
-            '<div class="attest-block">' +
-            "<div>ATTESTED:</div>" +
-            '<div class="sign-indent"><div class="sign-rule"></div><div>Investigating Officer (IO)</div></div>' +
-            '<div class="sign-indent"><div class="sign-rule"></div><div>Date</div></div>' +
-            "</div></div>" +
-            '<div class="form2 print-page waiver-page">' +
-            '<div class="waiver-top"><div class="waiver-form-label">PPA FORM 2</div><div class="waiver-code">PPA-FO-FR-002</div></div>' +
-            agencyHeaderHtml(office) +
-            '<div class="waiver-title">WAIVER</div>' +
-            '<div class="waiver-body">' +
-            '<p class="intro-line">I, the undersigned, hereby authorize ' + blankSpan("auth") + " of</p>" +
-            '<p class="intro-line">' + blankSpan("auth2") + " to secure and make use of the following</p>" +
-            '<p class="intro-line intro-last">information and/or reports for purpose of evaluating my application for probation.</p>' +
-            waiverItem("1", "Record of previous arrest, arresting agency, date and place of arrest disposition.") +
-            waiverItem("2", "Record of previous probation/parole/pardon.") +
-            waiverItem("3", "School records.") +
-            waiverItem("4", "Medical records, including dates of all records of any physician, clinic or hospital where I have sought consultation or received treatment.") +
-            waiverItem("5", "Military records, including dates of all periods of active military services; records of disciplinary actions if any, other significant military history, awards, citations, date and type of discharge from active military service.") +
-            '<div class="waiver-item"><span class="item-blank"></span><div class="waiver-text">6. Others (Specify) ' + blankSpan("specify") + "</div></div>" +
-            '<div class="sign-right"><div class="sign-rule"></div><div>Signature</div></div>' +
-            '<div class="witness-label">WITNESSES:</div>' +
-            '<div class="witness-row"><div class="sign-slot"><div class="sign-rule"></div></div><div class="sign-slot"><div class="sign-rule"></div></div></div>' +
-            '<p class="jurat">SUBSCRIBED AND SWORN TO before me this ' + blankSpan("jurat") + " day of<br>" +
-            blankSpan("jurat") + ", 20" + blankSpan("short") + " at " + blankSpan("jurat") + ", Philippines.</p>" +
-            '<div class="sign-right"><div class="sign-rule"></div><div>CPPO</div></div>' +
-            "</div></div>";
-
         return h + "</div>";
     }
 
@@ -1319,5 +1297,132 @@
         );
     }
 
+    var LEGAL_CSS =
+        "@page { size: A4; margin: 12mm 11mm }" +
+        "html,body{margin:0;padding:0;background:#fff;color:#000;font-family:Arial,Helvetica,sans-serif;font-size:11pt;line-height:1.45}" +
+        ".sheet{max-width:190mm;margin:0 auto;padding:0}" +
+        ".hdr-center{text-align:center;line-height:1.35;margin:2mm 0 1mm;font-size:11pt}" +
+        ".hdr-office{font-weight:400}" +
+        ".cert-page,.waiver-page{color:#000;font-size:11pt;line-height:1.45}" +
+        ".cert-folio,.waiver-form-label,.waiver-code{font-weight:700;font-size:11pt}" +
+        ".cert-folio{margin:2mm 0 12mm}" +
+        ".cert-title,.waiver-title{text-align:center;font-weight:700;text-decoration:underline;text-underline-offset:2px;margin:6mm 0 8mm}" +
+        ".cert-body{text-align:center;max-width:168mm;margin:0 auto;line-height:1.85}" +
+        ".cert-line{margin:0}" +
+        ".cert-gap{margin-top:7mm}" +
+        ".blank{display:inline-block;border-bottom:0.7pt solid #000;min-width:42mm;min-height:1.05em;vertical-align:bottom}" +
+        ".blank.filled{font-weight:700;padding:0 1.5mm;min-width:0}" +
+        ".blank.cert-name{width:72mm;min-width:72mm}" +
+        ".blank.day{width:34mm;min-width:34mm}" +
+        ".blank.month{width:42mm;min-width:42mm}" +
+        ".blank.place{width:48mm;min-width:48mm}" +
+        ".blank.short{width:16mm;min-width:16mm}" +
+        ".blank.auth{width:64mm;min-width:64mm}" +
+        ".blank.auth2{width:42mm;min-width:42mm}" +
+        ".blank.specify{min-width:72mm}" +
+        ".blank.jurat{min-width:36mm}" +
+        ".sign-page-center{width:68mm;margin:16mm auto 0;text-align:center}" +
+        ".attest-block{margin-top:18mm}" +
+        ".sign-indent{width:62mm;margin:10mm 0 0 22mm;text-align:center}" +
+        ".sign-rule{border-bottom:0.7pt solid #000;min-height:16mm;margin-bottom:1mm;display:flex;align-items:flex-end;justify-content:center;font-weight:700}" +
+        ".sign-rule .esign{display:block;max-width:56mm;max-height:14mm;margin:0 auto}" +
+        ".waiver-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2mm}" +
+        ".waiver-body{margin:0 2mm 0 4mm}" +
+        ".intro-line{margin:0;line-height:1.65}" +
+        ".intro-last{margin-bottom:5mm}" +
+        ".waiver-item{display:flex;align-items:flex-start;gap:3mm;margin:4.2mm 0}" +
+        ".item-blank{flex:0 0 34mm;border-bottom:0.7pt solid #000;min-height:1.15em;margin-top:0.15em;text-align:center;font-weight:700}" +
+        ".waiver-text{flex:1;line-height:1.4}" +
+        ".sign-right{width:62mm;margin:7mm 6mm 0 auto;text-align:center}" +
+        ".witness-label{margin:8mm 0 3mm}" +
+        ".witness-row{display:flex;gap:14mm;margin:1mm 6mm 6mm 8mm}" +
+        ".witness-row .sign-slot{width:48mm}" +
+        ".jurat{text-align:center;margin:8mm auto 0;line-height:1.7;max-width:175mm}";
+
+    function buildLegalDocument(title, inner) {
+        return (
+            "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"/><title>" +
+            esc(title) +
+            "</title><style>" + LEGAL_CSS + "</style></head><body><div class=\"sheet\">" +
+            inner +
+            "</div></body></html>"
+        );
+    }
+
+    function signatureSrc(value) {
+        var text = str(value);
+        if (!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(text)) return "";
+        return text;
+    }
+
+    function signImageHtml(value) {
+        var src = signatureSrc(value);
+        if (!src) return "";
+        return '<img class="esign" alt="" src="' + src + '"/>';
+    }
+
+    function waiverItem(n, text, marked) {
+        return (
+            '<div class="waiver-item"><span class="item-blank">' + (marked ? "X" : "") +
+            '</span><div class="waiver-text">' + n + ". " + text + "</div></div>"
+        );
+    }
+
+    function buildCertificationDocument(data, office) {
+        data = data || {};
+        var when = dateParts(data.signedOn);
+        var attested = longDate(data.signedOn);
+        var inner =
+            '<div class="cert-page">' +
+            '<div class="cert-folio">PPA FORM 1/p.8</div>' +
+            '<div class="cert-title">CERTIFICATION</div>' +
+            '<div class="cert-body">' +
+            '<p class="cert-line">I, ' + valueSpan(data.petitionerName, "cert-name") + ", hereby declare that the</p>" +
+            '<p class="cert-line">information and facts given by me are true and correct and I am</p>' +
+            '<p class="cert-line">aware of the intent and consequence thereof.</p>' +
+            '<p class="cert-line cert-gap">Signed on the ' + valueSpan(when.day, "day") + " day of " + valueSpan(when.month, "month") + ", 20" + valueSpan(when.year, "short") + "</p>" +
+            '<p class="cert-line">at ' + valueSpan(data.place, "place") + ", Philippines.</p>" +
+            "</div>" +
+            '<div class="sign-page-center"><div class="sign-rule">' + signImageHtml(data.petitionerSignature) + '</div><div>Petitioner</div></div>' +
+            '<div class="attest-block">' +
+            "<div>ATTESTED:</div>" +
+            '<div class="sign-indent"><div class="sign-rule">' + signImageHtml(data.officerSignature) + '</div><div>Investigating Officer (IO)</div></div>' +
+            '<div class="sign-indent"><div class="sign-rule">' + esc(attested) + "</div><div>Date</div></div>" +
+            "</div></div>";
+        return buildLegalDocument("Certification", inner);
+    }
+
+    function buildWaiverDocument(data, office) {
+        data = data || {};
+        var records = data.records || {};
+        var when = dateParts(data.swornOn);
+        var inner =
+            '<div class="waiver-page">' +
+            '<div class="waiver-top"><div class="waiver-form-label">PPA FORM 2</div><div class="waiver-code">PPA-FO-FR-002</div></div>' +
+            agencyHeaderHtml(office) +
+            '<div class="waiver-title">WAIVER</div>' +
+            '<div class="waiver-body">' +
+            '<p class="intro-line">I, the undersigned, hereby authorize ' + valueSpan(data.authorizedPerson, "auth") + " of</p>" +
+            '<p class="intro-line">' + valueSpan(data.authorizedOffice, "auth2") + " to secure and make use of the following</p>" +
+            '<p class="intro-line intro-last">information and/or reports for purpose of evaluating my application for probation.</p>' +
+            waiverItem("1", "Record of previous arrest, arresting agency, date and place of arrest disposition.", !!records.arrest) +
+            waiverItem("2", "Record of previous probation/parole/pardon.", !!records.probation) +
+            waiverItem("3", "School records.", !!records.school) +
+            waiverItem("4", "Medical records, including dates of all records of any physician, clinic or hospital where I have sought consultation or received treatment.", !!records.medical) +
+            waiverItem("5", "Military records, including dates of all periods of active military services; records of disciplinary actions if any, other significant military history, awards, citations, date and type of discharge from active military service.", !!records.military) +
+            '<div class="waiver-item"><span class="item-blank"></span><div class="waiver-text">6. Others (Specify) ' + valueSpan(data.othersSpecify, "specify") + "</div></div>" +
+            '<div class="sign-right"><div class="sign-rule">' + signImageHtml(data.petitionerSignature) + '</div><div>Signature</div></div>' +
+            '<div class="sign-right"><div class="sign-rule">' + signImageHtml(data.officerSignature) + '</div><div>Investigating Officer</div></div>' +
+            '<div class="witness-label">WITNESSES:</div>' +
+            '<div class="witness-row"><div class="sign-slot"><div class="sign-rule"></div></div><div class="sign-slot"><div class="sign-rule"></div></div></div>' +
+            '<p class="jurat">SUBSCRIBED AND SWORN TO before me this ' + valueSpan(when.day, "jurat") + " day of<br>" +
+            valueSpan(when.month, "jurat") + ", 20" + valueSpan(when.year, "short") + " at " + valueSpan(data.swornPlace, "jurat") + ", Philippines.</p>" +
+            '<div class="sign-right"><div class="sign-rule"></div><div>CPPO</div></div>' +
+            "</div></div>";
+        return buildLegalDocument("Waiver", inner);
+    }
+
     global.fsBuildPpaWorksheetPrintDocument = buildHtmlDocument;
+    global.fsBuildPpaCertificationPrintDocument = buildCertificationDocument;
+    global.fsBuildPpaWaiverPrintDocument = buildWaiverDocument;
 })(typeof window !== "undefined" ? window : this);
