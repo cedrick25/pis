@@ -1350,8 +1350,8 @@
     }
 
     function signatureSrc(value) {
-        var text = str(value);
-        if (!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(text)) return "";
+        var text = str(value).replace(/\s+/g, "");
+        if (!/^data:image\/(?:png|jpe?g);base64,[A-Za-z0-9+/=]+$/i.test(text)) return "";
         return text;
     }
 

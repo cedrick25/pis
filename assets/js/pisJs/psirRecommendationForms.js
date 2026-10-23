@@ -119,11 +119,11 @@
         return !!(form && form.updatedAt);
     }
 
-    function statusText(form) {
-        if (!isSaved(form)) return "Not filled";
-        var when = new Date(form.updatedAt);
-        if (isNaN(when.getTime())) return "Saved";
-        return "Saved " + when.toLocaleString();
+    function recordStatusLabel() {
+        var status = state.record && state.record.worksheetStatus;
+        status = status == null ? "" : String(status).trim();
+        if (!status || status === "null") return "Not Available";
+        return status;
     }
 
     function formsBag() {
@@ -145,9 +145,11 @@
 
     function paintStatus() {
         var bag = formsBag();
+        var label = recordStatusLabel();
+        var complete = label.toLowerCase() === "complete";
         Object.keys(FORMS).forEach(function (kind) {
             var form = bag[kind] || null;
-            $(FORMS[kind].status).text(statusText(form)).toggleClass("is-saved", isSaved(form));
+            $(FORMS[kind].status).text(label).toggleClass("is-saved", complete);
             $(FORMS[kind].edit).text(isSaved(form) ? "Update" : "Create");
         });
         var docket = docketNumber();

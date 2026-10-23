@@ -19,7 +19,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Form</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">PSIR status</th>
                                     <th scope="col" class="text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -30,7 +30,7 @@
                                         <div class="psir-rec-name">Pending records check or GIOR</div>
                                         <div class="psir-rec-note">Petition granted while NBI, CMRD, or courtesy results are still out</div>
                                     </td>
-                                    <td><span class="psir-rec-status" id="psirRecPendingStatus">Not filled</span></td>
+                                    <td><span class="psir-rec-status" id="psirRecPendingStatus">Not Available</span></td>
                                     <td class="text-right text-nowrap">
                                         <button type="button" class="btn btn-sm btn-primary psir-rec-edit" data-form="pending" id="psirRecPendingEdit">Create</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary psir-rec-print" data-form="pending">Print</button>
@@ -42,7 +42,7 @@
                                         <div class="psir-rec-name">Complete records check or GIOR</div>
                                         <div class="psir-rec-note">Petition granted with records already complete</div>
                                     </td>
-                                    <td><span class="psir-rec-status" id="psirRecCompleteStatus">Not filled</span></td>
+                                    <td><span class="psir-rec-status" id="psirRecCompleteStatus">Not Available</span></td>
                                     <td class="text-right text-nowrap">
                                         <button type="button" class="btn btn-sm btn-primary psir-rec-edit" data-form="complete" id="psirRecCompleteEdit">Create</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary psir-rec-print" data-form="complete">Print</button>
@@ -55,7 +55,7 @@
                                         <div class="psir-rec-name">Granted</div>
                                         <div class="psir-rec-note">Granted for the supervision period, with the condition list</div>
                                     </td>
-                                    <td><span class="psir-rec-status" id="psirRecGrantedStatus">Not filled</span></td>
+                                    <td><span class="psir-rec-status" id="psirRecGrantedStatus">Not Available</span></td>
                                     <td class="text-right text-nowrap">
                                         <button type="button" class="btn btn-sm btn-primary psir-rec-edit" data-form="granted" id="psirRecGrantedEdit">Create</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary psir-rec-print" data-form="granted">Print</button>
@@ -67,7 +67,7 @@
                                         <div class="psir-rec-name">Denied</div>
                                         <div class="psir-rec-note">Denied under PD 968, as amended</div>
                                     </td>
-                                    <td><span class="psir-rec-status" id="psirRecDeniedStatus">Not filled</span></td>
+                                    <td><span class="psir-rec-status" id="psirRecDeniedStatus">Not Available</span></td>
                                     <td class="text-right text-nowrap">
                                         <button type="button" class="btn btn-sm btn-primary psir-rec-edit" data-form="denied" id="psirRecDeniedEdit">Create</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary psir-rec-print" data-form="denied">Print</button>

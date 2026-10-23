@@ -108,22 +108,43 @@
         $("#legalFormsAlert").hide().text("");
     }
 
-    function isSaved(form) {
-        return !!(form && form.updatedAt);
+    function hasText(value) {
+        return String(value == null ? "" : value).trim() !== "";
     }
 
-    function statusText(form) {
-        if (!isSaved(form)) return "Not filled";
-        var when = new Date(form.updatedAt);
-        if (isNaN(when.getTime())) return "Saved";
-        return "Saved " + when.toLocaleString();
+    function isSaved(form) {
+        if (!form || typeof form !== "object") return false;
+        if (form.updatedAt) return true;
+        return hasText(form.petitionerName) || hasText(form.signedOn) || hasText(form.place)
+            || hasText(form.petitionerSignature) || hasText(form.officerSignature)
+            || hasText(form.authorizedPerson) || hasText(form.authorizedOffice)
+            || hasText(form.swornOn) || hasText(form.swornPlace) || hasText(form.othersSpecify);
+    }
+
+    function signatureDataUrl(value) {
+        var text = String(value == null ? "" : value).replace(/^\s+|\s+$/g, "");
+        if (!text) return "";
+        var dataUrl = text.match(/^data:image\/[a-z0-9.+-]+;base64,/i);
+        if (dataUrl) return text;
+        var compact = text.replace(/\s+/g, "");
+        if (compact.length > 80 && /^[A-Za-z0-9+/=]+$/.test(compact)) {
+            return "data:image/png;base64," + compact;
+        }
+        return "";
+    }
+
+    function recordStatusLabel() {
+        var status = state.record && state.record.worksheetStatus;
+        status = status == null ? "" : String(status).trim();
+        if (!status || status === "null") return "Not Available";
+        return status;
     }
 
     function paintStatus() {
         var cert = state.data.certification || null;
         var waiver = state.data.waiver || null;
-        $("#legalCertStatus").text(statusText(cert)).toggleClass("is-saved", isSaved(cert));
-        $("#legalWaiverStatus").text(statusText(waiver)).toggleClass("is-saved", isSaved(waiver));
+        var label = recordStatusLabel();
+        $("#legalCertStatus, #legalWaiverStatus").text(label).toggleClass("is-saved", label.toLowerCase() === "complete");
         $("#legalCertEdit").text(isSaved(cert) ? "Update" : "Create");
         $("#legalWaiverEdit").text(isSaved(waiver) ? "Update" : "Create");
         var docket = docketNumber();
@@ -231,8 +252,14 @@
             $("#legalWaiverDate").val(fresh ? todayIso() : (saved.swornOn || ""));
             $("#legalWaiverPlace").val(fresh ? (state.office.address || state.office.officeName || "") : (saved.swornPlace || ""));
         }
-        loadPad(document.getElementById("legalSignPetitioner"), saved && saved.petitionerSignature);
-        loadPad(document.getElementById("legalSignOfficer"), saved && saved.officerSignature);
+        var petitionerSignature = saved && saved.petitionerSignature;
+        var officerSignature = saved && saved.officerSignature;
+        function paintSignatures() {
+            loadPad(document.getElementById("legalSignPetitioner"), petitionerSignature);
+            loadPad(document.getElementById("legalSignOfficer"), officerSignature);
+        }
+        paintSignatures();
+        window.requestAnimationFrame(paintSignatures);
         $("#legalFormSave").prop("disabled", false).text("Save");
     }
 
@@ -275,18 +302,29 @@
 
     function loadPad(canvas, dataUrl) {
         blankPad(canvas);
-        if (!canvas || !dataUrl || String(dataUrl).indexOf("data:image/png;base64,") !== 0) return;
-        canvas.dataset.source = dataUrl;
+        var src = signatureDataUrl(dataUrl);
+        if (!canvas || !src) return;
+        if (!canvas.width || !canvas.height) {
+            canvas.width = 520;
+            canvas.height = 140;
+        }
+        var token = (canvas._sigToken || 0) + 1;
+        canvas._sigToken = token;
         canvas.dataset.signed = "1";
+        canvas.dataset.source = src;
         var img = new Image();
         img.onload = function () {
-            if (canvas.dataset.source !== dataUrl) return;
+            if (canvas._sigToken !== token || !img.width || !img.height) return;
             var ctx = padContext(canvas);
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+            var width = img.width * scale;
+            var height = img.height * scale;
+            ctx.drawImage(img, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+            canvas.dataset.source = canvas.toDataURL("image/png");
         };
-        img.src = dataUrl;
+        img.src = src;
     }
 
     function readPad(id) {

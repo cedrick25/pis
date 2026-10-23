@@ -19,7 +19,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Form</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Worksheet status</th>
                                     <th scope="col" class="text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -29,7 +29,7 @@
                                         <div class="legal-form-name">Certification</div>
                                         <div class="legal-form-note">PPA Form 1 — petitioner’s declaration</div>
                                     </td>
-                                    <td><span class="legal-status" id="legalCertStatus">Not filled</span></td>
+                                    <td><span class="legal-status" id="legalCertStatus">Not Available</span></td>
                                     <td class="text-right text-nowrap">
                                         <button type="button" class="btn btn-sm btn-primary legal-edit" data-form="certification" id="legalCertEdit">Create</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary legal-print" data-form="certification">Print</button>
@@ -41,7 +41,7 @@
                                         <div class="legal-form-name">Waiver</div>
                                         <div class="legal-form-note">PPA Form 2 — authorization to secure records</div>
                                     </td>
-                                    <td><span class="legal-status" id="legalWaiverStatus">Not filled</span></td>
+                                    <td><span class="legal-status" id="legalWaiverStatus">Not Available</span></td>
                                     <td class="text-right text-nowrap">
                                         <button type="button" class="btn btn-sm btn-primary legal-edit" data-form="waiver" id="legalWaiverEdit">Create</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary legal-print" data-form="waiver">Print</button>
