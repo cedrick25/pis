@@ -544,7 +544,7 @@
     }
 
     function isJpegOrPng(file) {
-        if (!file || !file.size || file.size > 20 * 1024 * 1024) return false;
+        if (!file || !file.size || file.size > 60 * 1024 * 1024) return false;
         var name = String(file.name || "").toLowerCase();
         var type = String(file.type || "").toLowerCase();
         if (!/\.(jpe?g|png)$/.test(name)) return false;
@@ -574,7 +574,7 @@
     }
 
     function notesUploadError(xhr, fallback) {
-        if (xhr && xhr.status === 413) return "The image exceeds the 20 MB upload limit.";
+        if (xhr && xhr.status === 413) return "The image exceeds the 60 MB upload limit.";
         return fallback;
     }
 
@@ -584,7 +584,7 @@
             return;
         }
         if (!isJpegOrPng(file)) {
-            showAlert("Upload a JPG or PNG image, up to 20 MB.", "warning");
+            showAlert("Upload a JPG or PNG image, up to 60 MB.", "warning");
             return;
         }
         var remarks = state.uploadForm === "waiver" ? "Waiver" : "Certification";
@@ -718,7 +718,7 @@
         $(this).val("");
         if (!file || !padId) return;
         if (!isJpegOrPng(file)) {
-            showAlert("Upload a JPG or PNG signature, up to 20 MB.", "warning");
+            showAlert("Upload a JPG or PNG signature, up to 60 MB.", "warning");
             return;
         }
         var reader = new FileReader();
